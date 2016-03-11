@@ -1,0 +1,11 @@
+$layout:
+( panew: 200px  // pane width
+, paneh: 100%   // pane height
+, listh: 200px  // list height
+);
+
+@function layout( $key ) {
+  @return map-get( $layout, $key );
+}
+
+

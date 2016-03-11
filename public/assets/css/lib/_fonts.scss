@@ -1,0 +1,8 @@
+$fonts:
+( family: ( 'Avenir Next', Helvetica, sans-serif )
+, size: 11pt
+);
+
+@function getfont( $key ) {
+  @return map-get( $fonts, $key );
+}

@@ -1,6 +1,7 @@
 $high_color: #D76D01;
 $text_color: #ffffff;
-$back_color: #050505;
+$back_color: #2B2B2B;
+$box_line:   #000000;
 
 $colors:
 ( sboxb: $high_color // selected box background
@@ -8,23 +9,19 @@ $colors:
 , stext: $high_color // selected text (not in selected box)
 , workb: $back_color // workspace background
 , workt: $text_color // workspace background
-,  boxb: lighten ( $back_color, 40% ) // box background
-,  boxt: $text_color                  // box text
-, tboxb: lighten ( $back_color, 30% ) // title box background
+,  boxb: lighten( $back_color, 20% ) // box background
+,  boxt: $text_color                 // box text
+,  boxl: $box_line                   // box border (line) color
+, tboxb: lighten( $back_color, 30% ) // title box background
 , tboxt: $text_color                  // title box text
-, listb: lighten ( $back_color, 20% ) // list background
-,  fldb: lighten ( $back_color, 70% ) // input background
-,  fldt: darken  ( $text_color, 30% ) // input text
-);
-
-$fonts:
-( familiy: ( 'Avenir Next', Helvetica, sans-serif )
+, listb: lighten( $back_color, 5% ) // list background
+, paneb: lighten( $back_color, 17% ) // side panels background
+, lheab: lighten( $back_color, 10% ) // list head background
+,  fldb: lighten( $back_color, 70% ) // input background
+,  fldt: darken( $text_color, 30% ) // input text
 );
 
 @function color( $key ) {
   @return map-get( $colors, $key );
 }
 
-@function getfont( $key ) {
-  @return map-get( $fonts, $key );
-}

@@ -1,6 +1,157 @@
+@import 'lib/reset';
 @import 'lib/colors';
+@import 'lib/layout';
+@import 'lib/fonts';
+@import 'lib/misc';
 
 body {
+  font-family: getfont(family);
+  font-size:   getfont(size);
   background: color( workb );
   color: color( workt );
+}
+
+.box {
+  padding: $pad;
+  background: color( boxb );
+  border: $lbox solid color( boxl );
+  margin-left: -$lbox;
+  margin-top: -$lbox;
+  width: 90%;
+
+  &.sel {
+    background: color( sboxb );
+    color: color( sboxt );
+  }
+}
+
+._pane {
+  background: color( paneb );
+  position: fixed;
+  top: 0; bottom: 0;
+  height: layout( paneh );
+  width:  layout( panew ) - $ppad;
+  border: $lbox solid color( boxl );
+
+}
+
+._input {
+  position:absolute;
+  border: $lbox solid color( boxl );
+  border-radius: $brad;
+  padding:$pad;
+}
+
+._search {
+  background: color( lheab );
+  padding: $pad;
+  border: $lbox solid color( boxl );
+  position: relative;
+
+  p {
+    input {
+      @extend ._input;
+      top:$pad; left:$pad;
+      width: layout( panew ) - 2*$pad - $ppad - 3*$pad;
+    }
+  }
+}
+
+._saved {
+  padding:$pad;
+
+  li {
+    background: color( boxb );
+    display: inline-block;
+    border-radius: $brad;
+    border: $lbox solid color( boxl );
+    margin: 2px;
+    text-align: center;
+    width: 1.4em;
+
+    &.sel {
+      background: color( sboxb );
+      color: color( sboxt );
+    }
+  }
+}
+
+._list {
+  background: color( listb );
+  height: layout( listh );
+  border: $lbox solid color( boxl );
+  margin-top: -$lbox;
+
+  p {
+    background: color( lheab );
+    border: $lbox solid color( boxl );
+    padding: 2*$pad $pad;
+    margin: -$lbox;
+  }
+
+  li {
+    @extend .box;
+  }
+}
+
+#library {
+  @extend ._pane;
+  left:0;
+  padding-left: $ppad;
+
+  .search {
+    @extend ._search;
+    border-right:0;
+
+    .saved {
+      @extend ._saved;
+    }
+  }
+
+  .results {
+    @extend ._list;
+    border-right:0;
+  }
+}
+
+#project {
+  @extend ._pane;
+  right:0;
+  padding-right: $ppad;
+
+  .control {
+    @extend ._list;
+    border-left:0;
+  }
+
+  .scenes {
+    @extend ._list;
+    border-left:0;
+  }
+
+  .console {
+    @extend ._list;
+    border-left:0;
+    position: relative;
+
+    p {
+      input {
+        @extend ._input;
+        top:$pad; right:$pad;
+        width:50%;
+      }
+    }
+  }
+}
+
+h1, h2, h3, p {
+  font-size: 1em;
+  font-weight: normal;
+  line-height: 1.2em;
+  padding: $pad;
+  margin: 2*$pad 0;
+}
+
+p {
+  margin: 0;
 }
