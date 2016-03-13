@@ -1,5 +1,6 @@
 @import 'lib/reset';
 @import 'lib/colors';
+@import 'lib/palette';
 @import 'lib/layout';
 @import 'lib/fonts';
 @import 'lib/misc';
@@ -11,7 +12,7 @@ body {
   color: color( workt );
 }
 
-.box {
+._box {
   padding: $pad;
   background: color( boxb );
   border: $lbox solid color( boxl );
@@ -23,6 +24,19 @@ body {
     background: color( sboxb );
     color: color( sboxt );
   }
+}
+
+@for $i from 1 through $pcount {
+  svg .box#{$i} {
+    fill: pfill( $i );
+    stroke: pline( $i );
+    stroke-width: $lsbo;
+  }
+}
+
+svg .tbox {
+  font-size:   getfont(size);
+  fill: white;
 }
 
 ._pane {
@@ -90,7 +104,7 @@ body {
   }
 
   li {
-    @extend .box;
+    @extend ._box;
   }
 }
 
@@ -111,6 +125,20 @@ body {
   .results {
     @extend ._list;
     border-right:0;
+  }
+}
+
+#workbench {
+  @extend ._pane;
+  left:   layout( panew ) - $ppad;
+  // How to do this ?
+  // How to do it dynamically if sides are closed ?
+  padding-right:  layout( panew ) - $ppad;
+  width: 100%;
+
+  #svg {
+    width: 100%;
+    height: 100%;
   }
 }
 
