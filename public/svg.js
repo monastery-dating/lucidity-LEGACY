@@ -1,10 +1,9 @@
 var s = Snap ( '#svg' )
-var RADIUS = 3
+var RADIUS = 5
 var SLOT   = 5
 var SPAD   = 16
-var HEIGHT = 26
+var HEIGHT = 30
 var TPAD   = 10
-var foo
 
 var makeBox = function ( txt, x, y, pal, upSlots, downSlots )
 {
@@ -94,8 +93,14 @@ var makeBox = function ( txt, x, y, pal, upSlots, downSlots )
   , txt
   )
   t.addClass ( 'tbox' )
+  return r
 }
 
-makeBox ( 'filter.Blur',      150, 150, 1, 2, 1 )
-makeBox ( 'filter.Bloom',     150, 180, 1, 1, 1 )
-makeBox ( 'generate.Crystal', 150, 210, 3, 1, 2 )
+makeBox ( 'filter.Blur',      80, 150, 1, 2, 1 )
+
+makeBox ( 'filter.Bloom',     80, 180, 1, 1, 2 )
+.addClass ( 'sel' )
+
+makeBox ( 'filter.Foo',       80, 210, 1, 1, 1 )
+
+makeBox ( 'generate.Crystal', 80, 240, 3, 1, 2 )

@@ -31,12 +31,16 @@ body {
     fill: pfill( $i );
     stroke: pline( $i );
     stroke-width: $lsbo;
+
+    &.sel {
+      fill: spfill( $i );
+    }
   }
 }
 
 svg .tbox {
   font-size:   getfont(size);
-  fill: white;
+  fill: black;
 }
 
 ._pane {
@@ -130,6 +134,7 @@ svg .tbox {
 
 #workbench {
   @extend ._pane;
+  background: color( workb );
   left:   layout( panew ) - $ppad;
   // How to do this ?
   // How to do it dynamically if sides are closed ?
