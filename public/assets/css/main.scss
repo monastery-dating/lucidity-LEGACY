@@ -162,6 +162,11 @@ svg .tbox {
     border-left:0;
   }
 
+  .assets {
+    @extend ._list;
+    border-left:0;
+  }
+
   .console {
     @extend ._list;
     border-left:0;
