@@ -38,6 +38,12 @@ body {
   }
 }
 
+svg .box0 {
+  fill:   color( mainb );
+  stroke: color( mainl );
+  stroke-width: $lsbo;
+}
+
 svg .tbox {
   font-size:   getfont(size);
   fill: black;

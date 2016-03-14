@@ -93,12 +93,15 @@ var makeBox = function ( txt, x, y, pal, upSlots, downSlots )
   , txt
   )
   t.addClass ( 'tbox' )
-  return r
+  return { obj: r, size: rb }
 }
+
+makeBox ( 'main',             80, 120, 0, 0, 1 )
 
 makeBox ( 'filter.Blur',      80, 150, 1, 2, 1 )
 
 makeBox ( 'filter.Bloom',     80, 180, 1, 1, 2 )
+.obj
 .addClass ( 'sel' )
 
 makeBox ( 'filter.Foo',       80, 210, 1, 1, 1 )
