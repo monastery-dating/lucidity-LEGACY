@@ -5,15 +5,28 @@ var SPAD   = 16
 var HEIGHT = 30
 var TPAD   = 10
 
-var makeBox = function ( txt, x, y, pal, upSlots, downSlots )
+var computeMinSize = function ( obj )
 {
-  var t = s.text ( x + TPAD, y, txt )
+  var downSlots = ( obj.down || [] ).length
+  var upSlots   = ( obj.up   || [] ).length
+
+  var t = s.text ( 0, 0, obj.name )
   t.addClass ( 'tbox' )
   var tb = t.getBBox ()
+  t.remove ()
 
+  var w  = tb.width + 2 * TPAD
+  var wd = downSlots * ( SPAD + 2 * SLOT ) + 2 * RADIUS
+  var wu = upSlots   * ( SPAD + 2 * SLOT ) + 2 * RADIUS
+
+  return { w: Math.max ( w, wd, wu ), h: HEIGHT, tw: tb.width, th: tb.height }
+}
+
+var makeBox = function ( txt, pos, sz, pal, upSlots, downSlots )
+{
   // size
-  var w = tb.width + 2 * TPAD
-  var h = HEIGHT
+  var w = sz.w
+  var h = sz.h
   var r = RADIUS
 
   /*
@@ -22,18 +35,9 @@ var makeBox = function ( txt, x, y, pal, upSlots, downSlots )
   r *= 2
   */
 
-  // path starts at top-left corner + RADIUS in x direction.
-  var path = [`M${x + r} ${y}`]
+  // path starts at top-left corner + RADIUS in pos.x direction.
+  var path = [`M${pos.x + r} ${pos.y}`]
 
-  // up slots
-  var l = w - 2 * r
-  // up total length
-  var ul = upSlots * ( SPAD + 2 * SLOT ) + SPAD
-  // down total length
-  var dl = downSlots * ( SPAD + 2 * SLOT ) + SPAD
-
-  l = Math.max ( l, ul, dl )
-  
   for ( var i = 0; i < upSlots; ++i )
   {
     path.push ( `h${ SPAD }` )
@@ -41,8 +45,8 @@ var makeBox = function ( txt, x, y, pal, upSlots, downSlots )
     path.push ( `l${SLOT} ${ SLOT}` )
   }
   var usedl = upSlots * ( SPAD + 2 * SLOT )
-  if ( usedl < l )
-  { path.push ( `h${ l - usedl }` )
+  if ( usedl < w )
+  { path.push ( `h${ w - usedl }` )
   }
 
   // SPAD   /\  SPAD  /\
@@ -53,8 +57,8 @@ var makeBox = function ( txt, x, y, pal, upSlots, downSlots )
   path.push ( `a${r} ${r} 0 0 1 ${-r} ${ r}` )
 
   var usedl = downSlots * ( SPAD + 2 * SLOT )
-  if ( usedl < l )
-  { path.push ( `h${ usedl - l }` )
+  if ( usedl < w )
+  { path.push ( `h${ usedl - w }` )
   }
   for ( var i = 0; i < downSlots; ++i )
   {
@@ -70,11 +74,10 @@ var makeBox = function ( txt, x, y, pal, upSlots, downSlots )
   
   // path.push ( `a50 50 0 0 1 50 50` )
   // path.push ( `l50 50` )
-  console.log ( path.join ( '' ) )
 
   var r = s.path ( path.join ( ' ' ) )
   /*
-  var r = s.rect ( x, y, 10, HEIGHT, 3, 3 )
+  var r = s.rect ( pos.x, pos.y, 10, HEIGHT, 3, 3 )
 
 
   r.attr
@@ -85,25 +88,12 @@ var makeBox = function ( txt, x, y, pal, upSlots, downSlots )
   r.addClass ( 'box' + pal )
 
   var rb = r.getBBox ()
-  // FIXME: who to bring to front without recreating ?
-  t.remove ()
+
   t = s.text
-  ( x + TPAD
-  , rb.y + rb.height / 2 + tb.height / 4
+  ( pos.x + TPAD
+  , rb.y + rb.height / 2 + sz.th / 4
   , txt
   )
   t.addClass ( 'tbox' )
-  return { obj: r, size: rb }
+  return r
 }
-
-makeBox ( 'main',             80, 120, 0, 0, 1 )
-
-makeBox ( 'filter.Blur',      80, 150, 1, 2, 1 )
-
-makeBox ( 'filter.Bloom',     80, 180, 1, 1, 2 )
-.obj
-.addClass ( 'sel' )
-
-makeBox ( 'filter.Foo',       80, 210, 1, 1, 1 )
-
-makeBox ( 'generate.Crystal', 80, 240, 3, 1, 2 )
