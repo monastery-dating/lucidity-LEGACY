@@ -89,6 +89,7 @@ GRAPH = { "graph":
   , "fx4":
     { "type": "file"
     , "name": "generator.Crystal.js"
+    , "sel": true
     , "up":
       [ { "name": "crystal"
         , "type": "THREE.RenderTarget"

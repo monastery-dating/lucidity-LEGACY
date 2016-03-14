@@ -67,7 +67,7 @@ var drawOne = function ( graph, sizes, id, ctx )
 {
   var obj = graph [ id ]
   var sz  = sizes [ id ]
-  makeBox
+  var b = makeBox
   ( obj.name
   , ctx
   , sz.size
@@ -75,6 +75,8 @@ var drawOne = function ( graph, sizes, id, ctx )
   , (obj.up || []).length
   , (obj.down || []).length
   )
+
+  if ( obj.sel ) b.addClass ( 'sel' )
 
   var x = ctx.x
   if ( obj.down )
