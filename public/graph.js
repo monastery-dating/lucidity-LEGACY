@@ -1,5 +1,5 @@
 // JSON graph parser
-var BPAD   = 12 // padding between siblings
+var BPAD   = 0 // padding between siblings
 
 // To draw the graph we must:
 // Go through all nodes recursively (Depth-First).
@@ -26,51 +26,66 @@ var hashName = function ( name )
   return 1 + ( num % 8 )
 }
 
-var computeSize = function ( graph, sizes, id )
+var computeSize = function ( graph, oinfo, id )
 {
-  if ( ! sizes [ id ] ) sizes [ id ] = {}
+  if ( ! oinfo [ id ] ) oinfo [ id ] = {}
   var obj  = graph [ id ]
-  var sobj = sizes [ id ]
+  var iobj = oinfo [ id ]
 
-  sobj.min = computeMinSize ( obj )
+  iobj.smin = computeMinSize ( obj )
 
   if ( obj.down )
   {
-    var csizes = []
-    // get children
+    var sextra = [ 0 ] // extra spacing before slot i
+                       // first has 0 extra spacing
+                       // second has spacing dependent on first child, etc
+
+    // Compute sizes for all children
     for ( var i = 0; i < obj.down.length; ++i )
     {
       var receive = obj.down [ i ].receive
       if ( receive )
       {
         var cname = receive.split ( '.' ) [ 0 ]
-        csizes.push ( computeSize ( graph, sizes, cname ).w )
+        // We push in sextra the delta for slot i
+        var w  = computeSize ( graph, oinfo, cname ).w
+        sextra.push ( w + BPAD - SPAD - 2 * SLOT )
       }
     }
-    var cw = csizes.reduce ( ( s, x ) => BPAD + s + x )
-    sobj.size =
-    { w: Math.max ( sobj.min.w, cw )
-    , h: sobj.min.h
-    , tw: sobj.min.tw
-    , th: sobj.min.th
+    // Compute extra size for this box depending on i-1 children ( last child
+    // does not change slot position )
+    sextra.pop ()
+    iobj.sextra = sextra
+    var extra = sextra.reduce ( ( s, e ) => s + e )
+
+    var w  = iobj.smin.w
+    var wd = iobj.smin.wd + extra
+
+    iobj.size =
+    { w: Math.max ( w, wd )
+    , h: iobj.smin.h
+    , wd
+    , wu: iobj.smin.wu
+    , tw: iobj.smin.tw
+    , th: iobj.smin.th
     }
   }
   else
   {
-    sobj.size = sobj.min
+    iobj.size   = iobj.smin
   }
 
-  return sobj.size
+  return iobj.size
 }
 
-var drawOne = function ( graph, sizes, id, ctx )
+var drawOne = function ( graph, oinfo, id, ctx )
 {
-  var obj = graph [ id ]
-  var sz  = sizes [ id ]
+  var obj  = graph [ id ]
+  var info = oinfo [ id ]
   var b = makeBox
   ( obj.name
   , ctx
-  , sz.size
+  , info
   , id == 'fx0' ? 0 : hashName ( obj.name )
   , (obj.up || []).length
   , (obj.down || []).length
@@ -88,14 +103,14 @@ var drawOne = function ( graph, sizes, id, ctx )
       if ( receive )
       {
         var cname = receive.split ( '.') [ 0 ]
-        drawOne ( GRAPH.graph, sizes, cname, { x, y: ctx.y + HEIGHT } )
-        x += BPAD + sizes [ cname ].size.w
+        drawOne ( GRAPH.graph, oinfo, cname, { x, y: ctx.y + HEIGHT } )
+        x += BPAD + oinfo [ cname ].size.w
       }
     }
   }
 }
 
-var sizes = {}
-computeSize ( GRAPH.graph, sizes, 'fx0' )
+var oinfo = {}
+computeSize ( GRAPH.graph, oinfo, 'fx0' )
 
-drawOne ( GRAPH.graph, sizes, 'fx0', { x: 280, y: 120 } )
+drawOne ( GRAPH.graph, oinfo, 'fx0', { x: 280, y: 120 } )

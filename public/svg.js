@@ -16,16 +16,25 @@ var computeMinSize = function ( obj )
   t.remove ()
 
   var w  = tb.width + 2 * TPAD
-  var wd = downSlots * ( SPAD + 2 * SLOT ) + 2 * RADIUS
-  var wu = upSlots   * ( SPAD + 2 * SLOT ) + 2 * RADIUS
+  var wd = RADIUS + downSlots * ( SPAD + 2 * SLOT ) + SPAD + RADIUS
+  var wu = RADIUS + upSlots   * ( SPAD + 2 * SLOT ) + SPAD + RADIUS
 
-  return { w: Math.max ( w, wd, wu ), h: HEIGHT, tw: tb.width, th: tb.height }
+  return { w: Math.max ( w, wd, wu )
+         , h: HEIGHT
+         , wd
+         , wu
+         , tw: tb.width
+         , th: tb.height
+         }
 }
 
-var makeBox = function ( txt, pos, sz, pal, upSlots, downSlots )
+var makeBox = function ( txt, pos, info, pal, upSlots, downSlots )
 {
-  // size
-  var w = sz.w
+  var sextra = info.sextra
+  var sz     = info.size
+  var w  = sz.w
+  var wd = sz.wd
+  var wu = sz.wu
   var h = sz.h
   var r = RADIUS
 
@@ -44,9 +53,13 @@ var makeBox = function ( txt, pos, sz, pal, upSlots, downSlots )
     path.push ( `l${SLOT} ${-SLOT}` )
     path.push ( `l${SLOT} ${ SLOT}` )
   }
-  var usedl = upSlots * ( SPAD + 2 * SLOT )
-  if ( usedl < w )
-  { path.push ( `h${ w - usedl }` )
+
+  var rpadu = w - wu
+  if ( rpadu > 0 )
+  { path.push ( `h${ rpadu + SPAD }` )
+  }
+  else
+  { path.push ( `h${ SPAD }` )
   }
 
   // SPAD   /\  SPAD  /\
@@ -56,15 +69,19 @@ var makeBox = function ( txt, pos, sz, pal, upSlots, downSlots )
   path.push ( `v${ h - 2 * r }`      )
   path.push ( `a${r} ${r} 0 0 1 ${-r} ${ r}` )
 
-  var usedl = downSlots * ( SPAD + 2 * SLOT )
-  if ( usedl < w )
-  { path.push ( `h${ usedl - w }` )
+  var rpadd = w - wd
+  if ( rpadd > 0 )
+  { path.push ( `h${ - rpadd - SPAD }` )
   }
-  for ( var i = 0; i < downSlots; ++i )
+  else
+  { path.push ( `h${ - SPAD }` )
+  }
+
+  for ( var i = downSlots - 1; i >= 0; --i )
   {
-    path.push ( `l${-SLOT} ${-SLOT}` )
-    path.push ( `l${-SLOT} ${ SLOT}` )
-    path.push ( `h${ -SPAD }` )
+    path.push ( `l${ - SLOT } ${ - SLOT }` )
+    path.push ( `l${ - SLOT } ${   SLOT }` )
+    path.push ( `h${ - SPAD - ( sextra [ i ] || 0 ) }` )
   }
 
   path.push ( `a${r} ${r} 0 0 1 ${-r} ${-r}` )
