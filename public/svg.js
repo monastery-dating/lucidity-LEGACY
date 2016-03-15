@@ -31,7 +31,7 @@ var computeMinSize = function ( obj )
          }
 }
 
-var makeBox = function ( txt, pos, info, pal, upSlots, downSlots )
+var makeBox = function ( txt, pos, info, pal, upSlots, downSlots, type )
 {
   var sextra = info.sextra
   var sz     = info.size
@@ -68,9 +68,17 @@ var makeBox = function ( txt, pos, info, pal, upSlots, downSlots )
   // SPAD   /\  SPAD  /\
   // +-----+  +------+  +--
 
-  path.push ( `a${r} ${r} 0 0 1 ${ r} ${ r}` )
+  if ( type == 'box' )
+    path.push ( `a${r} ${r} 0 0 1 ${ r} ${ r}` )
+  else
+    path.push ( `l${r} ${r}` )
+
   path.push ( `v${ h - 2 * r }`      )
-  path.push ( `a${r} ${r} 0 0 1 ${-r} ${ r}` )
+  
+  if ( type == 'box' )
+    path.push ( `a${r} ${r} 0 0 1 ${-r} ${ r}` )
+  else
+    path.push ( `l${-r} ${ r}` )
 
   var rpadd = w - wd
   if ( rpadd > 0 )
@@ -87,10 +95,16 @@ var makeBox = function ( txt, pos, info, pal, upSlots, downSlots )
     path.push ( `h${ - SPAD - ( sextra [ i ] || 0 ) }` )
   }
 
-  path.push ( `a${r} ${r} 0 0 1 ${-r} ${-r}` )
-  // down slots
+  if ( type == 'box' )
+    path.push ( `a${r} ${r} 0 0 1 ${-r} ${-r}` )
+  else
+    path.push ( `l${-r} ${-r}` )
+
   path.push ( `v${ - h + 2 * r }`    )
-  path.push ( `a${r} ${r} 0 0 1 ${ r} ${-r}` )
+  if ( type == 'box' )
+    path.push ( `a${r} ${r} 0 0 1 ${ r} ${-r}` )
+  else
+    path.push ( `l${r} ${-r}` )
   
   // path.push ( `a50 50 0 0 1 50 50` )
   // path.push ( `l50 50` )

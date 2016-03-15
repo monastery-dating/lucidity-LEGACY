@@ -14,8 +14,15 @@
       li.add +
 
   ol.results
-    li filter.Blur
-    li filter.Crackle
-    li filter.Bloom
-    li filter.Color
-    li filter.Curves
+    li.box6 filter.Blur
+    li.box6 filter.Bloom
+    li.box6 filter.Curves
+    li.box3 generator.Crackle
+    li.box2 misc.Color
+
+  .console
+    p Console
+      input(value='search')
+
+    ol
+      li.ok Generated 34 cubes

@@ -22,17 +22,17 @@
 //   5. Run
 //
 GRAPH = { "graph":
-  { "fx0":
+  { "g0":
     { "type": "main"
-    , "name": "main"
+    , "name": "display"
     , "down":
       [ { "name": "image"
         , "type": "THREE.RenderTarget"
-        , "receive": "fx1.bloom"
+        , "receive": "g1.bloom"
         }
       ]
     }
-  , "fx1":
+  , "g1":
     { "type": "directory"
     , "name": "filter.Bloom"
     , "files":
@@ -48,7 +48,7 @@ GRAPH = { "graph":
     , "down":
       [ { "name": "image"
         , "type": "THREE.RenderTarget"
-        , "receive": "fx2.blur"
+        , "receive": "g2.blur"
         }
       // just to test layout
       , { "name": "image2"
@@ -56,7 +56,7 @@ GRAPH = { "graph":
         }
       ]
     }
-  , "fx2": // we use a unique identifier to avoid messing stuff on rename
+  , "g2": // we use a unique identifier to avoid messing stuff on rename
            // these ids are incremented per scene, on object addition.
     { "type": "directory"
     , "name": "filter.Mix" // this is the folder name
@@ -73,15 +73,15 @@ GRAPH = { "graph":
     , "down":
       [ { "name": "image1"
         , "type": "THREE.RenderTarget"
-        , "receive": "fx3.video"
+        , "receive": "g3.video"
         }
       , { "name": "image2"
         , "type": "THREE.RenderTarget"
-        , "receive": "fx4.crystal"
+        , "receive": "g4.crystal"
         }
       ]
     }
-  , "fx3":
+  , "g3":
     { "type": "file"
     , "name":  "generator.Video.js"
     , "up":
@@ -92,11 +92,10 @@ GRAPH = { "graph":
     , "down":
       [ { "name": "palette"
         , "type": "THREE.RenderTarget"
-        , "receive": "fx9.image"
         }
       ]
     }
-  , "fx4":
+  , "g4":
     { "type": "file"
     , "name": "generator.Crystal.js"
     , "sel": true
@@ -108,137 +107,80 @@ GRAPH = { "graph":
     , "down":
       [ { "name": "image"
         , "type": "THREE.RenderTarget"
-        , "receive": "fx5.image"
         }
       ]
     }
-  , "fx5":
+  }
+, "assets": // format is a hack to draw until we work things out
+  { "a0":
+    { "type": "main"
+    , "name": "assets"
+    , "next": "g5"
+    }
+  , "g5":
     { "type": "file"
-    , "name": "a.Palette"
-    , "up":
-      [ { "name": "image"
-        , "type": "THREE.RenderTarget"
-        }
-      ]
-    , "down":
-      [ { "name": "image"
-        , "type": "THREE.RenderTarget"
-        , "receive": "fx6.image"
-        }
-      ]
+    , "name": "game"
+    , "next": "g9"
+    , "sub":  "g6"
     }
-  , "fx6":
+  , "g6":
     { "type": "file"
-    , "name": "b.Palette"
-    , "up":
-      [ { "name": "image"
-        , "type": "THREE.RenderTarget"
-        }
-      ]
-    , "down":
-      [ { "name": "image"
-        , "type": "THREE.RenderTarget"
-        , "receive": "fx7.image"
-        }
-      ]
+    , "name": "game.Player"
+    , "next": "g7"
     }
-  , "fx7":
+  , "g7":
+    { "type": "file"
+    , "name": "game.Wall"
+    , "next": "g8"
+    }
+  , "g8":
+    { "type": "file"
+    , "name": "game.Arena"
+    }
+  , "g9":
+    { "type": "file"
+    , "name": "ai.Learn"
+    , "next": "g10"
+    }
+  , "g10":
+    { "type": "file"
+    , "name": "ai.Play"
+    , "next": "g11"
+    }
+  , "g11":
     { "type": "file"
     , "name": "c.Palette"
-    , "up":
-      [ { "name": "image"
-        , "type": "THREE.RenderTarget"
-        }
-      ]
-    , "down":
-      [ { "name": "image"
-        , "type": "THREE.RenderTarget"
-        , "receive": "fx8.image"
-        }
-      ]
+    , "next": "g12"
     }
-  , "fx8":
+  , "g12":
     { "type": "file"
     , "name": "d.Palette"
-    , "up":
-      [ { "name": "image"
-        , "type": "THREE.RenderTarget"
-        }
-      ]
+    , "next": "g13"
     }
-  , "fx9":
+  , "g13":
     { "type": "file"
     , "name": "e.Palette"
-    , "up":
-      [ { "name": "image"
-        , "type": "THREE.RenderTarget"
-        }
-      ]
-    , "down":
-      [ { "name": "image"
-        , "type": "THREE.RenderTarget"
-        , "receive": "fx10.image"
-        }
-      ]
+    , "next": "g14"
     }
-  , "fx10":
+  , "g14":
     { "type": "file"
     , "name": "f.Palette"
-    , "up":
-      [ { "name": "image"
-        , "type": "THREE.RenderTarget"
-        }
-      ]
-    , "down":
-      [ { "name": "image"
-        , "type": "THREE.RenderTarget"
-        , "receive": "fx11.image"
-        }
-      ]
+    , "next": "g15"
+    , "sel": true
     }
-  , "fx11":
+  , "g15":
     { "type": "file"
     , "name": "g.Palette"
-    , "up":
-      [ { "name": "image"
-        , "type": "THREE.RenderTarget"
-        }
-      ]
-    , "down":
-      [ { "name": "image"
-        , "type": "THREE.RenderTarget"
-        , "receive": "fx12.image"
-        }
-      ]
+    , "next": "g16"
     }
-  , "fx12":
+  , "g16":
     { "type": "file"
     , "name": "h.Palette"
-    , "up":
-      [ { "name": "image"
-        , "type": "THREE.RenderTarget"
-        }
-      ]
-    , "down":
-      [ { "name": "image"
-        , "type": "THREE.RenderTarget"
-        , "receive": "fx13.image"
-        }
-      ]
+    , "next": "g17"
     }
-  , "fx13":
+  , "g17":
     { "type": "file"
     , "name": "i.Palette"
-    , "up":
-      [ { "name": "image"
-        , "type": "THREE.RenderTarget"
-        }
-      ]
-    , "down":
-      [ { "name": "image"
-        , "type": "THREE.RenderTarget"
-        }
-      ]
     }
   }
 }

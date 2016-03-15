@@ -1,5 +1,8 @@
 // JSON graph parser
-var BPAD   = 0 // padding between siblings
+var BPAD   = 0  // padding between siblings
+var PCOUNT = 12 // palette color count
+var SUBPAD = 3 * GRIDH // pad in sub assets
+var VPAD   = 3  // padding between asset boxes
 
 // To draw the graph we must:
 // Go through all nodes recursively (Depth-First).
@@ -18,13 +21,14 @@ var BPAD   = 0 // padding between siblings
 var hashName = function ( name )
 {
   var name = name.split ( '.' ) [ 0 ]
-  var num = 0
+  var num = 7
   for ( var i = 0; i < name.length; ++i )
   {
     num += name.charCodeAt ( i )
   }
-  return 1 + ( num % 8 )
+  return 1 + ( num % PCOUNT )
 }
+console.log ( hashName ( 'generator' ) )
 
 var computeSize = function ( graph, oinfo, id )
 {
@@ -56,6 +60,7 @@ var computeSize = function ( graph, oinfo, id )
         sextra.push ( 0 )
       }
     }
+
     // Compute extra size for this box depending on i-1 children ( last child
     // does not change slot position )
     sextra.pop ()
@@ -73,16 +78,25 @@ var computeSize = function ( graph, oinfo, id )
     , tw: iobj.smin.tw
     , th: iobj.smin.th
     }
+
   }
   else
   {
+    if ( obj.next )
+    { computeSize ( graph, oinfo, obj.next )
+    }
+
+    if ( obj.sub )
+    { computeSize ( graph, oinfo, obj.sub )
+    }
+
     iobj.size   = iobj.smin
   }
 
   return iobj.size
 }
 
-var drawOne = function ( graph, oinfo, id, ctx )
+var drawOne = function ( graph, oinfo, id, ctx, type )
 {
   var obj  = graph [ id ]
   var info = oinfo [ id ]
@@ -90,9 +104,10 @@ var drawOne = function ( graph, oinfo, id, ctx )
   ( obj.name
   , ctx
   , info
-  , id == 'fx0' ? 0 : hashName ( obj.name )
+  , obj.type == 'main' ? 0 : hashName ( obj.name )
   , (obj.up || []).length
   , (obj.down || []).length
+  , type
   )
 
   if ( obj.sel ) b.addClass ( 'sel' )
@@ -107,14 +122,37 @@ var drawOne = function ( graph, oinfo, id, ctx )
       if ( receive )
       {
         var cname = receive.split ( '.') [ 0 ]
-        drawOne ( GRAPH.graph, oinfo, cname, { x, y: ctx.y + HEIGHT } )
+        drawOne
+        ( graph, oinfo, cname, { x, y: ctx.y + HEIGHT }, type )
         x += BPAD + oinfo [ cname ].size.w
       }
     }
+    return HEIGHT
+  }
+  else
+  {
+    var dy = HEIGHT + VPAD
+    if ( obj.sub )
+    { dy += drawOne
+      ( graph, oinfo, obj.sub
+      , { x: x + SUBPAD, y: ctx.y + dy }
+      , type
+      )
+    }
+
+    if ( obj.next )
+    { dy += drawOne
+      ( graph, oinfo, obj.next, { x, y: ctx.y + dy }, type )
+    }
+    return dy
   }
 }
 
-var oinfo = {}
-computeSize ( GRAPH.graph, oinfo, 'fx0' )
+var ginfo = {}
+var ainfo = {}
 
-drawOne ( GRAPH.graph, oinfo, 'fx0', { x: 280, y: 120 } )
+computeSize ( GRAPH.graph,  ginfo, 'g0' )
+computeSize ( GRAPH.assets, ainfo, 'a0' )
+
+drawOne ( GRAPH.graph,  ginfo, 'g0', { x: 220, y: 20 }, 'box'   )
+drawOne ( GRAPH.assets, ainfo, 'a0', { x: 20,  y: 20 }, 'asset' )

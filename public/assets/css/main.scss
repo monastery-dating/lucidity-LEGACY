@@ -34,7 +34,12 @@ body {
 
     &.sel {
       fill: spfill( $i );
+      stroke: color( sboxl );
     }
+  }
+
+  #library .results li.box#{$i} {
+    background:  pbox( $i );
   }
 }
 
@@ -136,6 +141,20 @@ svg .tbox {
     @extend ._list;
     border-right:0;
   }
+
+  .console {
+    @extend ._list;
+    border-right:0;
+    position: relative;
+
+    p {
+      input {
+        @extend ._input;
+        top:$pad; right:$pad;
+        width:50%;
+      }
+    }
+  }
 }
 
 #workbench {
@@ -173,19 +192,6 @@ svg .tbox {
     border-left:0;
   }
 
-  .console {
-    @extend ._list;
-    border-left:0;
-    position: relative;
-
-    p {
-      input {
-        @extend ._input;
-        top:$pad; right:$pad;
-        width:50%;
-      }
-    }
-  }
 }
 
 h1, h2, h3, p {
