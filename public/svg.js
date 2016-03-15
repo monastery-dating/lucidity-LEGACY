@@ -1,4 +1,3 @@
-var s = Snap ( '#svg' )
 var RADIUS = 5
 var SLOT   = 5
 var SPAD   = 16
@@ -6,7 +5,7 @@ var HEIGHT = 30
 var TPAD   = 10
 var GRIDH  = 8
 
-var computeMinSize = function ( obj )
+var computeMinSize = function ( s, obj )
 {
   var downSlots = ( obj.down || [] ).length
   var upSlots   = ( obj.up   || [] ).length
@@ -31,7 +30,7 @@ var computeMinSize = function ( obj )
          }
 }
 
-var makeBox = function ( txt, pos, info, pal, upSlots, downSlots, type )
+var makeBox = function ( s, txt, pos, info, pal, upSlots, downSlots )
 {
   var sextra = info.sextra
   var sz     = info.size
@@ -111,11 +110,17 @@ var makeBox = function ( txt, pos, info, pal, upSlots, downSlots, type )
 
   var rb = r.getBBox ()
 
-  t = s.text
+  var t = s.text
   ( pos.x + TPAD
   , rb.y + rb.height / 2 + sz.th / 4
   , txt
   )
+
   t.addClass ( 'tbox' )
+  console.log ( info )
+  if ( info.tclass )
+  { t.addClass ( info.tclass )
+  }
+
   return r
 }

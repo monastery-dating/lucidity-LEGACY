@@ -2,6 +2,8 @@ $layout:
 ( panew: 200px  // pane width
 , paneh: 100%   // pane height
 , listh: 200px  // list height
+, graphw: 500px // project files in workbench
+, filesw: 200px // project files in workbench
 );
 
 @function layout( $key ) {

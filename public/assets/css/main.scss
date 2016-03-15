@@ -51,7 +51,10 @@ svg .box0 {
 
 svg .tbox {
   font-size:   getfont(size);
-  fill: black;
+  fill: color( wboxt );
+  &.main {
+    fill: color( wboxs );
+  }
 }
 
 ._pane {
@@ -166,8 +169,16 @@ svg .tbox {
   padding-right:  layout( panew ) - $ppad;
   width: 100%;
 
-  #svg {
-    width: 100%;
+  #graph {
+    width: layout( graphw );
+    padding: $wpad ;
+    height: 100%;
+  }
+
+  #files {
+    float:left;
+    padding: $wpad ;
+    width: layout( filesw );
     height: 100%;
   }
 }

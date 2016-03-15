@@ -21,10 +21,11 @@
 //   4. Connections are established
 //   5. Run
 //
-GRAPH = { "graph":
+GRAPH =
+{ "graph":
   { "g0":
     { "type": "main"
-    , "name": "display"
+    , "name": "cubes"
     , "down":
       [ { "name": "image"
         , "type": "THREE.RenderTarget"
@@ -111,10 +112,10 @@ GRAPH = { "graph":
       ]
     }
   }
-, "assets": // format is a hack to draw until we work things out
-  { "a0":
+, "files":
+  { "f0":
     { "type": "main"
-    , "name": "assets"
+    , "name": "Gods of India"
     , "next": "g5"
     }
   , "g5":

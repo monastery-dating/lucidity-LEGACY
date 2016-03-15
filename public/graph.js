@@ -30,13 +30,13 @@ var hashName = function ( name )
 }
 console.log ( hashName ( 'generator' ) )
 
-var computeSize = function ( graph, oinfo, id )
+var computeSize = function ( s, graph, oinfo, id )
 {
   if ( ! oinfo [ id ] ) oinfo [ id ] = {}
   var obj  = graph [ id ]
   var iobj = oinfo [ id ]
 
-  iobj.smin = computeMinSize ( obj )
+  iobj.smin = computeMinSize ( s, obj )
 
   if ( obj.down )
   {
@@ -52,7 +52,7 @@ var computeSize = function ( graph, oinfo, id )
       {
         var cname = receive.split ( '.' ) [ 0 ]
         // We push in sextra the delta for slot i
-        var w  = computeSize ( graph, oinfo, cname ).w
+        var w  = computeSize ( s, graph, oinfo, cname ).w
         sextra.push ( w + BPAD - SPAD - 2 * SLOT )
       }
       else
@@ -83,11 +83,11 @@ var computeSize = function ( graph, oinfo, id )
   else
   {
     if ( obj.next )
-    { computeSize ( graph, oinfo, obj.next )
+    { computeSize ( s, graph, oinfo, obj.next )
     }
 
     if ( obj.sub )
-    { computeSize ( graph, oinfo, obj.sub )
+    { computeSize ( s, graph, oinfo, obj.sub )
     }
 
     iobj.size   = iobj.smin
@@ -96,18 +96,18 @@ var computeSize = function ( graph, oinfo, id )
   return iobj.size
 }
 
-var drawOne = function ( graph, oinfo, id, ctx, type )
+var drawOne = function ( s, graph, oinfo, id, ctx )
 {
   var obj  = graph [ id ]
   var info = oinfo [ id ]
   var b = makeBox
-  ( obj.name
+  ( s
+  , obj.name
   , ctx
   , info
   , obj.type == 'main' ? 0 : hashName ( obj.name )
   , (obj.up || []).length
   , (obj.down || []).length
-  , type
   )
 
   if ( obj.sel ) b.addClass ( 'sel' )
@@ -123,7 +123,7 @@ var drawOne = function ( graph, oinfo, id, ctx, type )
       {
         var cname = receive.split ( '.') [ 0 ]
         drawOne
-        ( graph, oinfo, cname, { x, y: ctx.y + HEIGHT }, type )
+        ( s, graph, oinfo, cname, { x, y: ctx.y + HEIGHT } )
         x += BPAD + oinfo [ cname ].size.w
       }
     }
@@ -134,25 +134,32 @@ var drawOne = function ( graph, oinfo, id, ctx, type )
     var dy = HEIGHT + VPAD
     if ( obj.sub )
     { dy += drawOne
-      ( graph, oinfo, obj.sub
+      ( s, graph, oinfo, obj.sub
       , { x: x + SUBPAD, y: ctx.y + dy }
-      , type
       )
     }
 
     if ( obj.next )
     { dy += drawOne
-      ( graph, oinfo, obj.next, { x, y: ctx.y + dy }, type )
+      ( s, graph, oinfo, obj.next, { x, y: ctx.y + dy } )
     }
     return dy
   }
 }
 
 var ginfo = {}
+var s = Snap ( '#graph' )
+
+computeSize ( s, GRAPH.graph, ginfo, 'g0' )
+ginfo.g0.tclass = 'main'
+
+drawOne ( s, GRAPH.graph, ginfo, 'g0', { x: 0,  y: 0 } )
+
+
+s = Snap ( '#files' )
 var ainfo = {}
 
-computeSize ( GRAPH.graph,  ginfo, 'g0' )
-computeSize ( GRAPH.assets, ainfo, 'a0' )
+computeSize ( s, GRAPH.files, ainfo, 'f0' )
+ainfo.f0.tclass = 'main'
 
-drawOne ( GRAPH.graph,  ginfo, 'g0', { x: 220, y: 20 }, 'box'   )
-drawOne ( GRAPH.assets, ainfo, 'a0', { x: 20,  y: 20 }, 'asset' )
+drawOne ( s, GRAPH.files,  ainfo, 'f0', { x: 0, y: 0 } )
