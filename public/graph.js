@@ -51,6 +51,10 @@ var computeSize = function ( graph, oinfo, id )
         var w  = computeSize ( graph, oinfo, cname ).w
         sextra.push ( w + BPAD - SPAD - 2 * SLOT )
       }
+      else
+      {
+        sextra.push ( 0 )
+      }
     }
     // Compute extra size for this box depending on i-1 children ( last child
     // does not change slot position )

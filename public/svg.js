@@ -4,6 +4,7 @@ var SLOT   = 5
 var SPAD   = 16
 var HEIGHT = 30
 var TPAD   = 10
+var GRIDH  = 8
 
 var computeMinSize = function ( obj )
 {
@@ -19,7 +20,9 @@ var computeMinSize = function ( obj )
   var wd = RADIUS + downSlots * ( SPAD + 2 * SLOT ) + SPAD + RADIUS
   var wu = RADIUS + upSlots   * ( SPAD + 2 * SLOT ) + SPAD + RADIUS
 
-  return { w: Math.max ( w, wd, wu )
+  w = Math.ceil ( Math.max ( w, wd, wu ) / GRIDH ) * GRIDH
+
+  return { w
          , h: HEIGHT
          , wd
          , wu
