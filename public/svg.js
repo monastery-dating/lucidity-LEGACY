@@ -68,17 +68,11 @@ var makeBox = function ( txt, pos, info, pal, upSlots, downSlots, type )
   // SPAD   /\  SPAD  /\
   // +-----+  +------+  +--
 
-  if ( type == 'box' )
-    path.push ( `a${r} ${r} 0 0 1 ${ r} ${ r}` )
-  else
-    path.push ( `l${r} ${r}` )
+  path.push ( `a${r} ${r} 0 0 1 ${ r} ${ r}` )
 
   path.push ( `v${ h - 2 * r }`      )
   
-  if ( type == 'box' )
-    path.push ( `a${r} ${r} 0 0 1 ${-r} ${ r}` )
-  else
-    path.push ( `l${-r} ${ r}` )
+  path.push ( `a${r} ${r} 0 0 1 ${-r} ${ r}` )
 
   var rpadd = w - wd
   if ( rpadd > 0 )
@@ -95,16 +89,10 @@ var makeBox = function ( txt, pos, info, pal, upSlots, downSlots, type )
     path.push ( `h${ - SPAD - ( sextra [ i ] || 0 ) }` )
   }
 
-  if ( type == 'box' )
-    path.push ( `a${r} ${r} 0 0 1 ${-r} ${-r}` )
-  else
-    path.push ( `l${-r} ${-r}` )
+  path.push ( `a${r} ${r} 0 0 1 ${-r} ${-r}` )
 
   path.push ( `v${ - h + 2 * r }`    )
-  if ( type == 'box' )
-    path.push ( `a${r} ${r} 0 0 1 ${ r} ${-r}` )
-  else
-    path.push ( `l${r} ${-r}` )
+  path.push ( `a${r} ${r} 0 0 1 ${ r} ${-r}` )
   
   // path.push ( `a50 50 0 0 1 50 50` )
   // path.push ( `l50 50` )

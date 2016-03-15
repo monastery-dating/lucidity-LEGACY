@@ -138,14 +138,24 @@ GRAPH = { "graph":
     , "name": "game.Arena"
     }
   , "g9":
-    { "type": "file"
-    , "name": "ai.Learn"
+    { "type": "folder"
+    , "name": "ai"
+    , "sub":  "a9"
     , "next": "g10"
     }
-  , "g10":
+  , "a9":
+    { "type": "file"
+    , "name": "ai.Learn"
+    , "next": "a10"
+    }
+  , "a10":
     { "type": "file"
     , "name": "ai.Play"
-    , "next": "g11"
+    }
+  , "g10":
+    { "type": "folder"
+    , "name": "palette"
+    , "sub":  "g11"
     }
   , "g11":
     { "type": "file"
