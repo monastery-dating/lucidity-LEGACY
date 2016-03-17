@@ -51,6 +51,14 @@ module.exports = {
         loader: 'json'
       },
       {
+        test: /\.yml$/,
+        loaders: ['json', 'yaml']
+      },
+      {
+        test: /\.scss$/,
+        loaders: ["style", "css", "sass"]
+      },
+      {
         test: /\.html$/,
         loader: 'vue-html'
       },

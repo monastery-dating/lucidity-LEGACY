@@ -1,24 +1,24 @@
+export const GRIDH  = 8
+export const HEIGHT = 30
 const RADIUS = 5
-const SLOT   = 5
-const SPAD   = 16
-const HEIGHT = 30
+export const SLOT   = 5
+export const SPAD   = 16
 const TPAD   = 10
-const GRIDH  = 8
 
 /** Compute the minimum size to display the element.
  *
- * @param {Snap} s snap svg drawer
+ * @param {Snap} snap Snap svg drawer
  * @param {object} obj object definition
  * @returns {void}
  */
-export function computeMinSize ( s, obj ) {
+export const computeMinSize = function ( snap, obj ) {
   const downSlots = ( obj.down || [] ).length
   const upSlots   = ( obj.up   || [] ).length
 
-  const t = s.text ( 0, 0, obj.name )
-  t.addClass ( 'tbox' )
-  const tb = t.getBBox ()
-  t.remove ()
+  const text = snap.text ( 0, 0, obj.name )
+  text.addClass ( 'tbox' )
+  const tb = text.getBBox ()
+  text.remove ()
 
   let w  = tb.width + 2 * TPAD
   const wd = RADIUS + downSlots * ( SPAD + 2 * SLOT ) + SPAD + RADIUS
@@ -39,16 +39,17 @@ export function computeMinSize ( s, obj ) {
  * The sizes have to be computed first in the 'info' field.
  * FIXME: this function needs a better interface.
  *
- * @param {Snap} s snap svg drawer
+ * @param {Snap} snap Snap svg drawer
  * @param {string} txt name to display in box
  * @param {object} pos x and y coordinates of top-left corner
  * @param {object} info junk field
  * @param {int} pal palette id number [1,12]
  * @param {int} upSlots number of up slots
  * @param {int} downSlots number of down slots
- * @returns {void}
+ * @returns {object} created objects { box, text }
  */
-export function makeBox ( s, txt, pos, info, pal, upSlots, downSlots ) {
+export const makeBox =
+function ( snap, txt, pos, info, pal, upSlots, downSlots ) {
   const sextra = info.sextra
   const sz     = info.size
   const w  = sz.w
@@ -111,20 +112,23 @@ export function makeBox ( s, txt, pos, info, pal, upSlots, downSlots ) {
   // path.push ( `a50 50 0 0 1 50 50` )
   // path.push ( `l50 50` )
 
-  const box = s.path ( path.join ( ' ' ) )
+  const box = snap.path ( path.join ( ' ' ) )
   box.addClass ( `box${pal}` )
 
   const rb = box.getBBox ()
 
-  const t = s.text
+  const text = snap.text
   ( pos.x + TPAD
   , rb.y + rb.height / 2 + sz.th / 4
   , txt
   )
 
-  t.addClass ( 'tbox' )
+  text.addClass ( 'tbox' )
 
   if ( info.tclass ) {
-    t.addClass ( info.tclass )
+    text.addClass ( info.tclass )
   }
+
+  return { box, text }
 }
+
