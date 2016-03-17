@@ -38,6 +38,7 @@ export default
   }
 , activate: ( done ) => {
     // FIXME: is this the right way to load ?
+    // STUDY: http://vuejs.org/examples/svg.html
     // How to make sure Snap is ready ?
     setTimeout
     ( () => {
