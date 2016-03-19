@@ -1,57 +1,57 @@
 module Lucidity where
 
+import Library
+import Project
+import Workbench
+
 import Html exposing (..)
-import Html.Attributes exposing (..)
-import Html.Events exposing (..)
 
 -- MODEL
 
-type alias Model = Int
+type alias Model = 
+  { library : Library.Model
+  , workbench : Workbench.Model
+  , project : Project.Model
+  }
 
-init : Model
-init = 0
+init : {} -> Model
+init graph =
+  { library = Library.init graph
+  , workbench = Workbench.init graph
+  , project = Project.init graph
+  }
 
 -- UPDATE
 
-type Action = Increment | Decrement
+type Action
+  = Reset
+  | Lib Library.Action
+  | Work Workbench.Action
+  | Proj Project.Action
 
+-- Do nothing for the moment
 update : Action -> Model -> Model
 update action model =
   case action of
-    Increment ->
-      model + 1
+    Reset ->
+      model
 
-    Decrement ->
-      model - 1
+    Lib act ->
+      model
 
+    Work act ->
+      model -- { model | topCounter = Counter.update act model.topCounter }
 
+    Proj act ->
+      model
 
 -- VIEW
 
 view : Signal.Address Action -> Model -> Html
 view address model =
-  div [ divStyle ]
-    [ button [ onClick address Decrement ] [ text "-" ]
-    , div [ counterStyle ] [ text (toString model) ]
-    , button [ onClick address Increment ] [ text "+" ]
+  div []
+    [ Library.view (Signal.forwardTo address Lib) model.library
+    , Workbench.view (Signal.forwardTo address Work) model.workbench
+    , Project.view (Signal.forwardTo address Proj) model.project
     ]
 
-divStyle : Attribute
-divStyle =
-  style
-    [ ("padding", "20px")
-    , ("margin", "20px")
-    , ("border", "1px solid #555")
-    , ("background", "#ddd")
-    , ("display", "table")
-    ]
-
-counterStyle : Attribute
-counterStyle =
-  style
-    [ ("font-size", "20px")
-    , ("font-family", "monospace")
-    , ("display", "inline-block")
-    , ("width", "50px")
-    , ("text-align", "center")
-    ]

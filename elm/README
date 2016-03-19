@@ -5,7 +5,7 @@ Start hot compiler:
 ~ lucidity.editor/elm> elm-reactor
 
 Start browser sync:
-~ lucidity.editor/elm> browser-sync start --proxy "localhost:8000" --files "*.elm"
+~ lucidity.editor/elm> browser-sync start --config bs-config.js
 
 Read more on: https://github.com/evancz/elm-architecture-tutorial
 

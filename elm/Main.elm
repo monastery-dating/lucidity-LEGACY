@@ -3,7 +3,7 @@ import Lucidity exposing (init, update, view)
 
 main =
   start
-    { model = init
+    { model = init {}
     , update = update
     , view = view
     }
