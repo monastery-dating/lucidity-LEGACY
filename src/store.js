@@ -4,16 +4,21 @@ import Vuex  from 'Vuex'
 
 Vue.use ( Vuex )
 
+const baseState =
+{ title: 'Lucy in the sky'
+, graph: Graph.graph
+, files: Graph.files
+}
+
+const mutations =
+{ foo ( state ) {
+    state.graph.g1.sel = true
+  }
+}
+
 export default new Vuex.Store
-( { state:
-    { title: 'Lucy in the sky'
-    , graph: Graph
-    }
-  , mutations:
-    { foo ( state ) {
-        state.title = 'foo'
-      }
-    }
+( { state: baseState
+  , mutations
   }
 )
 

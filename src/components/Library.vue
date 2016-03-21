@@ -18,7 +18,7 @@
     </div>
 
     <ol class='results'>
-      <li class='box6'>filter.Blur</li>
+      <li class='box6' v-on:click="test">filter.Blur</li>
       <li class='box6'>filter.Bloom</li>
       <li class='box6'>filter.Curves</li>
       <li class='box3'>generator.Crackle</li>
@@ -38,9 +38,16 @@
 </template>
 
 <script>
+import store from '../store'
+
 export default
 { data () {
     return { msg: 'top' }
+  }
+, methods:
+  { test () {
+    store.dispatch ( 'foo', 'This is a test' )
+    }
   }
 }
 </script>
