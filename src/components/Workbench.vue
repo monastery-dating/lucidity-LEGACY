@@ -11,24 +11,24 @@ import { computeSize, drawOne } from './graph'
 import store from '../store'
 
 const drawGraph = function () {
-  const GRAPH = store.state.graph
+  const files = store.state.files
+  const graph = store.state.graph
 
   const ginfo = {}
   let snap = Snap ( '#graph' )
 
-  computeSize ( snap, GRAPH.graph, ginfo, 'g0' )
+  computeSize ( snap, graph, ginfo, 'g0' )
   ginfo.g0.tclass = 'main'
 
-  drawOne ( snap, GRAPH.graph, ginfo, 'g0', { x: 0,  y: 0 } )
-
+  drawOne ( snap, graph, ginfo, 'g0', { x: 0,  y: 0 } )
 
   snap = Snap ( '#files' )
   const ainfo = {}
 
-  computeSize ( snap, GRAPH.files, ainfo, 'f0' )
+  computeSize ( snap, files, ainfo, 'f0' )
   ainfo.f0.tclass = 'main'
 
-  drawOne ( snap, GRAPH.files,  ainfo, 'f0', { x: 0, y: 0 } )
+  drawOne ( snap, files,  ainfo, 'f0', { x: 0, y: 0 } )
 }
 
 
