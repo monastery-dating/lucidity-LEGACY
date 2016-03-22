@@ -5,9 +5,9 @@
 </template>
 
 <script>
-import Library   from './components/Library'
-import Project   from './components/Project'
-import Workbench from './components/Workbench'
+import Library   from './Library'
+import Project   from './Project'
+import Workbench from './Workbench'
 
 export default
 { components:
@@ -19,5 +19,5 @@ export default
 </script>
 
 <style lang='sass'>
-@import "./assets/css/main.scss"
+@import "../assets/css/main.scss"
 </style>

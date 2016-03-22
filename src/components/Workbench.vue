@@ -8,7 +8,7 @@
 <script>
 /* global Snap */
 import { computeSize, drawOne } from './graph'
-import store from '../store'
+import store from '../vuex/store'
 
 const drawGraph = function () {
   const files = store.state.files
@@ -36,17 +36,8 @@ export default
 { data () {
     return {}
   }
-, activate: ( done ) => {
-    // FIXME: is this the right way to load ?
-    // STUDY: http://vuejs.org/examples/svg.html
-    // How to make sure Snap is ready ?
-    setTimeout
-    ( () => {
-        drawGraph ()
-      }
-    , 100
-    )
-    done ()
+, ready () {
+    drawGraph ()
   }
 , methods: {}
 }

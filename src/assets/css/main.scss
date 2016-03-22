@@ -1,9 +1,10 @@
-@import 'lib/reset';
 @import 'lib/colors';
-@import 'lib/palette';
-@import 'lib/layout';
+@import 'lib/effects';
 @import 'lib/fonts';
+@import 'lib/layout';
 @import 'lib/misc';
+@import 'lib/palette';
+@import 'lib/reset';
 
 body {
   font-family: getfont(family);
@@ -126,6 +127,10 @@ svg .tbox {
   }
 }
 
+._button {
+  cursor:pointer;
+}
+
 #library {
   @extend ._pane;
   left:0;
@@ -138,6 +143,15 @@ svg .tbox {
     .saved {
       @extend ._saved;
     }
+  }
+
+  .refresh {
+    @extend ._button;
+  }
+
+  .error {
+    font-size:80%;
+    color:#c44;
   }
 
   .results {

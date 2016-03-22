@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import Scene from './playback/Scene'
+import Scene from './Scene'
 
 export default
 { components:
@@ -16,6 +16,6 @@ export default
 </script>
 
 <style lang='sass'>
-@import "./assets/css/main.scss"
+// @import "../assets/css/main.scss"
 </style>
 
