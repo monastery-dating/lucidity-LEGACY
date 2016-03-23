@@ -1,5 +1,6 @@
 import
-{ RECEIVE_LIBRARY
+{ FILES_ADD
+, RECEIVE_LIBRARY
 , REFRESHING_LIBRARY
 , REFRESHING_LIBRARY_ERROR
 } from './mutation-types'
@@ -22,4 +23,9 @@ function ( { dispatch } ) {
       dispatch ( REFRESHING_LIBRARY_ERROR, error )
     }
   )
+}
+
+export const filesAdd =
+function ( { dispatch }, data ) {
+  dispatch ( FILES_ADD, data )
 }

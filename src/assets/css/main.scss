@@ -31,7 +31,6 @@ body {
   svg .box#{$i} {
     fill: pfill( $i );
     stroke: pline( $i );
-    stroke-width: $lsbo;
 
     &.sel {
       fill: spfill( $i );
@@ -57,6 +56,23 @@ svg .tbox {
     fill: color( wboxs );
   }
 }
+
+svg#files {
+  border: 2px dashed transparent;
+
+  &.drag-over {
+    border-color: color( wfild );
+  }
+}
+
+
+svg {
+  text {
+    pointer-events: none;
+    stroke-width: $lsbo;
+  }
+}
+
 
 ._pane {
   background: color( paneb );
@@ -131,6 +147,33 @@ svg .tbox {
   cursor:pointer;
 }
 
+._draggable {
+  user-select: none;
+  li:before {
+    color:#222;
+    content: ":: ";
+  }
+}
+
+.dragged {
+  opacity: 0.8;
+  border-width: 2px;
+  border-radius: 4px;
+}
+
+._drop {
+  .drag-enter {
+    background: color( sboxb );
+    color: color( sboxt );
+    cursor:copy;
+  }
+}
+
+#library li.drag-match {
+  cursor:copy;
+  color:red;
+}
+
 #library {
   @extend ._pane;
   left:0;
@@ -156,6 +199,8 @@ svg .tbox {
 
   .results {
     @extend ._list;
+    @extend ._draggable;
+    @extend ._drop;
     border-right:0;
   }
 

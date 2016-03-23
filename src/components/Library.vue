@@ -16,15 +16,15 @@
       </ol>
 
       <ol>
-        <li class='refresh' @click='refreshLibrary' v-bind:class='{ blink:
-        refreshing }'>refresh</li>
-        <li v-if='refreshError' class='error'>{{ refreshError }}</li>
+        <li class='refresh' @click='refreshLibrary' v-bind:class='{ blink: refreshing }'>refresh</li>
       </ol>
     </div>
 
     <ol class='results'>
+      <li v-if='refreshError' class='error'>{{ refreshError }}</li>
       <!-- li v-for='item in all' class='{{ boxtype }}' -->
-      <li v-for='item in all'>
+      <li v-for='(index, item) in all' :id='index'
+        v-drag:box='{name: item.name}'>
         {{ item.name }}
       </li>
     </ol>

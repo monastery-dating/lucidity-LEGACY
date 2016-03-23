@@ -31,7 +31,7 @@ const VPAD   = 3  // padding between asset boxes
  * @param {string} aname the object's name
  * @returns {int} the palette id
  */
-const hashName = function ( aname ) {
+export const hashName = function ( aname ) {
   const name = aname.split ( '.' ) [ 0 ]
   let num = 7
   for ( let i = 0; i < name.length; i += 1 ) {

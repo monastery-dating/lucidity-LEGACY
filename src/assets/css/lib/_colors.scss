@@ -10,6 +10,7 @@ $colors:
 , workb: darken($back_color, 5%)      // workspace background
 , workt: $text_color                  // workspace text
 , wboxt: #000                         // workspace svg text
+, wfild: $high_color                  // workspace files drop
 //  workspace svg high text
 , wboxs: lighten( saturate( $high_color, 50%), 20%)
 

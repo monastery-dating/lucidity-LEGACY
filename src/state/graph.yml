@@ -1,4 +1,9 @@
 files:
+  all:
+    - name: 'ai.Play'
+    - name: 'ai.Learn'
+    - name: 'foo'
+xfiles:
   a10:
     name: ai.Play
     type: file

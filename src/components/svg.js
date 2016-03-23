@@ -1,9 +1,9 @@
 export const GRIDH  = 8
 export const HEIGHT = 30
-const RADIUS = 5
+export const RADIUS = 5
 export const SLOT   = 5
 export const SPAD   = 16
-const TPAD   = 10
+export const TPAD   = 10
 
 /** Compute the minimum size to display the element.
  *

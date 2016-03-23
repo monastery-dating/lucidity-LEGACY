@@ -12,10 +12,10 @@
     "test": "npm run unit && npm run e2e"
   },
   "dependencies": {
-    "babel-polyfill": "^6.7.2",
     "js-yaml": "^3.5.4",
     "json-loader": "^0.5.4",
     "vue": "^1.0.17",
+    "vue-drag-drop": "git+ssh://git@github.com/lucidogen/vue-drag-drop.git",
     "vuex": "^0.6.2",
     "yaml-loader": "^0.1.0"
   },

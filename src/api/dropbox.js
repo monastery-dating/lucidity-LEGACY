@@ -55,9 +55,21 @@ const open = function ( path ) {
   )
 }
 
+const MOCK = true
+
 const library = function ( appPath ) {
   return new Promise
   ( ( resolve, reject ) => {
+      if ( MOCK ) {
+        resolve
+        ( [ { name: 'alpha.Hello' }
+          , { name: 'alpha.Lucy' }
+          , { name: 'alpha.Mix' }
+          , { name: 'alpha.Lala' }
+          ]
+        )
+      }
+      else {
       open ( `${appPath}/library` ).then
       ( data => {
           const base = data.shift ()
@@ -77,6 +89,7 @@ const library = function ( appPath ) {
         }
       )
       .catch ( err => reject ( err ) )
+      }
     }
   )
 }
