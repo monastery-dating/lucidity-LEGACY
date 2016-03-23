@@ -124,10 +124,7 @@ function ( snap, txt, pos, info, pal, upSlots, downSlots ) {
   )
 
   text.addClass ( 'tbox' )
-
-  if ( info.tclass ) {
-    text.addClass ( info.tclass )
-  }
+  text.addClass ( `box${pal}` )
 
   return { box, text }
 }

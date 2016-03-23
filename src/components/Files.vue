@@ -1,8 +1,10 @@
 <template>
   <svg id='files' v-drop:box>
+    <box :box='{ name: "Gods of India" }'
+         :index='0'></box>
     <box v-for='(index, item) in all'
       :box='item'
-      :index='index'
+      :index='index + 1'
       ></box>
   </svg>
 </template>

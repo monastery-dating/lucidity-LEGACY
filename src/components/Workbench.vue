@@ -20,7 +20,6 @@ const drawGraph = function () {
   const snap = Snap ( '#graph' )
 
   computeSize ( snap, graph, ginfo, 'g0' )
-  ginfo.g0.tclass = 'main'
 
   drawOne ( snap, graph, ginfo, 'g0', { x: 0,  y: 0 } )
 
@@ -28,7 +27,6 @@ const drawGraph = function () {
   // const ainfo = {}
 
   // computeSize ( snap, files, ainfo, 'f0' )
-  // ainfo.f0.tclass = 'main'
 
   // drawOne ( snap, files,  ainfo, 'f0', { x: 0, y: 0 } )
 }

@@ -5,7 +5,7 @@
       :class='class'
       v-el:rect
     ></rect>
-    <text :x='tx' :y='ty' class='tbox'>{{ name }}</text>
+    <text :x='tx' :y='ty' class='tbox' :class='class'>{{ name }}</text>
   </g>
 </template>
 
@@ -50,7 +50,7 @@ export default
       return HEIGHT
     }
   , class () {
-      return `box${ hashName ( this.box.name ) }`
+      return `box${ this.index === 0 ? 0 : hashName ( this.box.name ) }`
     }
   , name () {
       return this.box.name

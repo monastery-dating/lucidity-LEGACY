@@ -64,8 +64,8 @@ const library = function ( appPath ) {
         resolve
         ( [ { name: 'alpha.Hello' }
           , { name: 'alpha.Lucy' }
-          , { name: 'alpha.Mix' }
-          , { name: 'alpha.Lala' }
+          , { name: 'beta.Mix' }
+          , { name: 'beta.Lala' }
           ]
         )
       }

@@ -28,7 +28,19 @@ body {
 }
 
 @for $i from 1 through $pcount {
-  svg .box#{$i} {
+  // can be removed when box are all drawn
+  // with same code using path
+  svg rect.box#{$i} {
+    fill: pfill( $i );
+    stroke: pline( $i );
+
+    &.sel {
+      fill: spfill( $i );
+      stroke: color( sboxl );
+    }
+  }
+
+  svg path.box#{$i} {
     fill: pfill( $i );
     stroke: pline( $i );
 
@@ -43,7 +55,14 @@ body {
   }
 }
 
-svg .box0 {
+// This can be removed when all is drawn with path
+svg rect.box0 {
+  fill:   color( mainb );
+  stroke: color( mainl );
+  stroke-width: $lsbo;
+}
+
+svg path.box0 {
   fill:   color( mainb );
   stroke: color( mainl );
   stroke-width: $lsbo;
@@ -52,7 +71,7 @@ svg .box0 {
 svg .tbox {
   font-size:   getfont(size);
   fill: color( wboxt );
-  &.main {
+  &.box0 {
     fill: color( wboxs );
   }
 }

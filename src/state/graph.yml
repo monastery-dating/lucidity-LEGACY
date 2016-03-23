@@ -119,7 +119,7 @@ graph:
     down:
       - name: palette
         type: THREE.RenderTarget
-    name: generator.Video.js
+    name: generator.Video
     type: file
     up:
       - name: video
@@ -128,7 +128,7 @@ graph:
     down:
       - name: image
         type: THREE.RenderTarget
-    name: generator.Crystal.js
+    name: generator.Crystal
     sel: true
     type: file
     up:
