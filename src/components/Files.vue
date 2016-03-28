@@ -13,6 +13,10 @@
 import Box from './Box'
 import { filesAdd } from '../vuex/actions'
 
+// const ainfo = {}
+// computeSize ( Snap ( '#scrap' ), files, ainfo, 'f0' )
+// drawOne ( snap ( '#files' ), files,  ainfo, 'f0', { x: 0, y: 0 } )
+
 export default
 { vuex:
   { getters:

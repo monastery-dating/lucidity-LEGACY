@@ -5,6 +5,7 @@
       :class='class'
       v-el:rect
     ></rect>
+    <path :d='path' :class='class'></path>
     <text :x='tx' :y='ty' class='tbox' :class='class'>{{ name }}</text>
   </g>
 </template>
@@ -54,6 +55,12 @@ export default
     }
   , name () {
       return this.box.name
+    }
+  , path () {
+      // to compute path, we need to compute size
+      // before. Size and position is computed in
+      // parent and passed as prop (box.layout) ?
+      return ''
     }
   }
 }
