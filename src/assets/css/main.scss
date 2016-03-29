@@ -56,13 +56,13 @@ body {
 }
 
 // This can be removed when all is drawn with path
-svg rect.box0 {
+svg rect.main {
   fill:   color( mainb );
   stroke: color( mainl );
   stroke-width: $lsbo;
 }
 
-svg path.box0 {
+svg path.main {
   fill:   color( mainb );
   stroke: color( mainl );
   stroke-width: $lsbo;
@@ -71,7 +71,7 @@ svg path.box0 {
 svg .tbox {
   font-size:   getfont(size);
   fill: color( wboxt );
-  &.box0 {
+  &.main {
     fill: color( wboxs );
   }
 }

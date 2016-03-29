@@ -13,6 +13,10 @@ const DEFAULT_LAYOUT =
 , SLOT:   5
 , SPAD:   16
 , TPAD:   10
+, BPAD:   0  // pad between siblings
+, PCOUNT: 12 // palette color count
+, SUBPAD: 3 * 8 // (3*GRIDH) pad in sub assets
+, VPAD:   3  // vertical padding between boxes
 , tmpdom: document.getElementById ( 'svgscratch' )
 }
 
@@ -20,13 +24,13 @@ const DEFAULT_LAYOUT =
  *
  * @param {object} obj    - object definition
  * @param {object} layout - constants and tmp svg element
- * @returns {object}      - {w, h, wi, wo, tw, th}
+ * @returns {object}      - {w, h, wd, wu, tw, th, ds, us}
  */
 const minSize = function ( obj, layout ) {
-  const downSlots = ( obj.in  || [] ).length
-  const upSlot    = obj.out ? 1 : 0
-  const tmpdom    = layout.tmpdom
-  const name      = htmlEscape ( obj.name )
+  const ds     = ( obj.in  || [] ).length
+  const us     = obj.out ? 1 : 0
+  const tmpdom = layout.tmpdom
+  const name   = htmlEscape ( obj.name )
 
   const el = document.createElement ( 'text' )
   el.classList.add ( 'tbox' )
@@ -37,25 +41,27 @@ const minSize = function ( obj, layout ) {
 
   let w  = tb.width + 2 * layout.TPAD
 
-  // width taken by inlets
-  const wi = layout.RADIUS +
-    downSlots * ( layout.SPAD + 2 * layout.SLOT ) +
+  // width down (taken by inlets)
+  const wd = layout.RADIUS +
+    ds * ( layout.SPAD + 2 * layout.SLOT ) +
     layout.SPAD + layout.RADIUS
 
-  // width taken by outlets
-  const wo = layout.RADIUS +
-    upSlot    * ( layout.SPAD + 2 * layout.SLOT ) +
+  // width up (taken by outlets)
+  const wu = layout.RADIUS +
+    us * ( layout.SPAD + 2 * layout.SLOT ) +
     layout.SPAD + layout.RADIUS
 
   w = Math.ceil
-  ( Math.max ( w, wi, wo ) / layout.GRIDH ) * layout.GRIDH
+  ( Math.max ( w, wd, wu ) / layout.GRIDH ) * layout.GRIDH
 
   return { w
          , h: layout.HEIGHT
-         , wi
-         , wo
+         , wd
+         , wu
          , tw: tb.width
          , th: tb.height
+         , ds
+         , us
          }
 }
 
@@ -135,29 +141,22 @@ export const boxLayout = function ( graph, id, layout, bdefs, ghost ) {
   boxLayoutOne ( graph, id, layout || DEFAULT_LAYOUT, bdefs, ghost )
 }
 
-
 /** Create a box with up and down slots.
  * The sizes have to be computed first in the 'info' field.
- * FIXME: replace with 'path, x, y, class' functions
  *
- * @param {Snap} snap Snap svg drawer
- * @param {string} txt name to display in box
- * @param {object} pos x and y coordinates of top-left corner
- * @param {object} info junk field
- * @param {int} pal palette id number [1,12]
- * @param {int} upSlots number of up slots
- * @param {int} downSlots number of down slots
- * @returns {object} created objects { box, text }
+ * @param {object} boxdef - box layout definition
+ * @param {object} layout - constants and tmp svg element
+ * @returns {string} svg path
  */
-const makeBox =
-function ( snap, txt, pos, info, pal, upSlots, downSlots ) {
-  const sextra = info.sextra
-  const sz     = info.size
-  const w  = sz.w
-  const wd = sz.wd
-  const wu = sz.wu
-  const h = sz.h
-  const r = RADIUS
+export const path = function ( boxdef, layout ) {
+  const ds = boxdef.ds
+  const us = boxdef.us
+  const sextra = boxdef.sextra
+  const w  = boxdef.w
+  const wd = boxdef.wd
+  const wu = boxdef.wu
+  const h  = boxdef.h
+  const r  = layout.RADIUS
 
   /*
   w *= 2
@@ -165,123 +164,79 @@ function ( snap, txt, pos, info, pal, upSlots, downSlots ) {
   r *= 2
   */
 
-  // path starts at top-left corner + RADIUS in pos.x direction.
-  const path = [ `M${pos.x + r} ${pos.y}` ]
+  // path starts at top-left corner + RADIUS in x direction.
+  // top-left is (0,0) because we translate with a <g> tag.
+  const res = [ `M${r} 0` ]
 
-  for ( let i = 0; i < upSlots; i += 1 ) {
-    path.push ( `h${SPAD}` )
-    path.push ( `l${SLOT} ${-SLOT}` )
-    path.push ( `l${SLOT} ${ SLOT}` )
+  for ( let i = 0; i < us; i += 1 ) {
+    res.push ( `h${layout.SPAD}` )
+    res.push ( `l${layout.SLOT} ${-layout.SLOT}` )
+    res.push ( `l${layout.SLOT} ${ layout.SLOT}` )
   }
 
   const rpadu = w - wu
   if ( rpadu > 0 ) {
-    path.push ( `h${ rpadu + SPAD }` )
+    res.push ( `h${ rpadu + layout.SPAD }` )
   }
   else {
-    path.push ( `h${ SPAD }` )
+    res.push ( `h${ layout.SPAD }` )
   }
 
   // SPAD   /\  SPAD  /\
   // +-----+  +------+  +--
 
-  path.push ( `a${r} ${r} 0 0 1 ${ r} ${ r}` )
+  res.push ( `a${r} ${r} 0 0 1 ${ r} ${ r}` )
 
-  path.push ( `v${ h - 2 * r }`      )
+  res.push ( `v${ h - 2 * r }`      )
 
-  path.push ( `a${r} ${r} 0 0 1 ${-r} ${ r}` )
+  res.push ( `a${r} ${r} 0 0 1 ${-r} ${ r}` )
 
   const rpadd = w - wd
   if ( rpadd > 0 ) {
-    path.push ( `h${ -rpadd - SPAD }` )
+    res.push ( `h${ -rpadd - layout.SPAD }` )
   }
   else {
-    path.push ( `h${ -SPAD }` )
+    res.push ( `h${ -layout.SPAD }` )
   }
 
-  for ( let i = downSlots - 1; i >= 0; i -= 1 ) {
-    path.push ( `l${ -SLOT } ${ -SLOT }` )
-    path.push ( `l${ -SLOT } ${  SLOT }` )
-    path.push ( `h${ -SPAD - ( sextra [ i ] || 0 ) }` )
+  for ( let i = ds - 1; i >= 0; i -= 1 ) {
+    res.push ( `l${ -layout.SLOT } ${ -layout.SLOT }` )
+    res.push ( `l${ -layout.SLOT } ${  layout.SLOT }` )
+    res.push ( `h${ -layout.SPAD - ( sextra [ i ] || 0 ) }` )
   }
 
-  path.push ( `a${r} ${r} 0 0 1 ${-r} ${-r}` )
+  res.push ( `a${r} ${r} 0 0 1 ${-r} ${-r}` )
 
-  path.push ( `v${ -h + 2 * r }`    )
-  path.push ( `a${r} ${r} 0 0 1 ${ r} ${-r}` )
+  res.push ( `v${ -h + 2 * r }`    )
+  res.push ( `a${r} ${r} 0 0 1 ${ r} ${-r}` )
 
-  // path.push ( `a50 50 0 0 1 50 50` )
-  // path.push ( `l50 50` )
+  // res.push ( `a50 50 0 0 1 50 50` )
+  // res.push ( `l50 50` )
 
-  const box = snap.path ( path.join ( ' ' ) )
-  box.addClass ( `box${pal}` )
-
-  const rb = box.getBBox ()
-
-  const text = snap.text
-  ( pos.x + TPAD
-  , rb.y + rb.height / 2 + sz.th / 4
-  , txt
-  )
-
-  text.addClass ( 'tbox' )
-  text.addClass ( `box${pal}` )
-
-  return { box, text }
+  return res.join ( ' ' )
 }
 
-
-import { GRIDH
-       , HEIGHT
-       , SLOT
-       , SPAD
-       , computeMinSize
-       , makeBox
-       } from './svg'
-
-// JSON graph parser
-const BPAD   = 0  // padding between siblings
-const PCOUNT = 12 // palette color count
-const SUBPAD = 3 * GRIDH // pad in sub assets
-const VPAD   = 3  // padding between asset boxes
-
-// To draw the graph we must:
-// Go through all nodes recursively (Depth-First).
-//
-// ==> LAYOUT
-// 1. Open node
-// 2. Compute minimal node size from name + slots = self.minsize
-// 3. Compute minimal node size from children = children.sizes.sum
-// 4. Compute Max of self.minsize and children.sizes.sum = self.size
-// 5. Return self.size
-//
-// ==> DRAW
-// 1. Open node
-// 2. Draw respecting self.size ( and later slot positions )
-// 3. foreach child, draw
-
-/** Compute an palette id from an object name.
- * @param {string} aname the object's name
- * @returns {int} the palette id
+/** Compute a class name from an object.
+ *
+ * @param {object} obj - the object
+ * @param {object} layout - constants and tmp svg element
+ *
+ * @returns {string}   - the class name
  */
-export const hashName = function ( aname ) {
-  const name = aname.split ( '.' ) [ 0 ]
+export const className = function ( obj, layout ) {
+  if ( !obj.out ) {
+    return 'main'
+  }
+
+  const name = obj.name.split ( '.' ) [ 0 ]
   let num = 7
   for ( let i = 0; i < name.length; i += 1 ) {
     num += name.charCodeAt ( i )
   }
-  return 1 + num % PCOUNT
+  return `box${1 + num % layout.PCOUNT}`
 }
 
-/** Draw an element and it's children.
- *
- * @param {Snap}   snap  Snap svg drawer
- * @param {object} graph graph definition
- * @param {object} oinfo computed object information
- * @param {string} id    name of the object to draw
- * @param {object} ctx   top-left x,y position to draw
- * @returns {void}
- */
+/*
 export const drawOne = function ( snap, graph, oinfo, id, ctx ) {
   const obj  = graph [ id ]
   const info = oinfo [ id ]
@@ -331,4 +286,5 @@ export const drawOne = function ( snap, graph, oinfo, id, ctx ) {
     return dy
   }
 }
+*/
 
