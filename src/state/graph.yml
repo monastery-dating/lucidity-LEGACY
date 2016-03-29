@@ -70,67 +70,46 @@ xfiles:
     type: folder
 graph:
   g0:
-    down:
-      - name: image
-        receive: g1.bloom
-        type: THREE.RenderTarget
     name: cubes
-    type: main
+    in:
+      - target: THREE.RenderTarget
+    link:
+      - g1
   g1:
-    down:
-      - name: image
-        receive: g2.blur
-        type: THREE.RenderTarget
-      - name: image2
-        type: THREE.RenderTarget
-    files:
-      frag.glsl:
-        type: file
-      index.js:
-        type: file
-      vert.glsl:
-        type: file
     name: filter.Bloom
-    type: directory
-    up:
-      - name: bloom
-        type: THREE.RenderTarget
-  g2:
-    down:
-      - name: image1
-        receive: g3.video
-        type: THREE.RenderTarget
-      - name: image2
-        receive: g4.crystal
-        type: THREE.RenderTarget
+    out:
+      target: THREE.RenderTarget
+    in:
+      - target: THREE.RenderTarget
+      - target: THREE.RenderTarget
+    link:
+      - g2
     files:
-      frag.glsl:
-        type: file
-      index.js:
-        type: file
-      vert.glsl:
-        type: file
+      - frag.glsl:
+      - index.js:
+      - vert.glsl:
+  g2:
     name: filter.Mix
-    type: directory
-    up:
-      - name: blur
-        type: THREE.RenderTarget
+    out:
+      target: THREE.RenderTarget
+    in:
+      - target: THREE.RenderTarget
+      - target: THREE.RenderTarget
+    link:
+      - g3
+      - g4
+    files:
+      - frag.glsl
+      - index.js
+      - vert.glsl
   g3:
-    down:
-      - name: palette
-        type: THREE.RenderTarget
+    out:
+      - target: THREE.RenderTarget
     name: generator.Video
-    type: file
-    up:
-      - name: video
-        type: THREE.RenderTarget
+    link: []
   g4:
-    down:
-      - name: image
-        type: THREE.RenderTarget
+    out:
+      - target: THREE.RenderTarget
     name: generator.Crystal
     sel: true
-    type: file
-    up:
-      - name: crystal
-        type: THREE.RenderTarget
+    link: []

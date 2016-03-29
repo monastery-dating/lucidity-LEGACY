@@ -4,7 +4,7 @@
     <svg id='graph' class='svg' width='100%' height='100%'></svg>
     <!-- scrap is used to compute element sizes during graph
     construction -->
-    <svg id='scrap' class='svg' style='opacity:0'></svg>
+    <svg id='svgscratch' class='svg' style='opacity:0'></svg>
   </div>
 </template>
 
