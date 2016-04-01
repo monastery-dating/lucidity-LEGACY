@@ -1,5 +1,5 @@
 <template>
-  <div id='foo'>
+  <div id='playback'>
     <pre>
      +------------------+
      | Scene.vue = main |
@@ -89,7 +89,6 @@ const processGraph = function ( g, ctx ) {
   }
 
   if ( render ) {
-    console.log ( g.op.name, renderArgs )
     return Reflect.apply ( render, g.data, renderArgs )
   }
   else {
@@ -124,6 +123,6 @@ export default
 </script>
 
 <style>
-#foo { padding: 8px; }
+#playback { padding: 8px; }
 </style>
 

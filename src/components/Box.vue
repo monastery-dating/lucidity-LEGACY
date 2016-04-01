@@ -13,11 +13,12 @@
  ( pos.x + TPAD
   , rb.y + rb.height / 2 + sz.th / 4   
 <script>
-import { HEIGHT, TPAD } from './svg'
-import { hashName } from './graph'
+import
+{ DEFAULT_LAYOUT
+} from '../lib/boxDraw.js'
 
 export default
-{ props: [ 'box', 'index' ]
+{ props: [ 'bdef', 'index' ]
 , ready () {
     // could use v-el to register my
     // own drag event listeners
@@ -28,33 +29,33 @@ export default
 , computed:
   { transform () {
       const x = 0
-      const y = this.index * ( HEIGHT + 2 )
+      const y = this.index * ( DEFAULT_LAYOUT.HEIGHT + 2 )
       return `translate(${x},${y})`
     }
   , x () {
       return 0
     }
   , y () {
-      return this.index * ( HEIGHT + 2 )
+      return this.index * ( DEFAULT_LAYOUT.HEIGHT + 2 )
     }
   , tx () {
-      return TPAD
+      return DEFAULT_LAYOUT.TPAD
     }
   , ty () {
-      return HEIGHT / 2 + 4
-      // FIXME should be + sz.th/4
+      return DEFAULT_LAYOUT.HEIGHT / 2 + 4
+      // should be + sz.th/4
     }
   , width () {
       return 120
     }
   , height () {
-      return HEIGHT
+      return DEFAULT_LAYOUT.HEIGHT
     }
   , class () {
-      return `box${ this.index === 0 ? 0 : hashName ( this.box.name ) }`
+      return this.bdef.className
     }
   , name () {
-      return this.box.name
+      return this.bdef.name
     }
   , path () {
       // to compute path, we need to compute size

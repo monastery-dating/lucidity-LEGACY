@@ -1,9 +1,9 @@
 <template>
   <svg id='files' v-drop:box>
-    <box :box='{ name: "Gods of India" }'
+    <box :bdef='{ name: "Gods of India" }'
          :index='0'></box>
     <box v-for='(index, item) in all'
-      :box='item'
+      :bdef='item'
       :index='index + 1'
       ></box>
   </svg>

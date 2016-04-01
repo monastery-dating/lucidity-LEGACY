@@ -20,6 +20,26 @@ export const DEFAULT_LAYOUT =
 , tsizer: document.getElementById ( 'tsizer' )
 }
 
+/** Compute a class name from an object.
+ *
+ * @param {object} obj    - the object definition
+ * @param {object} layout - constants and tmp svg element
+ *
+ * @returns {string}   - the class name
+ */
+const className = function ( obj, layout ) {
+  if ( !obj.out ) {
+    return 'main'
+  }
+
+  const name = obj.name.split ( '.' ) [ 0 ]
+  let num = 7
+  for ( let i = 0; i < name.length; i += 1 ) {
+    num += name.charCodeAt ( i )
+  }
+  return `box${1 + num % layout.PCOUNT}`
+}
+
 /** Compute the minimum size to display the element.
  *
  * @param {object} obj    - object definition
@@ -63,12 +83,17 @@ const minSize = function ( obj, layout ) {
 }
 
 const boxLayoutOne = function ( graph, id, layout, bdefs, ghost ) {
+  const obj  = graph [ id ]
   if ( !bdefs.boxdef [ id ] ) {
     bdefs.boxdef [ id ] = {}
   }
-  const obj  = graph [ id ]
   const bdef = bdefs.boxdef [ id ]
   bdefs.all.push ( id )
+
+  if ( bdef.name !== obj.name ) {
+    bdef.name = obj.name
+    bdef.className = className ( obj, layout )
+  }
 
   let smin = bdef.smin
   if ( !smin ||
@@ -220,25 +245,6 @@ export const path = function ( boxdef, layout ) {
   return res.join ( ' ' )
 }
 
-/** Compute a class name from an object.
- *
- * @param {object} obj - the object
- * @param {object} layout - constants and tmp svg element
- *
- * @returns {string}   - the class name
- */
-export const className = function ( obj, layout ) {
-  if ( !obj.out ) {
-    return 'main'
-  }
-
-  const name = obj.name.split ( '.' ) [ 0 ]
-  let num = 7
-  for ( let i = 0; i < name.length; i += 1 ) {
-    num += name.charCodeAt ( i )
-  }
-  return `box${1 + num % layout.PCOUNT}`
-}
 
 /*
 export const drawOne = function ( snap, graph, oinfo, id, ctx ) {

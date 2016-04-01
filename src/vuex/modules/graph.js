@@ -1,7 +1,7 @@
 import
 { DEFAULT_LAYOUT
 , boxLayout
-} from '../../components/boxDraw.js'
+} from '../../lib/boxDraw.js'
 
 /*
 import
