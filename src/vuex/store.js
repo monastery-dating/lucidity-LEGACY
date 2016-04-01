@@ -1,7 +1,7 @@
-import Graph from '../state/graph.yml'
 import Vue   from 'vue'
 import Vuex  from 'vuex'
 import files from './modules/files'
+import graph from './modules/graph'
 import library from './modules/library'
 import { refreshLibrary } from './actions'
 
@@ -9,7 +9,6 @@ Vue.use ( Vuex )
 
 const baseState =
 { title: 'Lucy in the sky'
-, graph: Graph.graph
 }
 
 const store = new Vuex.Store
@@ -18,6 +17,7 @@ const store = new Vuex.Store
   , modules:
     { library
     , files
+    , graph
     }
   }
 )

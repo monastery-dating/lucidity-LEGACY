@@ -6,7 +6,7 @@ import htmlEscape from 'html-escape'
 /** Some constants for graph layout. These could live in a settings object when
  * calling boxLayout and path.
  */
-const DEFAULT_LAYOUT =
+export const DEFAULT_LAYOUT =
 { GRIDH:  8
 , HEIGHT: 30
 , RADIUS: 5
@@ -17,7 +17,7 @@ const DEFAULT_LAYOUT =
 , PCOUNT: 12 // palette color count
 , SUBPAD: 3 * 8 // (3*GRIDH) pad in sub assets
 , VPAD:   3  // vertical padding between boxes
-, tmpdom: document.getElementById ( 'svgscratch' )
+, tsizer: document.getElementById ( 'tsizer' )
 }
 
 /** Compute the minimum size to display the element.
@@ -29,15 +29,11 @@ const DEFAULT_LAYOUT =
 const minSize = function ( obj, layout ) {
   const ds     = ( obj.in  || [] ).length
   const us     = obj.out ? 1 : 0
-  const tmpdom = layout.tmpdom
+  const tsizer = layout.tsizer
   const name   = htmlEscape ( obj.name )
 
-  const el = document.createElement ( 'text' )
-  el.classList.add ( 'tbox' )
-  el.innerHTML = name
-  tmpdom.appendChild ( el )
-  const tb = el.getBBox ()
-  tmpdom.removeChild ( el )
+  tsizer.innerHTML = name
+  const tb = tsizer.getBBox ()
 
   let w  = tb.width + 2 * layout.TPAD
 
@@ -62,6 +58,7 @@ const minSize = function ( obj, layout ) {
          , th: tb.height
          , ds
          , us
+         , name: obj.name // cache reference
          }
 }
 
@@ -73,7 +70,11 @@ const boxLayoutOne = function ( graph, id, layout, bdefs, ghost ) {
   const bdef = bdefs.boxdef [ id ]
   bdefs.all.push ( id )
 
-  const smin = minSize ( obj, layout )
+  let smin = bdef.smin
+  if ( !smin ||
+        smin.name !== obj.name ) {
+    smin = minSize ( obj, layout )
+  }
 
   const links  = obj.links
 
@@ -138,7 +139,10 @@ const boxLayoutOne = function ( graph, id, layout, bdefs, ghost ) {
 export const boxLayout = function ( graph, id, layout, bdefs, ghost ) {
   // empty list
   bdefs.all = []
-  boxLayoutOne ( graph, id, layout || DEFAULT_LAYOUT, bdefs, ghost )
+  if ( !bdefs.boxdef ) {
+    bdefs.boxdef = {}
+  }
+  boxLayoutOne ( graph, id, layout, bdefs, ghost )
 }
 
 /** Create a box with up and down slots.
