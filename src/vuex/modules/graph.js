@@ -17,7 +17,8 @@ boxLayout ( Graph.graph, 'g0', DEFAULT_LAYOUT, bdefs, null )
 
 const state =
 { graph: Graph.graph
-, bdefs
+, all: bdefs.all
+, boxdef: bdefs.boxdef
 }
 
 // mutations

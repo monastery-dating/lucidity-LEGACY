@@ -101,15 +101,15 @@ const boxLayoutOne = function ( graph, id, layout, bdefs, ghost ) {
     smin = minSize ( obj, layout )
   }
 
-  const links  = obj.links
+  const link  = obj.link
 
-  if ( links ) {
+  if ( link ) {
     const sextra = [ 0 ] // extra spacing before slot i
                          // first has 0 extra spacing
                          // second has spacing dependent on first child, etc
 
     // Compute sizes for all children
-    for ( const cname of links ) {
+    for ( const cname of link ) {
       // We push in sextra the delta for slot i
       const w  = boxLayoutOne ( graph, cname, layout, bdefs, ghost )
       sextra.push ( w + layout.BPAD - layout.SPAD - 2 * layout.SLOT )
@@ -119,7 +119,8 @@ const boxLayoutOne = function ( graph, id, layout, bdefs, ghost ) {
     // does not change slot position )
     sextra.pop ()
     bdef.sextra = sextra
-    const extra = sextra.reduce ( ( sum, e ) => sum + e )
+    const extra =
+    sextra.length > 0 ? sextra.reduce ( ( sum, e ) => sum + e ) : 0
 
     const w  = smin.w
     const wd = smin.wd + extra

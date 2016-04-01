@@ -2,11 +2,11 @@
   <g :transform='transform'>
     <rect :width='width' :height='height'
       :id='index'
-      :class='class'
+      :class='className'
       v-el:rect
     ></rect>
-    <path :d='path' :class='class'></path>
-    <text :x='tx' :y='ty' class='tbox' :class='class'>{{ name }}</text>
+    <path :d='path' :class='className'></path>
+    <text :x='tx' :y='ty' class='tbox' :class='className'>{{ name }}</text>
   </g>
 </template>
 
@@ -18,7 +18,7 @@ import
 } from '../lib/boxDraw.js'
 
 export default
-{ props: [ 'bdef', 'index' ]
+{ props: [ 'box', 'index' ]
 , ready () {
     // could use v-el to register my
     // own drag event listeners
@@ -28,34 +28,28 @@ export default
   }
 , computed:
   { transform () {
-      const x = 0
+      const x = 0 // replace with this.box.pos.x
       const y = this.index * ( DEFAULT_LAYOUT.HEIGHT + 2 )
       return `translate(${x},${y})`
-    }
-  , x () {
-      return 0
-    }
-  , y () {
-      return this.index * ( DEFAULT_LAYOUT.HEIGHT + 2 )
     }
   , tx () {
       return DEFAULT_LAYOUT.TPAD
     }
   , ty () {
-      return DEFAULT_LAYOUT.HEIGHT / 2 + 4
-      // should be + sz.th/4
+      return DEFAULT_LAYOUT.HEIGHT / 2 +
+        this.box.size.th / 4
     }
   , width () {
-      return 120
+      return this.box.size.w
     }
   , height () {
-      return DEFAULT_LAYOUT.HEIGHT
+      return this.box.size.h
     }
-  , class () {
-      return this.bdef.className
+  , className () {
+      return this.box.className
     }
   , name () {
-      return this.bdef.name
+      return this.box.name
     }
   , path () {
       // to compute path, we need to compute size

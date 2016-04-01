@@ -1,18 +1,19 @@
 <template>
-  <ul id='graph'>
-    <li v-for='item in all'>{{item}}</li>
+  <div v-if='true'>
+  <svg id='graph'>
+    <box v-for='(index, item) in all'
+      :box='boxdef [ item ]'
+      :index='index'
+      ></box>
+  </svg>
+  </div>
+  <ul v-else id='graph'>
+    <li v-for='item in all'>{{ boxdef [ item ] }}</li>
   </ul>
-  
 </template>
 
 <script>
 /*
-  <svg id='graph'>
-    <box v-for='(index, item) in all'
-      :box='bdefs [ item ]'
-      :index='index'
-      ></box>
-  </svg>
 */
 import Box from './Box'
 
@@ -20,10 +21,10 @@ export default
 { vuex:
   { getters:
     { all ( { graph } ) {
-        return graph.bdefs.all
+        return graph.all
       }
-    , bdefs ( { graph } ) {
-        return graph.bdefs
+    , boxdef ( { graph } ) {
+        return graph.boxdef
       }
     }
   , actions:
