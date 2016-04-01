@@ -1,9 +1,8 @@
 <template>
   <div v-if='true'>
   <svg id='graph'>
-    <box v-for='(index, item) in all'
+    <box v-for='item in all'
       :box='boxdef [ item ]'
-      :index='index'
       ></box>
   </svg>
   </div>

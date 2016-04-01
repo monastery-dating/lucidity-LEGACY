@@ -1,3 +1,4 @@
+/* eslint "max-params":0 */
 /** Compute Boxdef layout from a graph definition and draw
  * svg path from Boxdef
  */
@@ -20,6 +21,77 @@ export const DEFAULT_LAYOUT =
 , tsizer: document.getElementById ( 'tsizer' )
 }
 
+/** Compute svg path of a box with up and down slots.
+ * The sizes have to be computed first in the 'info' field.
+ *
+ * @param {object} boxdef - box layout definition
+ * @param {object} layout - constants and tmp svg element
+ * @returns {string} svg path
+ */
+const path = function ( boxdef, layout ) {
+  const size = boxdef.size
+  const us   = size.us
+  const ds   = size.ds
+  const w    = size.w
+  const wd   = size.wd
+  const wde  = size.wde
+  const wu   = size.wu
+  const h    = size.h
+  const sextra = boxdef.sextra
+  const r    = layout.RADIUS
+
+  // path starts at top-left corner + RADIUS in x direction.
+  // top-left is (0,0) because we translate with a <g> tag.
+  const res = [ `M${r} 0` ]
+
+  for ( let i = 0; i < us; i += 1 ) {
+    res.push ( `h${layout.SPAD}` )
+    res.push ( `l${layout.SLOT} ${-layout.SLOT}` )
+    res.push ( `l${layout.SLOT} ${ layout.SLOT}` )
+  }
+
+  const rpadu = w - wu
+  if ( rpadu > 0 ) {
+    res.push ( `h${ rpadu + layout.SPAD }` )
+  }
+  else {
+    res.push ( `h${ layout.SPAD }` )
+  }
+
+  // SPAD   /\  SPAD  /\
+  // +-----+  +------+  +--
+
+  res.push ( `a${r} ${r} 0 0 1 ${ r} ${ r}` )
+
+  res.push ( `v${ h - 2 * r }`      )
+
+  res.push ( `a${r} ${r} 0 0 1 ${-r} ${ r}` )
+
+  const rpadd = w - wd - wde
+  if ( rpadd > 0 ) {
+    res.push ( `h${ -rpadd - layout.SPAD }` )
+  }
+  else {
+    res.push ( `h${ -layout.SPAD }` )
+  }
+
+  for ( let i = ds - 1; i >= 0; i -= 1 ) {
+    res.push ( `l${ -layout.SLOT } ${ -layout.SLOT }` )
+    res.push ( `l${ -layout.SLOT } ${  layout.SLOT }` )
+    res.push ( `h${ -layout.SPAD - ( sextra [ i ] || 0 ) }` )
+  }
+
+  res.push ( `a${r} ${r} 0 0 1 ${-r} ${-r}` )
+
+  res.push ( `v${ -h + 2 * r }`    )
+  res.push ( `a${r} ${r} 0 0 1 ${ r} ${-r}` )
+
+  // res.push ( `a50 50 0 0 1 50 50` )
+  // res.push ( `l50 50` )
+
+  return res.join ( ' ' )
+}
+
 /** Compute a class name from an object.
  *
  * @param {object} obj    - the object definition
@@ -38,6 +110,65 @@ const className = function ( obj, layout ) {
     num += name.charCodeAt ( i )
   }
   return `box${1 + num % layout.PCOUNT}`
+}
+
+/** Insert position in boxdef.
+ *
+ * @param {object} graph - the complete graph
+ * @param {string} id    - identifier of the element
+ * @param {object} layout- rendering constants
+ * @param {object} boxdef- box definitions
+ * @param {object} ghost - ghost box (being dragged)
+ * @param {object} ctx   - context {x,y}
+ *
+ * @returns {int}        - delta y
+ */
+const boxPosition = function ( graph, id, layout, boxdef, ghost, ctx ) {
+  const obj  = graph [ id ]
+
+  // store our position given by ctx
+  boxdef [ id ].pos = ctx
+  const dy = layout.HEIGHT
+
+  let x  = ctx.x
+  const link  = obj.link
+
+  if ( link ) {
+    // get children
+    for ( const cname of link ) {
+      boxPosition
+      ( graph, cname, layout, boxdef, ghost
+      , { x, y: ctx.y + dy }
+      )
+      x += layout.BPAD + boxdef [ cname ].size.w
+    }
+
+    return layout.HEIGHT
+  }
+  else {
+
+  /*
+   * files rendering
+   */
+  /*
+  else {
+    let dy = HEIGHT + VPAD
+    if ( obj.sub ) {
+      dy += drawOne
+      ( snap, graph, oinfo, obj.sub
+      , { x: x + SUBPAD, y: ctx.y + dy }
+      )
+    }
+
+    if ( obj.next ) {
+      dy += drawOne
+      ( snap, graph, oinfo, obj.next, { x, y: ctx.y + dy } )
+    }
+
+    return dy
+  */
+    return 0
+  }
 }
 
 /** Compute the minimum size to display the element.
@@ -95,10 +226,13 @@ const boxLayoutOne = function ( graph, id, layout, bdefs, ghost ) {
     bdef.className = className ( obj, layout )
   }
 
-  let smin = bdef.smin
-  if ( !smin ||
-        smin.name !== obj.name ) {
-    smin = minSize ( obj, layout )
+  let size = bdef.size
+  if ( !size ||
+        size.name !== obj.name ||
+        size.us   !== ( obj.up ? 1 : 0 ) ||
+        size.ds   !== ( obj.in || [] ).length
+        ) {
+    size = minSize ( obj, layout )
   }
 
   const link  = obj.link
@@ -119,21 +253,14 @@ const boxLayoutOne = function ( graph, id, layout, bdefs, ghost ) {
     // does not change slot position )
     sextra.pop ()
     bdef.sextra = sextra
-    const extra =
-    sextra.length > 0 ? sextra.reduce ( ( sum, e ) => sum + e ) : 0
-
-    const w  = smin.w
-    const wd = smin.wd + extra
-
-    bdef.size =
-    { w: Math.max ( w, wd )
-    , h: smin.h
-    , wd
-    , wu: smin.wu
-    , tw: smin.tw
-    , th: smin.th
+    if ( sextra.length > 0 ) {
+      size.wde = sextra.reduce ( ( sum, e ) => sum + e )
+    }
+    else {
+      size.wde = 0
     }
 
+    size.w = Math.max ( size.w, size.wd + size.wde )
   }
   else {
     if ( obj.next ) {
@@ -144,9 +271,14 @@ const boxLayoutOne = function ( graph, id, layout, bdefs, ghost ) {
       boxLayoutOne ( graph, obj.sub, layout, bdefs, ghost )
     }
 
+    size.wde = 0
+
     bdef.sextra = []
-    bdef.size = smin
   }
+
+  bdef.size = size
+
+  bdef.path = path ( bdef, layout )
   return bdef.size.w
 }
 
@@ -168,134 +300,14 @@ export const boxLayout = function ( graph, id, layout, bdefs, ghost ) {
   if ( !bdefs.boxdef ) {
     bdefs.boxdef = {}
   }
-  boxLayoutOne ( graph, id, layout, bdefs, ghost )
+
+  boxLayoutOne
+  ( graph, id, layout
+  , bdefs, ghost )
+
+  boxPosition
+  ( graph, id, layout
+  , bdefs.boxdef, ghost, { x: 0, y: 0 } )
 }
 
-/** Create a box with up and down slots.
- * The sizes have to be computed first in the 'info' field.
- *
- * @param {object} boxdef - box layout definition
- * @param {object} layout - constants and tmp svg element
- * @returns {string} svg path
- */
-export const path = function ( boxdef, layout ) {
-  const ds = boxdef.ds
-  const us = boxdef.us
-  const sextra = boxdef.sextra
-  const w  = boxdef.w
-  const wd = boxdef.wd
-  const wu = boxdef.wu
-  const h  = boxdef.h
-  const r  = layout.RADIUS
-
-  /*
-  w *= 2
-  h *= 2
-  r *= 2
-  */
-
-  // path starts at top-left corner + RADIUS in x direction.
-  // top-left is (0,0) because we translate with a <g> tag.
-  const res = [ `M${r} 0` ]
-
-  for ( let i = 0; i < us; i += 1 ) {
-    res.push ( `h${layout.SPAD}` )
-    res.push ( `l${layout.SLOT} ${-layout.SLOT}` )
-    res.push ( `l${layout.SLOT} ${ layout.SLOT}` )
-  }
-
-  const rpadu = w - wu
-  if ( rpadu > 0 ) {
-    res.push ( `h${ rpadu + layout.SPAD }` )
-  }
-  else {
-    res.push ( `h${ layout.SPAD }` )
-  }
-
-  // SPAD   /\  SPAD  /\
-  // +-----+  +------+  +--
-
-  res.push ( `a${r} ${r} 0 0 1 ${ r} ${ r}` )
-
-  res.push ( `v${ h - 2 * r }`      )
-
-  res.push ( `a${r} ${r} 0 0 1 ${-r} ${ r}` )
-
-  const rpadd = w - wd
-  if ( rpadd > 0 ) {
-    res.push ( `h${ -rpadd - layout.SPAD }` )
-  }
-  else {
-    res.push ( `h${ -layout.SPAD }` )
-  }
-
-  for ( let i = ds - 1; i >= 0; i -= 1 ) {
-    res.push ( `l${ -layout.SLOT } ${ -layout.SLOT }` )
-    res.push ( `l${ -layout.SLOT } ${  layout.SLOT }` )
-    res.push ( `h${ -layout.SPAD - ( sextra [ i ] || 0 ) }` )
-  }
-
-  res.push ( `a${r} ${r} 0 0 1 ${-r} ${-r}` )
-
-  res.push ( `v${ -h + 2 * r }`    )
-  res.push ( `a${r} ${r} 0 0 1 ${ r} ${-r}` )
-
-  // res.push ( `a50 50 0 0 1 50 50` )
-  // res.push ( `l50 50` )
-
-  return res.join ( ' ' )
-}
-
-
-/*
-export const drawOne = function ( snap, graph, oinfo, id, ctx ) {
-  const obj  = graph [ id ]
-  const info = oinfo [ id ]
-  const b = makeBox
-  ( snap
-  , obj.name
-  , ctx
-  , info
-  , obj.type === 'main' ? 0 : hashName ( obj.name )
-  , ( obj.up   || [] ).length
-  , ( obj.down || [] ).length
-  )
-
-  if ( obj.sel ) {
-    b.box.addClass ( 'sel' )
-  }
-
-  let x = ctx.x
-  if ( obj.down ) {
-    // get children
-    for ( let i = 0; i < obj.down.length; i += 1 ) {
-      const receive = obj.down [ i ].receive
-      if ( receive ) {
-        const cname = receive.split ( '.' ) [ 0 ]
-        drawOne
-        ( snap, graph, oinfo, cname, { x, y: ctx.y + HEIGHT } )
-        x += BPAD + oinfo [ cname ].size.w
-      }
-    }
-
-    return HEIGHT
-  }
-  else {
-    let dy = HEIGHT + VPAD
-    if ( obj.sub ) {
-      dy += drawOne
-      ( snap, graph, oinfo, obj.sub
-      , { x: x + SUBPAD, y: ctx.y + dy }
-      )
-    }
-
-    if ( obj.next ) {
-      dy += drawOne
-      ( snap, graph, oinfo, obj.next, { x, y: ctx.y + dy } )
-    }
-
-    return dy
-  }
-}
-*/
 

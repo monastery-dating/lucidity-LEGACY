@@ -1,10 +1,5 @@
 <template>
   <g :transform='transform'>
-    <rect :width='width' :height='height'
-      :id='index'
-      :class='className'
-      v-el:rect
-    ></rect>
     <path :d='path' :class='className'></path>
     <text :x='tx' :y='ty' class='tbox' :class='className'>{{ name }}</text>
   </g>
@@ -18,7 +13,7 @@ import
 } from '../lib/boxDraw.js'
 
 export default
-{ props: [ 'box', 'index' ]
+{ props: [ 'box' ]
 , ready () {
     // could use v-el to register my
     // own drag event listeners
@@ -28,8 +23,8 @@ export default
   }
 , computed:
   { transform () {
-      const x = 0 // replace with this.box.pos.x
-      const y = this.index * ( DEFAULT_LAYOUT.HEIGHT + 2 )
+      const x = this.box.pos.x
+      const y = this.box.pos.y
       return `translate(${x},${y})`
     }
   , tx () {
@@ -55,7 +50,7 @@ export default
       // to compute path, we need to compute size
       // before. Size and position is computed in
       // parent and passed as prop (box.layout) ?
-      return ''
+      return this.box.path
     }
   }
 }
