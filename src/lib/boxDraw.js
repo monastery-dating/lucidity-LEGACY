@@ -240,8 +240,10 @@ const boxLayoutOne = function ( graph, id, layout, bdefs, ghost ) {
                          // first has 0 extra spacing
                          // second has spacing dependent on first child, etc
 
+    let lcount = 0
     // Compute sizes for all children
     for ( const cname of link ) {
+      lcount += 1
       // We push in sextra the delta for slot i
       const w  = boxLayoutOne ( graph, cname, layout, bdefs, ghost )
       sextra.push ( w + layout.BPAD - layout.SPAD - 2 * layout.SLOT )
@@ -249,7 +251,12 @@ const boxLayoutOne = function ( graph, id, layout, bdefs, ghost ) {
 
     // Compute extra size for this box depending on i-1 children ( last child
     // does not change slot position )
-    sextra.pop ()
+    if ( lcount < size.ds ) {
+      // keep space of last element to draw empty slot
+    }
+    else {
+      sextra.pop ()
+    }
     bdef.sextra = sextra
     if ( sextra.length > 0 ) {
       size.wde = sextra.reduce ( ( sum, e ) => sum + e )
