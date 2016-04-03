@@ -100,7 +100,7 @@ const path = function ( boxdef, layout ) {
  * @returns {string}   - the class name
  */
 const className = function ( obj, layout ) {
-  if ( !obj.out ) {
+  if ( obj.type ) {
     return 'main'
   }
 
@@ -128,7 +128,7 @@ const boxPosition = function ( graph, id, layout, boxdef, ghost, ctx ) {
 
   // store our position given by ctx
   boxdef [ id ].pos = ctx
-  const dy = layout.HEIGHT
+  let dy = layout.HEIGHT
 
   let x  = ctx.x
   const link  = obj.link
@@ -150,24 +150,22 @@ const boxPosition = function ( graph, id, layout, boxdef, ghost, ctx ) {
   /*
    * files rendering
    */
-  /*
-  else {
-    let dy = HEIGHT + VPAD
+    dy += layout.VPAD
     if ( obj.sub ) {
-      dy += drawOne
-      ( snap, graph, oinfo, obj.sub
-      , { x: x + SUBPAD, y: ctx.y + dy }
+      dy += boxPosition
+      ( graph, obj.sub, layout, boxdef, ghost
+      , { x: x + layout.SUBPAD, y: ctx.y + dy }
       )
     }
 
     if ( obj.next ) {
-      dy += drawOne
-      ( snap, graph, oinfo, obj.next, { x, y: ctx.y + dy } )
+      dy += boxPosition
+      ( graph, obj.next, layout, boxdef, ghost
+      , { x, y: ctx.y + dy }
+      )
     }
 
     return dy
-  */
-    return 0
   }
 }
 

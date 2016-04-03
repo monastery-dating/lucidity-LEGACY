@@ -1,11 +1,23 @@
 files:
-  all:
-    - name: 'ai.Play'
-    - name: 'ai.Learn'
-    - name: 'foo'
+  f0:
+    name: 'Gods of India'
+    type: lucy.Project
+    next: f1
+  f1:
+    name: ai
+    sub: f2
+    next: f4
+  f2:
+    name: ai.Play
+    next: f3
+  f3:
+    name: ai.Learn
+  f4:
+    name: foo.Bar
 graph:
   g0:
     name: cubes
+    type: lucy.Scene
     in:
       - target: THREE.RenderTarget
     link:

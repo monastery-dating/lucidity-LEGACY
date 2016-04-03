@@ -1,10 +1,23 @@
 import
+{ DEFAULT_LAYOUT
+, boxLayout
+} from '../../lib/boxDraw.js'
+
+import
 { FILES_ADD
 } from '../mutation-types'
+
 import Graph from '../../state/graph.yml'
 
 // initial state
-const state = Graph.files
+const bdefs = {}
+boxLayout ( Graph.files, 'f0', DEFAULT_LAYOUT, bdefs, null )
+
+const state =
+{ graph: Graph.files
+, all: bdefs.all
+, boxdef: bdefs.boxdef
+}
 
 const sortFiles = ( a, b ) => a.name > b.name ? 1 : 0
 
@@ -27,7 +40,7 @@ const mutations =
   }
 }
 
-state.all.sort ( sortFiles )
+// state.all.sort ( sortFiles )
 
 export default
 { state

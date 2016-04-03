@@ -1,13 +1,8 @@
 <template>
   <svg id='files' v-drop:box>
-    <template v-if='false'>
-    <box :box='{ name: "Gods of India", className: "main" }'
-         :index='0'></box>
-    <box v-for='(index, item) in all'
+    <box v-for='item in all'
       :box='boxdef [ item ]'
-      :index='index + 1'
       ></box>
-    </template>
   </svg>
 </template>
 
@@ -26,7 +21,7 @@ export default
         return files.all
       }
     , boxdef ( { files } ) {
-        return files.boxdef || {}
+        return files.boxdef
       }
     }
   , actions:
