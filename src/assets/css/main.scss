@@ -100,28 +100,11 @@ svg {
   }
 }
 
-@keyframes pulse {
-  from { 
-    stroke: black;
-    fill: rgba(255,255,255,1);
-    transform: translateY(0px);
-  }
-  to {
-    stroke: white;
-    fill: rgba(0,0,0,0);
-    transform: translateY(-3px);
-  }
-}
-
 svg {
-  .pulse {
+  .slot {
     fill: none;
     stroke: black;
     stroke-width: 2px;
-    animation-name: pulse;
-    animation-duration: 0.4s;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
   }
 }
 
