@@ -131,16 +131,19 @@ const boxPosition = function ( graph, id, layout, boxdef, ghost, ctx ) {
   let dy = layout.HEIGHT
 
   let x  = ctx.x
-  const link  = obj.link
+  const input = obj.in
 
-  if ( link ) {
+  if ( input ) {
     // get children
-    for ( const cname of link ) {
-      boxPosition
-      ( graph, cname, layout, boxdef, ghost
-      , { x, y: ctx.y + dy }
-      )
-      x += layout.BPAD + boxdef [ cname ].size.w
+    for ( const slot of input ) {
+      const cname = slot.link
+      if ( cname ) {
+        boxPosition
+        ( graph, cname, layout, boxdef, ghost
+        , { x, y: ctx.y + dy }
+        )
+        x += layout.BPAD + boxdef [ cname ].size.w
+      }
     }
 
     return layout.HEIGHT
@@ -233,30 +236,41 @@ const boxLayoutOne = function ( graph, id, layout, bdefs, ghost ) {
     size = minSize ( obj, layout )
   }
 
-  const link  = obj.link
+  const input = obj.in
+  const slots = []
+  const sl = layout.SLOT
 
-  if ( link ) {
+  if ( input ) {
     const sextra = [ 0 ] // extra spacing before slot i
                          // first has 0 extra spacing
                          // second has spacing dependent on first child, etc
 
-    let lcount = 0
+    let   x = layout.RADIUS + layout.SPAD
+    const y = layout.HEIGHT
+
+
     // Compute sizes for all children
-    for ( const cname of link ) {
-      lcount += 1
-      // We push in sextra the delta for slot i
-      const w  = boxLayoutOne ( graph, cname, layout, bdefs, ghost )
-      sextra.push ( w + layout.BPAD - layout.SPAD - 2 * layout.SLOT )
+    for ( const slot of input ) {
+      slots.push
+      ( { path: `M${x} ${y} l${sl} ${-sl} l${sl} ${sl}`
+        }
+      )
+      const cname = slot.link
+      if ( cname ) {
+        // We push in sextra the delta for slot i
+        const w  = boxLayoutOne ( graph, cname, layout, bdefs, ghost )
+        sextra.push ( w + layout.BPAD - layout.SPAD - 2 * layout.SLOT )
+        x += w
+      }
+      else {
+        x += layout.SPAD + 2 * layout.SLOT
+        sextra.push ( 0 )
+      }
     }
 
     // Compute extra size for this box depending on i-1 children ( last child
     // does not change slot position )
-    if ( lcount < size.ds ) {
-      // keep space of last element to draw empty slot
-    }
-    else {
-      sextra.pop ()
-    }
+    sextra.pop ()
     bdef.sextra = sextra
     if ( sextra.length > 0 ) {
       size.wde = sextra.reduce ( ( sum, e ) => sum + e )
@@ -283,7 +297,8 @@ const boxLayoutOne = function ( graph, id, layout, bdefs, ghost ) {
 
   bdef.size = size
 
-  bdef.path = path ( bdef, layout )
+  bdef.path  = path ( bdef, layout )
+  bdef.slots = slots
   return bdef.size.w
 }
 

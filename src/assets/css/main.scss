@@ -44,6 +44,10 @@ body {
     fill: pfill( $i );
     stroke: pline( $i );
 
+    &.dark {
+      fill: darken( desaturate( pfill( $i ), 30%), 30%);
+    }
+
     &.sel {
       fill: spfill( $i );
       stroke: color( sboxl );
@@ -93,6 +97,31 @@ svg {
   text {
     pointer-events: none;
     stroke-width: $lsbo;
+  }
+}
+
+@keyframes pulse {
+  from { 
+    stroke: black;
+    fill: rgba(255,255,255,1);
+    transform: translateY(0px);
+  }
+  to {
+    stroke: white;
+    fill: rgba(0,0,0,0);
+    transform: translateY(-3px);
+  }
+}
+
+svg {
+  .pulse {
+    fill: none;
+    stroke: black;
+    stroke-width: 2px;
+    animation-name: pulse;
+    animation-duration: 0.4s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
   }
 }
 

@@ -20,17 +20,15 @@ graph:
     type: lucy.Scene
     in:
       - target: THREE.RenderTarget
-    link:
-      - g1
+        link: g1
   g1:
     name: filter.Bloom
     out:
       target: THREE.RenderTarget
     in:
       - target: THREE.RenderTarget
+        link: g2
       - target: THREE.RenderTarget
-    link:
-      - g2
     files:
       - frag.glsl:
       - index.js:
@@ -41,10 +39,9 @@ graph:
       target: THREE.RenderTarget
     in:
       - target: THREE.RenderTarget
+        link: g3
       - target: THREE.RenderTarget
-    link:
-      - g3
-      - g4
+        link: g4
     files:
       - frag.glsl
       - index.js
@@ -53,10 +50,8 @@ graph:
     out:
       - target: THREE.RenderTarget
     name: generator.Video
-    link: []
   g4:
     out:
       - target: THREE.RenderTarget
     name: generator.Crystal
     sel: true
-    link: []
