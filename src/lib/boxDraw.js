@@ -29,15 +29,8 @@ export const DEFAULT_LAYOUT =
  * @returns {string} svg path
  */
 const path = function ( boxdef, layout ) {
-  const size = boxdef.size
-  const us   = size.us
-  const ds   = size.ds
-  const w    = size.w
-  const wd   = size.wd
-  const wde  = size.wde
-  const wu   = size.wu
-  const h    = size.h
-  const sextra = boxdef.sextra
+  const { size, sextra }  = boxdef
+  const { us, ds, w, wd, wde, wu, h } = size
   const r    = layout.RADIUS
 
   // path starts at top-left corner + RADIUS in x direction.
@@ -134,9 +127,11 @@ const boxPosition = function ( graph, id, layout, boxdef, ghost, ctx ) {
   const input = obj.in
 
   if ( input ) {
+    const link = obj.link || []
+
     // get children
-    for ( const slot of input ) {
-      const cname = slot.link
+    for ( let i = 0; i < input.length; i += 1 ) {
+      const cname = link [ i ]
       if ( cname ) {
         boxPosition
         ( graph, cname, layout, boxdef, ghost
@@ -247,15 +242,16 @@ const boxLayoutOne = function ( graph, id, layout, bdefs, ghost ) {
 
     let   x = layout.RADIUS + layout.SPAD
     const y = layout.HEIGHT
+    const link = obj.link || []
 
 
     // Compute sizes for all children
-    for ( const slot of input ) {
+    for ( let i = 0; i < input.length; i += 1 ) {
       slots.push
       ( { path: `M${x} ${y} l${sl} ${-sl} l${sl} ${sl}`
         }
       )
-      const cname = slot.link
+      const cname = link [ i ]
       if ( cname ) {
         // We push in sextra the delta for slot i
         const w  = boxLayoutOne ( graph, cname, layout, bdefs, ghost )
@@ -329,5 +325,3 @@ export const boxLayout = function ( graph, id, layout, bdefs, ghost ) {
   ( graph, id, layout
   , bdefs.boxdef, ghost, { x: 0, y: 0 } )
 }
-
-

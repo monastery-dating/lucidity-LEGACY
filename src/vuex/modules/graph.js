@@ -13,10 +13,10 @@ import Graph from '../../state/graph.yml'
 
 // initial state
 const bdefs = {}
-boxLayout ( Graph.graph, 'g0', DEFAULT_LAYOUT, bdefs, null )
+boxLayout ( Graph, 'g0', DEFAULT_LAYOUT, bdefs, null )
 
 const state =
-{ graph: Graph.graph
+{ graph: Graph
 , all: bdefs.all
 , boxdef: bdefs.boxdef
 }
@@ -30,5 +30,3 @@ export default
 { state
 , mutations
 }
-
-

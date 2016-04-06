@@ -1,57 +1,44 @@
-files:
-  f0:
-    name: 'Gods of India'
-    type: lucy.Project
-    next: f1
-  f1:
-    name: ai
-    sub: f2
-    next: f4
-  f2:
-    name: ai.Play
-    next: f3
-  f3:
-    name: ai.Learn
-  f4:
-    name: foo.Bar
-graph:
-  g0:
-    name: cubes
-    type: lucy.Scene
-    in:
-      - target: THREE.RenderTarget
-        link: g1
-  g1:
-    name: filter.Bloom
-    out:
-      target: THREE.RenderTarget
-    in:
-      - target: THREE.RenderTarget
-        link: g2
-      - target: THREE.RenderTarget
-    files:
-      - frag.glsl:
-      - index.js:
-      - vert.glsl:
-  g2:
-    name: filter.Mix
-    out:
-      target: THREE.RenderTarget
-    in:
-      - target: THREE.RenderTarget
-        link: g3
-      - target: THREE.RenderTarget
-        link: g4
-    files:
-      - frag.glsl
-      - index.js
-      - vert.glsl
-  g3:
-    out:
-      - target: THREE.RenderTarget
-    name: generator.Video
-  g4:
-    out:
-      - target: THREE.RenderTarget
-    name: generator.Crystal
-    sel: true
+g0:
+  name: cubes
+  type: lucy.Scene
+  link:
+    - g5
+  in:
+    - any
+g1:
+  name: Hello
+  out:
+    text: string
+g2:
+  name: Lucy
+  out:
+    text: string
+g3:
+  name: Mix
+  out:
+    text: string
+  in:
+    - text: string
+    - text: string
+  link:
+    - g1
+    - g2
+g4:
+  name: Stereo
+  out:
+    text: string
+  in:
+    - text: string
+  link:
+    - g3
+g5:
+  name: Reverse
+  init: true
+  out:
+    text: string
+  in:
+    - text: string
+    - text: string
+  link:
+    - g4
+    - null

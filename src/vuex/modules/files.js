@@ -7,14 +7,14 @@ import
 { FILES_ADD
 } from '../mutation-types'
 
-import Graph from '../../state/graph.yml'
+import Files from '../../state/files.yml'
 
 // initial state
 const bdefs = {}
-boxLayout ( Graph.files, 'f0', DEFAULT_LAYOUT, bdefs, null )
+boxLayout ( Files, 'f0', DEFAULT_LAYOUT, bdefs, null )
 
 const state =
-{ graph: Graph.files
+{ graph: Files
 , all: bdefs.all
 , boxdef: bdefs.boxdef
 }
@@ -46,4 +46,3 @@ export default
 { state
 , mutations
 }
-
