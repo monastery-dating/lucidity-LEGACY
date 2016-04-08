@@ -1,3 +1,19 @@
+import { Component } from 'angular2/core'
+
+@Component
+( { selector: 'le-box'
+  , directives:
+    [ BoxComponent
+    ]
+  , template:
+    ` <text>BOX</text>
+    `
+  }
+)
+export class BoxComponent {
+
+}
+/*
 <template>
   <g :transform='transform'>
     <path :d='path' :class='className'></path>
@@ -58,5 +74,4 @@ export default
 
 <style>
 </style>
-
-
+*/

@@ -1,9 +1,25 @@
+import { Component } from 'angular2/core'
+import { BoxComponent } from './box.component'
+
+@Component
+( { selector: 'le-files'
+  , directives:
+    [ BoxComponent
+    ]
+  , template:
+    ` <svg id='files' v-drop:box>
+        <le-box v-for='item in all'
+          box='==boxdef [ item ]'
+          ></le-box>
+      </svg>
+    `
+  }
+)
+export class FilesComponent {
+
+}
+/*
 <template>
-  <svg id='files' v-drop:box>
-    <box v-for='item in all'
-      :box='boxdef [ item ]'
-      ></box>
-  </svg>
 </template>
 
 <script>
@@ -37,3 +53,4 @@ export default
 <style>
 </style>
 
+*/

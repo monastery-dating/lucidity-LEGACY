@@ -1,19 +1,24 @@
-<template>
-  <div v-if='true'>
-  <svg id='graph'>
-    <box v-for='item in all'
-      :box='boxdef [ item ]'
-      ></box>
-  </svg>
-  </div>
-  <ul v-else id='graph'>
-    <li v-for='item in all'>{{ boxdef [ item ] }}</li>
-  </ul>
-</template>
+import { Component } from 'angular2/core'
+import { BoxComponent } from './box.component'
 
-<script>
+@Component
+( { selector: 'le-graph'
+  , directives:
+    [ BoxComponent
+    ]
+  , template:
+    ` <svg id='graph'>
+        <box v-for='item in all'
+          box='==boxdef [ item ]'
+          ></box>
+      </svg>
+    `
+  }
+)
+export class GraphComponent {
+
+}
 /*
-*/
 import Box from './Box'
 
 export default
@@ -38,5 +43,4 @@ export default
 
 <style>
 </style>
-
-
+*/

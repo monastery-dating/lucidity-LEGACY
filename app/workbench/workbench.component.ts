@@ -1,8 +1,19 @@
 import { Component } from 'angular2/core'
+import { FilesComponent } from './files.component'
+import { GraphComponent } from './graph.component'
 
 @Component
 ( { selector: 'le-workbench'
-  , template: '<p>WORKBENCH</p>'
+  , directives:
+    [ FilesComponent
+    , GraphComponent
+    ]
+  , template:
+    ` <div id='workbench'>
+        <le-files></le-files>
+        <le-graph></le-graph>
+      </div>
+    `
   }
 )
 export class WorkbenchComponent {
@@ -10,10 +21,6 @@ export class WorkbenchComponent {
 }
 /*
 <template>
-  <div id='workbench'>
-    <files></files>
-    <graph></graph>
-  </div>
 </template>
 
 <script>
