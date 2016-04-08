@@ -1,14 +1,14 @@
 import { Component } from 'angular2/core'
-import LibraryComponent from './library/library.component'
-//import WorkbenchComponent from './workbench/index'
-import ProjectComponent from './project/index'
+import { LibraryComponent } from './library/library.component'
+import { WorkbenchComponent }  from './workbench/index'
+import { ProjectComponent } from './project/index'
 // import store from '../store/index'
 
 @Component
 ( { selector: 'le-app'
   , directives:
     [ LibraryComponent
-  //  , WorkbenchComponent
+    , WorkbenchComponent
     , ProjectComponent
     ]
   // , providers: store
@@ -22,10 +22,9 @@ import ProjectComponent from './project/index'
   <le-workbench></le-workbench>
   <le-project></le-project>
     `
-
   }
 )
-export class AppComponent {
+export default class AppComponent {
 }
 /*
 <script>

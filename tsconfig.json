@@ -1,20 +1,13 @@
-{ "compilerOptions":
-  { "target": "es5"
-  , "module": "system"
-  , "moduleResolution": "node"
-  , "emitDecoratorMetadata": true
-  , "experimentalDecorators": true
-  , "noImplicitAny": false
-  , "outDir": "dist"
+{ "exclude":
+  [ "node_modules"
+  , "jspm_packages"
+  , ".git"
+  , "typings/browser"
+  , "typings/browser.d.ts"
+  ]
+, "compilerOptions":
+  { "outDir": "dist"
+  , "target": "es5"
   , "sourceMap": true
   }
-, "exclude":
-  [ "jspm_packages"
-  , "node_modules"
-  , "lucidity.playback"
-  , "dist"
-  , "assets"
-  , "ani"
-  ]
-,  "compileOnSave": true
 }

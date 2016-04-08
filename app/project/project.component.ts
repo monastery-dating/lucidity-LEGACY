@@ -5,7 +5,7 @@ import { Component } from 'angular2/core'
   , template: '<p>PROJECT</p>'
   }
 )
-export default class ProjectComponent {
+export class ProjectComponent {
 
 }
 /*

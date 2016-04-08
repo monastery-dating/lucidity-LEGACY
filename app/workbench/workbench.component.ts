@@ -5,7 +5,7 @@ import { Component } from 'angular2/core'
   , template: '<p>WORKBENCH</p>'
   }
 )
-export default class WorkbenchComponent {
+export class WorkbenchComponent {
 
 }
 /*

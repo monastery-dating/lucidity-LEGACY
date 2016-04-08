@@ -5,7 +5,7 @@ import { Component } from 'angular2/core'
   , template: '<p>LIBRARY</p>'
   }
 )
-export default class LibraryComponent {
+export class LibraryComponent {
 }
 
 /*
