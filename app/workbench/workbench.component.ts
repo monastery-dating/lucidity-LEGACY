@@ -1,3 +1,14 @@
+import { Component } from 'angular2/core'
+
+@Component
+( { selector: 'le-workbench'
+  , template: '<p>WORKBENCH</p>'
+  }
+)
+export default class WorkbenchComponent {
+
+}
+/*
 <template>
   <div id='workbench'>
     <files></files>
@@ -23,3 +34,4 @@ export default
 
 <style>
 </style>
+*/

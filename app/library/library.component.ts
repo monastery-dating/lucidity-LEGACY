@@ -1,3 +1,14 @@
+import { Component } from 'angular2/core'
+
+@Component
+( { selector: 'le-library'
+  , template: '<p>LIBRARY</p>'
+  }
+)
+export default class LibraryComponent {
+}
+
+/*
 <template>
   <div id='library'>
     <h3>Library</h3>
@@ -66,3 +77,4 @@ export default
 
 <style>
 </style>
+*/

@@ -5,13 +5,18 @@
 
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1, user-scalable=no'>
+
+    <!-- bootstrap angular app with System.js -->
+
+    <script src="node_modules/angular2/bundles/angular2-polyfills.min.js"></script>
+    <script src="jspm_packages/system.js"></script>
+    <script src="config.js"></script>
   </head>
   <body>
-    <app></app>
-    <playback></playback>
-    <svg id='scratch' class='svg'>
-      <text class='tbox' id='tsizer'></text>
-    </svg>
-    <!-- built files will be auto injected -->
+    <le-app></le-app>
+    <script>
+      System.import ( 'app' )
+      .then ( null, console.error.bind ( console ) )
+    </script>
   </body>
 </html>

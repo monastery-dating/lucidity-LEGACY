@@ -1,0 +1,20 @@
+{ "compilerOptions":
+  { "target": "es5"
+  , "module": "system"
+  , "moduleResolution": "node"
+  , "emitDecoratorMetadata": true
+  , "experimentalDecorators": true
+  , "noImplicitAny": false
+  , "outDir": "dist"
+  , "sourceMap": true
+  }
+, "exclude":
+  [ "jspm_packages"
+  , "node_modules"
+  , "lucidity.playback"
+  , "dist"
+  , "assets"
+  , "ani"
+  ]
+,  "compileOnSave": true
+}

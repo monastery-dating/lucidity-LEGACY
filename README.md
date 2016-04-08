@@ -2,6 +2,9 @@
 
 > Lucidity Editor
 
+Using some ideas from this style guide:
+https://github.com/mgechev/angular2-style-guide
+
 ## Build Setup
 
 ``` bash

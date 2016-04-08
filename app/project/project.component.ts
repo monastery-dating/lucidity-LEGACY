@@ -1,3 +1,14 @@
+import { Component } from 'angular2/core'
+
+@Component
+( { selector: 'le-project'
+  , template: '<p>PROJECT</p>'
+  }
+)
+export default class ProjectComponent {
+
+}
+/*
 <template>
   <div id='project'>
    <h3 class='sel'> Gods of India</h3>
@@ -47,3 +58,4 @@ export default
 
 <style>
 </style>
+*/

@@ -1,9 +1,6 @@
 .DS_Store
-node_modules/
-dist/
-npm-debug.log
-selenium-debug.log
-test/unit/coverage
-test/e2e/reports
-elm-stuff
-elm.js
+/node_modules
+/jspm_packages
+/lucidity.playback
+/ani
+/dist
