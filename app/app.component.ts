@@ -1,5 +1,5 @@
 import { Component } from 'angular2/core'
-import { LibraryComponent } from './library/library.component'
+import { LibraryComponent } from './library/index'
 import { WorkbenchComponent }  from './workbench/index'
 import { ProjectComponent } from './project/index'
 // import store from '../store/index'

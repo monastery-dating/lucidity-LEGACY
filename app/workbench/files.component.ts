@@ -15,6 +15,7 @@ import { BoxComponent } from './box.component'
     `
   }
 )
+
 export class FilesComponent {
 
 }
