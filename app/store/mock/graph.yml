@@ -3,42 +3,40 @@ g0:
   type: lucy.Scene
   link:
     - g5
+  out:
   in:
     - any
 g1:
   name: Hello
-  out:
-    text: string
+  out: text:string
+  in:
 g2:
   name: Lucy
-  out:
-    text: string
+  out: text:string
+  in:
 g3:
   name: Mix
-  out:
-    text: string
+  out: text:string
   in:
-    - text: string
-    - text: string
+    - text:string
+    - text:string
   link:
     - g1
     - g2
 g4:
   name: Stereo
-  out:
-    text: string
+  out: text:string
   in:
-    - text: string
+    - text:string
   link:
     - g3
 g5:
   name: Reverse
   init: true
-  out:
-    text: string
+  out: text:string
   in:
-    - text: string
-    - text: string
+    - text:string
+    - text:string
   link:
     - g4
     - null

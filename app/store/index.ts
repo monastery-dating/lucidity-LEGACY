@@ -2,23 +2,7 @@ import {provide, OpaqueToken, Inject} from 'angular2/core'
 // Here we create the immutable app state (Flux style)
 import {Observable, BehaviorSubject, Subject} from 'rxjs'
 
-const merge = function<T extends S, S>
-( t: T, s: S ) : T {
-  const res: any = {}
-  // copy
-  for ( const k in t ) {
-    if ( t.hasOwnProperty ( k ) ) {
-      res [ k ] = t [ k ]
-    }
-  }
-  // merge
-  for ( const k in s ) {
-    if ( s.hasOwnProperty ( k ) ) {
-      res [ k ] = s [ k ]
-    }
-  }
-  return res
-}
+import { merge } from '../util/index'
 
 export interface Todo {
   id: number

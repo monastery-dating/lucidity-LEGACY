@@ -1,34 +1,18 @@
-/* eslint "max-params":0 */
-/** Compute Boxdef layout from a graph definition and draw
- * svg path from Boxdef
- */
-import htmlEscape from 'html-escape'
+import { UILayoutType } from './uilayout.type'
+import { UIGraphType, UIBoxesType } from './uigraph.type'
+import { UIBoxType, UIBoxSize, UIPosType } from './uibox.type'
+import { GraphType } from './graph.type'
+import { BoxType } from './box.type'
 
-/** Some constants for graph layout. These could live in a settings object when
- * calling boxLayout and path.
- */
-export const DEFAULT_LAYOUT =
-{ GRIDH:  8
-, HEIGHT: 30
-, RADIUS: 5
-, SLOT:   5
-, SPAD:   16
-, TPAD:   10
-, BPAD:   0  // pad between siblings
-, PCOUNT: 12 // palette color count
-, SUBPAD: 3 * 8 // (3*GRIDH) pad in sub assets
-, VPAD:   3  // vertical padding between boxes
-, tsizer: document.getElementById ( 'tsizer' )
-}
+import { escape } from '../util/index'
 
 /** Compute svg path of a box with up and down slots.
  * The sizes have to be computed first in the 'info' field.
- *
- * @param {object} boxdef - box layout definition
- * @param {object} layout - constants and tmp svg element
- * @returns {string} svg path
  */
-const path = function ( boxdef, layout ) {
+const path = function
+( boxdef : UIBoxType
+, layout : UILayoutType
+) {
   const { size, sextra }  = boxdef
   const { us, ds, w, wd, wde, wu, h } = size
   const r    = layout.RADIUS
@@ -92,7 +76,7 @@ const path = function ( boxdef, layout ) {
  *
  * @returns {string}   - the class name
  */
-const className = function ( obj, layout ) {
+const className = function ( obj, layout : UILayoutType ) {
   if ( obj.type ) {
     return 'main'
   }
@@ -116,73 +100,73 @@ const className = function ( obj, layout ) {
  *
  * @returns {int}        - delta y
  */
-const boxPosition = function ( graph, id, layout, boxdef, ghost, ctx ) {
+const boxPosition = function
+( graph: GraphType
+, id: string
+, layout: UILayoutType
+, uiboxes: UIBoxesType
+, ghost
+, ctx: UIPosType
+) {
   const obj  = graph [ id ]
 
   // store our position given by ctx
-  boxdef [ id ].pos = ctx
+  uiboxes [ id ].pos = ctx
   let dy = layout.HEIGHT
 
   let x  = ctx.x
   const input = obj.in
+  const link = obj.link || []
 
-  if ( input ) {
-    const link = obj.link || []
-
-    // get children
-    for ( let i = 0; i < input.length; i += 1 ) {
-      const cname = link [ i ]
-      if ( cname ) {
-        boxPosition
-        ( graph, cname, layout, boxdef, ghost
-        , { x, y: ctx.y + dy }
-        )
-        x += layout.BPAD + boxdef [ cname ].size.w
-      }
+  // get children
+  for ( let i = 0; i < input.length; i += 1 ) {
+    const cname = link [ i ]
+    if ( cname ) {
+      boxPosition
+      ( graph, cname, layout, uiboxes, ghost
+      , { x, y: ctx.y + dy }
+      )
+      x += layout.BPAD + uiboxes [ cname ].size.w
     }
-
-    return layout.HEIGHT
   }
-  else {
 
-  /*
-   * files rendering
-   */
+  if ( obj.sub || obj.next ){
+    // files rendering
     dy += layout.VPAD
+
     if ( obj.sub ) {
       dy += boxPosition
-      ( graph, obj.sub, layout, boxdef, ghost
+      ( graph, obj.sub, layout, uiboxes, ghost
       , { x: x + layout.SUBPAD, y: ctx.y + dy }
       )
     }
 
     if ( obj.next ) {
       dy += boxPosition
-      ( graph, obj.next, layout, boxdef, ghost
+      ( graph, obj.next, layout, uiboxes, ghost
       , { x, y: ctx.y + dy }
       )
     }
-
-    return dy
   }
+
+  return dy
 }
 
 /** Compute the minimum size to display the element.
- *
- * @param {object} obj    - object definition
- * @param {object} layout - constants and tmp svg element
- * @returns {object}      - {w, h, wd, wu, tw, th, ds, us}
  */
-const minSize = function ( obj, layout ) {
-  const ds     = ( obj.in  || [] ).length
+const minSize = function
+( obj: BoxType
+, layout: UILayoutType
+) : UIBoxSize {
+  const ds     = obj.in.length
   const us     = obj.out ? 1 : 0
   const tsizer = layout.tsizer
-  const name   = htmlEscape ( obj.name )
+  const name   = escape ( obj.name )
 
   tsizer.innerHTML = name
   const tb = tsizer.getBBox ()
 
-  let w  = tb.width + 2 * layout.TPAD
+  let w : number = tb.width + 2 * layout.TPAD
 
   // width down (taken by inlets)
   const wd = layout.RADIUS +
@@ -197,42 +181,47 @@ const minSize = function ( obj, layout ) {
   w = Math.ceil
   ( Math.max ( w, wd, wu ) / layout.GRIDH ) * layout.GRIDH
 
-  return { w
+  return { cacheName: obj.name // cache reference
+         , w
          , h: layout.HEIGHT
          , wd
          , wu
-         , tw: tb.width
-         , th: tb.height
          , ds
          , us
-         , name: obj.name // cache reference
+         , wde: 0
          }
 }
 
-const boxLayoutOne = function ( graph, id, layout, bdefs, ghost ) {
+const boxLayoutOne = function
+( graph: GraphType
+, id: string
+, layout: UILayoutType
+, uigraph: UIGraphType
+, ghost
+) {
   const obj  = graph [ id ]
-  if ( !bdefs.boxdef [ id ] ) {
-    bdefs.boxdef [ id ] = {}
+  if ( !uigraph.uibox [ id ] ) {
+    uigraph.uibox [ id ] = <UIBoxType> {}
   }
-  const bdef = bdefs.boxdef [ id ]
-  bdefs.all.push ( id )
+  const uibox = uigraph.uibox [ id ]
+  uigraph.list.push ( id )
 
-  if ( bdef.name !== obj.name ) {
-    bdef.name = obj.name
-    bdef.className = className ( obj, layout )
+  if ( uibox.name !== obj.name ) {
+    uibox.name = obj.name
+    uibox.className = className ( obj, layout )
   }
 
-  let size = bdef.size
+  let size = uibox.size
   if ( !size ||
-        size.name !== obj.name ||
-        size.us   !== ( obj.up ? 1 : 0 ) ||
+        size.cacheName !== obj.name ||
+        size.us   !== ( obj.out ? 1 : 0 ) ||
         size.ds   !== ( obj.in || [] ).length
         ) {
     size = minSize ( obj, layout )
   }
 
   const input = obj.in
-  const slots = []
+  const slots : string[] = []
   const sl = layout.SLOT
 
   if ( input ) {
@@ -248,13 +237,12 @@ const boxLayoutOne = function ( graph, id, layout, bdefs, ghost ) {
     // Compute sizes for all children
     for ( let i = 0; i < input.length; i += 1 ) {
       slots.push
-      ( { path: `M${x} ${y} l${sl} ${-sl} l${sl} ${sl}`
-        }
+      ( `M${x} ${y} l${sl} ${-sl} l${sl} ${sl}`
       )
       const cname = link [ i ]
       if ( cname ) {
         // We push in sextra the delta for slot i
-        const w  = boxLayoutOne ( graph, cname, layout, bdefs, ghost )
+        const w  = boxLayoutOne ( graph, cname, layout, uigraph, ghost )
         sextra.push ( w + layout.BPAD - layout.SPAD - 2 * layout.SLOT )
         x += w
       }
@@ -267,7 +255,7 @@ const boxLayoutOne = function ( graph, id, layout, bdefs, ghost ) {
     // Compute extra size for this box depending on i-1 children ( last child
     // does not change slot position )
     sextra.pop ()
-    bdef.sextra = sextra
+    uibox.sextra = sextra
     if ( sextra.length > 0 ) {
       size.wde = sextra.reduce ( ( sum, e ) => sum + e )
     }
@@ -279,49 +267,45 @@ const boxLayoutOne = function ( graph, id, layout, bdefs, ghost ) {
   }
   else {
     if ( obj.next ) {
-      boxLayoutOne ( graph, obj.next, layout, bdefs, ghost )
+      boxLayoutOne ( graph, obj.next, layout, uigraph, ghost )
     }
 
     if ( obj.sub ) {
-      boxLayoutOne ( graph, obj.sub, layout, bdefs, ghost )
+      boxLayoutOne ( graph, obj.sub, layout, uigraph, ghost )
     }
 
     size.wde = 0
 
-    bdef.sextra = []
+    uibox.sextra = []
   }
 
-  bdef.size = size
+  uibox.size = size
 
-  bdef.path  = path ( bdef, layout )
-  bdef.slots = slots
-  return bdef.size.w
+  uibox.path  = path ( uibox, layout )
+  uibox.slots = slots
+  return uibox.size.w
 }
 
 /** Compute the layout of a graph.
- *
- * @param {object} graph  - graph definition
- * @param {string} id     - name of top-most object
- * @param {object} layout - constants and tmp svg element
- * @param {array}  bdefs  - previous values to update.
- *                          Contains an 'all' field with list of
- *                          elements and a 'boxdef' object with
- *                          computed values.
- * @param {object} ghost  - dragged object if exists
- * @returns {void}
  */
-export const boxLayout = function ( graph, id, layout, bdefs, ghost ) {
+export const boxLayout = function
+( graph: GraphType
+, id: string
+, layout: UILayoutType
+, uigraph: UIGraphType
+, ghost
+) {
   // empty list
-  bdefs.all = []
-  if ( !bdefs.boxdef ) {
-    bdefs.boxdef = {}
+  uigraph.list = []
+  if ( !uigraph.uibox ) {
+    uigraph.uibox = {}
   }
 
   boxLayoutOne
   ( graph, id, layout
-  , bdefs, ghost )
+  , uigraph, ghost )
 
   boxPosition
   ( graph, id, layout
-  , bdefs.boxdef, ghost, { x: 0, y: 0 } )
+  , uigraph.uibox, ghost, { x: 0, y: 0 } )
 }
