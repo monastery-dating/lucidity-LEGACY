@@ -1,10 +1,10 @@
-import { UILayoutType } from './uilayout.type'
+import { UILayoutType, defaultUILayout } from './uilayout.type'
 import { UIGraphType, UIBoxesType } from './uigraph.type'
 import { UIBoxType, UIBoxSize, UIPosType } from './uibox.type'
 import { GraphType } from './graph.type'
 import { BoxType } from './box.type'
 
-import { escape } from '../util/index'
+import { escape, merge } from '../../util/index'
 
 /** Compute svg path of a box with up and down slots.
  * The sizes have to be computed first in the 'info' field.
@@ -192,32 +192,38 @@ const minSize = function
          }
 }
 
-const boxLayoutOne = function
+const uimapOne = function
 ( graph: GraphType
 , id: string
 , layout: UILayoutType
 , uigraph: UIGraphType
 , ghost
+, cachebox: UIBoxesType
 ) {
-  const obj  = graph [ id ]
-  if ( !uigraph.uibox [ id ] ) {
-    uigraph.uibox [ id ] = <UIBoxType> {}
-  }
-  const uibox = uigraph.uibox [ id ]
+  uigraph.uibox [ id ] = <UIBoxType> { id }
   uigraph.list.push ( id )
 
-  if ( uibox.name !== obj.name ) {
-    uibox.name = obj.name
-    uibox.className = className ( obj, layout )
-  }
+  const uibox = uigraph.uibox [ id ]
+  const cache = cachebox [ id ] || <UIBoxType>{}
 
-  let size = uibox.size
+  const obj  = graph [ id ]
+
+  uibox.name = obj.name
+  uibox.className = uibox.name === cache.name
+                  ? cache.className
+                  : className ( obj, layout )
+
+  let size = cache.size
   if ( !size ||
         size.cacheName !== obj.name ||
         size.us   !== ( obj.out ? 1 : 0 ) ||
         size.ds   !== ( obj.in || [] ).length
         ) {
     size = minSize ( obj, layout )
+  }
+  else {
+    // cache.size is immutable
+    size = merge ( size, {} )
   }
 
   const input = obj.in
@@ -242,7 +248,7 @@ const boxLayoutOne = function
       const cname = link [ i ]
       if ( cname ) {
         // We push in sextra the delta for slot i
-        const w  = boxLayoutOne ( graph, cname, layout, uigraph, ghost )
+        const w  = uimapOne ( graph, cname, layout, uigraph, ghost, cachebox )
         sextra.push ( w + layout.BPAD - layout.SPAD - 2 * layout.SLOT )
         x += w
       }
@@ -267,11 +273,11 @@ const boxLayoutOne = function
   }
   else {
     if ( obj.next ) {
-      boxLayoutOne ( graph, obj.next, layout, uigraph, ghost )
+      uimapOne ( graph, obj.next, layout, uigraph, ghost, cachebox )
     }
 
     if ( obj.sub ) {
-      boxLayoutOne ( graph, obj.sub, layout, uigraph, ghost )
+      uimapOne ( graph, obj.sub, layout, uigraph, ghost, cachebox )
     }
 
     size.wde = 0
@@ -288,24 +294,27 @@ const boxLayoutOne = function
 
 /** Compute the layout of a graph.
  */
-export const boxLayout = function
+export const uimap = function
 ( graph: GraphType
 , id: string
-, layout: UILayoutType
-, uigraph: UIGraphType
-, ghost
-) {
-  // empty list
-  uigraph.list = []
-  if ( !uigraph.uibox ) {
-    uigraph.uibox = {}
+, alayout?: UILayoutType
+, cache?: UIGraphType
+, ghost?: Object
+) : UIGraphType {
+  const uigraph =
+  { list: []
+  , uibox: {}
   }
 
-  boxLayoutOne
-  ( graph, id, layout
-  , uigraph, ghost )
+  const layout = alayout || defaultUILayout
+
+  const cachebox : UIBoxesType = cache ? cache.uibox : {}
+
+  uimapOne
+  ( graph, id, layout, uigraph, ghost, cachebox )
 
   boxPosition
-  ( graph, id, layout
-  , uigraph.uibox, ghost, { x: 0, y: 0 } )
+  ( graph, id, layout, uigraph.uibox, ghost, { x: 0, y: 0 } )
+
+  return uigraph
 }

@@ -1,149 +1,58 @@
 import {provide, OpaqueToken, Inject} from 'angular2/core'
 // Here we create the immutable app state (Flux style)
-import {Observable, BehaviorSubject, Subject} from 'rxjs'
+import { Observable, BehaviorSubject, Subject } from 'rxjs'
+import { FilesAction, FilesStoreType, observeFiles, initFilesStore } from '../workbench/index'
+import { GraphAction, GraphStoreType, observeGraph, initGraphStore } from '../workbench/index'
 
-import { merge } from '../util/index'
-
-export interface Todo {
-  id: number
-  text: string
-  completed: boolean
-}
+import { initStateToken, stateToken, dispatcherToken } from './store.tokens'
 
 export interface AppState {
-  todos: Todo[]
-  visibilityFilter: string
+  files: FilesStoreType
+  graph: GraphStoreType
 }
 
-// Mutations
-class AddTodo {
-  constructor
-  ( public todoId: number
-  , public text: string
-  ) {}
-}
+type Action = FilesAction | GraphAction
 
-class ToggleTodo {
-  constructor
-  ( public todoId: number
-  ) {}
-}
-
-export class SetVisibilityFilter {
-  constructor
-  ( public filter: string
-  ) {}
-}
-
-// This is all our app can do
-export type Action = AddTodo | ToggleTodo | SetVisibilityFilter
-
-// Create observable from initial state
-
-// Observe mutations on todo list
-const observeTodos = function
-( initState: Todo[]
-, actions: Observable<Action>
-) : Observable<Todo[]> {
-
-  // scan emits each event in the actions. It takes an accumulator ( in // our case the initial or current state ) and returns a new value (a state).
-  return actions.scan
-  ( ( state, action) => {
-      if ( action instanceof AddTodo ) {
-        // create a Todo
-        const newTodo =
-        { id: action.todoId, text: action.text, completed: false }
-        return [ ...state, newTodo ]
-      }
-      else {
-        // Observe mutations on individual elements
-        return state.map ( t => updateTodo ( t, action ) )
-      }
-    }
-  , initState
-  )
-}
-
-// Update a todo from an action
-const updateTodo = function
-( todo : Todo
-, action: Action
-) : Todo {
-
-  if ( action instanceof ToggleTodo && action.todoId == todo.id ) {
-    return merge ( todo, { completed: !todo.completed } )
-  }
-  else {
-    return todo
-  }
-}
-
-// Observe mutations on filter and produce new filter state.
-const observeFilter = function
-( initState: string
-, actions: Observable<Action>
-) : Observable<string> {
-
-  // From a list of actions, we emit filter changes. We could add debounce with
-  // actions.debounce ( 300 ).scan ( ... )
-  // http://www.sitepoint.com/functional-reactive-programming-rxjs/
-  return actions.scan
-  ( ( state, action ) => {
-      if ( action instanceof SetVisibilityFilter ) {
-        return action.filter
-      }
-      else {
-        return state
-      }
-    }
-  , initState
-  )
-}
-
-// And now let's put all this together in a single state function
+// We put it all together in a single state function.
 // It comes with an initial state, observable actions and gives an observable
-// application state:
-function stateFn
+// application state.
+function makeState
 ( initState: AppState
 , actions: Observable<Action>
 ) : Observable<AppState> {
 
   const appStateObservable : Observable<AppState> =
-  // observe Todos
-  observeTodos ( initState.todos, actions )
-  // add observe Filter
-  .zip ( observeFilter ( initState.visibilityFilter, actions ) )
+  // observe Files
+  observeFiles ( initState.files, actions )
+  // observe Graph
+  .zip ( observeGraph ( initState.graph, actions ) )
   // remap in a record corresponding to our AppState
-  .map ( s => ( { todos: s [ 0 ], visibilityFilter: s [ 1 ] } ) )
+  .map
+  ( s =>
+    ( { files: s [ 0 ], graph: s [ 1 ] } )
+  )
 
   // On observer subscription, we want to send the current app state without
   // waiting for an action.
-  const appBehaviorSubject = new BehaviorSubject ( initState )
+  const state = new BehaviorSubject ( initState )
 
-  // appBehaviorSubject subscribes to changes in app state
+  // app subscribes to changes in app state
   // and simply forwards the new state to its own subscribers
   // with 'next'.
-  appStateObservable.subscribe
-  ( s => appBehaviorSubject.next ( s ) )
+  state.subscribe
+  ( s => state.next ( s ) )
 
-  return appBehaviorSubject
+  return state
 }
 
-// Wrap the this into opaque structures before passing it
-// to our components with providers.
-export const initStateToken = new OpaqueToken ( 'initState' )
-export const stateToken = new OpaqueToken ( 'state' )
-export const dispatcherToken = new OpaqueToken ( 'dispatcher' )
 
 const store =
 // The initial state
 [ provide
   ( initStateToken
   , { useValue:
-      { todos:
-        [ { id: 1, text: 'foo', completed: false }
-        ]
-      , visibilityFilter: 'SHOW_ALL'
+      { files: initFilesStore ()
+      , graph: initGraphStore ()
       }
     }
   )
@@ -156,7 +65,7 @@ const store =
 // Observable app state
 , provide
   ( stateToken
-  , { useFactory: stateFn
+  , { useFactory: makeState
     , deps:
       [ new Inject ( initStateToken )
       , new Inject ( dispatcherToken )

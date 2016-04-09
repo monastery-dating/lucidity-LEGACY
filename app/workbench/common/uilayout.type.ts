@@ -38,4 +38,4 @@ export const UILayout = function
   return res
 }
 
-export const DefaultUILayout = UILayout ()
+export const defaultUILayout = UILayout ()

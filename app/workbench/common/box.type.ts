@@ -4,7 +4,7 @@ export interface BoxType {
   name: string
   in: SlotType[]
   out: SlotType
-  
+
   // Project, Scene, etc (empty for regular file or box)
   type?: string
 
@@ -16,4 +16,15 @@ export interface BoxType {
   // Specific to Box in files
   sub?: string    // points to first child
   next?: string   // points to next sibling
+}
+
+export interface FileType extends BoxType {
+  next: string   // points to next sibling
+}
+
+export const initBox = function () : BoxType {
+  return { name: 'main'
+    , in: []
+    , out: null
+    }
 }

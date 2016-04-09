@@ -17,6 +17,7 @@ export interface UIBoxSize {
 
 export interface UIBoxType {
   name: string
+  id: string
   size: UIBoxSize
   pos: UIPosType
   sextra: number[]

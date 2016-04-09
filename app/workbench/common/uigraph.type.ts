@@ -10,3 +10,11 @@ export interface UIGraphType {
   // collect information on these elements (size, etc)
   uibox: UIBoxesType
 }
+
+export const initUIGraph = function
+() : UIGraphType {
+  return {
+      list: []
+    , uibox: {}
+    }
+}
