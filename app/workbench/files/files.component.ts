@@ -3,6 +3,8 @@ import { BoxComponent } from '../common/box.component'
 import { stateToken, StateType } from '../../store/index'
 import { dispatcherToken, DispatcherType } from '../../store/index'
 
+import { FilesAdd } from './files.mutations'
+
 @Component
 ( { selector: 'le-files'
   , directives:
@@ -10,7 +12,7 @@ import { dispatcherToken, DispatcherType } from '../../store/index'
     ]
   , template:
     `
-     {{ filesCount | async }}
+     <p (click)='addFile()'>{{ filesCount | async }}</p>
 
      <svg id='files' v-drop:box>
         <le-box v-for='item in all'
@@ -29,7 +31,8 @@ export class FilesComponent {
   ) { }
 
   addFile () {
-    // this.dispatcher.next ( new FilesAdd ( ... ) )
+    console.log ( 'adding a file !' )
+    this.dispatcher.next ( new FilesAdd ( 'Joe', 'id0' ) )
   }
 
   get filesCount () {

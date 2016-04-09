@@ -9,6 +9,7 @@
   { "outDir": "dist"
   , "target": "es5"
   , "sourceMap": true
+  , "experimentalDecorators": true
   }
 , "compileOnSave": false
 }

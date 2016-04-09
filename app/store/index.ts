@@ -1,8 +1,19 @@
 import {provide, OpaqueToken, Inject} from 'angular2/core'
 // Here we create the immutable app state (Flux style)
 import { Observable, Observer, BehaviorSubject, Subject } from 'rxjs'
-import { FilesAction, FilesStoreType, observeFiles, initFilesStore } from '../workbench/index'
-import { GraphAction, GraphStoreType, observeGraph, initGraphStore } from '../workbench/index'
+// There is a bug in re-exports (functions become undef). Until fixed, let's
+// forget about workbench/index
+// import { FilesAction, FilesStoreType, observeFiles, initFilesStore } from '../workbench/index'
+// import { GraphAction, GraphStoreType, observeGraph, initGraphStore } from '../workbench/index'
+import { FilesAction } from '../workbench/files/files.mutations'
+import { FilesStoreType, initFilesStore } from '../workbench/files/files.store.type'
+import { observeFiles } from '../workbench/files/files.store'
+
+import { GraphAction } from '../workbench/graph/graph.mutations'
+import { GraphStoreType, initGraphStore } from '../workbench/graph/graph.store.type'
+import { observeGraph } from '../workbench/graph/graph.store'
+
+////
 
 import { initStateToken, stateToken, dispatcherToken } from './store.tokens'
 
@@ -39,12 +50,11 @@ function makeState
   // app subscribes to changes in app state
   // and simply forwards the new state to its own subscribers
   // with 'next'.
-  state.subscribe
+  appStateObservable.subscribe
   ( s => state.next ( s ) )
 
   return state
 }
-
 
 export const store =
 // The initial state

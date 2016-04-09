@@ -1,36 +1,36 @@
-g0:
+id0:
   name: cubes
   type: lucy.Scene
   link:
-    - g5
+    - id5
   out:
   in:
     - any
-g1:
+id1:
   name: Hello
   out: text:string
   in:
-g2:
+id2:
   name: Lucy
   out: text:string
   in:
-g3:
+id3:
   name: Mix
   out: text:string
   in:
     - text:string
     - text:string
   link:
-    - g1
-    - g2
-g4:
+    - id1
+    - id2
+id4:
   name: Stereo
   out: text:string
   in:
     - text:string
   link:
-    - g3
-g5:
+    - id3
+id5:
   name: Reverse
   init: true
   out: text:string
@@ -38,5 +38,5 @@ g5:
     - text:string
     - text:string
   link:
-    - g4
+    - id4
     - null

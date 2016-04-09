@@ -6,7 +6,8 @@ export interface FilesStoreType {
   uigraph: UIGraphType
 }
 
-export const initFilesStore = function () : FilesStoreType {
+export const initFilesStore = function
+() : FilesStoreType {
   return { graph: initGraph ()
     , uigraph: initUIGraph ()
     }

@@ -34,7 +34,7 @@ export class FilesAdd {
       const graph = merge ( state.graph, changes )
 
       // compute uigraph
-      const uigraph = uimap ( graph, 'f0' )
+      const uigraph = uimap ( graph )
 
       return { graph, uigraph }
   }

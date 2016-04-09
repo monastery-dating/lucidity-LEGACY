@@ -14,10 +14,6 @@ import { store } from './store/index'
   , providers: store
   , template:
     `
-  <svg id='scratch' class='svg'>
-    <text class='tbox' id='tsizer'></text>
-  </svg>
-  HELLO START
   <le-library></le-library>
   <le-workbench></le-workbench>
   <le-project></le-project>

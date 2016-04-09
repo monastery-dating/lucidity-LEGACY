@@ -2,6 +2,7 @@ import { UILayoutType, defaultUILayout } from './uilayout.type'
 import { UIGraphType, UIBoxesType } from './uigraph.type'
 import { UIBoxType, UIBoxSize, UIPosType } from './uibox.type'
 import { GraphType } from './graph.type'
+import { rootGraphId } from './graph.helper'
 import { BoxType } from './box.type'
 
 import { escape, merge } from '../../util/index'
@@ -226,6 +227,8 @@ const uimapOne = function
     size = merge ( size, {} )
   }
 
+  size.wde = 0
+
   const input = obj.in
   const slots : string[] = []
   const sl = layout.SLOT
@@ -265,25 +268,19 @@ const uimapOne = function
     if ( sextra.length > 0 ) {
       size.wde = sextra.reduce ( ( sum, e ) => sum + e )
     }
-    else {
-      size.wde = 0
-    }
 
     size.w = Math.max ( size.w, size.wd + size.wde )
   }
-  else {
-    if ( obj.next ) {
-      uimapOne ( graph, obj.next, layout, uigraph, ghost, cachebox )
-    }
 
-    if ( obj.sub ) {
-      uimapOne ( graph, obj.sub, layout, uigraph, ghost, cachebox )
-    }
-
-    size.wde = 0
-
-    uibox.sextra = []
+  if ( obj.next ) {
+    uimapOne ( graph, obj.next, layout, uigraph, ghost, cachebox )
   }
+
+  if ( obj.sub ) {
+    uimapOne ( graph, obj.sub, layout, uigraph, ghost, cachebox )
+  }
+
+  uibox.sextra = []
 
   uibox.size = size
 
@@ -296,25 +293,27 @@ const uimapOne = function
  */
 export const uimap = function
 ( graph: GraphType
-, id: string
 , alayout?: UILayoutType
 , cache?: UIGraphType
 , ghost?: Object
 ) : UIGraphType {
-  const uigraph =
+  const uigraph : UIGraphType =
   { list: []
   , uibox: {}
   }
+
 
   const layout = alayout || defaultUILayout
 
   const cachebox : UIBoxesType = cache ? cache.uibox : {}
 
   uimapOne
-  ( graph, id, layout, uigraph, ghost, cachebox )
+  ( graph, rootGraphId, layout, uigraph, ghost, cachebox )
+
+  console.log ( JSON.stringify ( uigraph ) )
 
   boxPosition
-  ( graph, id, layout, uigraph.uibox, ghost, { x: 0, y: 0 } )
+  ( graph, rootGraphId, layout, uigraph.uibox, ghost, { x: 0, y: 0 } )
 
   return uigraph
 }

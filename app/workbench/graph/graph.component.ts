@@ -1,5 +1,5 @@
 import { Component } from 'angular2/core'
-import { BoxComponent } from './box.component'
+import { BoxComponent } from '../common/box.component'
 
 @Component
 ( { selector: 'le-graph'

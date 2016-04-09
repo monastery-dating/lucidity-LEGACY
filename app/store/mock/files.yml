@@ -1,15 +1,15 @@
-f0:
+id0:
   name: 'Gods of India'
   type: lucy.Project
-  next: f1
-f1:
+  next: id1
+id1:
   name: ai
-  sub: f2
-  next: f4
-f2:
+  sub: id2
+  next: id4
+id2:
   name: ai.Play
-  next: f3
-f3:
+  next: id3
+id3:
   name: ai.Learn
-f4:
+id4:
   name: foo.Bar

@@ -1,4 +1,4 @@
-import { merge } from '../util/index'
+import { merge } from '../../util/index'
 
 /** Some constants for graph layout. These could live in a settings object when
  * calling boxLayout and path.
@@ -14,8 +14,21 @@ const DEFAULT_LAYOUT =
 , PCOUNT: 12 // palette color count
 , SUBPAD: 3 * 8 // (3*GRIDH) pad in sub assets
 , VPAD:   3  // vertical padding between boxes
-, tsizer: document.getElementById ( 'tsizer' )
+, tsizer: null
 }
+
+const getTsizer = function () {
+  if ( !DEFAULT_LAYOUT.tsizer ) {
+    DEFAULT_LAYOUT.tsizer = document.getElementById ( 'tsizer' )
+    if ( !DEFAULT_LAYOUT.tsizer ) {
+      console.log ( 'svg element tsizer missing in page' )
+    }
+    defaultUILayout.tsizer = DEFAULT_LAYOUT.tsizer  
+  }
+  return DEFAULT_LAYOUT.tsizer
+}
+// FIXME FIXME !
+setTimeout ( getTsizer, 100 )
 
 export interface UILayoutType {
   GRIDH:  number

@@ -1,19 +1,9 @@
 import { GraphStoreType } from './graph.store.type'
 import { GraphType } from '../common/graph.type'
+import { nextGraphId } from '../common/graph.helper'
 import { BoxType, FileType } from '../common/box.type'
 import { uimap } from '../common/uimap'
 import { merge } from '../../util/index'
-
-const nextFileId = function
-( state : GraphStoreType
-) : string {
-  const graph = state.graph
-  let n : number = 1
-  while ( graph [ `f${n}` ] ) {
-    n += 1
-  }
-  return `f${n}`
-}
 
 // Mutations
 export class GraphAdd {
@@ -29,7 +19,7 @@ export class GraphAdd {
       console.assert ( false, 'GraphAdd not implemented yet.' )
 
       // add a file to graph
-      const fileId = nextFileId ( state )
+      const fileId = nextGraphId ( state.graph )
       // We typecast to FileType so that 'next' is mandatory and we
       // do not get errors with the merge call.
       const after = <FileType> state.graph [ this.after ]
@@ -48,7 +38,7 @@ export class GraphAdd {
       const graph = merge ( state.graph, changes )
 
       // compute uigraph
-      const uigraph = uimap ( graph, 'f0' )
+      const uigraph = uimap ( graph )
 
       return { graph, uigraph }
   }

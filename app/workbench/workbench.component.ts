@@ -1,6 +1,6 @@
 import { Component } from 'angular2/core'
-import { FilesComponent } from './files.component'
-import { GraphComponent } from './graph.component'
+import { FilesComponent } from './files/files.component'
+import { GraphComponent } from './graph/graph.component'
 
 @Component
 ( { selector: 'le-workbench'
@@ -10,6 +10,10 @@ import { GraphComponent } from './graph.component'
     ]
   , template:
     ` <div id='workbench'>
+        <svg id='scratch' class='svg'>
+          <text class='tbox' id='tsizer'></text>
+        </svg>
+
         <le-files></le-files>
         <le-graph></le-graph>
       </div>
