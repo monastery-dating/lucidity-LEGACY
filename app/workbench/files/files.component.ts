@@ -1,5 +1,7 @@
-import { Component } from 'angular2/core'
-import { BoxComponent } from './box.component'
+import { Component, Inject, ChangeDetectionStrategy } from 'angular2/core'
+import { BoxComponent } from '../common/box.component'
+import { stateToken, StateType } from '../../store/index'
+import { dispatcherToken, DispatcherType } from '../../store/index'
 
 @Component
 ( { selector: 'le-files'
@@ -7,17 +9,32 @@ import { BoxComponent } from './box.component'
     [ BoxComponent
     ]
   , template:
-    ` <svg id='files' v-drop:box>
+    `
+     {{ filesCount | async }}
+
+     <svg id='files' v-drop:box>
         <le-box v-for='item in all'
           box='==boxdef [ item ]'
           ></le-box>
       </svg>
     `
+  , changeDetection: ChangeDetectionStrategy.OnPush
   }
 )
 
 export class FilesComponent {
+  constructor
+  ( @Inject (stateToken) private state: StateType
+  , @Inject (dispatcherToken) private dispatcher: DispatcherType
+  ) { }
 
+  addFile () {
+    // this.dispatcher.next ( new FilesAdd ( ... ) )
+  }
+
+  get filesCount () {
+    return this.state.map ( s => s.files.uigraph.list.length )
+  }
 }
 /*
 <template>

@@ -1,6 +1,6 @@
 import {provide, OpaqueToken, Inject} from 'angular2/core'
 // Here we create the immutable app state (Flux style)
-import { Observable, BehaviorSubject, Subject } from 'rxjs'
+import { Observable, Observer, BehaviorSubject, Subject } from 'rxjs'
 import { FilesAction, FilesStoreType, observeFiles, initFilesStore } from '../workbench/index'
 import { GraphAction, GraphStoreType, observeGraph, initGraphStore } from '../workbench/index'
 
@@ -11,7 +11,7 @@ export interface AppState {
   graph: GraphStoreType
 }
 
-type Action = FilesAction | GraphAction
+export type Action = FilesAction | GraphAction
 
 // We put it all together in a single state function.
 // It comes with an initial state, observable actions and gives an observable
@@ -46,7 +46,7 @@ function makeState
 }
 
 
-const store =
+export const store =
 // The initial state
 [ provide
   ( initStateToken
@@ -74,4 +74,6 @@ const store =
   )
 ]
 
-export default store
+export { stateToken, dispatcherToken } from './store.tokens'
+export type StateType = Observable<AppState>
+export type DispatcherType = Observer<Action>
