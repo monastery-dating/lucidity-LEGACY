@@ -1,4 +1,5 @@
-import { Component } from 'angular2/core'
+import { Component, Input } from 'angular2/core'
+import { UIBoxType } from './uibox.type'
 
 @Component
 ( { selector: 'le-box'
@@ -6,12 +7,12 @@ import { Component } from 'angular2/core'
     [ BoxComponent
     ]
   , template:
-    ` <text>BOX</text>
+    ` <li>{{box.name}}</li>
     `
   }
 )
 export class BoxComponent {
-
+  @Input() box: UIBoxType
 }
 /*
 <template>

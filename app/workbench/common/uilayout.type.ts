@@ -17,18 +17,17 @@ const DEFAULT_LAYOUT =
 , tsizer: null
 }
 
-const getTsizer = function () {
+// FIXME how to do this properly ?
+export const getTsizer = function () {
   if ( !DEFAULT_LAYOUT.tsizer ) {
     DEFAULT_LAYOUT.tsizer = document.getElementById ( 'tsizer' )
     if ( !DEFAULT_LAYOUT.tsizer ) {
       console.log ( 'svg element tsizer missing in page' )
     }
-    defaultUILayout.tsizer = DEFAULT_LAYOUT.tsizer  
+    defaultUILayout.tsizer = DEFAULT_LAYOUT.tsizer
   }
   return DEFAULT_LAYOUT.tsizer
 }
-// FIXME FIXME !
-setTimeout ( getTsizer, 100 )
 
 export interface UILayoutType {
   GRIDH:  number

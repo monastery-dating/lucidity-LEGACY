@@ -2,15 +2,15 @@ System.config({
   baseURL: "/",
   defaultJSExtensions: true,
   transpiler: "typescript",
+  typescriptOptions: {
+    "tsconfig": true
+  },
   paths: {
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*",
     "rxjs": "jspm_packages/npm/rxjs@5.0.0-beta.5/Rx.js"
   },
   trace: true,
-  typescriptOptions: {
-    "tsconfig": true
-  },
 
   packages: {
     "app": {
@@ -28,6 +28,7 @@ System.config({
   map: {
     "angular2": "npm:angular2@2.0.0-beta.13",
     "angular2-hot-loader": "npm:angular2-hot-loader@0.0.21",
+    "json": "github:systemjs/plugin-json@0.1.0",
     "rx": "npm:rx@4.1.0",
     "ts": "github:frankwallis/plugin-typescript@4.0.5",
     "typescript": "npm:typescript@1.8.9",

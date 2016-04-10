@@ -6,6 +6,19 @@ import { uimap } from '../common/uimap'
 import { merge } from '../../util/index'
 
 // Mutations
+export class FilesInit {
+  constructor
+  ( public graph: GraphType
+  ) {}
+
+  mutate
+  ( state: FilesStoreType ) : FilesStoreType {
+    const uigraph = uimap ( this.graph )
+
+    return { graph: this.graph, uigraph }
+  }
+}
+
 export class FilesAdd {
   constructor
   ( public name: string
@@ -41,4 +54,4 @@ export class FilesAdd {
 }
 
 // This is all our app can do on files
-export type FilesAction = FilesAdd
+export type FilesAction = FilesAdd | FilesInit

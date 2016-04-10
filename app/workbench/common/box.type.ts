@@ -12,6 +12,8 @@ export interface BoxType {
   // points to other ids in slot link order.
   // Can be null for empty slot.
   link?: string[]
+  // True if the block has an init function
+  init?: boolean
 
   // Specific to Box in files
   sub?: string    // points to first child

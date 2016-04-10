@@ -8,6 +8,7 @@
     "dependencies": {
       "angular2": "npm:angular2@^2.0.0-beta.13",
       "angular2-hot-loader": "npm:angular2-hot-loader@^0.0.21",
+      "json": "github:systemjs/plugin-json@^0.1.0",
       "rx": "npm:rx@^4.1.0",
       "ts": "github:frankwallis/plugin-typescript@^4.0.5"
     },
@@ -16,7 +17,7 @@
     }
   },
   "scripts": {
-    "dev" : "node-sass -w assets/scss/main.scss -o assets/css --source-map=true --output-style=compressed & live-server --no-browser --ignore=assets/scss,assets/css/style.css.map"
+    "dev": "node-sass -w assets/scss/main.scss -o assets/css --source-map=true --output-style=compressed & live-server --no-browser --ignore=assets/scss,assets/css/style.css.map"
   },
   "devDependencies": {
     "concurrently": "^2.0.0",

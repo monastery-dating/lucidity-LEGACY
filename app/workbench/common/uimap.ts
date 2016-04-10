@@ -1,4 +1,4 @@
-import { UILayoutType, defaultUILayout } from './uilayout.type'
+import { UILayoutType, defaultUILayout, getTsizer } from './uilayout.type'
 import { UIGraphType, UIBoxesType } from './uigraph.type'
 import { UIBoxType, UIBoxSize, UIPosType } from './uibox.type'
 import { GraphType } from './graph.type'
@@ -161,7 +161,9 @@ const minSize = function
 ) : UIBoxSize {
   const ds     = obj.in.length
   const us     = obj.out ? 1 : 0
-  const tsizer = layout.tsizer
+  // FIXME: We should find a better way to get hold of the
+  // DOM element...
+  const tsizer = layout.tsizer || ( layout.tsizer = getTsizer () )
   const name   = escape ( obj.name )
 
   tsizer.innerHTML = name
@@ -309,8 +311,6 @@ export const uimap = function
 
   uimapOne
   ( graph, rootGraphId, layout, uigraph, ghost, cachebox )
-
-  console.log ( JSON.stringify ( uigraph ) )
 
   boxPosition
   ( graph, rootGraphId, layout, uigraph.uibox, ghost, { x: 0, y: 0 } )

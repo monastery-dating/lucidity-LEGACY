@@ -3,7 +3,9 @@ import { BoxComponent } from '../common/box.component'
 import { stateToken, StateType } from '../../store/index'
 import { dispatcherToken, DispatcherType } from '../../store/index'
 
-import { FilesAdd } from './files.mutations'
+import { FilesAdd, FilesInit } from './files.mutations'
+
+import { mockFiles } from '../../store/mock/files'
 
 @Component
 ( { selector: 'le-files'
@@ -12,13 +14,10 @@ import { FilesAdd } from './files.mutations'
     ]
   , template:
     `
-     <p (click)='addFile()'>{{ filesCount | async }}</p>
-
-     <svg id='files' v-drop:box>
-        <le-box v-for='item in all'
-          box='==boxdef [ item ]'
-          ></le-box>
-      </svg>
+    <ul id='files'>
+      <li (click)='addFile()'>ADD FILE</li>
+      <le-box *ngFor='#box of ( all | async )' [box]='box'></le-box>
+    </ul>
     `
   , changeDetection: ChangeDetectionStrategy.OnPush
   }
@@ -28,15 +27,21 @@ export class FilesComponent {
   constructor
   ( @Inject (stateToken) private state: StateType
   , @Inject (dispatcherToken) private dispatcher: DispatcherType
-  ) { }
+  ) {
+    this.dispatcher.next
+    ( new FilesInit ( mockFiles ) )
+  }
 
   addFile () {
-    console.log ( 'adding a file !' )
     this.dispatcher.next ( new FilesAdd ( 'Joe', 'id0' ) )
   }
 
-  get filesCount () {
-    return this.state.map ( s => s.files.uigraph.list.length )
+  get all () {
+    return this.state.map ( s => {
+      const list = s.files.uigraph.list
+      const uibox = s.files.uigraph.uibox
+      return list.map ( e => uibox [ e ] )
+    })
   }
 }
 /*
