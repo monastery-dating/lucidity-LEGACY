@@ -7,7 +7,8 @@ export interface GraphStoreType {
 }
 
 export const initGraphStore = function () : GraphStoreType {
-  return { graph: initGraph ( )
+  return {
+      graph: initGraph ( )
     , uigraph: initUIGraph ()
     }
 }

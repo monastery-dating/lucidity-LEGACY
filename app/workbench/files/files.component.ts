@@ -14,10 +14,9 @@ import { mockFiles } from '../../store/mock/files'
     ]
   , template:
     `
-    <ul id='files'>
-      <li (click)='addFile()'>ADD FILE</li>
-      <le-box *ngFor='#box of ( all | async )' [box]='box'></le-box>
-    </ul>
+    <svg id='files'>
+      <g le-box *ngFor='#box of ( all | async )' [box]='box'></g>
+    </svg>
     `
   , changeDetection: ChangeDetectionStrategy.OnPush
   }

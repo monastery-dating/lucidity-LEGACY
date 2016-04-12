@@ -5,11 +5,9 @@ import { Observable, Observer, BehaviorSubject, Subject } from 'rxjs'
 // forget about workbench/index
 // import { FilesAction, FilesStoreType, observeFiles, initFilesStore } from '../workbench/index'
 // import { GraphAction, GraphStoreType, observeGraph, initGraphStore } from '../workbench/index'
-import { FilesAction } from '../workbench/files/files.mutations'
 import { FilesStoreType, initFilesStore } from '../workbench/files/files.store.type'
 import { observeFiles } from '../workbench/files/files.store'
 
-import { GraphAction } from '../workbench/graph/graph.mutations'
 import { GraphStoreType, initGraphStore } from '../workbench/graph/graph.store.type'
 import { observeGraph } from '../workbench/graph/graph.store'
 
@@ -17,12 +15,12 @@ import { observeGraph } from '../workbench/graph/graph.store'
 
 import { initStateToken, stateToken, dispatcherToken } from './store.tokens'
 
+import { Action } from './action.type'
+
 export interface AppState {
   files: FilesStoreType
   graph: GraphStoreType
 }
-
-export type Action = FilesAction | GraphAction
 
 // We put it all together in a single state function.
 // It comes with an initial state, observable actions and gives an observable

@@ -8,7 +8,8 @@ export interface FilesStoreType {
 
 export const initFilesStore = function
 () : FilesStoreType {
-  return { graph: initGraph ()
+  return {
+      graph: initGraph ()
     , uigraph: initUIGraph ()
     }
 }

@@ -1,4 +1,4 @@
-export default {
+export const mockGraph = {
   "id0": {
     "name": "cubes",
     "type": "lucy.Scene",
@@ -13,12 +13,12 @@ export default {
   "id1": {
     "name": "Hello",
     "out": "text:string",
-    "in": null
+    "in": []
   },
   "id2": {
     "name": "Lucy",
     "out": "text:string",
-    "in": null
+    "in": []
   },
   "id3": {
     "name": "Mix",

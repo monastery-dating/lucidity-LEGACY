@@ -113,7 +113,7 @@ const boxPosition = function
 
   // store our position given by ctx
   uiboxes [ id ].pos = ctx
-  let dy = layout.HEIGHT
+  let dy = layout.HEIGHT + layout.VPAD
 
   let x  = ctx.x
   const input = obj.in
@@ -133,7 +133,6 @@ const boxPosition = function
 
   if ( obj.sub || obj.next ){
     // files rendering
-    dy += layout.VPAD
 
     if ( obj.sub ) {
       dy += boxPosition
@@ -187,6 +186,8 @@ const minSize = function
   return { cacheName: obj.name // cache reference
          , w
          , h: layout.HEIGHT
+         , tx: layout.TPAD
+         , ty: layout.HEIGHT / 2 + tb.height / 4
          , wd
          , wu
          , ds

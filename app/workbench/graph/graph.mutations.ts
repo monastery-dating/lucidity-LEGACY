@@ -6,12 +6,45 @@ import { uimap } from '../common/uimap'
 import { merge } from '../../util/index'
 
 // Mutations
-export class GraphAdd {
+// Base class
+export class GraphAction {
+  name: string
+
+  constructor () {
+    this.name = 'GraphAction'
+  }
+
+  // dummy mutate method
+  mutate
+  ( state: GraphStoreType ) : GraphStoreType {
+    return state
+  }
+}
+
+export class GraphInit extends GraphAction {
+  constructor
+  ( public graph: GraphType
+  ) {
+    super ()
+  }
+
+  mutate
+  ( state: GraphStoreType ) : GraphStoreType {
+    console.log ( state )
+    const uigraph = uimap ( this.graph )
+
+    return { graph: this.graph, uigraph }
+  }
+}
+
+export class GraphAdd extends GraphAction {
   constructor
   ( public name: string
   , public after: string
   , public position: number
-  ) {}
+  ) {
+    super ()
+  }
 
   mutate
   ( state: GraphStoreType ) : GraphStoreType {
@@ -43,6 +76,3 @@ export class GraphAdd {
       return { graph, uigraph }
   }
 }
-
-// This is all our app can do on files
-export type GraphAction = GraphAdd

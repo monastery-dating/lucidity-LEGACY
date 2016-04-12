@@ -8,6 +8,8 @@ export interface UIBoxSize {
   cacheName: string
   w: number
   h: number
+  tx: number // text position x
+  ty: number // and y
   wd: number
   wu: number
   ds: number
