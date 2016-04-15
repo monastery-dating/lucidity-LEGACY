@@ -28,6 +28,10 @@ const path = function
     res.push ( `l${layout.SLOT} ${ layout.SLOT}` )
   }
 
+  // SPAD   /\  SPAD  /\
+  // +-----+  +------+  +-----------+
+  // |--------- wu ----------|
+  // |--------- w  -----------------|
   const rpadu = w - wu
   if ( rpadu > 0 ) {
     res.push ( `h${ rpadu + layout.SPAD }` )
@@ -36,8 +40,8 @@ const path = function
     res.push ( `h${ layout.SPAD }` )
   }
 
-  // SPAD   /\  SPAD  /\
-  // +-----+  +------+  +--
+  console.log ( boxdef.name, sextra )
+
 
   res.push ( `a${r} ${r} 0 0 1 ${ r} ${ r}` )
 
@@ -236,11 +240,11 @@ const uimapOne = function
   const slots : string[] = []
   const sl = layout.SLOT
 
-  if ( input ) {
-    const sextra = [ 0 ] // extra spacing before slot i
-                         // first has 0 extra spacing
-                         // second has spacing dependent on first child, etc
+  const sextra = [ 0 ] // extra spacing before slots
+                       // first has 0 extra spacing
+                       // second has spacing dependent on first child, etc
 
+  if ( input ) {
     let   x = layout.RADIUS + layout.SPAD
     const y = layout.HEIGHT
     const link = obj.link || []
@@ -267,13 +271,15 @@ const uimapOne = function
     // Compute extra size for this box depending on i-1 children ( last child
     // does not change slot position )
     sextra.pop ()
-    uibox.sextra = sextra
+    console.log ( uibox.name, sextra, '[0]')
     if ( sextra.length > 0 ) {
       size.wde = sextra.reduce ( ( sum, e ) => sum + e )
     }
 
     size.w = Math.max ( size.w, size.wd + size.wde )
   }
+
+  uibox.sextra = sextra
 
   if ( obj.next ) {
     uimapOne ( graph, obj.next, layout, uigraph, ghost, cachebox )
@@ -282,8 +288,6 @@ const uimapOne = function
   if ( obj.sub ) {
     uimapOne ( graph, obj.sub, layout, uigraph, ghost, cachebox )
   }
-
-  uibox.sextra = []
 
   uibox.size = size
 
