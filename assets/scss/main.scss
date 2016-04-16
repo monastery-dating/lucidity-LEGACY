@@ -61,11 +61,8 @@ body {
   }
 }
 
-// This can be removed when all is drawn with path
-svg rect.main {
-  fill:   color( mainb );
-  stroke: color( mainl );
-  stroke-width: $lsbo;
+svg text.main {
+  fill:  color( maint );
 }
 
 svg path.main {
@@ -261,6 +258,8 @@ svg {
   @extend ._pane;
   background: color( workb );
   left:   layout( panew ) - $ppad;
+  box-shadow: inset 0 0 60px 1px darken( color( workb ), 5% );
+
   // How to do this ?
   // How to do it dynamically if sides are closed ?
   padding-right:  layout( panew ) - $ppad;
@@ -284,6 +283,7 @@ svg {
   @extend ._pane;
   right:0;
   padding-right: $ppad;
+  box-shadow: 0 0 60px 1px darken( color( workb ), 5% );
 
   .control {
     @extend ._list;

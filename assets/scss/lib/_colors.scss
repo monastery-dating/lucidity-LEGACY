@@ -1,4 +1,5 @@
-$high_color: darken( desaturate( #D76D01, 30% ), 5% );
+$high_front: #D76D01;
+$high_back: darken( desaturate( $high_front, 30% ), 5% );
 $text_color: #ffffff;
 $back_color: #2B2B2B;
 $box_line:   #000000;
@@ -6,17 +7,17 @@ $box_line:   #000000;
 $colors:
 ( mainb: lighten( $back_color, 10% )
 , mainl: #000
-, maint: #000
-, workb: darken($back_color, 5%)      // workspace background
+, maint: $high_front
+, workb: lighten( $back_color,  5% )  // workspace background
 , workt: $text_color                  // workspace text
 , wboxt: #000                         // workspace svg text
-, wfild: $high_color                  // workspace files drop
+, wfild: $high_back                  // workspace files drop
 //  workspace svg high text
-, wboxs: lighten( saturate( $high_color, 50%), 20%)
+, wboxs: lighten( saturate( $high_back, 50%), 20%)
 
-, sboxb: $high_color // selected box background
+, sboxb: $high_back // selected box background
 , sboxt: $text_color // selected box text
-, stext: $high_color // selected text (not in selected box)
+, stext: $high_back // selected text (not in selected box)
 
 ,  boxb: lighten( $back_color, 20% ) // box background
 ,  boxt: $text_color                 // box text
@@ -33,4 +34,3 @@ $colors:
 @function color( $key ) {
   @return map-get( $colors, $key );
 }
-

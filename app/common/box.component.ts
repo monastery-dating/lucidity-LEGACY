@@ -11,7 +11,6 @@ import { UIBoxType } from './uibox.type'
         <svg:path [attr.d]='path' [attr.class]='className'></svg:path>
         <svg:text [attr.x]='tx' [attr.y]='ty' class='tbox' [attr.class]='className'>{{ name }}</svg:text>
         <svg:path *ngFor='#slot of slots'
-          class='slot'
           [attr.d]='slot'
           [attr.class]='sclass'></svg:path>
       </svg:g>
@@ -46,6 +45,6 @@ export class BoxComponent {
     return this.box.slots
   }
   get sclass () {
-    return this.box.name === 'filter.Bloom' ? 'pulse' : ''
+    return this.box.name === 'Mix' ? 'slot pulse' : 'slot'
   }
 }

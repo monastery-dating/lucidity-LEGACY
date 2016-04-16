@@ -12,8 +12,9 @@ const DEFAULT_LAYOUT =
 , TPAD:   8
 , BPAD:   0  // pad between siblings
 , PCOUNT: 12 // palette color count
-, SUBPAD: 0  // (computed  = 2 * GRIDH) pad in sub assets
-, VPAD:   2  // vertical padding between boxes
+, SUBPADX: 0  // (computed  = 2 * GRIDH) pad in sub assets
+, SUBPADY: 4  // (computed  = 2 * GRIDH) pad in sub assets
+, VPAD:   0  // vertical padding between boxes
 , tsizer: null
 }
 
@@ -38,7 +39,8 @@ export interface UILayoutType {
   TPAD:   number
   BPAD:   number  // pad between siblings
   PCOUNT: number  // palette color count
-  SUBPAD: number  // (3*GRIDH) pad in sub assets
+  SUBPADX: number  // (3*GRIDH) pad in sub assets
+  SUBPADY: number  // (3*GRIDH) pad with next item
   VPAD:   number  // vertical padding between boxes
   tsizer: any // TODO: should be a DOM element
 }
@@ -46,7 +48,7 @@ export interface UILayoutType {
 export const UILayout = function
 ( o?: Object ) : UILayoutType {
   const res = merge ( DEFAULT_LAYOUT, o || {} )
-  res.SUBPAD = 2 * res.GRIDH
+  res.SUBPADX = 2 * res.GRIDH
   return res
 }
 

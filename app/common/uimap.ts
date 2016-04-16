@@ -94,16 +94,7 @@ const className = function ( obj, layout : UILayoutType ) {
   return `box${1 + num % layout.PCOUNT}`
 }
 
-/** Insert position in boxdef.
- *
- * @param {object} graph - the complete graph
- * @param {string} id    - identifier of the element
- * @param {object} layout- rendering constants
- * @param {object} boxdef- box definitions
- * @param {object} ghost - ghost box (being dragged)
- * @param {object} ctx   - context {x,y}
- *
- * @returns {int}        - delta y
+/** Compute box position.
  */
 const boxPosition = function
 ( graph: GraphType
@@ -113,16 +104,22 @@ const boxPosition = function
 , ghost
 , ctx: UIPosType
 ) {
-  const obj  = graph [ id ]
+  const obj  = graph.boxes [ id ]
 
   // store our position given by ctx
   uiboxes [ id ].pos = ctx
-  let dy = layout.HEIGHT + layout.VPAD
+  let dy = layout.HEIGHT
 
   let x  = ctx.x
   const input = obj.in
   const link = obj.link || []
 
+  if ( graph.type === 'files' ) {
+    dy += layout.SUBPADY
+  }
+  else {
+    dy += layout.VPAD
+  }
   // get children
   for ( let i = 0; i < input.length; i += 1 ) {
     const cname = link [ i ]
@@ -135,20 +132,23 @@ const boxPosition = function
     }
   }
 
-  if ( obj.sub || obj.next ){
+  if ( obj.sub || obj.next ) {
     // files rendering
-
     if ( obj.sub ) {
       dy += boxPosition
       ( graph, obj.sub, layout, uiboxes, ghost
-      , { x: x + layout.SUBPAD, y: ctx.y + dy }
+      , { x: x + layout.SUBPADX
+        , y: ctx.y + dy
+        }
       )
     }
 
     if ( obj.next ) {
       dy += boxPosition
       ( graph, obj.next, layout, uiboxes, ghost
-      , { x, y: ctx.y + dy }
+      , { x
+        , y: ctx.y + dy
+        }
       )
     }
   }
@@ -214,7 +214,7 @@ const uimapOne = function
   const uibox = uigraph.uibox [ id ]
   const cache = cachebox [ id ] || <UIBoxType>{}
 
-  const obj  = graph [ id ]
+  const obj  = graph.boxes [ id ]
 
   uibox.name = obj.name
   uibox.className = uibox.name === cache.name
