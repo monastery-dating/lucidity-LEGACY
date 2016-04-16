@@ -1,5 +1,5 @@
 import { Component, Inject, ChangeDetectionStrategy } from 'angular2/core'
-import { BoxComponent } from '../common/box.component'
+import { BoxComponent } from '../../common/box.component'
 import { stateToken, StateType } from '../../store/index'
 import { dispatcherToken, DispatcherType } from '../../store/index'
 

@@ -1,21 +1,21 @@
-import { FilesStoreType } from './files.store.type'
-import { GraphType } from '../../common/graph.type'
-import { nextGraphId } from '../../common/graph.helper'
-import { BoxType, FileType } from '../../common/box.type'
-import { uimap } from '../../common/uimap'
-import { merge } from '../../util/index'
+import { LibraryStoreType } from './Library.store.t'
+import { GraphType } from '../common/graph.type'
+import { nextGraphId } from '../common/graph.helper'
+import { BoxType, FileType } from '../common/box.type'
+import { uimap } from '../common/uimap'
+import { merge } from '../util/index'
 
 // Mutations
 // Base class
-export class FilesAction {
+export class LibraryAction {
   // dummy mutate method
   mutate
-  ( state: FilesStoreType ) : FilesStoreType {
+  ( state: LibraryStoreType ) : LibraryStoreType {
     return state
   }
 }
 
-export class FilesInit extends FilesAction {
+export class LibraryInit extends LibraryAction {
   constructor
   ( public graph: GraphType
   ) {
@@ -23,14 +23,14 @@ export class FilesInit extends FilesAction {
   }
 
   mutate
-  ( state: FilesStoreType ) : FilesStoreType {
+  ( state: LibraryStoreType ) : LibraryStoreType {
     const uigraph = uimap ( this.graph )
 
     return { graph: this.graph, uigraph }
   }
 }
 
-export class FilesAdd extends FilesAction {
+export class LibraryAdd extends LibraryAction {
   constructor
   ( public name: string
   , public after: string // where to insert file
@@ -39,7 +39,7 @@ export class FilesAdd extends FilesAction {
   }
 
   mutate
-  ( state: FilesStoreType ) : FilesStoreType {
+  ( state: LibraryStoreType ) : LibraryStoreType {
       // add a file to graph
       const fileId = nextGraphId ( state.graph )
       // We typecast to FileType so that 'next' is mandatory and we

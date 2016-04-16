@@ -1,5 +1,5 @@
-import { GraphType, initGraph } from '../common/graph.type'
-import { UIGraphType, initUIGraph } from '../common/uigraph.type'
+import { GraphType, initGraph } from '../../common/graph.type'
+import { UIGraphType, initUIGraph } from '../../common/uigraph.type'
 
 export interface GraphStoreType {
   graph: GraphType

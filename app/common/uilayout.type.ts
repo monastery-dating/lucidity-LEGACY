@@ -1,19 +1,19 @@
-import { merge } from '../../util/index'
+import { merge } from '../util/index'
 
 /** Some constants for graph layout. These could live in a settings object when
  * calling boxLayout and path.
  */
 const DEFAULT_LAYOUT =
-{ GRIDH:  8
-, HEIGHT: 30
+{ GRIDH:  6
+, HEIGHT: 26
 , RADIUS: 5
 , SLOT:   5
-, SPAD:   16
-, TPAD:   10
+, SPAD:   16 // slot pad
+, TPAD:   8
 , BPAD:   0  // pad between siblings
 , PCOUNT: 12 // palette color count
-, SUBPAD: 3 * 8 // (3*GRIDH) pad in sub assets
-, VPAD:   3  // vertical padding between boxes
+, SUBPAD: 0  // (computed  = 2 * GRIDH) pad in sub assets
+, VPAD:   2  // vertical padding between boxes
 , tsizer: null
 }
 
@@ -46,7 +46,7 @@ export interface UILayoutType {
 export const UILayout = function
 ( o?: Object ) : UILayoutType {
   const res = merge ( DEFAULT_LAYOUT, o || {} )
-  res.SUBPAD = 3 * res.GRIDH
+  res.SUBPAD = 2 * res.GRIDH
   return res
 }
 

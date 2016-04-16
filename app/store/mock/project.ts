@@ -1,5 +1,5 @@
 import { GraphType } from '../../common/graph.type'
-export const mockFiles : GraphType = {
+export const mockProject : GraphType = {
   "id0": {
     "name": "Gods of India",
     "type": "lucy.Project",

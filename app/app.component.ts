@@ -14,9 +14,12 @@ import { store } from './store/index'
   , providers: store
   , template:
     `
-  <le-library></le-library>
-  <le-workbench></le-workbench>
-  <le-project></le-project>
+      <svg id='scratch' class='svg'>
+        <text class='tbox' id='tsizer'></text>
+      </svg>
+      <le-library></le-library>
+      <le-workbench></le-workbench>
+      <le-project></le-project>
     `
   }
 )

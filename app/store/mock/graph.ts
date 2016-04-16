@@ -1,4 +1,5 @@
-export const mockGraph = {
+import { GraphType } from '../../common/graph.type'
+export const mockGraph : GraphType = {
   "id0": {
     "name": "cubes",
     "type": "lucy.Scene",

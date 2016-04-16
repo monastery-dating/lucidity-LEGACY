@@ -1,32 +1,32 @@
 import { GraphType } from '../../common/graph.type'
-export const mockFiles : GraphType = {
+export const mockLibrary : GraphType = {
   "id0": {
-    "name": "Gods of India",
-    "type": "lucy.Project",
+    "name": "Library",
+    "type": "lucy.Library",
     "in": [],
     "out": null,
     "next": "id1"
   },
   "id1": {
-    "name": "ai",
+    "name": "generator",
     "in": [],
     "out": null,
     "sub": "id2",
     "next": "id4"
   },
   "id2": {
-    "name": "ai.Play",
+    "name": "Crystal",
     "in": [],
     "out": null,
     "next": "id3"
   },
   "id3": {
-    "name": "ai.Learn",
+    "name": "Video",
     "in": [],
     "out": null
   },
   "id4": {
-    "name": "foo.Bar",
+    "name": "filter",
     "in": [],
     "out": null
   }

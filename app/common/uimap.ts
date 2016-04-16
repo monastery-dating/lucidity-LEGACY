@@ -5,7 +5,7 @@ import { GraphType } from './graph.type'
 import { rootGraphId } from './graph.helper'
 import { BoxType } from './box.type'
 
-import { escape, merge } from '../../util/index'
+import { escape, merge } from '../util/index'
 
 /** Compute svg path of a box with up and down slots.
  * The sizes have to be computed first in the 'info' field.
@@ -281,12 +281,12 @@ const uimapOne = function
 
   uibox.sextra = sextra
 
-  if ( obj.next ) {
-    uimapOne ( graph, obj.next, layout, uigraph, ghost, cachebox )
-  }
-
   if ( obj.sub ) {
     uimapOne ( graph, obj.sub, layout, uigraph, ghost, cachebox )
+  }
+
+  if ( obj.next ) {
+    uimapOne ( graph, obj.next, layout, uigraph, ghost, cachebox )
   }
 
   uibox.size = size

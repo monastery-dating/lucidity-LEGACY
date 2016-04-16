@@ -10,10 +10,6 @@ import { GraphComponent } from './graph/graph.component'
     ]
   , template:
     ` <div id='workbench'>
-        <svg id='scratch' class='svg'>
-          <text class='tbox' id='tsizer'></text>
-        </svg>
-
         <le-files></le-files>
         <le-graph></le-graph>
       </div>

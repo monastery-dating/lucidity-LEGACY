@@ -21,7 +21,7 @@ body {
   border: $lbox solid color( boxl );
   margin-left: -$lbox;
   margin-top: -$lbox;
-  width: 90%;
+  width: 102%;
 
   &.sel {
     background: color( sboxb );
@@ -167,6 +167,7 @@ svg {
   height: layout( listh );
   border: $lbox solid color( boxl );
   margin-top: -$lbox;
+  overflow-x: hidden;
 
   p {
     background: color( lheab );

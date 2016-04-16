@@ -1,8 +1,8 @@
 import { GraphStoreType } from './graph.store.type'
-import { GraphType } from '../common/graph.type'
-import { nextGraphId } from '../common/graph.helper'
-import { BoxType, FileType } from '../common/box.type'
-import { uimap } from '../common/uimap'
+import { GraphType } from '../../common/graph.type'
+import { nextGraphId } from '../../common/graph.helper'
+import { BoxType, FileType } from '../../common/box.type'
+import { uimap } from '../../common/uimap'
 import { merge } from '../../util/index'
 
 // Mutations

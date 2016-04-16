@@ -11,6 +11,9 @@ import { observeFiles } from '../workbench/files/files.store'
 import { GraphStoreType, initGraphStore } from '../workbench/graph/graph.store.type'
 import { observeGraph } from '../workbench/graph/graph.store'
 
+import { LibraryStoreType, initLibraryStore } from '../library/library.store.t'
+import { observeLibrary } from '../library/library.store'
+
 ////
 
 import { initStateToken, stateToken, dispatcherToken } from './store.tokens'
@@ -20,6 +23,7 @@ import { Action } from './action.type'
 export interface AppState {
   files: FilesStoreType
   graph: GraphStoreType
+  library: LibraryStoreType
 }
 
 // We put it all together in a single state function.
@@ -31,14 +35,22 @@ function makeState
 ) : Observable<AppState> {
 
   const appStateObservable : Observable<AppState> =
+  Observable.zip
   // observe Files
-  observeFiles ( initState.files, actions )
+  ( observeFiles ( initState.files, actions )
   // observe Graph
-  .zip ( observeGraph ( initState.graph, actions ) )
+  , observeGraph ( initState.graph, actions )
+  // observe Library
+  , observeLibrary ( initState.library, actions )
+  )
   // remap in a record corresponding to our AppState
   .map
   ( s =>
-    ( { files: s [ 0 ], graph: s [ 1 ] } )
+    ( { files: s [ 0 ]
+      , graph: s [ 1 ]
+      , library: s [ 2 ]
+      }
+    )
   )
 
   // On observer subscription, we want to send the current app state without
@@ -61,6 +73,7 @@ export const store =
   , { useValue:
       { files: initFilesStore ()
       , graph: initGraphStore ()
+      , library: initLibraryStore ()
       }
     }
   )
