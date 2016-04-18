@@ -20,18 +20,6 @@ body {
 }
 
 @for $i from 1 through $pcount {
-  // can be removed when box are all drawn
-  // with same code using path
-  svg rect.box#{$i} {
-    fill: pfill( $i );
-    stroke: pline( $i );
-
-    &.sel {
-      fill: spfill( $i );
-      stroke: color( sboxl );
-    }
-  }
-
   svg path.box#{$i} {
     fill: pfill( $i );
     stroke: pline( $i );
@@ -51,6 +39,12 @@ body {
   }
 }
 
+svg path.Folder {
+  fill:   color( foldb );
+  stroke: color( foldl );
+  stroke-width: $lsbo;
+}
+
 svg text.main {
   fill:  color( maint );
 }
@@ -61,12 +55,9 @@ svg path.main {
   stroke-width: $lsbo;
 }
 
-svg .tbox {
+svg text {
   font-size:   getfont(size);
   fill: color( wboxt );
-  &.main {
-    fill: color( wboxs );
-  }
 }
 
 svg#files {
@@ -83,6 +74,7 @@ svg#scratch {
 
 
 svg {
+  @extend ._noselect;
   text {
     pointer-events: none;
     stroke-width: $lsbo;
@@ -341,4 +333,9 @@ h1, h2, h3, p {
 
 p {
   margin: 0;
+}
+
+// Block types
+.Scene, .Project {
+  @extend .main;
 }

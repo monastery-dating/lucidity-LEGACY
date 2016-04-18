@@ -1,16 +1,19 @@
 $high_front: #D76D01;
 $high_back: darken( desaturate( $high_front, 30% ), 5% );
-$text_color: #ffffff;
-$back_color: #2B2B2B;
-$box_line:   #000000;
+$text_color: #000;
+$back_color: #303030;
+$box_line:   #333;
 
 $colors:
 ( mainb: lighten( $back_color, 10% )
 , mainl: #000
 , maint: $high_front
+, foldb: lighten( $back_color, 20% )
+, foldl: #000
+, foldt: $high_front
 , workb: lighten( $back_color,  5% )  // workspace background
 , workt: $text_color                  // workspace text
-, wboxt: #000                         // workspace svg text
+, wboxt: $text_color                  // workspace svg text
 , wfild: $high_back                  // workspace files drop
 //  workspace svg high text
 , wboxs: lighten( saturate( $high_back, 50%), 20%)
@@ -19,7 +22,7 @@ $colors:
 , sboxt: $text_color // selected box text
 , stext: $high_back // selected text (not in selected box)
 
-,  boxb: lighten( $back_color, 20% ) // box background
+,  boxb: lighten( $back_color, 15% ) // box background
 ,  boxt: $text_color                 // box text
 ,  boxl: $box_line                   // box border (line) color
 , tboxb: lighten( $back_color, 30% ) // title box background

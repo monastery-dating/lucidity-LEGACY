@@ -4,7 +4,7 @@ export const mockFiles : GraphType = {
   "boxes": {
     "id0": {
       "name": "Gods of India",
-      "type": "lucy.Project",
+      "type": "Project",
       "in": [],
       "out": null,
       "next": "id1"

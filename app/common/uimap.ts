@@ -79,8 +79,8 @@ const path = function
  * @returns {string}   - the class name
  */
 const className = function ( obj, layout : UILayoutType ) {
-  if ( obj.type !== 'Block' && obj.type !== 'Folder' ) {
-    return 'main'
+  if ( obj.type !== 'Block' ) {
+    return obj.type
   }
 
   const name = obj.name.split ( '.' ) [ 0 ]

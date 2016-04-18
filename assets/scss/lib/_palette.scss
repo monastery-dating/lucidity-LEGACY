@@ -6,14 +6,12 @@ $pcount: 12;
 // palette background
 @function pfill( $index ) {
   @return darken( desaturate( adjust-hue( $pbase, $index * 360 / $pcount ),
-  60%), 5% );
+  70%), 10% );
 //  @return darken( desaturate( adjust-hue( $pbase, $index * 360 / $pcount ), 70%), 10% );
 }
 
 @function pbox( $index ) {
-  @return darken( desaturate( adjust-hue( $pbase, $index * 360 / $pcount ),
-  80%), 20% );
-//  @return darken( desaturate( adjust-hue( $pbase, $index * 360 / $pcount ), 70%), 10% );
+  @return pfill( $index )
 }
 
 @function spfill( $index ) {
