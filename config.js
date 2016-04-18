@@ -29,6 +29,8 @@ System.config({
     "angular2": "npm:angular2@2.0.0-beta.13",
     "angular2-hot-loader": "npm:angular2-hot-loader@0.0.21",
     "dragula": "npm:dragula@3.6.8",
+    "interact-js": "npm:interact-js@2.0.1",
+    "interact.js": "npm:interact.js@1.2.6",
     "json": "github:systemjs/plugin-json@0.1.0",
     "ng2-dragula": "npm:ng2-dragula@1.1.6",
     "pouchdb": "npm:pouchdb@5.3.1",

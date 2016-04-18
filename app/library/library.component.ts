@@ -73,7 +73,12 @@ export class LibraryComponent {
       , moves: ( el, container, handle ) => {
           return el.classList.contains ( 'drag' )
         }
-    }
+      }
+    )
+    dragulaService.drag.subscribe
+    ( ( value ) => {
+        console.log ( 'drag', value )
+      }
     )
     dispatcher.next
     ( new LibraryInit ( mockLibrary ) )

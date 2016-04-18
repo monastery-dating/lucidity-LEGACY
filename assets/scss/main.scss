@@ -179,7 +179,7 @@ svg#scratch {
     cursor: -moz-grab;
 
     &:active, &.gu-mirror {
-      cursor: grab;
+      cursor: grabbing;
       cursor: -webkit-grabbing;
       cursor: -moz-grabbing;
     }
