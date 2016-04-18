@@ -6,12 +6,11 @@ $box_line:   #333;
 
 $colors:
 ( mainb: lighten( $back_color, 10% )
-, mainl: #000
 , maint: $high_front
 , foldb: lighten( $back_color, 20% )
-, foldl: #000
 , foldt: $high_front
 , workb: lighten( $back_color,  5% )  // workspace background
+, wboxl: darken( $back_color, 25% )    // workspace lines
 , workt: $text_color                  // workspace text
 , wboxt: $text_color                  // workspace svg text
 , wfild: $high_back                  // workspace files drop

@@ -22,7 +22,6 @@ body {
 @for $i from 1 through $pcount {
   svg path.box#{$i} {
     fill: pfill( $i );
-    stroke: pline( $i );
 
     &.dark {
       fill: darken( desaturate( pfill( $i ), 30%), 30%);
@@ -40,24 +39,39 @@ body {
 }
 
 svg path.Folder {
-  fill:   color( foldb );
-  stroke: color( foldl );
-  stroke-width: $lsbo;
 }
 
-svg text.main {
-  fill:  color( maint );
-}
+svg {
+  @extend ._noselect;
 
-svg path.main {
-  fill:   color( mainb );
-  stroke: color( mainl );
-  stroke-width: $lsbo;
-}
+  .slot {
+    fill: none;
+    stroke: color( wboxl );
+    stroke-width: $lsbo;
+  }
 
-svg text {
-  font-size:   getfont(size);
-  fill: color( wboxt );
+  text {
+    pointer-events: none;
+    font-size:   getfont(size);
+    fill: color( wboxt );
+
+    &.main {
+      fill:  color( maint );
+    }
+  }
+
+  path {
+    stroke-width: $lsbo;
+    stroke: color( wboxl );
+
+    &.main {
+      fill:   color( mainb );
+    }
+
+    &.Folder {
+      fill:   color( foldb );
+    }
+  }
 }
 
 svg#files {
@@ -70,23 +84,6 @@ svg#files {
 
 svg#scratch {
   opacity: 0;
-}
-
-
-svg {
-  @extend ._noselect;
-  text {
-    pointer-events: none;
-    stroke-width: $lsbo;
-  }
-}
-
-svg {
-  .slot {
-    fill: none;
-    stroke: black;
-    stroke-width: 2px;
-  }
 }
 
 

@@ -18,9 +18,3 @@ $pcount: 12;
   @return lighten( desaturate( adjust-hue( $pbase, $index * 360 / $pcount),
   0% ), 30% );
 }
-
-// palette line
-@function pline( $index ) {
-  @return #000;
-//  @return adjust-hue( $pbase, $index * 60 );
-}
