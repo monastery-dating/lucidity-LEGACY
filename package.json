@@ -19,7 +19,9 @@
     }
   },
   "scripts": {
-    "dev": "node-sass -w assets/scss/main.scss -o assets/css --source-map=true --output-style=compressed & live-server --no-browser --ignore=assets/scss,assets/css/style.css.map"
+    "dev": "node-sass -w assets/scss/main.scss -o assets/css --source-map=true --output-style=compressed & live-server --no-browser --ignore=assets/scss,assets/css/style.css.map",
+    "sass": "node-sass -w assets/scss/main.scss -o assets/css --source-map=true --output-style=compressed",
+    "live": "live-server --no-browser --ignore=assets/scss,assets/css/style.css.map"
   },
   "devDependencies": {
     "concurrently": "^2.0.0",

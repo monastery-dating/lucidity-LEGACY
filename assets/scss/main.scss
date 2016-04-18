@@ -19,20 +19,9 @@ body {
   color: color( workt );
 }
 
-._draggable {
-  .list div {
-    padding: 0;
-    span {
-      // We move the text into a span to avoid drag size
-      // change (dragula bug)
-      display: block;
-      padding: $pad;
-      &:before {
-        color:#222;
-        content: ":: ";
-      }
-
-    }
+._nodrag {
+  .li span:before {
+    content: ''
   }
 }
 
@@ -183,11 +172,23 @@ svg {
   }
 }
 
-
-.list div {
+.li {
+  // drag
+  padding: 0;
+  span {
+    // We move the text into a span to avoid drag size
+    // change (dragula bug)
+    display: block;
+    padding: $pad;
+    &:before {
+      color:#222;
+      content: ":: ";
+    }
+  }
+  // drag
   cursor: pointer;
   border: $lbox solid color( boxl );
-  padding: $pad;
+  // padding: $pad;
   background: color( boxb );
   border: $lbox solid color( boxl );
   margin-left: -$lbox;
@@ -250,13 +251,13 @@ svg {
 
 .results {
   @extend ._list;
-  @extend ._draggable;
   @extend ._drop;
   border-right:0;
 }
 
 .console {
   @extend ._list;
+  @extend ._nodrag;
   border-right:0;
   position: relative;
 
@@ -301,16 +302,19 @@ svg {
   box-shadow: 0 0 10px darken( color( workb ), 15% );
 
   .control {
+    @extend ._nodrag;
     @extend ._list;
     border-left:0;
   }
 
   .scenes {
+    @extend ._nodrag;
     @extend ._list;
     border-left:0;
   }
 
   .assets {
+    @extend ._nodrag;
     @extend ._list;
     border-left:0;
   }

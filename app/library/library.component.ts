@@ -9,7 +9,6 @@ import { Dragula, DragulaService } from 'ng2-dragula/ng2-dragula'
 import { UIBoxType } from '../common/uibox.type'
 
 
-
 @Component
 ( { selector: 'le-library'
   , directives:
@@ -40,10 +39,10 @@ import { UIBoxType } from '../common/uibox.type'
           </div>
         </div>
 
-        <div [dragula]='library' class='results'>
-          <div class='list'>
+        <div class='results'>
+          <div [dragula]='library'>
             <!-- li v-if='refreshError' class='error'> ==refreshError</li -->
-            <div *ngFor='#box of ( all | async )'
+            <div class='li' *ngFor='#box of ( all | async )'
             class='li {{box.className}}'
             [attr.data-le]='box.id'
             style='margin-left:{{box.pos.x - 1}}px'>
@@ -57,8 +56,8 @@ import { UIBoxType } from '../common/uibox.type'
             <input value='search'>
           </p>
 
-          <div class='list'>
-            <div class='ok'>Generated 34 cubes</div>
+          <div>
+            <div class='li ok'><span>Generated 34 cubes</span></div>
           </div>
         </div>
       </div>
