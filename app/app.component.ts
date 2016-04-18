@@ -1,9 +1,10 @@
 import { Component } from 'angular2/core'
+import { Dragula, DragulaService } from 'ng2-dragula/ng2-dragula'
 import { LibraryComponent } from './library/index'
-import { WorkbenchComponent }  from './workbench/index'
 import { ProjectComponent } from './project/index'
 import { store } from './store/index'
 import { TestComponent } from './test.component'
+import { WorkbenchComponent }  from './workbench/index'
 
 @Component
 ( { selector: 'le-app'
@@ -13,7 +14,10 @@ import { TestComponent } from './test.component'
     , ProjectComponent
     , TestComponent
     ]
-  , providers: store
+  , providers:
+    [ store
+    , DragulaService
+    ]
   , template:
     `
       <svg id='scratch' class='svg'>

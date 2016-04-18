@@ -5,8 +5,8 @@ export interface BoxType {
   in: SlotType[]
   out: SlotType
 
-  // Project, Scene, etc (empty for regular file or box)
-  type?: string
+  // Project, Scene, etc
+  type: string
 
   // Specific to Box in graph
   // points to other ids in slot link order.

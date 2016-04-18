@@ -8,15 +8,12 @@ import { mockLibrary } from '../store/mock/library'
 import { Dragula, DragulaService } from 'ng2-dragula/ng2-dragula'
 import { UIBoxType } from '../common/uibox.type'
 
-
 @Component
 ( { selector: 'le-library'
   , directives:
     [ BoxComponent
     , Dragula
     ]
-  , viewProviders:
-    [ DragulaService ]
   , template:
     ` <div id='library'>
         <h3>Library</h3>
@@ -40,10 +37,10 @@ import { UIBoxType } from '../common/uibox.type'
         </div>
 
         <div class='results'>
-          <div [dragula]='library'>
+          <div [dragula]='"library"'>
             <!-- li v-if='refreshError' class='error'> ==refreshError</li -->
             <div class='li' *ngFor='#box of ( all | async )'
-            class='li {{box.className}}'
+            class='li {{canDrag ( box )}} {{box.className}}'
             [attr.data-le]='box.id'
             style='margin-left:{{box.pos.x - 1}}px'>
               <span>{{ box.name }}</span>
@@ -70,16 +67,11 @@ export class LibraryComponent {
   , @Inject (dispatcherToken) private dispatcher: DispatcherType
   , @Inject (DragulaService) private dragulaService: DragulaService
   ) {
-    console.log ( dragulaService )
     dragulaService.setOptions
     ( 'library'
     , { copy: true
-      , moves: function ( el, container, handle ) {
-          const boxid = el.getAttribute ( 'data-le' )
-          const lib : LibraryStoreType = this.state.library
-          const box = lib.graph.boxes [ boxid ]
-          console.log ( box.name )
-          return ! box.sub
+      , moves: ( el, container, handle ) => {
+          return el.classList.contains ( 'drag' )
         }
     }
     )
@@ -101,6 +93,10 @@ export class LibraryComponent {
   // helpers
   displayName ( uibox : UIBoxType ) : string {
     return ' '.repeat ( uibox.pos.x / 8 ) + uibox.name
+  }
+
+  canDrag ( box : UIBoxType ) : string {
+    return box.type === 'Block' ? 'drag' : ''
   }
 }
 /*

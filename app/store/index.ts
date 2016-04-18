@@ -96,5 +96,5 @@ export const store =
 ]
 
 export { stateToken, dispatcherToken } from './store.tokens'
-export type StateType = Observable<AppState>
+export type StateType = BehaviorSubject<AppState>
 export type DispatcherType = Observer<Action>

@@ -79,7 +79,7 @@ const path = function
  * @returns {string}   - the class name
  */
 const className = function ( obj, layout : UILayoutType ) {
-  if ( obj.type ) {
+  if ( obj.type !== 'Block' && obj.type !== 'Folder' ) {
     return 'main'
   }
 
@@ -214,6 +214,7 @@ const uimapOne = function
   const obj  = graph.boxes [ id ]
 
   uibox.name = obj.name
+  uibox.type = obj.type
   uibox.className = uibox.name === cache.name
                   ? cache.className
                   : className ( obj, layout )

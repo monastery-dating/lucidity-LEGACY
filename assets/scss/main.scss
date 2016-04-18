@@ -19,14 +19,6 @@ body {
   color: color( workt );
 }
 
-._nodrag {
-  .li span:before {
-    content: ''
-  }
-}
-
-
-
 @for $i from 1 through $pcount {
   // can be removed when box are all drawn
   // with same code using path
@@ -171,22 +163,44 @@ svg {
     margin: -$lbox;
   }
 }
+._noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select:none;
+}
 
 .li {
-  // drag
-  padding: 0;
-  span {
-    // We move the text into a span to avoid drag size
-    // change (dragula bug)
-    display: block;
-    padding: $pad;
-    &:before {
-      color:#222;
-      content: ":: ";
+  @extend ._noselect;
+  &.drag {
+    padding: 0;
+    span {
+      // We move the text into a span to avoid drag size change (dragula bug)
+      padding: $pad;
+      &:before {
+        color:#222;
+        content: ":: ";
+      }
+    }
+
+    cursor: grab;
+    cursor: -webkit-grab;
+    cursor: -moz-grab;
+
+    &:active, &.gu-mirror {
+      cursor: grab;
+      cursor: -webkit-grabbing;
+      cursor: -moz-grabbing;
     }
   }
-  // drag
-  cursor: pointer;
+
+  span {
+    display:block;
+  }
+
+  padding: $pad;
   border: $lbox solid color( boxl );
   // padding: $pad;
   background: color( boxb );
@@ -257,7 +271,6 @@ svg {
 
 .console {
   @extend ._list;
-  @extend ._nodrag;
   border-right:0;
   position: relative;
 
@@ -302,19 +315,16 @@ svg {
   box-shadow: 0 0 10px darken( color( workb ), 15% );
 
   .control {
-    @extend ._nodrag;
     @extend ._list;
     border-left:0;
   }
 
   .scenes {
-    @extend ._nodrag;
     @extend ._list;
     border-left:0;
   }
 
   .assets {
-    @extend ._nodrag;
     @extend ._list;
     border-left:0;
   }

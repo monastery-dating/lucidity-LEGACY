@@ -18,6 +18,7 @@ export interface UIBoxSize {
 }
 
 export interface UIBoxType {
+  type?: string
   name: string
   id: string
   size: UIBoxSize

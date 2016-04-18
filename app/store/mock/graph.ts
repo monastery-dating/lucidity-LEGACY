@@ -4,7 +4,7 @@ export const mockGraph : GraphType = {
   "boxes": {
     "id0": {
       "name": "cubes",
-      "type": "lucy.Scene",
+      "type": "Scene",
       "link": [
         "id5"
       ],
@@ -15,16 +15,19 @@ export const mockGraph : GraphType = {
     },
     "id1": {
       "name": "Hello",
+      "type": "Block",
       "out": "text:string",
       "in": []
     },
     "id2": {
       "name": "Lucy",
+      "type": "Block",
       "out": "text:string",
       "in": []
     },
     "id3": {
       "name": "Mix",
+      "type": "Block",
       "out": "text:string",
       "in": [
         "text:string",
@@ -37,6 +40,7 @@ export const mockGraph : GraphType = {
     },
     "id4": {
       "name": "Stereo",
+      "type": "Block",
       "out": "text:string",
       "in": [
         "text:string"
@@ -47,6 +51,7 @@ export const mockGraph : GraphType = {
     },
     "id5": {
       "name": "Reverse",
+      "type": "Block",
       "init": true,
       "out": "text:string",
       "in": [
