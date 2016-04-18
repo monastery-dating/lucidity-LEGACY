@@ -40,9 +40,6 @@ const path = function
     res.push ( `h${ layout.SPAD }` )
   }
 
-  console.log ( boxdef.name, sextra )
-
-
   res.push ( `a${r} ${r} 0 0 1 ${ r} ${ r}` )
 
   res.push ( `v${ h - 2 * r }`      )
@@ -271,7 +268,6 @@ const uimapOne = function
     // Compute extra size for this box depending on i-1 children ( last child
     // does not change slot position )
     sextra.pop ()
-    console.log ( uibox.name, sextra, '[0]')
     if ( sextra.length > 0 ) {
       size.wde = sextra.reduce ( ( sum, e ) => sum + e )
     }

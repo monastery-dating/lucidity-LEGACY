@@ -28,7 +28,9 @@ System.config({
   map: {
     "angular2": "npm:angular2@2.0.0-beta.13",
     "angular2-hot-loader": "npm:angular2-hot-loader@0.0.21",
+    "dragula": "npm:dragula@3.6.8",
     "json": "github:systemjs/plugin-json@0.1.0",
+    "ng2-dragula": "npm:ng2-dragula@1.1.6",
     "rx": "npm:rx@4.1.0",
     "ts": "github:frankwallis/plugin-typescript@4.0.5",
     "typescript": "npm:typescript@1.8.9",
@@ -236,6 +238,10 @@ System.config({
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
       "path": "github:jspm/nodelibs-path@0.1.0"
     },
+    "npm:contra@1.9.1": {
+      "atoa": "npm:atoa@1.0.0",
+      "ticky": "npm:ticky@1.0.0"
+    },
     "npm:cookie-signature@1.0.6": {
       "crypto": "github:jspm/nodelibs-crypto@0.1.0"
     },
@@ -263,6 +269,14 @@ System.config({
       "crypto": "github:jspm/nodelibs-crypto@0.1.0",
       "inherits": "npm:inherits@2.0.1",
       "stream": "github:jspm/nodelibs-stream@0.1.0"
+    },
+    "npm:crossvent@1.5.4": {
+      "child_process": "github:jspm/nodelibs-child_process@0.1.0",
+      "custom-event": "npm:custom-event@1.0.0",
+      "fs": "github:jspm/nodelibs-fs@0.1.2",
+      "path": "github:jspm/nodelibs-path@0.1.0",
+      "process": "github:jspm/nodelibs-process@0.1.2",
+      "systemjs-json": "github:systemjs/plugin-json@0.1.0"
     },
     "npm:crypto-browserify@3.11.0": {
       "browserify-cipher": "npm:browserify-cipher@1.0.0",
@@ -306,6 +320,10 @@ System.config({
       "miller-rabin": "npm:miller-rabin@4.0.0",
       "randombytes": "npm:randombytes@2.0.3",
       "systemjs-json": "github:systemjs/plugin-json@0.1.0"
+    },
+    "npm:dragula@3.6.8": {
+      "contra": "npm:contra@1.9.1",
+      "crossvent": "npm:crossvent@1.5.4"
     },
     "npm:elliptic@6.2.3": {
       "bn.js": "npm:bn.js@4.11.1",
@@ -410,6 +428,9 @@ System.config({
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
       "fs": "github:jspm/nodelibs-fs@0.1.2",
       "path": "github:jspm/nodelibs-path@0.1.0",
+      "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:ng2-dragula@1.1.6": {
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:on-finished@2.3.0": {
@@ -562,6 +583,9 @@ System.config({
       "process": "github:jspm/nodelibs-process@0.1.2",
       "systemjs-json": "github:systemjs/plugin-json@0.1.0",
       "when": "npm:when@3.7.7"
+    },
+    "npm:ticky@1.0.0": {
+      "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:timers-browserify@1.4.2": {
       "process": "npm:process@0.11.2"

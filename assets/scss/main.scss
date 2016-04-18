@@ -6,6 +6,11 @@
 @import 'lib/palette';
 @import 'lib/reset';
 @import 'lib/components';
+@import 'lib/dragula';
+
+// TODO: remove on prod
+@import 'lib/testcomp';
+
 
 body {
   font-family: getfont(family);
@@ -14,20 +19,24 @@ body {
   color: color( workt );
 }
 
+._draggable {
+  .list div {
+    padding: 0;
+    span {
+      // We move the text into a span to avoid drag size
+      // change (dragula bug)
+      display: block;
+      padding: $pad;
+      &:before {
+        color:#222;
+        content: ":: ";
+      }
 
-._box {
-  padding: $pad;
-  background: color( boxb );
-  border: $lbox solid color( boxl );
-  margin-left: -$lbox;
-  margin-top: -$lbox;
-  width: 102%;
-
-  &.sel {
-    background: color( sboxb );
-    color: color( sboxt );
+    }
   }
 }
+
+
 
 @for $i from 1 through $pcount {
   // can be removed when box are all drawn
@@ -56,7 +65,7 @@ body {
     }
   }
 
-  #library .results li.box#{$i} {
+  .li.box#{$i} {
     background:  pbox( $i );
   }
 }
@@ -172,9 +181,22 @@ svg {
     padding: 2*$pad $pad;
     margin: -$lbox;
   }
+}
 
-  li {
-    @extend ._box;
+
+.list div {
+  cursor: pointer;
+  border: $lbox solid color( boxl );
+  padding: $pad;
+  background: color( boxb );
+  border: $lbox solid color( boxl );
+  margin-left: -$lbox;
+  margin-top: -$lbox;
+  width: 102%;
+
+  &.sel {
+    background: color( sboxb );
+    color: color( sboxt );
   }
 }
 
@@ -182,13 +204,6 @@ svg {
   cursor:pointer;
 }
 
-._draggable {
-  user-select: none;
-  li:before {
-    color:#222;
-    content: ":: ";
-  }
-}
 
 .dragged {
   opacity: 0.8;
@@ -213,43 +228,43 @@ svg {
   @extend ._pane;
   left:0;
   padding-left: $ppad;
+}
 
-  .search {
-    @extend ._search;
-    border-right:0;
+.search {
+  @extend ._search;
+  border-right:0;
 
-    .saved {
-      @extend ._saved;
-    }
+  .saved {
+    @extend ._saved;
   }
+}
 
-  .refresh {
-    @extend ._button;
-  }
+.refresh {
+  @extend ._button;
+}
 
-  .error {
-    font-size:80%;
-    color:#c44;
-  }
+.error {
+  font-size:80%;
+  color:#c44;
+}
 
-  .results {
-    @extend ._list;
-    @extend ._draggable;
-    @extend ._drop;
-    border-right:0;
-  }
+.results {
+  @extend ._list;
+  @extend ._draggable;
+  @extend ._drop;
+  border-right:0;
+}
 
-  .console {
-    @extend ._list;
-    border-right:0;
-    position: relative;
+.console {
+  @extend ._list;
+  border-right:0;
+  position: relative;
 
-    p {
-      input {
-        @extend ._input;
-        top:$pad; right:$pad;
-        width:50%;
-      }
+  p {
+    input {
+      @extend ._input;
+      top:$pad; right:$pad;
+      width:50%;
     }
   }
 }
@@ -258,7 +273,7 @@ svg {
   @extend ._pane;
   background: color( workb );
   left:   layout( panew ) - $ppad;
-  box-shadow: inset 0 0 60px 1px darken( color( workb ), 5% );
+  box-shadow: inset 0 0 10px darken( color( workb ), 15% );
 
   // How to do this ?
   // How to do it dynamically if sides are closed ?
@@ -283,7 +298,7 @@ svg {
   @extend ._pane;
   right:0;
   padding-right: $ppad;
-  box-shadow: 0 0 60px 1px darken( color( workb ), 5% );
+  box-shadow: 0 0 10px darken( color( workb ), 15% );
 
   .control {
     @extend ._list;

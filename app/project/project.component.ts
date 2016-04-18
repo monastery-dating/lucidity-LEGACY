@@ -9,34 +9,34 @@ import { Component } from 'angular2/core'
         <div class='control'>
           <p>Control</p>
 
-          <ol>
-            <li>OSC</li>
-            <li>MIDI</li>
-            <li>VST Plugin</li>
-            <li>Keyboard</li>
-            <li>Mouse</li>
-          </ol>
+          <div class='list'>
+            <div>OSC</div>
+            <div>MIDI</div>
+            <div>VST Plugin</div>
+            <div>Keyboard</div>
+            <div>Mouse</div>
+          </div>
         </div>
 
         <div class='scenes'>
           <p>Scenes</p>
 
-          <ol>
-            <li>intro</li>
-            <li class='sel'>cubes</li>
-            <li>terrain</li>
-          </ol>
+          <div class='list'>
+            <div>intro</div>
+            <div class='sel'>cubes</div>
+            <div>terrain</div>
+          </div>
         </div>
 
         <div class='assets'>
           <p>assets</p>
 
-          <ol>
-            <li>dancing queen.mp4</li>
-            <li>shiva.jpg</li>
-            <li>components (lib)</li>
-            <li>lucy-forge (lib)</li>
-          </ol>
+          <div class='list'>
+            <div>dancing queen.mp4</div>
+            <div>shiva.jpg</div>
+            <div>components (lib)</div>
+            <div>lucy-forge (lib)</div>
+          </div>
         </div>
 
       </div>

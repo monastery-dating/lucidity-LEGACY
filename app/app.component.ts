@@ -3,6 +3,7 @@ import { LibraryComponent } from './library/index'
 import { WorkbenchComponent }  from './workbench/index'
 import { ProjectComponent } from './project/index'
 import { store } from './store/index'
+import { TestComponent } from './test.component'
 
 @Component
 ( { selector: 'le-app'
@@ -10,6 +11,7 @@ import { store } from './store/index'
     [ LibraryComponent
     , WorkbenchComponent
     , ProjectComponent
+    , TestComponent
     ]
   , providers: store
   , template:

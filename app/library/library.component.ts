@@ -1,18 +1,23 @@
-import { Component, Inject, ChangeDetectionStrategy } from 'angular2/core'
+import { ChangeDetectionStrategy, Component, Inject } from 'angular2/core'
 import { BoxComponent } from '../common/box.component'
-import { UIBoxType } from '../common/uibox.type'
-import { stateToken, StateType } from '../store/index'
 import { dispatcherToken, DispatcherType } from '../store/index'
-
+import { stateToken, StateType } from '../store/index'
 import { LibraryAdd, LibraryInit } from './library.mutations'
-
+import { LibraryStoreType } from './library.store.t'
 import { mockLibrary } from '../store/mock/library'
+import { Dragula, DragulaService } from 'ng2-dragula/ng2-dragula'
+import { UIBoxType } from '../common/uibox.type'
+
+
 
 @Component
 ( { selector: 'le-library'
   , directives:
     [ BoxComponent
+    , Dragula
     ]
+  , viewProviders:
+    [ DragulaService ]
   , template:
     ` <div id='library'>
         <h3>Library</h3>
@@ -30,27 +35,31 @@ import { mockLibrary } from '../store/mock/library'
             <li class='add'>+</li>
           </ol>
 
-          <ol>
-            <li class='refresh' click='refreshLibrary' v-bind:class='== blink: refreshing '>refresh</li>
-          </ol>
+          <div>
+            <div class='refresh' click='refreshLibrary' v-bind:class='== blink: refreshing '>refresh</div>
+          </div>
         </div>
 
-        <ol class='results'>
-          <!-- li v-if='refreshError' class='error'> ==refreshError</li -->
-          <li *ngFor='#box of ( all | async )' [class]='box.className'
-          style='margin-left:{{box.pos.x - 1}}px'>
-            {{ box.name }}
-          </li>
-        </ol>
+        <div [dragula]='library' class='results'>
+          <div class='list'>
+            <!-- li v-if='refreshError' class='error'> ==refreshError</li -->
+            <div *ngFor='#box of ( all | async )'
+            class='li {{box.className}}'
+            [attr.data-le]='box.id'
+            style='margin-left:{{box.pos.x - 1}}px'>
+              <span>{{ box.name }}</span>
+            </div>
+          </div>
+        </div>
 
         <div class='console'>
           <p>Console
             <input value='search'>
           </p>
 
-          <ol>
-            <li class='ok'>Generated 34 cubes</li>
-          </ol>
+          <div class='list'>
+            <div class='ok'>Generated 34 cubes</div>
+          </div>
         </div>
       </div>
     `
@@ -60,8 +69,22 @@ export class LibraryComponent {
   constructor
   ( @Inject (stateToken) private state: StateType
   , @Inject (dispatcherToken) private dispatcher: DispatcherType
+  , @Inject (DragulaService) private dragulaService: DragulaService
   ) {
-    this.dispatcher.next
+    console.log ( dragulaService )
+    dragulaService.setOptions
+    ( 'library'
+    , { copy: true
+      , moves: function ( el, container, handle ) {
+          const boxid = el.getAttribute ( 'data-le' )
+          const lib : LibraryStoreType = this.state.library
+          const box = lib.graph.boxes [ boxid ]
+          console.log ( box.name )
+          return ! box.sub
+        }
+    }
+    )
+    dispatcher.next
     ( new LibraryInit ( mockLibrary ) )
   }
 
