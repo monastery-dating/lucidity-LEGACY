@@ -11,6 +11,7 @@
       "dragula": "npm:dragula@^3.6.8",
       "json": "github:systemjs/plugin-json@^0.1.0",
       "ng2-dragula": "npm:ng2-dragula@^1.1.6",
+      "pouchdb": "npm:pouchdb@^5.3.1",
       "rx": "npm:rx@^4.1.0",
       "ts": "github:frankwallis/plugin-typescript@^4.0.5"
     },
@@ -35,6 +36,7 @@
     "dragula": "^3.6.8",
     "es6-shim": "^0.35.0",
     "ng2-dragula": "^1.1.6",
+    "pouchdb": "^5.3.1",
     "reflect-metadata": "0.1.2",
     "rxjs": "5.0.0-beta.2",
     "zone.js": "0.6.6"

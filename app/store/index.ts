@@ -57,7 +57,7 @@ function makeState
   // waiting for an action.
   const state = new BehaviorSubject ( initState )
 
-  // app subscribes to changes in app state
+  // state subscribes to changes in app state
   // and simply forwards the new state to its own subscribers
   // with 'next'.
   appStateObservable.subscribe

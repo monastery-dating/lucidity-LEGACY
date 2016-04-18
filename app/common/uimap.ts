@@ -315,7 +315,7 @@ export const uimap = function
   ( graph, rootGraphId, layout, uigraph, ghost, cachebox )
 
   boxPosition
-  ( graph, rootGraphId, layout, uigraph.uibox, ghost, { x: 0, y: 0 } )
+  ( graph, rootGraphId, layout, uigraph.uibox, ghost, { x: 0.5, y: 0.5 } )
 
   return uigraph
 }
