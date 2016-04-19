@@ -10,4 +10,4 @@ export const nextGraphId = function
   return `id${n}`
 }
 
-export const rootGraphId = nextGraphId ( {} )
+export const rootGraphId = nextGraphId ( <GraphType> {} )

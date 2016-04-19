@@ -213,6 +213,10 @@ const uimapOne = function
 
   const obj  = graph.boxes [ id ]
 
+  uibox.outpos =
+  { x: layout.RADIUS + layout.SPAD + layout.SLOT
+  , y: -layout.SLOT
+  }
   uibox.name = obj.name
   uibox.type = obj.type
   uibox.className = uibox.name === cache.name
@@ -306,16 +310,20 @@ export const uimap = function
   , uibox: {}
   }
 
-
   const layout = alayout || defaultUILayout
 
   const cachebox : UIBoxesType = cache ? cache.uibox : {}
+
+  const startpos =
+  { x: 0.5
+  , y: 0.5 + layout.SLOT + layout.RADIUS
+  }
 
   uimapOne
   ( graph, rootGraphId, layout, uigraph, ghost, cachebox )
 
   boxPosition
-  ( graph, rootGraphId, layout, uigraph.uibox, ghost, { x: 0.5, y: 0.5 } )
+  ( graph, rootGraphId, layout, uigraph.uibox, ghost, startpos )
 
   return uigraph
 }

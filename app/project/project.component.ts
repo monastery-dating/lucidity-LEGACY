@@ -1,10 +1,10 @@
 import { Component } from 'angular2/core'
-import { Interact } from '../interact/interact.directive'
+import { LeBoxDrag } from '../interact/boxdrag.directive'
 
 @Component
 ( { selector: 'le-project'
   , directives:
-    [ Interact
+    [ LeBoxDrag
     ]
   , template:
     ` <div id='project'>
@@ -14,8 +14,8 @@ import { Interact } from '../interact/interact.directive'
           <p>Control</p>
 
           <div>
-            <div interact class='li'><span>OSC</span></div>
-            <div interact class='li'><span>MIDI</span></div>
+            <div le-box-drag class='li'><span>OSC</span></div>
+            <div le-box-drag class='li'><span>MIDI</span></div>
             <div class='li'><span>VST Plugin</span></div>
             <div class='li'><span>Keyboard</span></div>
             <div class='li'><span>Mouse</span></div>

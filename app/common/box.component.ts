@@ -4,7 +4,7 @@ import { UIBoxType } from './uibox.type'
 @Component
 ( { selector: 'g[le-box]'
   , directives:
-    [ BoxComponent
+    [ 
     ]
   , template:
     ` <svg:g [attr.transform]='transform'>

@@ -6,14 +6,14 @@ import { LibraryAdd, LibraryInit } from './library.mutations'
 import { LibraryStoreType } from './library.store.t'
 import { mockLibrary } from '../store/mock/library'
 // import { Interact, InteractService } from '../interact/interact.service'
-import { Interact } from '../interact/interact.directive'
+import { LeBoxDrag } from '../interact/boxdrag.directive'
 import { UIBoxType } from '../common/uibox.type'
 
 @Component
 ( { selector: 'le-library'
   , directives:
     [ BoxComponent
-    , Interact
+    , LeBoxDrag
     ]
   , template:
     ` <div id='library'>
@@ -24,7 +24,7 @@ import { UIBoxType } from '../common/uibox.type'
             <input value='search'>
           </p>
 
-          <ol interact class='saved'>
+          <ol class='saved'>
             <li class='sel'>f</li>
             <li>g</li>
             <li>b</li>
@@ -43,6 +43,7 @@ import { UIBoxType } from '../common/uibox.type'
             <div class='li' *ngFor='#box of ( all | async )'
             class='li {{canDrag ( box )}} {{box.className}}'
             [attr.data-le]='box.id'
+            le-box-drag
             style='margin-left:{{box.pos.x - 1}}px'>
               <span>{{ box.name }}</span>
             </div>
