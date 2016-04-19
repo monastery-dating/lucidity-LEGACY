@@ -174,14 +174,14 @@ svg#scratch {
       }
     }
 
-    cursor: grab;
-    cursor: -webkit-grab;
-    cursor: -moz-grab;
+    // cursor: grab;
+    // cursor: -webkit-grab;
+    // cursor: -moz-grab;
 
-    &:active, &.gu-mirror {
-      cursor: grabbing;
-      cursor: -webkit-grabbing;
-      cursor: -moz-grabbing;
+    &:active {
+      cursor: none;
+      //cursor: -webkit-grabbing;
+      //cursor: -moz-grabbing;
     }
   }
 

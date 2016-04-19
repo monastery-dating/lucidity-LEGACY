@@ -1,25 +1,14 @@
-import { BehaviorSubject, Subscription } from 'rxjs'
-import { SlotType } from '../common/slot.type'
-import { BoxType, initBox } from '../common/box.type'
+import { BoxType } from '../common/box.type'
+import { BoxDragComponent } from './boxdrag.component'
 
 export class BoxDragService {
-  private observable: BehaviorSubject<BoxType>
+  private comp: BoxDragComponent
 
-  constructor () {
-    this.observable = new BehaviorSubject ( initBox () )
+  setComp ( comp: BoxDragComponent ) {
+    this.comp = comp
   }
 
-  subscribe ( clbk: ( box: BoxType ) => void )  {
-    return this.observable.subscribe ( clbk )
-  }
-
-  setBox ( name: string, input: SlotType[], out: SlotType, type: string ) {
-    this.observable.next
-    ( { name
-      , in: input
-      , out
-      , type
-      }
-    )
+  register ( el: any, boxid: string, from: string ) {
+    this.comp.register ( el, boxid, from )
   }
 }

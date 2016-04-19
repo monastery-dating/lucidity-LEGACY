@@ -213,9 +213,9 @@ const uimapOne = function
 
   const obj  = graph.boxes [ id ]
 
-  uibox.outpos =
+  uibox.grabpos =
   { x: layout.RADIUS + layout.SPAD + layout.SLOT
-  , y: -layout.SLOT
+  , y: layout.HEIGHT / 2 + layout.SLOT + 4 // FIXME: why do we need to add 4 ?
   }
   uibox.name = obj.name
   uibox.type = obj.type

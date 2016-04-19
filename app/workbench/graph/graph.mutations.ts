@@ -30,7 +30,6 @@ export class GraphInit extends GraphAction {
 
   mutate
   ( state: GraphStoreType ) : GraphStoreType {
-    console.log ( state )
     const uigraph = uimap ( this.graph )
 
     return { graph: this.graph, uigraph }

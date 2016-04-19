@@ -19,7 +19,6 @@ import { WorkbenchComponent }  from './workbench/index'
     ]
   , providers:
     [ store
-    , BoxDragComponent
     , BoxDragService
     ]
   , template:
