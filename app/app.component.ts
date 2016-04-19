@@ -1,5 +1,5 @@
 import { Component } from 'angular2/core'
-import { Dragula, DragulaService } from 'ng2-dragula/ng2-dragula'
+// import { InteractService } from './interact/interact.service'
 import { LibraryComponent } from './library/index'
 import { ProjectComponent } from './project/index'
 import { store } from './store/index'
@@ -16,7 +16,7 @@ import { WorkbenchComponent }  from './workbench/index'
     ]
   , providers:
     [ store
-    , DragulaService
+    // , InteractService
     ]
   , template:
     `

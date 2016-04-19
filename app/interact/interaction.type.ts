@@ -123,7 +123,7 @@ interface DropZoneOptions {
   checker?: DropFunctionChecker
 }
 
-interface InteractEvent {
+export interface InteractEvent {
   target: DOMElement
   interactable: Interactable
   interaction: any
@@ -172,7 +172,16 @@ interface OnEvent {
 export interface Interactable {
   draggable ( options: DraggableOptions & OnEvent )
   resizable ( options: ResizableOptions & OnEvent )
+  gesturable ( options: GesturableOptions & OnEvent )
   dropzone ( options: DropZoneOptions & OnEvent )
   on ( op: OnEvent )
   createSnapGrid ( opt: { x: number, y: number, range: number, offset: Position } ) : SnapFunction
+}
+
+export interface InteractOpts {
+  draggable?: DraggableOptions & OnEvent
+  resizable?: ResizableOptions & OnEvent
+  gesturable?: GesturableOptions & OnEvent
+  dropzone?: DropZoneOptions & OnEvent
+  on?: OnEvent
 }

@@ -5,14 +5,15 @@ import { stateToken, StateType } from '../store/index'
 import { LibraryAdd, LibraryInit } from './library.mutations'
 import { LibraryStoreType } from './library.store.t'
 import { mockLibrary } from '../store/mock/library'
-import { Dragula, DragulaService } from 'ng2-dragula/ng2-dragula'
+// import { Interact, InteractService } from '../interact/interact.service'
+import { Interact } from '../interact/interact.directive'
 import { UIBoxType } from '../common/uibox.type'
 
 @Component
 ( { selector: 'le-library'
   , directives:
     [ BoxComponent
-    , Dragula
+    , Interact
     ]
   , template:
     ` <div id='library'>
@@ -23,7 +24,7 @@ import { UIBoxType } from '../common/uibox.type'
             <input value='search'>
           </p>
 
-          <ol class='saved'>
+          <ol interact class='saved'>
             <li class='sel'>f</li>
             <li>g</li>
             <li>b</li>
@@ -37,7 +38,7 @@ import { UIBoxType } from '../common/uibox.type'
         </div>
 
         <div class='results'>
-          <div [dragula]='"library"'>
+          <div>
             <!-- li v-if='refreshError' class='error'> ==refreshError</li -->
             <div class='li' *ngFor='#box of ( all | async )'
             class='li {{canDrag ( box )}} {{box.className}}'
@@ -65,21 +66,19 @@ export class LibraryComponent {
   constructor
   ( @Inject (stateToken) private state: StateType
   , @Inject (dispatcherToken) private dispatcher: DispatcherType
-  , @Inject (DragulaService) private dragulaService: DragulaService
+  // , @Inject (InteractService) private interactService: InteractService
   ) {
-    dragulaService.setOptions
+    /*
+    interactService.setOptions
     ( 'library'
-    , { copy: true
-      , moves: ( el, container, handle ) => {
-          return el.classList.contains ( 'drag' )
+    , { draggable:
+        { dragmove: ( e ) => {
+            console.log ( e.clientX0 )
+          }
         }
       }
     )
-    dragulaService.drag.subscribe
-    ( ( value ) => {
-        console.log ( 'drag', value )
-      }
-    )
+    */
     dispatcher.next
     ( new LibraryInit ( mockLibrary ) )
   }

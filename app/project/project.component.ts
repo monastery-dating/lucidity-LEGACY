@@ -1,7 +1,11 @@
 import { Component } from 'angular2/core'
+import { Interact } from '../interact/interact.directive'
 
 @Component
 ( { selector: 'le-project'
+  , directives:
+    [ Interact
+    ]
   , template:
     ` <div id='project'>
         <h3 class='sel'> Gods of India</h3>
@@ -10,8 +14,8 @@ import { Component } from 'angular2/core'
           <p>Control</p>
 
           <div>
-            <div class='li'><span>OSC</span></div>
-            <div class='li'><span>MIDI</span></div>
+            <div interact class='li'><span>OSC</span></div>
+            <div interact class='li'><span>MIDI</span></div>
             <div class='li'><span>VST Plugin</span></div>
             <div class='li'><span>Keyboard</span></div>
             <div class='li'><span>Mouse</span></div>
