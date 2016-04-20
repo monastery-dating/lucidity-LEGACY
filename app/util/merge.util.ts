@@ -1,5 +1,5 @@
-export const merge = function<T extends S, S>
-( t: T, s: S ) : T {
+export const merge = function<T, S>
+( t: T, s: S ) : T & S {
   const res: any = {}
   // copy
   for ( const k in t ) {
