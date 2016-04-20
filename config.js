@@ -22,6 +22,16 @@ System.config({
           "loader": "ts"
         }
       }
+    },
+    "test": {
+      "main": "bootstrap",
+      "format": "system",
+      "defaultExtension": "ts",
+      "meta": {
+        "*.ts": {
+          "loader": "ts"
+        }
+      }
     }
   },
 

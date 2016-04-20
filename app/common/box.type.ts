@@ -25,8 +25,9 @@ export interface FileType extends BoxType {
 }
 
 export const initBox = function () : BoxType {
-  return { name: 'main'
-    , in: []
-    , out: null
-    }
+  return  { name: 'main'
+          , type: 'Block'
+          , in: []
+          , out: null
+          }
 }

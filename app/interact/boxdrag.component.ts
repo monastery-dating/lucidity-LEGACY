@@ -1,4 +1,4 @@
-import { interact } from 'interact.js/interact.js'
+import { interact } from 'interact.js/interact'
 import { ApplicationRef, Component, Inject, OnInit } from 'angular2/core'
 import { BoxComponent } from '../common/box.component'
 import { uimap } from '../common/uimap'

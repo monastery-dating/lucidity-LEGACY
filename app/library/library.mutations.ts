@@ -48,6 +48,7 @@ export class LibraryAdd extends LibraryAction {
 
       const newFile : FileType =
       { name: this.name
+      , type: 'Block'
       , in: []
       , out: null
       , next: after ? after.next : null

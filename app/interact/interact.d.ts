@@ -1,0 +1,1 @@
+type interact = any

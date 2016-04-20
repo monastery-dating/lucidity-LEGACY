@@ -48,6 +48,7 @@ export class FilesAdd extends FilesAction {
 
       const newFile : FileType =
       { name: this.name
+      , type: 'Block'
       , in: []
       , out: null
       , next: after ? after.next : null

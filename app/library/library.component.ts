@@ -95,10 +95,6 @@ export class LibraryComponent {
       return list.map ( e => uibox [ e ] )
     })
   }
-  // helpers
-  displayName ( uibox : UIBoxType ) : string {
-    return ' '.repeat ( uibox.pos.x / 8 ) + uibox.name
-  }
 
   canDrag ( box : UIBoxType ) : string {
     return box.type === 'Block' ? 'drag' : ''

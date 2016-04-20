@@ -1,7 +1,7 @@
 import { GraphStoreType } from './graph.store.type'
 import { GraphType } from '../../common/graph.type'
 import { nextGraphId } from '../../common/graph.helper'
-import { BoxType, FileType } from '../../common/box.type'
+import { BoxType, FileType, initBox } from '../../common/box.type'
 import { uimap } from '../../common/uimap'
 import { merge } from '../../util/index'
 
@@ -58,6 +58,7 @@ export class GraphAdd extends GraphAction {
 
       const newFile : FileType =
       { name: this.name
+      , type: 'File'
       , in: []
       , out: null
       , next: after ? after.next : null

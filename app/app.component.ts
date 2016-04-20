@@ -3,7 +3,6 @@ import { Component } from 'angular2/core'
 import { LibraryComponent } from './library/index'
 import { ProjectComponent } from './project/index'
 import { store } from './store/index'
-import { TestComponent } from './test.component'
 import { BoxDragComponent } from './interact/boxdrag.component'
 import { BoxDragService } from './interact/boxdrag.service'
 import { WorkbenchComponent }  from './workbench/index'
@@ -15,7 +14,6 @@ import { WorkbenchComponent }  from './workbench/index'
     , WorkbenchComponent
     , ProjectComponent
     , BoxDragComponent
-    , TestComponent
     ]
   , providers:
     [ store
