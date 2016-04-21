@@ -31,5 +31,14 @@ describe
         .toEqual ( { a: 3, x: 1 } )
       }
     )
+
+    it ( 'should delete null values'
+    , () => {
+        const a = { a: 3, b: 4 }
+        const b = { b: null }
+        expect ( merge ( a, b ) )
+        .toEqual ( { a: 3 } )
+      }
+    )
   }
 )

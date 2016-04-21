@@ -3,7 +3,7 @@ import { UIGraphType, UIBoxesType } from './uigraph.type'
 import { UIBoxType, UIBoxSize, UIPosType } from './uibox.type'
 import { GraphType } from './graph.type'
 import { rootGraphId } from './graph.helper'
-import { BoxType } from './box.type'
+import { BoxType, GhostBoxType } from './box.type'
 
 import { escape, merge } from '../util/index'
 
@@ -98,7 +98,7 @@ const boxPosition = function
 , id: string
 , layout: UILayoutType
 , uiboxes: UIBoxesType
-, ghost
+, ghost: GhostBoxType
 , ctx: UIPosType
 ) {
   const obj  = graph.boxes [ id ]
@@ -147,6 +147,15 @@ const boxPosition = function
         , y: ctx.y + dy
         }
       )
+    }
+  }
+
+  // handle redraw when ghost is dragged over graph
+  if ( ghost ) {
+    console.log ( ghost.y, ctx.y, ctx.y + dy )
+    if ( ghost.y > ctx.y && ghost.y <= ctx.y + dy ) {
+      console.log ( 'move' )
+      dy += layout.VPAD + layout.HEIGHT
     }
   }
 
@@ -202,7 +211,7 @@ const uimapOne = function
 , id: string
 , layout: UILayoutType
 , uigraph: UIGraphType
-, ghost
+, ghost: GhostBoxType
 , cachebox: UIBoxesType
 ) {
   uigraph.uibox [ id ] = <UIBoxType> { id }
@@ -303,7 +312,7 @@ export const uimap = function
 ( graph: GraphType
 , alayout?: UILayoutType
 , cache?: UIGraphType
-, ghost?: Object
+, ghost?: GhostBoxType
 ) : UIGraphType {
   const uigraph : UIGraphType =
   { list: []

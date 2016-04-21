@@ -8,7 +8,11 @@ export class BoxDragService {
     this.comp = comp
   }
 
-  register ( el: any, boxid: string, from: string ) {
-    this.comp.register ( el, boxid, from )
+  registerDragable ( el: any, boxid: string, from: string ) {
+    this.comp.registerDragable ( el, boxid, from )
+  }
+
+  registerDropzone ( el: any, to: string ) {
+    this.comp.registerDropzone ( el, to )
   }
 }

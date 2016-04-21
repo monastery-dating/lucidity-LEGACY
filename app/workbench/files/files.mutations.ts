@@ -61,7 +61,7 @@ export class FilesAdd extends FilesAction {
       const graph = merge ( state.graph, changes )
 
       // compute uigraph
-      const uigraph = uimap ( graph )
+      const uigraph = uimap ( graph, null, state.uigraph )
 
       return { graph, uigraph }
   }

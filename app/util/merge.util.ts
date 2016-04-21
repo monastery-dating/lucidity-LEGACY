@@ -10,7 +10,12 @@ export const merge = function<T, S>
   // merge
   for ( const k in s ) {
     if ( s.hasOwnProperty ( k ) ) {
-      res [ k ] = s [ k ]
+      if ( s [ k ] === null ) {
+        delete res [ k ]
+      }
+      else {
+        res [ k ] = s [ k ]
+      }
     }
   }
   return res

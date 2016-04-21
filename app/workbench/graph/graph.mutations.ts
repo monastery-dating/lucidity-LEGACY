@@ -1,6 +1,6 @@
 import { GraphStoreType } from './graph.store.type'
 import { GraphType } from '../../common/graph.type'
-import { nextGraphId } from '../../common/graph.helper'
+import { nextGraphId, removeInGraph } from '../../common/graph.helper'
 import { BoxType, FileType, initBox } from '../../common/box.type'
 import { uimap } from '../../common/uimap'
 import { merge } from '../../util/index'
@@ -36,43 +36,45 @@ export class GraphInit extends GraphAction {
   }
 }
 
-export class GraphAdd extends GraphAction {
+export class GraphClick extends GraphAction {
   constructor
-  ( public name: string
-  , public after: string
-  , public position: number
+  ( public boxid: string
   ) {
     super ()
+    console.log ( 'GraphClick', boxid )
   }
 
   mutate
   ( state: GraphStoreType ) : GraphStoreType {
-      // ======= FIXME ======
-      console.assert ( false, 'GraphAdd not implemented yet.' )
+      const graph = removeInGraph ( state.graph, this.boxid )
+      console.log ( graph )
 
-      // add a file to graph
-      const fileId = nextGraphId ( state.graph )
-      // We typecast to FileType so that 'next' is mandatory and we
-      // do not get errors with the merge call.
-      const after = <FileType> state.graph [ this.after ]
-
-      const newFile : FileType =
-      { name: this.name
-      , type: 'File'
-      , in: []
-      , out: null
-      , next: after ? after.next : null
-      }
-
-      const changes = {}
-      changes [ this.after ] = merge ( after, { next: fileId } )
-      changes [ fileId ] = newFile
-
-      const graph = merge ( state.graph, changes )
-
-      // compute uigraph
-      const uigraph = uimap ( graph )
+      const uigraph = uimap ( graph, null, state.uigraph )
 
       return { graph, uigraph }
+  }
+
+}
+
+export class GraphGhost extends GraphAction {
+  constructor
+  ( public box: BoxType
+  , public x: number
+  , public y: number
+  ) {
+    super ()
+    console.log ( 'new graph ghost' )
+  }
+
+  mutate
+  ( state: GraphStoreType ) : GraphStoreType {
+      console.log ( 'mutate graph ghost' )
+      // TODO: we could optimize this id
+      const nextId = nextGraphId ( state.graph )
+
+      // compute uigraph with the ghost
+      const uigraph = uimap ( state.graph, null, null, this )
+
+      return { graph: state.graph, uigraph }
   }
 }

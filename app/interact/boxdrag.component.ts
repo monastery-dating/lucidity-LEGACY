@@ -9,6 +9,10 @@ import { GraphType } from '../common/graph.type'
 import { initGraph } from '../common/graph.type'
 import { rootGraphId } from '../common/graph.helper'
 
+// FIXME: how could we move this to the GraphComponent with the
+// directive setup ?
+import { GraphGhost } from '../workbench/graph/graph.mutations'
+
 import { BoxDragService } from './boxdrag.service'
 import { dispatcherToken, DispatcherType } from '../store/index'
 import { stateToken, StateType } from '../store/index'
@@ -40,8 +44,8 @@ export class BoxDragComponent implements OnInit {
   constructor
   ( @Inject ( ApplicationRef ) private appref: ApplicationRef
   , @Inject ( BoxDragService ) private boxer: BoxDragService
-  , @Inject (stateToken) private state: StateType
-  , @Inject (dispatcherToken) private dispatcher: DispatcherType
+  , @Inject ( stateToken ) private state: StateType
+  , @Inject ( dispatcherToken ) private dispatcher: DispatcherType
   ) {
     this.boxer.setComp ( this )
     this.setBox ( initBox () )
@@ -52,26 +56,87 @@ export class BoxDragComponent implements OnInit {
     this.ghost.style.display = 'none'
   }
 
-  register ( el: any, boxid: string, from?: string ) {
-    // Register mouse events
+  registerDragable ( el: any, from?: string ) {
+    const boxid = el.getAttribute ( 'data-le')
     interact ( el )
     .styleCursor ( false )
     .draggable
     ( { onstart: ( event ) => {
           // Create shadow box for dragging
-          this.startDrag ( event, boxid, from || 'library' )
+          this.startDrag ( event, boxid, from || 'library', el )
         }
       , onmove: ( event ) => {
           this.move ( event )
         }
       , onend: ( event ) => {
-          this.onend ( event )
+          this.onend ( event, el )
+        }
+      }
+    )
+    .on
+    ( 'down', ( event ) => {
+        const int = event.interaction
+
+        if ( !int.interacting () ) {
+          int.start
+          ( { name: 'drag' }
+          , event.interactable
+          , event.currentTarget
+          )
         }
       }
     )
   }
 
-  startDrag ( event: any, boxid: string, from: string ) {
+  registerDropzone ( el: any, to: string ) {
+    interact ( el )
+    .styleCursor ( false )
+    .dropzone
+    ( { accept: '.drag'
+      , ondragenter: ( event ) => {
+          el.style.background = "#999"
+          console.log ( 'ENTER' )
+        }
+      , ondropmove: ( event ) => {
+          el.style.background = "#999"
+          // relative position
+          const p1 = event.dragEvent
+          const p2 = el.getBoundingClientRect ()
+          const x = p1.pageX - p2.left
+          const y = p1.pageY - p2.top
+          const box = event.draggable.leBox
+          const ghost =
+          this.dispatcher.next
+          ( new GraphGhost ( <BoxType> box, x, y ) )
+          this.appref.tick ()
+        }
+      , ondrop: ( event ) => {
+          el.style.background = ""
+          console.log ( 'DROP' )
+        }
+      , ondragleave: ( event ) => {
+          el.style.background = ""
+          console.log ( 'LEAVE' )
+        }
+      }
+    )
+
+  }
+
+  startDrag ( event: any, boxid: string, from: string, el: any ) {
+
+    const box = this.getBox ( boxid, from )
+    this.setBox ( box )
+    event.interactable.leBox = box
+    this.ghost.style.opacity = '0.8'
+    this.ghost.style.position = 'fixed'
+    this.ghost.style.top  = event.clientY
+    this.ghost.style.left = event.clientX
+    this.ghost.style.display = 'block'
+    el.style.opacity = '0.1'
+  }
+
+  getBox ( boxid: string, from: string ) {
     const graph : GraphType = this.state.getValue ()[ from ].graph
     const box = merge ( graph.boxes [ boxid ], {} ) // copy
 
@@ -79,13 +144,7 @@ export class BoxDragComponent implements OnInit {
     box.sub = null
     box.next = null
 
-    this.setBox ( box )
-    this.ghost.style.opacity = '0.8'
-    this.ghost.style.position = 'fixed'
-    // FIXME: How could we get 'outpos' ?
-    this.ghost.style.top  = event.clientY // - defaultUILayout.HEIGHT / 2 + defaultUILayout.SLOT
-    this.ghost.style.left = event.clientX // - defaultUILayout.RADIUS + defaultUILayout.SPAD + defaultUILayout.SLOT
-    this.ghost.style.display = 'block'
+    return box
   }
 
   move ( event: any ) {
@@ -93,9 +152,10 @@ export class BoxDragComponent implements OnInit {
     this.ghost.style.left = event.clientX // - defaultUILayout.RADIUS + defaultUILayout.SPAD + defaultUILayout.SLOT
   }
 
-  onend ( event: any ) {
+  onend ( event: any, el: any ) {
     document.documentElement.style.cursor = ''
     this.ghost.style.display = 'none'
+    el.style.opacity = '1.0'
   }
 
   setBox ( box: BoxType ) {

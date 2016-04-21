@@ -24,6 +24,12 @@ export interface FileType extends BoxType {
   next: string   // points to next sibling
 }
 
+export interface GhostBoxType {
+  box: BoxType
+  x: number
+  y: number
+}
+
 export const initBox = function () : BoxType {
   return  { name: 'main'
           , type: 'Block'

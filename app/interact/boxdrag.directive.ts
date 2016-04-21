@@ -10,7 +10,7 @@ import { defaultUILayout } from '../common/uilayout.type'
     ]
   }
 )
-export class LeBoxDrag implements OnInit {
+export class BoxDrag implements OnInit {
   // @Input( 'interact' ) bag: string
   // @Input() interactModel: any
   private container: any
@@ -24,8 +24,7 @@ export class LeBoxDrag implements OnInit {
   }
 
   ngOnInit () {
-    this.boxid = this.container.getAttribute ( 'data-le')
-    this.boxer.register ( this.container, this.boxid, 'library' ) // FIXME: how to get 'from' ?
+    this.boxer.registerDragable ( this.container, this.boxid, 'library' ) // FIXME: how to get 'from' ?
   }
 
   // ngOnChange ( changes: { [ key: string ]: SimpleChange } ) {

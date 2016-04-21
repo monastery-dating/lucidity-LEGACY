@@ -6,14 +6,14 @@ import { LibraryAdd, LibraryInit } from './library.mutations'
 import { LibraryStoreType } from './library.store.t'
 import { mockLibrary } from '../store/mock/library'
 // import { Interact, InteractService } from '../interact/interact.service'
-import { LeBoxDrag } from '../interact/boxdrag.directive'
+import { BoxDrag } from '../interact/boxdrag.directive'
 import { UIBoxType } from '../common/uibox.type'
 
 @Component
 ( { selector: 'le-library'
   , directives:
     [ BoxComponent
-    , LeBoxDrag
+    , BoxDrag
     ]
   , template:
     ` <div id='library'>

@@ -255,6 +255,7 @@ svg#scratch {
 .results {
   @extend ._list;
   @extend ._drop;
+  height: layout( resultsh );
   border-right:0;
 }
 
