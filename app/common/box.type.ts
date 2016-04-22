@@ -1,4 +1,5 @@
 import { SlotType } from './slot.type'
+import { UIBoxType } from './uibox.type'
 
 export interface BoxType {
   name: string
@@ -26,6 +27,7 @@ export interface FileType extends BoxType {
 
 export interface GhostBoxType {
   box: BoxType
+  uibox: UIBoxType
   x: number
   y: number
 }

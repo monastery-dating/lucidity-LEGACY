@@ -2,6 +2,7 @@ import { GraphStoreType } from './graph.store.type'
 import { GraphType } from '../../common/graph.type'
 import { nextGraphId, removeInGraph } from '../../common/graph.helper'
 import { BoxType, FileType, initBox } from '../../common/box.type'
+import { UIBoxType } from '../../common/uibox.type'
 import { uimap } from '../../common/uimap'
 import { merge } from '../../util/index'
 
@@ -59,6 +60,7 @@ export class GraphClick extends GraphAction {
 export class GraphGhost extends GraphAction {
   constructor
   ( public box: BoxType
+  , public uibox: UIBoxType
   , public x: number
   , public y: number
   ) {

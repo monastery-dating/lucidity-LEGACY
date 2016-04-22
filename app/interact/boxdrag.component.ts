@@ -104,10 +104,11 @@ export class BoxDragComponent implements OnInit {
           const p2 = el.getBoundingClientRect ()
           const x = p1.pageX - p2.left
           const y = p1.pageY - p2.top
-          const box = event.draggable.leBox
+          const box : BoxType = event.draggable.leBox
+          const uibox : UIBoxType = event.draggable.leUIBox
           const ghost =
           this.dispatcher.next
-          ( new GraphGhost ( <BoxType> box, x, y ) )
+          ( new GraphGhost ( box, uibox, x, y ) )
           this.appref.tick ()
         }
       , ondrop: ( event ) => {
@@ -126,8 +127,9 @@ export class BoxDragComponent implements OnInit {
   startDrag ( event: any, boxid: string, from: string, el: any ) {
 
     const box = this.getBox ( boxid, from )
-    this.setBox ( box )
+    const uibox = this.setBox ( box )
     event.interactable.leBox = box
+    event.interactable.leUIBox = uibox
     this.ghost.style.opacity = '0.8'
     this.ghost.style.position = 'fixed'
     this.ghost.style.top  = event.clientY
@@ -158,14 +160,15 @@ export class BoxDragComponent implements OnInit {
     el.style.opacity = '1.0'
   }
 
-  setBox ( box: BoxType ) {
+  setBox ( box: BoxType ) : UIBoxType {
     this.box = box
     this.graph = initGraph ( this.box )
     this.uigraph = uimap ( this.graph )
     const uibox = this.uigraph.uibox [ rootGraphId ]
     this.uibox = uibox
-    this.grabpos = this.uibox.grabpos
+    this.grabpos = this.uigraph.grabpos
     // FIXME: We do a full app redraw instead of just this element and children.
     this.appref.tick ()
+    return uibox
   }
 }

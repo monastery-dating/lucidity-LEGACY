@@ -24,7 +24,6 @@ export interface UIBoxType {
   size: UIBoxSize
   pos: UIPosType
   sextra: number[]
-  grabpos: UIPosType // center under outlet position
 
   // final computed elements
   className: string

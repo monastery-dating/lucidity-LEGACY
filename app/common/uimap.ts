@@ -107,16 +107,28 @@ const boxPosition = function
   uiboxes [ id ].pos = ctx
   let dy = layout.HEIGHT
 
-  let x  = ctx.x
-  const input = obj.in
-  const link = obj.link || []
-
   if ( graph.type === 'files' ) {
     dy += layout.SUBPADY
   }
   else {
     dy += layout.VPAD
   }
+
+  let x  = ctx.x
+
+  if ( ghost ) {
+    if ( ghost.y > ctx.y + dy && ghost.y <= ctx.y + 2 * dy ) {
+      // ghost is hovering on our children
+      // FIXME: insert it in uigraph...
+      x += ghost.uibox.size.w + layout.BPAD
+    }
+  }
+
+  // TODO: we should allow more links then input (passing extra args in
+  // function calls)
+  const input = obj.in
+  const link = obj.link || []
+
   // get children
   for ( let i = 0; i < input.length; i += 1 ) {
     const cname = link [ i ]
@@ -147,15 +159,6 @@ const boxPosition = function
         , y: ctx.y + dy
         }
       )
-    }
-  }
-
-  // handle redraw when ghost is dragged over graph
-  if ( ghost ) {
-    console.log ( ghost.y, ctx.y, ctx.y + dy )
-    if ( ghost.y > ctx.y && ghost.y <= ctx.y + dy ) {
-      console.log ( 'move' )
-      dy += layout.VPAD + layout.HEIGHT
     }
   }
 
@@ -222,10 +225,6 @@ const uimapOne = function
 
   const obj  = graph.boxes [ id ]
 
-  uibox.grabpos =
-  { x: layout.RADIUS + layout.SPAD + layout.SLOT
-  , y: layout.HEIGHT / 2 + layout.SLOT + 4 // FIXME: why do we need to add 4 ?
-  }
   uibox.name = obj.name
   uibox.type = obj.type
   uibox.className = uibox.name === cache.name
@@ -312,20 +311,31 @@ export const uimap = function
 ( graph: GraphType
 , alayout?: UILayoutType
 , cache?: UIGraphType
-, ghost?: GhostBoxType
+, aghost?: GhostBoxType
 ) : UIGraphType {
+  const layout = alayout || defaultUILayout
+  const cachebox : UIBoxesType = cache ? cache.uibox : {}
+
   const uigraph : UIGraphType =
   { list: []
+  , grabpos:
+    { x: layout.RADIUS + layout.SPAD + layout.SLOT
+    , y: layout.HEIGHT / 2 + layout.SLOT + 4 // FIXME: why do we need to add 4 ?
+    }
   , uibox: {}
   }
-
-  const layout = alayout || defaultUILayout
-
-  const cachebox : UIBoxesType = cache ? cache.uibox : {}
 
   const startpos =
   { x: 0.5
   , y: 0.5 + layout.SLOT + layout.RADIUS
+  }
+
+  let ghost
+  if ( aghost ) {
+    // take grabpos into account
+    const gx = aghost.x - uigraph.grabpos.x
+    const gy = aghost.y - uigraph.grabpos.y
+    ghost = merge ( aghost, { x: gx, y: gy })
   }
 
   uimapOne
