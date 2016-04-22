@@ -28,6 +28,9 @@ export interface FileType extends BoxType {
 export interface GhostBoxType {
   box: BoxType
   uibox: UIBoxType
+  linkpos?: number // if box can be dropped, this is the position in parent links
+  parentid?: string  // parent boxid if can be dropped
+  boxid?: string
   x: number
   y: number
 }

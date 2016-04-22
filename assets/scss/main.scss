@@ -58,6 +58,10 @@ svg {
     &.main {
       fill:  color( maint );
     }
+
+    &.ghost {
+      opacity: 0.2
+    }
   }
 
   path {
@@ -70,6 +74,11 @@ svg {
 
     &.Folder {
       fill:   color( foldb );
+    }
+
+    &.ghost {
+      fill:  color( mainb );
+      opacity: 0.3
     }
   }
 }

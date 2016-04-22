@@ -9,6 +9,7 @@ import { mockFiles } from '../../store/mock/files'
 
 @Component
 ( { selector: 'le-files'
+  , changeDetection: ChangeDetectionStrategy.OnPush
   , directives:
     [ BoxComponent
     ]
@@ -18,7 +19,6 @@ import { mockFiles } from '../../store/mock/files'
       <g le-box *ngFor='#box of ( all | async )' [box]='box'></g>
     </svg>
     `
-  , changeDetection: ChangeDetectionStrategy.OnPush
   }
 )
 

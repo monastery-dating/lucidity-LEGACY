@@ -1,10 +1,11 @@
-import { Component, Input } from 'angular2/core'
+import { ChangeDetectionStrategy, Component, Input } from 'angular2/core'
 import { UIBoxType } from './uibox.type'
 
 @Component
 ( { selector: 'g[le-box]'
+  , changeDetection: ChangeDetectionStrategy.OnPush
   , directives:
-    [ 
+    [
     ]
   , template:
     ` <svg:g [attr.transform]='transform'>
@@ -45,6 +46,7 @@ export class BoxComponent {
     return this.box.slots
   }
   get sclass () {
-    return this.box.name === 'Mix' ? 'slot pulse' : 'slot'
+    return 'slot'
+    // return this.box.name === 'Mix' ? 'slot pulse' : 'slot'
   }
 }

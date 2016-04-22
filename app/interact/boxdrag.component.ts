@@ -6,12 +6,13 @@ import { UIBoxType } from '../common/uibox.type'
 import { UIGraphType } from '../common/uigraph.type'
 import { BoxType, initBox } from '../common/box.type'
 import { GraphType } from '../common/graph.type'
+import { GhostBoxType } from '../common/box.type'
 import { initGraph } from '../common/graph.type'
 import { rootGraphId } from '../common/graph.helper'
 
 // FIXME: how could we move this to the GraphComponent with the
 // directive setup ?
-import { GraphGhost } from '../workbench/graph/graph.mutations'
+import { GraphGhost, GraphAdd } from '../workbench/graph/graph.mutations'
 
 import { BoxDragService } from './boxdrag.service'
 import { dispatcherToken, DispatcherType } from '../store/index'
@@ -39,7 +40,8 @@ export class BoxDragComponent implements OnInit {
   uibox: UIBoxType
   uigraph: UIGraphType
   grabpos: { x: number, y: number }
-  ghost: any
+  ghost: any // the element under pointer
+
 
   constructor
   ( @Inject ( ApplicationRef ) private appref: ApplicationRef
@@ -106,22 +108,19 @@ export class BoxDragComponent implements OnInit {
           const y = p1.pageY - p2.top
           const box : BoxType = event.draggable.leBox
           const uibox : UIBoxType = event.draggable.leUIBox
-          const ghost =
           this.dispatcher.next
           ( new GraphGhost ( box, uibox, x, y ) )
           this.appref.tick ()
         }
       , ondrop: ( event ) => {
           el.style.background = ""
-          console.log ( 'DROP' )
+          this.dispatcher.next ( new GraphAdd () )
         }
       , ondragleave: ( event ) => {
           el.style.background = ""
-          console.log ( 'LEAVE' )
         }
       }
     )
-
   }
 
   startDrag ( event: any, boxid: string, from: string, el: any ) {

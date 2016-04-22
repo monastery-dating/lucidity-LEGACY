@@ -25,7 +25,7 @@ export interface UIBoxType {
   pos: UIPosType
   sextra: number[]
 
-  // final computed elements
+  // can contain more then one class ( for ghost element )
   className: string
   // draw path
   path: string

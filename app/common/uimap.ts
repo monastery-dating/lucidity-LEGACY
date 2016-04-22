@@ -2,7 +2,7 @@ import { UILayoutType, defaultUILayout, getTsizer } from './uilayout.type'
 import { UIGraphType, UIBoxesType } from './uigraph.type'
 import { UIBoxType, UIBoxSize, UIPosType } from './uibox.type'
 import { GraphType } from './graph.type'
-import { rootGraphId } from './graph.helper'
+import { rootGraphId, nextGraphId } from './graph.helper'
 import { BoxType, GhostBoxType } from './box.type'
 
 import { escape, merge } from '../util/index'
@@ -97,14 +97,14 @@ const boxPosition = function
 ( graph: GraphType
 , id: string
 , layout: UILayoutType
-, uiboxes: UIBoxesType
+, uigraph: UIGraphType
 , ghost: GhostBoxType
 , ctx: UIPosType
 ) {
   const obj  = graph.boxes [ id ]
 
   // store our position given by ctx
-  uiboxes [ id ].pos = ctx
+  uigraph.uibox [ id ].pos = ctx
   let dy = layout.HEIGHT
 
   if ( graph.type === 'files' ) {
@@ -116,28 +116,46 @@ const boxPosition = function
 
   let x  = ctx.x
 
-  if ( ghost ) {
-    if ( ghost.y > ctx.y + dy && ghost.y <= ctx.y + 2 * dy ) {
-      // ghost is hovering on our children
-      // FIXME: insert it in uigraph...
-      x += ghost.uibox.size.w + layout.BPAD
-    }
-  }
-
   // TODO: we should allow more links then input (passing extra args in
   // function calls)
   const input = obj.in
   const link = obj.link || []
+  const onchildren = ghost
+                  && ( ghost.y > ctx.y + dy )
+                  && ( ghost.y <= ctx.y + 2 * dy )
 
   // get children
   for ( let i = 0; i < input.length; i += 1 ) {
     const cname = link [ i ]
+    if ( onchildren ) {
+      // ghost is hovering on our children
+      if ( ghost.x > x && ghost.x <= x + ghost.uibox.size.w ) {
+        // simulate drop
+        const boxid = nextGraphId ( graph )
+        ghost.linkpos = i
+        ghost.parentid = id
+
+        const gbox = merge
+        ( ghost.uibox,
+          { pos: { x: x, y: ctx.y + dy }
+          , id: boxid
+          , className: ghost.uibox.className + ' ghost'
+          }
+        )
+        // this is to draw the ghost
+        uigraph.list.push ( boxid )
+        uigraph.uibox [ boxid ] = gbox
+
+        x += ghost.uibox.size.w + layout.BPAD
+      }
+    }
+
     if ( cname ) {
       boxPosition
-      ( graph, cname, layout, uiboxes, ghost
+      ( graph, cname, layout, uigraph, ghost
       , { x, y: ctx.y + dy }
       )
-      x += layout.BPAD + uiboxes [ cname ].size.w
+      x += layout.BPAD + uigraph.uibox [ cname ].size.w
     }
   }
 
@@ -145,7 +163,7 @@ const boxPosition = function
     // files rendering
     if ( obj.sub ) {
       dy += boxPosition
-      ( graph, obj.sub, layout, uiboxes, ghost
+      ( graph, obj.sub, layout, uigraph, ghost
       , { x: x + layout.SUBPADX
         , y: ctx.y + dy
         }
@@ -154,7 +172,7 @@ const boxPosition = function
 
     if ( obj.next ) {
       dy += boxPosition
-      ( graph, obj.next, layout, uiboxes, ghost
+      ( graph, obj.next, layout, uigraph, ghost
       , { x
         , y: ctx.y + dy
         }
@@ -332,17 +350,18 @@ export const uimap = function
 
   let ghost
   if ( aghost ) {
-    // take grabpos into account
-    const gx = aghost.x - uigraph.grabpos.x
-    const gy = aghost.y - uigraph.grabpos.y
-    ghost = merge ( aghost, { x: gx, y: gy })
+    // cx, cy is the center of the box.
+    const cx = aghost.x - uigraph.grabpos.x + aghost.uibox.size.w / 2
+    const cy = aghost.y - uigraph.grabpos.y + aghost.uibox.size.h / 2
+    ghost = merge ( aghost, { x: cx, y: cy })
+    uigraph.dropghost = ghost
   }
 
   uimapOne
   ( graph, rootGraphId, layout, uigraph, ghost, cachebox )
 
   boxPosition
-  ( graph, rootGraphId, layout, uigraph.uibox, ghost, startpos )
+  ( graph, rootGraphId, layout, uigraph, ghost, startpos )
 
   return uigraph
 }

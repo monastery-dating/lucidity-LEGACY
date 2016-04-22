@@ -1,7 +1,7 @@
 import { GraphStoreType } from './graph.store.type'
 import { GraphType } from '../../common/graph.type'
 import { nextGraphId, removeInGraph } from '../../common/graph.helper'
-import { BoxType, FileType, initBox } from '../../common/box.type'
+import { BoxType, FileType, GhostBoxType, initBox } from '../../common/box.type'
 import { UIBoxType } from '../../common/uibox.type'
 import { uimap } from '../../common/uimap'
 import { merge } from '../../util/index'
@@ -37,18 +37,63 @@ export class GraphInit extends GraphAction {
   }
 }
 
+export class GraphAdd extends GraphAction {
+  constructor
+  () {
+    super ()
+  }
+
+  mutate
+  ( state: GraphStoreType ) : GraphStoreType {
+      const g = state.uigraph.dropghost
+      if ( !g ) {
+        console.error ( `No element set in uigraph.dropghost.` )
+        return
+      }
+
+      const parent = state.graph.boxes [ g.parentid ]
+      if ( !parent ) {
+        console.error ( `Cannot add element: missing parent '${g.parentid}'` )
+        return
+      }
+
+      const link = []
+      const plink = parent.link
+      for ( let i = 0; i < plink.length; i += 1 ) {
+        if ( i === g.linkpos ) {
+          link.push ( g.boxid )
+        }
+        link.push ( plink [ i ] )
+      }
+      const newparent = merge ( parent, { link } )
+      const boxes = merge
+      ( state.graph.boxes
+      , { [ g.parentid ]: newparent
+        , [ g.boxid ]: g.box
+        }
+      )
+
+      const graph = merge
+      ( state.graph , { boxes } )
+
+      console.log ( g.boxid, graph )
+
+      const uigraph = uimap ( graph, null, state.uigraph )
+
+      return { graph, uigraph }
+  }
+}
+
 export class GraphClick extends GraphAction {
   constructor
   ( public boxid: string
   ) {
     super ()
-    console.log ( 'GraphClick', boxid )
   }
 
   mutate
   ( state: GraphStoreType ) : GraphStoreType {
       const graph = removeInGraph ( state.graph, this.boxid )
-      console.log ( graph )
 
       const uigraph = uimap ( graph, null, state.uigraph )
 
@@ -65,12 +110,10 @@ export class GraphGhost extends GraphAction {
   , public y: number
   ) {
     super ()
-    console.log ( 'new graph ghost' )
   }
 
   mutate
   ( state: GraphStoreType ) : GraphStoreType {
-      console.log ( 'mutate graph ghost' )
       // TODO: we could optimize this id
       const nextId = nextGraphId ( state.graph )
 

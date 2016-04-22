@@ -10,6 +10,7 @@ import { mockGraph } from '../../store/mock/graph'
 
 @Component
 ( { selector: 'le-graph'
+  , changeDetection: ChangeDetectionStrategy.OnPush
   , directives:
     [ BoxComponent
     , BoxDrop
@@ -20,7 +21,6 @@ import { mockGraph } from '../../store/mock/graph'
       <g (click)='doClick($event)' le-box *ngFor='#box of ( all | async )' [box]='box'></g>
     </svg>
     `
-  , changeDetection: ChangeDetectionStrategy.OnPush
   }
 )
 export class GraphComponent {
