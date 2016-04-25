@@ -18,7 +18,7 @@ import { mockGraph } from '../../store/mock/graph'
   , template:
     `
     <svg id='graph' le-box-drop>
-      <g (click)='doClick($event)' le-box *ngFor='#box of ( all | async )' [box]='box'></g>
+      <g (click)='doClick($event)' le-box *ngFor='#uibox of ( all | async )' [uibox]='uibox'></g>
     </svg>
     `
   }

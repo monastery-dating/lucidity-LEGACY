@@ -48,6 +48,13 @@ svg {
     fill: none;
     stroke: color( wboxl );
     stroke-width: $lsbo;
+
+    &.detached {
+      @extend ._detachedFx;
+      stroke-width: 3 * $lsbo;
+      stroke: black;
+      transform: translateY(-1px);
+    }
   }
 
   text {

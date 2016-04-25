@@ -17,6 +17,11 @@ export interface UIBoxSize {
   wde: number
 }
 
+export interface UISlotType {
+  path: string
+  className: string
+}
+
 export interface UIBoxType {
   type?: string
   name: string
@@ -25,10 +30,13 @@ export interface UIBoxType {
   pos: UIPosType
   sextra: number[]
 
+  // During drag/drop operation, this is true for
+  // drop previsualisation (not the dragged element).
+  isGhost?: boolean
   // can contain more then one class ( for ghost element )
   className: string
   // draw path
   path: string
   // slot paths
-  slots: string[]
+  slots: UISlotType[]
 }

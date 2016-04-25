@@ -10,7 +10,8 @@ export interface BoxType {
   type: string
 
   // Specific to Box in graph
-  // points to other ids in slot link order.
+  // points to other ids in slot link order. There can be
+  // more links then inputs and these must be shown.
   // Can be null for empty slot.
   link?: string[]
   // True if the block has an init function

@@ -76,7 +76,7 @@ export class GraphAdd extends GraphAction {
       const graph = merge
       ( state.graph , { boxes } )
 
-      console.log ( g.boxid, graph )
+      console.log ( 'GraphAdd', g.boxid )
 
       const uigraph = uimap ( graph, null, state.uigraph )
 

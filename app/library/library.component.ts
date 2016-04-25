@@ -11,6 +11,7 @@ import { UIBoxType } from '../common/uibox.type'
 
 @Component
 ( { selector: 'le-library'
+  , changeDetection: ChangeDetectionStrategy.OnPush
   , directives:
     [ BoxComponent
     , BoxDrag

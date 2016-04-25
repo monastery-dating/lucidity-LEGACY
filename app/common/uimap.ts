@@ -1,6 +1,6 @@
 import { UILayoutType, defaultUILayout, getTsizer } from './uilayout.type'
 import { UIGraphType, UIBoxesType } from './uigraph.type'
-import { UIBoxType, UIBoxSize, UIPosType } from './uibox.type'
+import { UIBoxType, UIBoxSize, UISlotType, UIPosType } from './uibox.type'
 import { GraphType } from './graph.type'
 import { rootGraphId, nextGraphId } from './graph.helper'
 import { BoxType, GhostBoxType } from './box.type'
@@ -116,16 +116,13 @@ const boxPosition = function
 
   let x  = ctx.x
 
-  // TODO: we should allow more links then input (passing extra args in
-  // function calls)
-  const input = obj.in
   const link = obj.link || []
   const onchildren = ghost
                   && ( ghost.y > ctx.y + dy )
                   && ( ghost.y <= ctx.y + 2 * dy )
 
   // get children
-  for ( let i = 0; i < input.length; i += 1 ) {
+  for ( let i = 0; i < link.length; i += 1 ) {
     const cname = link [ i ]
     if ( onchildren ) {
       // ghost is hovering on our children
@@ -134,12 +131,13 @@ const boxPosition = function
         const boxid = nextGraphId ( graph )
         ghost.linkpos = i
         ghost.parentid = id
+        ghost.boxid = boxid
 
         const gbox = merge
         ( ghost.uibox,
           { pos: { x: x, y: ctx.y + dy }
           , id: boxid
-          , className: ghost.uibox.className + ' ghost'
+          , isGhost: true
           }
         )
         // this is to draw the ghost
@@ -189,7 +187,7 @@ const minSize = function
 ( obj: BoxType
 , layout: UILayoutType
 ) : UIBoxSize {
-  const ds     = obj.in.length
+  const ds     = Math.max ( obj.in.length, (obj.link || []).length )
   const us     = obj.out ? 1 : 0
   // FIXME: We should find a better way to get hold of the
   // DOM element...
@@ -236,7 +234,10 @@ const uimapOne = function
 , cachebox: UIBoxesType
 ) {
   uigraph.uibox [ id ] = <UIBoxType> { id }
-  uigraph.list.push ( id )
+  if ( graph.type !== 'render' ) {
+    // not in graph: draw parent first
+    uigraph.list.push ( id )
+  }
 
   const uibox = uigraph.uibox [ id ]
   const cache = cachebox [ id ] || <UIBoxType>{}
@@ -248,12 +249,14 @@ const uimapOne = function
   uibox.className = uibox.name === cache.name
                   ? cache.className
                   : className ( obj, layout )
+  // FIXME: only store text size in cache
+  const ds = Math.max ( ( obj.in || [] ).length, ( obj.link || [] ).length )
 
   let size = cache.size
   if ( !size ||
         size.cacheName !== obj.name ||
         size.us   !== ( obj.out ? 1 : 0 ) ||
-        size.ds   !== ( obj.in || [] ).length
+        size.ds   !== ds
         ) {
     size = minSize ( obj, layout )
   }
@@ -265,7 +268,7 @@ const uimapOne = function
   size.wde = 0
 
   const input = obj.in
-  const slots : string[] = []
+  const slots : UISlotType[] = []
   const sl = layout.SLOT
 
   const sextra = [ 0 ] // extra spacing before slots
@@ -276,13 +279,22 @@ const uimapOne = function
     let   x = layout.RADIUS + layout.SPAD
     const y = layout.HEIGHT
     const link = obj.link || []
+    const len = Math.max ( link.length, input.length )
 
 
     // Compute sizes for all children
-    for ( let i = 0; i < input.length; i += 1 ) {
-      slots.push
-      ( `M${x} ${y} l${sl} ${-sl} l${sl} ${sl}`
-      )
+    for ( let i = 0; i < len; i += 1 ) {
+      if ( ! input [ i ] ) {
+        // extra links outside of inputs...
+        const spath = `M${x} ${y} h${2 * sl}`
+        slots.push
+        ( { path: spath, className: 'slot detached' } )
+      }
+      else {
+        const spath = `M${x} ${y} l${sl} ${-sl} l${sl} ${sl}`
+        slots.push
+        ( { path: spath, className: 'slot' } )
+      }
       const cname = link [ i ]
       if ( cname ) {
         // We push in sextra the delta for slot i
@@ -320,6 +332,11 @@ const uimapOne = function
 
   uibox.path  = path ( uibox, layout )
   uibox.slots = slots
+  if ( graph.type === 'render' ) {
+    // list contains children before self so that we
+    // draw the parent above the child (slots).
+    uigraph.list.push ( id )
+  }
   return uibox.size.w
 }
 
@@ -333,6 +350,8 @@ export const uimap = function
 ) : UIGraphType {
   const layout = alayout || defaultUILayout
   const cachebox : UIBoxesType = cache ? cache.uibox : {}
+
+  console.log ( 'uimap', graph.type )
 
   const uigraph : UIGraphType =
   { list: []

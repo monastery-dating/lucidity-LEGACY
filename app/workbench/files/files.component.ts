@@ -16,7 +16,7 @@ import { mockFiles } from '../../store/mock/files'
   , template:
     `
     <svg id='files'>
-      <g le-box *ngFor='#box of ( all | async )' [box]='box'></g>
+      <g le-box *ngFor='#b of ( all | async )' [uibox]='b'></g>
     </svg>
     `
   }

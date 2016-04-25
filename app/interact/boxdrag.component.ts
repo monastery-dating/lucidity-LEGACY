@@ -29,7 +29,7 @@ import { merge } from '../util/merge.util'
     ]
   , template:
     ` <svg id='boxdrag' style='cursor:none; z-index:999; width:600px; height:60px; margin-top:-{{grabpos.y}}px; margin-left:-{{grabpos.x}}px'>
-        <g le-box [box]='uibox'></g>
+        <g le-box [uibox]='uibox'></g>
       </svg>
     `
   }
