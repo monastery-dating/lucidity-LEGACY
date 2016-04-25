@@ -58,12 +58,19 @@ export class GraphAdd extends GraphAction {
       }
 
       const link = []
-      const plink = parent.link
-      for ( let i = 0; i < plink.length; i += 1 ) {
+      const plink = parent.link || []
+      // FIXME FIXME: these algo are all broken.
+      const len = Math.max ( plink.length, g.linkpos + 1 )
+      for ( let i = 0; i < len; i += 1 ) {
         if ( i === g.linkpos ) {
           link.push ( g.boxid )
+          if ( plink [ i ] ) {
+            link.push ( plink [ i ] )
+          }
         }
-        link.push ( plink [ i ] )
+        else {
+          link.push ( plink [ i ] || null )
+        }
       }
       const newparent = merge ( parent, { link } )
       const boxes = merge
@@ -76,7 +83,7 @@ export class GraphAdd extends GraphAction {
       const graph = merge
       ( state.graph , { boxes } )
 
-      console.log ( 'GraphAdd', g.boxid )
+      console.log ( 'GraphAdd', graph )
 
       const uigraph = uimap ( graph, null, state.uigraph )
 

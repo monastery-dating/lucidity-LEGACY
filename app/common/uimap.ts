@@ -46,7 +46,7 @@ const path = function
 
   res.push ( `a${r} ${r} 0 0 1 ${-r} ${ r}` )
 
-  const rpadd = w - wd - wde
+  const rpadd = w - wd - wde + ( sextra [ ds ] || 0 )
   if ( rpadd > 0 ) {
     res.push ( `h${ -rpadd - layout.SPAD }` )
   }
@@ -117,34 +117,40 @@ const boxPosition = function
   let x  = ctx.x
 
   const link = obj.link || []
-  const onchildren = ghost
-                  && ( ghost.y > ctx.y + dy )
-                  && ( ghost.y <= ctx.y + 2 * dy )
+  const len  = Math.max ( link.length, ( obj.in || [] ).length )
+  const ghostbelow = ghost && ( ghost.y > ctx.y + dy )
+  const onchildren = ghost && ( ghost.y <= ctx.y + 2 * dy )
+  const sextra = uigraph.uibox [ id ].sextra
 
   // get children
-  for ( let i = 0; i < link.length; i += 1 ) {
+  for ( let i = 0; i < len + 1; i += 1 ) {
     const cname = link [ i ]
-    if ( onchildren ) {
+    const wtonext = ( sextra [ i ] || 0 ) + layout.SPAD + 2 * layout.SLOT
+    if ( ghostbelow ) {
       // ghost is hovering on our children
-      if ( ghost.x > x && ghost.x <= x + ghost.uibox.size.w ) {
+      if ( ghost.x > x && ghost.x <= x + wtonext ) {
         // simulate drop
-        const boxid = nextGraphId ( graph )
-        ghost.linkpos = i
-        ghost.parentid = id
-        ghost.boxid = boxid
+        if ( onchildren || !cname ) {
+          // precise drop on children row
+          // or dropping from far below on free slot
+          const boxid = nextGraphId ( graph )
+          ghost.linkpos = i
+          ghost.parentid = id
+          ghost.boxid = boxid
 
-        const gbox = merge
-        ( ghost.uibox,
-          { pos: { x: x, y: ctx.y + dy }
-          , id: boxid
-          , isGhost: true
-          }
-        )
-        // this is to draw the ghost
-        uigraph.list.push ( boxid )
-        uigraph.uibox [ boxid ] = gbox
+          const gbox = merge
+          ( ghost.uibox,
+            { pos: { x: x, y: ctx.y + dy }
+            , id: boxid
+            , isGhost: true
+            }
+          )
+          // this is to draw the ghost
+          uigraph.list.push ( boxid )
+          uigraph.uibox [ boxid ] = gbox
 
-        x += ghost.uibox.size.w + layout.BPAD
+          x += ghost.uibox.size.w + layout.BPAD
+        }
       }
     }
 
@@ -154,6 +160,10 @@ const boxPosition = function
       , { x, y: ctx.y + dy }
       )
       x += layout.BPAD + uigraph.uibox [ cname ].size.w
+    }
+    else if ( ghostbelow || cname === null ) {
+      // we add x to continue checking drop on all slots
+      x += layout.SPAD + 2 * layout.SLOT
     }
   }
 
@@ -299,21 +309,27 @@ const uimapOne = function
       if ( cname ) {
         // We push in sextra the delta for slot i
         const w  = uimapOne ( graph, cname, layout, uigraph, ghost, cachebox )
-        sextra.push ( w + layout.BPAD - layout.SPAD - 2 * layout.SLOT )
+        if ( i === len - 1 ) {
+          // last
+          sextra.push ( w + layout.BPAD - 2 * layout.SPAD - 4 * layout.SLOT )
+        }
+        else {
+          sextra.push ( w + layout.BPAD - layout.SPAD - 2 * layout.SLOT )
+        }
         x += w
       }
       else {
-        x += layout.SPAD + 2 * layout.SLOT
+        x += 0
         sextra.push ( 0 )
       }
     }
 
     // Compute extra size for this box depending on i-1 children ( last child
     // does not change slot position )
-    sextra.pop ()
     if ( sextra.length > 0 ) {
       size.wde = sextra.reduce ( ( sum, e ) => sum + e )
     }
+    // sextra.pop ()
 
     size.w = Math.max ( size.w, size.wd + size.wde )
   }
@@ -353,25 +369,25 @@ export const uimap = function
 
   console.log ( 'uimap', graph.type )
 
-  const uigraph : UIGraphType =
-  { list: []
-  , grabpos:
-    { x: layout.RADIUS + layout.SPAD + layout.SLOT
-    , y: layout.HEIGHT / 2 + layout.SLOT + 4 // FIXME: why do we need to add 4 ?
-    }
-  , uibox: {}
-  }
-
   const startpos =
   { x: 0.5
   , y: 0.5 + layout.SLOT + layout.RADIUS
   }
 
+  const uigraph : UIGraphType =
+  { list: []
+  , grabpos:
+    { x: startpos.x + layout.RADIUS + layout.SPAD + layout.SLOT
+    , y: startpos.y - layout.RADIUS + 6 // why do we need this 6 ?
+    }
+  , uibox: {}
+  }
+
   let ghost
   if ( aghost ) {
-    // cx, cy is the center of the box.
-    const cx = aghost.x - uigraph.grabpos.x + aghost.uibox.size.w / 2
-    const cy = aghost.y - uigraph.grabpos.y + aghost.uibox.size.h / 2
+    // We want cx, cy to be the up slot.
+    const cx = aghost.x - uigraph.grabpos.x // + aghost.uibox.size.w / 2
+    const cy = aghost.y - uigraph.grabpos.y // + aghost.uibox.size.h / 2
     ghost = merge ( aghost, { x: cx, y: cy })
     uigraph.dropghost = ghost
   }

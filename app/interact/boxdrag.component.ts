@@ -115,6 +115,7 @@ export class BoxDragComponent implements OnInit {
       , ondrop: ( event ) => {
           el.style.background = ""
           this.dispatcher.next ( new GraphAdd () )
+          this.appref.tick ()
         }
       , ondragleave: ( event ) => {
           el.style.background = ""
@@ -154,7 +155,6 @@ export class BoxDragComponent implements OnInit {
   }
 
   onend ( event: any, el: any ) {
-    document.documentElement.style.cursor = ''
     this.ghost.style.display = 'none'
     el.style.opacity = '1.0'
   }
