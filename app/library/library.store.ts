@@ -3,7 +3,7 @@ import { Observable } from 'rxjs'
 // Mutations
 import { Action } from '../store/action.type'
 import { LibraryAction } from './library.mutations'
-import { LibraryStoreType } from './library.store.t'
+import { LibraryStoreType } from './library.store.type'
 
 // Observe mutations on Library and act on them.
 // We just execute the 'mutate' action.

@@ -33,22 +33,3 @@ import { WorkbenchComponent }  from './workbench/index'
 )
 export default class AppComponent {
 }
-/*
-<script>
-import Library   from './Library'
-import Project   from './Project'
-import Workbench from './Workbench'
-
-export default
-{ components:
-  { Library
-  , Project
-  , Workbench
-  }
-}
-</script>
-
-<style lang='sass'>
-@import "../assets/css/main.scss"
-</style>
-*/

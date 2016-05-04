@@ -1,4 +1,4 @@
-import { LibraryStoreType } from './Library.store.t'
+import { LibraryStoreType } from './library.store.type'
 import { GraphType } from '../common/graph.type'
 import { nextGraphId } from '../common/graph.helper'
 import { BoxType, FileType } from '../common/box.type'

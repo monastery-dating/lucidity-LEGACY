@@ -11,7 +11,7 @@ import { observeFiles } from '../workbench/files/files.store'
 import { GraphStoreType, initGraphStore } from '../workbench/graph/graph.store.type'
 import { observeGraph } from '../workbench/graph/graph.store'
 
-import { LibraryStoreType, initLibraryStore } from '../library/library.store.t'
+import { LibraryStoreType, initLibraryStore } from '../library/library.store.type'
 import { observeLibrary } from '../library/library.store'
 
 ////
@@ -25,6 +25,16 @@ export interface AppState {
   graph: GraphStoreType
   library: LibraryStoreType
 }
+/*
+export interface AppState {
+  // Any change to 'user' must be saved globally
+  user: UserStoreType
+  // Any change to 'project' must be saved in the project
+  project: ProjectStoreType
+  // Changes to 'ui' are not saved (but could be used in tutorials)
+  ui: UIStoreType
+}
+*/
 
 // We put it all together in a single state function.
 // It comes with an initial state, observable actions and gives an observable
