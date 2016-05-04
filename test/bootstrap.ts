@@ -1,5 +1,4 @@
-import '../app/common/graph.helper.spec'
-import '../app/common/uimap.spec'
-import '../app/foo.spec'
-import '../app/util/gettype.spec'
+import '../app/types/graph.spec'
+import '../app/types/node.spec'
+import '../app/user/user.spec'
 import '../app/util/merge.spec'
