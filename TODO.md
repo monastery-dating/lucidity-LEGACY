@@ -21,10 +21,14 @@
       ==> Different reducer functions add on different parts
           of the state tree.
           ==> user
+             ==> model
+             ==> views
           ==> project
-              ==> scene
+             ==> model
+                ==> scene
                   ==> node
-          ==> ui ?
+             ==> views
+               ==> selected scene, etc.
           return Object.freeze
           ( { user: user ( state.user, action )
             , project: projectReducer ( state.project, action )
@@ -50,6 +54,9 @@
           This should only happen when the prop for this component (a graph) is changed. No need to tinker with uimap outside of rendering components !! As simple as that !!
       ==> We could keep a 'uiState' sub-tree for all the communication
           with the player, database, etc. But we should not use it to compute features only required to display a component.
+      ==> Clarify onPush: what triggers minimal DOM updates to workspace
+          ==> Define inputs for workspace (instead of using store ?) such
+              as: ( graph, uigraph ) or ( graph, dragop ), etc
 * 2. Transform code from boxdrag to use the store instead of a service...
   --
   StartDrag => Post event to store

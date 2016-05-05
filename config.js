@@ -38,6 +38,7 @@ System.config({
   map: {
     "angular2": "npm:angular2@2.0.0-beta.15",
     "angular2-hot-loader": "npm:angular2-hot-loader@0.0.21",
+    "baobab": "npm:baobab@2.3.3",
     "dragula": "npm:dragula@3.6.8",
     "interact.js": "npm:interact.js@1.2.6",
     "json": "github:systemjs/plugin-json@0.1.0",
@@ -243,6 +244,11 @@ System.config({
       "process": "github:jspm/nodelibs-process@0.1.2",
       "querystring": "github:jspm/nodelibs-querystring@0.1.0",
       "url": "github:jspm/nodelibs-url@0.1.0"
+    },
+    "npm:baobab@2.3.3": {
+      "emmett": "npm:emmett@3.1.1",
+      "fs": "github:jspm/nodelibs-fs@0.1.2",
+      "path": "github:jspm/nodelibs-path@0.1.0"
     },
     "npm:bindings@1.2.1": {
       "fs": "github:jspm/nodelibs-fs@0.1.2",

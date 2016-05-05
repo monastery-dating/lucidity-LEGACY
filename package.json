@@ -8,6 +8,7 @@
     "dependencies": {
       "angular2": "npm:angular2@2.0.0-beta.15",
       "angular2-hot-loader": "npm:angular2-hot-loader@^0.0.21",
+      "baobab": "npm:baobab@^2.3.3",
       "dragula": "npm:dragula@^3.6.8",
       "interact.js": "npm:interact.js@^1.2.6",
       "json": "github:systemjs/plugin-json@^0.1.0",
@@ -38,6 +39,7 @@
   },
   "dependencies": {
     "angular2": "2.0.0-beta.13",
+    "baobab": "^2.3.3",
     "dragula": "^3.6.8",
     "es6-shim": "^0.35.0",
     "interact.js": "^1.2.6",
