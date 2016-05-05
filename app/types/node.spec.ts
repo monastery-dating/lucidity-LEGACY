@@ -12,21 +12,25 @@ describe
         node = Node.create ( 'hello' , SOURCE_A, basePath )
       }
     )
+
     it ( 'should set name', () => {
         expect ( node.name )
         .toEqual ( 'hello' )
       }
     )
+
     it ( 'should set source', () => {
         expect ( node.source )
         .toEqual ( SOURCE_A )
       }
     )
+
     it ( 'should compute path', () => {
         expect ( node.path )
         .toEqual ( `${basePath}/hello.ts`)
       }
     )
+
     it ( 'should be immutable', () => {
         expect
         ( function () {
@@ -36,6 +40,7 @@ describe
         .toThrow ()
       }
     )
+    
     xit ( 'should parse source', () => {
         expect ( node.input )
         .toEqual ( [ 'text:string', 'text:string' ] )
@@ -56,22 +61,26 @@ describe
         node = Node.create ( 'hello' , SOURCE_A, basePath )
       }
     )
+
     it ( 'should set name', () => {
         const node2 = Node.update ( node, { name: 'new name' } )
         expect ( node.name )
         .toEqual ( 'hello' )
       }
     )
+
     it ( 'should set source', () => {
         expect ( node.source )
         .toEqual ( SOURCE_A )
       }
     )
+
     it ( 'should compute path', () => {
         expect ( node.path )
         .toEqual ( `${basePath}/hello.ts`)
       }
     )
+
     xit ( 'should parse source', () => {
         expect ( node.input )
         .toEqual ( [ 'text:string', 'text:string' ] )

@@ -17,16 +17,19 @@ describe
         graph = Graph.create ( node )
       }
     )
+
     it ( 'store node in nodes', () => {
         expect ( graph.nodes [ rootId ] )
         .toBe ( node )
       }
     )
+
     it ( 'create links entry', () => {
         expect ( graph.links [ rootId ] )
         .toEqual ( { id: rootId, children: [], parent: null } )
       }
     )
+
     it ( 'create with id', () => {
         const anid = 'id99'
         const graph2 = Graph.create ( node, anid )
@@ -34,6 +37,7 @@ describe
         .toBe ( node )
       }
     )
+
     it ( 'should be immutable', () => {
         expect
         ( function () {
@@ -56,6 +60,7 @@ describe
         graph = Graph.create ( node )
       }
     )
+
     it ( 'append child in parent', () => {
         const node2 = Node.create ( 'foo', SOURCE_A, basePath )
         const graph2 = Graph.append ( graph, 'id0', node2 )
@@ -63,6 +68,7 @@ describe
         .toEqual ( [ 'id1' ] )
       }
     )
+
     it ( 'add child in nodes', () => {
         const node2 = Node.create ( 'foo', SOURCE_A, basePath )
         const graph2 = Graph.append ( graph, 'id0', node2 )
@@ -70,6 +76,7 @@ describe
         .toBe ( node2 )
       }
     )
+
     it ( 'set child links', () => {
         const node2 = Node.create ( 'foo', SOURCE_A, basePath )
         const graph2 = Graph.append ( graph, 'id0', node2 )
@@ -90,6 +97,7 @@ describe
         graph = Graph.create ( node )
       }
     )
+
     it ( 'insert child in parent', () => {
         const node1 = Node.create ( 'foo', SOURCE_A, basePath )
         const node2 = Node.create ( 'bar', SOURCE_A, basePath )
@@ -101,6 +109,7 @@ describe
         .toBe ( node2 )
       }
     )
+
     it ( 'add child in nodes', () => {
         const node2 = Node.create ( 'foo', SOURCE_A, basePath )
         const graph2 = Graph.insert ( graph, 'id0', 0, node2 )
@@ -108,6 +117,7 @@ describe
         .toBe ( node2 )
       }
     )
+
     it ( 'set child links', () => {
         const node2 = Node.create ( 'foo', SOURCE_A, basePath )
         const graph2 = Graph.insert ( graph, 'id0', 0, node2 )

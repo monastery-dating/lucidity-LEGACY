@@ -1,8 +1,8 @@
 /// <reference path="../../typings/jasmine/jasmine.d.ts" />
-import { merge, append, insert, aset } from './merge.util'
+import { merge, append, insert, aset, update } from './merge.util'
 
 describe
-( 'merge', () => {
+( 'IM.merge', () => {
     it ( 'should create new object'
     , () => {
         const a = {}
@@ -56,7 +56,7 @@ describe
 )
 
 describe
-( 'append', () => {
+( 'IM.append', () => {
     it ( 'should create new object'
     , () => {
         const a = [10]
@@ -90,7 +90,7 @@ describe
 )
 
 describe
-( 'insert', () => {
+( 'IM.insert', () => {
     it ( 'should create new object'
     , () => {
         const a = [10]
@@ -124,7 +124,7 @@ describe
 )
 
 describe
-( 'array set', () => {
+( 'IM.aset', () => {
     it ( 'should create new object'
     , () => {
         const a = [10]
@@ -178,6 +178,60 @@ describe
           }
         )
         .toThrow ()
+      }
+    )
+  }
+)
+
+describe
+( 'IM.update', () => {
+  const a = { x: { y: 1 }, z: 2 }
+  const b = { b: 'b' }
+
+    it ( 'should create new object'
+    , () => {
+        expect ( update ( a, 'x', 'y', 3 ) )
+        .not.toBe ( a )
+      }
+    )
+
+    it ( 'should create frozen object'
+    , () => {
+        const c = update ( a, 'x', 'y', 3 )
+        expect
+        ( function () {
+            c.x.y = 4
+          }
+        )
+        .toThrow ()
+      }
+    )
+
+    it ( 'should set new value'
+    , () => {
+        expect ( update ( a, 'x', 'y', 3 ) )
+        .toEqual ( { x: { y: 3 }, z: 2 } )
+      }
+    )
+
+    it ( 'should set new value with function'
+    , () => {
+        const a = { x: { y: { z: [ 1, 2 ] } }, w: 3 }
+        const r =
+        update ( a, 'x', 'y', 'z'
+        , ( z ) => {
+            return insert ( z, 1, 33 )
+          }
+        )
+        expect ( r )
+        .toEqual ( { x: { y: { z: [ 1, 33, 2 ] } }, w: 3 } )
+      }
+    )
+
+    it ( 'should create required objects'
+    , () => {
+        expect ( update ( a, 'x', 'z', 'w', 3 ) )
+        .toEqual ( { x: { y: 1, z: { w: 3 } }, z: 2 } )
       }
     )
   }

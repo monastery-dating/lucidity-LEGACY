@@ -1,5 +1,5 @@
 import { NodeType, NodeIOType } from './node.type'
-import { GraphType } from './graph.type'
+import { GraphType, LinkType } from './graph.type'
 import { SlotType } from './slot.type'
 import * as IM from '../util/merge.util'
 
@@ -16,6 +16,14 @@ export const nextGraphId = function
 
 export const rootGraphId = nextGraphId ( <GraphType> { nodes: {}} )
 
+const newLink = function
+( id: string
+, parentId: string
+) : LinkType
+{
+  return Object.freeze ( { id, parent: parentId || null, children: [] } )
+}
+
 export const create = function
 ( node: NodeType
 , anid?: string
@@ -23,17 +31,10 @@ export const create = function
 ) : GraphType
 {
   const id = anid || rootGraphId
-  return IM.merge
-  ( { nodes:
-      Object.freeze (
-        { [ id ]: node }
-      )
-    , links:
-      Object.freeze (
-        { [ id ]: Object.freeze ( { id, parent: parentId || null, children: [] } ) }
-      )
+  return Object.freeze
+  ( { nodes: Object.freeze ( { [ id ]: node } )
+    , links: Object.freeze ( { [ id ]: newLink ( id, parentId ) } )
     }
-  , {}
   )
 }
 
@@ -46,18 +47,15 @@ export const insert = function
 {
   const id = nextGraphId ( graph )
   // new information for the added element
-  const childgraph = create ( child, id, parentId )
-  let nodes = IM.merge ( graph.nodes, childgraph.nodes )
-  let links = IM.merge ( graph.links, childgraph.links )
+  let g = IM.update ( graph, 'nodes', id, child )
+  g = IM.update ( g, 'links', id, newLink ( id, parentId ) )
   // update existing graph
   const plink = graph.links [ parentId ]
   const children = IM.insert ( plink.children, pos, id )
-  const nplink = IM.merge ( plink, { children } )
-
-  // update parent link info
-  links = IM.merge ( links, { [ parentId ]: nplink } )
-  // merge updated graph with child graph
-  return Object.freeze ( { nodes, links })
+  return IM.update
+  ( g, 'links', parentId, 'children'
+  , ( children ) => IM.insert ( children, pos, id )
+  )
 }
 
 export const append = function

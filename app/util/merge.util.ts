@@ -72,3 +72,30 @@ export const aset = function<T>
   }
   return Object.freeze ( res )
 }
+
+const doUpdate = function<T>
+( t: T, keys: string[], pos: number, s: any ) : T {
+  const k = keys [ pos ]
+  if ( pos === keys.length - 1 ) {
+    // last
+    if ( typeof s === 'function' ) {
+      const v = s ( t [ k ] )
+      return merge ( t, { [ k ]: v } )
+    }
+    else {
+      return merge ( t, { [ k ]: s } )
+    }
+  }
+  let tv = t [ k ]
+  if ( tv === undefined ) {
+    tv = {}
+  }
+  return merge ( t, { [ k ]: doUpdate ( tv, keys, pos + 1, s ) } )
+}
+
+export const update = function<T>
+( t: T, ...args: any[]) : T {
+  const value = args.pop ()
+  const keys = <string[]>args
+  return doUpdate ( t, keys, 0, value )
+}
