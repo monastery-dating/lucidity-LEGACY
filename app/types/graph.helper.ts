@@ -6,15 +6,15 @@ import * as IM from '../util/merge.util'
 export const nextGraphId = function
 ( graph : GraphType
 ) : string {
-  const nodes = graph.nodes
+  const nodesById = graph.nodesById
   let n : number = 0
-  while ( nodes [ `id${n}` ] ) {
+  while ( nodesById [ `id${n}` ] ) {
     n += 1
   }
   return `id${n}`
 }
 
-export const rootGraphId = nextGraphId ( <GraphType> { nodes: {}} )
+export const rootGraphId = nextGraphId ( <GraphType> { nodesById: {}} )
 
 const newLink = function
 ( id: string
@@ -32,8 +32,9 @@ export const create = function
 {
   const id = anid || rootGraphId
   return Object.freeze
-  ( { nodes: Object.freeze ( { [ id ]: node } )
-    , links: Object.freeze ( { [ id ]: newLink ( id, parentId ) } )
+  ( { nodesById: Object.freeze ( { [ id ]: node } )
+    , linksById: Object.freeze ( { [ id ]: newLink ( id, parentId ) } )
+    , nodes: Object.freeze ( [ id ] )
     }
   )
 }
@@ -48,10 +49,13 @@ export const insert = function
   const id = nextGraphId ( graph )
   let g = graph
   // new information for the added element
-  g = IM.update ( g, 'nodes', id, child )
-  g = IM.update ( g, 'links', id, newLink ( id, parentId ) )
-  g = IM.update ( g, 'links', parentId, 'children'
+  g = IM.update ( g, 'nodesById', id, child )
+  g = IM.update ( g, 'linksById', id, newLink ( id, parentId ) )
+  g = IM.update ( g, 'linksById', parentId, 'children'
   , ( children ) => IM.insert ( children, pos, id )
+  )
+  g = IM.update ( g, 'nodes'
+  , ( nodes ) => IM.append ( nodes, id )
   )
   return g
 }

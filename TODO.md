@@ -17,10 +17,18 @@
   c. ui (drag/drop operations, computed graphs, etc)
      having the ui in the store will help us create tutorials by mocking
      ui events.
+   ==> Use reducer composition
+      ==> Different reducer functions add on different parts
+          of the state tree.
+          ==> user
+          ==> project
+              ==> scene
+                  ==> node
+          ==> ui ?
 * 2. Transform code from boxdrag to use the store instead of a service...
   --
   StartDrag => Post event to store
   DragMove => Post event to store
   --
   Drop => etc
-* Use seamless-immutable (once they have proper typings)
+* Use seamless-immutable (once they have proper typings) ?

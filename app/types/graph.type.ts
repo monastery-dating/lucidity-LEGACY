@@ -11,6 +11,7 @@ export interface LinkType {
 }
 
 export interface GraphType {
-  nodes: NodeMapType
-  links: LinkMapType
+  nodesById: NodeMapType
+  linksById: LinkMapType
+  nodes: string[]
 }
