@@ -1,26 +1,16 @@
-// Use seamless-immutable when we have proper typings for it.
-// import Immutable from 'seamless-immutable'
-// https://github.com/rtfeldman/seamless-immutable/issues/108
+// Object.assign polyfill
+// https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
+
 export const merge = function<T, S>
 ( t: T, s: S ) : T & S {
-  const res: any = {}
+  return Object.freeze ( Object.assign ( {}, t, s ) )
+}
+
+export const remove = function<T>
+( t: T, k: string ) : T {
   // copy
-  for ( const k in t ) {
-    if ( t.hasOwnProperty ( k ) ) {
-      res [ k ] = t [ k ]
-    }
-  }
-  // merge
-  for ( const k in s ) {
-    if ( s.hasOwnProperty ( k ) ) {
-      if ( s [ k ] === null ) {
-        delete res [ k ]
-      }
-      else {
-        res [ k ] = s [ k ]
-      }
-    }
-  }
+  const res = Object.assign ( {}, t )
+  delete res [ k ]
   return Object.freeze ( res )
 }
 

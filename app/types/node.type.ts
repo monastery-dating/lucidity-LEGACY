@@ -30,15 +30,17 @@ export interface NodeType extends NodeIOType {
   name: string
   path: string
   source: string
+  // This is set for type 'Graph'
+  // It creates a graph that behaves like an object (a way to group nodes)
+  graph?: GraphType
+}
+
+export interface NodeMapType {
+  [ id: string ]: NodeType
 }
 
 // basic compiler type checks
 const typetest = function
 ( a: NodeType ) : NodeTypeChanges {
   return a
-}
-
-export interface GraphNode extends NodeType {
-  type: 'Graph'
-  graph: GraphType
 }

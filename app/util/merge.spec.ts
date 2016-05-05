@@ -1,5 +1,5 @@
 /// <reference path="../../typings/jasmine/jasmine.d.ts" />
-import { merge, append, insert, aset, update } from './merge.util'
+import { append, aset, insert, merge, remove, update } from './merge.util'
 
 describe
 ( 'IM.merge', () => {
@@ -44,12 +44,36 @@ describe
       }
     )
 
-    it ( 'should delete null values'
+  }
+)
+
+describe
+( 'IM.remove', () => {
+    const a = { a: 3, b: { c: 4, d: 5 }, e: 6 }
+
+    it ( 'should create new object'
     , () => {
-        const a = { a: 3, b: 4 }
-        const b = { b: null }
-        expect ( merge ( a, b ) )
-        .toEqual ( { a: 3 } )
+        expect ( remove ( a, 'b' ) )
+        .not.toBe ( a )
+      }
+    )
+
+    it ( 'should create frozen object'
+    , () => {
+        const b = remove ( a, 'b' )
+        expect
+        ( function () {
+            b.a = 34
+          }
+        )
+        .toThrow ()
+      }
+    )
+
+    it ( 'should delete value'
+    , () => {
+        expect ( remove ( a, 'b' ) )
+        .toEqual ( { a: 3, e: 6 } )
       }
     )
   }

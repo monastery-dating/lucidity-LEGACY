@@ -46,16 +46,14 @@ export const insert = function
 ) : GraphType
 {
   const id = nextGraphId ( graph )
+  let g = graph
   // new information for the added element
-  let g = IM.update ( graph, 'nodes', id, child )
+  g = IM.update ( g, 'nodes', id, child )
   g = IM.update ( g, 'links', id, newLink ( id, parentId ) )
-  // update existing graph
-  const plink = graph.links [ parentId ]
-  const children = IM.insert ( plink.children, pos, id )
-  return IM.update
-  ( g, 'links', parentId, 'children'
+  g = IM.update ( g, 'links', parentId, 'children'
   , ( children ) => IM.insert ( children, pos, id )
   )
+  return g
 }
 
 export const append = function

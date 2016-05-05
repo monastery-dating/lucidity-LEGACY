@@ -1,8 +1,4 @@
-import { NodeType } from './node.type'
-
-export interface NodeMapType {
-  [ id: string ]: NodeType
-}
+import { NodeMapType } from './node.type'
 
 export interface LinkMapType {
   [ id: string ]: LinkType

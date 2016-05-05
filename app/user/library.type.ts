@@ -1,5 +1,6 @@
-import { GraphType } from '../types/graph.type'
+import { NodeMapType } from '../types/node.type'
 
-export interface Library {
-  graph: GraphType
+export interface LibraryType {
+  nodes: NodeMapType
+  
 }
