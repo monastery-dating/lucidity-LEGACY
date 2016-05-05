@@ -1,5 +1,5 @@
 /// <reference path="../../typings/jasmine/jasmine.d.ts" />
-import { NodeType } from './node.type'
+import { NodeType, NodeMapType } from './node.type'
 import * as Node from './node.helper'
 
 const basePath = '/some/place'
@@ -40,7 +40,7 @@ describe
         .toThrow ()
       }
     )
-    
+
     xit ( 'should parse source', () => {
         expect ( node.input )
         .toEqual ( [ 'text:string', 'text:string' ] )
@@ -88,6 +88,27 @@ describe
         .toEqual ( 'text:string' )
         expect ( node.init )
         .toBe ( false )
+      }
+    )
+  }
+)
+
+describe
+( 'Node.nextNodeId', () => {
+    it ( 'should return id0 on empty map', () => {
+        expect
+        ( Node.nextNodeId ( {} )
+        )
+        .toEqual ( 'id0' )
+      }
+    )
+
+    it ( 'should return first free in graph', () => {
+        const n = Node.create ( 'foo', '', '' )
+        expect
+        ( Node.nextNodeId ( <NodeMapType> { id0: n, id3: n } )
+        )
+        .toEqual ( 'id1' )
       }
     )
   }

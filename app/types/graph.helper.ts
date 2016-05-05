@@ -1,20 +1,8 @@
 import { NodeType, NodeIOType } from './node.type'
+import { nextNodeId, rootNodeId } from './node.helper'
 import { GraphType, LinkType } from './graph.type'
 import { SlotType } from './slot.type'
 import * as IM from '../util/merge.util'
-
-export const nextGraphId = function
-( graph : GraphType
-) : string {
-  const nodesById = graph.nodesById
-  let n : number = 0
-  while ( nodesById [ `id${n}` ] ) {
-    n += 1
-  }
-  return `id${n}`
-}
-
-export const rootGraphId = nextGraphId ( <GraphType> { nodesById: {}} )
 
 const newLink = function
 ( id: string
@@ -30,7 +18,7 @@ export const create = function
 , parentId?: string
 ) : GraphType
 {
-  const id = anid || rootGraphId
+  const id = anid || rootNodeId
   return Object.freeze
   ( { nodesById: Object.freeze ( { [ id ]: node } )
     , linksById: Object.freeze ( { [ id ]: newLink ( id, parentId ) } )
@@ -46,7 +34,7 @@ export const insert = function
 , child: NodeType
 ) : GraphType
 {
-  const id = nextGraphId ( graph )
+  const id = nextNodeId ( graph.nodesById )
   let g = graph
   // new information for the added element
   g = IM.update ( g, 'nodesById', id, child )

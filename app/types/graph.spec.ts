@@ -5,7 +5,7 @@ import * as Graph from './graph.helper'
 import * as Node from './node.helper'
 
 const basePath = '/some/place'
-const rootId = Graph.rootGraphId
+const rootId = Node.rootNodeId
 
 describe
 ( 'Graph.create', () => {
@@ -147,29 +147,6 @@ describe
         const graph2 = Graph.insert ( graph, 'id0', 0, node2 )
         expect ( graph2.linksById[ 'id1' ] )
         .toEqual ( { id: 'id1', parent: 'id0', children: [] } )
-      }
-    )
-  }
-)
-
-describe
-( 'Graph.nextGraphId', () => {
-    it ( 'should return id0 on empty graph', () => {
-        expect
-        ( Graph.nextGraphId ( <GraphType> { nodesById: {} } )
-        )
-        .toEqual ( 'id0' )
-      }
-    )
-
-    it ( 'should return first free in graph', () => {
-        const n = Node.create ( 'foo', '', '' )
-        expect
-        ( Graph.nextGraphId
-          ( <GraphType> { nodesById: { id0: n, id3: n }, linksById: {} }
-          )
-        )
-        .toEqual ( 'id1' )
       }
     )
   }

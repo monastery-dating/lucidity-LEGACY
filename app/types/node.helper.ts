@@ -1,6 +1,18 @@
-import { NodeType, NodeIOType, NodeTypeChanges } from './node.type'
+import { NodeType, NodeMapType, NodeIOType, NodeTypeChanges } from './node.type'
 import { SlotType } from './slot.type'
 import { merge } from '../util/merge.util'
+
+export const nextNodeId = function
+( nodesById: NodeMapType
+) : string {
+  let n : number = 0
+  while ( nodesById [ `id${n}` ] ) {
+    n += 1
+  }
+  return `id${n}`
+}
+
+export const rootNodeId = nextNodeId ( {} )
 
 export const create = function
 ( name: string

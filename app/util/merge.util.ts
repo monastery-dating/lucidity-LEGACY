@@ -15,12 +15,20 @@ export const remove = function<T>
 }
 
 export const append = function<T>
-( t: T[], s: T ) : T {
-  return insert ( t, -1, s )
+( t: T[]
+, s: T
+, f?: (a:T, b:T ) => number
+) : T[] {
+  const res = [ ...t, s ]
+  if ( f ) { res.sort ( f ) }
+  return Object.freeze ( res )
 }
 
 export const insert = function<T>
-( t: T[], pos: number, s: T ) : T {
+( t: T[]
+, pos: number
+, s: T
+) : T[] {
   const res: any = []
   const len = t.length
   let p = pos < 0 ? len + pos + 1 : pos
@@ -88,4 +96,11 @@ export const update = function<T>
   const value = args.pop ()
   const keys = <string[]>args
   return doUpdate ( t, keys, 0, value )
+}
+
+export const sort = function<T>
+( t: T[], f: ( a:T, b:T ) => number ) : T[] {
+  const res = [...t]
+  res.sort ( f )
+  return Object.freeze ( res )
 }

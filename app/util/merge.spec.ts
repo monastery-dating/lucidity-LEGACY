@@ -1,5 +1,5 @@
 /// <reference path="../../typings/jasmine/jasmine.d.ts" />
-import { append, aset, insert, merge, remove, update } from './merge.util'
+import { append, aset, insert, merge, remove, sort, update } from './merge.util'
 
 describe
 ( 'IM.merge', () => {
@@ -108,6 +108,15 @@ describe
         const b = 30
         expect ( append ( a, b ) )
         .toEqual ( [ 10, 20, 30 ] )
+      }
+    )
+
+    it ( 'should append and sort'
+    , () => {
+        const a = [10,20]
+        const b = 15
+        expect ( append ( a, b, ( a, b ) => a < b ? -1 : 1 ) )
+        .toEqual ( [ 10, 15, 20 ] )
       }
     )
   }
@@ -256,6 +265,38 @@ describe
     , () => {
         expect ( update ( a, 'x', 'z', 'w', 3 ) )
         .toEqual ( { x: { y: 1, z: { w: 3 } }, z: 2 } )
+      }
+    )
+  }
+)
+
+describe
+( 'IM.sort', () => {
+    const comp = ( a, b ) => a < b ? -1 : 1
+    const a = [3, 4, 2]
+    it ( 'should create new object'
+    , () => {
+        expect ( sort ( a, comp ) )
+        .not.toBe ( a )
+      }
+    )
+
+    it ( 'should create frozen object'
+    , () => {
+        const o = sort ( a, comp )
+        expect
+        ( function () {
+            o[0] = 12
+          }
+        )
+        .toThrow ()
+      }
+    )
+
+    it ( 'should sort'
+    , () => {
+        expect ( sort ( a, comp ) )
+        .toEqual ( [ 2, 3, 4 ] )
       }
     )
   }

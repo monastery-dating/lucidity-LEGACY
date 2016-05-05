@@ -39,6 +39,7 @@ export interface NodeMapType {
   [ id: string ]: NodeType
 }
 
+
 // basic compiler type checks
 const typetest = function
 ( a: NodeType ) : NodeTypeChanges {
