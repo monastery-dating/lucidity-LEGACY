@@ -39,6 +39,8 @@ System.config({
     "angular2": "npm:angular2@2.0.0-beta.15",
     "angular2-hot-loader": "npm:angular2-hot-loader@0.0.21",
     "baobab": "npm:baobab@2.3.3",
+    "cerebral": "npm:cerebral@0.33.34",
+    "cerebral-view-angular2": "npm:cerebral-view-angular2@0.1.0",
     "dragula": "npm:dragula@3.6.8",
     "interact.js": "npm:interact.js@1.2.6",
     "json": "github:systemjs/plugin-json@0.1.0",
@@ -345,6 +347,15 @@ System.config({
     "npm:bufferutil@1.2.1": {
       "bindings": "npm:bindings@1.2.1",
       "nan": "npm:nan@2.2.1"
+    },
+    "npm:cerebral-view-angular2@0.1.0": {
+      "path": "github:jspm/nodelibs-path@0.1.0",
+      "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:cerebral@0.33.34": {
+      "events": "github:jspm/nodelibs-events@0.1.1",
+      "lodash": "npm:lodash@4.11.2",
+      "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:chalk@1.1.3": {
       "ansi-styles": "npm:ansi-styles@2.2.1",
@@ -886,6 +897,10 @@ System.config({
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:lodash.tostring@4.1.2": {
+      "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:lodash@4.11.2": {
+      "buffer": "github:jspm/nodelibs-buffer@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:lru-cache@4.0.1": {

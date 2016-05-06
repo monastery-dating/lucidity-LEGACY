@@ -13,18 +13,21 @@ import { store, storeToken } from './store/index'
     [ store
     ]
   , template:
-    ` <div style='border:1px solid black; margin:20px; padding: 20px;'>
+    ` <div style='border:1px solid black; margin:20px; padding: 20px; float:left; color: white; width:200px;'>
         <h1>THIS IS {{ compname }}</h1>
         <button (click)='changeName()'>name</button>
         <button (click)='addColor()'>add</button>
-        <h3> {{ name }} </h3>
+        <h3> {{ name.name }} </h3>
         <ul>
           <li *ngFor='#color of ( colors )'>
             {{ color }}
           </li>
         </ul>
       </div>
-      <foo></foo>
+      <foo
+        [colorState]='colorState'
+        [nameState]='nameState'>
+      </foo>
       <bar></bar>
     `
   }
@@ -34,7 +37,7 @@ export class AppComponent {
   colorsCursor: any
   compname: string = 'App'
 
-  constructor ( @Inject (storeToken) private store ) {
+  constructor ( @Inject (storeToken) public store ) {
     // https://github.com/Yomguithereal/baobab
     this.nameCursor = store.select ( 'name' )
     this.colorsCursor = store.select ( 'colors' )
@@ -45,7 +48,16 @@ export class AppComponent {
   }
 
   changeName () {
-    this.nameCursor.set ( `${this.compname} Name` )
+    this.nameCursor.set ( { name: `${this.compname} Name` } )
+  }
+
+  get nameState() {
+    return this.nameCursor.get()
+  }
+
+  get colorState() {
+    console.log ( '== APP colorState ==')
+    return this.colorsCursor.get()
   }
 
   get name () {

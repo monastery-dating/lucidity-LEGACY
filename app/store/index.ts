@@ -4,7 +4,7 @@ import Baobab from 'baobab'
 const makeState = function () {
   return new Baobab
   ( { colors: [ 'yellow', 'purple' ]
-    , name: 'Glorious colors'
+    , name: { name: 'Glorious colors' }
     }
   )
 }

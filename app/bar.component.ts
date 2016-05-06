@@ -3,13 +3,13 @@ import { storeToken } from './store/index'
 
 @Component
 ( { selector: 'bar'
-  , changeDetection: ChangeDetectionStrategy.OnPush
+  //, changeDetection: ChangeDetectionStrategy.OnPush
   , template:
-    ` <div style='border:1px solid black; margin:20px; padding: 20px;'>
+    ` <div style='border:1px solid black; margin:20px; padding: 20px; float:left; color: white; width:150px;'>
         <h1>THIS IS {{ compname }}</h1>
         <button (click)='changeName()'>change</button>
         <button (click)='addColor()'>add</button>
-        <h3> {{ name }} </h3>
+        <h3> {{ name.name }} </h3>
         <ul>
           <li *ngFor='#color of ( colors )'>
             {{ color }}
@@ -42,7 +42,7 @@ export class BarComponent {
   }
 
   changeName () {
-    this.nameCursor.set ( `${this.compname} Name` )
+    this.nameCursor.set ( { name: `${this.compname} Name` } )
   }
 
   get name () {
