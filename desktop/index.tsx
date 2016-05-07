@@ -1,9 +1,9 @@
-import App from './App/index'
+import App from './App/index.tsx'
 import Controller from 'cerebral'
 import Devtools from 'cerebral-module-devtools'
 import Http from 'cerebral-module-http'
 import Model from 'cerebral-model-baobab'
-import Library from '../modules/Library/index'
+import Library from '../modules/Library/index.ts'
 // import Project from './modules/Project'
 // import Router from 'cerebral-module-router'
 // import Scene from './modules/Scene'
@@ -15,6 +15,8 @@ import { Component, render } from 'cerebral-view-snabbdom'
 Component.createElement = Component.DOM
 
 const controller = Controller ( Model ( {} ) )
+
+console.log ( 'YO change no' )
 
 // Our modules
 controller.addModules

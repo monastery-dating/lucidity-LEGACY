@@ -1,7 +1,7 @@
 import { Component } from 'cerebral-view-snabbdom'
-import ProjectPane from './ProjectPane/index'
-import ToolsPane from './ToolsPane/index'
-import Workbench from './Workbench/index'
+import ProjectPane from './ProjectPane/index.tsx'
+import ToolsPane from './ToolsPane/index.tsx'
+import Workbench from './Workbench/index.tsx'
 
 export default Component
 ( {

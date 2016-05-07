@@ -2,25 +2,43 @@
 
 > Lucidity Editor
 
-Using some ideas from this style guide:
-https://github.com/mgechev/angular2-style-guide
+## Install dependencies
 
-## Build Setup
+    npm install
+    jspm install
 
-``` bash
-# install dependencies
-npm install
-jspm install
+## Run the jspm live-reload server
 
-# serve with reload and sass rebuild at localhost:8080 (Mac)
-npm run dev
+Run one of these two following commands and open http://localhost:8080.
 
-# serve with reload and sass rebuild at localhost:8080 (Windows)
-npm run live
-npm run sass
+There is currently a bug and the page does not reload on changes. These are detected by webpack-dev-server but the change is not injected. See: https://webpack.github.io/docs/webpack-dev-server.html.
 
-# rebuild test list in test/bootstrap.ts (in case new test files are created)
-npm run maketests
+View the app as in production by pre-building the js bundle (fastest reload).
 
-# view tests in 127.0.0.1/unit-tests.html
-```
+    npm run dev
+
+Live-server using jspm (slower reloads).
+
+    npm run jspm
+
+## Run the tests
+
+Start the live server
+
+    npm run dev
+
+And open http://localhost:8080/unit-tests.html.
+
+When adding new `.spec.ts` files, you need to update the tests bootstrap file with:
+
+    npm run maketests
+
+## Rebuild SCSS
+
+    npm run sass
+
+## Build for production
+
+The files will go inside the 'public' directory.
+
+    npm run build
