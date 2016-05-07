@@ -46,9 +46,9 @@ declare module "cerebral-view-snabbdom" {
     ( any ): any
   }
   interface ComponentParams {
-    state: Object
-    signals: Object
-    props: Object
+    state: any
+    signals: any
+    props: any
   }
   interface ComponentClbk {
     ( options: ComponentParams ): void

@@ -3,7 +3,7 @@ import Controller from 'cerebral'
 import Devtools from 'cerebral-module-devtools'
 import Http from 'cerebral-module-http'
 import Model from 'cerebral-model-baobab'
-// import Library from './modules/Library'
+import Library from '../modules/Library/index'
 // import Project from './modules/Project'
 // import Router from 'cerebral-module-router'
 // import Scene from './modules/Scene'
@@ -25,6 +25,7 @@ controller.addModules
 controller.addModules
 ( { http: Http ()
   , devtools: Devtools ()
+  , library: Library ()
   /*
   , router: Router
     ( { '/': 'example.redirectRoot' // these are signals

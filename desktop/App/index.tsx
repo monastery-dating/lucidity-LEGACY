@@ -8,10 +8,12 @@ export default Component
   }
 , ( { state, signals } ) => (
     <div>
-      <svg id='scratch' class='svg'>
-        <text class='tbox' id='tsizer'></text>
+      <svg id='scratch' className='svg'>
+        <text className='tbox' id='tsizer'></text>
       </svg>
-      {/* <le-boxdrag></le-boxdrag> */}
+      {/*
+        <le-boxdrag></le-boxdrag>
+        */}
       <ToolsPane></ToolsPane>
       <Workbench></Workbench>
       <ProjectPane></ProjectPane>

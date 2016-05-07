@@ -24,6 +24,17 @@ System.config({
           "loader": "typescript"
         }
       }
+    },
+    "modules": {
+      "defaultExtension": "ts",
+      "modules": {
+        "*.tsx": {
+          "loader": "typescript"
+        },
+        "*.ts": {
+          "loader": "typescript"
+        }
+      }
     }
   },
 

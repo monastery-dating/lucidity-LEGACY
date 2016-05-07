@@ -25,6 +25,10 @@
     },
     "devDependencies": {
       "typescript": "npm:typescript@^1.6.2"
+    },
+    "buildConfig": {
+      "transpileES6": true,
+      "minify": true
     }
   }
 }
