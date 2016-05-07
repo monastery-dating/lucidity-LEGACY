@@ -1,4 +1,4 @@
-import App from './desktop/App/index'
+import App from './App/index'
 import Controller from 'cerebral'
 import Devtools from 'cerebral-module-devtools'
 import Http from 'cerebral-module-http'
@@ -10,6 +10,9 @@ import Model from 'cerebral-model-baobab'
 // import User from './modules/User'
 // We need Component because of jsx usage
 import { Component, render } from 'cerebral-view-snabbdom'
+
+// HACK to support typescript transpiler for tsx files
+Component.createElement = Component.DOM
 
 const controller = Controller ( Model ( {} ) )
 

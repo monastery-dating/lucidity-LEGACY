@@ -1,30 +1,41 @@
 System.config({
   baseURL: "/",
   defaultJSExtensions: true,
-  transpiler: "babel",
-  babelOptions: {
-    "optional": [
-      "runtime",
-      "optimisation.modules.system"
-    ],
-    "jsxPragma": "Component.DOM"
+  transpiler: "typescript",
+  typescriptOptions: {
+    "tsconfig": true,
+    "reactNamespace": "Component",
+    "jsx": 2
   },
   paths: {
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
   },
 
+  packages: {
+    "desktop": {
+      "main": "index",
+      "defaultExtension": "tsx",
+      "modules": {
+        "*.tsx": {
+          "loader": "typescript"
+        },
+        "*.ts": {
+          "loader": "typescript"
+        }
+      }
+    }
+  },
+
   map: {
-    "babel": "npm:babel-core@5.8.38",
-    "babel-runtime": "npm:babel-runtime@5.8.38",
     "cerebral": "npm:cerebral@0.33.34",
     "cerebral-model-baobab": "npm:cerebral-model-baobab@0.4.8",
     "cerebral-module-devtools": "npm:cerebral-module-devtools@0.6.4",
     "cerebral-module-http": "npm:cerebral-module-http@0.1.1",
     "cerebral-view-snabbdom": "npm:cerebral-view-snabbdom@0.5.0",
-    "core-js": "npm:core-js@1.2.6",
     "snabbdom": "npm:snabbdom@0.4.2",
     "snabbdom-jsx": "npm:snabbdom-jsx@0.3.0",
+    "typescript": "npm:typescript@1.8.10",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.3.0"
     },
@@ -113,9 +124,6 @@ System.config({
       "systemjs-json": "github:systemjs/plugin-json@0.1.2",
       "url": "github:jspm/nodelibs-url@0.1.0",
       "zlib": "github:jspm/nodelibs-zlib@0.1.0"
-    },
-    "npm:babel-runtime@5.8.38": {
-      "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:baobab@2.3.3": {
       "emmett": "npm:emmett@3.1.1",
@@ -225,12 +233,6 @@ System.config({
       "string_decoder": "github:jspm/nodelibs-string_decoder@0.1.0"
     },
     "npm:constants-browserify@0.0.1": {
-      "systemjs-json": "github:systemjs/plugin-json@0.1.2"
-    },
-    "npm:core-js@1.2.6": {
-      "fs": "github:jspm/nodelibs-fs@0.1.2",
-      "path": "github:jspm/nodelibs-path@0.1.0",
-      "process": "github:jspm/nodelibs-process@0.1.2",
       "systemjs-json": "github:systemjs/plugin-json@0.1.2"
     },
     "npm:core-util-is@1.0.2": {
@@ -424,6 +426,9 @@ System.config({
     },
     "npm:timers-browserify@1.4.2": {
       "process": "npm:process@0.11.2"
+    },
+    "npm:typescript@1.8.10": {
+      "os": "github:jspm/nodelibs-os@0.1.0"
     },
     "npm:url@0.10.3": {
       "assert": "github:jspm/nodelibs-assert@0.1.0",

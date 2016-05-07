@@ -1,0 +1,19 @@
+{ "exclude":
+  [ "node_modules"
+  , "jspm_packages"
+  , ".git"
+  , "typings/browser"
+  , "typings/browser.d.ts"
+  , "angular"
+  , "app"
+  ]
+, "compilerOptions":
+  { "outDir": "dist"
+  , "target": "es6"
+  , "reactNamespace": "Component"
+  , "sourceMap": true
+  , "experimentalDecorators": true
+  , "jsx": "Preserve"
+  }
+, "compileOnSave": false
+}
