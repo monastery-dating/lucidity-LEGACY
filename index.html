@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Lucidity Editor</title>
+
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, user-scalable=no'>
+
+    <link rel='stylesheet' type='text/css' href='assets/css/main.css'>
+    <script src="jspm_packages/system.js"></script>
+    <script src="config.js"></script>
+  </head>
+  <body>
+    <le-app></le-app>
+    <script>
+      System.import ( 'desktop' )
+      .then ( null, console.error.bind ( console ) )
+    </script>
+  </body>
+</html>
