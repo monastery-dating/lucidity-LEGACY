@@ -1,24 +1,3 @@
-import { html } from 'snabbdom-jsx'
-import snabbdom from 'snabbdom'
-import sclass from 'snabbdom/modules/class'
-import sprops from 'snabbdom/modules/props'
-import sstyle from 'snabbdom/modules/style'
-import sevent from 'snabbdom/modules/eventlisteners'
-
-const patch = snabbdom.init
-( [ sclass, sprops, sstyle, sevent ] )
-
-//HelloMessage : (attrs, body) -> vnode
-const HelloMessage = ({name}) =>
-  <div on-click={ _ => alert('Hi ' + name) }>
-    {name}
-  </div>;
-
-
-var vnode = <HelloMessage name="Yassine" />
-
-patch(document.getElementById('app'), vnode);
-/*
 import App from './desktop/App/index'
 import Controller from 'cerebral'
 import Devtools from 'cerebral-module-devtools'
@@ -43,7 +22,6 @@ controller.addModules
 controller.addModules
 ( { http: Http ()
   , devtools: Devtools ()
-  */
   /*
   , router: Router
     ( { '/': 'example.redirectRoot' // these are signals
@@ -51,13 +29,11 @@ controller.addModules
     , { onlyHash: true }
     )
     */
-    /*
   }
 )
 
 render
 ( () => <App/>
-, document.querySelector ( '#root' )
+, document.getElementById ( 'app' )
 , controller
 )
-*/

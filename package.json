@@ -1,0 +1,32 @@
+{
+  "name": "lucidity.editor",
+  "version": "0.1.0",
+  "description": "An app for live arts",
+  "main": "desktop.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/lucidogen/lucidity.editor.git"
+  },
+  "author": "Gaspard Bucher <gaspard@lucidogen.io> (http://lucidogen.io)",
+  "license": "Commercial",
+  "homepage": "https://bitbucket.org/lucidogen/lucidity.editor#readme",
+  "jspm": {
+    "dependencies": {
+      "cerebral": "npm:cerebral@^0.33.34",
+      "cerebral-model-baobab": "npm:cerebral-model-baobab@^0.4.8",
+      "cerebral-module-devtools": "npm:cerebral-module-devtools@^0.6.4",
+      "cerebral-module-http": "npm:cerebral-module-http@^0.1.1",
+      "cerebral-view-snabbdom": "npm:cerebral-view-snabbdom@^0.5.0",
+      "snabbdom": "npm:snabbdom@^0.4.2",
+      "snabbdom-jsx": "npm:snabbdom-jsx@^0.3.0"
+    },
+    "devDependencies": {
+      "babel": "npm:babel-core@^5.8.24",
+      "babel-runtime": "npm:babel-runtime@^5.8.24",
+      "core-js": "npm:core-js@^1.1.4"
+    }
+  }
+}
