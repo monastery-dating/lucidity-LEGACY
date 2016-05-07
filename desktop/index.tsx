@@ -16,8 +16,6 @@ Component.createElement = Component.DOM
 
 const controller = Controller ( Model ( {} ) )
 
-console.log ( 'YO change no' )
-
 // Our modules
 controller.addModules
 ( {

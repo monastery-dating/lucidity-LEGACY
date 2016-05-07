@@ -11,8 +11,6 @@
 
 Run one of these two following commands and open http://localhost:8080.
 
-There is currently a bug and the page does not reload on changes. These are detected by webpack-dev-server but the change is not injected. See: https://webpack.github.io/docs/webpack-dev-server.html.
-
 View the app as in production by pre-building the js bundle (fastest reload).
 
     npm run dev

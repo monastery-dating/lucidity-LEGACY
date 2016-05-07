@@ -5,10 +5,10 @@
   "main": "desktop.js",
   "scripts": {
     "build": "webpack --config webpack.config.js --minify",
-    "dev": "webpack --inline --config webpack.config.js && webpack-dev-server --content-base public",
+    "dev": "webpack --config webpack.config.js && webpack-dev-server --inline --content-base public",
     "jspm": "live-server --no-browser --ignore=assets/scss,assets/css/style.css.map",
     "maketests": "node test/makebootstrap.js",
-    "sass": "node-sass -w assets/scss/main.scss -o public/css --source-map=true --output-style=compressed",
+    "sass": "node-sass -w assets/scss/main.scss -o public/assets/css --source-map=true --output-style=compressed",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

@@ -5,8 +5,10 @@ export default (options = {}) => {
     console.log ( 'loading library' )
     module.addState
     ( { $rows:
-        [ { name: 'One' }
-        , { name: 'Two' }
+        [ { name: 'Hello' }
+        , { name: 'World' }
+        , { name: 'I am happy' }
+        , { name: 'Life is good' }
         ]
       }
     )

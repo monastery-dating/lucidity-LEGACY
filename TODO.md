@@ -1,3 +1,7 @@
+# DEV
+
+* Use a babel SCSS transpiler and make it live-reload with webpack-dev-server (makes it easier to move styles inline with components).
+
 # PERFORMANCE
 
 * Optimize graph draw to not replace svg elements but update them ? (sync ?)

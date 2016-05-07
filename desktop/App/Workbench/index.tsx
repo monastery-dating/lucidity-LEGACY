@@ -5,7 +5,9 @@ export default Component
   }
 , ( { state, signals } ) => (
     <div id='workbench'>
-      WORKBENCH
+      <div id='files'>
+        I LOVE MU
+      </div>
     </div>
   )
 )
