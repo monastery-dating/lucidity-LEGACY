@@ -1,0 +1,148 @@
+import { Component as CComp } from 'cerebral-view-snabbdom'
+
+const SVGNS = 'http://www.w3.org/2000/svg'
+const modulesNS = [ 'hook', 'on', 'style', 'class', 'props', 'attrs' ]
+const slice = Array.prototype.slice
+
+interface SubComponent {
+  ( props: any, children: VNode[] )
+}
+
+interface VPrimitiveNode {
+  text: any
+}
+
+interface VTagNode {
+  sel: string
+  key: string
+  data: any
+  children?: VNode[]
+}
+
+type VNode = VPrimitiveNode | VTagNode
+
+const mapData = function
+( adata: any
+): any {
+  const props = {}
+  const data = { props }
+  for ( const k in adata ) {
+    if ( k === 'key' || k === 'className' ) {
+      continue
+    }
+    const dash = k.indexOf ( '-' )
+    if ( dash > 0 ) {
+      const nkey = k.split ( '-' )
+      const fkey = nkey.pop ()
+      let base : any = data
+      for ( const l of nkey ) {
+        if ( ! base [ l ] ) {
+          base = base [ l ] = {}
+        }
+        else {
+          base = base [ l ]
+        }
+      }
+      base [ fkey ] = adata [ k ]
+    }
+    else {
+      if ( modulesNS.indexOf ( k ) >= 0 ) {
+        if ( data [ k ] ) {
+          Object.assign ( data [ k ], adata [ k ] )
+        }
+        else {
+          data [ k ] = adata [ k ]
+        }
+      }
+      else {
+        props [ k ] = adata [ k ]
+      }
+    }
+  }
+  return data
+}
+
+const mapChildren = ( c ) => {
+  if ( typeof c === 'object' ) {
+    return c
+  }
+  else {
+    return { text: c }
+  }
+}
+
+const remapSVGData = ( adata ) => {
+  // This is probably buggy
+  adata.attrs = Object.assign ( adata.props.attrs || {}, adata.props )
+  delete adata.props
+  delete adata.attrs.attrs
+
+  adata.ns = SVGNS
+  return adata
+}
+
+const setSVGChildren = ( children ) => {
+  for ( const c of children ) {
+    if ( c.data ) {
+      c.data = remapSVGData ( c.data )
+      if ( c.children ) {
+        setSVGChildren ( c.children )
+      }
+    }
+  }
+}
+
+const createElement = function
+( sel: string | SubComponent
+, adata: any
+, achildren: any[]
+) : VNode {
+
+  let children = achildren
+  if ( arguments.length > 3 || !Array.isArray ( achildren ) ) {
+    children = slice.call ( arguments, 2 )
+  }
+
+  if ( children ) {
+    children = children.map
+    ( ( c ) => typeof c === 'object' ? c : { text: c } )
+  }
+
+  if ( typeof sel === 'string' ) {
+    const vnode: any = { sel }
+    if ( adata ) {
+      if ( adata.key ) {
+        vnode.key = adata.key
+      }
+
+      const data = mapData ( adata )
+      vnode.data = data
+
+      const className  = adata.className
+      if ( className ) {
+        data [ 'class' ] = { [ className ]: true }
+      }
+    }
+    else {
+      vnode.data = {}
+    }
+
+    if ( children ) {
+      vnode.children = children
+    }
+
+    if ( sel === 'svg' ) {
+      setSVGChildren ( [ vnode ] )
+    }
+    return vnode
+  }
+  else {
+    return sel ( adata, children )
+  }
+}
+
+// HACK. Should be able to change this without or should
+// rewrite cerebral-view-snabbdom entirely.
+CComp['createElement'] = createElement // CComp.DOM
+
+export const Component = CComp

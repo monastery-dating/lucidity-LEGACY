@@ -1,6 +1,5 @@
 { "exclude":
   [ "node_modules"
-  , "jspm_packages"
   , ".git"
   , "typings/browser"
   , "typings/browser.d.ts"
@@ -10,11 +9,11 @@
 , "compilerOptions":
   { "outDir": "dist"
   , "target": "es6"
-  , "module": "es6"
+  , "module": "commonjs"
   , "reactNamespace": "Component"
   , "sourceMap": true
   , "experimentalDecorators": true
-  , "jsx": "Preserve"
+  , "jsx": "React"
   }
 , "compileOnSave": false
 }

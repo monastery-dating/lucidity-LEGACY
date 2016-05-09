@@ -1,0 +1,14 @@
+$layout:
+( panew: 200px  // pane width
+, paneh: 100%   // pane height
+, statush: 20px // status bar
+, statusw: 100% // status bar
+, listh: 200px  // list height
+, graphw: 500px // project files in workbench
+, filesw: 200px // project files in workbench
+, resultsh: 400px // library results height
+);
+
+@function layout( $key ) {
+  @return map-get( $layout, $key );
+}

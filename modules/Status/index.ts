@@ -1,17 +1,15 @@
+import changed from './signals/changed'
+
 export default (options = {}) => {
   return (module, controller) => {
     module.addState
-    ( { $rows:
-        [ { name: 'Hello' }
-        , { name: 'Lucy' }
-        , { name: 'I am happy' }
-        , { name: 'Life is good' }
-        ]
+    ( { type: 'info'
+      , message: ''
       }
     )
 
     module.addSignals
-    ( {
+    ( { changed
       }
     )
 

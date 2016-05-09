@@ -1,9 +1,9 @@
 const path = require ( 'path' )
 
 module.exports =
-{ entry: './desktop.js'
+{ entry: './desktop/boot.tsx'
   , output:
-  { path: path.resolve ( __dirname, 'build', 'js' )
+  { path: path.resolve ( __dirname, 'build' )
   , filename: 'js/app.js'
   , publicPath: '/assets/'
   }
@@ -13,13 +13,10 @@ module.exports =
   { loaders:
     [ { test: /(\.js|\.ts|\.tsx)$/
       , exclude: /node_modules/
-      , loader: 'babel'
-      , query:
-        { "presets": [ "es2015" ]
-        , "plugins":
-          [ [ "transform-react-jsx", { "pragma": "Component.DOM" } ]
-          ]
-        }
+      , loader: 'ts-loader' //-loader!ts-loader'
+      }
+    , { test: /\.scss$/
+      , loaders: [ 'style', 'css', 'sass' ]
       }
     ]
   }

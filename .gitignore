@@ -3,7 +3,7 @@
 /jspm_packages
 /lucidity.playback
 /dist
-/typings
 /npm-debug.log
 /public/bundle.js
 /build
+/angular

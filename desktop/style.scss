@@ -1,0 +1,345 @@
+@import 'styles/colors';
+@import 'styles/effects';
+@import 'styles/fonts';
+@import 'styles/layout';
+@import 'styles/misc';
+@import 'styles/palette';
+@import 'styles/reset';
+@import 'styles/components';
+@import 'styles/dragula';
+
+// TODO: remove on prod
+@import 'styles/testcomp';
+
+
+body {
+  font-family: getfont(family);
+  font-size:   getfont(size);
+  background: color( workb );
+  color: color( workt );
+}
+
+@for $i from 1 through $pcount {
+  svg path.box#{$i} {
+    fill: pfill( $i );
+
+    &.dark {
+      fill: darken( desaturate( pfill( $i ), 30%), 30%);
+    }
+
+    &.sel {
+      fill: spfill( $i );
+      stroke: color( sboxl );
+    }
+  }
+
+  .li.box#{$i} {
+    background:  pbox( $i );
+  }
+}
+
+svg path.Folder {
+}
+
+svg {
+  @extend ._noselect;
+
+  .slot {
+    fill: none;
+    stroke: color( wboxl );
+    stroke-width: $lsbo;
+
+    &.detached {
+      @extend ._detachedFx;
+      stroke-width: 3 * $lsbo;
+      stroke: black;
+      transform: translateY(-1px);
+    }
+  }
+
+  text {
+    pointer-events: none;
+    font-size:   getfont(size);
+    fill: color( wboxt );
+
+    &.main {
+      fill:  color( maint );
+    }
+
+    &.ghost {
+      opacity: 0.2
+    }
+  }
+
+  path {
+    stroke-width: $lsbo;
+    stroke: color( wboxl );
+
+    &.main {
+      fill:   color( mainb );
+    }
+
+    &.Folder {
+      fill:   color( foldb );
+    }
+
+    &.ghost {
+      fill:  color( mainb );
+      opacity: 0.3
+    }
+  }
+}
+
+svg#files {
+  border: 2px dashed transparent;
+
+  &.drag-over {
+    border-color: color( wfild );
+  }
+}
+
+svg#scratch {
+  opacity: 0;
+}
+
+
+._pane {
+  background: color( paneb );
+  position: fixed;
+  top: 0; bottom: 0;
+  height: layout( paneh );
+  width:  layout( panew ) - $ppad;
+  border: $lbox solid color( boxl );
+
+}
+
+._input {
+  background: color( inputb );
+  position:absolute;
+  border: $lbox solid color( boxl );
+  border-radius: $brad;
+  padding:$pad;
+}
+
+._search {
+  background: color( lheab );
+  padding: $pad;
+  border: $lbox solid color( boxl );
+  position: relative;
+
+  p {
+    input {
+      @extend ._input;
+      top:$pad; left:$pad;
+      width: layout( panew ) - 2*$pad - $ppad - 3*$pad;
+    }
+  }
+}
+
+._saved {
+  padding:$pad;
+
+  li {
+    background: color( boxb );
+    display: inline-block;
+    border-radius: $brad;
+    border: $lbox solid color( boxl );
+    margin: 2px;
+    text-align: center;
+    width: 1.4em;
+
+    &.sel {
+      background: color( sboxb );
+      color: color( sboxt );
+    }
+  }
+}
+
+._list {
+  background: color( listb );
+  height: layout( listh );
+  border: $lbox solid color( boxl );
+  margin-top: -$lbox;
+  overflow-x: hidden;
+
+  p {
+    background: color( lheab );
+    border: $lbox solid color( boxl );
+    padding: 2*$pad $pad;
+    margin: -$lbox;
+  }
+}
+._noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select:none;
+}
+
+.li {
+  @extend ._noselect;
+  &.drag {
+    padding: 0;
+    span {
+      // We move the text into a span to avoid drag size change (dragula bug)
+      padding: $pad;
+      &:before {
+        color:#222;
+        content: ":: ";
+      }
+    }
+
+    // cursor: grab;
+    // cursor: -webkit-grab;
+    // cursor: -moz-grab;
+  }
+
+  span {
+    display:block;
+  }
+
+  padding: $pad;
+  border: $lbox solid color( boxl );
+  // padding: $pad;
+  background: color( boxb );
+  border: $lbox solid color( boxl );
+  margin-left: -$lbox;
+  margin-top: -$lbox;
+  width: 102%;
+
+  &.sel {
+    background: color( sboxb );
+    color: color( sboxt );
+  }
+}
+
+._button {
+  cursor:pointer;
+}
+
+
+.dragged {
+  opacity: 0.8;
+  border-width: 2px;
+  border-radius: 4px;
+}
+
+._drop {
+  .drag-enter {
+    background: color( sboxb );
+    color: color( sboxt );
+    cursor:copy;
+  }
+}
+
+#library li.drag-match {
+  cursor:copy;
+  color:red;
+}
+
+#library {
+  @extend ._pane;
+  left:0;
+  padding-left: $ppad;
+}
+
+.search {
+  @extend ._search;
+  border-right:0;
+
+  .saved {
+    @extend ._saved;
+  }
+}
+
+.refresh {
+  @extend ._button;
+}
+
+.results {
+  @extend ._list;
+  @extend ._drop;
+  height: layout( resultsh );
+  border-right:0;
+}
+
+.console {
+  @extend ._list;
+  border-right:0;
+  position: relative;
+
+  p {
+    input {
+      @extend ._input;
+      top:$pad; right:$pad;
+      width:50%;
+    }
+  }
+}
+
+#workbench {
+  @extend ._pane;
+  background: color( workb );
+  left:   layout( panew ) - $ppad;
+  box-shadow: inset 0 0 10px darken( color( workb ), 15% );
+
+  // How to do this ?
+  // How to do it dynamically if sides are closed ?
+  padding-right:  layout( panew ) - $ppad;
+  width: 100%;
+
+  #graph {
+    width: layout( graphw );
+    padding: $wpad ;
+    height: 100%;
+  }
+
+  #files {
+    float:left;
+    padding: $wpad ;
+    width: layout( filesw );
+    height: 100%;
+  }
+}
+
+#project {
+  @extend ._pane;
+  right:0;
+  padding-right: $ppad;
+  box-shadow: 0 0 10px darken( color( workb ), 15% );
+
+  .control {
+    @extend ._list;
+    border-left:0;
+  }
+
+  .scenes {
+    @extend ._list;
+    border-left:0;
+  }
+
+  .assets {
+    @extend ._list;
+    border-left:0;
+  }
+
+}
+
+h1, h2, h3, p {
+  font-size: 1em;
+  font-weight: normal;
+  line-height: 1.2em;
+  padding: $pad;
+  margin: 2*$pad 0;
+}
+
+p {
+  margin: 0;
+}
+
+// Block types
+.Scene, .Project {
+  @extend .main;
+}

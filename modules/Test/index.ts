@@ -1,12 +1,9 @@
 export default (options = {}) => {
   return (module, controller) => {
+    /*
     module.addState
-    ( { $rows:
-        [ { name: 'Hello' }
-        , { name: 'Lucy' }
-        , { name: 'I am happy' }
-        , { name: 'Life is good' }
-        ]
+    ( { type: 'info'
+      , message: ''
       }
     )
 
@@ -14,6 +11,7 @@ export default (options = {}) => {
     ( {
       }
     )
+    */
 
     return {} // meta information
   }

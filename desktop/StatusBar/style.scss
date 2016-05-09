@@ -1,0 +1,58 @@
+
+@import '../styles/colors';
+@import '../styles/layout';
+@import '../styles/misc';
+
+@keyframes fadea {
+  0% { opacity: 1.0 }
+  100% { opacity: 0.1 }
+}
+
+@keyframes fadeb {
+  0% { opacity: 1.0 }
+  100% { opacity: 0.1 }
+}
+
+#statusBar {
+  background: lighten( $back_color, 5% );
+  position: fixed;
+  bottom: 0;
+  height: layout( statush );
+  width:  layout( statusw );
+  border: $lbox solid color( boxl );
+  padding: $ppad;
+  color: lighten( $text_color, 60% );
+
+  &.error {
+    color: #a77;
+    .outer {
+      stroke: #f22;
+    }
+    .inner {
+      fill: #f00;
+      animation: fadea 2s 1 both;
+    }
+  }
+
+  &.ok {
+    color: #898;
+    .outer {
+      stroke: #0b0;
+    }
+    .inner {
+      fill: #0f0;
+      animation: fadeb 2s 1 both;
+    }
+  }
+
+  .outer {
+    stroke-width: 1px;
+    stroke: #000;
+    fill: none;
+  }
+
+  .inner {
+    stroke: none;
+    fill: #000;
+  }
+}

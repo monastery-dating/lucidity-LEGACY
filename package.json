@@ -5,10 +5,8 @@
   "main": "desktop.js",
   "scripts": {
     "build": "webpack --config webpack.config.js --minify",
-    "dev": "webpack --config webpack.config.js && webpack-dev-server --inline --content-base public",
-    "jspm": "live-server --no-browser --ignore=assets/scss,assets/css/style.css.map",
-    "maketests": "node test/makebootstrap.js",
-    "sass": "node-sass -w assets/scss/main.scss -o public/assets/css --source-map=true --output-style=compressed",
+    "dev": "webpack --config webpack.config.js && webpack-dev-server --inline --content-base desktop",
+    "maketests": "node test/maketests.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,32 +16,30 @@
   "author": "Gaspard Bucher <gaspard@lucidogen.io> (http://lucidogen.io)",
   "license": "Commercial",
   "homepage": "https://bitbucket.org/lucidogen/lucidity.editor#readme",
-  "jspm": {
-    "dependencies": {
-      "cerebral": "npm:cerebral@^0.33.34",
-      "cerebral-model-baobab": "npm:cerebral-model-baobab@^0.4.8",
-      "cerebral-module-devtools": "npm:cerebral-module-devtools@^0.6.4",
-      "cerebral-module-http": "npm:cerebral-module-http@^0.1.1",
-      "cerebral-view-snabbdom": "npm:cerebral-view-snabbdom@^0.5.0",
-      "snabbdom": "npm:snabbdom@^0.4.2",
-      "snabbdom-jsx": "npm:snabbdom-jsx@^0.3.0"
-    },
-    "devDependencies": {
-      "typescript": "npm:typescript@^1.6.2"
-    },
-    "buildConfig": {
-      "transpileES6": true,
-      "minify": true
-    }
-  },
   "devDependencies": {
     "babel-core": "^6.8.0",
     "babel-loader": "^6.2.4",
     "babel-plugin-transform-react-jsx": "^6.8.0",
     "babel-preset-es2015": "^6.6.0",
-    "live-server": "^1.0.0",
+    "css-loader": "^0.23.1",
+    "deep-equal": "^1.0.1",
+    "jasmine": "^2.4.1",
+    "node-sass": "^3.7.0",
+    "sass-loader": "^3.2.0",
+    "style-loader": "^0.13.1",
     "typescript": "^1.8.10",
     "webpack": "^1.13.0",
-    "node-sass": "^3.4.2"
+    "webpack-dev-server": "^1.14.1"
+  },
+  "dependencies": {
+    "babel-plugin-transform-flow-strip-types": "^6.8.0",
+    "baobab": "^2.3.3",
+    "cerebral": "^0.33.34",
+    "cerebral-model-baobab": "^0.4.8",
+    "cerebral-module-devtools": "^0.6.4",
+    "cerebral-module-http": "^0.1.1",
+    "cerebral-view-snabbdom": "^0.5.0",
+    "snabbdom-jsx": "^0.3.0",
+    "ts-loader": "^0.8.2"
   }
 }
