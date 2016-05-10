@@ -21,7 +21,7 @@ const makeKeyup = function
     if ( e.keyCode === 27 ) {
       // ESC = abort
       e.preventDefault ()
-      e.target.setAttribute ( 'data-abort', true )
+      e.target.setAttribute ( 'data-done', true )
       titleChange ( signals, title )
     }
   }
@@ -29,8 +29,8 @@ const makeKeyup = function
 
 const makeChange = function ( signals: ProjectSignals ) {
   return ( e ) => {
-    console.log ( 'change' )
-    if ( ! e.target.getAttribute ( 'data-abort' ) ) {
+    if ( ! e.target.getAttribute ( 'data-done' ) ) {
+      e.target.setAttribute ( 'data-done', true )
       titleChange ( signals, e.target.value )
     }
   }
@@ -42,10 +42,11 @@ const editableTitle = function ( state, signals: ProjectSignals ) {
     const change = makeChange ( signals )
     const title = state.title
     let noblur = false
-    return <h3>
+    return <h3 class='editable active'>
       <input class='fld' value={ state.title }
         hook-create={ focus }
         on-keyup={ keyup }
+        on-blur={ change }
         on-change={ change }
         />
       </h3>

@@ -116,16 +116,29 @@ svg#scratch {
 
 .fld {
   background: color( inputb );
-  border: $lbox solid color( boxl );
+  border: none;
   border-radius: $brad;
-  padding:$pad;
+  padding: $pad;
+  font: inherit;
 }
 
 .editable {
+  input.fld {
+    background-color: rgba( 0, 0, 0, 0 );
+    border-radius: 0;
+    width:100%;
+    outline: none;
+  }
+  &.active {
+    padding: 0;
+    background-color: rgba( color( inputa ), 1.0 );
+  }
   cursor: text;
+  // transparent background
+  background-color: rgba( 0, 0, 0, 0 );
   border-bottom: 1px dashed #fff;
   border-bottom-color: rgba( lighten( $text_color, 80% ), 0);
-  transition: border-bottom-color 0.8s;
+  transition: border-bottom-color 0.8s, background-color 0.3s;
   &:hover {
     border-bottom-color: rgba( lighten( $text_color, 10% ), 0.4);
   }
