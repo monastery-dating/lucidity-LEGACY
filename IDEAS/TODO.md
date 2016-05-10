@@ -12,59 +12,38 @@
 
 # INTERFACE
 
+# PLAYBACK
+
+  1. Use a Facet to store full project in tree with
+     selected scene.
+  2. Use a Monkey to update the $main function whenever the
+     current scene changes.
+  3. Use a Playback Component to display current scene inside
+     top of Workbench.
 
 # REFACTORING
 
-* 1. Transform store into
-  a. user (library, prefs, etc)
-  b. project (files, scenes->graph, selected scene)
-  c. ui (drag/drop operations, computed graphs, etc)
-     having the ui in the store will help us create tutorials by mocking
-     ui events.
-   ==> Use reducer composition
-      ==> Different reducer functions add on different parts
-          of the state tree.
-          ==> user
-             ==> model
-             ==> views
-          ==> project
-             ==> model
-                ==> scene
-                  ==> node
-             ==> views
-               ==> selected scene, etc.
-          return Object.freeze
-          ( { user: user ( state.user, action )
-            , project: projectReducer ( state.project, action )
-            // But ui depends on project...?
-            , ui: uiReducer ( state.ui, action )
-            }
-          )
-          // Redux.combineReducers
-          const combineReducers = ( reducers ) => {
-            return ( state = {}, action ) => {
-              return Object.keys ( reducers ).reduce
-              ( ( acc, key ) => {
-                  acc [ key ] = reducers [ key ] ( state [ key ], action )
-                  return acc
-                }
-              , {}
-              )
-            }
-          }
-      ==> Acting on lists: state.map...
-      ==> How do we set a 'ref' (react) to keep dom in sync with node.id
-      ==> uimap should be called by the master component rendering a graph.
-          This should only happen when the prop for this component (a graph) is changed. No need to tinker with uimap outside of rendering components !! As simple as that !!
-      ==> We could keep a 'uiState' sub-tree for all the communication
-          with the player, database, etc. But we should not use it to compute features only required to display a component.
-      ==> Clarify onPush: what triggers minimal DOM updates to workspace
-          ==> Define inputs for workspace (instead of using store ?) such
-              as: ( graph, uigraph ) or ( graph, dragop ), etc
-* 2. Transform code from boxdrag to use the store instead of a service...
-  --
-  StartDrag => Post event to store
-  DragMove => Post event to store
-  --
-  Drop => etc
-* Use seamless-immutable (once they have proper typings) ?
+  1. Recreate state tree
+    ==> user
+       ==> model
+       ==> views
+    ==> project
+       ==> model
+          ==> scene
+            ==> node
+       ==> views
+         ==> selected scene, etc.
+
+  2. Use uimap in Graph component or with Facet ?
+
+    uimap should be called by the master component rendering a graph.
+    his should only happen when the prop for this component (a graph) is changed. No need to tinker with uimap outside of rendering components !! As simple as that !!
+
+    or use Monkeys ?
+
+  3. Transform code from boxdrag to use the store instead of a service...
+    --
+    StartDrag => Post event to store
+    DragMove => Post event to store
+    --
+    Drop => etc

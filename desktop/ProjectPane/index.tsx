@@ -5,38 +5,38 @@ export default Component
   }
 , ( { state, signals } ) => (
     <div id='project'>
-        <h3 className='sel'> Gods of India</h3>
+        <h3 class='sel'> Gods of India</h3>
 
-        <div className='control'>
+        <div class='control'>
           <p>Control</p>
 
           <div>
-            <div className='li'><span>OSC</span></div>
-            <div className='li'><span>MIDI</span></div>
-            <div className='li'><span>VST Plugin</span></div>
-            <div className='li'><span>Keyboard</span></div>
-            <div className='li'><span>Mouse</span></div>
+            <div class='li'><span>OSC</span></div>
+            <div class='li'><span>MIDI</span></div>
+            <div class='li'><span>VST Plugin</span></div>
+            <div class='li'><span>Keyboard</span></div>
+            <div class='li'><span>Mouse</span></div>
           </div>
         </div>
 
-        <div className='scenes'>
+        <div class='scenes'>
           <p>Scenes</p>
 
           <div>
-            <div className='li'><span>intro</span></div>
-            <div class={{ li: true, sel: true }}><span>cubes</span></div>
-            <div className='li'><span>terrain</span></div>
+            <div class='li'><span>intro</span></div>
+            <div class='li sel'><span>cubes</span></div>
+            <div class='li'><span>terrain</span></div>
           </div>
         </div>
 
-        <div className='assets'>
+        <div class='assets'>
           <p>assets</p>
 
           <div>
-            <div className='li'><span>dancing queen.mp4</span></div>
-            <div className='li'><span>shiva.jpg</span></div>
-            <div className='li'><span>components (lib)</span></div>
-            <div className='li'><span>lucy-forge (lib)</span></div>
+            <div class='li'><span>dancing queen.mp4</span></div>
+            <div class='li'><span>shiva.jpg</span></div>
+            <div class='li'><span>components (lib)</span></div>
+            <div class='li'><span>lucy-forge (lib)</span></div>
           </div>
         </div>
       </div>

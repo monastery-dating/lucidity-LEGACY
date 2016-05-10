@@ -1,0 +1,22 @@
+@import '../styles/colors';
+@import '../styles/layout';
+@import '../styles/misc';
+
+#playback {
+  background: darken( $back_color, 5% );
+  color: lighten( $text_color, 60% );
+  position: relative;
+  width: 100%;
+
+  #screen {
+    background: black;
+    position: absolute;
+  }
+  .tv {
+    rect {
+      stroke: lighten( #000, 20% );
+      stroke-width: 1px;
+      fill: none;
+    }
+  }
+}

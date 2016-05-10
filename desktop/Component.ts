@@ -42,7 +42,6 @@ const mapData = function
       if ( typeof aclass === 'string' ) {
         const klasses = aclass.split ( /\s+/ )
         for ( const k of klasses ) {
-          console.log ( klass, k )
           klass [ k ] = true
         }
       }

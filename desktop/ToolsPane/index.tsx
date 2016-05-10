@@ -1,9 +1,9 @@
 import { Component } from '../Component'
 
 const renderRow = ( el ) => (
-  <div className='li'>
+  <div class='li'>
     { /*
-         class={ [ el.className ]: true }
+         class={ [ el.class ]: true }
          style={ { marginLeft: el.pos.x - 1 } }>
       */
     }
@@ -18,40 +18,40 @@ export default Component
     <div id='library'>
       <h3>Library</h3>
 
-      <div className='search'>
+      <div class='search'>
         <p>&nbsp;
           <input value='search' />
         </p>
 
-        <ol className='saved'>
-          <li className='sel'>f</li>
+        <ol class='saved'>
+          <li class='sel'>f</li>
           <li>g</li>
           <li>b</li>
           <li>x</li>
-          <li className='add'>+</li>
+          <li class='add'>+</li>
         </ol>
 
         <div>
-          <div className='refresh' click='refreshLibrary'
-            className2='== blink: refreshing '>refresh</div>
+          <div class='refresh' click='refreshLibrary'
+            class2='== blink: refreshing '>refresh</div>
         </div>
       </div>
 
-      <div className='results'>
+      <div class='results'>
         <div>
-          {/* <li v-if='refreshError' className='error'> ==refreshError</li> */}
+          {/* <li v-if='refreshError' class='error'> ==refreshError</li> */}
           { state.rows.map ( renderRow )
            }
         </div>
       </div>
 
-      <div className='console'>
+      <div class='console'>
         <p>Console
           <input value='search'/>
         </p>
 
         <div>
-          <div class={{ li: true, ok: true }}>
+          <div class='li ok'>
             <span>Generated 34 cubes</span>
             </div>
         </div>

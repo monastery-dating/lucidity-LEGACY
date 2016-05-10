@@ -8,7 +8,7 @@ export default Component
 , ( { state, signals } ) => {
 
     return <div id='statusBar'
-      className={ state.type }
+      class={ state.type }
       on-click={ () =>
         signals.status.changed
         ( { type: state.type == 'error' ? 'ok' : 'error'
@@ -18,8 +18,8 @@ export default Component
       }>
 
       <svg height='12' width='14'>
-        <circle cx='5.5' cy='6.5' r='5' className='outer'/>
-        <circle cx='5.5' cy='6.5' r='3' className='inner'/>
+        <circle cx='5.5' cy='6.5' r='5' class='outer'/>
+        <circle cx='5.5' cy='6.5' r='3' class='inner'/>
       </svg>
       { state.message }
     </div>
