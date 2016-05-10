@@ -72,7 +72,7 @@ const defaultfail : OnFail = function
       console.log( JSON.stringify ( f.expected, null, 2 ) )
       break;
   }
-  return false
+  return true // continue
 }
 
 interface OnSuite {
@@ -98,18 +98,24 @@ interface Failure extends Test {
   assertion: 'same' | 'notSame' | 'equal'
 }
 
-interface RunResult {
+interface RunResult extends TestStats {
   allok: Boolean
-  testcount: number
-  failcount: number
   failures: Failure[]
+}
+
+interface TestStats {
+  testCount: number
+  failCount: number
+  assertCount: number
 }
 
 const makeAssert = function
 ( f: Failure
+, stats: TestStats
 ): Assert {
   return {
       same ( a, b ) {
+        stats.assertCount += 1
         f.assertion = 'same'
         f.actual   = a
         f.expected = b
@@ -118,6 +124,7 @@ const makeAssert = function
         }
       }
     , notSame ( a, b ) {
+        stats.assertCount += 1
         f.assertion = 'notSame'
         f.actual   = a
         f.expected = b
@@ -126,6 +133,7 @@ const makeAssert = function
         }
       }
     , equal ( a, b ) {
+        stats.assertCount += 1
         f.assertion = 'equal'
         f.actual   = a
         f.expected = b
@@ -142,11 +150,10 @@ export const run = function
 , onsuite?: OnSuite
 , ontest?: OnTest
 ) : RunResult {
-  let testcount = 0
-  let failcount = 0
+  const stats = { testCount: 0, failCount: 0, assertCount: 0 }
   let failures: Failure[] = []
   let failure = <Failure> {}
-  let assert = makeAssert ( failure )
+  let assert = makeAssert ( failure, stats )
   for ( const suite of suites ) {
     if ( onsuite ) {
       onsuite ( suite )
@@ -156,22 +163,22 @@ export const run = function
         ontest ( test )
       }
       try {
-        testcount += 1
+        stats.testCount += 1
         test.test ( assert )
         onsuccess ( test )
       }
       catch ( error ) {
         Object.assign ( failure, { error }, test )
         failures.push ( failure )
-        failcount += 1
+        stats.failCount += 1
         if ( ! onfail ( failure ) ) {
           // abort
-          return { allok: false, failcount, testcount, failures }
+          return Object.assign ( { failures, allok: stats.failCount == 0 }, stats )
         }
         failure = <Failure> {}
-        assert = makeAssert ( failure )
+        assert = makeAssert ( failure, stats )
       }
     }
   }
-  return { allok: failcount == 0, testcount, failcount, failures }
+  return Object.assign ( { failures, allok: stats.failCount == 0 }, stats )
 }
