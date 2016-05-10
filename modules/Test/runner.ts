@@ -4,6 +4,7 @@ interface Assert {
   same<T> ( a: T, b: T ): void
   notSame<T> ( a: T, b: T): void
   equal<T> ( a: T, b: T ): void
+  pending ( msg: string ): void
 }
 
 interface TestFunction {
@@ -48,12 +49,19 @@ export const describe = function
   clbk ( it )
 }
 
-const defaultsuccess : OnSuccess = function
+const defaultSuccess : OnSuccess = function
 ( { suiteName, testName } ) {
-  console.log ( `PASS: ${ suiteName } ${ testName }` )
+  // console.log ( `PASS: ${ suiteName } ${ testName }` )
 }
 
-const defaultfail : OnFail = function
+const defaultPending: OnFail = function
+( { suiteName, testName, actual } ) {
+  console.log ( `PEND: ${ suiteName } ${ testName }` )
+  console.log ( actual )
+  return true
+}
+
+const defaultFail : OnFail = function
 ( f: Failure ) {
   console.log ( `FAIL: ${ f.suiteName } ${ f.testName }` )
   switch ( f.assertion ) {
@@ -95,7 +103,7 @@ interface Failure extends Test {
   error: string
   expected: any
   actual: any
-  assertion: 'same' | 'notSame' | 'equal'
+  assertion: 'same' | 'notSame' | 'equal' | 'pending'
 }
 
 interface RunResult extends TestStats {
@@ -105,7 +113,9 @@ interface RunResult extends TestStats {
 
 interface TestStats {
   testCount: number
+  passCount: number
   failCount: number
+  pendingCount: number
   assertCount: number
 }
 
@@ -141,16 +151,25 @@ const makeAssert = function
           throw `!deepEqual ( ${ a }, ${ b } )`
         }
       }
+    , pending ( m ) {
+        f.assertion = 'pending'
+        f.actual = m
+        throw m
+      }
     }
 }
 
 export const run = function
-( onsuccess: OnSuccess = defaultsuccess
-, onfail: OnFail = defaultfail
+( onsuccess: OnSuccess = defaultSuccess
+, onfail: OnFail = defaultFail
+, onpending: OnFail = defaultPending
 , onsuite?: OnSuite
 , ontest?: OnTest
 ) : RunResult {
-  const stats = { testCount: 0, failCount: 0, assertCount: 0 }
+  const stats =
+  { testCount: 0, failCount: 0, passCount:0, pendingCount: 0
+  , assertCount: 0
+  }
   let failures: Failure[] = []
   let failure = <Failure> {}
   let assert = makeAssert ( failure, stats )
@@ -159,26 +178,38 @@ export const run = function
       onsuite ( suite )
     }
     for ( const test of suite.tests ) {
+      stats.testCount += 1
       if ( ontest ) {
         ontest ( test )
       }
+
       try {
-        stats.testCount += 1
         test.test ( assert )
+        // PASS
+        stats.passCount += 1
         onsuccess ( test )
       }
       catch ( error ) {
+        // FAIL
         Object.assign ( failure, { error }, test )
         failures.push ( failure )
-        stats.failCount += 1
-        if ( ! onfail ( failure ) ) {
-          // abort
-          return Object.assign ( { failures, allok: stats.failCount == 0 }, stats )
+
+        if ( failure.assertion === 'pending' ) {
+          stats.pendingCount += 1
+          onpending ( failure )
+        }
+
+        else {
+          stats.failCount += 1
+          if ( ! onfail ( failure ) ) {
+            // abort
+            return Object.assign ( { failures, allok: stats.passCount == stats.testCount }, stats )
+          }
         }
         failure = <Failure> {}
         assert = makeAssert ( failure, stats )
       }
     }
   }
-  return Object.assign ( { failures, allok: stats.failCount == 0 }, stats )
+  return Object.assign ( { failures, allok: stats.passCount == stats.testCount }, stats )
 }

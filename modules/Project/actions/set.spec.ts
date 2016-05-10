@@ -3,16 +3,16 @@ import set from './set'
 import * as Baobab from 'baobab'
 
 describe
-( 'Status set action', ( it ) => {
+( 'Project set action', ( it ) => {
     it ( 'should set status in state', ( assert ) => {
         const state = new Baobab
-        ( { status: { type: 'foo', message: 'bar' } } )
+        ( { project: { title: 'foo' } } )
 
-        set ( { state, input: { type: 'success', message: 'Good' } } )
+        set ( { state, input: { title: 'Gods of India' } } )
 
         assert.equal
         ( state.get ()
-        , { status: { type: 'success', message: 'Good' } }
+        , { project: { title: 'Gods of India' } }
         )
       }
     )

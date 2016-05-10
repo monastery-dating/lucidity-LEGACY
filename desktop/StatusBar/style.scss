@@ -34,7 +34,18 @@
     }
   }
 
-  &.ok {
+  &.warn {
+    color: #997;
+    .outer {
+      stroke: #bb0;
+    }
+    .inner {
+      fill: #ff0;
+      animation: fadeb 2s 1 both;
+    }
+  }
+
+  &.success {
     color: #898;
     .outer {
       stroke: #0b0;

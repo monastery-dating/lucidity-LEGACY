@@ -17,6 +17,7 @@ body {
   font-size:   getfont(size);
   background: color( workb );
   color: color( workt );
+  cursor: default;
 }
 
 @for $i from 1 through $pcount {
@@ -113,12 +114,21 @@ svg#scratch {
 
 }
 
-._input {
+.fld {
   background: color( inputb );
-  position:absolute;
   border: $lbox solid color( boxl );
   border-radius: $brad;
   padding:$pad;
+}
+
+.editable {
+  cursor: text;
+  border-bottom: 1px dashed #fff;
+  border-bottom-color: rgba( lighten( $text_color, 80% ), 0);
+  transition: border-bottom-color 0.8s;
+  &:hover {
+    border-bottom-color: rgba( lighten( $text_color, 10% ), 0.4);
+  }
 }
 
 ._search {
@@ -129,7 +139,7 @@ svg#scratch {
 
   p {
     input {
-      @extend ._input;
+      position:absolute;
       top:$pad; left:$pad;
       width: layout( panew ) - 2*$pad - $ppad - 3*$pad;
     }
@@ -272,7 +282,7 @@ svg#scratch {
 
   p {
     input {
-      @extend ._input;
+      position:absolute;
       top:$pad; right:$pad;
       width:50%;
     }

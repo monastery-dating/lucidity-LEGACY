@@ -20,7 +20,7 @@ export default Component
 
       <div class='search'>
         <p>&nbsp;
-          <input value='search' />
+          <input value='search' class='fld'/>
         </p>
 
         <ol class='saved'>
@@ -47,7 +47,7 @@ export default Component
 
       <div class='console'>
         <p>Console
-          <input value='search'/>
+          <input value='search' class='fld'/>
         </p>
 
         <div>

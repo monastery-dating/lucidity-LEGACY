@@ -10,7 +10,7 @@ declare namespace Cerebral {
   }
 }
 
-declare module "cerebral" {
+declare module 'cerebral' {
   interface MakeController {
     ( model: any ): Cerebral.Controller
   }
@@ -18,7 +18,7 @@ declare module "cerebral" {
   export = dummy
 }
 
-declare module "cerebral-module-devtools" {
+declare module 'cerebral-module-devtools' {
   interface DevTools {
     (): any
   }
@@ -26,7 +26,7 @@ declare module "cerebral-module-devtools" {
   export = dummy
 }
 
-declare module "cerebral-module-http" {
+declare module 'cerebral-module-http' {
   interface Http {
     (): any
   }
@@ -34,7 +34,7 @@ declare module "cerebral-module-http" {
   export = dummy
 }
 
-declare module "cerebral-model-baobab" {
+declare module 'cerebral-model-baobab' {
   interface Model {
     ( initState: Object ): any
   }
@@ -42,7 +42,7 @@ declare module "cerebral-model-baobab" {
   export = dummy
 }
 
-declare module "cerebral-view-snabbdom" {
+declare module 'cerebral-view-snabbdom' {
   interface CreateElement {
     ( tag: string, ...args ): any
   }

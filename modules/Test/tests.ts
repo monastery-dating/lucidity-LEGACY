@@ -1,3 +1,8 @@
 import '../../desktop/Component.spec.tsx'
+import '../Project/actions/edit.spec.ts'
+import '../Project/actions/save.spec.ts'
+import '../Project/actions/saved.spec.ts'
+import '../Project/actions/saving.spec.ts'
+import '../Project/actions/set.spec.ts'
 import '../Status/actions/clear.spec.ts'
 import '../Status/actions/set.spec.ts'
