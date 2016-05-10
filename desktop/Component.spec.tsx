@@ -21,6 +21,20 @@ describe
       }
     )
 
+    it ( 'should accept class string', ( assert ) => {
+        assert.equal
+        ( <div class='foo bar'></div>
+        , { sel: 'div'
+          , data:
+            { props: {}
+            , class: { foo: true, bar: true }
+            }
+          , children: []
+          }
+        )
+      }
+    )
+
     it ( 'should wrap props', ( assert ) => {
         assert.equal
         ( <foo bing='top'></foo>

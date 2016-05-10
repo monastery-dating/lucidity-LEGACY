@@ -25,38 +25,62 @@ const mapData = function
 ( adata: any
 ): any {
   const props = {}
-  const data = { props }
+  const data: any = { props }
   for ( const k in adata ) {
-    if ( k === 'key' || k === 'className' ) {
+    if ( k === 'key' ) {
+      // set outside of data
       continue
     }
-    const dash = k.indexOf ( '-' )
-    if ( dash > 0 ) {
-      const nkey = k.split ( '-' )
-      const fkey = nkey.pop ()
-      let base : any = data
-      for ( const l of nkey ) {
-        if ( ! base [ l ] ) {
-          base = base [ l ] = {}
-        }
-        else {
-          base = base [ l ]
-        }
+
+    else if ( k === 'class' ) {
+      const aclass = adata [ k ]
+      let klass = data.class
+      if ( !klass ) {
+        klass = {}
+        data.class = klass
       }
-      base [ fkey ] = adata [ k ]
-    }
-    else {
-      if ( modulesNS.indexOf ( k ) >= 0 ) {
-        if ( data [ k ] ) {
-          Object.assign ( data [ k ], adata [ k ] )
-        }
-        else {
-          data [ k ] = adata [ k ]
+      if ( typeof aclass === 'string' ) {
+        const klasses = aclass.split ( /\s+/ )
+        for ( const k of klasses ) {
+          console.log ( klass, k )
+          klass [ k ] = true
         }
       }
       else {
-        props [ k ] = adata [ k ]
+        Object.assign ( klass, aclass )
       }
+    }
+
+    else {
+      const dash = k.indexOf ( '-' )
+      if ( dash > 0 ) {
+        const nkey = k.split ( '-' )
+        const fkey = nkey.pop ()
+        let base : any = data
+        for ( const l of nkey ) {
+          if ( ! base [ l ] ) {
+            base = base [ l ] = {}
+          }
+          else {
+            base = base [ l ]
+          }
+        }
+        base [ fkey ] = adata [ k ]
+      }
+      else {
+        if ( modulesNS.indexOf ( k ) >= 0 ) {
+          if ( data [ k ] ) {
+            Object.assign ( data [ k ], adata [ k ] )
+          }
+          else {
+            data [ k ] = adata [ k ]
+          }
+        }
+        else {
+          props [ k ] = adata [ k ]
+        }
+      }
+
     }
   }
   return data
@@ -117,11 +141,6 @@ const createElement = function
 
       const data = mapData ( adata )
       vnode.data = data
-
-      const className  = adata.className
-      if ( className ) {
-        data [ 'class' ] = { [ className ]: true }
-      }
     }
     else {
       vnode.data = {}
