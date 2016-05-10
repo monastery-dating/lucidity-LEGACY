@@ -1,5 +1,7 @@
 import * as deepEqual from 'deep-equal'
 
+const DEFAULT_TIMEOUT = 3000
+
 interface Assert {
   same<T> ( a: T, b: T ): void
   notSame<T> ( a: T, b: T): void
@@ -7,8 +9,12 @@ interface Assert {
   pending ( msg: string ): void
 }
 
+interface Done {
+  (): void
+}
+
 interface TestFunction {
-  ( assert: Assert ) : void
+  ( assert: Assert, done?: Done ) : void
 }
 
 interface ItCallback {
@@ -23,6 +29,7 @@ interface Test {
   suiteName: string
   testName: string
   test: TestFunction
+  async: Boolean // true in Failure when running outside try/catch
 }
 
 interface Suite {
@@ -43,6 +50,7 @@ export const describe = function
     ( { suiteName: name
       , testName: testname
       , test
+      , async: test.length === 2
       }
     )
   }
@@ -65,14 +73,17 @@ const defaultFail : OnFail = function
 ( f: Failure ) {
   console.log ( `FAIL: ${ f.suiteName } ${ f.testName }` )
   switch ( f.assertion ) {
+    case 'timeout':
+      console.log ( 'timeout exceeded', f.actual )
+      break
     case 'notSame':
       console.log ( 'expected', f.actual )
       console.log ( 'to not be', f.expected )
-      break;
+      break
     case 'same':
       console.log ( 'expected', f.actual )
       console.log ( 'to be', f.expected )
-      break;
+      break
     case 'equal':
       console.log ( 'expected' )
       console.log ( JSON.stringify ( f.actual, null, 2 ) )
@@ -103,20 +114,16 @@ interface Failure extends Test {
   error: string
   expected: any
   actual: any
-  assertion: 'same' | 'notSame' | 'equal' | 'pending'
+  assertion: 'same' | 'notSame' | 'equal' | 'pending' | 'timeout'
 }
 
-interface RunResult extends TestStats {
-  allok: Boolean
-  failures: Failure[]
-}
-
-interface TestStats {
+export interface TestStats {
   testCount: number
   passCount: number
   failCount: number
   pendingCount: number
   assertCount: number
+  failures: Failure[]
 }
 
 const makeAssert = function
@@ -130,7 +137,15 @@ const makeAssert = function
         f.actual   = a
         f.expected = b
         if ( a !== b ) {
-          throw `${ a } !== ${ b }`
+          const m = `${ a } !== ${ b }`
+          if ( f.async ) {
+            // we do not throw in async code because we
+            // cannot catch
+            f.error = m
+          }
+          else {
+            throw m
+          }
         }
       }
     , notSame ( a, b ) {
@@ -139,7 +154,15 @@ const makeAssert = function
         f.actual   = a
         f.expected = b
         if ( a === b ) {
-          throw `${ a } === ${ b }`
+          const m = `${ a } === ${ b }`
+          if ( f.async ) {
+            // we do not throw in async code because we
+            // cannot catch
+            f.error = m
+          }
+          else {
+            throw m
+          }
         }
       }
     , equal ( a, b ) {
@@ -148,31 +171,117 @@ const makeAssert = function
         f.actual   = a
         f.expected = b
         if ( !deepEqual ( a, b, { strict: true } ) ) {
-          throw `!deepEqual ( ${ a }, ${ b } )`
+          const m = `!deepEqual ( ${ a }, ${ b } )`
+          if ( f.async ) {
+            // we do not throw in async code because we
+            // cannot catch
+            f.error = m
+          }
+          else {
+            throw m
+          }
         }
       }
     , pending ( m ) {
         f.assertion = 'pending'
         f.actual = m
-        throw m
+        if ( f.async ) {
+          // we do not throw in async code because we
+          // cannot catch
+          f.error = m
+        }
+        else {
+          throw m
+        }
       }
     }
 }
 
+interface OnFinish {
+  ( r: TestStats ): void
+}
+
+interface RunOpts {
+  onsuccess?: OnSuccess // = defaultSuccess
+  onfail?: OnFail  // = defaultFail
+  onpending?: OnFail // = defaultPending
+  onsuite?: OnSuite
+  ontest?: OnTest
+}
+
+const runNext = function ( gen, f ) {
+  const tim = gen.next ().value
+  if ( tim ) {
+    // async yield
+    setTimeout
+    ( () => tim.next ? f () : null
+    , tim.timeout
+    )
+  }
+  // done ( onfinish called from generator )
+}
+
 export const run = function
-( onsuccess: OnSuccess = defaultSuccess
-, onfail: OnFail = defaultFail
-, onpending: OnFail = defaultPending
-, onsuite?: OnSuite
-, ontest?: OnTest
-) : RunResult {
+( onfinish: OnFinish
+, opts?: RunOpts ) {
+  let gen
+  const f = () => runNext ( gen, f )
+  gen = testGen ( onfinish, opts || {}, f )
+  f ()
+}
+
+const testGen = function*
+( onfinish: OnFinish
+, { onsuccess = defaultSuccess
+  , onfail = defaultFail
+  , onpending = defaultPending
+  , onsuite
+  , ontest
+  } : RunOpts
+, forward
+) {
+  let failures: Failure[] = []
   const stats =
   { testCount: 0, failCount: 0, passCount:0, pendingCount: 0
   , assertCount: 0
+  , failures
   }
-  let failures: Failure[] = []
   let failure = <Failure> {}
   let assert = makeAssert ( failure, stats )
+  const pass = ( test ) => {
+    // PASS
+    stats.passCount += 1
+    onsuccess ( test )
+  }
+
+  const fail = ( test, error ): Boolean => {
+    Object.assign ( failure, { error }, test )
+    failures.push ( failure )
+
+    if ( failure.assertion === 'pending' ) {
+      stats.pendingCount += 1
+      onpending ( failure )
+    }
+
+    else {
+      stats.failCount += 1
+      if ( ! onfail ( failure ) ) {
+        // abort
+        onfinish ( stats )
+        return true
+      }
+    }
+    failure = <Failure> {}
+    assert = makeAssert ( failure, stats )
+    return false
+  }
+
+  const done = () => {
+    // clear
+    failure.async = false
+    forward ()
+  }
+
   for ( const suite of suites ) {
     if ( onsuite ) {
       onsuite ( suite )
@@ -184,32 +293,50 @@ export const run = function
       }
 
       try {
-        test.test ( assert )
-        // PASS
-        stats.passCount += 1
-        onsuccess ( test )
+        if ( test.async ) {
+          test.test ( assert, done )
+          // continue with async
+          failure.async = true
+          const tim =
+          { timeout: DEFAULT_TIMEOUT
+          , next: true // call next on timeout
+          }
+          yield tim
+          if ( failure.async ) {
+            // timed out
+            failure.assertion = 'timeout'
+            failure.actual = DEFAULT_TIMEOUT
+            if ( fail ( test, 'timeout' ) ) {
+              yield // abort
+            }
+          }
+          else if ( failure.error ) {
+            tim.next = false // on timeout do nothing
+            // assertion failure
+            if ( fail ( test, failure.error ) ) {
+              yield // abort
+            }
+          }
+          else {
+            tim.next = false
+            // pass
+            pass ( test )
+          }
+        }
+        else {
+          test.test ( assert )
+          pass ( test )
+        }
       }
       catch ( error ) {
         // FAIL
-        Object.assign ( failure, { error }, test )
-        failures.push ( failure )
-
-        if ( failure.assertion === 'pending' ) {
-          stats.pendingCount += 1
-          onpending ( failure )
+        if ( fail ( test, error ) ) {
+          yield // abort
         }
-
-        else {
-          stats.failCount += 1
-          if ( ! onfail ( failure ) ) {
-            // abort
-            return Object.assign ( { failures, allok: stats.passCount == stats.testCount }, stats )
-          }
-        }
-        failure = <Failure> {}
-        assert = makeAssert ( failure, stats )
       }
     }
   }
-  return Object.assign ( { failures, allok: stats.passCount == stats.testCount }, stats )
+  console.log ( 'all done' )
+  // all done
+  onfinish ( stats )
 }

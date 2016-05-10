@@ -3,8 +3,8 @@ const save: any = function
   state.set ( [ 'project', '$editing' ], false )
   state.set ( [ 'project', '$saving' ], true )
   setTimeout
-  ( () => output.success ()
-  , 3000
+  ( () => output.success ( { save: 'ok' } )
+  , 10
   )
 }
 

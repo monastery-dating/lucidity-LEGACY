@@ -4,12 +4,20 @@ import * as Baobab from 'baobab'
 
 describe
 ( 'Project save action', ( it ) => {
-    it ( 'should set $saveing to true', ( assert ) => {
-        assert.pending ( 'Need async testing support..' )
+    it ( 'should set $saveing to true', ( assert, done ) => {
         const state = new Baobab
         ( { project: { $editing: true, $saving: false, title: 'Foo' } } )
+        const output =
+        { success ( args ) {
+            assert.equal
+            ( args
+            , { save: 'ok' }
+            )
+            done ()
+          }
+        }
 
-        save ( { state } )
+        save ( { state, output } )
 
         assert.equal
         ( state.get ()
