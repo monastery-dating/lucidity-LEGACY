@@ -24,6 +24,12 @@ const makeKeyup = function
       e.target.setAttribute ( 'data-done', true )
       titleChange ( signals, title )
     }
+    else if ( e.keyCode === 13 ) {
+      // enter = save
+      e.preventDefault ()
+      e.target.setAttribute ( 'data-done', true )
+      titleChange ( signals, e.target.value )
+    }
   }
 }
 
@@ -52,7 +58,7 @@ const editableTitle = function ( state, signals: ProjectSignals ) {
       </h3>
   }
   else {
-    return <h3 class='editable' on-click={ ( e ) => signals.project.edit ( {} ) }>
+    return <h3 class={{ editable: true, saving: state.saving }} on-click={ ( e ) => signals.project.edit ( {} ) }>
         { state.title }
       </h3>
   }

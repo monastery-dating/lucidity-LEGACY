@@ -1,4 +1,4 @@
-import { Component as CComp } from 'cerebral-view-snabbdom'
+import { Component as CComp, render as Crender } from 'cerebral-view-snabbdom'
 
 const SVGNS = 'http://www.w3.org/2000/svg'
 const modulesNS = [ 'hook', 'on', 'style', 'class', 'props', 'attrs' ]
@@ -164,3 +164,4 @@ const createElement = function
 CComp['createElement'] = createElement // CComp.DOM
 
 export const Component = CComp
+export const render = Crender

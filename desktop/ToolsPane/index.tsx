@@ -1,6 +1,8 @@
+import './style.scss'
 import { Component } from '../Component'
+import Status from '../Status'
 
-const renderRow = ( el ) => (
+const renderLibrary = ( el ) => (
   <div class='li'>
     { /*
          class={ [ el.class ]: true }
@@ -11,8 +13,15 @@ const renderRow = ( el ) => (
   </div>
 )
 
+const renderStatus = ( el ) => (
+  <div class='li'>
+    <Status nosvg='true' type={el.type} message={el.message}/>
+  </div>
+)
+
 export default Component
 ( { rows: [ 'library', '$rows' ]
+  , status: [ 'status' ]
   }
 , ( { state, signals } ) => (
     <div id='library'>
@@ -40,20 +49,18 @@ export default Component
       <div class='results'>
         <div>
           {/* <li v-if='refreshError' class='error'> ==refreshError</li> */}
-          { state.rows.map ( renderRow )
+          { state.rows.map ( renderLibrary )
            }
         </div>
       </div>
 
       <div class='console'>
         <p>Console
-          <input value='search' class='fld'/>
+          { /*<input value='search' class='fld'/> */}
         </p>
 
         <div>
-          <div class='li ok'>
-            <span>Generated 34 cubes</span>
-            </div>
+          { ( state.status || [] ).map ( renderStatus ) }
         </div>
       </div>
     </div>

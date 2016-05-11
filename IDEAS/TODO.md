@@ -12,9 +12,18 @@
 
 # INTERFACE
 
+# SAVE
+
+  1. Write to /project/title
+  2. => on.update:
+        write to /data/[/project.id]/title
+        /project/$saving = false
+  4. => database save
+  5. => /project/$saving = false
+
 # PLAYBACK
 
-  1. Use a Facet to store full project in tree with
+  1. Use a Monkey to store full project in tree with
      selected scene.
   2. Use a Monkey to update the $main function whenever the
      current scene changes.

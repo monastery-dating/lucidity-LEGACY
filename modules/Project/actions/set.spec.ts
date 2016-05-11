@@ -4,15 +4,53 @@ import * as Baobab from 'baobab'
 
 describe
 ( 'Project set action', ( it ) => {
-    it ( 'should set status in state', ( assert ) => {
+    it ( 'should push to db', ( assert ) => {
         const state = new Baobab
-        ( { project: { title: 'foo' } } )
+        ( { project: { $editing: true, $saving: false, title: 'Foo' } } )
+        const output =
+        { success ( args ) {
+            assert.equal
+            ( args.title
+            , 'newtitle'
+            )
+          }
+        }
 
-        set ( { state, input: { title: 'Gods of India' } } )
+        set ( { state, output, input: { title: 'newtitle' } } )
 
         assert.equal
         ( state.get ()
-        , { project: { title: 'Gods of India' } }
+        , { project:
+            { $editing: false
+            , $saving: true
+              // set to avoid UI flicker with revert to old title during save
+            , $title: 'newtitle'
+            , title: 'Foo'
+            }
+          }
+        )
+      }
+    )
+
+    it ( 'should not save if title same', ( assert ) => {
+        const state = new Baobab
+        ( { project: { title: 'foo' } } )
+
+        const output =
+        { success ( args ) {
+          console.log ( 'success called' )
+            assert.equal
+            ( args
+            , { save: 'ok' }
+            )
+          }
+        }
+
+        set ( { state, output, input: { title: 'foo' } } )
+
+        assert.equal
+        ( state.get ()
+        , { project: { $editing: false, title: 'foo' } }
         )
       }
     )

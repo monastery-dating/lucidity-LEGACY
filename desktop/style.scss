@@ -138,7 +138,10 @@ svg#scratch {
   background-color: rgba( 0, 0, 0, 0 );
   border-bottom: 1px dashed #fff;
   border-bottom-color: rgba( lighten( $text_color, 80% ), 0);
-  transition: border-bottom-color 0.8s, background-color 0.3s;
+  transition: border-bottom-color 0.8s, background-color 0.3s, color 0.3s;
+  &.saving {
+    color: lighten( $text_color, 100% );
+  }
   &:hover {
     border-bottom-color: rgba( lighten( $text_color, 10% ), 0.4);
   }

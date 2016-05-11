@@ -89,7 +89,11 @@ const defaultFail : OnFail = function
       console.log ( JSON.stringify ( f.actual, null, 2 ) )
       console.log ( 'to equal' )
       console.log( JSON.stringify ( f.expected, null, 2 ) )
-      break;
+      break
+    case 'exception':
+      console.log ( 'exception' )
+      console.log( f.error )
+      break
   }
   return true // continue
 }
@@ -114,7 +118,7 @@ interface Failure extends Test {
   error: string
   expected: any
   actual: any
-  assertion: 'same' | 'notSame' | 'equal' | 'pending' | 'timeout'
+  assertion: 'same' | 'notSame' | 'equal' | 'pending' | 'timeout' | 'exception'
 }
 
 export interface TestStats {
@@ -137,14 +141,13 @@ const makeAssert = function
         f.actual   = a
         f.expected = b
         if ( a !== b ) {
-          const m = `${ a } !== ${ b }`
+          f.error = `${ a } !== ${ b }`
           if ( f.async ) {
             // we do not throw in async code because we
             // cannot catch
-            f.error = m
           }
           else {
-            throw m
+            throw f.error
           }
         }
       }
@@ -154,14 +157,13 @@ const makeAssert = function
         f.actual   = a
         f.expected = b
         if ( a === b ) {
-          const m = `${ a } === ${ b }`
+          f.error = `${ a } === ${ b }`
           if ( f.async ) {
             // we do not throw in async code because we
             // cannot catch
-            f.error = m
           }
           else {
-            throw m
+            throw f.error
           }
         }
       }
@@ -171,24 +173,23 @@ const makeAssert = function
         f.actual   = a
         f.expected = b
         if ( !deepEqual ( a, b, { strict: true } ) ) {
-          const m = `!deepEqual ( ${ a }, ${ b } )`
+          f.error = `!deepEqual ( ${ a }, ${ b } )`
           if ( f.async ) {
             // we do not throw in async code because we
             // cannot catch
-            f.error = m
           }
           else {
-            throw m
+            throw f.error
           }
         }
       }
     , pending ( m ) {
         f.assertion = 'pending'
         f.actual = m
+        f.error = m
         if ( f.async ) {
           // we do not throw in async code because we
           // cannot catch
-          f.error = m
         }
         else {
           throw m
@@ -330,13 +331,16 @@ const testGen = function*
       }
       catch ( error ) {
         // FAIL
+        if ( !failure.error ) {
+          // exception in user code
+          failure.assertion = 'exception'
+        }
         if ( fail ( test, error ) ) {
           yield // abort
         }
       }
     }
   }
-  console.log ( 'all done' )
   // all done
   onfinish ( stats )
 }

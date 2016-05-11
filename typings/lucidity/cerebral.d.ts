@@ -37,8 +37,25 @@ declare module 'cerebral-module-http' {
 declare module 'cerebral-model-baobab' {
   interface Model {
     ( initState: Object ): any
+    monkey: any
   }
   const dummy: Model
+  export = dummy
+}
+
+declare module 'cerebral-addons/set' {
+  interface Set {
+    ( path: string, value: any): any
+  }
+  const dummy: Set
+  export = dummy
+}
+
+declare module 'cerebral-addons/copy' {
+  interface Copy {
+    ( from: any, to: any): any
+  }
+  const dummy: Copy
   export = dummy
 }
 

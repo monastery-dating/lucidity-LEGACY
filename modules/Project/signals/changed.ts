@@ -1,9 +1,9 @@
-import saving from '../actions/saving'
-import saved from '../actions/saved'
 import set from '../actions/set'
+import save from '../../Data/actions/save'
 
-export default [
-  saving
-, set
-, saved
+export default
+[ set
+, { success:
+    [ save, { success: [], error: [] } ]
+  }
 ]

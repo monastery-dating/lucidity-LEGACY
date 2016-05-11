@@ -1,0 +1,70 @@
+@import '../styles/colors';
+@import '../styles/layout';
+@import '../styles/misc';
+
+@keyframes fadea {
+  0% { opacity: 1.0 }
+  100% { opacity: 0.1 }
+}
+
+@keyframes fadeb {
+  0% { opacity: 1.0 }
+  100% { opacity: 0.1 }
+}
+
+.Status {
+  &.info {
+    color: #777;
+    .outer {
+      stroke: #666;
+    }
+    .inner {
+      fill: #666;
+      animation: fadea 2s 1 both;
+    }
+  }
+
+  &.error {
+    color: #a77;
+    .outer {
+      stroke: #b22;
+    }
+    .inner {
+      fill: #f00;
+      animation: fadea 2s 1 both;
+    }
+  }
+
+  &.warn {
+    color: #997;
+    .outer {
+      stroke: #bb0;
+    }
+    .inner {
+      fill: #ff0;
+      animation: fadeb 2s 1 both;
+    }
+  }
+
+  &.success {
+    color: #898;
+    .outer {
+      stroke: #0b0;
+    }
+    .inner {
+      fill: #0f0;
+      animation: fadeb 2s 1 both;
+    }
+  }
+
+  .outer {
+    stroke-width: 1px;
+    stroke: #000;
+    fill: none;
+  }
+
+  .inner {
+    stroke: none;
+    fill: #000;
+  }
+}
