@@ -6,13 +6,13 @@ describe
 ( 'Status set action', ( it ) => {
     it ( 'should set status in state', ( assert ) => {
         const state = new Baobab
-        ( { status: { type: 'foo', message: 'bar' } } )
+        ( { status: [] } )
 
         set ( { state, input: { type: 'success', message: 'Good' } } )
 
         assert.equal
         ( state.get ()
-        , { status: { type: 'success', message: 'Good' } }
+        , { status: [ { type: 'success', message: 'Good' } ] }
         )
       }
     )

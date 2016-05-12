@@ -1,3 +1,5 @@
+@import './misc';
+
 $fonts:
 ( family: ( 'Segoe ui', 'Avenir Next', Helvetica, sans-serif )
 , size: 10pt
@@ -5,4 +7,16 @@ $fonts:
 
 @function getfont( $key ) {
   @return map-get( $fonts, $key );
+}
+
+h1, h2, h3, p, .title {
+  font-size: 1em;
+  font-weight: normal;
+  line-height: 1.2em;
+  padding: $pad;
+  margin: 2*$pad 0;
+}
+
+p {
+  margin: 0;
 }

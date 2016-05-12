@@ -31,6 +31,8 @@
      top of Workbench.
 
 # REFACTORING
+  0. Remove default exports: they are confusing since any name
+     can be used and this can lead to stupid mistakes.
 
   1. Recreate state tree
     ==> user

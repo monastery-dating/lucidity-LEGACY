@@ -1,94 +1,31 @@
+import './style.scss'
 import { Component } from '../Component'
 import { ProjectSignals } from '../../modules/Project'
+import EditableText from '../EditableText'
 
-const titleChange = function
-( signals: ProjectSignals, title: string ) {
-  signals.project.changed ( { title } )
-}
-
-const focus = ( _, { elm } ) => {
-  setTimeout ( () => {
-      elm.focus ()
-      elm.select ()
-    }
-  , 0
-  )
-}
-
-const makeKeyup = function
-( signals: ProjectSignals, title: string ) {
-  return ( e ) => {
-    if ( e.keyCode === 27 ) {
-      // ESC = abort
-      e.preventDefault ()
-      e.target.setAttribute ( 'data-done', true )
-      titleChange ( signals, title )
-    }
-    else if ( e.keyCode === 13 ) {
-      // enter = save
-      e.preventDefault ()
-      e.target.setAttribute ( 'data-done', true )
-      titleChange ( signals, e.target.value )
-    }
-  }
-}
-
-const makeChange = function ( signals: ProjectSignals ) {
-  return ( e ) => {
-    if ( ! e.target.getAttribute ( 'data-done' ) ) {
-      e.target.setAttribute ( 'data-done', true )
-      titleChange ( signals, e.target.value )
-    }
-  }
-}
-
-const editableTitle = function ( state, signals: ProjectSignals ) {
-  if ( state.editing ) {
-    const keyup = makeKeyup ( signals, state.title )
-    const change = makeChange ( signals )
-    const title = state.title
-    let noblur = false
-    return <h3 class='editable active'>
-      <input class='fld' value={ state.title }
-        hook-create={ focus }
-        on-keyup={ keyup }
-        on-blur={ change }
-        on-change={ change }
-        />
-      </h3>
-  }
-  else {
-    return <h3 class={{ editable: true, saving: state.saving }} on-click={ ( e ) => signals.project.edit ( {} ) }>
-        { state.title }
-      </h3>
-  }
-  /*
-  const title = state.title
-  return <h3 contentEditable='true'
-    on-click={ () => console.log ( 'click' ) }
-    on-blur={ () => signals.project.changed ( { title } ) }
-    on-keyup={ ( e ) =>  {
-      console.log ( e.keyCode )
-      if ( e.keyCode === 27 ) {
-        e.preventDefault ()
-        // abort
-        signals.project.changed ( { title } )
-      }
-    }}
-    on-change={ ( e ) => console.log ( 'change' ) }>
-      {state.title}
-    </h3>
-    */
-}
+const sceneLi = ( scene, selectedSceneId ) => (
+  <div class={{ li: true
+              , sel: scene._id === selectedSceneId }}>
+    scene.title
+  </div>
+)
 
 export default Component
 ( { title: [ 'project', 'title' ]
   , editing: [ 'project', '$editing' ]
   , saving: [ 'project', '$saving' ]
+  , scenes: [ 'project', 'scenes' ]
+  , selectedSceneId: [ 'project', 'selectedSceneId' ]
   }
 , ( { state, signals } ) => (
     <div id='project'>
-      { editableTitle ( state, signals ) }
+      <EditableText class='title'
+        text={ state.title }
+        editing={ state.editing }
+        saving={ state.saving }
+        on-edit={ signals.project.edit }
+        on-change={ ( title ) => signals.project.changed ( { title } ) }
+        />
 
       <div class='control'>
         <p>Control</p>
@@ -106,9 +43,12 @@ export default Component
         <p>Scenes</p>
 
         <div>
-          <div class='li'><span>intro</span></div>
-          <div class='li sel'><span>cubes</span></div>
-          <div class='li'><span>terrain</span></div>
+          { state.scenes ?
+            state.scenes.map
+            ( ( e ) => sceneLi ( e, state.selectedSceneId ) )
+            : ''
+          }
+          <div class='li add'>+</div>
         </div>
       </div>
 

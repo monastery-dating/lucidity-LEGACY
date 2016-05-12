@@ -122,31 +122,6 @@ svg#scratch {
   font: inherit;
 }
 
-.editable {
-  input.fld {
-    background-color: rgba( 0, 0, 0, 0 );
-    border-radius: 0;
-    width:100%;
-    outline: none;
-  }
-  &.active {
-    padding: 0;
-    background-color: rgba( color( inputa ), 1.0 );
-  }
-  cursor: text;
-  // transparent background
-  background-color: rgba( 0, 0, 0, 0 );
-  border-bottom: 1px dashed #fff;
-  border-bottom-color: rgba( lighten( $text_color, 80% ), 0);
-  transition: border-bottom-color 0.8s, background-color 0.3s, color 0.3s;
-  &.saving {
-    color: lighten( $text_color, 100% );
-  }
-  &:hover {
-    border-bottom-color: rgba( lighten( $text_color, 10% ), 0.4);
-  }
-}
-
 ._search {
   background: color( lheab );
   padding: $pad;
@@ -206,6 +181,7 @@ svg#scratch {
 
 .li {
   @extend ._noselect;
+  cursor: pointer;
   &.drag {
     padding: 0;
     span {
@@ -238,6 +214,19 @@ svg#scratch {
   &.sel {
     background: color( sboxb );
     color: color( sboxt );
+  }
+
+  &.add {
+    background: none;
+    color: color( boxb );
+    border-bottom: none;
+    text-align: center;
+    font-weight: bold;
+    transition: background 0.5s, color 0.5s;
+    &:hover {
+      background: color( boxb );
+      color: color( workt );
+    }
   }
 }
 
@@ -353,17 +342,6 @@ svg#scratch {
 
 }
 
-h1, h2, h3, p {
-  font-size: 1em;
-  font-weight: normal;
-  line-height: 1.2em;
-  padding: $pad;
-  margin: 2*$pad 0;
-}
-
-p {
-  margin: 0;
-}
 
 // Block types
 .Scene, .Project {

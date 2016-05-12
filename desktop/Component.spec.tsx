@@ -46,6 +46,22 @@ describe
       }
     )
 
+    it ( 'should parse hooks in sub components', ( assert ) => {
+      const SubComp = ( opts ) => opts
+        assert.equal
+        ( <foo><SubComp foo='hop' on-change='bang'/></foo>
+        , { sel: 'foo'
+          , data: {}
+          , children:
+            [ { on: { change: 'bang' }
+              , foo: 'hop'
+              }
+            ]
+          }
+        )
+      }
+    )
+
     it ( 'should wrap attrs in svg', ( assert ) => {
         const ns = 'http://www.w3.org/2000/svg'
         assert.equal

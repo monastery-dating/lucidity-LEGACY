@@ -23,9 +23,13 @@ type VNode = VPrimitiveNode | VTagNode
 
 const mapData = function
 ( adata: any
+, noprops?: Boolean
 ): any {
-  const props = {}
-  const data: any = { props }
+  const data: any = { }
+  const props = noprops ? data : {}
+  if ( !noprops ) {
+    data.props = props
+  }
   for ( const k in adata ) {
     if ( k === 'key' ) {
       // set outside of data
@@ -155,7 +159,7 @@ const createElement = function
     return vnode
   }
   else {
-    return sel ( adata, children )
+    return sel ( mapData ( adata, true ), children )
   }
 }
 
