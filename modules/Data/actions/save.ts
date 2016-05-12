@@ -2,7 +2,7 @@ const action =
 ( { state, services: { data: { db } }, output, input }
 ) => {
   const pid =
-  state.get ( [ 'data', 'main', 'projectId', 'value' ] )
+  state.get ( [ 'project', '_id' ] )
 
   db.put
   ( input
@@ -12,6 +12,9 @@ const action =
       }
       else {
         if ( pid !== input._id ) {
+          // Saving new project, write id as selected project
+          // FIXME: this belongs in a new action
+          // { _id: selectedId } ==> selectProject
           db.put
           ( { _id: 'projectId'
             , type: 'main'

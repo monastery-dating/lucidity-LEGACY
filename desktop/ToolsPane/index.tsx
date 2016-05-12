@@ -21,7 +21,7 @@ const renderStatus = ( el ) => (
 
 export default Component
 ( { rows: [ 'library', '$rows' ]
-  , status: [ 'status' ]
+  , status: [ '$status' ]
   }
 , ( { state, signals } ) => (
     <div id='library'>

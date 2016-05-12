@@ -6,7 +6,7 @@ describe
 ( 'Project set action', ( it ) => {
     it ( 'should push to db', ( assert ) => {
         const state = new Baobab
-        ( { project: { $editing: true, $saving: false, title: 'Foo' } } )
+        ( { $project: { editing: true, saving: false, title: 'Foo' } } )
         const output =
         { success ( args ) {
             assert.equal
@@ -20,12 +20,11 @@ describe
 
         assert.equal
         ( state.get ()
-        , { project:
-            { $editing: false
-            , $saving: true
+        , { $project:
+            { editing: false
+            , saving: true
               // set to avoid UI flicker with revert to old title during save
-            , $title: 'newtitle'
-            , title: 'Foo'
+            , title: 'newtitle'
             }
           }
         )
@@ -50,7 +49,8 @@ describe
 
         assert.equal
         ( state.get ()
-        , { project: { $editing: false, title: 'foo' } }
+        , { $project: { editing: false }
+          , project: { title: 'foo' } }
         )
       }
     )

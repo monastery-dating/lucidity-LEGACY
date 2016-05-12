@@ -6,8 +6,7 @@ describe
 ( 'Data save action', ( it ) => {
     it ( 'should save to db', ( assert ) => {
         const state = new Baobab
-        ( { project: { $editing: true, $saving: false, title: 'Foo' }
-          , data: { main: { projectId: { value: 'foobar' } } }
+        ( { project: { _id: 'foobar' }
           }
         )
 
@@ -31,8 +30,7 @@ describe
 
     it ( 'should send error out', ( assert ) => {
         const state = new Baobab
-        ( { project: { $editing: true, $saving: false, title: 'Foo' }
-          , data: { main: { projectId: { value: 'foobar' } } }
+        ( { project: { _id: 'foobar' }
           }
         )
 

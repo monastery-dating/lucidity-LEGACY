@@ -14,12 +14,13 @@
 
 # SAVE
 
-  1. Write to /project/title
+  1. Write to /$project/title
+  2. Write to DB
   2. => on.update:
         write to /data/[/project.id]/title
-        /project/$saving = false
-  4. => database save
-  5. => /project/$saving = false
+        /$project/saving = false
+  4. => database on.change
+  5. => /$project/saving = false
 
 # PLAYBACK
 

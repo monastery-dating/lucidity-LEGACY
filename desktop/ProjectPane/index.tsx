@@ -1,26 +1,41 @@
-import './style.scss'
 import { Component } from '../Component'
 import { ProjectSignals } from '../../modules/Project'
 import EditableText from '../EditableText'
 
-const sceneLi = ( scene, selectedSceneId ) => (
-  <div class={{ li: true
-              , sel: scene._id === selectedSceneId }}>
-    scene.title
-  </div>
-)
+const sortByTitle = ( a, b ) => a.title > b.title ? 1 : -1
+
+const showScenes =
+( { scenes, sceneById, selectedSceneId } ) => {
+  if ( !scenes ) {
+    return ''
+  }
+  const list = scenes.map ( ( id ) => sceneById [ id ] )
+  list.sort ( sortByTitle )
+  return list.map
+  ( ( scene ) => (
+      <div class={{ li: true
+                  , sel: scene._id === selectedSceneId
+                  }}>
+        scene.title
+      </div>
+    )
+  )
+}
 
 export default Component
 ( { title: [ 'project', 'title' ]
-  , editing: [ 'project', '$editing' ]
-  , saving: [ 'project', '$saving' ]
+  , stitle: [ '$project', 'title' ]
+  , editing: [ '$project', 'editing' ]
+  , saving: [ '$project', 'saving' ]
   , scenes: [ 'project', 'scenes' ]
+  , sceneById: [ 'data', 'scene' ]
   , selectedSceneId: [ 'project', 'selectedSceneId' ]
   }
 , ( { state, signals } ) => (
     <div id='project'>
       <EditableText class='title'
         text={ state.title }
+        stext={ state.stitle } // shown while saving
         editing={ state.editing }
         saving={ state.saving }
         on-edit={ signals.project.edit }
@@ -43,10 +58,7 @@ export default Component
         <p>Scenes</p>
 
         <div>
-          { state.scenes ?
-            state.scenes.map
-            ( ( e ) => sceneLi ( e, state.selectedSceneId ) )
-            : ''
+          { showScenes ( state )
           }
           <div class='li add'>+</div>
         </div>

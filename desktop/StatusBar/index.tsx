@@ -3,7 +3,7 @@ import { Component } from '../Component'
 import Status from '../Status'
 
 export default Component
-( { status: [ 'status' ]
+( { status: [ '$status' ]
   }
 , ( { state, signals } ) => {
     const l = state.status || []

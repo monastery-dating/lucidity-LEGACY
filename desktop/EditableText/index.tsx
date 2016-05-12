@@ -1,3 +1,4 @@
+import './style.scss'
 import { Component } from '../Component'
 
 const focus = ( _, { elm } ) => {
@@ -57,6 +58,7 @@ export default Component
         </div>
     }
     else {
+      const text = props.saving ? props.stext : props.text
       const klass =
       Object.assign
       ( { EditableText: true, saving: props.saving }
@@ -65,7 +67,7 @@ export default Component
       return <div
           class={ klass }
           on-click={ ( e ) => props.on.edit ( {} ) }>
-          { props.text }
+          { text || props.text }
         </div>
     }
   }

@@ -11,9 +11,10 @@ const action = ( { state, input } ) => {
 
     state.set ( [ 'data', type, _id ], doc )
 
-    const cid = state.get ( 'data.main.projectId.value' )
+    const cid =
+    state.get ( [ 'project', '_id' ] )
     if ( type === 'project' && _id === cid ) {
-      state.set ( [ 'project', '$saving' ], false )
+      state.set ( [ '$project', 'saving' ], false )
     }
   }
 
