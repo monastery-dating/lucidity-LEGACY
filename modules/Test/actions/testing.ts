@@ -1,4 +1,4 @@
-export default ( { state, output } ) => {
-  state.set ( 'status.type', 'info' )
-  state.set ( 'status.message', 'Running tests' )
+export const testing =
+( { state, output } ) => {
+  output ( { status: { type: 'info', message: 'Started testing' } } )
 }

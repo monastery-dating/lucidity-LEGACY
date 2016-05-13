@@ -1,5 +1,5 @@
 import '../../desktop/Component.spec.tsx'
 import '../Data/actions/save.spec.ts'
-import '../Project/actions/edit.spec.ts'
-import '../Project/actions/set.spec.ts'
-import '../Status/actions/set.spec.ts'
+import '../Factory/common/set.spec.ts'
+import '../Factory/editable/finishEditing.spec.ts'
+import '../Status/actions/status.spec.ts'

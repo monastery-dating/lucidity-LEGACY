@@ -1,5 +1,5 @@
 import { describe } from '../../Test/runner'
-import set from './set'
+import { status }  from './status'
 import * as Baobab from 'baobab'
 
 describe
@@ -8,7 +8,12 @@ describe
         const state = new Baobab
         ( { $status: [] } )
 
-        set ( { state, input: { type: 'success', message: 'Good' } } )
+        status
+        ( { state
+          , input:
+            { status:  { type: 'success', message: 'Good' } }
+          }
+        )
 
         assert.equal
         ( state.get ()

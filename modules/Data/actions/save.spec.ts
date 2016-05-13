@@ -1,5 +1,5 @@
 import { describe } from '../../Test/runner'
-import save from './save'
+import { save } from './save'
 import * as Baobab from 'baobab'
 
 describe
@@ -13,17 +13,22 @@ describe
         let res
         const output =
         { success ( args ) { res = args }
-        , error ( args ) { res = args }
         }
         const put = ( doc, clbk ) => clbk ()
 
         const services = { data: { db : { put } } }
 
-        save ( { state, output, services, input: { title: 'newtitle' } } )
+        save
+        ( { state
+          , output
+          , services
+          , input: { doc: { type: 'foobar', title: 'newtitle' } }
+          }
+        )
 
         assert.equal
         ( res
-        , {}
+        , { status: { type: 'success', message: 'Saved foobar' } }
         )
       }
     )
@@ -36,18 +41,17 @@ describe
 
         let res
         const output =
-        { success ( args ) { res = args }
-        , error ( args ) { res = args }
+        { error ( args ) { res = args }
         }
         const put = ( doc, clbk ) => clbk ( 'no good' )
 
         const services = { data: { db : { put } } }
 
-        save ( { state, output, services, input: { title: 'newtitle' } } )
+        save ( { state, output, services, input: { doc: { title: 'newtitle' } } } )
 
         assert.equal
         ( res
-        , { type: 'error', message: 'no good' }
+        , { status: { type: 'error', message: 'no good' } }
         )
       }
     )

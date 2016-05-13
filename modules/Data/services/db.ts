@@ -1,6 +1,7 @@
 import * as PouchDB from 'pouchdb'
 
-const db = new PouchDB ( 'lucidity' )
+export const db =
+new PouchDB ( 'lucidity' )
 /*
   db.destroy ( ( err ) => {
       if ( err ) {
@@ -9,4 +10,3 @@ const db = new PouchDB ( 'lucidity' )
     }
   )
 */
-export default db

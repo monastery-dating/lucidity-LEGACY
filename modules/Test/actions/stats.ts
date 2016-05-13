@@ -1,6 +1,5 @@
-import { TestStats } from '../runner'
-
-export default ( { state, input, output } ) => {
+export const stats =
+( { state, input, output } ) => {
   const m = [ `${input.passCount}/${input.testCount} tests pass` ]
   if ( input.failCount ) {
     m.push ( `${input.failCount} fail`)
@@ -22,5 +21,5 @@ export default ( { state, input, output } ) => {
     s.type = 'warn'
   }
 
-  output.success ( s )
+  output.success ( { status: s } )
 }

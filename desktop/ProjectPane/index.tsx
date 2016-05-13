@@ -1,6 +1,6 @@
 import { Component } from '../Component'
-import { ProjectSignals } from '../../modules/Project'
-import EditableText from '../EditableText'
+import { ContextType } from '../../modules/context.type'
+import { editable } from '../../modules/Factory'
 
 const sortByTitle = ( a, b ) => a.title > b.title ? 1 : -1
 
@@ -22,25 +22,18 @@ const showScenes =
   )
 }
 
+const ProjectTitle = editable ( [ 'project', 'title' ] )
+
+
+
 export default Component
-( { title: [ 'project', 'title' ]
-  , stitle: [ '$project', 'title' ]
-  , editing: [ '$project', 'editing' ]
-  , saving: [ '$project', 'saving' ]
-  , scenes: [ 'project', 'scenes' ]
+( { scenes: [ 'project', 'scenes' ]
   , sceneById: [ 'data', 'scene' ]
   , selectedSceneId: [ 'project', 'selectedSceneId' ]
   }
-, ( { state, signals } ) => (
+, ( { state, signals }: ContextType ) => (
     <div id='project'>
-      <EditableText class='title'
-        text={ state.title }
-        stext={ state.stitle } // shown while saving
-        editing={ state.editing }
-        saving={ state.saving }
-        on-edit={ signals.project.edit }
-        on-change={ ( title ) => signals.project.changed ( { title } ) }
-        />
+      <ProjectTitle/>
 
       <div class='control'>
         <p>Control</p>

@@ -1,6 +1,7 @@
 import { Db } from '../types/db.type'
 
-const action = ( { services, output } ) => {
+export const reload =
+( { services, output } ) => {
   const db: Db = services.data.db
   const data = {}
   db.allDocs
@@ -27,5 +28,4 @@ const action = ( { services, output } ) => {
   )
 }
 
-action [ 'async' ] = true
-export default action
+reload [ 'async' ] = true

@@ -1,4 +1,5 @@
-export default (options = {}) => {
+export const Library =
+( options = {} ) => {
   return (module, controller) => {
     module.addState
     ( { $rows:

@@ -5,7 +5,8 @@ import ToolsPane from './ToolsPane'
 import Workbench from './Workbench'
 import StatusBar from './StatusBar'
 
-export default Component
+export const App =
+Component
 ( {
   }
 , ( { state, signals } ) => (

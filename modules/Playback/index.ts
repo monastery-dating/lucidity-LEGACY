@@ -1,4 +1,5 @@
-export default (options = {}) => {
+export const Playback =
+( options = {} ) => {
   return (module, controller) => {
     module.addState
     ( { $main: function () {}

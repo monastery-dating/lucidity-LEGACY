@@ -1,5 +1,5 @@
-import set from '../actions/set'
+import { status } from '../actions/status'
 
-export default [
-  set
+export const changed =
+[ status
 ]

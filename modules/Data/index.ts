@@ -1,7 +1,20 @@
-import db from './services/db'
-import dbChanged from './signals/dbChanged'
+// Exposed actions and signals from Data (used directly in other signals composition)
+export * from './signals/reload'
+export * from './actions/save'
 
-export default ( { tree } ) => {
+import { db } from './services/db'
+import { dbChanged } from './signals/dbChanged'
+import { reload } from './signals/reload'
+import { save } from './signals/save'
+
+export interface DataSignalsType {
+  dbChanged ( any )
+  reload ( any )
+  save ( any )
+}
+
+export const Data =
+( options = {} ) => {
   return (module, controller) => {
     // This state is where we read and write to
     // the database
@@ -15,8 +28,11 @@ export default ( { tree } ) => {
     ( { db
       }
     )
+
     module.addSignals
     ( { dbChanged
+      , reload
+      , save
       }
     )
     const changed =
@@ -30,17 +46,6 @@ export default ( { tree } ) => {
     ).on ( 'change', changed )
     // FIXME: could use r.cancel to stop listening to
     // changes
-
-/*
-    const project = tree.select ( [ 'data' ] )
-    const signals = controller.getSignals ()
-    project.on
-    ( 'update', ( e ) => {
-        console.log ( 'DATA UPDATE', e.data.currentData )
-        // signals.data.saveProject ( {} )
-      }
-    )
-    */
 
     return {} // meta information
   }

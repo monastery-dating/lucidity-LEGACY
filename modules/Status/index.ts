@@ -1,6 +1,9 @@
-import changed from './signals/changed'
+export * from './actions/status'
 
-export default (options = {}) => {
+import { changed } from './signals/changed'
+
+export const Status =
+(options = {}) => {
   return (module, controller) => {
     module.addState
     ( []

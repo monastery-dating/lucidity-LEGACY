@@ -37,7 +37,7 @@ const makeChange = function ( { on } ) {
   }
 }
 
-export default Component
+export const EditableText = Component
 ( {}
 , ( { props } ) => {
     if ( props.editing ) {

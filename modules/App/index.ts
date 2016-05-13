@@ -1,10 +1,11 @@
-import mounted from './signals/mounted'
+import { mounted } from './signals/mounted'
 
 interface Foo {
   bar: string
 }
 
-export default (options = {}) => {
+export const App =
+(options = {}) => {
   return (module, controller) => {
     // no state added
 

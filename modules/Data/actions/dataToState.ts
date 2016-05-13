@@ -1,7 +1,6 @@
 import { Db } from '../types/db.type'
 
-const action = ( { state, input } ) => {
+export const dataToState =
+( { state, input } ) => {
   state.set ( input.path, input.data )
 }
-
-export default action
