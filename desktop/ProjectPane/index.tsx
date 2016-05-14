@@ -1,17 +1,18 @@
 import { Component } from '../Component'
 import { ContextType } from '../../modules/context.type'
 import { editable } from '../../modules/Factory'
+import { AddNew } from '../AddNew'
 
 const sortByTitle = ( a, b ) => a.title > b.title ? 1 : -1
 
 const showScenes =
 ( { scenes, sceneById, selectedSceneId } ) => {
-  if ( !scenes ) {
+  if ( !scenes || !sceneById ) {
     return ''
   }
   const list = scenes.map ( ( id ) => sceneById [ id ] )
   list.sort ( sortByTitle )
-  return list.map
+  const l = list.map
   ( ( scene ) => (
       <div class={{ li: true
                   , sel: scene._id === selectedSceneId
@@ -20,11 +21,10 @@ const showScenes =
       </div>
     )
   )
+  return l
 }
 
 const ProjectTitle = editable ( [ 'project', 'title' ] )
-
-
 
 export default Component
 ( { scenes: [ 'project', 'scenes' ]
@@ -51,9 +51,10 @@ export default Component
         <p>Scenes</p>
 
         <div>
-          { showScenes ( state )
-          }
-          <div class='li add'>+</div>
+          { showScenes ( state ) }
+          <AddNew class='li'
+            type='scene'
+            path={ [ 'project', 'scenes' ] }/>
         </div>
       </div>
 

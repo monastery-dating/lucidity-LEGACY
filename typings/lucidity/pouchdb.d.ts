@@ -7,7 +7,6 @@ declare module 'pouchdb' {
   interface PouchDB {
     ( dbname: string ): void
   }
-
   const dummy: PouchDB
   export = dummy
 }

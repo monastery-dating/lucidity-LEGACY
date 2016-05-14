@@ -14,12 +14,12 @@ export const reload =
 
         for ( const mdoc of docs.rows ) {
           const doc = mdoc.doc
-          let types = data [ doc.type ]
-          if ( !types ) {
-            types = {}
-            data [ doc.type ] = types
+          let branch = data [ doc.type ]
+          if ( !branch ) {
+            branch = {}
+            data [ doc.type ] = branch
           }
-          types [ doc._id ] = doc
+          branch [ doc._id ] = doc
         }
 
         output.success ( { data: data, path: 'data' } )

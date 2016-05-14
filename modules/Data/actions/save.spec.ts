@@ -1,3 +1,5 @@
+import { ContextType } from '../../context.type'
+import { DataServicesType } from '../../Data'
 import { describe } from '../../Test/runner'
 import { save } from './save'
 import * as Baobab from 'baobab'
@@ -16,7 +18,9 @@ describe
         }
         const put = ( doc, clbk ) => clbk ()
 
-        const services = { data: { db : { put } } }
+        const data : DataServicesType =
+        { db: { put } }
+        const services = { data }
 
         save
         ( { state

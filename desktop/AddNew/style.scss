@@ -1,0 +1,30 @@
+@import '../styles/misc';
+@import '../styles/colors';
+
+.EditableText {
+  input.fld {
+    border: none;
+    padding: $pad;
+    font: inherit;
+    background-color: rgba( 0, 0, 0, 0 );
+    border-radius: 0;
+    width:100%;
+    outline: none;
+  }
+  &.active {
+    padding: 0;
+    background-color: rgba( color( inputa ), 1.0 );
+  }
+  cursor: text;
+  // transparent background
+  background-color: rgba( 0, 0, 0, 0 );
+  border-bottom: 1px dashed #fff;
+  border-bottom-color: rgba( lighten( $text_color, 80% ), 0);
+  transition: border-bottom-color 0.8s, background-color 0.3s, color 0.3s;
+  &.saving {
+    color: lighten( $text_color, 100% );
+  }
+  &:hover {
+    border-bottom-color: rgba( lighten( $text_color, 10% ), 0.4);
+  }
+}

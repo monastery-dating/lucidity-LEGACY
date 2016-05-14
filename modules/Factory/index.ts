@@ -1,6 +1,6 @@
 export * from './editable'
 
-import { set } from './common'
+import { set, add } from './common'
 import { changed } from './editable'
 
 export const Factory =
@@ -14,7 +14,8 @@ export const Factory =
     )
 
     module.addSignals
-    ( { changed
+    ( { add
+      , changed
       , set
       }
     )

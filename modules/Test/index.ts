@@ -1,4 +1,8 @@
-export default (options = {}) => {
+export * from './signalTest'
+export * from './runner'
+
+export const Test =
+(options = {}) => {
   return (module, controller) => {
     /*
     module.addState

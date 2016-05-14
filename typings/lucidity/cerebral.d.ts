@@ -7,6 +7,8 @@ declare namespace Cerebral {
   interface Controller {
     addModules ( opts: any )
     getSignals ( path?: string ) : any
+    addServices ( opts: any )
+    on: any
   }
 }
 

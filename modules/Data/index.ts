@@ -1,6 +1,6 @@
 // Exposed actions and signals from Data (used directly in other signals composition)
 export * from './signals/reload'
-export * from './actions/save'
+export * from './signals/save'
 
 import { db } from './services/db'
 import { dbChanged } from './signals/dbChanged'
@@ -11,6 +11,25 @@ export interface DataSignalsType {
   dbChanged ( any )
   reload ( any )
   save ( any )
+}
+
+interface Document {
+  _id: string
+  type: string
+}
+
+interface Callback {
+  ( err: string ): void
+}
+
+// we make functions optional for mock in testing
+interface Db {
+  put? ( doc: Document, clbk: Callback )
+  bulkDocs? ( docs: Document[], clbk: Callback )
+}
+
+export interface DataServicesType {
+  db: Db
 }
 
 export const Data =
@@ -35,15 +54,15 @@ export const Data =
       , save
       }
     )
-    const changed =
-    controller.getSignals ().data.dbChanged
+
+    const changed = controller.getSignals ().data.dbChanged
 
     const r = db.changes
     ( { live: true
       , include_docs: true
       , since: 'now'
       }
-    ).on ( 'change', changed )
+    ).on ( 'change', ( change ) => changed ( { change } ) )
     // FIXME: could use r.cancel to stop listening to
     // changes
 

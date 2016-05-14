@@ -1,8 +1,11 @@
+import { ContextType } from '../../context.type'
+import * as check from 'check-types'
+
 export const finishEditing =
 ( { state
   , input: { path, value }
   , output
-  }
+  } : ContextType
 ) => {
   const oldValue = state.get ( path )
   const root = path.slice ( 0, path.length - 1 )
@@ -26,4 +29,10 @@ export const finishEditing =
 
     output.success ( { doc } )
   }
+}
+
+// Cerebral type checking
+finishEditing [ 'input' ] =
+{ path: check.array.of.string
+, value: check.not.undefined
 }

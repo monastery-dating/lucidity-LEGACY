@@ -1,18 +1,18 @@
 export const update =
-( { state, input, output } ) => {
+( { state, input: { change }, output } ) => {
 
-  if ( input.deleted ) {
+  if ( change.deleted ) {
     // FIXME: Handle removal
   }
   else {
-    const doc = input.doc
+    const doc = change.doc
     const { _id, type } = doc
 
     state.set ( [ 'data', type, _id ], doc )
 
     const cid = state.get ( [ type, '_id' ] )
 
-    if ( _id === cid ) {
+    if ( _id === cid || cid === undefined ) {
       output ( { saved: type } )
     }
   }
