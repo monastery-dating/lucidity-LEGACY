@@ -1,7 +1,15 @@
 import { Component } from './Component'
 import { describe } from '../modules/Test/runner'
 
-const e = ( obj ) => Object.assign ( { sel: 'div', data: {}, children: [] }, obj )
+const e = ( sel: string, klass?: string, obj?: any ) => {
+  const o: any = Object.assign
+  ( { sel , data: {}, children: [] }, obj || {} )
+
+  if ( klass ) {
+    o.data.class = { [klass]: true }
+  }
+  return o
+}
 
 describe
 ( 'Component.createElement', ( it ) => {
@@ -16,7 +24,7 @@ describe
     it ( 'should create simple object', ( assert ) => {
         assert.equal
         ( <foo></foo>
-        , e ( { sel: 'foo' } )
+        , e ( 'foo' )
         )
       }
     )
@@ -26,10 +34,25 @@ describe
         ( <div class='foo bar'></div>
         , { sel: 'div'
           , data:
-            { props: {}
-            , class: { foo: true, bar: true }
+            { class: { foo: true, bar: true }
             }
           , children: []
+          }
+        )
+      }
+    )
+
+    it ( 'should accept mixed children', ( assert ) => {
+        assert.equal
+        ( <ol>{ [ <li class='one'></li>, <li class='two'></li> ]}<li class='three'></li>{[ <li class='four'></li> ]}</ol>
+        , { sel: 'ol'
+          , data: {}
+          , children:
+            [ e ( 'li', 'one' )
+            , e ( 'li', 'two' )
+            , e ( 'li', 'three' )
+            , e ( 'li', 'four' )
+            ]
           }
         )
       }
@@ -84,8 +107,8 @@ describe
         const rmap = ( r ) => <li>{ r }</li>
         assert.equal
         ( ( <ul>{ rows.map ( rmap ) }</ul> ).children
-        , [ e ( { sel: 'li', children: [ { text: 'a' } ] } )
-          , e ( { sel: 'li', children: [ { text: 'b' } ] } )
+        , [ e ( 'li', null, { children: [ { text: 'a' } ] } )
+          , e ( 'li', null, { children: [ { text: 'b' } ] } )
           ]
         )
       }

@@ -27,9 +27,7 @@ const mapData = function
 ): any {
   const data: any = { }
   const props = noprops ? data : {}
-  if ( !noprops ) {
-    data.props = props
-  }
+  let hasProps = false
   for ( const k in adata ) {
     if ( k === 'key' ) {
       // set outside of data
@@ -80,11 +78,15 @@ const mapData = function
           }
         }
         else {
+          hasProps = true
           props [ k ] = adata [ k ]
         }
       }
 
     }
+  }
+  if ( !noprops && hasProps ) {
+    data.props = props
   }
   return data
 }
@@ -126,8 +128,19 @@ const createElement = function
 ) : VNode {
 
   let children = achildren
-  if ( arguments.length > 3 || !Array.isArray ( achildren ) ) {
+  if ( !Array.isArray ( achildren ) ) {
     children = slice.call ( arguments, 2 )
+  }
+  else if ( arguments.length > 3 ) {
+    children = [ ...children ]
+    for ( const c of slice.call ( arguments, 3 ) ) {
+      if ( Array.isArray ( c ) ) {
+        children = [ ...children, ...c ]
+      }
+      else {
+        children.push ( c )
+      }
+    }
   }
 
   if ( children ) {
