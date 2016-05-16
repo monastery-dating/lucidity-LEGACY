@@ -42,6 +42,19 @@ describe
       }
     )
 
+    it ( 'should accept style string', ( assert ) => {
+        assert.equal
+        ( <div style='color:#555'></div>
+        , { sel: 'div'
+          , data:
+            { style: { color: '#555' }
+            }
+          , children: []
+          }
+        )
+      }
+    )
+
     it ( 'should accept mixed children', ( assert ) => {
         assert.equal
         ( <ol>{ [ <li class='one'></li>, <li class='two'></li> ]}<li class='three'></li>{[ <li class='four'></li> ]}</ol>

@@ -36,10 +36,10 @@ const mapData = function
 
     else if ( k === 'class' ) {
       const aclass = adata [ k ]
-      let klass = data.class
+      let klass = data [ k ]
       if ( !klass ) {
         klass = {}
-        data.class = klass
+        data [ k ] = klass
       }
       if ( typeof aclass === 'string' ) {
         const klasses = aclass.split ( /\s+/ )
@@ -49,6 +49,25 @@ const mapData = function
       }
       else {
         Object.assign ( klass, aclass )
+      }
+    }
+
+    else if ( k === 'style' ) {
+      const astyle = adata [ k ]
+      let style = data [ k ]
+      if ( !style ) {
+        style = {}
+        data [ k ] = style
+      }
+      if ( typeof astyle === 'string' ) {
+        const styles = astyle.split ( /\s*;\s*/ )
+        for ( const s of styles ) {
+          const [ key, value ] = s.split ( /\s*:\s*/ )
+          style [ key ] = value
+        }
+      }
+      else {
+        Object.assign ( style, astyle )
       }
     }
 
