@@ -2,27 +2,24 @@
 // FIXME: move Factory to '/lib' ?
 // FIXME: should import styles ?
 import { Component } from '../../../desktop/Component'
+import { ContextType } from '../../context.type'
 
 
 // Open/closeable pane
 export const pane =
 ( name: string ) => {
-  const PanePath = [ '$factory', 'pane', name ]
-
-  let togglePane
+  const panePath = [ '$factory', 'pane', name ]
 
   const comp = Component
-  ( { active: PanePath // State of the pane.
+  ( { active: panePath // State of the pane.
     }
-  , ( { state, children, signals } ) => {
+  , ( { state, props, children, signals } ) => {
       const active = state.active
 
-      togglePane = ( e ) => {
-        signals.$factory.set
-        ( { path: PanePath, value: !active } )
-      }
+      const klass = Object.assign
+      ( {}, props.class || {}, { Pane: true, active } )
 
-      return <div class={{ Pane: true, active }}>
+      return <div class={ klass }>
           <div class='wrap'>
             { children }
           </div>
@@ -30,8 +27,23 @@ export const pane =
 
     }
   )
-  // Not sure I am not leaking here.
-  comp.toggle = ( e ) => togglePane ( e )
-  comp.path = PanePath
+  comp.toggle = Component
+  ( { active: panePath
+    }
+  , ( { state, props, children, signals }: ContextType ) => {
+      const active = state.active
+
+      const toggle = ( e ) => {
+        signals.$factory.set
+        ( { path: panePath, value: !state.active } )
+      }
+
+      const klass = Object.assign
+      ( {}, props.class || {}, { active } )
+
+      return <div class={ klass } on-click={ toggle }>
+        { children }</div>
+    }
+  )
   return comp
 }

@@ -1,10 +1,11 @@
 import './style.scss'
 import { Component } from 'cerebral-view-snabbdom'
+import { Library } from './Library'
 import { Modal } from '../modules/Factory'
 import { ProjectPane } from './ProjectPane'
-import StatusBar from './StatusBar'
-import ToolsPane from './ToolsPane'
-import Workbench from './Workbench'
+import { StatusBar } from './StatusBar'
+// import { ToolsPane } from './ToolsPane'
+import { Workbench } from './Workbench'
 
 export const App =
 Component
@@ -18,8 +19,9 @@ Component
       <Modal/>
       {/*
         <le-boxdrag></le-boxdrag>
-        */}
       <ToolsPane></ToolsPane>
+        */}
+      <Library></Library>
       <Workbench></Workbench>
       <ProjectPane></ProjectPane>
       <StatusBar></StatusBar>

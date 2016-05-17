@@ -1,8 +1,8 @@
 import './style.scss'
 import { Component } from '../Component'
-import Status from '../Status'
+import { Status } from '../Status'
 
-export default Component
+export const StatusBar = Component
 ( { status: [ '$status' ]
   }
 , ( { state, signals } ) => {

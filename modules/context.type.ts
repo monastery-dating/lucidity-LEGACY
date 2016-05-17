@@ -19,6 +19,7 @@ interface ServicesType {
 export interface ContextType {
   state?: any
   input?: any
+  props?: any
   output?: any
   services?: ServicesType
   signals?: SignalsType

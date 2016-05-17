@@ -22,12 +22,12 @@
   background: darken( color( workb ), 5% );
   div { display: inline-block }
   padding-left: $pad;
-  
+
   .fa {
     color: darken( desaturate( color( maint ), 60% ), 20% );
-    &.active {
-      color: lighten( color( maint ), 30% );
-    }
+  }
+  .fa.active, .active>.fa {
+    color: lighten( color( maint ), 30% );
   }
 }
 
@@ -46,7 +46,6 @@
   border-bottom-right-radius: $brad;
   .wrap {
     padding: $pad;
-    width: layout( optw ) - 2 * $pad ;
   }
 }
 

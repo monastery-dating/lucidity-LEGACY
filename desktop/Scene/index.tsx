@@ -8,7 +8,7 @@ const SceneTitle = editable ( [ 'scene', 'title' ] )
 const SceneOptions = pane ( 'scene' )
 
 export const Scene = Component
-( { active: SceneOptions.path
+( {
   }
 , ( { state, signals }: ContextType ) => {
     const deleteModal = openModal
@@ -21,12 +21,7 @@ export const Scene = Component
 
     return <div class='Scene'>
         <div class='bar'>
-          <div
-            class={{fa: true
-                   , ['fa-film']:true
-                   , active: state.active
-                   }}
-            on-click={ SceneOptions.toggle }></div>
+          <SceneOptions.toggle class='fa fa-film'/>
           <SceneTitle class='title'/>
         </div>
         <SceneOptions>

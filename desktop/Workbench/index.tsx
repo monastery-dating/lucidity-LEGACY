@@ -5,7 +5,7 @@ import { Project } from '../Project'
 
 import { editable, pane } from '../../modules/Factory'
 
-export default Component
+export const Workbench = Component
 ( { playback: [ 'playback', '$visible' ]
   }
 , ( { state, signals } ) => (

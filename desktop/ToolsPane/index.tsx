@@ -1,6 +1,8 @@
 import './style.scss'
 import { Component } from '../Component'
-import Status from '../Status'
+import { ContextType, SignalsType } from '../../modules/context.type'
+import { editable, openModal, pane } from '../../modules/Factory'
+import { Status } from '../Status'
 
 const renderLibrary = ( el ) => (
   <div class='li'>
@@ -19,53 +21,56 @@ const renderStatus = ( el ) => (
   </div>
 )
 
-export default Component
+const LibraryOptions = pane ( 'library' )
+
+export const ToolsPane = Component
 ( { rows: [ 'library', '$rows' ]
   , status: [ '$status' ]
   }
 , ( { state, signals } ) => (
     <div id='library'>
-      <h3>
-        <i class='fa fa-book'></i>
-        Library
-      </h3>
-
-      <div class='search'>
-        <p>&nbsp;
-          <input value='search' class='fld'/>
-        </p>
-
-        <ol class='saved'>
-          <li class='sel'>f</li>
-          <li>g</li>
-          <li>b</li>
-          <li>x</li>
-          <li class='add'>+</li>
-        </ol>
-
-        <div>
-          <div class='refresh' click='refreshLibrary'
-            class2='== blink: refreshing '>refresh</div>
+      <LibraryOptions class='Library'>
+        <div class='bar'>
+          <LibraryOptions.toggle class='fa fa-book'/>
+          <div class='title'>Library</div>
         </div>
-      </div>
+        <div class='search'>
+          <p>&nbsp;
+            <input value='search' class='fld'/>
+          </p>
 
-      <div class='results'>
-        <div>
-          {/* <li v-if='refreshError' class='error'> ==refreshError</li> */}
-          { state.rows.map ( renderLibrary )
-           }
+          <ol class='saved'>
+            <li class='sel'>f</li>
+            <li>g</li>
+            <li>b</li>
+            <li>x</li>
+            <li class='add'>+</li>
+          </ol>
+
+          <div>
+            <div class='refresh' click='refreshLibrary'
+              class2='== blink: refreshing '>refresh</div>
+          </div>
         </div>
-      </div>
 
-      <div class='console'>
-        <p>Console
-          { /*<input value='search' class='fld'/> */}
-        </p>
-
-        <div>
-          { ( state.status || [] ).map ( renderStatus ) }
+        <div class='results'>
+          <div>
+            {/* <li v-if='refreshError' class='error'> ==refreshError</li> */}
+            { state.rows.map ( renderLibrary )
+             }
+          </div>
         </div>
-      </div>
+
+        <div class='console'>
+          <p>Console
+            { /*<input value='search' class='fld'/> */}
+          </p>
+
+          <div>
+            { ( state.status || [] ).map ( renderStatus ) }
+          </div>
+        </div>
+      </LibraryOptions>
     </div>
   )
 )

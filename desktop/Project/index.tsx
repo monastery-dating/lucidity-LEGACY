@@ -8,17 +8,12 @@ const ProjectTitle = editable ( [ 'project', 'title' ] )
 const ProjectOptions = pane ( 'project' )
 
 export const Project = Component
-( { active: ProjectOptions.path
+( {
   }
 , ( { state, signals }: ContextType ) => (
     <div class='Project'>
       <div class='bar'>
-        <div
-          class={{fa: true
-                 , ['fa-cube']:true
-                 , active: state.active
-                 }}
-          on-click={ () => ProjectOptions.toggle ( signals ) }></div>
+        <ProjectOptions.toggle class='fa fa-cube'/>
         <ProjectTitle class='title'/>
       </div>
       <ProjectOptions>

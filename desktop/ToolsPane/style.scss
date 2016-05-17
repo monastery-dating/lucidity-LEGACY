@@ -9,8 +9,15 @@
 
 #library {
   @extend ._pane;
-  left:0;
-  padding-left: $ppad;
+  .bar {
+    .fa { position: fixed; left: $pad; top: $pad }
+    .title {
+      color: desaturate( color( maint ), 100% );
+    }
+  }
+}
+.Library.Pane .wrap {
+  padding:0;
 }
 
 .console .li {
