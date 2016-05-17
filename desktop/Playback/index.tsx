@@ -15,8 +15,8 @@ export const Playback = Component
     , width: w + 'px'
     , height: h + 'px'
     }
-    return <div id='playback' style={{ height: usedh + 'px' }}>
-      <div id='screen' style={portStyle}>
+    return <div class='Playback' style={{ height: usedh + 'px' }}>
+      <div class='Screen' style={portStyle}>
         <svg width={w+2+2*hair} height={h+2+2*hair} class='tv'
           style={{ marginLeft: -1-hair, marginTop: -1-hair }}>
 

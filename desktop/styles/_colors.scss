@@ -7,7 +7,7 @@ $box_line:   #333;
 
 $colors:
 ( mainb: lighten( $back_color, 10% )
-, maint: lighten( desaturate( $high_front, 30% ), 20% )
+, maint: lighten( desaturate( $high_front, 30% ), 10% )
 , foldb: lighten( $back_color, 20% )
 , foldt: $high_front
 , workb: lighten( $back_color,  5% )  // workspace background

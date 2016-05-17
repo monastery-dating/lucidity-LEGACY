@@ -2,15 +2,16 @@
 @import '../styles/layout';
 @import '../styles/misc';
 
-#playback {
+.Playback {
   background: darken( $back_color, 5% );
   color: lighten( $text_color, 60% );
-  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
 
-  #screen {
+  .Screen {
     background: black;
-    position: absolute;
   }
   .tv {
     rect {

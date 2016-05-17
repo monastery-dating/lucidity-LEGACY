@@ -3,6 +3,7 @@
 $layout:
 ( panew: 200px  // pane width
 , paneh: 100%   // pane height
+, fbarh: 32px   // fixed bar height (should == title in bar height)
 , optw: 140px   // options pane width
 , playbackh: 220px // playback height ( width is 16/9 * h )
 , statush: 20px // status bar

@@ -21,8 +21,8 @@ Component
         <le-boxdrag></le-boxdrag>
       <ToolsPane></ToolsPane>
         */}
-      <Library></Library>
       <Workbench></Workbench>
+      <Library></Library>
       <ProjectPane></ProjectPane>
       <StatusBar></StatusBar>
     </div>

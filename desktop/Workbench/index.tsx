@@ -1,3 +1,4 @@
+import './style.scss'
 import { Component } from '../Component'
 import { Playback } from '../Playback'
 import { Scene } from '../Scene'
@@ -9,7 +10,7 @@ export const Workbench = Component
 ( { playback: [ 'playback', '$visible' ]
   }
 , ( { state, signals } ) => (
-    <div id='workbench'>
+    <div class='Workbench'>
       { state.playback ? <Playback/> : '' }
       <Project/>
       <Scene/>

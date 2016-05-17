@@ -19,18 +19,22 @@ const LibraryOptions = pane ( 'library' )
 export const Library = Component
 ( { rows: [ 'library', '$rows' ]
   , status: [ '$status' ]
+  , active: LibraryOptions.path
   }
 , ( { state, signals } ) => (
     <LibraryOptions class='Library'>
-      <div class='fbar bar'>
-        <LibraryOptions.toggle>
-          <div class='fa fa-book'></div>
-          <div class='title'>Library</div>
-        </LibraryOptions.toggle>
-      </div>
-      <div class='bar'>
-        <div class='title'>&nbsp;</div>
-      </div>
+      <LibraryOptions.toggle class='fbar bar'>
+        <div class='fa fa-book'></div>
+        <div class='title'>Library</div>
+        <div class='larrow'></div>
+      </LibraryOptions.toggle>
+      
+      <LibraryOptions.toggle class='bar'>
+        <div class='spacer'></div>
+        <div class='rarrow'></div>
+        &nbsp;
+      </LibraryOptions.toggle>
+
       <div class='search'>
         <p>&nbsp;
           <input value='search' class='fld'/>

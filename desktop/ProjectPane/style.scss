@@ -1,0 +1,10 @@
+
+@import '../styles/colors';
+@import '../styles/layout';
+@import '../styles/misc';
+
+#project {
+  .fa {
+    color: darken( color( boxb ), 8% );
+  }
+}

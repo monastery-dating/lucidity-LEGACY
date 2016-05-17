@@ -15,6 +15,7 @@ declare module 'check-types' {
     undefined: any
     not: CheckTypes
     maybe: CheckTypes
+    assigned: any
   }
   const dummy: CheckTypes
   export = dummy

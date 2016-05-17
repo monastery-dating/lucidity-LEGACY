@@ -1,3 +1,4 @@
+import './style.scss'
 import { Component } from '../Component'
 import { ContextType, SignalsType } from '../../modules/context.type'
 import { editable } from '../../modules/Factory'
@@ -25,6 +26,7 @@ const showScenes =
                   , sel: scene._id === selectedSceneId
                   }}
         on-click={ () => selectScene ( signals, scene._id ) }>
+        <div class='fa fa-film'></div>
         { scene.title }
       </div>
     )

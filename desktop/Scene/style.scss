@@ -33,7 +33,6 @@
 
 .Pane {
   overflow: hidden;
-  background: lighten( color( workb ), 5% );
   width: 0px;
   &.active {
     width: layout( optw );
@@ -42,7 +41,6 @@
   position: absolute;
   left: 0;
   margin-left: -1px;
-  border: 1px solid color( boxl );
   border-bottom-right-radius: $brad;
   .wrap {
     padding: $pad;
@@ -90,22 +88,34 @@
 
 .button {
   padding: $pad/2 $pad;
-  background: lighten( color( workb ), 40% );
+  background: linear-gradient(
+    lighten( color( workb ), 45%),
+    lighten( color( workb ), 30%)
+    );
   border-radius: $brad;
-  border: 1px solid color( boxl );
-  margin: $pad;
+  border: 2px solid darken( color( boxl ), 1%);
+  border-top-color: lighten( color( boxl ), 1%);
+  border-right-color: lighten( color( boxl ), 1%);
+  margin: 2*$pad;
   cursor: pointer;
   &:active {
     position: relative;
+    opacity: 0.8;
     top: 1px;
   }
 
   &.delete {
-    background: #966;
+    background: linear-gradient(
+      lighten( #966, 5%),
+      darken( #966, 5%)
+      );
   }
 
   &.continue {
-    background: lighten( color( sboxb ), 20%);
+    background: linear-gradient(
+      lighten( color( sboxb ), 20%),
+      lighten(  color( sboxb ),10%)
+      );
     align-self: flex-end;
   }
 

@@ -1,0 +1,17 @@
+@import '../styles/colors';
+@import '../styles/layout';
+@import '../styles/misc';
+
+.Workbench {
+  background: color( workb );
+  width: 100%;
+  height: 100%;
+
+  .Pane {
+    background: darken( color( workb ), 2%);
+    box-shadow: inset 0 0 8px darken( color( workb ), 8% );
+    .wrap {
+      padding: 2*$pad;
+    }
+  }
+}

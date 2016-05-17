@@ -104,6 +104,9 @@ svg#files {
 }
 
 svg#scratch {
+  position: fixed;
+  top:0; left:0;
+  z-index: -999;
   opacity: 0;
 }
 
@@ -256,13 +259,6 @@ svg#scratch {
   @extend ._button;
 }
 
-.results {
-  @extend ._list;
-  @extend ._drop;
-  height: layout( resultsh );
-  border-right:0;
-}
-
 .console {
   @extend ._list;
   border-right:0;
@@ -275,19 +271,6 @@ svg#scratch {
       width:50%;
     }
   }
-}
-
-#workbench {
-  @extend ._pane;
-  background: color( workb );
-  left:   layout( panew ) - $ppad;
-  box-shadow: inset 0 0 10px darken( color( workb ), 15% );
-
-  // How to do this ?
-  // How to do it dynamically if sides are closed ?
-  padding-right:  layout( panew ) - $ppad;
-  width: 100%;
-
 }
 
 #project {

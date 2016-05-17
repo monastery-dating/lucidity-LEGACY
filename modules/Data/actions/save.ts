@@ -3,12 +3,11 @@ import * as check from 'check-types'
 
 export const save =
 ( { state
-  , input //: { doc, docs }
+  , input: { doc, docs }
   , services: { data: { db } }
   , output
   } : ContextType
 ) => {
-  const { doc, docs } = input
 
   if ( doc ) {
     // setTimeout ( () => {
@@ -57,29 +56,8 @@ export const save =
 save [ 'async' ] = true
 
 // Cerebral type checking
-const checkDoc = ( doc ) => {
-  return check.string ( doc._id )
-      && check.string ( doc.type )
+const mdoc = { _id: 'string', type: 'string' }
+save [ 'input' ] = ( v ) => {
+  return check.maybe.like ( v.doc, mdoc )
+      && check.maybe.array.of.like ( v.docs, mdoc )
 }
-
-save [ 'input' ] = ( value ) => {
-  if ( value.doc ) {
-    return checkDoc ( value.doc )
-  }
-  else if ( value.docs ) {
-    return value.docs.reduce
-    ( ( acc, doc ) => acc && checkDoc ( doc )
-    , true
-    )
-  }
-  else {
-    return false
-  }
-}
-/*
-Could we fix with check ?
-save [ 'input' ] =
-{ doc: ( v ) => check.maybe.like ( v, mdoc )
-, docs: ( v ) => check.maybe.array.of.like ( v, mdoc )
-}
-*/
