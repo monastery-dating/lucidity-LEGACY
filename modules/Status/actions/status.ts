@@ -2,17 +2,19 @@ import { ContextType } from '../../context.type'
 
 export const status =
 ( { state, input }: ContextType ) => {
-  const status = state.get ( '$status' ) || []
-  state.set ( '$status', [ input.status, ...status ] )
+  if ( input.status ) {
+    const status = state.get ( '$status' ) || []
+    state.set ( '$status', [ input.status, ...status ] )
+  }
 }
 
 // Cerebral type checking
-status [ 'input' ] =
-{ status:
-  { type: String
-  , message: String
-  }
-}
+//status [ 'input' ] =
+//{ status:
+//  { type: String
+//  , message: String
+//  }
+//}
 
 // FIXME do we need this ?
 interface StatusType {

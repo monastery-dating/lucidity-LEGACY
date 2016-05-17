@@ -25,7 +25,10 @@ export default Component
   }
 , ( { state, signals } ) => (
     <div id='library'>
-      <h3>Library</h3>
+      <h3>
+        <i class='fa fa-book'></i>
+        Library
+      </h3>
 
       <div class='search'>
         <p>&nbsp;

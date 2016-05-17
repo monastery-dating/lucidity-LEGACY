@@ -1,15 +1,27 @@
+@import './misc';
+
 $layout:
 ( panew: 200px  // pane width
 , paneh: 100%   // pane height
+, optw: 140px   // options pane width
 , playbackh: 220px // playback height ( width is 16/9 * h )
 , statush: 20px // status bar
 , statusw: 100% // status bar
 , listh: 200px  // list height
-, graphw: 500px // project files in workbench
+, scenew: 500px // project files in workbench
 , filesw: 200px // project files in workbench
 , resultsh: 400px // library results height
 );
 
 @function layout( $key ) {
   @return map-get( $layout, $key );
+}
+
+._pane {
+  background: color( paneb );
+  position: fixed;
+  top: 0; bottom: 0;
+  height: layout( paneh );
+  width:  layout( panew ) - $ppad;
+  border: $lbox solid color( boxl );
 }

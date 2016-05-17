@@ -92,9 +92,9 @@ const defaultFail : OnFail = function
       break
     case 'exception':
       console.log ( 'exception' )
-      console.log( f.error )
       break
   }
+  console.log ( f.error )
   return true // continue
 }
 
@@ -115,7 +115,7 @@ interface OnFail {
 }
 
 interface Failure extends Test {
-  error: string
+  error: Error
   expected: any
   actual: any
   assertion: 'same' | 'notSame' | 'equal' | 'pending' | 'timeout' | 'exception'
@@ -141,7 +141,7 @@ const makeAssert = function
         f.actual   = a
         f.expected = b
         if ( a !== b ) {
-          f.error = `${ a } !== ${ b }`
+          f.error = new Error ( `${ a } !== ${ b }` )
           if ( f.async ) {
             // we do not throw in async code because we
             // cannot catch
@@ -157,7 +157,7 @@ const makeAssert = function
         f.actual   = a
         f.expected = b
         if ( a === b ) {
-          f.error = `${ a } === ${ b }`
+          f.error = new Error ( `${ a } === ${ b }` )
           if ( f.async ) {
             // we do not throw in async code because we
             // cannot catch
@@ -173,7 +173,7 @@ const makeAssert = function
         f.actual   = a
         f.expected = b
         if ( !deepEqual ( a, b, { strict: true } ) ) {
-          f.error = `!deepEqual ( ${ a }, ${ b } )`
+          f.error = new Error ( `!deepEqual ( ${ a }, ${ b } )` )
           if ( f.async ) {
             // we do not throw in async code because we
             // cannot catch
@@ -186,13 +186,13 @@ const makeAssert = function
     , pending ( m ) {
         f.assertion = 'pending'
         f.actual = m
-        f.error = m
+        f.error = new Error ( m )
         if ( f.async ) {
           // we do not throw in async code because we
           // cannot catch
         }
         else {
-          throw m
+          throw f.error
         }
       }
     }

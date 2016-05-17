@@ -71,6 +71,7 @@ declare module 'cerebral-view-snabbdom' {
     output: any
     input: any
     props: any
+    children: any[]
   }
   interface ComponentClbk {
     ( options: ComponentParams ): void

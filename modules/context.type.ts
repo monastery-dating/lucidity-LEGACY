@@ -1,9 +1,13 @@
 import { DataSignalsType, DataServicesType } from './Data'
+import { FactorySignalsType } from './Factory'
+import { SceneSignalsType } from './Scene'
 
 // Exported interface for signals (corresponds to inputs of
 // first action in signal chains)
-interface SignalsType {
+export interface SignalsType {
   data: DataSignalsType
+  $factory: FactorySignalsType
+  scene: SceneSignalsType
 }
 
 // We make services optional so that we can mock them
@@ -18,6 +22,7 @@ export interface ContextType {
   output?: any
   services?: ServicesType
   signals?: SignalsType
+  children?: any[]
 }
 
 // Generic types

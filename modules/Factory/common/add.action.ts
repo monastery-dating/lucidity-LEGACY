@@ -28,15 +28,22 @@ export const addAction =
       , { type: 'main', _id: type, value: _id }
     )
   )
+  // This is a flag that will set editing after db object
+  // is selected.
+  state.set ( [ '$factory', 'editing' ], type )
 
   if ( path.length > 1 ) {
     // add to parent
     // project.scenes
     const parent = state.get ( path [ 0 ] )
     const key = path [ path.length - 1 ]
+    const skey = `${type}Id`
     const list = [ ... ( parent [ key ] || [] ), _id ]
     docs.push
-    ( Object.assign ( {}, parent, { [ key ]: list } )
+    ( Object.assign
+      ( {}
+      , parent
+      , { [ key ]: list, [ skey ]: _id } )
     )
   }
   output ( { docs } )

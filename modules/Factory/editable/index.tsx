@@ -10,8 +10,8 @@ const EditingPath = [ '$factory', 'editing' ]
 
 // Editable Component factory
 export const editable =
-( path ) => {
-  const spath = path.join ( '-' )
+( path, idscope: string = '' ) => {
+  const spath = path.join ( '-' ) + idscope
   const fpath = [ '$factory', ...path ]
   return Component
   ( { text: path
@@ -23,7 +23,7 @@ export const editable =
     // (only one per app)
     , editing: EditingPath
     }
-  , ( { state, signals } ) => {
+  , ( { state, signals, props } ) => {
       const edit = () => signals.$factory.set
       ( { path: EditingPath, value: spath } )
 
@@ -31,11 +31,11 @@ export const editable =
       ( { path, value } )
 
       const isediting = state.editing === spath
-      
-      return <EditableText class='title'
+
+      return <EditableText class={ props.class }
           text={ state.text }
           stext={ state.stext } // shown while saving
-          editing={ state.editing }
+          editing={ isediting }
           saving={ state.saving }
           on-edit={ edit }
           on-change={ changed }

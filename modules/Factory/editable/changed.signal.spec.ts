@@ -34,14 +34,6 @@ describe
                     }
                   }
                 }
-              , $status:
-                [ { type: 'success'
-                  , message: 'Saved main'
-                  }
-                , { type: 'success'
-                  , message: 'Saved user'
-                  }
-                ]
               }
             )
             done ()

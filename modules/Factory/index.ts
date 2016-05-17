@@ -1,4 +1,13 @@
 export * from './editable'
+export * from './modal'
+export * from './pane'
+
+type stringArray = string[]
+export interface FactorySignalsType {
+  set ( { path: stringArray, value: any } )
+  add ( { path: stringArray, type: string } )
+  // TODO: rename reloaded or attached or ...
+}
 
 import { set, add } from './common'
 import { changed } from './editable'

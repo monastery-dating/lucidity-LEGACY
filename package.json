@@ -30,7 +30,7 @@
   "dependencies": {
     "@hoodie/store-client": "^5.0.1",
     "baobab": "^2.3.3",
-    "cerebral": "^0.33.34",
+    "cerebral": "^0.34.0",
     "cerebral-addons": "^0.5.4",
     "cerebral-model-baobab": "^0.4.8",
     "cerebral-module-devtools": "^0.6.4",

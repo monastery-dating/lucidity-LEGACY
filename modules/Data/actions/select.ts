@@ -23,7 +23,7 @@ export const selectAction =
       }
     )
   }
-  else if ( doc ) {
+  else if ( doc && !doc._deleted ) {
     // with a 'doc' as argument, we only save if there is no
     // element with this type selected.
     // We ignore 'docs' as we suppose in this case 'select' is

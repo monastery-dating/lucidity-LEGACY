@@ -1,6 +1,9 @@
 import { Component } from '../Component'
-import Playback from '../Playback'
+import { Playback } from '../Playback'
+import { Scene } from '../Scene'
+import { Project } from '../Project'
 
+import { editable, pane } from '../../modules/Factory'
 
 export default Component
 ( { playback: [ 'playback', '$visible' ]
@@ -8,9 +11,9 @@ export default Component
 , ( { state, signals } ) => (
     <div id='workbench'>
       { state.playback ? <Playback/> : '' }
-      <div id='files'>
-        I LOVE my MU
-      </div>
+      <Project/>
+      <Scene/>
     </div>
   )
 )
+        // <ProjectTitle/> /

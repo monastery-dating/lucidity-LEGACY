@@ -17,6 +17,7 @@ import * as Model from 'cerebral-model-baobab'
 
 import { Component, render } from './Component' // Component for jsx on this page
 import { App as AppView } from './App'
+//import { TestView as AppView } from './TestView'
 
 const model = Model ( {} )
 const controller = Controller ( model )
@@ -30,6 +31,7 @@ controller.addModules
   , library: Library ()
   , playback: Playback ()
   , project: Project ()
+  , scene: Scene ()
   , $status: Status ()
   }
 )
@@ -39,5 +41,11 @@ render
 , document.getElementById ( 'app' )
 , controller
 )
+
+const warn = console.warn
+console.warn = ( msg ) => {
+  console.trace ()
+  warn.call ( console, msg )
+}
 
 controller.getSignals().app.mounted ()

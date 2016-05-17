@@ -1,0 +1,113 @@
+@import '../styles/colors';
+@import '../styles/layout';
+@import '../styles/misc';
+
+.Scene {
+  width: layout( scenew );
+  height: 100%;
+  float: left;
+  border: 1px solid color( boxl );
+  margin-left: -1px;
+  position: relative;
+}
+
+// TODO: This should go into Factory...
+
+
+.bar {
+  .title {
+    color: color( maint );
+  }
+
+  background: darken( color( workb ), 5% );
+  div { display: inline-block }
+  padding-left: $pad;
+  
+  .fa {
+    color: darken( desaturate( color( maint ), 60% ), 20% );
+    &.active {
+      color: lighten( color( maint ), 30% );
+    }
+  }
+}
+
+.Pane {
+  overflow: hidden;
+  background: lighten( color( workb ), 5% );
+  width: 0px;
+  &.active {
+    width: layout( optw );
+  }
+  transition: width 0.1s;
+  position: absolute;
+  left: 0;
+  margin-left: -1px;
+  border: 1px solid color( boxl );
+  border-bottom-right-radius: $brad;
+  .wrap {
+    padding: $pad;
+    width: layout( optw ) - 2 * $pad ;
+  }
+}
+
+.Modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  background-color: rgba(20,20,20,0);
+  transition: background-color 0.8s, opacity 0.3s;
+  z-index: -9;
+  opacity: 0;
+  &.active {
+    background-color: rgba(20,20,20,0.5);
+    opacity: 1;
+    z-index: 9;
+  }
+  justify-content: center;
+  align-items: center;
+
+  .wrap {
+    background: lighten( color( paneb ), 20%);
+    padding: 2 * $pad;
+    border: 1px solid color( boxl );
+    border-radius: $brad;
+    min-width: layout( panew );
+  }
+
+  .message {
+    margin: $pad 0;
+  }
+
+  .bwrap {
+    margin-top: 8 * $pad;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+  }
+}
+
+.button {
+  padding: $pad/2 $pad;
+  background: lighten( color( workb ), 40% );
+  border-radius: $brad;
+  border: 1px solid color( boxl );
+  margin: $pad;
+  cursor: pointer;
+  &:active {
+    position: relative;
+    top: 1px;
+  }
+
+  &.delete {
+    background: #966;
+  }
+
+  &.continue {
+    background: lighten( color( sboxb ), 20%);
+    align-self: flex-end;
+  }
+
+}

@@ -6,11 +6,14 @@ import { db } from './services/db'
 import { dbChanged } from './signals/dbChanged'
 import { reload } from './signals/reload'
 import { save } from './signals/save'
+import { selected } from './signals/selected'
 
 export interface DataSignalsType {
   dbChanged ( any )
-  reload ( any )
-  save ( any )
+  reload ( any ) // TODO: rename reloaded or attached or ...
+  save ( any )   // TODO: where is this used, rename to
+                 //       dataChanged, or ...
+  selected ( opts: { select: { type: string, _id: string } } )
 }
 
 interface Document {
@@ -52,6 +55,7 @@ export const Data =
     ( { dbChanged
       , reload
       , save
+      , selected
       }
     )
 

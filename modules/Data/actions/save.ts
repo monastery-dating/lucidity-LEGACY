@@ -3,11 +3,12 @@ import * as check from 'check-types'
 
 export const save =
 ( { state
-  , input: { doc, docs }
+  , input //: { doc, docs }
   , services: { data: { db } }
   , output
   } : ContextType
 ) => {
+  const { doc, docs } = input
 
   if ( doc ) {
     // setTimeout ( () => {

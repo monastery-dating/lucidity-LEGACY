@@ -1,4 +1,17 @@
 @import '../styles/colors';
+@import '../styles/layout';
+@import '../styles/misc';
+
+#library li.drag-match {
+  cursor:copy;
+  color:red;
+}
+
+#library {
+  @extend ._pane;
+  left:0;
+  padding-left: $ppad;
+}
 
 .console .li {
   background: darken( color( boxb ), 12% );

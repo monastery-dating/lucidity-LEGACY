@@ -2,11 +2,12 @@ const path = require ( 'path' )
 
 module.exports =
 { entry: './desktop/boot.tsx'
-  , output:
+, output:
   { path: path.resolve ( __dirname, 'build' )
   , filename: 'js/app.js'
   , publicPath: '/assets/'
   }
+, devtool: 'source-map'
 , resolve:
   { extensions: ['', '.js', '.ts', '.tsx'] }
 , module:
@@ -15,7 +16,7 @@ module.exports =
       , exclude: /node_modules/
       , loader: 'ts-loader' //-loader!ts-loader'
       }
-    , { test: /\.scss$/
+    , { test: /\.s?css$/
       , loaders: [ 'style', 'css', 'sass' ]
       }
     ]

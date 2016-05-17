@@ -1,39 +1,46 @@
 import { Component } from '../Component'
-import { ContextType } from '../../modules/context.type'
+import { ContextType, SignalsType } from '../../modules/context.type'
 import { editable } from '../../modules/Factory'
 import { AddNew } from '../AddNew'
 
 const sortByTitle = ( a, b ) => a.title > b.title ? 1 : -1
 
+const selectScene =
+( signals: SignalsType, _id ) => {
+  signals.data.selected
+  ( { select: { type: 'scene', _id } } )
+}
+
 const showScenes =
-( { scenes, sceneById, selectedSceneId } ) => {
+( { scenes, sceneById, selectedSceneId }
+, signals: SignalsType  ) => {
   if ( !scenes || !sceneById ) {
     return ''
   }
   const list = scenes.map ( ( id ) => sceneById [ id ] )
   list.sort ( sortByTitle )
-  const l = list.map
+  return list.map
   ( ( scene ) => (
       <div class={{ li: true
                   , sel: scene._id === selectedSceneId
-                  }}>
-        scene.title
+                  }}
+        on-click={ () => selectScene ( signals, scene._id ) }>
+        { scene.title }
       </div>
     )
   )
-  return l
 }
 
-const ProjectTitle = editable ( [ 'project', 'title' ] )
+const ProjectTitle = editable ( [ 'project', 'title' ], 'p' )
 
-export default Component
+export const ProjectPane = Component
 ( { scenes: [ 'project', 'scenes' ]
   , sceneById: [ 'data', 'scene' ]
-  , selectedSceneId: [ 'project', 'selectedSceneId' ]
+  , selectedSceneId: [ 'scene', '_id' ]
   }
 , ( { state, signals }: ContextType ) => (
     <div id='project'>
-      <ProjectTitle/>
+      <ProjectTitle class='title'/>
 
       <div class='control'>
         <p>Control</p>
@@ -51,7 +58,7 @@ export default Component
         <p>Scenes</p>
 
         <div>
-          { showScenes ( state ) }
+          { showScenes ( state, signals ) }
           <AddNew class='li'
             type='scene'
             path={ [ 'project', 'scenes' ] }/>

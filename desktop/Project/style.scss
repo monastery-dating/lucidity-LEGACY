@@ -1,0 +1,12 @@
+@import '../styles/colors';
+@import '../styles/layout';
+@import '../styles/misc';
+
+.Project {
+  width: layout( filesw );
+  height: 100%;
+  float: left;
+  position: relative;
+  border: 1px solid color( boxl );
+  margin-left: -1px;
+}

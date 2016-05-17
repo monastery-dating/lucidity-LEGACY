@@ -1,7 +1,7 @@
 import './style.scss'
 import { Component } from '../Component'
 
-export default Component
+export const Playback = Component
 ( { main: [ 'playback', '$main' ]
   }
 , ( { state, signals } ) => {

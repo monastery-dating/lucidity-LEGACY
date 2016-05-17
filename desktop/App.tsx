@@ -1,9 +1,10 @@
 import './style.scss'
 import { Component } from 'cerebral-view-snabbdom'
-import ProjectPane from './ProjectPane'
+import { Modal } from '../modules/Factory'
+import { ProjectPane } from './ProjectPane'
+import StatusBar from './StatusBar'
 import ToolsPane from './ToolsPane'
 import Workbench from './Workbench'
-import StatusBar from './StatusBar'
 
 export const App =
 Component
@@ -14,6 +15,7 @@ Component
       <svg id='scratch' className='svg'>
         <text className='tbox' id='tsizer'></text>
       </svg>
+      <Modal/>
       {/*
         <le-boxdrag></le-boxdrag>
         */}

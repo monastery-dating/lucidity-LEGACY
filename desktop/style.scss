@@ -11,6 +11,10 @@
 // TODO: remove on prod
 @import 'styles/testcomp';
 
+html, body, #app {
+  margin: 0;
+  height: 100%;
+}
 
 body {
   font-family: getfont(family);
@@ -103,16 +107,6 @@ svg#scratch {
   opacity: 0;
 }
 
-
-._pane {
-  background: color( paneb );
-  position: fixed;
-  top: 0; bottom: 0;
-  height: layout( paneh );
-  width:  layout( panew ) - $ppad;
-  border: $lbox solid color( boxl );
-
-}
 
 .fld {
   background: color( inputb );
@@ -249,17 +243,6 @@ svg#scratch {
   }
 }
 
-#library li.drag-match {
-  cursor:copy;
-  color:red;
-}
-
-#library {
-  @extend ._pane;
-  left:0;
-  padding-left: $ppad;
-}
-
 .search {
   @extend ._search;
   border-right:0;
@@ -305,18 +288,6 @@ svg#scratch {
   padding-right:  layout( panew ) - $ppad;
   width: 100%;
 
-  #graph {
-    width: layout( graphw );
-    padding: $wpad ;
-    height: 100%;
-  }
-
-  #files {
-    float:left;
-    padding: $wpad ;
-    width: layout( filesw );
-    height: 100%;
-  }
 }
 
 #project {
