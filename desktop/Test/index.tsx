@@ -5,7 +5,7 @@ export default Component
   }
 , ( { state, signals } ) => (
     <div id='test'>
-      This is the test details
+      This will be used to display the failing test details
     </div>
   )
 )

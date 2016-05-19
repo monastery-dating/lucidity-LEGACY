@@ -1,5 +1,6 @@
-import './style.scss'
-import { Component } from '../Component'
+import { Component } from '../../../desktop/Component'
+
+// FIXME: how can I move this to Factory ?
 
 const focus = ( _, { elm } ) => {
   setTimeout ( () => {

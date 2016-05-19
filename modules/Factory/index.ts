@@ -1,3 +1,4 @@
+export * from './add'
 export * from './editable'
 export * from './modal'
 export * from './pane'

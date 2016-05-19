@@ -4,7 +4,7 @@ export * from './saved.action'
 // FIXME: move Component to '/lib' ?
 // FIXME: move Factory to '/lib' ?
 import { Component } from '../../../desktop/Component'
-import { EditableText } from '../../../desktop/EditableText'
+import { EditableText } from './EditableText'
 
 const EditingPath = [ '$factory', 'editing' ]
 

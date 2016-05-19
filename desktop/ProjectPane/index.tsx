@@ -1,16 +1,15 @@
 import './style.scss'
 import { Component } from '../Component'
 import { ContextType, SignalsType } from '../../modules/context.type'
-import { editable } from '../../modules/Factory'
-import { AddNew } from '../AddNew'
-
-const sortByTitle = ( a, b ) => a.title > b.title ? 1 : -1
+import { editable, add } from '../../modules/Factory'
 
 const selectScene =
 ( signals: SignalsType, _id ) => {
   signals.data.selected
   ( { select: { type: 'scene', _id } } )
 }
+
+const sortByTitle = ( a, b ) => a.title > b.title ? 1 : -1
 
 const showScenes =
 ( { scenes, sceneById, selectedSceneId }
@@ -34,6 +33,7 @@ const showScenes =
 }
 
 const ProjectTitle = editable ( [ 'project', 'title' ], 'p' )
+const AddScene = add ( 'scene', [ 'project', 'scenes' ] )
 
 export const ProjectPane = Component
 ( { scenes: [ 'project', 'scenes' ]
@@ -41,8 +41,11 @@ export const ProjectPane = Component
   , selectedSceneId: [ 'scene', '_id' ]
   }
 , ( { state, signals }: ContextType ) => (
-    <div id='project'>
-      <ProjectTitle class='title'/>
+    <div class='ProjectPane'>
+      <div class='bar'>
+        <div class='fa fa-cube'></div>
+        <ProjectTitle class='title'/>
+      </div>
 
       <div class='control'>
         <p>Control</p>
@@ -61,9 +64,7 @@ export const ProjectPane = Component
 
         <div>
           { showScenes ( state, signals ) }
-          <AddNew class='li'
-            type='scene'
-            path={ [ 'project', 'scenes' ] }/>
+          <AddScene class='li'>+</AddScene>
         </div>
       </div>
 

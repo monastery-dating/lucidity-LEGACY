@@ -153,32 +153,11 @@ svg#scratch {
   }
 }
 
-._list {
-  background: color( listb );
-  height: layout( listh );
-  border: $lbox solid color( boxl );
-  margin-top: -$lbox;
-  overflow-x: hidden;
-
-  p {
-    background: color( lheab );
-    border: $lbox solid color( boxl );
-    padding: 2*$pad $pad;
-    margin: -$lbox;
-  }
-}
-._noselect {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select:none;
-}
 
 .li {
   @extend ._noselect;
   cursor: pointer;
+  color: lighten( color( workt ), 8% );
   &.drag {
     padding: 0;
     span {
@@ -271,27 +250,4 @@ svg#scratch {
       width:50%;
     }
   }
-}
-
-#project {
-  @extend ._pane;
-  right:0;
-  padding-right: $ppad;
-  box-shadow: 0 0 10px darken( color( workb ), 15% );
-
-  .control {
-    @extend ._list;
-    border-left:0;
-  }
-
-  .scenes {
-    @extend ._list;
-    border-left:0;
-  }
-
-  .assets {
-    @extend ._list;
-    border-left:0;
-  }
-
 }

@@ -3,8 +3,36 @@
 @import '../styles/layout';
 @import '../styles/misc';
 
-#project {
-  .fa {
-    color: darken( color( boxb ), 8% );
+.ProjectPane {
+  @extend ._pane;
+
+  right:0;
+  padding-right: $ppad;
+  box-shadow: 0 0 10px darken( color( workb ), 15% );
+
+  .control {
+    @extend ._list;
+    border-left:0;
   }
+  .bar .title {
+    color: darken( desaturate( color( maint ), 30% ), 20% );
+  }
+
+  .scenes {
+    @extend ._list;
+    border-left:0;
+    .fa {
+      color: darken( color( boxb ), 10% );
+      padding-left: $pad/2;
+    }
+    .sel .fa {
+      color: darken( color( boxb ), 20% );
+    }
+  }
+
+  .assets {
+    @extend ._list;
+    border-left:0;
+  }
+
 }
