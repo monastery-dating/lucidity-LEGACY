@@ -1,12 +1,14 @@
 import * as deepEqual from 'deep-equal'
 
 const DEFAULT_TIMEOUT = 3000
+const NO_ERR = { message: 'did not throw' }
 
 interface Assert {
   same<T> ( a: T, b: T ): void
   notSame<T> ( a: T, b: T): void
   equal<T> ( a: T, b: T ): void
   pending ( msg: string ): void
+  throws ( fun: Function, re?: RegExp ): void
 }
 
 interface Done {
@@ -91,9 +93,9 @@ export const failureMessage =
       m.push ( 'to equal' )
       m.push( JSON.stringify ( f.expected, null, 2 ) )
       break
-    case 'exception':
-      m.push ( 'exception' )
-      break
+    default:
+    case 'throws':
+      m.push ( f.assertion )
   }
   m.push ( f.error )
   return m.join ( '\n' ) // continue
@@ -125,7 +127,7 @@ export interface Failure extends Test {
   error: Error
   expected: any
   actual: any
-  assertion: 'same' | 'notSame' | 'equal' | 'pending' | 'timeout' | 'exception'
+  assertion: 'same' | 'notSame' | 'equal' | 'pending' | 'timeout' | 'exception' | 'throws'
 }
 
 export interface TestStats {
@@ -181,6 +183,33 @@ const makeAssert = function
         f.expected = b
         if ( !deepEqual ( a, b, { strict: true } ) ) {
           f.error = new Error ( `!deepEqual ( ${ a }, ${ b } )` )
+          if ( f.async ) {
+            // we do not throw in async code because we
+            // cannot catch
+          }
+          else {
+            throw f.error
+          }
+        }
+      }
+    , throws ( func, regex: RegExp ) {
+        f.assertion = 'throws'
+        f.expected = regex
+        let err = NO_ERR
+        try {
+          func ()
+        }
+        catch ( e ) {
+          err = e
+        }
+
+        if ( err === NO_ERR || (regex && !regex.test ( err.message )) ) {
+          if ( regex ) {
+            f.error = new Error ( `${ err.message } does not match ${ regex }` )
+          }
+          else {
+            f.error = new Error ( `${ err.message }` )
+          }
           if ( f.async ) {
             // we do not throw in async code because we
             // cannot catch

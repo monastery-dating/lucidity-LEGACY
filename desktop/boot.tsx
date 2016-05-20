@@ -2,6 +2,7 @@
 import { App } from '../modules/App'
 import { Data } from '../modules/Data'
 import { Factory } from '../modules/Factory'
+import { Graph } from '../modules/Graph'
 import { Library } from '../modules/Library'
 import { Playback } from '../modules/Playback'
 import { Project } from '../modules/Project'
@@ -26,6 +27,7 @@ controller.addModules
 ( { app: App ()
   , data: Data ()
   , $factory: Factory ()
+  , graph: Graph ()
   , devtools: Devtools ()
   , http: Http ()
   , library: Library ()
