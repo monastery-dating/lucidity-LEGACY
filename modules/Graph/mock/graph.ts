@@ -3,8 +3,8 @@ export const mockGraph : GraphType = {
   // "type": "render",
   "nodesById": {
     "id0": {
-      "type": "Scene",
-      "name": "cubes",
+      "type": "scene",
+      "name": "main",
       "path": "/",
       "source": "",
       "init": false,
@@ -14,7 +14,7 @@ export const mockGraph : GraphType = {
       ]
     },
     "id1": {
-      "type": "Block",
+      "type": "block",
       "name": "Hello",
       "path": "/",
       "source": "",
@@ -23,7 +23,7 @@ export const mockGraph : GraphType = {
       "input": []
     },
     "id2": {
-      "type": "Block",
+      "type": "block",
       "name": "Lucy",
       "path": "/",
       "source": "",
@@ -32,7 +32,7 @@ export const mockGraph : GraphType = {
       "input": []
     },
     "id3": {
-      "type": "Block",
+      "type": "block",
       "name": "Mix",
       "path": "/",
       "source": "",
@@ -44,7 +44,7 @@ export const mockGraph : GraphType = {
       ]
     },
     "id4": {
-      "type": "Block",
+      "type": "block",
       "name": "Stereo",
       "path": "/",
       "source": "",
@@ -55,7 +55,7 @@ export const mockGraph : GraphType = {
       ]
     },
     "id5": {
-      "type": "Block",
+      "type": "block",
       "name": "Reverse",
       "path": "/",
       "source": "",
@@ -107,6 +107,7 @@ export const mockGraph : GraphType = {
   },
 
   "nodes": [
+    "id0",
     "id1",
     "id2",
     "id3",

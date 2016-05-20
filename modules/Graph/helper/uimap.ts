@@ -83,7 +83,7 @@ const path = function
  * @returns {string}   - the class name
  */
 const className = function ( obj, layout : UILayoutType ) {
-  if ( obj.type !== 'Block' ) {
+  if ( obj.type !== 'block' ) {
     return obj.type
   }
 
@@ -331,21 +331,13 @@ const uimapOne = function
   return uibox.size.w
 }
 
-interface uimapOpts {
-  graph: GraphType
-  alayout?: UILayoutType
-  cache?: UIGraphType
-  aghost?: UIGhostNodeType
-}
-
-export interface uimapType {
-  ( opts: uimapOpts ) : UIGraphType
-}
-
 /** Compute the layout of a graph.
  */
 export const uimap =
-( { graph, alayout, cache, aghost }: uimapOpts
+( graph: GraphType
+, alayout?: UILayoutType
+, cache?: UIGraphType
+, aghost?: UIGhostNodeType
 ) : UIGraphType => {
   const layout = alayout || defaultUILayout
   const cachebox : UINodeByIdType = cache ? cache.uiNodeById : {}

@@ -1,0 +1,91 @@
+@import '../styles/palette';
+@import '../styles/effects';
+@import '../styles/colors';
+@import '../styles/layout';
+@import '../styles/misc';
+
+@for $i from 1 through $pcount {
+  svg path.box#{$i} {
+    fill: pfill( $i );
+
+    &.dark {
+      fill: darken( desaturate( pfill( $i ), 30%), 30%);
+    }
+
+    &.sel {
+      fill: spfill( $i );
+      stroke: color( sboxl );
+    }
+  }
+
+  .li.box#{$i} {
+    background:  pbox( $i );
+  }
+}
+
+svg path.Folder {
+}
+
+svg {
+  @extend ._noselect;
+
+  .slot {
+    fill: none;
+    stroke: color( wboxl );
+    stroke-width: $lsbo;
+
+    &.detached {
+      @extend ._detachedFx;
+      stroke-width: 3 * $lsbo;
+      stroke: black;
+      transform: translateY(-1px);
+    }
+  }
+
+  text {
+    pointer-events: none;
+    font-size:   getfont(size);
+    fill: color( wboxt );
+
+    &.scene {
+      fill:  color( maint );
+    }
+
+    &.ghost {
+      opacity: 0.2
+    }
+  }
+
+  path {
+    stroke-width: $lsbo;
+    stroke: color( wboxl );
+
+    &.scene {
+      fill:   color( mainb );
+    }
+
+    &.Folder {
+      fill:   color( foldb );
+    }
+
+    &.ghost {
+      fill:  color( mainb );
+      opacity: 0.3
+    }
+  }
+}
+
+svg#files {
+  border: 2px dashed transparent;
+
+  &.drag-over {
+    border-color: color( wfild );
+  }
+}
+
+svg#scratch {
+  position: fixed;
+  top:0; left:0;
+  z-index: -999;
+  opacity: 0;
+}

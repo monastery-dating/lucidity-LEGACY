@@ -8,7 +8,7 @@ import { getTextSizeCanvas } from './getTextSizeCanvas'
 const DEFAULT_LAYOUT =
 { GRIDH:  6
 , HEIGHT: 26
-, THEIGHT: 26
+, THEIGHT: 20
 , RADIUS: 5
 , SLOT:   5
 , SPAD:   16 // slot pad

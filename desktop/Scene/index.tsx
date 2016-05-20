@@ -1,7 +1,8 @@
 import './style.scss'
 import { Component } from '../Component'
-import { ContextType, SignalsType } from '../../modules/context.type'
+import { ContextType } from '../../modules/context.type'
 import { editable, openModal, pane } from '../../modules/Factory'
+import { Graph } from '../Graph'
 
 const SceneTitle = editable ( [ 'scene', 'title' ] )
 
@@ -31,6 +32,7 @@ export const Scene = Component
           </div>
           <div class='button'>duplicate</div>
         </SceneOptions>
+        <Graph/>
       </div>
   }
 )

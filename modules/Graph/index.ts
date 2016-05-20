@@ -1,15 +1,13 @@
-import { uimap, uimapType } from './helper'
+export * from './helper/uimap'
+export * from './types'
 
-export interface GraphServicesType {
-  uimap: uimapType
-}
+import { mockGraph } from './mock/graph'
 
 export const Graph =
 ( options = {}) => {
   return (module, controller) => {
-    module.addServices
-    ( { uimap
-      }
+    module.addState
+    ( mockGraph
     )
 
     return {} // meta information

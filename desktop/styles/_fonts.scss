@@ -3,8 +3,9 @@
 
 // IF CHANGING THIS, update font reference in
 // /modules/Graph/helper/uimap/uilayout (or grep project for Muli)
+// Muli is ugly in svg..
 $fonts:
-( family: ( 'Muli', Helvetica, sans-serif )
+( family: ( 'Avenir Next', 'Segoe ui', 'Muli', Helvetica, sans-serif )
 , size: 10pt
 );
 

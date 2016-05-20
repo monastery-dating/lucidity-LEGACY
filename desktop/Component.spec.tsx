@@ -98,7 +98,24 @@ describe
       }
     )
 
-    it ( 'should wrap attrs in svg', ( assert ) => {
+    it ( 'should wrap svg without attrs', ( assert ) => {
+        const ns = 'http://www.w3.org/2000/svg'
+        assert.equal
+        ( <svg><foo bing='top'></foo></svg>
+        , { sel: 'svg'
+          , data: { ns, attrs: {} }
+          , children:
+            [ { sel: 'foo'
+              , data: { ns, attrs: { bing: 'top' } }
+              , children: []
+              }
+            ]
+          }
+        )
+      }
+    )
+
+    it ( 'should wrap svg with attrs', ( assert ) => {
         const ns = 'http://www.w3.org/2000/svg'
         assert.equal
         ( <svg width='10'><foo bing='top'></foo></svg>
@@ -126,5 +143,19 @@ describe
         )
       }
     )
+
+    it ( 'should allow rows.map with mixed', ( assert ) => {
+        const rows = ['a', 'b']
+        const rmap = ( r ) => <li>{ r }</li>
+        assert.equal
+        ( ( <ul><li>foo</li>{ rows.map ( rmap ) }</ul> ).children
+        , [ e ( 'li', null, { children: [ { text: 'foo' } ] } )
+          , e ( 'li', null, { children: [ { text: 'a' } ] } )
+          , e ( 'li', null, { children: [ { text: 'b' } ] } )
+          ]
+        )
+      }
+    )
+
   }
 )

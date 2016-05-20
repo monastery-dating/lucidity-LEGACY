@@ -120,8 +120,8 @@ const mapChildren = ( c ) => {
 }
 
 const remapSVGData = ( adata ) => {
-  // This is probably buggy
-  adata.attrs = Object.assign ( adata.props.attrs || {}, adata.props )
+  const props = adata.props || {}
+  adata.attrs = Object.assign ( props.attrs || {}, props )
   delete adata.props
   delete adata.attrs.attrs
 
@@ -146,13 +146,9 @@ const createElement = function
 , achildren: any[]
 ) : VNode {
 
-  let children = achildren
-  if ( !Array.isArray ( achildren ) ) {
-    children = slice.call ( arguments, 2 )
-  }
-  else if ( arguments.length > 3 ) {
-    children = [ ...children ]
-    for ( const c of slice.call ( arguments, 3 ) ) {
+  let children = []
+  if ( arguments.length > 2 ) {
+    for ( const c of slice.call ( arguments, 2 ) ) {
       if ( Array.isArray ( c ) ) {
         children = [ ...children, ...c ]
       }

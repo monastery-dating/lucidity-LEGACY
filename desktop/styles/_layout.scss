@@ -6,6 +6,7 @@ $layout:
 , infow: 180px // overlay message info
 , infowmax: 380px // overlay message info
 , infoh: 100px // overlay message info
+, infohmax: 300px // overlay message info
 , fbarh: 32px   // fixed bar height (should == title in bar height)
 , optw: 140px   // options pane width
 , playbackh: 220px // playback height ( width is 16/9 * h )
@@ -38,6 +39,11 @@ $layout:
   position: fixed;
   bottom: layout( statush ) + 2*$ppad + $lbox;
   left: 0;
+
+  .wrap {
+    max-height: layout( infohmax );
+    overflow: auto;
+  }
 }
 
 ._pane {
