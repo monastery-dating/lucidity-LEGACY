@@ -1,8 +1,9 @@
+import { ActionContextType } from '../../context.type'
 export const removeAction =
 ( { state
   , input: { clear }
   , output
-  }
+  } : ActionContextType
 ) => {
   // clear modal
   state.set ( [ '$factory', 'modal', 'active' ], false )

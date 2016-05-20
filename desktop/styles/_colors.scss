@@ -24,7 +24,7 @@ $colors:
 
 ,  boxb: lighten( $back_color, 15% ) // box background
 ,  boxt: $text_color                 // box text
-,  boxl: $box_line                   // box border (line) color
+,  boxl: lighten( $back_color, 2% )  // box border (line) color
 , tboxb: lighten( $back_color, 30% ) // title box background
 , tboxt: $text_color                  // title box text
 , listb: lighten( $back_color, 5% ) // list background
@@ -33,6 +33,11 @@ $colors:
 , inputa: $high_back // active input background
 , inputb: lighten( $back_color, 30% ) // input background
 , inputt: darken( $text_color, 30% ) // input text
+
+, infob: rgba( darken( $back_color, 5% ), 0.95)
+
+// font
+, error: #a77 // error message
 );
 
 @function color( $key ) {

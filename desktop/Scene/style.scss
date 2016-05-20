@@ -9,15 +9,15 @@
   border: 1px solid color( boxl );
   margin-left: -1px;
   position: relative;
+  .title {
+    color: color( maint );
+  }
 }
 
 // TODO: This should go into Factory...
 
 
 .bar {
-  .title {
-    color: color( maint );
-  }
 
   background: darken( color( workb ), 5% );
   div { display: inline-block }

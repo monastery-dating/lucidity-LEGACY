@@ -68,8 +68,6 @@ declare module 'cerebral-view-snabbdom' {
   interface ComponentParams {
     state: any
     signals: any
-    output: any
-    input: any
     props: any
     children: any[]
   }

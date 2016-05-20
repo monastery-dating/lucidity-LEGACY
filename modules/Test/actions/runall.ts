@@ -4,7 +4,7 @@ import { run } from '../runner'
 export const runall =
 ( { state, output } ) => {
   run ( ( stats ) => {
-    output.success ( stats )
+    output.success ( { stats } )
   })
 }
 

@@ -1,4 +1,4 @@
-import { ContextType } from '../../context.type'
+import { ActionContextType } from '../../context.type'
 import * as check from 'check-types'
 
 export const save =
@@ -6,7 +6,7 @@ export const save =
   , input: { doc, docs }
   , services: { data: { db } }
   , output
-  } : ContextType
+  } : ActionContextType
 ) => {
 
   if ( doc ) {

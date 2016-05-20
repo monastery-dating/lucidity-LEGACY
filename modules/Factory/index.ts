@@ -7,11 +7,12 @@ type stringArray = string[]
 export interface FactorySignalsType {
   set ( { path: stringArray, value: any } )
   add ( { path: stringArray, type: string } )
+  finishedEditing ( { path: stringArray, value: any } )
   // TODO: rename reloaded or attached or ...
 }
 
 import { set, add } from './common'
-import { changed } from './editable'
+import { finishedEditing } from './editable'
 
 export const Factory =
 ( options = {} ) => {
@@ -25,7 +26,7 @@ export const Factory =
 
     module.addSignals
     ( { add
-      , changed
+      , finishedEditing
       , set
       }
     )

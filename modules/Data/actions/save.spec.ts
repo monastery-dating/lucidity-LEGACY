@@ -1,4 +1,3 @@
-import { ContextType } from '../../context.type'
 import { DataServicesType } from '../../Data'
 import { describe } from '../../Test/runner'
 import { save } from './save'
@@ -6,6 +5,22 @@ import * as Baobab from 'baobab'
 
 describe
 ( 'Data save action', ( it ) => {
+    it ( 'tmp test', ( assert ) => {
+        const list1 = []
+        const state = new Baobab
+        ( { project: { _id: 'foobar', list: list1 }
+          }
+        )
+        let list = state.get ( [ 'project', 'list' ] ).slice()
+
+        list.push ( '11' )
+        list = state.get ( [ 'project', 'list' ] )
+
+        assert.equal
+        ( list, [] )
+      }
+    )
+
     it ( 'should save to db', ( assert ) => {
         const state = new Baobab
         ( { project: { _id: 'foobar' }

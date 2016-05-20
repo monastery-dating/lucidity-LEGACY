@@ -1,8 +1,8 @@
-import { Db } from '../types/db.type'
+import { ActionContextType } from '../../context.type'
 
 export const reload =
-( { services, output } ) => {
-  const db: Db = services.data.db
+( { services, output }: ActionContextType ) => {
+  const db = services.data.db
   const data = {}
   db.allDocs
   ( { include_docs: true, descending: true }

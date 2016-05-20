@@ -1,24 +1,30 @@
+import { TestStats, failureMessage } from '../runner'
+import { StatusType } from '../../Status'
+
 export const stats =
 ( { state, input, output } ) => {
-  const m = [ `${input.passCount}/${input.testCount} tests pass` ]
-  if ( input.failCount ) {
-    m.push ( `${input.failCount} fail`)
+  const stats: TestStats = input.stats
+  const m = [ `${stats.passCount}/${stats.testCount} tests pass` ]
+  if ( stats.failCount ) {
+    m.push ( `${stats.failCount} fail`)
   }
 
-  if ( input.pendingCount ) {
-    m.push ( `${input.pendingCount} pending`)
+  if ( stats.pendingCount ) {
+    m.push ( `${stats.pendingCount} pending`)
   }
 
-  const s:any = { message: m.join ( ',' ) }
+  const s: StatusType =
+  { type: 'success', message: m.join ( ',' ) }
 
-  if ( input.passCount === input.testCount ) {
-    s.type = 'success'
-  }
-  else if ( input.failCount ) {
-    s.type = 'error'
-  }
-  else {
-    s.type = 'warn'
+  if ( stats.passCount !== stats.testCount ) {
+    s.detail = stats.failures.map ( failureMessage )
+
+    if ( stats.failCount ) {
+      s.type = 'error'
+    }
+    else {
+      s.type = 'warn'
+    }
   }
 
   output.success ( { status: s } )

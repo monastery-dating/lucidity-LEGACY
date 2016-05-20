@@ -3,6 +3,9 @@
 $layout:
 ( panew: 200px  // pane width
 , paneh: 100%   // pane height
+, infow: 180px // overlay message info
+, infowmax: 380px // overlay message info
+, infoh: 100px // overlay message info
 , fbarh: 32px   // fixed bar height (should == title in bar height)
 , optw: 140px   // options pane width
 , playbackh: 220px // playback height ( width is 16/9 * h )
@@ -16,6 +19,25 @@ $layout:
 
 @function layout( $key ) {
   @return map-get( $layout, $key );
+}
+
+._info {
+  background: color( infob );
+  .wrap {
+    padding: $ppad;
+  }
+  border: $lbox solid color( boxl );
+  border-top-right-radius: $brad;
+  .bar {
+    border-top-right-radius: $brad;
+  }
+  color: lighten( $text_color, 60% );
+  min-width: layout( infow );
+  max-width: layout( infowmax );
+  min-height: layout( infoh );
+  position: fixed;
+  bottom: layout( statush ) + 2*$ppad + $lbox;
+  left: 0;
 }
 
 ._pane {

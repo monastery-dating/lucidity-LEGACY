@@ -1,9 +1,10 @@
-export * from './changed.signal'
+export * from './finishedEditing.signal'
 export * from './saved.action'
 
 // FIXME: move Component to '/lib' ?
 // FIXME: move Factory to '/lib' ?
 import { Component } from '../../../desktop/Component'
+import { ContextType } from '../../context.type'
 import { EditableText } from './EditableText'
 
 const EditingPath = [ '$factory', 'editing' ]
@@ -23,11 +24,11 @@ export const editable =
     // (only one per app)
     , editing: EditingPath
     }
-  , ( { state, signals, props } ) => {
+  , ( { state, signals, props }: ContextType ) => {
       const edit = () => signals.$factory.set
       ( { path: EditingPath, value: spath } )
 
-      const changed = ( value ) => signals.$factory.changed
+      const changed = ( value ) => signals.$factory.finishedEditing
       ( { path, value } )
 
       const isediting = state.editing === spath

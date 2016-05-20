@@ -1,8 +1,10 @@
 @import './misc';
 @import './colors';
 
+// IF CHANGING THIS, update font reference in
+// /modules/Graph/helper/uimap/uilayout (or grep project for Muli)
 $fonts:
-( family: ( 'Segoe ui', 'Avenir Next', Helvetica, sans-serif )
+( family: ( 'Muli', Helvetica, sans-serif )
 , size: 10pt
 );
 

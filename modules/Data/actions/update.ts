@@ -1,3 +1,5 @@
+import { ActionContextType } from '../../context.type'
+
 const getVerb = ( doc ) => (
   doc._deleted ?
   'Deleted'
@@ -14,7 +16,7 @@ const getStatus = ( doc ) => (
 )
 
 export const update =
-( { state, input: { change }, output } ) => {
+( { state, input: { change }, output }: ActionContextType ) => {
   const doc = change.doc
   const { _id, type } = doc
 

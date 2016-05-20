@@ -57,44 +57,51 @@ export const describe = function
   clbk ( it )
 }
 
-const defaultSuccess : OnSuccess = function
-( { suiteName, testName } ) {
+const defaultSuccess : OnSuccess =
+( { suiteName, testName } ) => {
   // console.log ( `PASS: ${ suiteName } ${ testName }` )
 }
 
-const defaultPending: OnFail = function
-( { suiteName, testName, actual } ) {
+const defaultPending: OnFail =
+( { suiteName, testName, actual } ) => {
   console.log ( `PEND: ${ suiteName } ${ testName }` )
   console.log ( actual )
   return true
 }
 
-const defaultFail : OnFail = function
-( f: Failure ) {
-  console.log ( `FAIL: ${ f.suiteName } ${ f.testName }` )
+export const failureMessage =
+( f: Failure ) => {
+  const m = []
+  m.push ( `FAIL: ${ f.suiteName } ${ f.testName }` )
   switch ( f.assertion ) {
     case 'timeout':
-      console.log ( 'timeout exceeded', f.actual )
+      m.push ( 'timeout exceeded', f.actual )
       break
     case 'notSame':
-      console.log ( 'expected', f.actual )
-      console.log ( 'to not be', f.expected )
+      m.push ( 'expected', f.actual )
+      m.push ( 'to not be', f.expected )
       break
     case 'same':
-      console.log ( 'expected', f.actual )
-      console.log ( 'to be', f.expected )
+      m.push ( 'expected', f.actual )
+      m.push ( 'to be', f.expected )
       break
     case 'equal':
-      console.log ( 'expected' )
-      console.log ( JSON.stringify ( f.actual, null, 2 ) )
-      console.log ( 'to equal' )
-      console.log( JSON.stringify ( f.expected, null, 2 ) )
+      m.push ( 'expected' )
+      m.push ( JSON.stringify ( f.actual, null, 2 ) )
+      m.push ( 'to equal' )
+      m.push( JSON.stringify ( f.expected, null, 2 ) )
       break
     case 'exception':
-      console.log ( 'exception' )
+      m.push ( 'exception' )
       break
   }
-  console.log ( f.error )
+  m.push ( f.error )
+  return m.join ( '\n' ) // continue
+}
+
+const defaultFail : OnFail =
+( f: Failure ) => {
+  console.log ( failureMessage ( f ) )
   return true // continue
 }
 
@@ -114,7 +121,7 @@ interface OnFail {
   ( failure: Failure ): Boolean
 }
 
-interface Failure extends Test {
+export interface Failure extends Test {
   error: Error
   expected: any
   actual: any

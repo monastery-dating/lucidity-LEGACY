@@ -1,8 +1,9 @@
+import { ActionContextType } from '../../context.type'
 export const addAction =
 ( { state
   , input: { path, type }
   , output
-  }
+  } : ActionContextType
 ) => {
   // path = [ 'project', 'scenes' ]
   // type = 'scene'

@@ -25,7 +25,7 @@ const LibraryOptions = pane ( 'library' )
 
 export const ToolsPane = Component
 ( { rows: [ 'library', '$rows' ]
-  , status: [ '$status' ]
+  , status: [ '$status', 'list' ]
   }
 , ( { state, signals } ) => (
     <div id='library'>

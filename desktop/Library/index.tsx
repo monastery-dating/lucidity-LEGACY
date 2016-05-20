@@ -18,7 +18,7 @@ const LibraryOptions = pane ( 'library' )
 
 export const Library = Component
 ( { rows: [ 'library', '$rows' ]
-  , status: [ '$status' ]
+  , status: [ '$status', 'list' ]
   , active: LibraryOptions.path
   }
 , ( { state, signals } ) => (
@@ -28,7 +28,7 @@ export const Library = Component
         <div class='title'>Library</div>
         <div class='larrow'></div>
       </LibraryOptions.toggle>
-      
+
       <LibraryOptions.toggle class='bar'>
         <div class='spacer'></div>
         <div class='rarrow'></div>

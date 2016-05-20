@@ -3,7 +3,7 @@ import { finishEditing } from './finishEditing.action'
 import { save } from '../../Data'
 import { status } from '../../Status'
 
-export const changed : SignalType =
+export const finishedEditing : SignalType =
 [ finishEditing
 , { success: [ ...save ]
   }

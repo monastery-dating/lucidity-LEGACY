@@ -1,9 +1,9 @@
-import { changed } from './changed.signal'
+import { finishedEditing } from './finishedEditing.signal'
 import { describe } from '../../Test'
 import { signalTest } from '../../Test'
 
 describe
-( 'Factory changed signal', ( it ) => {
+( 'Factory finished editing signal', ( it ) => {
 
     it ( 'should save', ( assert, done ) => {
         const services =
@@ -13,7 +13,7 @@ describe
         ( { other: 'data'
           , $factory: { editing: 'foo-bar' }
           }
-        , changed
+        , finishedEditing 
         , services
         )
 

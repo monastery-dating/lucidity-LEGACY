@@ -27,7 +27,7 @@ export const pane =
 
     }
   )
-  
+
   comp.path = panePath
 
   comp.toggle = Component

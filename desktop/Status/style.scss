@@ -13,6 +13,8 @@
 }
 
 .Status {
+  cursor: pointer;
+  
   &.info {
     color: #777;
     .outer {
@@ -25,7 +27,7 @@
   }
 
   &.error {
-    color: #a77;
+    color: color( error );
     .outer {
       stroke: #b22;
     }

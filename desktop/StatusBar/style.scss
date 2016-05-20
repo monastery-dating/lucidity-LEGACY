@@ -3,7 +3,7 @@
 @import '../styles/layout';
 @import '../styles/misc';
 
-#statusBar {
+.StatusBar {
   background: lighten( $back_color, 5% );
   position: fixed;
   bottom: 0;

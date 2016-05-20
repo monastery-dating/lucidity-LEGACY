@@ -1,11 +1,11 @@
-import { ContextType } from '../../context.type'
+import { ActionContextType } from '../../context.type'
 import * as check from 'check-types'
 
 export const finishEditing =
 ( { state
   , input: { path, value }
   , output
-  } : ContextType
+  } : ActionContextType
 ) => {
   const oldValue = state.get ( path )
   const root = path.slice ( 0, path.length - 1 )

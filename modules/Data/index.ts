@@ -3,6 +3,7 @@ export * from './signals/reload'
 export * from './signals/save'
 
 import { db } from './services/db'
+import { Db } from './types/db.type'
 import { dbChanged } from './signals/dbChanged'
 import { reload } from './signals/reload'
 import { save } from './signals/save'
@@ -14,21 +15,6 @@ export interface DataSignalsType {
   save ( any )   // TODO: where is this used, rename to
                  //       dataChanged, or ...
   selected ( opts: { select: { type: string, _id: string } } )
-}
-
-interface Document {
-  _id: string
-  type: string
-}
-
-interface Callback {
-  ( err: string ): void
-}
-
-// we make functions optional for mock in testing
-interface Db {
-  put? ( doc: Document, clbk: Callback )
-  bulkDocs? ( docs: Document[], clbk: Callback )
 }
 
 export interface DataServicesType {

@@ -4,6 +4,7 @@ import { Library } from './Library'
 import { Modal } from '../modules/Factory'
 import { ProjectPane } from './ProjectPane'
 import { StatusBar } from './StatusBar'
+import { StatusDetail } from './StatusDetail'
 // import { ToolsPane } from './ToolsPane'
 import { Workbench } from './Workbench'
 
@@ -13,9 +14,6 @@ Component
   }
 , ( { state, signals } ) => (
     <div>
-      <svg id='scratch' className='svg'>
-        <text className='tbox' id='tsizer'></text>
-      </svg>
       <Modal/>
       {/*
         <le-boxdrag></le-boxdrag>
@@ -25,6 +23,7 @@ Component
       <Library></Library>
       <ProjectPane></ProjectPane>
       <StatusBar></StatusBar>
+      <StatusDetail></StatusDetail>
     </div>
   )
 )

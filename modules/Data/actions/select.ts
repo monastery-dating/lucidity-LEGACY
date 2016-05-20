@@ -1,9 +1,9 @@
-import { ContextType } from '../../context.type'
+import { ActionContextType } from '../../context.type'
 export const selectAction =
 ( { state
   , input: { doc, select }
   , output
-  } : ContextType
+} : ActionContextType
 ) => {
   // if the saved element is not selected, select it
 
