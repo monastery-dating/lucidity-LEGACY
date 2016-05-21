@@ -4,10 +4,8 @@ import { SlotType } from './SlotType'
 export interface BlockTypeChanges {
   // True if the node has an init function
   init?: boolean
-  type?: string // 'Node' | 'Graph'
 
   name?: string
-  path?: string
   source?: string
   // The following elements should be deduced
   // from the source code
@@ -25,14 +23,15 @@ export interface BlockIOType {
 }
 
 export interface BlockType extends BlockIOType {
-  type: string // 'Block' | 'Graph'
-  _id?: string
+  // database related
+  _id: string
   _rev?: string
+  type: string // must be 'block'
+  //
 
   name: string
-  path: string
   source: string
-  // This is set for type 'Graph'
+  // If this is true, we have a sub-graph
   // It creates a graph that behaves like an object (a way to group nodes)
   graph?: GraphType
 }

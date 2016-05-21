@@ -1,14 +1,22 @@
 import { describe } from '../../Test/runner'
 import { BlockType, BlockByIdType } from '../types'
-import { Block } from './Block'
+import { BlockHelper } from './BlockHelper'
 
 const SOURCE_A = ``
-const basePath = '/some/place'
 
-describe ( 'Block.create', ( it ) => {
+describe ( 'BlockHelper.create', ( it ) => {
+
+    it ( 'should new _id', ( assert ) => {
+        const node = BlockHelper.create ( 'hello' , SOURCE_A )
+        assert.equal
+        ( typeof node._id
+        , 'string'
+        )
+      }
+    )
 
     it ( 'should set name', ( assert ) => {
-        const node = Block.create ( 'hello' , SOURCE_A, basePath )
+        const node = BlockHelper.create ( 'hello' , SOURCE_A )
         assert.equal
         ( node.name
         , 'hello'
@@ -17,7 +25,7 @@ describe ( 'Block.create', ( it ) => {
     )
 
     it ( 'should set source', ( assert ) => {
-        const node = Block.create ( 'hello' , SOURCE_A, basePath )
+        const node = BlockHelper.create ( 'hello' , SOURCE_A )
         assert.equal
         ( node.source
         , SOURCE_A
@@ -25,17 +33,8 @@ describe ( 'Block.create', ( it ) => {
       }
     )
 
-    it ( 'should compute path', ( assert ) => {
-        const node = Block.create ( 'hello' , SOURCE_A, basePath )
-        assert.equal
-        ( node.path
-        , `${basePath}/hello.ts`
-        )
-      }
-    )
-
     it ( 'should be immutable', ( assert ) => {
-        const node = Block.create ( 'hello' , SOURCE_A, basePath )
+        const node = BlockHelper.create ( 'hello' , SOURCE_A )
         assert.throws
         ( function () {
           node.name = 'foobar'
@@ -45,7 +44,7 @@ describe ( 'Block.create', ( it ) => {
     )
 
     it ( 'should parse source', ( assert ) => {
-        const node = Block.create ( 'hello' , SOURCE_A, basePath )
+        const node = BlockHelper.create ( 'hello' , SOURCE_A )
         assert.pending ( 'should parse source' )
         assert.equal
         ( node.input
@@ -64,12 +63,12 @@ describe ( 'Block.create', ( it ) => {
   }
 )
 
-describe ( 'Block.update', ( it ) => {
+describe ( 'BlockHelper.update', ( it ) => {
 
-    const node = Block.create ( 'hello' , SOURCE_A, basePath )
+    const node = BlockHelper.create ( 'hello' , SOURCE_A )
 
     it ( 'should set name', ( assert ) => {
-        const node2 = Block.update ( node, { name: 'new name' } )
+        const node2 = BlockHelper.update ( node, { name: 'new name' } )
         assert.equal
         ( node.name
         , 'hello'
@@ -81,14 +80,6 @@ describe ( 'Block.update', ( it ) => {
         assert.equal
         ( node.source
         , SOURCE_A
-        )
-      }
-    )
-
-    it ( 'should compute path', ( assert ) => {
-        assert.equal
-        ( node.path
-        , `${basePath}/hello.ts`
         )
       }
     )
@@ -106,26 +97,6 @@ describe ( 'Block.update', ( it ) => {
         assert.same
         ( node.init
         , false
-        )
-      }
-    )
-  }
-)
-
-describe ( 'Block.nextBlockId', ( it ) => {
-    it ( 'should return id0 on empty map', ( assert ) => {
-        assert.equal
-        ( Block.nextNodeId ( {} )
-        , 'id0'
-        )
-      }
-    )
-
-    it ( 'should return first free in graph', ( assert ) => {
-        const n = Block.create ( 'foo', '', '' )
-        assert.equal
-        ( Block.nextNodeId ( <BlockByIdType> { id0: n, id3: n } )
-        , 'id1'
         )
       }
     )

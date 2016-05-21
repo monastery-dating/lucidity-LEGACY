@@ -1,5 +1,5 @@
 import { defaultUILayout } from './uilayout'
-import { GraphType
+import { GraphWithBlocksType
        , UIGhostBlockType
        , UINodeType, UINodeByIdType
        , UIGraphType
@@ -7,7 +7,9 @@ import { GraphType
        , UIPosType
        , UISlotType } from '../types'
 
-import { Block } from './Block'
+import { NodeHelper } from './NodeHelper'
+const nextNodeId = NodeHelper.nextNodeId
+const rootNodeId = NodeHelper.rootNodeId
 
 import { minSize } from './minSize'
 
@@ -98,7 +100,7 @@ const className = function ( obj, layout : UILayoutType ) {
 /** Compute box position.
  */
 const boxPosition = function
-( graph: GraphType
+( graph: GraphWithBlocksType
 , id: string
 , layout: UILayoutType
 , uigraph: UIGraphType
@@ -141,7 +143,7 @@ const boxPosition = function
         if ( onchildren || !cname ) {
           // precise drop on children row
           // or dropping from far below on free slot
-          const boxid = Block.nextNodeId ( graph.blocksById )
+          const boxid = nextNodeId ( graph.nodesById )
           ghost.linkpos = i
           ghost.parentId = id
           ghost.nodeId = boxid
@@ -205,7 +207,7 @@ const boxPosition = function
 
 
 const uimapOne = function
-( graph: GraphType
+( graph: GraphWithBlocksType
 , id: string
 , layout: UILayoutType
 , uigraph: UIGraphType
@@ -334,7 +336,7 @@ const uimapOne = function
 /** Compute the layout of a graph.
  */
 export const uimap =
-( graph: GraphType
+( graph: GraphWithBlocksType
 , alayout?: UILayoutType
 , cache?: UIGraphType
 , aghost?: UIGhostBlockType
@@ -366,10 +368,10 @@ export const uimap =
   }
 
   uimapOne
-  ( graph, Block.rootNodeId, layout, uigraph, ghost, cachebox )
+  ( graph, rootNodeId, layout, uigraph, ghost, cachebox )
 
   boxPosition
-  ( graph, Block.rootNodeId, layout, uigraph, ghost, startpos )
+  ( graph, rootNodeId, layout, uigraph, ghost, startpos )
 
   return uigraph
 }

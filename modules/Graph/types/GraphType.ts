@@ -1,11 +1,15 @@
 import { BlockByIdType } from './BlockType'
 import { NodeByIdType } from './NodeType'
 
+// This is what we store in scene
 export interface GraphType {
-  blocksById: BlockByIdType
   nodesById: NodeByIdType
-  // list of link ids
   nodes: string[]
+}
+
+// This is what we pass to uimap
+export interface GraphWithBlocksType extends GraphType {
+  blocksById: BlockByIdType
 }
 
 

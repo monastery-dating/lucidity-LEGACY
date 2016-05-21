@@ -1,11 +1,11 @@
-import { GraphType } from '../types'
-export const mockGraph : GraphType = {
+import { GraphWithBlocksType } from '../types'
+export const mockGraph : GraphWithBlocksType = {
   // "type": "render",
   "blocksById": {
     "id0": {
-      "type": "scene",
+      "_id": "id0",
+      "type": "block",
       "name": "main",
-      "path": "/",
       "source": "",
       "init": false,
       "output": null,
@@ -14,27 +14,27 @@ export const mockGraph : GraphType = {
       ]
     },
     "id1": {
+      "_id": "id1",
       "type": "block",
       "name": "3D.Cube",
-      "path": "/",
       "source": "",
       "init": false,
       "output": "text:string",
       "input": []
     },
     "id2": {
+      "_id": "id2",
       "type": "block",
       "name": "3D.TimeShader",
-      "path": "/",
       "source": "",
       "init": false,
       "output": "text:string",
       "input": []
     },
     "id3": {
+      "_id": "id3",
       "type": "block",
       "name": "3D.Scene",
-      "path": "/",
       "source": "",
       "init": false,
       "output": "text:string",
@@ -44,9 +44,9 @@ export const mockGraph : GraphType = {
       ]
     },
     "id4": {
+      "_id": "id4",
       "type": "block",
       "name": "filter.Anaglyph",
-      "path": "/",
       "source": "",
       "init": false,
       "output": "text:string",
@@ -55,9 +55,9 @@ export const mockGraph : GraphType = {
       ]
     },
     "id5": {
+      "_id": "id5",
       "type": "block",
       "name": "filter.Glow",
-      "path": "/",
       "source": "",
       "init": true,
       "output": "text:string",
@@ -71,6 +71,7 @@ export const mockGraph : GraphType = {
   "nodesById": {
     "id0": {
       "id": "id0",
+      "blockId": "id0",
       "parent": null,
       "children": [
         "id5"
@@ -78,14 +79,17 @@ export const mockGraph : GraphType = {
     },
     "id1": {
       "id": "id1",
+      "blockId": "id1",
       "children": [],
     },
     "id2": {
       "id": "id2",
+      "blockId": "id2",
       "children": [],
     },
     "id3": {
       "id": "id3",
+      "blockId": "id3",
       "children": [
         "id1",
         "id2"
@@ -93,12 +97,14 @@ export const mockGraph : GraphType = {
     },
     "id4": {
       "id": "id4",
+      "blockId": "id4",
       "children": [
         "id3"
       ]
     },
     "id5": {
       "id": "id5",
+      "blockId": "id5",
       "children": [
         "id4",
         null

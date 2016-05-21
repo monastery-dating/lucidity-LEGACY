@@ -13,3 +13,15 @@ export const Graph =
     return {} // meta information
   }
 }
+
+// data/scene/[_id] graph: { full graph }
+// data/block/[_id] Block storage
+
+// The full graph is:
+/*
+{ nodes: string[]
+  nodeById: NodeByIdType
+}
+*/
+// ==> graph changes ==> scene save
+// ==> block changes ==> block save. OK.
