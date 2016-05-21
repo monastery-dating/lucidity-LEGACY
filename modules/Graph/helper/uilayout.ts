@@ -14,7 +14,7 @@ const DEFAULT_LAYOUT =
 , SPAD:   16 // slot pad
 , TPAD:   8
 , BPAD:   0  // pad between siblings
-, PCOUNT: 12 // palette color count
+, PCOUNT: 12 // palette color count must be the same as _palettee.scss
 , SUBPADX: 0  // (computed  = 2 * GRIDH) pad in sub assets
 , SUBPADY: 4  // (computed  = 2 * GRIDH) pad in sub assets
 , VPAD:   0  // vertical padding between boxes
@@ -26,7 +26,7 @@ export const UILayout =
   const res = Object.assign ( {}, DEFAULT_LAYOUT, o || {} )
   res.SUBPADX = 2 * res.GRIDH
   if ( ! res.tsizer ) {
-    res.tsizer = getTextSizeCanvas ( 'Muli 10pt' )
+    res.tsizer = getTextSizeCanvas ( '10pt Avenir Next' )
   }
   return res
 }

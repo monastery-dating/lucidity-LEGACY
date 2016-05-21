@@ -15,7 +15,7 @@ export const mockGraph : GraphType = {
     },
     "id1": {
       "type": "block",
-      "name": "Hello",
+      "name": "3D.Cube",
       "path": "/",
       "source": "",
       "init": false,
@@ -24,7 +24,7 @@ export const mockGraph : GraphType = {
     },
     "id2": {
       "type": "block",
-      "name": "Lucy",
+      "name": "3D.TimeShader",
       "path": "/",
       "source": "",
       "init": false,
@@ -33,7 +33,7 @@ export const mockGraph : GraphType = {
     },
     "id3": {
       "type": "block",
-      "name": "Mix",
+      "name": "3D.Scene",
       "path": "/",
       "source": "",
       "init": false,
@@ -45,7 +45,7 @@ export const mockGraph : GraphType = {
     },
     "id4": {
       "type": "block",
-      "name": "Stereo",
+      "name": "filter.Anaglyph",
       "path": "/",
       "source": "",
       "init": false,
@@ -56,7 +56,7 @@ export const mockGraph : GraphType = {
     },
     "id5": {
       "type": "block",
-      "name": "Reverse",
+      "name": "filter.Glow",
       "path": "/",
       "source": "",
       "init": true,
