@@ -1,4 +1,4 @@
-import { GetTextSizeType } from './getTextSize.type'
+import { GetTextSizeType } from './GetTextSizeType'
 
 export interface UILayoutType {
   GRIDH:  number

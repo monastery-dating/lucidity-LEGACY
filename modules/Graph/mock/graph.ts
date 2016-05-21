@@ -1,7 +1,7 @@
 import { GraphType } from '../types'
 export const mockGraph : GraphType = {
   // "type": "render",
-  "nodesById": {
+  "blocksById": {
     "id0": {
       "type": "scene",
       "name": "main",
@@ -68,7 +68,7 @@ export const mockGraph : GraphType = {
     }
   },
 
-  "linksById": {
+  "nodesById": {
     "id0": {
       "id": "id0",
       "parent": null,

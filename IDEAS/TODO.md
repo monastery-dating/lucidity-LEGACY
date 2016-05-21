@@ -32,26 +32,19 @@
      top of Workbench.
 
 # REFACTORING
-  0. Remove default exports: they are confusing since any name
+  1. Change Graph structure and type:
+
+  A graph is just a list of NodeLink ids.
+  A NodeLink is
+  { id: NodeLinkId
+  , parentId: NodeLinkId
+  , children: NodeLinkId[]
+  , nodeId: NodeId
+  }
+  A Node is this thing with inputs, output, script, path, etc.
+
+  2. Remove default exports: they are confusing since any name
      can be used and this can lead to stupid mistakes.
-
-  1. Recreate state tree
-    ==> user
-       ==> model
-       ==> views
-    ==> project
-       ==> model
-          ==> scene
-            ==> node
-       ==> views
-         ==> selected scene, etc.
-
-  2. Use uimap in Graph component or with Facet ?
-
-    uimap should be called by the master component rendering a graph.
-    his should only happen when the prop for this component (a graph) is changed. No need to tinker with uimap outside of rendering components !! As simple as that !!
-
-    or use Monkeys ?
 
   3. Transform code from boxdrag to use the store instead of a service...
     --

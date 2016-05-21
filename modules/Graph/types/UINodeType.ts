@@ -1,4 +1,4 @@
-import { NodeType } from './node.type'
+import { BlockType } from './BlockType'
 
 export interface UIPosType {
   x: number
@@ -43,8 +43,8 @@ export interface UINodeType {
   slots: UISlotType[]
 }
 
-export interface UIGhostNodeType {
-  node: NodeType
+export interface UIGhostBlockType {
+  node: BlockType
   uinode: UINodeType
   linkpos?: number // if box can be dropped, this is the position in parent links
   parentId?: string  // parent boxid if can be dropped

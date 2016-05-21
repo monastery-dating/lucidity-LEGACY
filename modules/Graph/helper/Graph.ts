@@ -1,13 +1,13 @@
-import { Node } from './node.helper'
-import { GraphType, LinkType, NodeType
-       , NodeIOType, SlotType } from '../types'
+import { Block } from './Block'
+import { GraphType, BlockType, NodeType
+       , BlockIOType, SlotType } from '../types'
 
 import { Immutable as IM } from './immutable'
 
-const newLink = function
+const newNode = function
 ( id: string
 , parentId: string
-) : LinkType
+) : NodeType
 {
   return Object.freeze ( { id, parent: parentId || null, children: [] } )
 }
@@ -15,15 +15,15 @@ const newLink = function
 export module Graph {
 
   export const create = function
-  ( node: NodeType
+  ( block: BlockType
   , anid?: string
   , parentId?: string
   ) : GraphType
   {
-    const id = anid || Node.rootNodeId
+    const id = anid || Block.rootNodeId
     return Object.freeze
-    ( { nodesById: Object.freeze ( { [ id ]: node } )
-      , linksById: Object.freeze ( { [ id ]: newLink ( id, parentId ) } )
+    ( { blocksById: Object.freeze ( { [ id ]: block } )
+      , nodesById: Object.freeze ( { [ id ]: newNode ( id, parentId ) } )
       , nodes: Object.freeze ( [ id ] )
       }
     )
@@ -33,15 +33,15 @@ export module Graph {
   ( graph: GraphType
   , parentId: string
   , pos: number
-  , child: NodeType
+  , child: BlockType
   ) : GraphType
   {
-    const id = Node.nextNodeId ( graph.nodesById )
+    const id = Block.nextNodeId ( graph.blocksById )
     let g = graph
     // new information for the added element
-    g = IM.update ( g, 'nodesById', id, child )
-    g = IM.update ( g, 'linksById', id, newLink ( id, parentId ) )
-    g = IM.update ( g, 'linksById', parentId, 'children'
+    g = IM.update ( g, 'blocksById', id, child )
+    g = IM.update ( g, 'nodesById', id, newNode ( id, parentId ) )
+    g = IM.update ( g, 'nodesById', parentId, 'children'
     , ( children ) => IM.insert ( children, pos, id )
     )
     g = IM.update ( g, 'nodes'
@@ -53,7 +53,7 @@ export module Graph {
   export const append = function
   ( graph: GraphType
   , parentId: string
-  , child: NodeType
+  , child: BlockType
   ) : GraphType
   {
     return insert ( graph, parentId, -1, child )

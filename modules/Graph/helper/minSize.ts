@@ -1,10 +1,10 @@
-import { LinkType, NodeType, UILayoutType, UINodeSize } from '../types'
+import { NodeType, BlockType, UILayoutType, UINodeSize } from '../types'
 
 /** Compute the minimum size to display the element.
  */
 export const minSize =
-( obj: NodeType
-, link: LinkType
+( obj: BlockType
+, link: NodeType
 , layout: UILayoutType
 ) : UINodeSize => {
   const ds     = Math.max ( obj.input.length, link.children.length )

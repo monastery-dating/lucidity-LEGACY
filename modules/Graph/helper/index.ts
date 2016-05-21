@@ -1,3 +1,3 @@
 export * from './uimap'
-export * from './graph.helper'
-export * from './node.helper'
+export * from './Graph'
+export * from './Block'

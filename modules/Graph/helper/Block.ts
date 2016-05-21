@@ -1,15 +1,15 @@
-import { NodeType, NodeByIdType, NodeIOType
-       , NodeTypeChanges, SlotType } from '../types'
+import { BlockType, BlockByIdType, BlockIOType
+       , BlockTypeChanges, SlotType } from '../types'
 import { Immutable as IM } from './immutable'
 
 
 
-export module Node {
+export module Block {
   export const nextNodeId =
-  ( nodesById: NodeByIdType
+  ( blocksById: BlockByIdType
   ) : string => {
     let n : number = 0
-    while ( nodesById [ `id${n}` ] ) {
+    while ( blocksById [ `id${n}` ] ) {
       n += 1
     }
     return `id${n}`
@@ -21,7 +21,7 @@ export module Node {
   ( name: string
   , source: string
   , basePath: string
-  ) : NodeType => {
+  ) : BlockType => {
     const typeInfo = getType ( source )
     const path = `${basePath}/${name}.ts`
 
@@ -36,9 +36,9 @@ export module Node {
   }
 
   export const update =
-  ( node: NodeType
-  , changes: NodeTypeChanges
-  ) : NodeType => {
+  ( node: BlockType
+  , changes: BlockTypeChanges
+  ) : BlockType => {
     const newobj = IM.merge ( node, changes )
     if ( changes.source ) {
       const typeInfo = getType ( changes.source )
@@ -51,7 +51,7 @@ export module Node {
 
   const getType =
   ( source: string
-  ) : NodeIOType => {
+  ) : BlockIOType => {
     // TODO: parse source and read 'render' signature
     return { input: [ 'text:string', 'text:string' ]
            , output: 'text:string'

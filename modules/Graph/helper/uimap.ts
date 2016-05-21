@@ -1,13 +1,13 @@
 import { defaultUILayout } from './uilayout'
 import { GraphType
-       , UIGhostNodeType
+       , UIGhostBlockType
        , UINodeType, UINodeByIdType
        , UIGraphType
        , UILayoutType
        , UIPosType
        , UISlotType } from '../types'
 
-import { Node } from './node.helper'
+import { Block } from './Block'
 
 import { minSize } from './minSize'
 
@@ -102,10 +102,10 @@ const boxPosition = function
 , id: string
 , layout: UILayoutType
 , uigraph: UIGraphType
-, ghost: UIGhostNodeType
+, ghost: UIGhostBlockType
 , ctx: UIPosType
 ) {
-  const obj  = graph.nodesById [ id ]
+  const obj  = graph.blocksById [ id ]
 
   // store our position given by ctx
   uigraph.uiNodeById [ id ].pos = ctx
@@ -124,7 +124,7 @@ const boxPosition = function
 
   let x  = ctx.x
 
-  const link = graph.linksById [ id ]
+  const link = graph.nodesById [ id ]
   const len  = Math.max ( link.children.length, ( obj.input || [] ).length )
   const ghostbelow = ghost && ( ghost.y > ctx.y + dy )
   const onchildren = ghost && ( ghost.y <= ctx.y + 2 * dy )
@@ -141,7 +141,7 @@ const boxPosition = function
         if ( onchildren || !cname ) {
           // precise drop on children row
           // or dropping from far below on free slot
-          const boxid = Node.nextNodeId ( graph.nodesById )
+          const boxid = Block.nextNodeId ( graph.blocksById )
           ghost.linkpos = i
           ghost.parentId = id
           ghost.nodeId = boxid
@@ -156,7 +156,7 @@ const boxPosition = function
             }
           )
           // this is to draw the ghost
-          uigraph.list.push ( boxid )
+          uigraph.nodes.push ( boxid )
           uigraph.uiNodeById [ boxid ] = gbox
 
           x += ghost.uinode.size.w + layout.BPAD
@@ -209,7 +209,7 @@ const uimapOne = function
 , id: string
 , layout: UILayoutType
 , uigraph: UIGraphType
-, ghost: UIGhostNodeType
+, ghost: UIGhostBlockType
 , cachebox: UINodeByIdType
 ) {
   uigraph.uiNodeById [ id ] = <UINodeType> { id }
@@ -223,8 +223,8 @@ const uimapOne = function
   const uibox = uigraph.uiNodeById [ id ]
   const cache = cachebox [ id ] || <UINodeType>{}
 
-  const obj  = graph.nodesById [ id ]
-  const link = graph.linksById [ id ]
+  const obj  = graph.blocksById [ id ]
+  const link = graph.nodesById [ id ]
 
   uibox.name = obj.name
   uibox.type = obj.type
@@ -337,7 +337,7 @@ export const uimap =
 ( graph: GraphType
 , alayout?: UILayoutType
 , cache?: UIGraphType
-, aghost?: UIGhostNodeType
+, aghost?: UIGhostBlockType
 ) : UIGraphType => {
   const layout = alayout || defaultUILayout
   const cachebox : UINodeByIdType = cache ? cache.uiNodeById : {}
@@ -348,7 +348,7 @@ export const uimap =
   }
 
   const uigraph : UIGraphType =
-  { list: []
+  { nodes: []
   , grabpos:
     { x: startpos.x + layout.RADIUS + layout.SPAD + layout.SLOT
     , y: startpos.y - layout.RADIUS + 6 // why do we need this 6 ?
@@ -366,10 +366,10 @@ export const uimap =
   }
 
   uimapOne
-  ( graph, Node.rootNodeId, layout, uigraph, ghost, cachebox )
+  ( graph, Block.rootNodeId, layout, uigraph, ghost, cachebox )
 
   boxPosition
-  ( graph, Node.rootNodeId, layout, uigraph, ghost, startpos )
+  ( graph, Block.rootNodeId, layout, uigraph, ghost, startpos )
 
   return uigraph
 }
