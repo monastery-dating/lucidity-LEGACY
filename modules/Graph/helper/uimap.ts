@@ -235,6 +235,7 @@ const uimapOne = function
   const obj  = graph.blocksById [ link.blockId ]
 
   uibox.name = obj.name
+  uibox.blockId = obj._id
   uibox.type = obj.type
   uibox.className = uibox.name === cache.name
                   ? cache.className
@@ -279,7 +280,7 @@ const uimapOne = function
     const cw = layout.SCLICKW
     const ch = layout.SCLICKH
     // start top left below rounded corner
-    const clickp = [ `M${-cw/2} ${-layout.HEIGHT/2 + r}` ]
+    const clickp = [ `M${-cw/2} ${-sl + r}` ]
     clickp.push ( `a${r} ${r} 0 0 1 ${ r} ${-r}` )
     clickp.push ( `h${cw-2*r}` )
     clickp.push ( `a${r} ${r} 0 0 1 ${ r} ${ r}` )

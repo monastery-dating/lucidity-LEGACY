@@ -6,6 +6,7 @@ export const getTextSizeCanvas =
   const context = canvas.getContext ( '2d' )
   context.font = font
   return ( text: string ) => {
-    return context.measureText ( text )
+    const w = context.measureText ( text )
+    return { width: Math.ceil ( w.width ) }
   }
 }

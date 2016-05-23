@@ -28,24 +28,39 @@ const makeSlot = ( slot: UISlotType, clbk ) => {
 }
 
 export const Node = Component
-( { // layout ...
+( { block: [ 'block' ] // selected block
   }
 , ( { state, props, signals }: ContextType ) => {
     const uinode: UINodeType = props.uinode
     const x = uinode.pos.x
     const y = uinode.pos.y
     const transform = `translate(${x},${y})`
-    const klass = { [uinode.className]: true, ghost:uinode.isGhost }
-    const clbk = ( pos ) => {
+    const klass = { sel: false
+                  , [ uinode.className ]: true
+                  , ghost: uinode.isGhost
+                  }
+                  
+    if ( state.block ) {
+      klass.sel = state.block._id === uinode.blockId
+    }
+
+
+    const slotclick = ( pos ) => {
       signals.graph.add ( { pos, parentId: uinode.id } )
+    }
+    const click = () => {
+      signals.graph.select ( { id: uinode.id } )
     }
 
     return <g transform={ transform }>
-        <path d={ uinode.path } class={ klass }></path>
+        <path d={ uinode.path } class={ klass }
+          on-click={ click }></path>
         <text x={ uinode.size.tx } y={ uinode.size.ty }>
           { uinode.name }
         </text>
-        { uinode.slots.map ( ( s ) => makeSlot ( s, clbk ) ) }
+        { uinode.slots.map
+          ( ( s ) => makeSlot ( s, slotclick ) )
+        }
       </g>
   }
 )

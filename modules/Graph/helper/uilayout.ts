@@ -28,7 +28,7 @@ export const UILayout =
   const res = Object.assign ( {}, DEFAULT_LAYOUT, o || {} )
   res.SUBPADX = 2 * res.GRIDH
   res.SCLICKW = res.SPAD + 2 * res.SLOT
-  res.SCLICKH = 1.4 * res.HEIGHT
+  res.SCLICKH = 1.2 * res.HEIGHT
   if ( ! res.tsizer ) {
     res.tsizer = getTextSizeCanvas ( '10pt Avenir Next' )
   }

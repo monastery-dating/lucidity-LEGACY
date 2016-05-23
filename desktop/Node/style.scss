@@ -6,14 +6,18 @@
 
 @for $i from 1 through $pcount {
   svg path.box#{$i} {
-    fill: pfill( $i );
+    fill: darken( desaturate( pfill( $i ), 10%), 5%);
+    cursor: pointer;
+    &:hover {
+      fill: darken( saturate( pfill( $i ), 10%), 15%);
+    }
 
     &.dark {
       fill: darken( desaturate( pfill( $i ), 30%), 30%);
     }
 
     &.sel {
-      fill: spfill( $i );
+      fill: lighten( saturate( pfill( $i ), 10%), 0%);
       stroke: color( sboxl );
     }
   }
@@ -43,7 +47,7 @@ svg {
 
   .plus {
     fill: none;
-    stroke: color( boxb );
+    stroke: darken( color( workb ), 5% );
     stroke-width: $lsbo;
     cursor: pointer;
   }

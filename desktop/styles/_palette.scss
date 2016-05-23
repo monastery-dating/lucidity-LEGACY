@@ -13,8 +13,3 @@ $pcount: 12;
 @function pbox( $index ) {
   @return pfill( $index )
 }
-
-@function spfill( $index ) {
-  @return lighten( desaturate( adjust-hue( $pbase, $index * 360 / $pcount),
-  0% ), 30% );
-}
