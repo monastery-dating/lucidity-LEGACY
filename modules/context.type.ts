@@ -1,5 +1,6 @@
 import { DataSignalsType, DataServicesType } from './Data'
 import { FactorySignalsType } from './Factory'
+import { GraphSignalsType } from './Graph'
 import { SceneSignalsType } from './Scene'
 import { StatusSignalsType } from './Status'
 
@@ -8,6 +9,7 @@ import { StatusSignalsType } from './Status'
 export interface SignalsType {
   data: DataSignalsType
   $factory: FactorySignalsType
+  graph: GraphSignalsType
   scene: SceneSignalsType
   $status: StatusSignalsType
 }

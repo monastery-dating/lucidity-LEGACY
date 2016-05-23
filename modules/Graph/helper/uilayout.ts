@@ -12,6 +12,8 @@ const DEFAULT_LAYOUT =
 , RADIUS: 5
 , SLOT:   5
 , SPAD:   16 // slot pad
+, SCLICKW:  0 // (computed from SLOT and SPAD ) slot click rect width
+, SCLICKH:  0 // (computed from HEIGHT) slot click rect height
 , TPAD:   8
 , BPAD:   0  // pad between siblings
 , PCOUNT: 12 // palette color count must be the same as _palettee.scss
@@ -25,6 +27,8 @@ export const UILayout =
 ( o?: Object ) : UILayoutType => {
   const res = Object.assign ( {}, DEFAULT_LAYOUT, o || {} )
   res.SUBPADX = 2 * res.GRIDH
+  res.SCLICKW = res.SPAD + 2 * res.SLOT
+  res.SCLICKH = 1.4 * res.HEIGHT
   if ( ! res.tsizer ) {
     res.tsizer = getTextSizeCanvas ( '10pt Avenir Next' )
   }

@@ -149,6 +149,28 @@ describe ( 'IM.insert', ( it ) => {
         )
       }
     )
+
+    it ( 'should insert null if value out of array', ( assert ) => {
+        const a = [10,20]
+        const b = 30
+        assert.equal
+        ( IM.insert ( a, 3, b )
+        , [ 10, 20, null, 30 ]
+        )
+      }
+    )
+
+    it ( 'should replace null', ( assert ) => {
+        const a = [10, null, 20]
+        const b = 30
+        assert.equal
+        ( IM.insert ( a, 1, b )
+        , [ 10, 30, 20 ]
+        )
+      }
+    )
+
+
   }
 )
 

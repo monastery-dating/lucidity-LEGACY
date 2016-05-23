@@ -1,5 +1,7 @@
 import { defaultUILayout } from './uilayout'
-import { GraphWithBlocksType
+import { BlockType
+       , GraphWithBlocksType
+       , NodeType
        , UIGhostBlockType
        , UINodeType, UINodeByIdType
        , UIGraphType
@@ -84,9 +86,13 @@ const path = function
  *
  * @returns {string}   - the class name
  */
-const className = function ( obj, layout : UILayoutType ) {
-  if ( obj.type !== 'block' ) {
-    return obj.type
+const className =
+( obj: BlockType
+, link: NodeType
+, layout : UILayoutType
+) => {
+  if ( link.id === rootNodeId ) {
+    return 'scene'
   }
 
   const name = obj.name.split ( '.' ) [ 0 ]
@@ -107,7 +113,8 @@ const boxPosition = function
 , ghost: UIGhostBlockType
 , ctx: UIPosType
 ) {
-  const obj  = graph.blocksById [ id ]
+  const link = graph.nodesById [ id ]
+  const obj  = graph.blocksById [ link.blockId ]
 
   // store our position given by ctx
   uigraph.uiNodeById [ id ].pos = ctx
@@ -126,7 +133,6 @@ const boxPosition = function
 
   let x  = ctx.x
 
-  const link = graph.nodesById [ id ]
   const len  = Math.max ( link.children.length, ( obj.input || [] ).length )
   const ghostbelow = ghost && ( ghost.y > ctx.y + dy )
   const onchildren = ghost && ( ghost.y <= ctx.y + 2 * dy )
@@ -174,8 +180,8 @@ const boxPosition = function
       x += layout.BPAD + uigraph.uiNodeById [ cname ].size.w
     }
     else if ( ghostbelow || cname === null ) {
-      // we add x to continue checking drop on all slots
-      x += layout.SPAD + 2 * layout.SLOT
+      // empty slot, add padding and click width
+      x += layout.SCLICKW/2 + layout.SPAD + 2 * layout.SLOT
     }
   }
 
@@ -225,14 +231,14 @@ const uimapOne = function
   const uibox = uigraph.uiNodeById [ id ]
   const cache = cachebox [ id ] || <UINodeType>{}
 
-  const obj  = graph.blocksById [ id ]
   const link = graph.nodesById [ id ]
+  const obj  = graph.blocksById [ link.blockId ]
 
   uibox.name = obj.name
   uibox.type = obj.type
   uibox.className = uibox.name === cache.name
                   ? cache.className
-                  : className ( obj, layout )
+                  : className ( obj, link, layout )
   // FIXME: only store text size in cache
   const ds = Math.max ( ( obj.input || [] ).length, ( link.children || [] ).length )
 
@@ -266,34 +272,75 @@ const uimapOne = function
 
 
     // Compute sizes for all children
+    const sline = `M${-sl} ${sl} h${2 * sl}`
+    const spath = `M${-sl} ${0} l${sl} ${-sl} l${sl} ${sl}`
+    const plus = `M${-sl} ${2*sl} h${2*sl} M${0} ${sl} v${2*sl}`
+    const r = layout.RADIUS
+    const cw = layout.SCLICKW
+    const ch = layout.SCLICKH
+    // start top left below rounded corner
+    const clickp = [ `M${-cw/2} ${-layout.HEIGHT/2 + r}` ]
+    clickp.push ( `a${r} ${r} 0 0 1 ${ r} ${-r}` )
+    clickp.push ( `h${cw-2*r}` )
+    clickp.push ( `a${r} ${r} 0 0 1 ${ r} ${ r}` )
+    clickp.push ( `v${ch-2*r}` )
+    clickp.push ( `a${r} ${r} 0 0 1 ${-r} ${ r}` )
+    clickp.push ( `h${-cw+2*r}` )
+    clickp.push ( `a${r} ${r} 0 0 1 ${-r} ${-r}` )
+    clickp.push ( `v${-ch+2*r} z` )
+
+    const click = clickp.join ('')
+
+    const slotpad = layout.SPAD + 2 * layout.SLOT
+
     for ( let i = 0; i < len; i += 1 ) {
+      const cname = link.children [ i ]
+      const pos = { x: x + sl, y }
+
+      console.log ( 'FREE', !cname, x, pos )
       if ( ! input [ i ] ) {
         // extra links outside of inputs...
-        const spath = `M${x} ${y} h${2 * sl}`
         slots.push
-        ( { path: spath, className: 'slot detached' } )
+        ( { path: sline
+          , idx: i
+          , pos
+          , plus
+          , click
+          , flags: { detached: true, free: !cname }
+          }
+        )
       }
       else {
-        const spath = `M${x} ${y} l${sl} ${-sl} l${sl} ${sl}`
         slots.push
-        ( { path: spath, className: 'slot' } )
+        ( { path: spath
+          , idx: i
+          , pos
+          , plus
+          , click
+          , flags: { free: !cname }
+          }
+        )
       }
-      const cname = link.children [ i ]
       if ( cname ) {
         // We push in sextra the delta for slot i
         const w  = uimapOne ( graph, cname, layout, uigraph, ghost, cachebox )
         if ( i === len - 1 ) {
           // last
-          sextra.push ( w + layout.BPAD - 2 * layout.SPAD - 4 * layout.SLOT )
+          sextra.push ( w + layout.BPAD - 2 * slotpad )
         }
         else {
-          sextra.push ( w + layout.BPAD - layout.SPAD - 2 * layout.SLOT )
+          sextra.push ( w + layout.BPAD - slotpad )
         }
         x += w
       }
-      else {
-        x += 0
+      else if ( i === len - 1 ) {
         sextra.push ( 0 )
+      }
+      else {
+        // empty slot adds extra padding for click
+        const w = layout.SCLICKW/2 + slotpad
+        x += w // layout.SPAD + 2 * layout.SLOT
+        sextra.push ( w + layout.BPAD - slotpad )
       }
     }
 

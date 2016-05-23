@@ -7,6 +7,8 @@ export interface UILayoutType {
   RADIUS: number
   SLOT:   number
   SPAD:   number
+  SCLICKH: number
+  SCLICKW: number
   TPAD:   number
   BPAD:   number  // pad between siblings
   PCOUNT: number  // palette color count

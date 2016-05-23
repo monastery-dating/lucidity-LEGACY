@@ -19,9 +19,26 @@ export interface UINodeSize {
   wde: number
 }
 
+export interface SlotFlagType {
+  free?: boolean
+  detached?: boolean
+}
+
 export interface UISlotType {
+  // Center of slot position.
+  pos: UIPosType
+  // position in slot
+  idx: number
+
+  flags: SlotFlagType
+
+  // The fields below could be kept inside layout (constants)
+  // slot path
   path: string
-  className: string
+  // click area path for the slot (if needed)
+  click: string
+  // path for plus sign (if needed)
+  plus: string
 }
 
 export interface UINodeType {

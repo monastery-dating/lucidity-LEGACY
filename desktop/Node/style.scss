@@ -27,7 +27,6 @@ svg path.Folder {
 }
 
 svg {
-  @extend ._noselect;
 
   .slot {
     fill: none;
@@ -39,6 +38,23 @@ svg {
       stroke-width: 3 * $lsbo;
       stroke: black;
       transform: translateY(-1px);
+    }
+  }
+
+  .plus {
+    fill: none;
+    stroke: color( boxb );
+    stroke-width: $lsbo;
+    cursor: pointer;
+  }
+
+  .click {
+    fill: rgba( 0, 0, 0, 0 );
+    transition: fill 0.8s;
+    stroke: none;
+    cursor: pointer;
+    &:hover, &.active {
+      fill: rgba( 0, 0, 0, 0.3 );
     }
   }
 

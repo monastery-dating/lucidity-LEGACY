@@ -22,8 +22,8 @@ export const mockGraph : GraphWithBlocksType = {
       "output": "text:string",
       "input": []
     },
-    "id2": {
-      "_id": "id2",
+    "some-big-id2": {
+      "_id": "some-big-id2",
       "type": "block",
       "name": "3D.TimeShader",
       "source": "",
@@ -84,14 +84,14 @@ export const mockGraph : GraphWithBlocksType = {
     },
     "id2": {
       "id": "id2",
-      "blockId": "id2",
+      "blockId": "some-big-id2",
       "children": [],
     },
     "id3": {
       "id": "id3",
       "blockId": "id3",
       "children": [
-        "id1",
+        null,
         "id2"
       ]
     },
@@ -114,7 +114,6 @@ export const mockGraph : GraphWithBlocksType = {
 
   "nodes": [
     "id0",
-    "id1",
     "id2",
     "id3",
     "id4",

@@ -4,4 +4,8 @@
 
 .Graph {
   margin-left: 2 * $ppad;
+  svg {
+    width: 100%;
+    height: 100%;
+  }
 }

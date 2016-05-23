@@ -98,7 +98,26 @@ describe ( 'GraphHelper.insert', ( it ) => {
         ( graph2.nodesById [ 'id0' ].children
         , [ 'id2', 'id1' ]
         )
+      }
+    )
 
+    it ( 'insert null', ( assert ) => {
+    let graph3 = GraphHelper.insert ( graph, 'id0', 1, block1 )
+        assert.equal
+        ( graph3.nodesById [ 'id0' ].children
+        , [ null, 'id1' ]
+        )
+      }
+    )
+
+    it ( 'replace null', ( assert ) => {
+    let graph3 = GraphHelper.insert ( graph, 'id0', 1, block1 )
+        graph3 = GraphHelper.insert ( graph2, 'id0', 0, block2 )
+
+        assert.equal
+        ( graph2.nodesById [ 'id0' ].children
+        , [ 'id2', 'id1' ]
+        )
       }
     )
 

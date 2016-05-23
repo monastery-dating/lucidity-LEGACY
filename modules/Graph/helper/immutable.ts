@@ -33,8 +33,16 @@ export const insert = function<T>
   const res: any = []
   const len = t.length
   let p = pos < 0 ? len + pos + 1 : pos
+
   if ( p > len ) {
-    p = len
+    const r = [...t]
+    let i = len
+    while ( i < p ) {
+      r.push ( null )
+      i += 1
+    }
+    r.push ( s )
+    return Object.freeze ( r )
   }
   else if ( p < 0 ) {
     p = 0
@@ -43,7 +51,12 @@ export const insert = function<T>
   for ( let i = 0; i < len + 1; i += 1 ) {
     if ( i === p ) {
       res [ i ] = s
-      di = 1
+      if ( t [ i ] === null ) {
+        continue
+      }
+      else {
+        di = 1
+      }
     }
 
     if ( i < len ) {

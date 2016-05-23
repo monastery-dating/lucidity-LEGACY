@@ -1,13 +1,23 @@
 export * from './helper/uimap'
 export * from './types'
 
+export interface GraphSignalsType {
+  add ( input: { pos: number, parentId: string } )
+}
+
 import { mockGraph } from './mock/graph'
+import { add } from './signals/add'
 
 export const Graph =
 ( options = {}) => {
   return (module, controller) => {
     module.addState
     ( mockGraph
+    )
+
+    module.addSignals
+    ( { add
+      }
     )
 
     return {} // meta information
