@@ -1,7 +1,7 @@
 import './style.scss'
 import { Component } from '../Component'
 import { ContextType, SignalsType } from '../../modules/context.type'
-import { editable, add } from '../../modules/Factory'
+import { add, pane } from '../../modules/Factory'
 
 const selectScene =
 ( signals: SignalsType, _id ) => {
@@ -32,8 +32,10 @@ const showScenes =
   )
 }
 
-const ProjectName = editable ( [ 'project', 'name' ], 'p' )
+
 const AddScene = add ( 'scene', [ 'project', 'scenes' ] )
+
+const Pane = pane ( 'project' )
 
 export const ProjectPane = Component
 ( { scenes: [ 'project', 'scenes' ]
@@ -41,11 +43,19 @@ export const ProjectPane = Component
   , selectedSceneId: [ 'scene', '_id' ]
   }
 , ( { state, signals }: ContextType ) => (
-    <div class='ProjectPane'>
-      <div class='bar'>
+
+    <Pane class='ProjectPane'>
+      <Pane.toggle class='fbar bar'>
         <div class='fa fa-diamond'></div>
-        <ProjectName class='name'/>
-      </div>
+        <div class='name'>Project</div>
+        <div class='larrow'></div>
+      </Pane.toggle>
+
+      <Pane.toggle class='bar'>
+        <div class='spacer'></div>
+        <div class='rarrow'></div>
+        &nbsp;
+      </Pane.toggle>
 
       <div class='control'>
         <p>Control</p>
@@ -78,6 +88,6 @@ export const ProjectPane = Component
           <div class='li'><span>lucy-forge (lib)</span></div>
         </div>
       </div>
-    </div>
+    </Pane>
   )
 )

@@ -5,7 +5,7 @@ import { editable, pane } from '../../modules/Factory'
 
 const ProjectName = editable ( [ 'project', 'name' ] )
 
-const ProjectOptions = pane ( 'project' )
+const ProjectOptions = pane ( 'project-opts' )
 
 export const Project = Component
 ( {

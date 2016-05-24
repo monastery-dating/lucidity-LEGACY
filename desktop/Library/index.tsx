@@ -1,7 +1,7 @@
 import './style.scss'
 import { Component } from '../Component'
 import { ContextType, SignalsType } from '../../modules/context.type'
-import { editable, openModal, pane } from '../../modules/Factory'
+import { pane } from '../../modules/Factory'
 
 const renderLibrary = ( el ) => (
   <div class='li'>
@@ -14,26 +14,26 @@ const renderLibrary = ( el ) => (
   </div>
 )
 
-const LibraryOptions = pane ( 'library' )
+const Pane = pane ( 'library' )
 
 export const Library = Component
 ( { rows: [ 'library', '$rows' ]
   , status: [ '$status', 'list' ]
-  , active: LibraryOptions.path
+  , active: Pane.path
   }
 , ( { state, signals } ) => (
-    <LibraryOptions class='Library'>
-      <LibraryOptions.toggle class='fbar bar'>
+    <Pane class='Library'>
+      <Pane.toggle class='fbar bar'>
         <div class='fa fa-book'></div>
         <div class='name'>Library</div>
-        <div class='larrow'></div>
-      </LibraryOptions.toggle>
-
-      <LibraryOptions.toggle class='bar'>
-        <div class='spacer'></div>
         <div class='rarrow'></div>
+      </Pane.toggle>
+
+      <Pane.toggle class='bar'>
+        <div class='spacer'></div>
+        <div class='larrow'></div>
         &nbsp;
-      </LibraryOptions.toggle>
+      </Pane.toggle>
 
       <div class='search'>
         <p>&nbsp;
@@ -61,6 +61,6 @@ export const Library = Component
           { state.rows.map ( renderLibrary ) }
         </div>
       </div>
-    </LibraryOptions>
+    </Pane>
   )
 )

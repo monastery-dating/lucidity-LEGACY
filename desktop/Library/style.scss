@@ -3,77 +3,25 @@
 @import '../styles/misc';
 
 .Library {
-  position: absolute;
-  top:$pad;
-  left:0;
-  box-shadow: 0 0 10px darken( color( workb ), 15% );
-  background: rgba( lighten( color( workb ), 5% ), 0.95);
-  
+  @extend ._pane;
+  left: - layout( panew );
+  transition: left 0.2s;
+
   .bar {
-    cursor: pointer;
-    padding: 0;
+    flex-direction: row-reverse;
+
     &.fbar {
-      background: none;
-      position: fixed;
-      height: layout( fbarh );
-      left: 0; top: 0;
-    }
-    .fa, .name {
-      padding: 2*$pad;
-      border-radius: 0;
-      background: darken( color( workb ), 5% );
-    }
-    .name {
-      color: desaturate( color( maint ), 100% );
-      &:hover {
-        color: lighten( desaturate( color( maint ), 100% ), 10%);
-      }
-    }
-
-    height: layout( fbarh );
-    .spacer {
-      float: right;
-      width: 4*$pad;
-      height: 100%;
-      background-color: darken( color( workb ), 8% );
-    }
-    .rarrow {
-      float: right;
-      margin:0;padding:0;
-      width: 0;
-      height: 0;
-      border: layout( fbarh )/2 solid transparent;
-      border-left: none;
-      border-right-color: darken( color( workb ), 8% );
-    }
-  }
-
-  .fbar .larrow {
-    position:relative;
-    top: $pad;
-    float: right;
-    margin:0;padding:0;
-    width: 0;
-    height: 0;
-    border: layout( fbarh )/2 solid transparent;
-    border-right: none;
-    border-left-color: darken( color( workb ), 5% );
-  }
-
-  &.Pane {
-    transition: left 0.4s;
-    width: layout( panew );
-    left: - layout( panew );
-    &.active {
+      flex-direction: row;
       left: 0;
-      width: layout( panew );
-    }
-
-    .wrap {
-      overflow: visible;
-      padding:0;
     }
   }
+
+  &.active {
+    left: 0;
+  }
+
+  border-bottom-right-radius: $brad;
+  padding-bottom: $brad;
 
   .results {
     min-height: layout( resultsh ) / 2;

@@ -3,8 +3,8 @@
 @import '../styles/misc';
 
 .Scene {
+  position: relative;
   flex-grow: 1;
-  width: layout( scenew );
   border: 1px solid color( boxl );
   border-width: 1px 0 0 1px;
   display: flex;
@@ -16,22 +16,6 @@
 
 // TODO: This should go into Factory...
 
-
-.Pane {
-  overflow: hidden;
-  width: 0px;
-  &.active {
-    width: layout( optw );
-  }
-  transition: width 0.1s;
-  position: absolute;
-  left: 0;
-  margin-left: -1px;
-  border-bottom-right-radius: $brad;
-  .wrap {
-    padding: $pad;
-  }
-}
 
 .Modal {
   position: fixed;

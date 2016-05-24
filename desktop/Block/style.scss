@@ -11,8 +11,14 @@
   color: lighten( $text_color, 60% );
   */
 
-  align-self: flex-end;
-  height: layout( blockh );
+  // align-self: flex-end;
+  position: absolute;
+  bottom: 0;
+  right: 0;
   width: layout( blockw );
   background: darken( $back_color, 5% );
+  .bar {
+    border-top-left-radius: $brad;
+  }
+  border-top-left-radius: $brad;
 }

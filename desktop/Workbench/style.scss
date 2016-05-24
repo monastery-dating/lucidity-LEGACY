@@ -15,10 +15,20 @@
   }
 
   .Pane {
-    background: darken( color( workb ), 2%);
-    box-shadow: inset 0 0 8px darken( color( workb ), 8% );
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    margin-left: -1px;
+
+    width: 0px;
+    transition: width 0.1s;
+
+    &.active {
+      width: layout( optw );
+    }
+    border-bottom-right-radius: $brad;
     .wrap {
-      padding: 2*$pad;
+      padding: $pad;
     }
   }
 }

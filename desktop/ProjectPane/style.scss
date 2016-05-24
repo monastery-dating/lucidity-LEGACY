@@ -5,34 +5,22 @@
 
 .ProjectPane {
   @extend ._pane;
+  right: - layout( panew );
+  transition: right 0.2s;
 
-  right:0;
-  padding-right: $ppad;
-  box-shadow: 0 0 10px darken( color( workb ), 15% );
+  .bar {
+    flex-direction: row;
 
-  .control {
-    @extend ._list;
-    border-left:0;
-  }
-  .bar .name {
-    color: darken( desaturate( color( maint ), 30% ), 20% );
-  }
-
-  .scenes {
-    @extend ._list;
-    border-left:0;
-    .fa {
-      color: darken( color( boxb ), 10% );
-      padding-left: $pad/2;
-    }
-    .sel .fa {
-      color: darken( color( boxb ), 20% );
+    &.fbar {
+      flex-direction: row-reverse;
+      right: 0;
     }
   }
 
-  .assets {
-    @extend ._list;
-    border-left:0;
+  &.active {
+    right: 0;
   }
 
+  border-bottom-left-radius: $brad;
+  padding-bottom: $brad;
 }

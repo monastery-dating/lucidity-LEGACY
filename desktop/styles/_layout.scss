@@ -1,7 +1,7 @@
 @import './misc';
 
 $layout:
-( panew: 200px  // pane width
+( panew: 160px  // pane width
 , paneh: 100%   // pane height
 , blockw: 480px // block editor width
 , blockh: 400px // block editor height
@@ -49,15 +49,6 @@ $layout:
     max-height: layout( infohmax );
     overflow: auto;
   }
-}
-
-._pane {
-  background: color( paneb );
-  position: fixed;
-  top: 0; bottom: 0;
-  height: layout( paneh );
-  width:  layout( panew ) - $ppad;
-  border: $lbox solid color( boxl );
 }
 
 ._list {
@@ -115,4 +106,85 @@ $layout:
       background: #28211c; // CodeMirror bespin
     }
   }
+}
+
+
+// hideable pane
+._pane {
+  position: fixed;
+  top:$pad;
+  box-shadow: 0 0 10px darken( color( workb ), 15% );
+  background: rgba( lighten( color( workb ), 5% ), 0.95);
+
+  width: layout( panew );
+
+  .wrap {
+    overflow: visible;
+  }
+
+  .bar {
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    cursor: pointer;
+    padding: 0;
+
+    .rarrow {
+      border-left-color: darken( color( workb ), 8% );
+    }
+    .larrow {
+      border-right-color: darken( color( workb ), 8% );
+    }
+
+    &.fbar {
+      flex-direction: row;
+      background: none;
+      position: fixed;
+      height: layout( fbarh );
+      top: $pad;
+
+      .rarrow {
+        border-left-color: darken( color( workb ), 5% );
+      }
+      .larrow {
+        border-right-color: darken( color( workb ), 5% );
+      }
+    }
+
+    .fa, .name {
+      padding: 2*$pad;
+      border-radius: 0;
+      background: darken( color( workb ), 5% );
+    }
+    .name {
+      color: desaturate( color( maint ), 100% );
+      &:hover {
+        color: lighten( desaturate( color( maint ), 100% ), 10%);
+      }
+    }
+
+    height: layout( fbarh );
+    .spacer {
+      width: 4*$pad;
+      height: 100%;
+      background-color: darken( color( workb ), 8% );
+    }
+  }
+
+  .larrow {
+    margin:0;padding:0;
+    width: 0;
+    height: 0;
+    border: layout( fbarh )/2 solid transparent;
+    border-left: none;
+  }
+
+  .rarrow {
+    margin:0;padding:0;
+    width: 0;
+    height: 0;
+    border: layout( fbarh )/2 solid transparent;
+    border-right: none;
+  }
+
 }

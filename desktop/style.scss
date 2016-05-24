@@ -91,13 +91,8 @@ body {
   }
 
   padding: $pad;
-  border: $lbox solid color( boxl );
-  // padding: $pad;
   background: color( boxb );
-  border: $lbox solid color( boxl );
-  margin-left: -$lbox;
-  margin-top: -$lbox;
-  width: 102%;
+  border-bottom: $lbox solid color( boxl );
 
   &.sel {
     background: color( sboxb );
