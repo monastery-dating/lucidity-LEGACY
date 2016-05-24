@@ -3,8 +3,8 @@
 $layout:
 ( panew: 200px  // pane width
 , paneh: 100%   // pane height
-, blockw: 400px // block editor width
-, blockh: 300px // block editor height
+, blockw: 480px // block editor width
+, blockh: 400px // block editor height
 , infow: 180px // overlay message info
 , infowmax: 380px // overlay message info
 , infoh: 100px // overlay message info
@@ -13,7 +13,6 @@ $layout:
 , optw: 140px   // options pane width
 , playbackh: 220px // playback height ( width is 16/9 * h )
 , statush: 20px // status bar
-, statusw: 100% // status bar
 , listh: 200px  // list height
 , scenew: 500px // project files in workbench
 , filesw: 200px // project files in workbench

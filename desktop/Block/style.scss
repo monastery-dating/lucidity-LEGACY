@@ -11,6 +11,8 @@
   color: lighten( $text_color, 60% );
   */
 
+  align-self: flex-end;
   height: layout( blockh );
+  width: layout( blockw );
   background: darken( $back_color, 5% );
 }

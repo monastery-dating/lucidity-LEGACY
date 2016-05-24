@@ -5,10 +5,8 @@
 .Project {
   width: layout( filesw );
   height: 100%;
-  float: left;
-  position: relative;
   border: 1px solid color( boxl );
-  margin-left: -1px;
+  border-width: 1px 0 0 0;
   .name {
     color: color( maint );
   }

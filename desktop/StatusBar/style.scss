@@ -5,12 +5,10 @@
 
 .StatusBar {
   background: lighten( $back_color, 5% );
-  position: fixed;
-  bottom: 0;
   height: layout( statush );
-  width:  layout( statusw );
+  width:  100%;
   border: $lbox solid color( boxl );
   padding: $ppad;
   color: lighten( $text_color, 60% );
-  z-index: 4; // code editor is 3
+  z-index: 4; // editor is at 3
 }

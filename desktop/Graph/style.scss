@@ -4,6 +4,7 @@
 
 .Graph {
   margin-left: 2 * $ppad;
+  flex-grow: 1;
   svg {
     width: 100%;
     height: 100%;

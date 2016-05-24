@@ -3,10 +3,16 @@
 @import '../styles/misc';
 
 .Workbench {
-  position: relative;
   background: color( workb );
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  >.stretch {
+    flex-grow: 1;
+    display: flex;
+  }
 
   .Pane {
     background: darken( color( workb ), 2%);
