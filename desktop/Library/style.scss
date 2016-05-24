@@ -8,6 +8,7 @@
   left:0;
   box-shadow: 0 0 10px darken( color( workb ), 15% );
   background: rgba( lighten( color( workb ), 5% ), 0.95);
+  
   .bar {
     cursor: pointer;
     padding: 0;
@@ -17,12 +18,12 @@
       height: layout( fbarh );
       left: 0; top: 0;
     }
-    .fa, .title {
+    .fa, .name {
       padding: 2*$pad;
       border-radius: 0;
       background: darken( color( workb ), 5% );
     }
-    .title {
+    .name {
       color: desaturate( color( maint ), 100% );
       &:hover {
         color: lighten( desaturate( color( maint ), 100% ), 10%);

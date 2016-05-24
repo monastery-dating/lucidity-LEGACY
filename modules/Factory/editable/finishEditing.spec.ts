@@ -7,13 +7,13 @@ describe
     it ( 'should prepare for save', ( assert ) => {
         const state = new Baobab
         ( { $factory:
-            { project: { editing: true, title: 'Foo' }
+            { project: { editing: true, name: 'Foo' }
             }
-          , project: { title: 'bong' }
+          , project: { name: 'bong' }
           }
         )
 
-        const input = { path: [ 'project', 'title' ], value: 'newTitle' }
+        const input = { path: [ 'project', 'name' ], value: 'newName' }
         let res
         const output =
         { success: ( e ) => { res = e }
@@ -30,22 +30,22 @@ describe
         ( res.doc
         , { type: 'project'
           , _id: res.doc._id
-          , title: 'newTitle'
+          , name: 'newName'
           }
         )
 
         assert.equal
-        ( state.get ( [ 'project', 'title' ] )
+        ( state.get ( [ 'project', 'name' ] )
         , 'bong' // not yet saved/changed
         )
 
         assert.equal
-        ( state.get ( [ '$factory', 'project', 'title', 'value' ] )
-        , 'newTitle' // temporary displayed value
+        ( state.get ( [ '$factory', 'project', 'name', 'value' ] )
+        , 'newName' // temporary displayed value
         )
 
         assert.equal
-        ( state.get ( [ '$factory', 'project', 'title', 'saving' ] )
+        ( state.get ( [ '$factory', 'project', 'name', 'saving' ] )
         , true
         )
 

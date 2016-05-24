@@ -32,7 +32,7 @@ export const ToolsPane = Component
       <LibraryOptions class='Library'>
         <div class='bar'>
           <LibraryOptions.toggle class='fa fa-book'/>
-          <div class='title'>Library</div>
+          <div class='name'>Library</div>
         </div>
         <div class='search'>
           <p>&nbsp;

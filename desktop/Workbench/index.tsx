@@ -17,4 +17,4 @@ export const Workbench = Component
     </div>
   )
 )
-        // <ProjectTitle/> /
+        // <ProjectName/> /

@@ -14,7 +14,7 @@
     @extend ._list;
     border-left:0;
   }
-  .bar .title {
+  .bar .name {
     color: darken( desaturate( color( maint ), 30% ), 20% );
   }
 

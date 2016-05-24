@@ -41,7 +41,7 @@ describe
         ( { state
           , output
           , services
-          , input: { doc: { type: 'foobar', title: 'newtitle' } }
+          , input: { doc: { type: 'foobar', name: 'newname' } }
           }
         )
 
@@ -66,7 +66,7 @@ describe
 
         const services = { data: { db : { put } } }
 
-        save ( { state, output, services, input: { doc: { title: 'newtitle' } } } )
+        save ( { state, output, services, input: { doc: { name: 'newname' } } } )
 
         assert.equal
         ( res

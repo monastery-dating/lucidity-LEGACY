@@ -11,7 +11,7 @@
   @extend ._pane;
   .bar {
     .fa { position: fixed; left: $pad; top: $pad }
-    .title {
+    .name {
       color: desaturate( color( maint ), 100% );
     }
   }

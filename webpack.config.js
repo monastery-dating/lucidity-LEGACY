@@ -9,7 +9,8 @@ module.exports =
   }
 , devtool: 'source-map'
 , resolve:
-  { extensions: ['', '.js', '.ts', '.tsx'] }
+  { extensions: ['', '.js', '.ts', '.tsx']
+  }
 , module:
   { loaders:
     [ { test: /(\.js|\.ts|\.tsx)$/

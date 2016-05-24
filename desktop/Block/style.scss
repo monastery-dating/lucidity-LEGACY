@@ -1,0 +1,16 @@
+@import '../styles/colors';
+@import '../styles/layout';
+@import '../styles/misc';
+
+.Block {
+  /*
+  position: absolute;
+  top: 200px;
+  left: 30px;
+  width: layout( blockw );
+  color: lighten( $text_color, 60% );
+  */
+
+  height: layout( blockh );
+  background: darken( $back_color, 5% );
+}

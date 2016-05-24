@@ -3,7 +3,7 @@ import * as Model from 'cerebral-model-baobab'
 const defaultProject =
 { _id: new Date ().toISOString ()
 , type: 'project'
-, title: 'New project'
+, name: 'New project'
 , scenes: []
 }
 

@@ -12,5 +12,5 @@
   border: $lbox solid color( boxl );
   padding: $ppad;
   color: lighten( $text_color, 60% );
-
+  z-index: 4; // code editor is 3
 }

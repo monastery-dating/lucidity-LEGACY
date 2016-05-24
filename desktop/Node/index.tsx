@@ -9,7 +9,6 @@ const makeSlot = ( slot: UISlotType, clbk ) => {
   const klass = Object.assign ( {}, flags, { slot: true })
   const transform = `translate(${x}, ${y})`
   if ( flags.free ) {
-    console.log ( transform )
     return <g transform={ transform }>
         <path d={ slot.plus } class='plus'/>
         <path d={ slot.click }
@@ -39,7 +38,7 @@ export const Node = Component
                   , [ uinode.className ]: true
                   , ghost: uinode.isGhost
                   }
-                  
+
     if ( state.block ) {
       klass.sel = state.block._id === uinode.blockId
     }

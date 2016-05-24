@@ -16,7 +16,7 @@ export const addAction =
   docs.push
   ( { _id
     , type
-    , title: `New ${type}`
+    , name: `New ${type}`
     }
   )
 

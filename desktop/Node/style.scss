@@ -9,7 +9,7 @@
     fill: darken( desaturate( pfill( $i ), 10%), 5%);
     cursor: pointer;
     &:hover {
-      fill: darken( saturate( pfill( $i ), 10%), 15%);
+      fill: lighten( desaturate( pfill( $i ), 10%), 8%);
     }
 
     &.dark {
@@ -17,7 +17,7 @@
     }
 
     &.sel {
-      fill: lighten( saturate( pfill( $i ), 10%), 0%);
+      fill: lighten( saturate( pfill( $i ), 10%), 10%);
       stroke: color( sboxl );
     }
   }

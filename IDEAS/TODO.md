@@ -4,20 +4,22 @@
 
 # PERFORMANCE
 
-* Optimize graph draw to not replace svg elements but update them ? (sync ?)
-  During drag hover, it might take less CPU.
+  1. Make sure the component render is NOT called if state and props have not changed (this is the first reason why we use immutables so it better work).
+  
+  2. Optimize graph draw to not replace svg elements but update them ? (sync ?)
+    During drag hover, it might take less CPU.
 
-* Make sure uigraph cache is used every time possible (eventually reduce cache usage to text size).
+  3. Make sure uigraph cache is used every time possible (eventually reduce cache usage to text size).
 
 
 # INTERFACE
 
 # SAVE
 
-  1. Write to /$project/title
+  1. Write to /$project/name
   2. Write to DB
   2. => on.update:
-        write to /data/[/project.id]/title
+        write to /data/[/project.id]/name
         /$project/saving = false
   4. => database on.change
   5. => /$project/saving = false

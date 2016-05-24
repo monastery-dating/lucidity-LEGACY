@@ -25,8 +25,8 @@ $colors:
 ,  boxb: lighten( $back_color, 15% ) // box background
 ,  boxt: $text_color                 // box text
 ,  boxl: lighten( $back_color, 2% )  // box border (line) color
-, tboxb: lighten( $back_color, 30% ) // title box background
-, tboxt: $text_color                  // title box text
+, tboxb: lighten( $back_color, 30% ) // name box background
+, tboxt: $text_color                  // name box text
 , listb: lighten( $back_color, 5% ) // list background
 , paneb: lighten( $back_color, 17% ) // side panels background
 , lheab: lighten( $back_color, 10% ) // list head background

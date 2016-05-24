@@ -9,7 +9,7 @@ const selectScene =
   ( { select: { type: 'scene', _id } } )
 }
 
-const sortByTitle = ( a, b ) => a.title > b.title ? 1 : -1
+const sortByName = ( a, b ) => a.name > b.name ? 1 : -1
 
 const showScenes =
 ( { scenes, sceneById, selectedSceneId }
@@ -18,7 +18,7 @@ const showScenes =
     return ''
   }
   const list = scenes.map ( ( id ) => sceneById [ id ] )
-  list.sort ( sortByTitle )
+  list.sort ( sortByName )
   return list.map
   ( ( scene ) => (
       <div class={{ li: true
@@ -26,13 +26,13 @@ const showScenes =
                   }}
         on-click={ () => selectScene ( signals, scene._id ) }>
         <div class='fa fa-film'></div>
-        { scene.title }
+        { scene.name }
       </div>
     )
   )
 }
 
-const ProjectTitle = editable ( [ 'project', 'title' ], 'p' )
+const ProjectName = editable ( [ 'project', 'name' ], 'p' )
 const AddScene = add ( 'scene', [ 'project', 'scenes' ] )
 
 export const ProjectPane = Component
@@ -43,8 +43,8 @@ export const ProjectPane = Component
 , ( { state, signals }: ContextType ) => (
     <div class='ProjectPane'>
       <div class='bar'>
-        <div class='fa fa-cube'></div>
-        <ProjectTitle class='title'/>
+        <div class='fa fa-diamond'></div>
+        <ProjectName class='name'/>
       </div>
 
       <div class='control'>

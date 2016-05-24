@@ -11,7 +11,7 @@ export const StatusDetail = Component
     const status: StatusType = state.detail || {}
     return <div class={{ StatusDetail: true, active: state.visible }}>
         <div class='bar'>
-          <Status status={ status } class='title'/>
+          <Status status={ status } class='name'/>
         </div>
         <div class='wrap'>
           { (status.detail || []).map

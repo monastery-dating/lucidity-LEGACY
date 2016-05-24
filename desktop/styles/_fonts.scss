@@ -13,7 +13,7 @@ $fonts:
   @return map-get( $fonts, $key );
 }
 
-h1, h2, h3, p, .title, .fa {
+h1, h2, h3, p, .name, .fa {
   font-size: 1em;
   font-weight: normal;
   line-height: 1.2em;

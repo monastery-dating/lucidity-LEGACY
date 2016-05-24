@@ -25,7 +25,7 @@ export const Library = Component
     <LibraryOptions class='Library'>
       <LibraryOptions.toggle class='fbar bar'>
         <div class='fa fa-book'></div>
-        <div class='title'>Library</div>
+        <div class='name'>Library</div>
         <div class='larrow'></div>
       </LibraryOptions.toggle>
 

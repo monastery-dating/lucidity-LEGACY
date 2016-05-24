@@ -20,7 +20,7 @@ export const removeAction =
   // Find current selection in ordered scenes
   const sortedscenes = [...parent.scenes]
   sortedscenes.sort
-  ( ( a, b ) => sceneById [ a ].title > sceneById [ b ].title ? 1 : -1 )
+  ( ( a, b ) => sceneById [ a ].name > sceneById [ b ].name ? 1 : -1 )
   const oldidx = sortedscenes.indexOf ( doc._id )
   const scenes = sortedscenes.filter
   ( ( id ) => id !== doc._id )

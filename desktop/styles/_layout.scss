@@ -3,11 +3,13 @@
 $layout:
 ( panew: 200px  // pane width
 , paneh: 100%   // pane height
+, blockw: 400px // block editor width
+, blockh: 300px // block editor height
 , infow: 180px // overlay message info
 , infowmax: 380px // overlay message info
 , infoh: 100px // overlay message info
 , infohmax: 300px // overlay message info
-, fbarh: 32px   // fixed bar height (should == title in bar height)
+, fbarh: 32px   // fixed bar height (should == name in bar height)
 , optw: 140px   // options pane width
 , playbackh: 220px // playback height ( width is 16/9 * h )
 , statush: 20px // status bar
@@ -24,14 +26,18 @@ $layout:
 
 ._info {
   background: color( infob );
+
   .wrap {
     padding: $ppad;
   }
+
   border: $lbox solid color( boxl );
   border-top-right-radius: $brad;
+
   .bar {
     border-top-right-radius: $brad;
   }
+
   color: lighten( $text_color, 60% );
   min-width: layout( infow );
   max-width: layout( infowmax );
@@ -76,4 +82,38 @@ $layout:
   -moz-user-select: none;
   -ms-user-select: none;
   user-select:none;
+}
+
+.bar {
+
+  background: darken( color( workb ), 5% );
+  div { display: inline-block }
+  padding-left: $pad;
+
+  .fa {
+    color: darken( desaturate( color( maint ), 60% ), 20% );
+  }
+  .fa.active, .active>.fa {
+    color: lighten( color( maint ), 30% );
+  }
+
+  &.tabs {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+
+    .stretch {
+      flex-grow: 1;
+    }
+  }
+
+  .tab {
+    border-left: 1px solid darken( color( workb ), 10% );
+    color: desaturate( color( maint ), 100% );
+    padding: $pad 2*$pad;
+
+    &.sel {
+      background: #28211c; // CodeMirror bespin
+    }
+  }
 }

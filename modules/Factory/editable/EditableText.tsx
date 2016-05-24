@@ -68,7 +68,7 @@ export const EditableText = Component
       return <div
           class={ klass }
           on-click={ ( e ) => props.on.edit ( {} ) }>
-          { text || props.text }
+          { text || props.text || ' ' }
         </div>
     }
   }

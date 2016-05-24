@@ -12,7 +12,7 @@ const getVerb = ( doc ) => (
 // Could be removed: no need for so much operation noise or have something
 // more interesting...
 const getStatus = ( doc ) => (
-  { type: 'info', message: `${ getVerb ( doc )} ${doc.type} '${doc.title || ''}'` }
+  { type: 'info', message: `${ getVerb ( doc )} ${doc.type} '${doc.name || ''}'` }
 )
 
 export const update =
@@ -39,8 +39,8 @@ export const update =
       const editing = state.get ( [ '$factory', 'editing' ] )
       if ( editing === _id ) {
         // the _id in 'select' == type
-        // when editing == type on select, activate title edit
-        state.set ( [ '$factory', 'editing' ], `${_id}-title` )
+        // when editing == type on select, activate name edit
+        state.set ( [ '$factory', 'editing' ], `${_id}-name` )
       }
     }
     else {

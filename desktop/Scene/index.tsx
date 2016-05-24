@@ -1,10 +1,11 @@
 import './style.scss'
+import { Block } from '../Block'
 import { Component } from '../Component'
 import { ContextType } from '../../modules/context.type'
 import { editable, openModal, pane } from '../../modules/Factory'
 import { Graph } from '../Graph'
 
-const SceneTitle = editable ( [ 'scene', 'title' ] )
+const SceneName = editable ( [ 'scene', 'name' ] )
 
 const SceneOptions = pane ( 'scene' )
 
@@ -23,7 +24,7 @@ export const Scene = Component
     return <div class='Scene'>
         <div class='bar'>
           <SceneOptions.toggle class='fa fa-film'/>
-          <SceneTitle class='title'/>
+          <SceneName class='name'/>
         </div>
         <SceneOptions>
           <div class='button delete'
@@ -33,6 +34,7 @@ export const Scene = Component
           <div class='button'>duplicate</div>
         </SceneOptions>
         <Graph/>
+        <Block/>
       </div>
   }
 )

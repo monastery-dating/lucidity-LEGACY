@@ -1,5 +1,6 @@
 // modules
 import { App } from '../modules/App'
+import { Block } from '../modules/Block'
 import { Data } from '../modules/Data'
 import { Factory } from '../modules/Factory'
 import { Graph } from '../modules/Graph'
@@ -25,6 +26,7 @@ const controller = Controller ( model )
 
 controller.addModules
 ( { app: App ()
+  , block: Block ()
   , data: Data ()
   , $factory: Factory ()
   , graph: Graph ()

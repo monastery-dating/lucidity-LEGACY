@@ -298,7 +298,6 @@ const uimapOne = function
       const cname = link.children [ i ]
       const pos = { x: x + sl, y }
 
-      console.log ( 'FREE', !cname, x, pos )
       if ( ! input [ i ] ) {
         // extra links outside of inputs...
         slots.push

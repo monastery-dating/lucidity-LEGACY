@@ -37,6 +37,7 @@
     "cerebral-module-http": "^0.1.1",
     "cerebral-view-snabbdom": "^0.5.0",
     "check-types": "^7.0.0",
+    "codemirror": "^5.15.2",
     "pouchdb": "^5.3.2",
     "snabbdom-jsx": "^0.3.0",
     "ts-loader": "^0.8.2"
