@@ -17,6 +17,7 @@ export const Scene = Component
     ( { message: 'Delete scene ?'
       , type: 'scene'
       , operation: 'remove'
+      , confirm: 'Delete'
       }
     , signals
     )

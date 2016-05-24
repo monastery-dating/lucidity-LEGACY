@@ -10,6 +10,7 @@ interface OpenModalOpts {
   message: string
   type: 'scene'
   operation: 'remove'
+  confirm?: string
 }
 
 // We use a switch case instead of signals[ key ] to force type check.
@@ -68,7 +69,9 @@ export const Modal = Component
             <div class='button cancel'
               on-click={ cancel }>Cancel</div>
             <div class='button continue'
-              on-click={ continueOp }>Continue</div>
+              on-click={ continueOp }>
+              { opts.confirm || 'Continue' }
+            </div>
           </div>
         </div>
       </div>
