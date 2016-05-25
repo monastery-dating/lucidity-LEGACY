@@ -84,10 +84,10 @@ svg {
       fill:   color( mainb );
       cursor: pointer;
       &:hover {
-        fill:  lighten( color( mainb ), 5% );
+        fill: lighten( color( mainb ), 5% );
       }
       &.sel {
-        fill:  lighten( color( mainb ), 50% );
+        fill: lighten( color( mainb ), 30% );
       }
     }
 

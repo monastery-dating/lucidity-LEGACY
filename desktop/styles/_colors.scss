@@ -6,7 +6,7 @@ $back_color: #302c2c; // #ff3030 is kind of fun ;-)
 $box_line:   #333;
 
 $colors:
-( mainb: lighten( $back_color, 10% )
+( mainb: lighten( $back_color, 5% )
 , maint: lighten( desaturate( $high_front, 30% ), 10% )
 , foldb: lighten( $back_color, 20% )
 , foldt: $high_front
