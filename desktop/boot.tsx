@@ -9,7 +9,7 @@ import { Playback } from '../modules/Playback'
 import { Project } from '../modules/Project'
 import { Scene } from '../modules/Scene'
 import { Status } from '../modules/Status'
-// import User from '../modules/User'
+import { User } from '../modules/User'
 
 // import Router from 'cerebral-module-router'
 import * as Controller from 'cerebral'
@@ -37,6 +37,7 @@ controller.addModules
   , project: Project ()
   , scene: Scene ()
   , $status: Status ()
+  , user: User ()
   }
 )
 

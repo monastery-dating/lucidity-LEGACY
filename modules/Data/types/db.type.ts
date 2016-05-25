@@ -7,12 +7,19 @@ interface DocResult {
   rows: any[]
 }
 
+interface DBError {
+  status: number
+  name: string
+  message: string
+  error: boolean
+}
+
 interface AllCallback {
-  ( err: string, doc: DocResult )
+  ( err: DBError, doc: DocResult )
 }
 
 interface Callback<T> {
-  ( err: string, res: T )
+  ( err: DBError, res: T )
 }
 
 // we make functions optional for mock in testing

@@ -9,7 +9,7 @@
     fill: darken( desaturate( pfill( $i ), 10%), 5%);
     cursor: pointer;
     &:hover {
-      fill: lighten( desaturate( pfill( $i ), 10%), 8%);
+      fill: lighten( desaturate( pfill( $i ), 10%), 3%);
     }
 
     &.dark {
@@ -82,10 +82,13 @@ svg {
 
     &.scene {
       fill:   color( mainb );
-    }
-
-    &.Folder {
-      fill:   color( foldb );
+      cursor: pointer;
+      &:hover {
+        fill:  lighten( color( mainb ), 5% );
+      }
+      &.sel {
+        fill:  lighten( color( mainb ), 50% );
+      }
     }
 
     &.ghost {

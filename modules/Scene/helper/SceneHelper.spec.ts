@@ -5,23 +5,12 @@ import { BlockType, GraphHelper } from '../../Graph'
 describe ( 'SceneHelper.create', ( it ) => {
 
     it ( 'should return block and scene docs', ( assert ) => {
-        const docs = SceneHelper.create ( { _id: 'foo', type: 'scene' } )
-        assert.equal
-        ( docs.length
-        , 2
-        )
+        const { scene, block } = SceneHelper.create ()
+        const graph = GraphHelper.create ( <BlockType> block )
 
         assert.equal
-        ( docs [ 0 ]
-        , {
-          }
-        )
-
-        const graph = GraphHelper.create ( <BlockType>docs [ 0 ] )
-
-        assert.equal
-        ( docs [ 1 ]
-        , { _id: 'foo'
+        ( scene
+        , { _id: scene._id ? scene._id : 'bad'
           , type: 'scene'
           , graph
           }

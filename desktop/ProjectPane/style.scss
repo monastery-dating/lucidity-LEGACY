@@ -5,7 +5,7 @@
 
 .ProjectPane {
   @extend ._pane;
-  right: - layout( panew );
+  right: - layout( panew ) - $ppad;
   transition: right 0.2s;
 
   .bar {

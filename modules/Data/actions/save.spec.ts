@@ -2,9 +2,11 @@ import { DataServicesType } from '../../Data'
 import { describe } from '../../Test/runner'
 import { saveAction } from './save'
 import * as Baobab from 'baobab'
+import * as Model from 'cerebral-model-baobab'
 
 describe
 ( 'Data save action', ( it ) => {
+
     it ( 'should save to db', ( assert ) => {
         const state = new Baobab
         ( { project: { _id: 'foobar' }
@@ -46,7 +48,7 @@ describe
         const output =
         { error ( args ) { res = args }
         }
-        const put = ( doc, clbk ) => clbk ( 'no good' )
+        const put = ( doc, clbk ) => clbk ( { message: 'no good' } )
 
         const services = { data: { db : { put } } }
 

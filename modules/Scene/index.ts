@@ -1,23 +1,23 @@
-export * from './signals/remove.signal'
 export * from './helper/SceneHelper'
 
-interface removeInputs {
-  clear?: string[]
-}
-
 export interface SceneSignalsType {
-  // TODO: rename reloaded or attached or ...
-  remove ( input: removeInputs )
+  add ( input: {} )
+  name ( input: { value: string } )
+  remove ( input: { _id: string } )
+  select ( input: { _id: string } )
 }
 
 import * as Model from 'cerebral-model-baobab'
-import { remove } from './signals/remove.signal'
+import { add } from './signals/add'
+import { name } from './signals/name'
+import { remove } from './signals/remove'
+import { select } from './signals/select'
 import { SceneHelper } from './helper/SceneHelper'
 
 const CurrentScene = Model.monkey
 ( { cursors:
     { sceneById: [ 'data', 'scene' ]
-    , id: [ 'data', 'main', 'scene', 'value' ]
+    , id: [ 'user', 'sceneId' ]
     }
   , get ( data ) {
       const sceneById = data.sceneById || {}
@@ -34,12 +34,11 @@ export const Scene =
     )
 
     module.addSignals
-    ( { remove
+    ( { add
+      , name
+      , remove
+      , select
       }
-    )
-
-    module.addServices
-    ( SceneHelper
     )
 
     return {} // meta information

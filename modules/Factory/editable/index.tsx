@@ -1,19 +1,39 @@
-export * from './finishedEditing.signal'
-export * from './saved.action'
-
-// FIXME: move Component to '/lib' ?
-// FIXME: move Factory to '/lib' ?
 import { Component } from '../../../desktop/Component'
-import { ContextType } from '../../context.type'
+import { ContextType, SignalsType } from '../../context.type'
 import { EditableText } from './EditableText'
 
 const EditingPath = [ '$factory', 'editing' ]
+
+// We use a switch case instead of signals[ key ] to force type check.
+const getSignal =
+( signals: SignalsType, type, attr ) => {
+  switch ( type ) {
+    case 'block':
+      switch ( attr ) {
+        case 'name':
+          return signals.block.name
+      }
+    break
+    case 'project':
+      switch ( attr ) {
+        case 'name':
+          return signals.project.name
+      }
+    case 'scene':
+      switch ( attr ) {
+        case 'name':
+          return signals.scene.name
+      }
+    break
+  }
+}
 
 // Editable Component factory
 export const editable =
 ( path, idscope: string = '' ) => {
   const spath = path.join ( '-' ) + idscope
   const fpath = [ '$factory', ...path ]
+
   return Component
   ( { text: path
     // where we store temporary value until saved
@@ -28,8 +48,9 @@ export const editable =
       const edit = () => signals.$factory.set
       ( { path: EditingPath, value: spath } )
 
-      const changed = ( value ) => signals.$factory.finishedEditing
-      ( { path, value } )
+      const signal = getSignal ( signals, path [ 0 ], path [ 1 ] )
+
+      const changed = ( value ) => signal ( { value } )
 
       const isediting = state.editing === spath
 

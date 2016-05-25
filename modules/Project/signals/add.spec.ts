@@ -1,19 +1,29 @@
-import { finishedEditing } from './finishedEditing.signal'
+import { add } from './add'
 import { describe } from '../../Test'
 import { signalTest } from '../../Test'
 
 describe
-( 'Factory finished editing signal', ( it ) => {
+( 'Project add signal', ( it ) => {
 
-    it ( 'should save', ( assert, done ) => {
+    it ( 'should add project', ( assert, done ) => {
+        const docs = []
         const services =
-        { data: { db: { put ( e, clbk ) { clbk () } } }
+        { data:
+          { db:
+            { bulkDocs ( d, clbk ) {
+                d.forEach ( ( e ) => docs.push ( e ) )
+                clbk ()
+              }
+            }
+          }
         }
+
+        // FIXME
         const send = signalTest
         ( { other: 'data'
           , $factory: { editing: 'foo-bar' }
           }
-        , finishedEditing 
+        , add
         , services
         )
 
@@ -42,5 +52,6 @@ describe
         )
       }
     )
+
   }
 )

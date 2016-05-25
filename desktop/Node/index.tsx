@@ -45,10 +45,11 @@ export const Node = Component
 
 
     const slotclick = ( pos ) => {
-      signals.graph.add ( { pos, parentId: uinode.id } )
+      signals.block.add ( { pos, parentId: uinode.id } )
     }
+    
     const click = () => {
-      signals.graph.select ( { id: uinode.id } )
+      signals.block.select ( { _id: uinode.blockId } )
     }
 
     return <g transform={ transform }>

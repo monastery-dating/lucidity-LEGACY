@@ -1,6 +1,8 @@
 import { defaultUILayout } from './uilayout'
 import { BlockType
+       , BlockByIdType
        , GraphWithBlocksType
+       , GraphType
        , NodeType
        , UIGhostBlockType
        , UINodeType, UINodeByIdType
@@ -383,11 +385,17 @@ const uimapOne = function
 /** Compute the layout of a graph.
  */
 export const uimap =
-( graph: GraphWithBlocksType
+( agraph: GraphType
+, blocksById: BlockByIdType
 , alayout?: UILayoutType
 , cache?: UIGraphType
 , aghost?: UIGhostBlockType
 ) : UIGraphType => {
+  const graph =
+  { nodes: agraph.nodes
+  , nodesById: agraph.nodesById
+  , blocksById
+  }
   const layout = alayout || defaultUILayout
   const cachebox : UINodeByIdType = cache ? cache.uiNodeById : {}
 

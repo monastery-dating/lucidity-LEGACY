@@ -1,6 +1,35 @@
-# DEV
+# DATA
 
-* Use a babel SCSS transpiler and make it live-reload with webpack-dev-server (makes it easier to move styles inline with components).
+We need to store 3 kinds of data:
+
+  1. Project data
+    - Project assets and scenes
+    - Scene name, graph, etc
+    - Block contents
+
+  2. User state
+    - Current project
+      - selected scene
+      - selected tab
+      - etc
+
+  3. Playback state
+    - Slider values
+    - Time position
+    - etc
+
+(1) should live in PouchDB-CouchDB on Lucidity.
+    /data/...
+(2) should also live in PouchDB-CouchDB, but under the user
+    scope.
+    /user/...
+(3) should live in another real-time database, with eventual
+    snapshots stored in /data/.
+
+For (1) and (2), we need to create two functions:
+
+  data.save ( type, id, values-to-merge ) ==> docs
+  data.state ( values-to-merge ) ==> docs
 
 # PERFORMANCE
 

@@ -1,19 +1,44 @@
 import { BlockHelper, GraphHelper } from '../../Graph'
-import { FactoryCreateHelperType } from '../../Factory'
+import { GraphType } from '../../Graph'
+import { makeId } from '../../Factory'
 
 export module SceneHelper {
-  export const create : FactoryCreateHelperType =
-  ( { _id, type } ) => {
+  export const create =
+  () => {
+    const _id = makeId ()
     const block = BlockHelper.create ( 'main', '' )
     const graph = GraphHelper.create ( block )
     const s = Object.assign
-    ( { _id, type }
-    , { name: 'New scene'
+    ( { _id
+      , type: 'scene'
+      , name: 'New scene'
       , graph
       }
     )
 
-    return [ block, s ]
+    return { block, scene: s }
+  }
+
+  export const select =
+  ( state, user, scene ) => {
+
+    if ( !scene ) {
+      return Object.assign
+      ( {}
+      , user
+      , { sceneId: null
+        }
+      )
+    }
+
+    // do not select block on scene change
+
+    return Object.assign
+    ( {}
+    , user
+    , { sceneId: scene._id
+      }
+    )
   }
 
 }

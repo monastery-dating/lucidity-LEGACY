@@ -6,7 +6,6 @@ export * from './types'
 export * from './makeId'
 
 import { set, add } from './common'
-import { finishedEditing } from './editable'
 
 export const Factory =
 ( options = {} ) => {
@@ -18,9 +17,9 @@ export const Factory =
       }
     )
 
+    // FIXME: none of these should exist.
     module.addSignals
     ( { add
-      , finishedEditing
       , set
       }
     )

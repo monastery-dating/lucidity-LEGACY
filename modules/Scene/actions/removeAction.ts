@@ -1,7 +1,9 @@
 import { ActionContextType } from '../../context.type'
+import { SceneHelper } from '../'
+
 export const removeAction =
 ( { state
-  , input: { clear }
+  , input: { _id }
   , output
   } : ActionContextType
 ) => {
@@ -10,7 +12,16 @@ export const removeAction =
   // clear options pane
   state.set ( [ '$factory', 'pane',  'scene'  ], false )
 
-  const doc = state.get ( [ 'scene' ] )
+  if ( !_id ) {
+    return
+  }
+
+  const doc = state.get ( [ 'data', 'scene', _id ] )
+
+  if ( !doc ) {
+    return
+  }
+
   const sceneById = state.get ( [ 'data', 'scene' ] )
 
   const docs = []
@@ -37,13 +48,14 @@ export const removeAction =
     )
   )
 
+  // FIXME use user for scene selection.
+  const user = state.get ( [ 'user' ] )
+  const newScene = scenes [ selidx ]
+
+
   // Select new scene
   docs.push
-  ( Object.assign
-    ( {}
-    , state.get ( [ 'data', 'main', 'scene' ] )
-    , { value: scenes [ selidx ] }
-    )
+  ( SceneHelper.select ( state, user, newScene )
   )
 
   // Remove element
@@ -57,7 +69,6 @@ export const removeAction =
   if ( graph ) {
     const nodes = graph.nodes
   }
-
 
   output ( { docs } )
 }

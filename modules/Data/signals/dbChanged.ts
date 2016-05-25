@@ -1,5 +1,5 @@
 import { update } from '../actions/update'
-import { saved } from '../../Factory'
+import { saved } from '../actions/saved'
 import { status } from '../../Status'
 
 export const dbChanged =

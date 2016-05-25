@@ -8,6 +8,7 @@ import { ContextType, SignalsType } from '../../context.type'
 // Open/closeable pane
 interface OpenModalOpts {
   message: string
+  _id: string
   type: 'scene'
   operation: 'remove'
   confirm?: string
@@ -55,7 +56,7 @@ export const Modal = Component
     const continueOp = () => {
       const signal = getSignal ( signals, opts )
       if ( signal ) {
-        signal ( {} )
+        signal ( { _id: opts.id } )
       }
       else {
         console.error ( 'Invalid signal for modal:', opts )

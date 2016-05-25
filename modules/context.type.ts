@@ -1,15 +1,17 @@
+import { BlockSignalsType } from './Block'
 import { DataSignalsType, DataServicesType } from './Data'
 import { FactorySignalsType } from './Factory'
-import { GraphSignalsType } from './Graph'
+import { ProjectSignalsType } from './Project'
 import { SceneSignalsType, SceneHelperType } from './Scene'
 import { StatusSignalsType } from './Status'
 
 // Exported interface for signals (corresponds to inputs of
 // first action in signal chains)
 export interface SignalsType {
+  block: BlockSignalsType
   data: DataSignalsType
   $factory: FactorySignalsType
-  graph: GraphSignalsType
+  project: ProjectSignalsType
   scene: SceneSignalsType
   $status: StatusSignalsType
 }

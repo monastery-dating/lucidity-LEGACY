@@ -10,12 +10,13 @@ const SceneName = editable ( [ 'scene', 'name' ] )
 const SceneOptions = pane ( 'scene' )
 
 export const Scene = Component
-( {
+( { _id: [ 'scene', '_id' ]
   }
 , ( { state, signals }: ContextType ) => {
     const deleteModal = openModal
     ( { message: 'Delete scene ?'
       , type: 'scene'
+      , _id: state._id
       , operation: 'remove'
       , confirm: 'Delete'
       }

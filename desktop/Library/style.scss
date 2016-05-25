@@ -4,7 +4,7 @@
 
 .Library {
   @extend ._pane;
-  left: - layout( panew );
+  left: - layout( panew ) - $ppad;
   transition: left 0.2s;
 
   .bar {

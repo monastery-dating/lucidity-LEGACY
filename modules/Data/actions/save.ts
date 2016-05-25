@@ -9,25 +9,7 @@ export const saveAction =
   } : ActionContextType
 ) => {
 
-  if ( doc ) {
-    // setTimeout ( () => {
-    db.put
-    ( doc
-    , ( err ) => {
-        if ( err ) {
-          output.error
-          ( { status: { type: 'error', message: err } } )
-        }
-        else {
-          output.success
-          ( { status: { type: 'success', message: `Saved ${doc.type}` } } )
-        }
-      }
-    )
-    // }, 500 )
-  }
-
-  else if ( docs ) {
+  if ( docs ) {
     db.bulkDocs
     ( docs
     , ( err ) => {
@@ -47,6 +29,25 @@ export const saveAction =
       }
     )
   }
+
+  else if ( doc ) {
+    // setTimeout ( () => {
+    db.put
+    ( doc
+    , ( err ) => {
+        if ( err ) {
+          output.error
+          ( { status: { type: 'error', message: err.message } } )
+        }
+        else {
+          output.success
+          ( { status: { type: 'success', message: `Saved ${doc.type}` } } )
+        }
+      }
+    )
+    // }, 500 )
+  }
+
   else {
     throw 'Missing "docs" or "doc" in Data.save'
   }

@@ -40,10 +40,6 @@ export const Editor = Component
       }
     }
 
-
-
-console.log ( FOOCODE )
-
     if ( block !== state.block && code ) {
       console.log ( 'RENDER Block' )
       block = state.block

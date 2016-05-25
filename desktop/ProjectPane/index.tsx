@@ -5,8 +5,8 @@ import { add, pane } from '../../modules/Factory'
 
 const selectScene =
 ( signals: SignalsType, _id ) => {
-  signals.data.selected
-  ( { select: { type: 'scene', _id } } )
+  signals.scene.select
+  ( { _id } )
 }
 
 const sortByName = ( a, b ) => a.name > b.name ? 1 : -1
@@ -32,8 +32,6 @@ const showScenes =
   )
 }
 
-
-const AddScene = add ( 'scene', [ 'project', 'scenes' ] )
 
 const Pane = pane ( 'project' )
 
@@ -74,7 +72,10 @@ export const ProjectPane = Component
 
         <div>
           { showScenes ( state, signals ) }
-          <AddScene class='li'>+</AddScene>
+          <div class='li add'
+            on-click={ () => signals.scene.add ( {} ) }>
+            +
+          </div>
         </div>
       </div>
 
