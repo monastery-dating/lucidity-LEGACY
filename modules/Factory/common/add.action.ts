@@ -1,7 +1,11 @@
 import { ActionContextType } from '../../context.type'
+import { FactoryCreateHelperType } from '../types'
+import { makeId } from '../makeId'
+
 export const addAction =
 ( { state
   , input: { path, type }
+  , services
   , output
   } : ActionContextType
 ) => {
@@ -11,14 +15,27 @@ export const addAction =
 
   const docs = []
 
-  const _id = new Date ().toISOString ()
+  const _id = makeId ()
+
   // create new element
-  docs.push
-  ( { _id
-    , type
-    , name: `New ${type}`
-    }
-  )
+  const helper = services [ type ]
+  if ( helper && helper.create ) {
+    const create: FactoryCreateHelperType = helper.create
+
+    // creates documents for initial object of type 'type'
+    create ( { _id, type } )
+    .forEach ( ( d ) => {
+      console.log ( d )
+      docs.push ( d ) })
+  }
+  else {
+    docs.push
+    ( { _id
+      , type
+      , name: `New ${type}`
+      }
+    )
+  }
 
   // Select this new element
   docs.push
@@ -29,6 +46,7 @@ export const addAction =
       , { type: 'main', _id: type, value: _id }
     )
   )
+
   // This is a flag that will set editing after db object
   // is selected.
   state.set ( [ '$factory', 'editing' ], type )

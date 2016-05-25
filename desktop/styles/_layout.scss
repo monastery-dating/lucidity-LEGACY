@@ -111,6 +111,7 @@ $layout:
 
 // hideable pane
 ._pane {
+  z-index: 5; // CodeMirror = 3, StatusBar = 4
   position: fixed;
   top:$pad;
   box-shadow: 0 0 10px darken( color( workb ), 15% );

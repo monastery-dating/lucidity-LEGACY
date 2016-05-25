@@ -1,7 +1,8 @@
 import * as Model from 'cerebral-model-baobab'
+import { makeId } from '../../modules/Factory'
 
 const defaultProject =
-{ _id: new Date ().toISOString ()
+{ _id: makeId ()
 , type: 'project'
 , name: 'New project'
 , scenes: []

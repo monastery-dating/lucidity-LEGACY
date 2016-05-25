@@ -51,5 +51,13 @@ export const removeAction =
   ( Object.assign ( {}, doc, { _deleted: true } )
   )
 
+  // Remove graph
+  const graph = doc.graph
+
+  if ( graph ) {
+    const nodes = graph.nodes
+  }
+
+
   output ( { docs } )
 }

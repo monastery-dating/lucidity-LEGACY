@@ -1,7 +1,10 @@
 export * from './signals/remove.signal'
+export * from './helper/SceneHelper'
+
 interface removeInputs {
   clear?: string[]
 }
+
 export interface SceneSignalsType {
   // TODO: rename reloaded or attached or ...
   remove ( input: removeInputs )
@@ -9,6 +12,7 @@ export interface SceneSignalsType {
 
 import * as Model from 'cerebral-model-baobab'
 import { remove } from './signals/remove.signal'
+import { SceneHelper } from './helper/SceneHelper'
 
 const CurrentScene = Model.monkey
 ( { cursors:
@@ -32,6 +36,10 @@ export const Scene =
     module.addSignals
     ( { remove
       }
+    )
+
+    module.addServices
+    ( SceneHelper
     )
 
     return {} // meta information

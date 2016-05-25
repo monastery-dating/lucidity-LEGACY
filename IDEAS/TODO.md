@@ -5,7 +5,8 @@
 # PERFORMANCE
 
   1. Make sure the component render is NOT called if state and props have not changed (this is the first reason why we use immutables so it better work).
-  
+  ==> Try switch to Inferno
+
   2. Optimize graph draw to not replace svg elements but update them ? (sync ?)
     During drag hover, it might take less CPU.
 
@@ -13,6 +14,10 @@
 
 
 # INTERFACE
+
+# OPERATION
+
+Group actions into an operation.
 
 # SAVE
 

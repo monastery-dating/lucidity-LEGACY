@@ -17,7 +17,7 @@ const showScenes =
   if ( !scenes || !sceneById ) {
     return ''
   }
-  const list = scenes.map ( ( id ) => sceneById [ id ] )
+  const list = scenes.map ( ( id ) => sceneById [ id ] || {} )
   list.sort ( sortByName )
   return list.map
   ( ( scene ) => (

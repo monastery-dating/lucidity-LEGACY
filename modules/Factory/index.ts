@@ -2,14 +2,8 @@ export * from './add'
 export * from './editable'
 export * from './modal'
 export * from './pane'
-
-type stringArray = string[]
-export interface FactorySignalsType {
-  set ( { path: stringArray, value: any } )
-  add ( { path: stringArray, type: string } )
-  finishedEditing ( { path: stringArray, value: any } )
-  // TODO: rename reloaded or attached or ...
-}
+export * from './types'
+export * from './makeId'
 
 import { set, add } from './common'
 import { finishedEditing } from './editable'

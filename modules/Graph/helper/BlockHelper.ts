@@ -1,6 +1,7 @@
 import { BlockType, BlockByIdType, BlockIOType
        , BlockTypeChanges } from '../types'
 import { Immutable as IM } from './immutable'
+import { makeId } from '../../Factory'
 
 
 
@@ -14,7 +15,7 @@ export module BlockHelper {
 
 
     return IM.merge
-    ( { _id: new Date ().toISOString ()
+    ( { _id: makeId ()
       , type: 'block'
       , name
       , source

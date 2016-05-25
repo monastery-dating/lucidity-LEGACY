@@ -1,5 +1,6 @@
 import { ActionContextType } from '../../context.type'
 import * as check from 'check-types'
+import { makeId } from '../makeId'
 
 export const finishEditing =
 ( { state
@@ -19,7 +20,7 @@ export const finishEditing =
 
     if ( !doc._id ) {
       // new element
-      doc._id = new Date().toISOString ()
+      doc._id = makeId ()
       doc.type = root [ 0 ]
     }
 

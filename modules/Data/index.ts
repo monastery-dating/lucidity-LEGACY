@@ -1,6 +1,8 @@
 // Exposed actions and signals from Data (used directly in other signals composition)
 export * from './signals/reload'
 export * from './signals/save'
+export * from './actions/save'
+export * from './signals/selected'
 
 import { db } from './services/db'
 import { Db } from './types/db.type'

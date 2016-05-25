@@ -1,7 +1,7 @@
 import { ActionContextType } from '../../context.type'
 import * as check from 'check-types'
 
-export const save =
+export const saveAction =
 ( { state
   , input: { doc, docs }
   , services: { data: { db } }
@@ -53,11 +53,11 @@ export const save =
 
 }
 
-save [ 'async' ] = true
+saveAction [ 'async' ] = true
 
 // Cerebral type checking
 const mdoc = { _id: 'string', type: 'string' }
-save [ 'input' ] = ( v ) => {
+saveAction [ 'input' ] = ( v ) => {
   return check.maybe.like ( v.doc, mdoc )
       && check.maybe.array.of.like ( v.docs, mdoc )
 }

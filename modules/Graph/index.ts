@@ -1,5 +1,7 @@
-export * from './helper/uimap'
+export * from './helper/BlockHelper'
+export * from './helper/GraphHelper'
 export * from './types'
+export * from './helper/uimap'
 
 export interface GraphSignalsType {
   add ( input: { pos: number, parentId: string } )

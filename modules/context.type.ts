@@ -1,7 +1,7 @@
 import { DataSignalsType, DataServicesType } from './Data'
 import { FactorySignalsType } from './Factory'
 import { GraphSignalsType } from './Graph'
-import { SceneSignalsType } from './Scene'
+import { SceneSignalsType, SceneHelperType } from './Scene'
 import { StatusSignalsType } from './Status'
 
 // Exported interface for signals (corresponds to inputs of
@@ -18,6 +18,7 @@ export interface SignalsType {
 // during testing.
 interface ServicesType {
   data?: DataServicesType
+  scene?: SceneHelperType
 }
 
 export interface StateType {
