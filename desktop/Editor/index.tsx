@@ -34,6 +34,12 @@ export const Editor = Component
               , mode: 'javascript'
               }
             )
+            code.on
+            ( 'blur', () => {
+                signals.block.source
+                ( { value: code.getValue () } )
+              }
+            )
           }
         , 100
         )
@@ -41,9 +47,8 @@ export const Editor = Component
     }
 
     if ( block !== state.block && code ) {
-      console.log ( 'RENDER Block' )
       block = state.block
-      code.setValue ( state.source || FOOCODE )
+      code.setValue ( state.source || '' )
     }
 
     return <div class='Editor'>
