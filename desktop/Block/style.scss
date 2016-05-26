@@ -12,4 +12,8 @@
     border-top-left-radius: $brad;
   }
   border-top-left-radius: $brad;
+
+  .CodeMirror {
+    height: layout( blockh );
+  }
 }

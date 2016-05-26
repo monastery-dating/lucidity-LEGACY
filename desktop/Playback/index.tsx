@@ -4,6 +4,11 @@ import { PlaybackHelper, PlaybackCache } from '../../modules/Playback'
 
 const cache: PlaybackCache = { nodecache: {} }
 
+/* ====== PLAYBACK LIBS ======= */
+import * as THREE from 'three'
+window['THREE'] = THREE
+/* ====== PLAYBACK LIBS ======= */
+
 export const Playback = Component
 ( { main: [ 'playback', '$main' ]
   , graph: [ 'scene', 'graph' ]
@@ -42,7 +47,6 @@ export const Playback = Component
         style={{ height: usedh + 'px'
                , width: usedw + 'px' }}>
         <div class='Screen' style={portStyle}>
-          <div id='screen'></div>
           <svg width={w+2+2*hair} height={h+2+2*hair} class='tv'
             style={{ marginLeft: -1-hair, marginTop: -1-hair }}>
 
@@ -50,6 +54,9 @@ export const Playback = Component
             <rect x={0.5+hair} y={0.5-1} width={w+1} height={h+3+2*hair}/>
 
           </svg>
+
+          <div id='screen'></div>
+
         </div>
       </div>
     </div>
