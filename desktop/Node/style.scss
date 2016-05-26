@@ -17,7 +17,8 @@
     }
 
     &.sel {
-      fill: lighten( saturate( pfill( $i ), 10%), 10%);
+      fill: lighten( saturate( color( sboxb ), 40% ), 20%);
+      // fill: lighten( saturate( pfill( $i ), 10%), 10%);
       stroke: color( sboxl );
     }
   }
@@ -81,13 +82,15 @@ svg {
     stroke: color( wboxl );
 
     &.scene {
-      fill:   color( mainb );
       cursor: pointer;
+
+      fill:   color( mainb );
+
       &:hover {
         fill: lighten( color( mainb ), 5% );
       }
       &.sel {
-        fill: lighten( color( mainb ), 30% );
+        fill: lighten( saturate( color( sboxb ), 40% ), 20%);
       }
     }
 
