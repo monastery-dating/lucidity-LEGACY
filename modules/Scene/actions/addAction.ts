@@ -13,7 +13,7 @@ export const addAction =
 
   // This is a flag that will set editing after db object
   // is selected. Not sure this works.
-  state.set ( [ '$factory', 'editing' ], 'scene' )
+  state.set ( [ '$factory', 'editing' ], scene._id )
 
   // add to project
   const project = state.get ( [ 'project' ] )

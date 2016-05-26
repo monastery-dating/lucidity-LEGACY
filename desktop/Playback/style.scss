@@ -10,9 +10,20 @@
   align-items: center;
   width: 100%;
 
-  .Screen {
-    background: black;
+  .wrap {
+    position: relative;
   }
+
+  .Screen {
+    position: absolute;
+    background: black;
+    #screen {
+      position: absolute;
+      top:0; left:0;
+      width:100%; height:100%;
+    }
+  }
+
   .tv {
     rect {
       stroke: lighten( #000, 20% );

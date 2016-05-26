@@ -1,6 +1,5 @@
-export * from './helper/GraphHelper'
 export * from './types'
-export * from './helper/uimap'
+export * from './helper'
 
 import * as Model from 'cerebral-model-baobab'
 

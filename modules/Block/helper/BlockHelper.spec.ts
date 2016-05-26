@@ -33,6 +33,15 @@ describe ( 'BlockHelper.create', ( it ) => {
       }
     )
 
+    it ( 'should compile js', ( assert ) => {
+        const node = BlockHelper.create ( 'hello' , `export const render = () => 'hop'`)
+        assert.equal
+        ( node.js
+        , "\"use strict\";\r\nexports.render = function () { return 'hop'; };\r\n"
+        )
+      }
+    )
+
     it ( 'should be immutable', ( assert ) => {
         const node = BlockHelper.create ( 'hello' , SOURCE_A )
         assert.throws

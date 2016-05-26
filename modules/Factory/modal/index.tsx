@@ -56,7 +56,7 @@ export const Modal = Component
     const continueOp = () => {
       const signal = getSignal ( signals, opts )
       if ( signal ) {
-        signal ( { _id: opts.id } )
+        signal ( { _id: opts._id } )
       }
       else {
         console.error ( 'Invalid signal for modal:', opts )

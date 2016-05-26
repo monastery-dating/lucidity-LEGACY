@@ -7,8 +7,7 @@ export const setAction =
   }
 ) => {
   if ( path [ 0 ] === 'data' ) {
-    // this is a save
-    output.save ( { path, value } )
+    throw ( "SHOULD NOT USE set with data" )
   }
   else {
     // we could write this even during a save for faster UI ops
@@ -20,5 +19,3 @@ setAction [ 'input' ] =
 { path: check.array.of.string
 , value: check.assigned
 }
-
-setAction [ 'outputs' ] = [ 'save' ]

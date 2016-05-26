@@ -8,7 +8,7 @@ import { ContextType } from '../../context.type'
 // Open/closeable pane
 export const pane =
 ( name: string ) => {
-  const panePath = [ 'data', 'main', `pane-${name}`, 'value' ]
+  const panePath = [ '$factory', 'pane', name ]
 
   const comp = Component
   ( { active: panePath // State of the pane.

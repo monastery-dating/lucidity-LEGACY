@@ -9,11 +9,14 @@ export const addAction =
   } : ActionContextType
 ) => {
   const scene = state.get ( [ 'scene' ] )
-  const child = BlockHelper.create ( 'empty.Block', '' )
+  const child = BlockHelper.create ( 'new block' )
   const graph =
   GraphHelper.insert ( scene.graph, parentId, pos, child )
 
   const sceneupdate = Object.assign ( {}, scene, { graph } )
 
-  output ( { docs: [ child, sceneupdate ] } )
+  // triger name edit after object save
+  state.set ( [ '$factory', 'editing' ], child._id )
+
+  output ( { docs: [ child, sceneupdate ], doc: child } )
 }

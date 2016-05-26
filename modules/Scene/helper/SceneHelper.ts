@@ -1,13 +1,14 @@
-import { BlockHelper } from '../../Block'
+import { BlockHelper, BlockType } from '../../Block'
 import { GraphHelper } from '../../Graph'
 import { GraphType } from '../../Graph'
+import { SceneType } from '../'
 import { makeId } from '../../Factory'
 
 export module SceneHelper {
   export const create =
-  () => {
+  () : { block: BlockType, scene: SceneType } => {
     const _id = makeId ()
-    const block = BlockHelper.create ( 'main', '' )
+    const block = BlockHelper.main ()
     const graph = GraphHelper.create ( block )
     const s = Object.assign
     ( { _id
@@ -21,7 +22,10 @@ export module SceneHelper {
   }
 
   export const select =
-  ( state, user, scene ) => {
+  ( state
+  , user
+  , scene : SceneType
+  ) => {
 
     if ( !scene ) {
       return Object.assign

@@ -39,7 +39,9 @@
     "check-types": "^7.0.0",
     "codemirror": "^5.15.2",
     "pouchdb": "^5.3.2",
+    "raw-loader": "^0.5.1",
     "snabbdom-jsx": "^0.3.0",
-    "ts-loader": "^0.8.2"
+    "ts-loader": "^0.8.2",
+    "typescript-services": "^0.1.5"
   }
 }

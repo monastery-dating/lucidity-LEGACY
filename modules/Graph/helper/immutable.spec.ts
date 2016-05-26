@@ -1,5 +1,5 @@
 import { describe } from '../../Test/runner'
-import { Immutable as IM } from './immutable'
+import { Immutable as IM } from './Immutable'
 
 describe ( 'IM.merge', ( it ) => {
     it ( 'should create new object', ( assert ) => {

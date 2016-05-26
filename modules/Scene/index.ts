@@ -1,4 +1,5 @@
 export * from './helper/SceneHelper'
+export * from './SceneType'
 
 export interface SceneSignalsType {
   add ( input: {} )

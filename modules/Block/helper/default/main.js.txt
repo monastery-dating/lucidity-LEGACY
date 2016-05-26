@@ -1,0 +1,4 @@
+export const render =
+( ctx, child ) => {
+  child ()
+}

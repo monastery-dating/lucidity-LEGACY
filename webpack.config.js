@@ -15,7 +15,11 @@ module.exports =
   { loaders:
     [ { test: /(\.js|\.ts|\.tsx)$/
       , exclude: /node_modules/
-      , loader: 'ts-loader' //-loader!ts-loader'
+      , loader: 'ts-loader'
+      }
+    , { test: /\.txt$/
+      , exclude: /node_modules/
+      , loader: 'raw-loader'
       }
     , { test: /\.s?css$/
       , loaders: [ 'style', 'css', 'sass' ]

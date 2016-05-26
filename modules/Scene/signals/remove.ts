@@ -1,9 +1,11 @@
 import { SignalType } from '../../context.type'
 import { removeAction } from '../actions/removeAction'
 import { save } from '../../Data'
+import { status } from '../../Status'
 
 export const remove: SignalType =
-// prepare things to add
 [ removeAction
-, ...save
+, { success: [ ...save ]
+  , error: [ status ]
+  }
 ]

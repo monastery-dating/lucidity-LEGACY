@@ -4,7 +4,7 @@ import { GraphHelper } from './GraphHelper'
 import { NodeHelper } from './NodeHelper'
 import { BlockHelper } from '../../Block'
 
-import { Immutable as IM } from './immutable'
+import { Immutable as IM } from './Immutable'
 
 const rootId = NodeHelper.rootNodeId
 const SOURCE_A = ``

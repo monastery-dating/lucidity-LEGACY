@@ -1,5 +1,5 @@
 import { NodeType, NodeByIdType } from '../types'
-import { Immutable as IM } from './immutable'
+import { Immutable as IM } from './Immutable'
 
 export module NodeHelper {
 

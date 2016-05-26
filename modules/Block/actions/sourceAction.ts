@@ -1,4 +1,6 @@
 import { ActionContextType } from '../../context.type'
+import { BlockHelper } from '../'
+
 export const sourceAction =
 ( { state
   , input: { value }
@@ -7,9 +9,8 @@ export const sourceAction =
 ) => {
 
   // prepare doc
-  const doc = Object.assign
-  ( {}
-  , state.get ( [ 'block' ] )
+  const doc = BlockHelper.update
+  ( state.get ( [ 'block' ] )
   , { source: value }
   )
 

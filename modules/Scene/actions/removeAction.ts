@@ -1,5 +1,6 @@
 import { ActionContextType } from '../../context.type'
-import { SceneHelper } from '../'
+import { ProjectType } from '../../Project'
+import { SceneHelper, SceneType, SceneByIdType } from '../'
 
 export const removeAction =
 ( { state
@@ -13,21 +14,31 @@ export const removeAction =
   state.set ( [ '$factory', 'pane',  'scene'  ], false )
 
   if ( !_id ) {
+    output.error
+    ( { status:
+        { type: 'error', message: 'No _id cannot delete scene' }
+      }
+    )
     return
   }
 
   const doc = state.get ( [ 'data', 'scene', _id ] )
 
   if ( !doc ) {
+    output.error
+    ( { status:
+        { type: 'error', message: 'Cannot delete unselected scene.' }
+      }
+    )
     return
   }
 
-  const sceneById = state.get ( [ 'data', 'scene' ] )
+  const sceneById: SceneByIdType = state.get ( [ 'data', 'scene' ] )
 
   const docs = []
 
   // Remove ref in parent
-  const parent = state.get ( [ 'project' ] )
+  const parent: ProjectType = state.get ( [ 'project' ] )
   // Find current selection in ordered scenes
   const sortedscenes = [...parent.scenes]
   sortedscenes.sort
@@ -44,13 +55,12 @@ export const removeAction =
   ( Object.assign
     ( {}
       , parent
-      , { scenes, sceneId }
+      , { scenes }
     )
   )
 
-  // FIXME use user for scene selection.
   const user = state.get ( [ 'user' ] )
-  const newScene = scenes [ selidx ]
+  const newScene = sceneById [ sceneId ]
 
 
   // Select new scene
@@ -70,5 +80,5 @@ export const removeAction =
     const nodes = graph.nodes
   }
 
-  output ( { docs } )
+  output.success ( { docs } )
 }

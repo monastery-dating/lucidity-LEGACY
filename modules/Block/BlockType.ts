@@ -13,16 +13,17 @@ export interface BlockTypeChanges {
   output?: SlotType
 }
 
-export interface BlockIOType {
+export interface BlockSourceInfo {
   // The following elements should be deduced
   // from the source code
+  js: string // compiled source
   input: SlotType[]
   output: SlotType
   // True if the node has an init function
   init: boolean
 }
 
-export interface BlockType extends BlockIOType {
+export interface BlockType extends BlockSourceInfo {
   // database related
   _id: string
   _rev?: string

@@ -35,13 +35,7 @@ export const update =
   else {
     state.set ( [ 'data', type, _id ], doc )
 
-    if ( type === 'main' ) { // selecting element
-      const editing = state.get ( [ '$factory', 'editing' ] )
-      if ( editing === _id ) {
-        // the _id in 'select' == type
-        // when editing == type on select, activate name edit
-        state.set ( [ '$factory', 'editing' ], `${_id}-name` )
-      }
+    if ( type === 'user' ) {
     }
     else {
       if ( _id === cid || cid === undefined ) {
@@ -49,5 +43,5 @@ export const update =
       }
     }
   }
-  output ( { saved, status } )
+  output ( { saved, status, doc } )
 }
