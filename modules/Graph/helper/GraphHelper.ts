@@ -1,6 +1,7 @@
 import { NodeHelper } from './NodeHelper'
-import { GraphType, BlockType, NodeType
-       , BlockIOType, SlotType } from '../types'
+import { GraphType, NodeType } from '../types'
+import { BlockType
+       , BlockIOType, SlotType } from '../../Block'
 
 import { Immutable as IM } from './immutable'
 

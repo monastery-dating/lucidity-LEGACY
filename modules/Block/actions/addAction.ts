@@ -1,5 +1,6 @@
 import { ActionContextType } from '../../context.type'
-import { GraphType, GraphHelper, BlockHelper } from '../../Graph'
+import { GraphHelper } from '../../Graph'
+import { BlockHelper } from '../helper/BlockHelper'
 
 export const addAction =
 ( { state

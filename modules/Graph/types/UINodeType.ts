@@ -1,4 +1,4 @@
-import { BlockType } from './BlockType'
+import { BlockType } from '../../Block'
 
 export interface UIPosType {
   x: number
@@ -62,7 +62,7 @@ export interface UINodeType {
 }
 
 export interface UIGhostBlockType {
-  node: BlockType
+  block: BlockType
   uinode: UINodeType
   linkpos?: number // if box can be dropped, this is the position in parent links
   parentId?: string  // parent boxid if can be dropped

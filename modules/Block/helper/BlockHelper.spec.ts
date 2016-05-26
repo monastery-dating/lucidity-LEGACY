@@ -1,5 +1,5 @@
 import { describe } from '../../Test/runner'
-import { BlockType, BlockByIdType } from '../types'
+import { BlockType, BlockByIdType } from '../BlockType'
 import { BlockHelper } from './BlockHelper'
 
 const SOURCE_A = ``

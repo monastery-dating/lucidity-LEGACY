@@ -1,4 +1,4 @@
-import { GraphType } from './GraphType'
+import { GraphType } from '../Graph'
 import { SlotType } from './SlotType'
 
 export interface BlockTypeChanges {

@@ -1,7 +1,6 @@
 import { defaultUILayout } from './uilayout'
-import { BlockType
-       , BlockByIdType
-       , GraphWithBlocksType
+import { BlockType, BlockByIdType } from '../../Block'
+import { GraphWithBlocksType
        , GraphType
        , NodeType
        , UIGhostBlockType

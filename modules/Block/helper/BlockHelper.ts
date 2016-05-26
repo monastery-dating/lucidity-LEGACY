@@ -1,8 +1,6 @@
 import { BlockType, BlockByIdType, BlockIOType
-       , BlockTypeChanges } from '../types'
-import { Immutable as IM } from './immutable'
+       , BlockTypeChanges } from '../BlockType'
 import { makeId } from '../../Factory'
-
 
 
 export module BlockHelper {
@@ -14,8 +12,9 @@ export module BlockHelper {
     const typeInfo = getType ( source )
 
 
-    return IM.merge
-    ( { _id: makeId ()
+    return Object.assign
+    ( {}
+    , { _id: makeId ()
       , type: 'block'
       , name
       , source
@@ -25,14 +24,14 @@ export module BlockHelper {
   }
 
   export const update =
-  ( node: BlockType
+  ( block: BlockType
   , changes: BlockTypeChanges
   ) : BlockType => {
-    const newobj = IM.merge ( node, changes )
+    const newobj = Object.assign ( {}, block, changes )
 
     if ( changes.source ) {
       const typeInfo = getType ( changes.source )
-      return IM.merge ( newobj, typeInfo )
+      return Object.assign ( {}, newobj, typeInfo )
     }
 
     else {

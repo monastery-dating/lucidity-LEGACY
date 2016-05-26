@@ -1,8 +1,8 @@
 import { describe } from '../../Test/runner'
-import { GraphType, BlockType } from '../types'
+import { GraphType } from '../types'
 import { GraphHelper } from './GraphHelper'
 import { NodeHelper } from './NodeHelper'
-import { BlockHelper } from './BlockHelper'
+import { BlockHelper } from '../../Block'
 
 import { Immutable as IM } from './immutable'
 

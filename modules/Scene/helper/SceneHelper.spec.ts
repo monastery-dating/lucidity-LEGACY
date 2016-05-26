@@ -1,6 +1,7 @@
+import { BlockType } from '../../Block'
 import { describe } from '../../Test/runner'
 import { SceneHelper } from './SceneHelper'
-import { BlockType, GraphHelper } from '../../Graph'
+import { GraphHelper } from '../../Graph'
 
 describe ( 'SceneHelper.create', ( it ) => {
 

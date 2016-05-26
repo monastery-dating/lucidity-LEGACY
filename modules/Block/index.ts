@@ -5,6 +5,10 @@ export interface BlockSignalsType {
   source ( input: { value: string } )
 }
 
+export * from './helper/BlockHelper'
+export * from './BlockType'
+export * from './SlotType'
+
 import * as Model from 'cerebral-model-baobab'
 import { add } from './signals/add'
 import { name } from './signals/name'

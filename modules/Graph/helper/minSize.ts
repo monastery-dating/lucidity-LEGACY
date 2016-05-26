@@ -1,4 +1,5 @@
-import { NodeType, BlockType, UILayoutType, UINodeSize } from '../types'
+import { NodeType, UILayoutType, UINodeSize } from '../types'
+import { BlockType } from '../../Block'
 
 /** Compute the minimum size to display the element.
  */

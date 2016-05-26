@@ -1,4 +1,5 @@
-import { BlockHelper, GraphHelper } from '../../Graph'
+import { BlockHelper } from '../../Block'
+import { GraphHelper } from '../../Graph'
 import { GraphType } from '../../Graph'
 import { makeId } from '../../Factory'
 

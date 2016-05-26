@@ -1,4 +1,4 @@
-import { BlockByIdType } from './BlockType'
+import { BlockByIdType } from '../../Block'
 import { NodeByIdType } from './NodeType'
 
 // This is what we store in scene
