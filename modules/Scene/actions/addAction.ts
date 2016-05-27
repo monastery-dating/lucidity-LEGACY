@@ -1,5 +1,5 @@
 import { ActionContextType } from '../../context.type'
-import { SceneHelper } from '../'
+import { SceneHelper } from '../../Scene'
 
 export const addAction =
 ( { state
@@ -11,8 +11,8 @@ export const addAction =
   const { scene, block }= SceneHelper.create ()
   const docs = [ block, scene ]
 
-  // This is a flag that will set editing after db object
-  // is selected. Not sure this works.
+  // This is a flag that will set name editing after db object
+  // is selected.
   state.set ( [ '$factory', 'editing' ], scene._id )
 
   // add to project

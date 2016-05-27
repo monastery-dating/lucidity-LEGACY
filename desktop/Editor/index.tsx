@@ -21,6 +21,10 @@ export const Editor = Component
   , block: [ 'block' ]
   }
 , ( { state, signals }: ContextType ) => {
+    if ( !state.block ) {
+      return ''
+    }
+
     const create = ( _, { elm } ) => {
       if ( code === null ) {
         code = false

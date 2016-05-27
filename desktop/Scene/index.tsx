@@ -1,28 +1,32 @@
 import './style.scss'
-import { Block } from '../Block'
 import { Component } from '../Component'
 import { ContextType } from '../../modules/context.type'
 import { editable, openModal, pane } from '../../modules/Factory'
 import { Graph } from '../Graph'
+import { SceneType } from '../../modules/Scene'
 
 const SceneName = editable ( [ 'scene', 'name' ] )
 
 const SceneOptions = pane ( 'scene' )
 
 export const Scene = Component
-( { _id: [ 'scene', '_id' ]
+( { scene: [ 'scene' ]
   }
 , ( { state, signals }: ContextType ) => {
+    const scene: SceneType = state.scene
+    if ( !scene ) {
+      return ''
+    }
+
     const deleteModal = openModal
     ( { message: 'Delete scene ?'
       , type: 'scene'
-      , _id: state._id
+      , _id: scene._id
       , operation: 'remove'
       , confirm: 'Delete'
       }
     , signals
     )
-
     return <div class='Scene'>
         <div class='bar'>
           <SceneOptions.toggle class='fa fa-film'/>
@@ -35,8 +39,7 @@ export const Scene = Component
           </div>
           <div class='button'>duplicate</div>
         </SceneOptions>
-        <Graph/>
-        <Block/>
+        <Graph ownerType={ 'scene' } graph={ scene.graph } />
       </div>
   }
 )

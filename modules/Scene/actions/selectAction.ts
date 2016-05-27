@@ -13,7 +13,7 @@ export const selectAction =
     // Editing project properties
     if ( ! doc._rev ) {
       // New scene, we select it after creation.
-      const alldocs = docs ? [ ...docs, doc ] : [ doc ]
+      const alldocs = docs ? [ ...docs ] : [ doc ]
       alldocs.push ( SceneHelper.select ( state, user, doc ) )
       output ( { docs: alldocs } )
     }

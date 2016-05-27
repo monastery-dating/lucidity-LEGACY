@@ -3,7 +3,7 @@ import { ProjectHelper } from '../'
 
 export const selectAction =
 ( { state
-  , input: { doc, _id }
+  , input: { docs, doc, _id }
   , output
   } : ActionContextType
 ) => {
@@ -13,13 +13,9 @@ export const selectAction =
     // Editing project properties
     if ( ! user.projectId || ! doc._rev ) {
       // New project, we select it after creation.
-      const docs = [ doc ]
-      output
-      ( { docs:
-          [ doc, ProjectHelper.select ( state, user, doc )
-          ]
-        }
-      )
+      const alldocs = docs ? [ ...docs ] : [ doc ]
+      alldocs.push ( ProjectHelper.select ( state, user, doc ) )
+      output ( { docs: alldocs } )
     }
     else {
       // pass through, nothing to select

@@ -11,14 +11,8 @@ import * as Model from 'cerebral-model-baobab'
 import { makeId } from '../../modules/Factory'
 import { add } from './signals/add'
 import { name } from './signals/name'
+import { ProjectHelper } from './helper/ProjectHelper'
 import { select } from './signals/select'
-
-const defaultProject =
-{ _id: makeId ()
-, type: 'project'
-, name: 'New project'
-, scenes: []
-}
 
 const CurrentProject = Model.monkey
 ( { cursors:
@@ -28,7 +22,6 @@ const CurrentProject = Model.monkey
   , get ( data ) {
       const projectById = data.projectById || {}
       return projectById [ data.id ]
-          || defaultProject
     }
   }
 )

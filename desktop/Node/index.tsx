@@ -2,6 +2,8 @@ import './style.scss'
 import { Component } from '../Component'
 import { ContextType } from '../../modules/context.type'
 import { UINodeType, UISlotType } from '../../modules/Graph/types'
+import { ProjectType } from '../../modules/Project'
+import { SceneType } from '../../modules/Scene'
 
 const makeSlot = ( slot: UISlotType, clbk ) => {
   const flags = slot.flags
@@ -31,6 +33,7 @@ export const Node = Component
   }
 , ( { state, props, signals }: ContextType ) => {
     const uinode: UINodeType = props.uinode
+    const ownerType = props.ownerType
     const x = uinode.pos.x
     const y = uinode.pos.y
     const transform = `translate(${x},${y})`
@@ -45,9 +48,14 @@ export const Node = Component
 
 
     const slotclick = ( pos ) => {
-      signals.block.add ( { pos, parentId: uinode.id } )
+      signals.block.add
+      ( { pos
+        , parentId: uinode.id
+        , ownerType
+        }
+      )
     }
-    
+
     const click = () => {
       signals.block.select ( { _id: uinode.blockId } )
     }

@@ -1,4 +1,5 @@
 import './style.scss'
+import { Block } from '../Block'
 import { Component } from '../Component'
 import { Playback } from '../Playback'
 import { Scene } from '../Scene'
@@ -16,6 +17,7 @@ export const Workbench = Component
       <div class='stretch'>
         <Project/>
         <Scene/>
+        <Block/>
       </div>
       <StatusBar></StatusBar>
     </div>

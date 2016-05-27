@@ -11,6 +11,9 @@ export const Block = Component
 ( { block: [ 'block' ]
   }
 , ( { state, signals }: ContextType ) => {
+    if ( !state.block ) {
+      return ''
+    }
 
     return <div class='Block'>
         <div class='bar tabs'>
