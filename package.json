@@ -7,7 +7,8 @@
     "build": "webpack --config webpack.config.js --minify",
     "dev": "webpack --config webpack.config.js && webpack-dev-server --inline --content-base desktop",
     "maketests": "node scripts/maketests.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "db": "ssh -L5984:127.0.0.1:5984 root@db.lucidity.io"
   },
   "repository": {
     "type": "git",
