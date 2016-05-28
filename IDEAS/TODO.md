@@ -58,31 +58,79 @@ Group actions into an operation.
   4. => database on.change
   5. => /$project/saving = false
 
-# PLAYBACK
+# PLAYBACK INIT
 
-  1. Use a Monkey to store full project in tree with
-     selected scene.
-  2. Use a Monkey to update the $main function whenever the
-     current scene changes.
-  3. Use a Playback Component to display current scene inside
-     top of Workbench.
+The **init** function takes an object to allow destructuring, avoid any mistakes in argument position, and allow more options if needed later.
+
+  **cache**
+
+  1. Manage state through specialized blocks (db) that pass a state thing to their children.
+
+  2. Initialization of this block state is done with the init function, with things written to the cache. Exposition through the script with closures.
+
+  **asset**
+
+  1. Assets are downloaded (and declared) in the init function through an 'asset' function. The project assets are pre-downloaded and are accessed by their filename.
+
+  In both **cache** and **asset** a Promise can be returned for async asset fetch/download, etc.
+
+  **other sources**
+
+  How do we access other sources in a block (like fragment and vertex shaders) ?
+
+  * Through local import ? No: it is not made for reading files.
+  * With 'asset' ? This would allow us to rerun the function on source changes. But asset becomes more complex and loads things depending on block context. Can be confusing.
+  * Use a third parameter called 'source' ? This is the best option as it actually creates the empty tabs. Content is then saved in document in sources object.
+
+
+A script with some state and assets:
+===============
+import SomeDB from 'somedb'
+
+let db
+let cat
+
+export const init =
+( { asset, cache, source } ) => {
+
+  // ====== ASSET
+  // Get an image. This code runs async and does not 'return' a value. With this code we can check on compile time if all assets with the given name exist and if decide when we download, notify progress, etc. We can also cache the element. The downside is we need an API for this and translations to THREE.Image, etc.
+
+  asset.image ( 'Cat.jpg', ( i ) => cat = i )
+  asset.source ( 'blur.frag', ( s ) => {
+      shader.fragment = s
+      shader.changed = true
+    }
+  )
+
+  // ====== OTHER SOURCE FILE
+  source ( 'frag.glsl', ( s ) => {
+    // do this that
+  })
+
+  // ====== CACHE
+  // Simplest case
+  cache.db = db = cache.db || new SomeDB ()
+
+  if ( cache.db ) {
+    db = cache.db
+  }
+  else {
+    db = cache.db = new SomeDB ()
+    db.doSomething ()
+  }
+
+  // For async code, the init function can return a Promise.
+}
+===============
+
 
 # REFACTORING
-  1. Change Graph structure and type:
 
-  A graph is just a list of NodeLink ids.
-  A NodeLink is
-  { id: NodeLinkId
-  , parentId: NodeLinkId
-  , children: NodeLinkId[]
-  , nodeId: NodeId
-  }
-  A Node is this thing with inputs, output, script, path, etc.
-
-  2. Remove default exports: they are confusing since any name
+  1. Remove default exports: they are confusing since any name
      can be used and this can lead to stupid mistakes.
 
-  3. Transform code from boxdrag to use the store instead of a service...
+  2. Transform code from boxdrag to use the store instead of a service...
     --
     StartDrag => Post event to store
     DragMove => Post event to store

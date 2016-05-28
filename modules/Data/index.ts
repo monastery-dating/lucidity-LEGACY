@@ -3,8 +3,8 @@ export * from './signals/reload'
 export * from './signals/save'
 export * from './actions/save'
 
-import { db } from './services/db'
-import { Db } from './types/db.type'
+import { db, authdb } from './services/db'
+import { Db, AuthDBType } from './types/db.type'
 import { dbChanged } from './signals/dbChanged'
 import { reload } from './signals/reload'
 import { save } from './signals/save'
@@ -16,7 +16,8 @@ export interface DataSignalsType {
 }
 
 export interface DataServicesType {
-  db: Db
+  db?: Db
+  authdb?: AuthDBType
 }
 
 export const Data =

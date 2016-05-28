@@ -39,6 +39,7 @@
     "check-types": "^7.0.0",
     "codemirror": "^5.15.2",
     "pouchdb": "^5.3.2",
+    "pouchdb-authentication": "^0.5.1",
     "raw-loader": "^0.5.1",
     "snabbdom-jsx": "^0.3.0",
     "three": "^0.77.1",

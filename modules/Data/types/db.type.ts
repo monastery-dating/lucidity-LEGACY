@@ -30,3 +30,9 @@ interface DbType<T> {
 }
 
 export type Db = DbType<any>
+
+export interface AuthDBType {
+  signup ( name: string, password: string, meta?: any ): Promise<any>
+  login ( name: string, password: string ): Promise<any>
+  logout (): Promise<any>
+}

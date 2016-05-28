@@ -19,7 +19,7 @@ export module BlockHelper {
   ( name: string
   , source: string = DEFAULT_SOURCE
   ) : BlockType => {
-    const typeInfo = processSource ( source )
+    const info = processSource ( source )
 
     return IM.merge
     ( { _id: makeId ()
@@ -27,7 +27,7 @@ export module BlockHelper {
       , name
       , source
       }
-    , typeInfo
+    , info
     )
   }
 
@@ -38,8 +38,8 @@ export module BlockHelper {
     const newobj = IM.merge ( block, changes )
 
     if ( changes.source ) {
-      const typeInfo = processSource ( changes.source )
-      return IM.merge ( newobj, typeInfo )
+      const info = processSource ( changes.source )
+      return IM.merge ( newobj, info )
     }
 
     else {
