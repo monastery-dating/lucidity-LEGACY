@@ -10,6 +10,7 @@ import { Project } from '../modules/Project'
 import { Scene } from '../modules/Scene'
 import { Status } from '../modules/Status'
 import { User } from '../modules/User'
+import { Sync } from '../modules/Sync'
 
 // import Router from 'cerebral-module-router'
 import * as Controller from 'cerebral'
@@ -38,6 +39,7 @@ controller.addModules
   , scene: Scene ()
   , $status: Status ()
   , user: User ()
+  , $sync: Sync ()
   }
 )
 

@@ -4,11 +4,23 @@
 @import '../styles/misc';
 
 .StatusBar {
-  background: lighten( $back_color, 5% );
+  position: fixed;
+  bottom: 0;
   height: layout( statush );
   width:  100%;
+  background: lighten( $back_color, 5% );
   border: $lbox solid color( boxl );
   padding: $ppad;
   color: lighten( $text_color, 60% );
   z-index: 4; // editor is at 3
+
+  display: flex;
+  justify-content: flex-start;
+  .Status {
+    flex-grow: 1;
+  }
+  .Sync {
+    flex-grow: 0;
+    align-content: flex-end;
+  }
 }

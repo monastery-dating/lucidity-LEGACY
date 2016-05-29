@@ -1,0 +1,27 @@
+@import '../styles/colors';
+@import '../styles/layout';
+@import '../styles/misc';
+
+.Sync {
+  width: 1em;
+  height: 1em;
+  margin-right: 2*$pad;
+  color: color( success );
+
+  &.paused {
+    color: color( success );
+  }
+  &.active {
+    color: lighten( $high_front, 15% );
+  }
+  &.complete {
+
+  }
+  &.offline {
+    color: color( error );
+  }
+  &.error {
+    color: color( error );
+  }
+
+}

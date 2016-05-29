@@ -3,10 +3,11 @@ import * as check from 'check-types'
 
 export const logoutAction =
 ( { state
-  , services: { data: { authdb } }
+  , services: { data: { /*authdb*/ } }
   , output
   } : ActionContextType
 ) => {
+  /*
   authdb.logout ()
   .then ( ( response ) => {
       output.success ()
@@ -17,6 +18,7 @@ export const logoutAction =
       output.error ( { type: 'error', message: 'Could not logout.' } )
     }
   )
+  */
 }
 
 logoutAction [ 'async' ] = true

@@ -14,7 +14,7 @@
 
 .Status {
   cursor: pointer;
-  
+
   &.info {
     color: #777;
     .outer {
@@ -49,7 +49,7 @@
   }
 
   &.success {
-    color: #898;
+    color: color( success );
     .outer {
       stroke: #0b0;
     }

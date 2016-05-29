@@ -6,6 +6,7 @@ import { Modal } from '../modules/Factory'
 import { ProjectChooser } from './ProjectChooser'
 import { ProjectPane } from './ProjectPane'
 import { Signup } from './Signup'
+import { StatusBar } from './StatusBar'
 import { StatusDetail } from './StatusDetail'
 // import { ToolsPane } from './ToolsPane'
 import { Workbench } from './Workbench'
@@ -27,10 +28,11 @@ const appStateChooser = ( state ) => {
   else {
     return  <div>
         <Modal/>
-          <Workbench></Workbench>
-          <Library></Library>
-          <ProjectPane></ProjectPane>
-          <ProjectChooser/>
+        <Workbench></Workbench>
+        <Library></Library>
+        <ProjectPane></ProjectPane>
+        <ProjectChooser/>
+        <StatusBar></StatusBar>
         <StatusDetail></StatusDetail>
       </div>
   }

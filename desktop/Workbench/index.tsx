@@ -4,7 +4,6 @@ import { Component } from '../Component'
 import { Playback } from '../Playback'
 import { Scene } from '../Scene'
 import { Project } from '../Project'
-import { StatusBar } from '../StatusBar'
 
 import { editable, pane } from '../../modules/Factory'
 
@@ -19,7 +18,6 @@ export const Workbench = Component
         <Scene/>
         <Block/>
       </div>
-      <StatusBar></StatusBar>
     </div>
   )
 )

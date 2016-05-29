@@ -4,9 +4,8 @@ import { FactorySignalsType } from './Factory'
 import { ProjectSignalsType } from './Project'
 import { SceneSignalsType, SceneHelperType } from './Scene'
 import { StatusSignalsType } from './Status'
+import { SyncSignalsType } from './Sync'
 
-// Exported interface for signals (corresponds to inputs of
-// first action in signal chains)
 export interface SignalsType {
   block: BlockSignalsType
   data: DataSignalsType
@@ -14,6 +13,7 @@ export interface SignalsType {
   project: ProjectSignalsType
   scene: SceneSignalsType
   $status: StatusSignalsType
+  $sync: SyncSignalsType
 }
 
 // We make services optional so that we can mock them

@@ -4,10 +4,11 @@ import * as check from 'check-types'
 export const signupAction =
 ( { state
   , input: { username, password, email }
-  , services: { data: { authdb } }
+  , services: { data: { /*authdb */} }
   , output
   } : ActionContextType
 ) => {
+  /*
   authdb.signup
   ( username
   , password
@@ -43,6 +44,7 @@ export const signupAction =
     }
   )
 
+*/
 }
 
 signupAction [ 'async' ] = true

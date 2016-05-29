@@ -37,7 +37,8 @@ $colors:
 , infob: rgba( darken( $back_color, 5% ), 0.95)
 
 // font
-, error: #a77 // error message
+, error: #a77   // error message
+, success: #686 // success
 );
 
 @function color( $key ) {

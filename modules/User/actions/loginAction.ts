@@ -4,10 +4,13 @@ import * as check from 'check-types'
 export const loginAction =
 ( { state
   , input: { username, password, email }
-  , services: { data: { authdb } }
+  , services: { data: { /* authdb */ } }
   , output
   } : ActionContextType
 ) => {
+  // FIXME: replace data.db with a database helper for
+  // all operations in User and Sync
+  /*
   authdb.login
   ( username
   , password
@@ -33,6 +36,8 @@ export const loginAction =
 
     }
   )
+
+  */
 
 }
 
