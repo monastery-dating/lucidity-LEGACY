@@ -11,6 +11,12 @@ const SceneOptions = pane ( 'scene' )
 
 export const Scene = Component
 ( { scene: [ 'scene' ]
+    // update ui on scene name edit
+  , editing: SceneName.path
+    // ensure that we redraw on pane changes
+  , pane: SceneOptions.path
+    // ui update on block select
+  , blockId: [ 'user', 'blockId' ]
   }
 , ( { state, signals }: ContextType ) => {
     const scene: SceneType = state.scene
@@ -39,7 +45,10 @@ export const Scene = Component
           </div>
           <div class='button'>duplicate</div>
         </SceneOptions>
-        <Graph ownerType={ 'scene' } graph={ scene.graph } />
+      <Graph key='scene.graph'
+        selectedBlockId={ state.blockId }
+        ownerType={ 'scene' }
+        graph={ scene.graph } />
       </div>
   }
 )

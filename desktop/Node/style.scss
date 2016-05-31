@@ -31,6 +31,10 @@
 svg path.Folder {
 }
 
+svg * {
+  @extend ._noselect;
+}
+
 svg {
 
   .slot {

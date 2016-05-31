@@ -41,6 +41,11 @@ export interface BlockByIdType {
   [ id: string ]: BlockType
 }
 
+export interface BlockAddOperationType {
+  pos: number
+  parentId: string
+  ownerType: string
+}
 
 // basic compiler type checks
 const typetest = function

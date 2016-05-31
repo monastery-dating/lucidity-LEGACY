@@ -11,9 +11,11 @@ const selectScene =
 
 const sortByName = ( a, b ) => a.name > b.name ? 1 : -1
 
+let oldprops
 const showScenes =
 ( { scenes, sceneById, selectedSceneId }
 , signals: SignalsType  ) => {
+  console.log ( 'showScenes' )
   if ( !scenes || !sceneById ) {
     return ''
   }
@@ -32,13 +34,31 @@ const showScenes =
   )
 }
 
+const Scenes = Component
+( {}
+, ( { props, signals }: ContextType ) => (
+    <div class='scenes'>
+      <p>Scenes</p>
+
+      <div>
+        { showScenes ( props, signals ) }
+        <div class='li add'
+          on-click={ () => signals.scene.add ( {} ) }>
+          +
+        </div>
+      </div>
+    </div>
+  )
+)
 
 const Pane = pane ( 'project' )
 
 export const ProjectPane = Component
-( { scenes: [ 'project', 'scenes' ]
+( { project: [ 'project' ]
   , sceneById: [ 'data', 'scene' ]
   , selectedSceneId: [ 'scene', '_id' ]
+  // project pane toggle
+  , pane: Pane.path
   }
 , ( { state, signals }: ContextType ) => (
 
@@ -67,17 +87,11 @@ export const ProjectPane = Component
         </div>
       </div>
 
-      <div class='scenes'>
-        <p>Scenes</p>
-
-        <div>
-          { showScenes ( state, signals ) }
-          <div class='li add'
-            on-click={ () => signals.scene.add ( {} ) }>
-            +
-          </div>
-        </div>
-      </div>
+      <Scenes
+        scenes={ ( state.project || {} ).scenes }
+        sceneById={ state.sceneById }
+        selectedSceneId={ state.selectedSceneId }
+        key='project.scenes'/>
 
       <div class='assets'>
         <p>assets</p>

@@ -2,6 +2,7 @@
 import { App } from '../modules/App'
 import { Block } from '../modules/Block'
 import { Data } from '../modules/Data'
+import { DragDrop } from '../modules/DragDrop'
 import { Factory } from '../modules/Factory'
 import { Graph } from '../modules/Graph'
 import { Library } from '../modules/Library'
@@ -29,6 +30,7 @@ controller.addModules
 ( { app: App ()
   , block: Block ()
   , data: Data ()
+  , $dragdrop: DragDrop ()
   , $factory: Factory ()
   , graph: Graph ()
   , devtools: Devtools ()

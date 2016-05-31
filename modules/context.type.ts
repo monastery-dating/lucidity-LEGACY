@@ -1,5 +1,6 @@
 import { BlockSignalsType } from './Block'
 import { DataSignalsType, DataServicesType } from './Data'
+import { DragDropSignalsType } from './DragDrop'
 import { FactorySignalsType } from './Factory'
 import { ProjectSignalsType } from './Project'
 import { SceneSignalsType, SceneHelperType } from './Scene'
@@ -9,6 +10,7 @@ import { SyncSignalsType } from './Sync'
 export interface SignalsType {
   block: BlockSignalsType
   data: DataSignalsType
+  $dragdrop: DragDropSignalsType
   $factory: FactorySignalsType
   project: ProjectSignalsType
   scene: SceneSignalsType

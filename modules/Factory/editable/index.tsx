@@ -34,7 +34,7 @@ export const editable =
   const spath = path.join ( '-' ) + idscope
   const fpath = [ '$factory', ...path ]
 
-  return Component
+  const comp = Component
   ( { text: path
     // where we store temporary value until saved
     , stext: [ ...fpath, 'value' ]
@@ -42,17 +42,17 @@ export const editable =
     , saving: [ ...fpath, 'saving' ]
     // where we store the currently editing field
     // (only one per app)
-    , editing: EditingPath
+    , editing: fpath // EditingPath
     }
   , ( { state, signals, props }: ContextType ) => {
       const edit = () => signals.$factory.set
-      ( { path: EditingPath, value: spath } )
+      ( { path: fpath, value: true } )
 
       const signal = getSignal ( signals, path [ 0 ], path [ 1 ] )
 
       const changed = ( value ) => signal ( { value } )
 
-      const isediting = state.editing === spath
+      const isediting = state.editing === true
 
       return <EditableText class={ props.class }
           text={ state.text }
@@ -64,4 +64,8 @@ export const editable =
           />
     }
   )
+
+  comp.path = fpath
+
+  return comp
 }

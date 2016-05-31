@@ -1,10 +1,10 @@
 import { SignalType } from '../../context.type'
-import { setNameAction } from '../actions/setNameAction'
+import { nameAction } from '../actions/nameAction'
 import { selectAction } from '../actions/selectAction'
 import { save } from '../../Data'
 
 export const name: SignalType =
-[ setNameAction
+[ nameAction
 , selectAction
 , ...save
 ]

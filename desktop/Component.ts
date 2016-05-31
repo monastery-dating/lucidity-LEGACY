@@ -1,4 +1,5 @@
 import { Component as CComp, render as Crender } from 'cerebral-view-snabbdom'
+import { ContextType } from '../modules/context.type'
 
 const SVGNS = 'http://www.w3.org/2000/svg'
 const modulesNS = [ 'hook', 'on', 'style', 'class', 'props', 'attrs' ]
@@ -21,6 +22,8 @@ interface VTagNode {
 
 type VNode = VPrimitiveNode | VTagNode
 
+const hasData = /^data\-/
+
 const mapData = function
 ( adata: any
 , noprops?: Boolean
@@ -29,12 +32,8 @@ const mapData = function
   const props = noprops ? data : {}
   let hasProps = false
   for ( const k in adata ) {
-    if ( k === 'key' ) {
-      // set outside of data
-      continue
-    }
 
-    else if ( k === 'class' ) {
+    if ( k === 'class' ) {
       const aclass = adata [ k ]
       let klass = data [ k ]
       if ( !klass ) {
@@ -73,7 +72,7 @@ const mapData = function
 
     else {
       const dash = k.indexOf ( '-' )
-      if ( dash > 0 ) {
+      if ( dash > 0 && ! hasData.test ( k ) ) {
         const nkey = k.split ( '-' )
         const fkey = nkey.pop ()
         let base : any = data
@@ -87,6 +86,7 @@ const mapData = function
         }
         base [ fkey ] = adata [ k ]
       }
+
       else {
         if ( modulesNS.indexOf ( k ) >= 0 ) {
           if ( data [ k ] ) {
@@ -195,5 +195,22 @@ const createElement = function
 // rewrite cerebral-view-snabbdom entirely.
 CComp['createElement'] = createElement // CComp.DOM
 
-export const Component = CComp
+interface PathsType {
+  [ key: string ]: string[]
+}
+
+interface ComponentClbk {
+  ( options: ContextType ): any
+}
+
+interface CreateElement {
+  ( tag: string, ...args ): any
+}
+
+interface ComponentType {
+  createElement: CreateElement
+  ( paths: PathsType, callback: ComponentClbk )
+}
+
+export const Component: ComponentType = CComp
 export const render = Crender

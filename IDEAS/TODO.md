@@ -1,6 +1,6 @@
 # DATA
 
-We need to store 3 kinds of data:
+We need to store these kinds of data:
 
   1. Project data
     - Project assets and scenes
@@ -18,6 +18,10 @@ We need to store 3 kinds of data:
     - Time position
     - etc
 
+  4. Library data
+    - Objects from other users (including lucidity)
+    - Objects created by owner
+
 (1) should live in PouchDB-CouchDB on Lucidity.
     /data/...
 (2) should also live in PouchDB-CouchDB, but under the user
@@ -25,6 +29,20 @@ We need to store 3 kinds of data:
     /user/...
 (3) should live in another real-time database, with eventual
     snapshots stored in /data/.
+(4) should allow some kind of versioning, pull request, etc
+    - we use the github api !
+      get tree: https://developer.github.com/v3/git/trees/#get-a-tree
+      edit: https://developer.github.com/v3/repos/contents
+    - for each project, user can set access tokens to corresponding repo and can
+      then 'commit' project (makes a self contained executable project).
+    - for the library, user's can have multiple sources with and without write
+      access. When adding/updating an object to the library, the user selects
+      where this object is written to (his own public lib, his own private lib,
+      his clone of lucy-library, etc).
+
+For all versioning needs: https://developer.github.com/v3/repos/contents/
+Library goes to a github repo.
+Each project can have a github repo link (per user).
 
 For (1) and (2), we need to create two functions:
 
@@ -136,3 +154,32 @@ export const init =
     DragMove => Post event to store
     --
     Drop => etc
+
+# FINANCES
+
+Create different prices:
+
+## Free 0$
+
+  - public projects (owner write, public read)
+
+## Standard 10$/month
+
+  - private projects, sharing
+  - github integration
+  - dropbox integration for assets
+
+## Pro 25$/month
+
+  - Desktop app (midi, etc)
+  - DAW plugin
+  - Receive new library objects 6 month sooner (they finance its development)
+
+## What about making Lucidity completely server free ?
+
+Then people only pay for an app, they buy the app, get updates now and then and that's it. The rest of the social, networking stuff is handled from each app with a simple file system db thing.
+
+If we really need people to have this thing sync online, it could backup to dropbox app, or some other cloud people use anyway...
+
+Pro: no server to maintain, simple pricing for users
+Con: no per month revenue

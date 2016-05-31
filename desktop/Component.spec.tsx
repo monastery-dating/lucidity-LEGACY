@@ -71,6 +71,32 @@ describe
       }
     )
 
+    it ( 'should move data-xx in props', ( assert ) => {
+        assert.equal
+        ( <foo data-bing='top'></foo>
+        , { sel: 'foo'
+          , data: { props: { ['data-bing']: 'top' }}
+          , children: []
+          }
+        )
+      }
+    )
+
+    it ( 'should optimize through key', ( assert ) => {
+        const Foo = Component
+        ( {}, ( {} ) => <div></div> )
+        const a = <Foo key='bar'/>
+        const b = <Foo key='bar'/>
+        const c = <Foo key='bing'/>
+        const d = <Foo/>
+
+        assert.same ( a, b )
+        assert.notSame ( a, c )
+        assert.notSame ( a, d )
+      }
+    )
+
+
     it ( 'should wrap props', ( assert ) => {
         assert.equal
         ( <foo bing='top'></foo>

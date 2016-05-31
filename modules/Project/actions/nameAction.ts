@@ -1,5 +1,5 @@
 import { ActionContextType } from '../../context.type'
-export const setNameAction =
+export const nameAction =
 ( { state
   , input: { value }
   , output
@@ -15,8 +15,6 @@ export const setNameAction =
 
   const path = [ 'project', 'name' ]
 
-  // close editable
-  state.set ( [ '$factory', 'editing' ], false )
   // mark element as 'saving'
   state.set ( [ '$factory', ...path, 'saving' ], true )
   // temporary value during save

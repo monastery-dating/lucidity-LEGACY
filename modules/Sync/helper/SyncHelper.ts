@@ -2,6 +2,9 @@ import { SignalsType } from '../../context.type'
 // FIXME: we should probably move all db code
 // to a DatabaseHelper and use this to login, sync, etc
 // with proper try/catch/promise.
+//
+// CHECK CODE WITH
+// https://github.com/colinskow/ng-pouch-mirror/blob/master/src/ng-pouch-mirror.js
 import * as PouchDB from 'pouchdb'
 
 let sync

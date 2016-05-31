@@ -1,13 +1,15 @@
 import { ActionContextType } from '../../context.type'
 import { GraphHelper } from '../../Graph'
 import { BlockHelper } from '../helper/BlockHelper'
+import { BlockAddOperationType } from '../'
 
 export const addAction =
 ( { state
-  , input: { pos, parentId, ownerType }
+  , input
   , output
   } : ActionContextType
 ) => {
+  const { pos, parentId, ownerType } = <BlockAddOperationType>input
   const owner = state.get ( [ ownerType ] )
   const child = BlockHelper.create ( 'new block' )
   const graph =

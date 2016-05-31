@@ -15,8 +15,6 @@ export const nameAction =
 
   const path = [ 'scene', 'name' ]
 
-  // close editable
-  state.set ( [ '$factory', 'editing' ], false )
   // mark element as 'saving'
   state.set ( [ '$factory', ...path, 'saving' ], true )
   // temporary value during save

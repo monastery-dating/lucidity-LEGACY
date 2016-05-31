@@ -10,8 +10,7 @@ window['THREE'] = THREE
 /* ====== PLAYBACK LIBS ======= */
 
 export const Playback = Component
-( { main: [ 'playback', '$main' ]
-  , graph: [ 'scene', 'graph' ]
+( { graph: [ 'scene', 'graph' ]
   , blocksById: [ 'data', 'block' ]
   }
 , ( { state, signals } ) => {
