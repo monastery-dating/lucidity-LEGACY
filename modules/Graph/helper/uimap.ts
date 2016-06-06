@@ -1,3 +1,4 @@
+import { GraphHelper } from '../'
 import { defaultUILayout } from './uilayout'
 import { BlockType, BlockByIdType } from '../../Block'
 import { GraphWithBlocksType
@@ -79,23 +80,11 @@ const path = function
   return res.join ( ' ' )
 }
 
-/** Compute a class name from an object.
- *
- * @param {object} obj    - the object definition
- * @param {object} layout - constants and tmp svg element
- *
- * @returns {string}   - the class name
- */
 const className =
-( obj: BlockType
-, link: NodeType
+( objName: string
 , layout : UILayoutType
 ) => {
-  if ( link.id === rootNodeId ) {
-    return 'scene'
-  }
-
-  const name = obj.name.split ( '.' ) [ 0 ]
+  const name = objName.split ( '.' ) [ 0 ]
   let num = 7
   for ( let i = 0; i < name.length; i += 1 ) {
     num += name.charCodeAt ( i )
@@ -185,9 +174,17 @@ const uimapOne = function
   uibox.name = obj.name
   uibox.blockId = obj._id
   uibox.type = obj.type
-  uibox.className = uibox.name === cache.name
-                  ? cache.className
-                  : className ( obj, link, layout )
+
+  if ( link.parent === null ) {
+    uibox.className = 'scene'
+  }
+
+  else {
+    uibox.className = className ( obj.name, layout )
+  }
+
+
+
   // FIXME: only store text size in cache
   const ds = Math.max ( ( obj.input || [] ).length, ( link.children || [] ).length )
 
@@ -357,4 +354,22 @@ export const uimap =
   ( graph, rootNodeId, layout, uigraph, startpos )
 
   return uigraph
+}
+
+export const uimapBlock =
+( block: BlockType
+, alayout?: UILayoutType
+) : UINodeType => {
+  const graph = GraphHelper.create ( block )
+  const blocksById =
+  { [ block._id ]: block }
+
+  const uigraph = uimap
+  ( graph, blocksById )
+
+  const uinode = uigraph.uiNodeById [ rootNodeId ]
+  const klass = className ( block.name, alayout || defaultUILayout )
+
+  return Object.assign
+  ( {}, uinode, { className: klass } )
 }

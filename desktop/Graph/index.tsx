@@ -38,10 +38,8 @@ const mapUINodes =
 export const Graph = Component
 ( { blocksById: [ 'data', 'block' ]
   , blockId: [ 'user', 'blockId' ]
-    // update ui on block name change
-    // FIXME: this does not work on remote block update
-    //        that is not the selected block.
-  , blockName: [ 'block', 'name' ]
+    // update ui on block change
+  , block: [ 'block' ]
     // update graph on drag op
   , drop: [ '$dragdrop', 'drop' ] // react to drag op
   , drag: [ '$dragdrop', 'drag' ]
@@ -52,6 +50,7 @@ export const Graph = Component
     const drop: DragDropType = state.drop
     const drag: DragStartType = state.drag
     if ( graph ) {
+      let blocksById = state.blocksById
       // Could we get rid of blocksById dependency ? Or just
       // pass the required elements from 'scene' to avoid redraw if
       // any existing block changes ?
@@ -59,9 +58,16 @@ export const Graph = Component
       if ( drop && drop.ownerType === ownerType ) {
         graph = drop.graph
         dropid = drop.nodeId
+
+        if ( drag.ownerType === 'library' ) {
+          // We need to add the block since it is not
+          // in state.blocksById
+          blocksById =
+          Object.assign ( {}, blocksById, { [ drag.blockId ]: drag.block })
+        }
       }
 
-      const uigraph = uimap ( graph, state.blocksById )
+      const uigraph = uimap ( graph, blocksById )
 
       return <svg class='Graph'>{ mapUINodes ( graph, uigraph, ownerType, dropid ) }</svg>
     }

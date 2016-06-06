@@ -19,7 +19,7 @@ export const Drag = Component
     }
 
     const uinode: UINodeType = drag.uinode
-    const node: NodeType = drag.node
+    const node: NodeType = { id: drag.nodeId, parent: null, children: [], blockId: drag.blockId }
     const x = move.clientPos.x - uinode.pos.x - drag.nodePos.x
     const y = move.clientPos.y - uinode.pos.y - drag.nodePos.y
     const style = { top: y, left: x }

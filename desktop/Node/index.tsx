@@ -57,7 +57,14 @@ export const Node = Component
     , ( nodePos ) => {
         // start drag
         signals.$dragdrop.drag
-        ( { drag: { ownerType, node, nodePos, uinode } } )
+        ( { drag:
+            { ownerType
+            , blockId: node.blockId
+            , nodeId: node.id
+            , nodePos
+            , uinode
+            }
+          } )
       }
     , ( e ) => {
         // normal click

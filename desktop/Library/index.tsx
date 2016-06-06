@@ -5,15 +5,14 @@ import { DragDropHelper } from '../../modules/DragDrop'
 import { ContextType, SignalsType } from '../../modules/context.type'
 import { pane } from '../../modules/Factory'
 
-const renderLibrary = ( el, signals: SignalsType ) => {
+const renderLibrary = ( block, signals: SignalsType ) => {
   // const uinode =
   const { mousedown, mousemove, mouseup } = DragDropHelper.drag
   ( signals
     // start drag
   , ( nodePos ) => {
-    const node = NodeHelper.create ( el.blockId, 'drag', null )
     signals.$dragdrop.drag
-    ( { drag: { node, ownerType: 'library', nodePos }
+    ( { drag: { blockId: block._id, ownerType: 'library', nodePos }
       }
     )
   }
@@ -21,8 +20,14 @@ const renderLibrary = ( el, signals: SignalsType ) => {
   , ( e ) => {}
   )
 
-  return <div class='li' data-drop='library'>
-      <span data-drop='library'>{ el.name }</span>
+  return <div
+        class='li'
+        data-drop='library'
+        on-mousedown={ mousedown }
+        on-mouseup={ mouseup }
+        on-mousemove={ mousemove }
+        >
+      <span data-drop='library'>{ block.name }</span>
     </div>
 }
 
@@ -60,7 +65,7 @@ export const Library = Component
 
         <div class={ klass } data-drop='library'>
           <div data-drop='library'>
-            { state.rows.map ( ( el ) => renderLibrary ( el, signals ) ) }
+            { state.rows.map ( ( block ) => renderLibrary ( block, signals ) ) }
           </div>
         </div>
       </Pane>

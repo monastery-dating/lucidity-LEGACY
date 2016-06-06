@@ -1,3 +1,4 @@
+import { uimapBlock } from '../../Graph'
 import { DragStartType } from '../types'
 import { BlockHelper } from '../../Block'
 import { ActionContextType } from '../../context.type'
@@ -11,12 +12,14 @@ export const dragAction =
   , output
   } : ActionContextType
 ) => {
-  const drag: DragStartType = input.drag
+  const drag: DragStartType =
+  Object.assign ( {}, input.drag )
+
+  const type = drag.ownerType === 'library' ? 'lblock' : 'block'
+  drag.block = state.get ( [ 'data', type, drag.blockId ] ) 
 
   if ( !drag.uinode ) {
-    const block = state.get ( [ 'data', 'block', drag.node.blockId ] )
-    // FIXME
-    // drag.uinode = uimapBlock ( block )
+    drag.uinode = uimapBlock ( drag.block )
   }
 
   state.set ( path, drag )

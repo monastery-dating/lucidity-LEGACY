@@ -11,7 +11,13 @@ export interface DragStartType {
   ownerType: string
   // relative position on node
   nodePos: PosType
-  node: NodeType
+  blockId: string
+
+  // Used to identify starting node (hover on self)
+  nodeId?: string
+  
+  // Computed on drag signal from blockId
+  block?: BlockType
   // Computed if not provided (library drag)
   uinode?: UINodeType
 }

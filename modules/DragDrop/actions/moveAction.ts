@@ -28,7 +28,7 @@ export const moveAction =
 
     }
 
-    else if ( ownerType === drag.ownerType && nodeId === drag.node.id ) {
+    else if ( ownerType === drag.ownerType && nodeId === drag.nodeId ) {
       // dragging on self: do nothing
       // FIXME: we should also ignore dragging on children of self
       drop = null
@@ -44,13 +44,12 @@ export const moveAction =
     }
 
     else {
-      state.set ( [ '$factory', 'pane', 'library' ], false )
       // changed
       let graph: GraphType = state.get ( [ ownerType, 'graph' ] )
       let newId = nextNodeId ( graph.nodesById )
       let pos: number = parseInt ( apos )
       let parentId: string
-      const block = state.get ( [ 'data', 'block', drag.node.blockId ] )
+      const block = drag.block
 
       if ( apos ) {
         // should have a way to set nodeId to 'drop' here or mark as ghost...

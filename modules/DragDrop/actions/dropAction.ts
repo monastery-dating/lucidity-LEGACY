@@ -1,4 +1,4 @@
-import { BlockHelper } from '../../Block'
+import { BlockHelper, BlockByIdType } from '../../Block'
 import { Immutable as IM } from '../../Graph'
 import { ActionContextType } from '../../context.type'
 import { DragStartType, DragDropType } from '../'
@@ -28,12 +28,25 @@ export const dropAction =
 
   const docs = []
 
-  const block = BlockHelper.copy
-  ( state.get ( [ 'data', 'block', drag.node.blockId ] )
-  )
+  const block = BlockHelper.copy ( drag.block )
 
   if ( drop.ownerType === 'library' ) {
-    const lblock = IM.update ( block, 'type', 'lblock' )
+    // Do we have a block with same name in the library ?
+    const library: BlockByIdType = state.get ( [ 'data', 'lblock' ] )
+    let lblock
+    for ( const k in library ) {
+      const b = library [ k ]
+      if ( b.name === block.name ) {
+        // replace
+        lblock = Object.assign
+        ( {}, b, block, { type: 'lblock', _id: b._id } )
+      }
+
+    }
+
+    if ( !lblock ) {
+      lblock = Object.assign ( {}, block, { type: 'lblock' } )
+    }
     docs.push ( lblock )
   }
 
