@@ -16,8 +16,7 @@ export const Scene = Component
     // ensure that we redraw on pane changes
   , pane: SceneOptions.path
     // update graph ui
-  , blockId: [ 'block', '_id' ]
-  , blockName: [ 'block', 'name' ]
+  , block: [ 'block' ]
     // update graph on drag op
   , drop: [ '$dragdrop', 'drop' ]
   }

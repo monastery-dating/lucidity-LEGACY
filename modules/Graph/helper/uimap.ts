@@ -155,7 +155,6 @@ const uimapOne = function
 , cachebox: UINodeByIdType
 ) {
   uigraph.uiNodeById [ id ] = <UINodeType> { id }
-  uigraph.nodes.push ( id )
   /*
   if ( graph.type !== 'processing' ) {
     // not in graph: draw parent first
@@ -218,7 +217,7 @@ const uimapOne = function
 
 
     // Compute sizes for all children
-    const sline = `M${-sl} ${sl} h${2 * sl}`
+    const sline = `M${-sl} ${0} h${2 * sl}`
     const spath = `M${-sl} ${0} l${sl} ${-sl} l${sl} ${sl}`
     const plus = `M${-sl} ${2*sl} h${2*sl} M${0} ${sl} v${2*sl}`
     const r = layout.RADIUS
@@ -314,6 +313,8 @@ const uimapOne = function
   uibox.path  = path ( uibox, layout )
   uibox.slots = slots
 
+  // draw nodes from child to parent
+  uigraph.nodes.push ( id )
   return uibox.size.w
 }
 

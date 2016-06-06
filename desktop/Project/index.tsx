@@ -14,9 +14,9 @@ export const Project = Component
   , editing: ProjectName.path
     // ensure that we redraw on pane changes
   , pane: ProjectOptions.path
-    // update graph ui
-  , blockId: [ 'block', '_id' ]
-  , blockName: [ 'block', 'name' ]
+    // update graph ui. On source change this can make many redraws for
+    // nothing. TODO: only sync to changes in block signature...
+  , block: [ 'block' ]
     // update graph on drag op
   , drop: [ '$dragdrop', 'drop' ]
   }
