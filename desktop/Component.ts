@@ -72,19 +72,29 @@ const mapData = function
 
     else {
       const dash = k.indexOf ( '-' )
-      if ( dash > 0 && ! hasData.test ( k ) ) {
-        const nkey = k.split ( '-' )
-        const fkey = nkey.pop ()
-        let base : any = data
-        for ( const l of nkey ) {
-          if ( ! base [ l ] ) {
-            base = base [ l ] = {}
-          }
-          else {
-            base = base [ l ]
-          }
+      if ( dash > 0 ) {
+
+        if ( hasData.test ( k ) ) {
+          const attrs = data.attrs = data.attrs || {}
+          attrs [ k ] = adata [ k ]
         }
-        base [ fkey ] = adata [ k ]
+
+        else {
+
+          const nkey = k.split ( '-' )
+          const fkey = nkey.pop ()
+          let base : any = data
+          for ( const l of nkey ) {
+            if ( ! base [ l ] ) {
+              base = base [ l ] = {}
+            }
+            else {
+              base = base [ l ]
+            }
+          }
+          base [ fkey ] = adata [ k ]
+
+        }
       }
 
       else {
@@ -121,7 +131,8 @@ const mapChildren = ( c ) => {
 
 const remapSVGData = ( adata ) => {
   const props = adata.props || {}
-  adata.attrs = Object.assign ( props.attrs || {}, props )
+  adata.attrs = Object.assign
+  ( props.attrs || {}, adata.attrs, props )
   delete adata.props
   delete adata.attrs.attrs
 

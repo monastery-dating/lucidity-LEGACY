@@ -18,21 +18,24 @@ export const Project = Component
   , blockId: [ 'block', '_id' ]
   , blockName: [ 'block', 'name' ]
     // update graph on drag op
-  , move: [ '$dragdrop', 'drop' ]
+  , drop: [ '$dragdrop', 'drop' ]
   }
-, ( { state, signals } ) => (
-    <div class='Project'>
-      <div class='bar'>
-        <ProjectOptions.toggle class='fa fa-diamond'/>
-        <ProjectName class='name'/>
+, ( { state, signals } ) => {
+    const dclass = state.drop && state.drop.ownerType === 'project'
+    const klass = { Project: true, drop: dclass }
+
+    return <div class={ klass }>
+        <div class='bar'>
+          <ProjectOptions.toggle class='fa fa-diamond'/>
+          <ProjectName class='name'/>
+        </div>
+        <ProjectOptions>
+          <div class='button delete'>delete</div>
+          <div class='button'>duplicate</div>
+        </ProjectOptions>
+        <Graph key='project.graph'
+          ownerType={ 'project' }
+          graph={ state.graph } />
       </div>
-      <ProjectOptions>
-        <div class='button delete'>delete</div>
-        <div class='button'>duplicate</div>
-      </ProjectOptions>
-      <Graph key='project.graph'
-        ownerType={ 'project' }
-        graph={ state.graph } />
-    </div>
-  )
+  }
 )

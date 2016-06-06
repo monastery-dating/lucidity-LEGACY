@@ -3,9 +3,9 @@ import { Immutable as IM } from '../../Graph'
 import { ActionContextType } from '../../context.type'
 import { DragStartType, DragDropType } from '../'
 
-const dragPath = [ '$dragdrop', 'drag' ]
-const movePath = [ '$dragdrop', 'move' ]
-const dropPath = [ '$dragdrop', 'drop' ]
+const dragp = [ '$dragdrop', 'drag' ]
+const movep = [ '$dragdrop', 'move' ]
+const dropp = [ '$dragdrop', 'drop' ]
 
 export const dropAction =
 ( { state
@@ -13,11 +13,12 @@ export const dropAction =
   , output
   } : ActionContextType
 ) => {
-  const drag: DragStartType = state.get ( dragPath )
-  const drop: DragDropType  = state.get ( dropPath )
+  const drag: DragStartType = state.get ( dragp )
+  const drop: DragDropType  = state.get ( dropp )
 
-  state.unset ( dragPath )
-  state.unset ( movePath )
+  state.unset ( dragp )
+  state.unset ( movep )
+  state.unset ( dropp )
 
   if ( !drop ) {
     // Not dropping on a valid zone.
@@ -25,21 +26,30 @@ export const dropAction =
     return
   }
 
+  const docs = []
+
   const block = BlockHelper.copy
   ( state.get ( [ 'data', 'block', drag.node.blockId ] )
   )
-  const docs = [ block ]
 
-  // FIXME: handle drop on library
-  let graph = drop.graph
-  // replace blockId
-  const nodeId = drop.nodeId
-  graph = IM.update
-  ( graph, 'nodesById', nodeId, 'blockId', block._id )
+  if ( drop.ownerType === 'library' ) {
+    const lblock = IM.update ( block, 'type', 'lblock' )
+    docs.push ( lblock )
+  }
 
-  let elem = state.get ( [ drop.ownerType ] )
-  elem = IM.update ( elem, 'graph', graph )
-  docs.push ( elem )
+  else {
+    docs.push ( block )
 
-  // output.success ( { docs } )
+    let graph = drop.graph
+    // replace blockId
+    const nodeId = drop.nodeId
+    graph = IM.update
+    ( graph, 'nodesById', nodeId, 'blockId', block._id )
+
+    let elem = state.get ( [ drop.ownerType ] )
+    elem = IM.update ( elem, 'graph', graph )
+    docs.push ( elem )
+  }
+
+  output.success ( { docs } )
 }

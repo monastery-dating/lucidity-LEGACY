@@ -3,6 +3,7 @@
   position: fixed;
   display: block;
   opacity: 0.8;
+  z-index: 6; // above library = 5
   pointer-events: none;
 
   cursor: grabbing;

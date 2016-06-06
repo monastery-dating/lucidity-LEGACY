@@ -22,7 +22,6 @@ export const moveAction =
 
   if ( target ) {
     const [ ownerType, nodeId, apos ] = target.split ( '-' )
-    console.log ( ownerType, nodeId, apos )
 
     if ( ( drop && target === drop.target ) || nodeId === 'drop' ) {
       // do not change
@@ -34,7 +33,18 @@ export const moveAction =
       // FIXME: we should also ignore dragging on children of self
       drop = null
     }
+
+    else if ( ownerType === 'library' ) {
+      // drop on library
+      state.set ( [ '$factory', 'pane', 'library' ], true )
+      drop =
+      { target
+      , ownerType
+      }
+    }
+
     else {
+      state.set ( [ '$factory', 'pane', 'library' ], false )
       // changed
       let graph: GraphType = state.get ( [ ownerType, 'graph' ] )
       let newId = nextNodeId ( graph.nodesById )

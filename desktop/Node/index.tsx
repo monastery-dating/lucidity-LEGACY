@@ -54,10 +54,13 @@ export const Node = Component
 
     const { mousedown, mousemove, mouseup } = DragDropHelper.drag
     ( signals
-    , ownerType
-    , node
-    , uinode
+    , ( nodePos ) => {
+        // start drag
+        signals.$dragdrop.drag
+        ( { drag: { ownerType, node, nodePos, uinode } } )
+      }
     , ( e ) => {
+        // normal click
         signals.block.select ( { _id: uinode.blockId } )
       }
     )

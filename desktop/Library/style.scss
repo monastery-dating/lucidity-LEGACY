@@ -29,5 +29,9 @@
     .li {
       padding-left: 3*$pad;
     }
+
+    &.drop {
+      border: 2px solid $high_front;
+    }
   }
 }

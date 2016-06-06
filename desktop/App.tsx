@@ -31,7 +31,7 @@ const appStateChooser = ( state ) => {
     return <ProjectChooser key='ProjectChooser'/>
   }
   else {
-    return  <div>
+    return  <div class='wrap'>
         <Modal key='Modal'/>
         <div class='Workbench'>
           <Playback key='playback'/>

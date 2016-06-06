@@ -12,4 +12,8 @@
   .name {
     color: color( maint );
   }
+
+  &.drop {
+    background: lighten( color( workb ), 5% );
+  }
 }

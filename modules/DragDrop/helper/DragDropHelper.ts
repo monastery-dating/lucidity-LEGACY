@@ -5,13 +5,23 @@ interface ClickCallback {
   ( e: MouseEvent ): void
 }
 
+interface Position {
+  x: number
+  y: number
+}
+
+interface DragCallback {
+  ( pos: Position ): void
+}
+
 const MIN_DRAG_DIST = 4 // manhattan distance to trigger a drag
 
 const startDrag = ( signals: SignalsType ) => {
   const doc = document.documentElement
   const dragel = document.getElementById ( 'drag' )
-  console.log ( 'START DRAG', dragel )
+
   let getElementUnderMouse
+
   if ( dragel.tagName === 'svg' ) {
     const baseclass = dragel.getAttribute ( 'class' )
     const hidden = baseclass + ' drag-hide'
@@ -22,6 +32,7 @@ const startDrag = ( signals: SignalsType ) => {
       return el
     }
   }
+
   else {
     const baseclass = dragel.className
     const hidden = baseclass + ' drag-hide'
@@ -61,9 +72,7 @@ const startDrag = ( signals: SignalsType ) => {
 export module DragDropHelper {
   export const drag =
   ( signals: SignalsType
-  , ownerType: string
-  , node: NodeType
-  , uinode: UINodeType
+  , dragclbk: DragCallback
   , click: ClickCallback
   ) => {
     let evstate: 'down' | 'dragging' | 'up' = 'up'
@@ -103,9 +112,8 @@ export module DragDropHelper {
           return
         }
         evstate = 'dragging'
-        console.log ( '====>', uinode )
-        signals.$dragdrop.drag
-        ( { drag: { ownerType, node, nodePos, uinode } } )
+
+        dragclbk ( nodePos )
 
         startDrag ( signals )
       }

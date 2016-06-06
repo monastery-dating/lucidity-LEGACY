@@ -5,6 +5,6 @@ import { add } from '../../Block'
 
 export const drop: SignalType =
 [ dropAction
-, { success: []
+, { success: [...save]
   }
 ]

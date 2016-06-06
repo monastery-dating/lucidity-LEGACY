@@ -9,11 +9,11 @@ interface PosType {
 export interface DragStartType {
   // 'library', 'project', 'scene'
   ownerType: string
-  // moved nodeId ( null if ownerType === 'library' )
-  node: NodeType
-  uinode: UINodeType
   // relative position on node
   nodePos: PosType
+  node: NodeType
+  // Computed if not provided (library drag)
+  uinode?: UINodeType
 }
 
 // This is the drop zone
@@ -27,12 +27,11 @@ export interface DragMoveType {
 
 // This is the drop zone
 export interface DragDropType {
-  // owner 'library', 'project', 'scene'
-  ownerType?: string
-  // new graph
-  graph: GraphType
-  //
   target: string
-  // new ref in graph
-  nodeId: string
+  // owner 'library', 'project', 'scene'
+  ownerType: string
+  // new graph. Not needed on library drop
+  graph?: GraphType
+  // new ref in graph. Not needed on library
+  nodeId?: string
 }

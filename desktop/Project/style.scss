@@ -4,10 +4,16 @@
 
 .Project {
   width: layout( filesw );
-  height: 100%;
+  flex-grow: 1;
   border: 1px solid color( boxl );
   border-width: 1px 0 0 0;
+  display: flex;
+  flex-direction: column;
   .name {
     color: color( maint );
+  }
+
+  &.drop {
+    background: lighten( color( workb ), 5% );
   }
 }

@@ -19,9 +19,12 @@ export const Scene = Component
   , blockId: [ 'block', '_id' ]
   , blockName: [ 'block', 'name' ]
     // update graph on drag op
-  , move: [ '$dragdrop', 'drop' ]
+  , drop: [ '$dragdrop', 'drop' ]
   }
 , ( { state, signals }: ContextType ) => {
+    const dclass = state.drop && state.drop.ownerType === 'scene'
+    const klass = { Scene: true, drop: dclass }
+
     const scene: SceneType = state.scene
     if ( !scene ) {
       return ''
@@ -36,7 +39,7 @@ export const Scene = Component
       }
     , signals
     )
-    return <div class='Scene'>
+    return <div class={ klass }>
         <div class='bar'>
           <SceneOptions.toggle class='fa fa-film'/>
           <SceneName class='name'/>

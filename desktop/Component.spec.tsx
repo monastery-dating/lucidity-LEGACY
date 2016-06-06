@@ -71,12 +71,22 @@ describe
       }
     )
 
-    it ( 'should move data-xx in props', ( assert ) => {
+    it ( 'should move data-xx in attrs', ( assert ) => {
         assert.equal
         ( <foo data-bing='top'></foo>
         , { sel: 'foo'
-          , data: { props: { ['data-bing']: 'top' }}
+          , data: { attrs: { ['data-bing']: 'top' }}
           , children: []
+          }
+        )
+      }
+    )
+
+    it ( 'should move data-xx in attrs for svg', ( assert ) => {
+        const r = <svg><path data-bing='top'></path></svg>
+        assert.equal
+        ( r.children [ 0 ].data.attrs
+        , { ['data-bing']: 'top'
           }
         )
       }
