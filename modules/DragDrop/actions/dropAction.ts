@@ -1,3 +1,5 @@
+import { BlockHelper } from '../../Block'
+import { Immutable as IM } from '../../Graph'
 import { ActionContextType } from '../../context.type'
 import { DragStartType, DragDropType } from '../'
 
@@ -23,33 +25,21 @@ export const dropAction =
     return
   }
 
-  if ( drop.ownerType === 'library' ) {
-    if ( drag.ownerType === 'library' ) {
-      // ignore ? re-add to update tags, name, etc ?
-    }
-    else {
-      // copy to library
-    }
-  }
+  const block = BlockHelper.copy
+  ( state.get ( [ 'data', 'block', drag.node.blockId ] )
+  )
+  const docs = [ block ]
 
-  else {
-    // graph operation
+  // FIXME: handle drop on library
+  let graph = drop.graph
+  // replace blockId
+  const nodeId = drop.nodeId
+  graph = IM.update
+  ( graph, 'nodesById', nodeId, 'blockId', block._id )
 
-    if ( drop.operation === 'add' ) {
-      // add
-    }
+  let elem = state.get ( [ drop.ownerType ] )
+  elem = IM.update ( elem, 'graph', graph )
+  docs.push ( elem )
 
-    else {
-      // above a node: insert between node and parent
-    }
-
-    if ( drop.ownerType === drag.ownerType ) {
-      // move
-    }
-
-    else {
-      // copy to other graph
-    }
-  }
-
+  // output.success ( { docs } )
 }

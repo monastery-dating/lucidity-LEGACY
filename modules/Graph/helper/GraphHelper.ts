@@ -57,4 +57,44 @@ export module GraphHelper {
     return insert ( graph, parentId, -1, child )
   }
 
+  // slip a new object between parent and child
+  export const slip = function
+  ( graph: GraphType
+  , parentId: string
+  , pos: number
+  , child: BlockType
+  ) : GraphType
+  {
+    const id = nextNodeId ( graph.nodesById )
+    let g = graph
+
+    // get previous child at this position
+    const parent = g.nodesById [ parentId ]
+    const elder = parent.children [ pos ]
+    const children = elder ? [ elder ] : []
+
+    // move elder in child.children
+    g = IM.update
+    ( g, 'nodesById', id
+    , createNode ( child._id, id, parentId, children )
+    )
+
+    // change elder parent
+    g = IM.update
+    ( g, 'nodesById', elder, 'parent', id )
+
+    // replace parent child
+    g = IM.update
+    ( g, 'nodesById', parentId, 'children'
+    , ( children ) => IM.aset ( children, pos, id )
+    )
+
+    // add new child in nodes list
+    g = IM.update ( g, 'nodes'
+    , ( nodes ) => IM.append ( nodes, id )
+    )
+
+    return g
+  }
+
 }

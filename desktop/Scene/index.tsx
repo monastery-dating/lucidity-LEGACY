@@ -15,8 +15,11 @@ export const Scene = Component
   , editing: SceneName.path
     // ensure that we redraw on pane changes
   , pane: SceneOptions.path
-    // ui update on block select
-  , blockId: [ 'user', 'blockId' ]
+    // update graph ui
+  , blockId: [ 'block', '_id' ]
+  , blockName: [ 'block', 'name' ]
+    // update graph on drag op
+  , move: [ '$dragdrop', 'drop' ]
   }
 , ( { state, signals }: ContextType ) => {
     const scene: SceneType = state.scene

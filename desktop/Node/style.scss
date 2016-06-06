@@ -99,8 +99,7 @@ svg {
     }
 
     &.ghost {
-      fill:  color( mainb );
-      opacity: 0.3
+      animation: ghost 0.4s infinite alternate;
     }
   }
 }

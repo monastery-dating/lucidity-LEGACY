@@ -72,6 +72,23 @@ describe ( 'BlockHelper.create', ( it ) => {
   }
 )
 
+describe ( 'BlockHelper.copy', ( it ) => {
+
+    it ( 'assign new _id', ( assert ) => {
+        const a = BlockHelper.create ( 'hello' , SOURCE_A )
+        const b = BlockHelper.copy ( a )
+        assert.notSame ( a, b )
+        assert.notSame ( a._id, b._id )
+        assert.equal
+        ( typeof b._id
+        , 'string'
+        )
+      }
+    )
+  }
+)
+
+
 describe ( 'BlockHelper.update', ( it ) => {
 
     const node = BlockHelper.create ( 'hello' , SOURCE_A )

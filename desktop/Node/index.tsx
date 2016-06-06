@@ -1,7 +1,7 @@
 import './style.scss'
 import { Component } from '../Component'
 import { ContextType } from '../../modules/context.type'
-import { UINodeType, UISlotType } from '../../modules/Graph/types'
+import { NodeType, UINodeType, UISlotType } from '../../modules/Graph/types'
 import { DragDropHelper } from '../../modules/DragDrop'
 import { ProjectType } from '../../modules/Project'
 import { SceneType } from '../../modules/Scene'
@@ -15,7 +15,7 @@ const makeSlot = ( slot: UISlotType, datainfo, clbk ) => {
   if ( flags.free ) {
     return <g transform={ transform }>
         <path d={ slot.plus } class='plus'/>
-        <path d={ slot.click } data-node={ slotinfo }
+        <path d={ slot.click } data-drop={ slotinfo }
           on-click={ () => clbk ( slot.idx ) } class='click' />
       </g>
   }
@@ -31,27 +31,31 @@ const makeSlot = ( slot: UISlotType, datainfo, clbk ) => {
 }
 
 export const Node = Component
-( { block: [ 'block' ] // selected block
+( { blockId: [ 'user', 'blockId' ]
+  , move: [ '$dragdrop', 'move' ] // react to drag op
   }
 , ( { state, props, signals }: ContextType ) => {
     const uinode: UINodeType = props.uinode
+    const node: NodeType = props.node
     const ownerType = props.ownerType
+    const isghost: boolean = props.isghost
     const x = uinode.pos.x
     const y = uinode.pos.y
     const transform = `translate(${x},${y})`
-    const datainfo = `${ownerType}-${uinode.id}`
-    const klass = { sel: false
-                  , [ uinode.className ]: true
-                  , ghost: uinode.isGhost
-                  }
-
-    if ( state.block ) {
-      klass.sel = state.block._id === uinode.blockId
+    let datainfo = `${ownerType}-${uinode.id}`
+    if ( isghost ) {
+      datainfo = `${ownerType}-drop`
     }
+
+    const klass = { sel: uinode.blockId === state.blockId
+                  , [ uinode.className ]: true
+                  , ghost: isghost
+                  }
 
     const { mousedown, mousemove, mouseup } = DragDropHelper.drag
     ( signals
     , ownerType
+    , node
     , uinode
     , ( e ) => {
         signals.block.select ( { _id: uinode.blockId } )
@@ -69,7 +73,7 @@ export const Node = Component
 
     return <g transform={ transform }>
         <path d={ uinode.path } class={ klass }
-          props-data-node={ datainfo }
+          data-drop={ datainfo }
           on-mousedown={ mousedown }
           on-mouseup={ mouseup }
           on-mousemove={ mousemove }

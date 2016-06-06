@@ -15,6 +15,21 @@ export module BlockHelper {
     return create ( 'main', MAIN_SOURCE )
   }
 
+  export const copy =
+  ( block: BlockType
+  ) : BlockType => {
+    const info = processSource ( block.source )
+
+    return IM.merge
+    ( { _id: makeId ()
+      , type: 'block'
+      , name: block.name
+      , source: block.source
+      }
+    , info
+    )
+  }
+
   export const create =
   ( name: string
   , source: string = DEFAULT_SOURCE

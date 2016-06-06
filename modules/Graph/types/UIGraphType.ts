@@ -1,4 +1,4 @@
-import { UINodeType, UIPosType, UIGhostBlockType } from './UINodeType'
+import { UINodeType, UIPosType } from './UINodeType'
 
 export interface UINodeByIdType {
   [ key: string ]: UINodeType
@@ -11,8 +11,6 @@ export interface UIGraphType {
   uiNodeById: UINodeByIdType
   // location of mouse in dragged object
   grabpos: UIPosType
-  // object to add on drop
-  dropghost?: UIGhostBlockType
 }
 
 export const initUIGraph = function

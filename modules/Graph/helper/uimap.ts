@@ -3,7 +3,6 @@ import { BlockType, BlockByIdType } from '../../Block'
 import { GraphWithBlocksType
        , GraphType
        , NodeType
-       , UIGhostBlockType
        , UINodeType, UINodeByIdType
        , UIGraphType
        , UILayoutType
@@ -111,7 +110,6 @@ const boxPosition = function
 , id: string
 , layout: UILayoutType
 , uigraph: UIGraphType
-, ghost: UIGhostBlockType
 , ctx: UIPosType
 ) {
   const link = graph.nodesById [ id ]
@@ -135,79 +133,26 @@ const boxPosition = function
   let x  = ctx.x
 
   const len  = Math.max ( link.children.length, ( obj.input || [] ).length )
-  const ghostbelow = ghost && ( ghost.y > ctx.y + dy )
-  const onchildren = ghost && ( ghost.y <= ctx.y + 2 * dy )
   const sextra = uigraph.uiNodeById [ id ].sextra
 
   // get children
   for ( let i = 0; i < len + 1; i += 1 ) {
-    const cname = link.children [ i ]
+    const childId = link.children [ i ]
     const wtonext = ( sextra [ i ] || 0 ) + layout.SPAD + 2 * layout.SLOT
-    if ( ghostbelow ) {
-      // ghost is hovering on our children
-      if ( ghost.x > x && ghost.x <= x + wtonext ) {
-        // simulate drop
-        if ( onchildren || !cname ) {
-          // precise drop on children row
-          // or dropping from far below on free slot
-          const boxid = nextNodeId ( graph.nodesById )
-          ghost.linkpos = i
-          ghost.parentId = id
-          ghost.nodeId = boxid
 
-          const gbox =
-          Object.assign
-          ( {}
-          , ghost.uinode
-          , { pos: { x: x, y: ctx.y + dy }
-            , id: boxid
-            , isGhost: true
-            }
-          )
-          // this is to draw the ghost
-          uigraph.nodes.push ( boxid )
-          uigraph.uiNodeById [ boxid ] = gbox
+    if ( childId ) {
 
-          x += ghost.uinode.size.w + layout.BPAD
-        }
-      }
-    }
-
-    if ( cname ) {
       boxPosition
-      ( graph, cname, layout, uigraph, ghost
+      ( graph, childId, layout, uigraph
       , { x, y: ctx.y + dy }
       )
-      x += layout.BPAD + uigraph.uiNodeById [ cname ].size.w
+      x += layout.BPAD + uigraph.uiNodeById [ childId ].size.w
     }
-    else if ( ghostbelow || cname === null ) {
+    else if ( childId === null ) {
       // empty slot, add padding and click width
       x += layout.SCLICKW/2 + layout.SPAD + 2 * layout.SLOT
     }
   }
-
-  /*
-  if ( link.sub || link.next ) {
-    // files rendering
-    if ( obj.sub ) {
-      dy += boxPosition
-      ( graph, obj.sub, layout, uigraph, ghost
-      , { x: x + layout.SUBPADX
-        , y: ctx.y + dy
-        }
-      )
-    }
-
-    if ( obj.next ) {
-      dy += boxPosition
-      ( graph, obj.next, layout, uigraph, ghost
-      , { x
-        , y: ctx.y + dy
-        }
-      )
-    }
-  }
-  */
 
   return dy
 }
@@ -218,16 +163,18 @@ const uimapOne = function
 , id: string
 , layout: UILayoutType
 , uigraph: UIGraphType
-, ghost: UIGhostBlockType
 , cachebox: UINodeByIdType
 ) {
   uigraph.uiNodeById [ id ] = <UINodeType> { id }
+  uigraph.nodes.push ( id )
   /*
   if ( graph.type !== 'processing' ) {
     // not in graph: draw parent first
     uigraph.list.push ( id )
   }
+
   */
+
 
   const uibox = uigraph.uiNodeById [ id ]
   const cache = cachebox [ id ] || <UINodeType>{}
@@ -296,7 +243,7 @@ const uimapOne = function
     const slotpad = layout.SPAD + 2 * layout.SLOT
 
     for ( let i = 0; i < len; i += 1 ) {
-      const cname = link.children [ i ]
+      const childId = link.children [ i ]
       const pos = { x: x + sl, y }
 
       if ( ! input [ i ] ) {
@@ -307,7 +254,7 @@ const uimapOne = function
           , pos
           , plus
           , click
-          , flags: { detached: true, free: !cname }
+          , flags: { detached: true, free: !childId }
           }
         )
       }
@@ -318,13 +265,17 @@ const uimapOne = function
           , pos
           , plus
           , click
-          , flags: { free: !cname }
+          , flags: { free: !childId }
           }
         )
       }
-      if ( cname ) {
+
+
+      if ( childId ) {
+
         // We push in sextra the delta for slot i
-        const w  = uimapOne ( graph, cname, layout, uigraph, ghost, cachebox )
+        const w  = uimapOne ( graph, childId, layout, uigraph, cachebox )
+
         if ( i === len - 1 ) {
           // last
           sextra.push ( w + layout.BPAD - 2 * slotpad )
@@ -334,14 +285,18 @@ const uimapOne = function
         }
         x += w
       }
-      else if ( i === len - 1 ) {
-        sextra.push ( 0 )
-      }
       else {
-        // empty slot adds extra padding for click
-        const w = layout.SCLICKW/2 + slotpad
-        x += w // layout.SPAD + 2 * layout.SLOT
-        sextra.push ( w + layout.BPAD - slotpad )
+        // empty slot
+
+        if ( i === len - 1 ) {
+          sextra.push ( 0 )
+        }
+        else {
+          // empty slot adds extra padding for click
+          const w = layout.SCLICKW/2 + slotpad
+          x += w // layout.SPAD + 2 * layout.SLOT
+          sextra.push ( w + layout.BPAD - slotpad )
+        }
       }
     }
 
@@ -357,27 +312,11 @@ const uimapOne = function
 
   uibox.sextra = sextra
 
-/*
-  if ( obj.sub ) {
-    uimapOne ( graph, obj.sub, layout, uigraph, ghost, cachebox )
-  }
-
-  if ( obj.next ) {
-    uimapOne ( graph, obj.next, layout, uigraph, ghost, cachebox )
-  }
-  */
-
   uibox.size = size
 
   uibox.path  = path ( uibox, layout )
   uibox.slots = slots
-  /*
-  if ( graph.type === 'processing' ) {
-    // list contains children before self so that we
-    // draw the parent above the child (slots).
-    uigraph.list.push ( id )
-  }
-  */
+
   return uibox.size.w
 }
 
@@ -388,7 +327,6 @@ export const uimap =
 , blocksById: BlockByIdType
 , alayout?: UILayoutType
 , cache?: UIGraphType
-, aghost?: UIGhostBlockType
 ) : UIGraphType => {
   const graph =
   { nodes: agraph.nodes
@@ -412,20 +350,11 @@ export const uimap =
   , uiNodeById: {}
   }
 
-  let ghost
-  if ( aghost ) {
-    // We want cx, cy to be the up slot.
-    const cx = aghost.x - uigraph.grabpos.x // + aghost.uibox.size.w / 2
-    const cy = aghost.y - uigraph.grabpos.y // + aghost.uibox.size.h / 2
-    ghost = Object.assign ( {}, aghost, { x: cx, y: cy } )
-    uigraph.dropghost = ghost
-  }
-
   uimapOne
-  ( graph, rootNodeId, layout, uigraph, ghost, cachebox )
+  ( graph, rootNodeId, layout, uigraph, cachebox )
 
   boxPosition
-  ( graph, rootNodeId, layout, uigraph, ghost, startpos )
+  ( graph, rootNodeId, layout, uigraph, startpos )
 
   return uigraph
 }

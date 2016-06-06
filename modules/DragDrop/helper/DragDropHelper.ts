@@ -1,5 +1,5 @@
 import { SignalsType } from '../../context.type'
-import { UINodeType } from '../../Graph'
+import { NodeType, UINodeType } from '../../Graph'
 
 interface ClickCallback {
   ( e: MouseEvent ): void
@@ -9,11 +9,35 @@ const MIN_DRAG_DIST = 4 // manhattan distance to trigger a drag
 
 const startDrag = ( signals: SignalsType ) => {
   const doc = document.documentElement
+  const dragel = document.getElementById ( 'drag' )
+  console.log ( 'START DRAG', dragel )
+  let getElementUnderMouse
+  if ( dragel.tagName === 'svg' ) {
+    const baseclass = dragel.getAttribute ( 'class' )
+    const hidden = baseclass + ' drag-hide'
+    getElementUnderMouse = ( e ) => {
+      dragel.setAttribute ( 'class', hidden )
+      const el = document.elementFromPoint ( e.clientX, e.clientY )
+      dragel.setAttribute ( 'class', baseclass )
+      return el
+    }
+  }
+  else {
+    const baseclass = dragel.className
+    const hidden = baseclass + ' drag-hide'
+    getElementUnderMouse = ( e ) => {
+      dragel.className = hidden
+      const el = document.elementFromPoint ( e.clientX, e.clientY )
+      dragel.className = baseclass
+      return el
+    }
+  }
 
   // mouse move detected document wide
   const mousemove = ( e : MouseEvent ) => {
     e.preventDefault ()
-    const el = document.elementFromPoint ( e.clientX, e.clientY )
+    const el = getElementUnderMouse ( e )
+
     const target = el.getAttribute ( 'data-drop' )
     const clientPos = { x: e.clientX, y: e.clientY }
 
@@ -38,6 +62,7 @@ export module DragDropHelper {
   export const drag =
   ( signals: SignalsType
   , ownerType: string
+  , node: NodeType
   , uinode: UINodeType
   , click: ClickCallback
   ) => {
@@ -78,8 +103,9 @@ export module DragDropHelper {
           return
         }
         evstate = 'dragging'
+        console.log ( '====>', uinode )
         signals.$dragdrop.drag
-        ( { drag: { ownerType, uinode, nodePos } } )
+        ( { drag: { ownerType, node, nodePos, uinode } } )
 
         startDrag ( signals )
       }

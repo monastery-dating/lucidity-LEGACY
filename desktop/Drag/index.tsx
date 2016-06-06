@@ -3,7 +3,7 @@ import { Component } from '../Component'
 import { ContextType } from '../../modules/context.type'
 import { DragMoveType, DragStartType } from '../../modules/DragDrop'
 import { Node } from '../Node'
-import { UINodeType, UISlotType } from '../../modules/Graph/types'
+import { UINodeType, UISlotType, NodeType } from '../../modules/Graph/types'
 
 export const Drag = Component
 ( { drag: [ '$dragdrop', 'drag' ]
@@ -15,16 +15,19 @@ export const Drag = Component
     const klass = { Drag: true }
 
     if ( !drag || !move ) {
-      return <svg class={ klass }></svg>
+      return <svg id='drag' class={ klass }></svg>
     }
 
     const uinode: UINodeType = drag.uinode
+    const node: NodeType = drag.node
     const x = move.clientPos.x - uinode.pos.x - drag.nodePos.x
     const y = move.clientPos.y - uinode.pos.y - drag.nodePos.y
-    const style = { top: y, left: x, display: 'block' }
+    const style = { top: y, left: x }
 
-    return <svg class={ klass } style={ style }>
-        <Node ownerType='drag' uinode={ uinode }/>
-      </svg>
+    return <svg id='drag' class={ klass } style={ style }>
+          <Node ownerType='drag'
+            uinode={ uinode }
+            node={ node }/>
+        </svg>
   }
 )

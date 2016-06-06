@@ -155,6 +155,8 @@ export const init =
     --
     Drop => etc
 
+  3. Make 'parent' and 'parentId' consistent (use parentId).
+
 # FINANCES
 
 Create different prices:
@@ -183,3 +185,14 @@ If we really need people to have this thing sync online, it could backup to drop
 
 Pro: no server to maintain, simple pricing for users
 Con: no per month revenue
+
+
+# DRAG & DROP
+
+1. drag ==> uinode to show dragged element
+        ==> node to compute shape in case of drop preview
+
+2. hover: $dragdrop.drop ==> insert/append block
+                         ==> uimap
+
+   Graph's only redraw if 'drop' changes === new graph.

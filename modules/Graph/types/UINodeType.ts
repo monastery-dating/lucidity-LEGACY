@@ -50,9 +50,6 @@ export interface UINodeType {
   pos: UIPosType
   sextra: number[]
 
-  // During drag/drop operation, this is true for
-  // drop previsualisation (not the dragged element).
-  isGhost?: boolean
   // can contain more then one class ( for ghost element )
   className: string
   // draw path
@@ -61,12 +58,7 @@ export interface UINodeType {
   slots: UISlotType[]
 }
 
-export interface UIGhostBlockType {
-  block: BlockType
-  uinode: UINodeType
-  linkpos?: number // if box can be dropped, this is the position in parent links
-  parentId?: string  // parent boxid if can be dropped
-  nodeId?: string
-  x: number
-  y: number
+export interface UIDropType {
+  nodeId: string
+  slotId: number
 }

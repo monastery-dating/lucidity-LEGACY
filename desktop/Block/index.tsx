@@ -9,6 +9,8 @@ const BlockName = editable ( [ 'block', 'name' ] )
 
 export const Block = Component
 ( { block: [ 'block' ]
+    // update ui on scene name edit
+  , editing: BlockName.path
   }
 , ( { state, signals }: ContextType ) => {
     if ( !state.block ) {

@@ -6,6 +6,7 @@ export interface BlockSignalsType {
 }
 
 export * from './helper/BlockHelper'
+export * from './signals/add'
 export * from './BlockType'
 export * from './SlotType'
 

@@ -30,10 +30,10 @@ export const Playback = Component
       const func = PlaybackHelper.compile
       ( state.graph, state.blocksById, cache )
 
-      console.log ( 'play once' )
+      console.log ( 'play once MOTHER and FATHER' )
       try {
         const context = {}
-        func ( context )
+        // func ( context )
       }
       catch ( err ) {
         console.error ( err )

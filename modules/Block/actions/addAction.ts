@@ -9,9 +9,17 @@ export const addAction =
   , output
   } : ActionContextType
 ) => {
-  const { pos, parentId, ownerType } = <BlockAddOperationType>input
+  const { pos, parentId, ownerType, blockId } =
+  <BlockAddOperationType>input
   const owner = state.get ( [ ownerType ] )
-  const child = BlockHelper.create ( 'new block' )
+  let child
+  if ( blockId ) {
+    child = BlockHelper.copy
+    ( state.get ( [ 'data', 'block', blockId ] ) )
+  }
+  else {
+    child = BlockHelper.create ( 'new block' )
+  }
   const graph =
   GraphHelper.insert ( owner.graph, parentId, pos, child )
 

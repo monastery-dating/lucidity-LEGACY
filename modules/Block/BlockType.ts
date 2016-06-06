@@ -45,6 +45,7 @@ export interface BlockAddOperationType {
   pos: number
   parentId: string
   ownerType: string
+  blockId?: string
 }
 
 // basic compiler type checks

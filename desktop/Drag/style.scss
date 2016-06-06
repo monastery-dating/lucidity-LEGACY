@@ -1,6 +1,16 @@
 
 .Drag {
   position: fixed;
+  display: block;
   opacity: 0.8;
   pointer-events: none;
+
+  cursor: grabbing;
+  cursor: -moz-grabbing;
+  cursor: -webkit-grabbing;
+  // Used to hide the element while
+  // looking for element under pointer.
+  &.drag-hide {
+    display: none;
+  }
 }

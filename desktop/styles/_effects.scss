@@ -28,6 +28,16 @@
   }
 }
 
+// drop element preview
+@keyframes ghost {
+  0% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 0.4;
+  }
+}
+
 .blink {
   animation: blinker 1s linear infinite;
 }

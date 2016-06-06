@@ -15,7 +15,10 @@ export const Project = Component
     // ensure that we redraw on pane changes
   , pane: ProjectOptions.path
     // update graph ui
-  , blockId: [ 'user', 'blockId' ]
+  , blockId: [ 'block', '_id' ]
+  , blockName: [ 'block', 'name' ]
+    // update graph on drag op
+  , move: [ '$dragdrop', 'drop' ]
   }
 , ( { state, signals } ) => (
     <div class='Project'>
@@ -28,7 +31,6 @@ export const Project = Component
         <div class='button'>duplicate</div>
       </ProjectOptions>
       <Graph key='project.graph'
-        selectedBlockId={ state.blockId }
         ownerType={ 'project' }
         graph={ state.graph } />
     </div>

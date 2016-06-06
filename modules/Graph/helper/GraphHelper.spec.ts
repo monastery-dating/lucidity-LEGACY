@@ -140,3 +140,46 @@ describe ( 'GraphHelper.insert', ( it ) => {
     )
   }
 )
+
+describe ( 'GraphHelper.slipt', ( it ) => {
+    const block = BlockHelper.create ( 'main' )
+    const graph = GraphHelper.create ( block )
+    const block1 = BlockHelper.create ( 'foo', SOURCE_A )
+    const block2 = BlockHelper.create ( 'bar', SOURCE_A )
+    let graph2 = GraphHelper.insert ( graph, 'id0', 0, block1 )
+        graph2 = GraphHelper.slip ( graph2, 'id0', 0, block2 )
+
+    it ( 'set child in parent', ( assert ) => {
+
+        assert.equal
+        ( graph2.nodesById [ 'id0' ].children
+        , [ 'id2' ]
+        )
+      }
+    )
+
+    it ( 'set previous child in new child', ( assert ) => {
+
+        assert.equal
+        ( graph2.nodesById [ 'id2' ].children
+        , [ 'id1' ]
+        )
+      }
+    )
+
+    it ( 'set parent in child and new child', ( assert ) => {
+
+        assert.equal
+        ( graph2.nodesById [ 'id1' ].parent
+        , 'id2'
+        )
+
+        assert.equal
+        ( graph2.nodesById [ 'id2' ].parent
+        , 'id0'
+        )
+      }
+    )
+
+  }
+)
