@@ -97,6 +97,7 @@ const className =
 const boxPosition = function
 ( graph: GraphWithBlocksType
 , id: string
+, dragId: string
 , layout: UILayoutType
 , uigraph: UIGraphType
 , ctx: UIPosType
@@ -132,12 +133,12 @@ const boxPosition = function
     if ( childId ) {
 
       boxPosition
-      ( graph, childId, layout, uigraph
+      ( graph, childId, dragId, layout, uigraph
       , { x, y: ctx.y + dy }
       )
       x += layout.BPAD + uigraph.uiNodeById [ childId ].size.w
     }
-    else if ( childId === null ) {
+    else if ( childId === null || childId === dragId ) {
       // empty slot, add padding and click width
       x += layout.SCLICKW/2 + layout.SPAD + 2 * layout.SLOT
     }
@@ -150,6 +151,7 @@ const boxPosition = function
 const uimapOne = function
 ( graph: GraphWithBlocksType
 , id: string
+, dragId: string
 , layout: UILayoutType
 , uigraph: UIGraphType
 , cachebox: UINodeByIdType
@@ -241,6 +243,7 @@ const uimapOne = function
     for ( let i = 0; i < len; i += 1 ) {
       const childId = link.children [ i ]
       const pos = { x: x + sl, y }
+      const free = !childId || childId === dragId
 
       if ( ! input [ i ] ) {
         // extra links outside of inputs...
@@ -250,7 +253,7 @@ const uimapOne = function
           , pos
           , plus
           , click
-          , flags: { detached: true, free: !childId }
+          , flags: { detached: true, free }
           }
         )
       }
@@ -261,16 +264,26 @@ const uimapOne = function
           , pos
           , plus
           , click
-          , flags: { free: !childId }
+          , flags: { free }
           }
         )
       }
 
 
       if ( childId ) {
+        const nodes = uigraph.nodes
+        if ( childId === dragId ) {
+          // do not store nodes for drag element
+          // but compute extra width
+          uigraph.nodes = []
+        }
 
         // We push in sextra the delta for slot i
-        const w  = uimapOne ( graph, childId, layout, uigraph, cachebox )
+        const w  = uimapOne ( graph, childId, dragId, layout, uigraph, cachebox )
+
+        if ( childId === dragId ) {
+          uigraph.nodes = nodes
+        }
 
         if ( i === len - 1 ) {
           // last
@@ -323,6 +336,8 @@ const uimapOne = function
 export const uimap =
 ( agraph: GraphType
 , blocksById: BlockByIdType
+, rootId?: string
+, dragId?: string
 , alayout?: UILayoutType
 , cache?: UIGraphType
 ) : UIGraphType => {
@@ -349,10 +364,10 @@ export const uimap =
   }
 
   uimapOne
-  ( graph, rootNodeId, layout, uigraph, cachebox )
+  ( graph, rootId || rootNodeId, dragId, layout, uigraph, cachebox )
 
   boxPosition
-  ( graph, rootNodeId, layout, uigraph, startpos )
+  ( graph, rootId || rootNodeId, dragId, layout, uigraph, startpos )
 
   return uigraph
 }

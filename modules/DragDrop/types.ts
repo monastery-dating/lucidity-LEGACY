@@ -13,9 +13,12 @@ export interface DragStartType {
   nodePos: PosType
   blockId: string
 
-  // Used to identify starting node (hover on self)
+  // Used to identify starting node
   nodeId?: string
-  
+
+  // Used on scene/project drag operation
+  graph?: GraphType
+
   // Computed on drag signal from blockId
   block?: BlockType
   // Computed if not provided (library drag)

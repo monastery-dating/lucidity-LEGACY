@@ -15,5 +15,10 @@
     display: none;
   }
 
+  // this is set when there is a drop on graph
+  &.hide {
+    display: none;
+  }
+
   .plus, .click { display: none }
 }

@@ -99,7 +99,9 @@ svg {
     }
 
     &.ghost {
-      animation: ghost 0.4s infinite alternate;
+      // stroke: $high_front;
+      // fill: $high_front;
+      animation: ghost 0.6s infinite alternate;
     }
   }
 }

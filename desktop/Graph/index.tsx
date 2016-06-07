@@ -1,7 +1,7 @@
 import './style.scss'
 import { Component } from '../Component'
 import { ContextType } from '../../modules/context.type'
-import { uimap, GraphType, GraphHelper, UIGraphType } from '../../modules/Graph'
+import { uimap, GraphType, GraphHelper, NodeHelper, UIGraphType } from '../../modules/Graph'
 import { Node } from '../Node'
 import { SceneType } from '../../modules/Scene'
 import { ProjectType } from '../../modules/Project'
@@ -49,15 +49,16 @@ export const Graph = Component
     let graph: GraphType = props.graph
     const drop: DragDropType = state.drop
     const drag: DragStartType = state.drag
+    const rootId = props.rootId || NodeHelper.rootNodeId
     if ( graph ) {
       let blocksById = state.blocksById
       // Could we get rid of blocksById dependency ? Or just
       // pass the required elements from 'scene' to avoid redraw if
       // any existing block changes ?
-      let dropid: string
+      let dropId: string
       if ( drop && drop.ownerType === ownerType ) {
         graph = drop.graph
-        dropid = drop.nodeId
+        dropId = drop.nodeId
 
         if ( drag.ownerType === 'library' ) {
           // We need to add the block since it is not
@@ -67,9 +68,20 @@ export const Graph = Component
         }
       }
 
-      const uigraph = uimap ( graph, blocksById )
+      let dragId: string
+      if ( drag && drag.ownerType === ownerType ) {
+        dragId = drag.nodeId
+      }
 
-      return <svg class='Graph'>{ mapUINodes ( graph, uigraph, ownerType, dropid ) }</svg>
+      const uigraph = uimap
+      ( graph, blocksById, rootId, dragId )
+
+      const klass = Object.assign ( { Graph: true }, props.class )
+      const style = props.style || {}
+
+      console.log ( 'Graph.class', klass )
+
+      return <svg class={ klass } style={ style }>{ mapUINodes ( graph, uigraph, ownerType, dropId ) }</svg>
     }
     else {
       return ''

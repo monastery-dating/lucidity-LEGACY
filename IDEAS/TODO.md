@@ -189,10 +189,7 @@ Con: no per month revenue
 
 # DRAG & DROP
 
-1. drag ==> uinode to show dragged element
-        ==> node to compute shape in case of drop preview
-
-2. hover: $dragdrop.drop ==> insert/append block
-                         ==> uimap
-
-   Graph's only redraw if 'drop' changes === new graph.
+1. drag scene/project ==> graph for dragged elements
+                      ==> drag.nodeId === nodeId : do not draw children
+                          uimap ( ..., dragNodeId ) ?
+   drag library ==> graph with a single node

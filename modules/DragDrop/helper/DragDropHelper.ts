@@ -23,10 +23,9 @@ const startDrag = ( signals: SignalsType ) => {
   let getElementUnderMouse
 
   if ( dragel.tagName === 'svg' ) {
-    const baseclass = dragel.getAttribute ( 'class' )
-    const hidden = baseclass + ' drag-hide'
     getElementUnderMouse = ( e ) => {
-      dragel.setAttribute ( 'class', hidden )
+      const baseclass = dragel.getAttribute ( 'class' )
+      dragel.setAttribute ( 'class', baseclass + ' drag-hide' )
       const el = document.elementFromPoint ( e.clientX, e.clientY )
       dragel.setAttribute ( 'class', baseclass )
       return el
@@ -34,10 +33,9 @@ const startDrag = ( signals: SignalsType ) => {
   }
 
   else {
-    const baseclass = dragel.className
-    const hidden = baseclass + ' drag-hide'
     getElementUnderMouse = ( e ) => {
-      dragel.className = hidden
+      const baseclass = dragel.className
+      dragel.className = baseclass + ' drag-hide'
       const el = document.elementFromPoint ( e.clientX, e.clientY )
       dragel.className = baseclass
       return el

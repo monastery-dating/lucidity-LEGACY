@@ -16,11 +16,13 @@ export const dragAction =
   Object.assign ( {}, input.drag )
 
   const type = drag.ownerType === 'library' ? 'lblock' : 'block'
-  drag.block = state.get ( [ 'data', type, drag.blockId ] ) 
+  drag.block = state.get ( [ 'data', type, drag.blockId ] )
 
   if ( !drag.uinode ) {
     drag.uinode = uimapBlock ( drag.block )
   }
+
+  drag.graph = state.get ( [ drag.ownerType, 'graph' ] )
 
   state.set ( path, drag )
 }
