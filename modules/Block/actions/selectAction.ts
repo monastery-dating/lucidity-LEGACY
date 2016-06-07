@@ -7,15 +7,24 @@ export const selectAction =
   , output
   } : ActionContextType
 ) => {
-  const elem = state.get ( [ ownerType ] )
+  const sel = state.get ( [ '$block' ] )
 
   if ( doc ) {
     const graph: GraphType = doc.graph
-    state.set ( [ '$blockId' ], graph.blockId )
+    if ( sel ) {
+      // do not select if block is hidden
+      state.set ( [ '$block' ], { id: graph.blockId, ownerType } )
+    }
   }
 
   else {
     // simple select
-    state.set ( [ '$blockId' ], id )
+    if ( sel && id == sel.id && ownerType == sel.ownerType ) {
+      // toggle
+      state.unset ( [ '$block' ] )
+    }
+    else {
+      state.set ( [ '$block' ], { id, ownerType } )
+    }
   }
 }

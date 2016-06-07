@@ -15,15 +15,35 @@ import { add } from './signals/add'
 import { name } from './signals/name'
 import { select } from './signals/select'
 import { source } from './signals/source'
+import { GraphType } from '../Graph'
 
 const CurrentBlock = Model.monkey
 ( { cursors:
-    { blockById: [ 'data', 'block' ]
-    , id: [ 'user', 'blockId' ]
+    { sceneById: [ 'data', 'scene' ]
+    , sceneId: [ 'user', 'sceneId' ]
+    , projectById: [ 'data', 'project' ]
+    , projectId: [ 'user', 'projectId' ]
+    , select: [ '$block' ]
     }
-  , get ( data ) {
-      const blockById = data.blockById || {}
-      return blockById [ data.id ] || {}
+  , get ( state ) {
+      const project = ( state.projectById || {} ) [ state.projectId ]
+      const scene = ( state.sceneById || {} ) [ state.sceneId ]
+      const choice = { project, scene }
+      const select = state.select || {}
+      let graph
+      if ( project && select.ownerType === 'project' ) {
+        graph = project.graph
+      }
+      else if ( scene && select.ownerType === 'scene' ) {
+        graph = scene.graph
+      }
+
+      if ( graph ) {
+        return graph.blocksById [ select.id ]
+      }
+      else {
+        return undefined
+      }
     }
   }
 )

@@ -5,5 +5,4 @@ import { save } from '../../Data'
 export const select: SignalType =
 // prepare things to add
 [ selectAction
-, ...save
 ]

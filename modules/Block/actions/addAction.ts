@@ -1,5 +1,7 @@
 import { ActionContextType } from '../../context.type'
-import { GraphHelper, GraphType } from '../../Graph'
+import { GraphType } from '../../Graph'
+// FIXME: why is this 'undefined' if imported from 'Graph' above ?
+import { GraphHelper } from '../../Graph/helper/GraphHelper'
 import { BlockAddOperationType } from '../'
 
 export const addAction =
@@ -25,7 +27,7 @@ export const addAction =
   // triger name edit after object save
   // FIXME
   // state.set ( [ '$factory', 'editing' ], child._id )
-  
+
 
   output ( { doc: ownerupdate } )
 }

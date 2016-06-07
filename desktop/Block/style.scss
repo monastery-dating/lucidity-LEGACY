@@ -16,4 +16,6 @@
   .CodeMirror {
     height: layout( blockh );
   }
+  // CodeMirror does not like to be hidden with display: none
+  &.hidden { visibility: hidden }
 }

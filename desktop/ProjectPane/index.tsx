@@ -15,7 +15,6 @@ let oldprops
 const showScenes =
 ( { scenes, sceneById, selectedSceneId }
 , signals: SignalsType  ) => {
-  console.log ( 'showScenes' )
   if ( !scenes || !sceneById ) {
     return ''
   }

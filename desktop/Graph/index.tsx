@@ -42,10 +42,13 @@ export const Graph = Component
     // update graph on drag op
     drop: [ '$dragdrop', 'drop' ] // react to drag op
   , drag: [ '$dragdrop', 'drag' ]
-  , blockId: [ '$blockId' ]
+  , select: [ '$block' ]
   }
 , ( { props, state, signals }: ContextType ) => {
     const ownerType = props.ownerType
+    const select = state.select || {}
+    const blockId = select.ownerType === ownerType ? select.id : null
+
     let graph: GraphType = props.graph
     const drop: DragDropType = state.drop
     const drag: DragStartType = state.drag
@@ -67,9 +70,7 @@ export const Graph = Component
       const klass = Object.assign ( { Graph: true }, props.class )
       const style = props.style || {}
 
-      console.log ( 'Graph.class', klass )
-
-      return <svg class={ klass } style={ style }>{ mapUINodes ( graph, uigraph, ownerType, dropId, state.blockId ) }</svg>
+      return <svg class={ klass } style={ style }>{ mapUINodes ( graph, uigraph, ownerType, dropId, blockId ) }</svg>
     }
     else {
       return ''

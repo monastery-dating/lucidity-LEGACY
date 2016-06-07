@@ -11,19 +11,15 @@ import 'codemirror/theme/bespin.css'
 
 // UGLY UI state...
 let code = null
-let block
+let source
 
 const FOOCODE =
 "// This is a comment\n\nexport const render =\n( a, b ) => {\n  // ... do something\n  return { text: '' }\n}"
 
 export const Editor = Component
-( { source: [ 'block', 'source' ]
-  , block: [ 'block' ]
-  }
-, ( { state, signals }: ContextType ) => {
-    if ( !state.block ) {
-      return ''
-    }
+( {}
+, ( { props, signals }: ContextType ) => {
+    const block = props.block
 
     const create = ( _, { elm } ) => {
       if ( code === null ) {
@@ -32,7 +28,7 @@ export const Editor = Component
         ( () => {
             code = CodeMirror
             ( elm
-            , { value: state.source || ''
+            , { value: block.source || ''
               , lineNumbers: true
               , theme: 'bespin'
               , mode: 'javascript'
@@ -50,9 +46,9 @@ export const Editor = Component
       }
     }
 
-    if ( block !== state.block && code ) {
-      block = state.block
-      code.setValue ( state.source || '' )
+    if ( source !== block.source && code ) {
+      source = block.source
+      code.setValue ( block.source || '' )
     }
 
     return <div class='Editor'>

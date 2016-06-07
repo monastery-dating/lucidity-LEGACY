@@ -9,15 +9,14 @@ const BlockName = editable ( [ 'block', 'name' ] )
 
 export const Block = Component
 ( { block: [ 'block' ]
-    // update ui on scene name edit
+  , select: [ '$block' ]
+    // update ui on block name edit
   , editing: BlockName.path
   }
 , ( { state, signals }: ContextType ) => {
-    if ( !state.block ) {
-      return ''
-    }
+    const klass = { Block: true, hidden: !state.block }
 
-    return <div class='Block'>
+    return <div class={ klass }>
         <div class='bar tabs'>
           <div class='stretch'>
             <div class='fa fa-cube'></div>
@@ -37,7 +36,7 @@ export const Block = Component
             Control
           </div>
         </div>
-        <Editor/>
+        <Editor key='Editor' block={ state.block || {} }/>
       </div>
   }
 )
