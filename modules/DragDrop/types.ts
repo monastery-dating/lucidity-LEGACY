@@ -19,7 +19,9 @@ export interface DragStartType {
   nodeId?: string
 
   // Dragged graph (computed on drag start)
-  graph?: GraphType
+  dgraph?: GraphType
+  // Rest of the graph
+  rgraph?: GraphType
 
   // Computed on drag start
   uigraph?: UIGraphType
@@ -41,6 +43,8 @@ export interface DragDropType {
   ownerType: string
   // new graph. Not needed on library drop
   graph?: GraphType
-  // new ref in graph. Not needed on library
+  // Start considering as ghost from this node id
+  ghostId?: string
+  // End of ghost
   nodeId?: string
 }

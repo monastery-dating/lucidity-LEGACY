@@ -11,7 +11,6 @@ const mapUINodes =
 ( graph: GraphType
 , uigraph: UIGraphType
 , ownerType: string
-, dropId: string
 , blockId: string
 ) => {
   const nodesById = graph.nodesById
@@ -22,17 +21,12 @@ const mapUINodes =
   return nodes.map ( ( n ) => {
       const uinode = uiNodeById [ n ]
       const node = nodesById [ n ]
-      let isghost = false
-      if ( n === dropId ) {
-        // special drop element
-        isghost = true
-      }
       return <Node key={ key + uinode.id }
         blockId={ blockId }
         uinode={ uinode }
         node={ node }
         ownerType={ ownerType }
-        isghost={ isghost }/>
+        />
     }
   )
 }
@@ -54,23 +48,23 @@ export const Graph = Component
     const drag: DragStartType = state.drag
     const rootId = props.rootId || NodeHelper.rootNodeId
     if ( graph ) {
-      let dropId: string
+      let nodeId: string
+      let ghostId: string
       if ( drop && drop.ownerType === ownerType ) {
         graph = drop.graph
-        dropId = drop.nodeId
+        nodeId = drop.nodeId
+        ghostId = drop.ghostId
+      }
+      else if ( drag && drag.ownerType === ownerType ) {
+        graph = drag.rgraph
       }
 
-      let dragId: string
-      if ( drag && drag.ownerType === ownerType ) {
-        dragId = drag.nodeId
-      }
-
-      const uigraph = uimap ( graph, rootId, dragId )
+      const uigraph = uimap ( graph, ghostId, nodeId )
 
       const klass = Object.assign ( { Graph: true }, props.class )
       const style = props.style || {}
 
-      return <svg class={ klass } style={ style }>{ mapUINodes ( graph, uigraph, ownerType, dropId, blockId ) }</svg>
+      return <svg class={ klass } style={ style }>{ mapUINodes ( graph, uigraph, ownerType, blockId ) }</svg>
     }
     else {
       return ''

@@ -1,6 +1,9 @@
-import { uimap, GraphHelper, GraphType, NodeHelper } from '../../Graph'
+import { GraphType } from '../../Graph'
+import { NodeHelper } from '../../Graph/helper/NodeHelper'
+import { GraphHelper } from '../../Graph/helper/GraphHelper'
+import { uimap } from '../../Graph/helper/uimap'
 import { DragStartType } from '../types'
-import { BlockHelper } from '../../Block'
+import { BlockHelper } from '../../Block/helper/BlockHelper'
 import { ActionContextType } from '../../context.type'
 import * as check from 'check-types'
 
@@ -17,17 +20,20 @@ export const dragAction =
   Object.assign ( {}, input.drag )
 
   if ( drag.ownerType === 'library' ) {
-    drag.graph = state.get ( [ 'data', 'component', drag.componentId, 'graph' ] )
+    drag.dgraph = state.get ( [ 'data', 'component', drag.componentId, 'graph' ] )
   }
 
   else {
-    drag.graph = GraphHelper.cut
-    ( state.get ( [ drag.ownerType, 'graph' ] )
+    let graph = state.get ( [ drag.ownerType, 'graph' ] )
+    const otype = drag.ownerType === 'project' ? 'scene' : 'project'
+    drag.dgraph = GraphHelper.cut
+    ( graph
     , drag.nodeId
     )
+    drag.rgraph = GraphHelper.drop ( graph, drag.nodeId )
   }
 
-  drag.uigraph = uimap ( drag.graph )
+  drag.uigraph = uimap ( drag.dgraph )
 
   state.set ( dragp, drag )
 }

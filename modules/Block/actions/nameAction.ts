@@ -1,17 +1,13 @@
 import { ActionContextType } from '../../context.type'
+import { BlockHelper } from '../'
+import { GraphType, Immutable as IM } from '../../Graph'
+
 export const nameAction =
 ( { state
   , input: { value }
   , output
   } : ActionContextType
 ) => {
-
-  // prepare doc
-  const doc = Object.assign
-  ( {}
-  , state.get ( [ 'block' ] )
-  , { name: value }
-  )
 
   const path = [ 'block', 'name' ]
 
@@ -21,6 +17,18 @@ export const nameAction =
   state.set ( [ '$factory', ...path, 'saving' ], true )
   // temporary value during save
   state.set ( [ '$factory', ...path, 'value' ], value )
+
+  // prepare doc
+  const select = state.get ( [ '$block' ] )
+  if ( !select ) {
+    return
+  }
+
+  const doc = IM.update
+  ( state.get ( [ select.ownerType ] )
+  , 'graph', 'blocksById', select.id
+  , ( block ) => BlockHelper.update ( block, { name: value } )
+  )
 
   output ( { doc } )
 }

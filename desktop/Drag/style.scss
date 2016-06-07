@@ -1,10 +1,11 @@
 
-.Drag {
+.Graph.Drag {
   position: fixed;
   display: block;
   opacity: 0.8;
   z-index: 6; // above library = 5
   pointer-events: none;
+  margin: 0;
 
   cursor: grabbing;
   cursor: -moz-grabbing;

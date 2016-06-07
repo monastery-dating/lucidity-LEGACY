@@ -55,6 +55,8 @@ export interface UINodeType {
   path: string
   // slot paths
   slots: UISlotType[]
+  // true if the element is part of the eventual drop
+  isghost?: string
 }
 
 export interface UIDropType {

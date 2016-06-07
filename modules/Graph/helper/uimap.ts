@@ -96,7 +96,6 @@ const className =
 const boxPosition = function
 ( graph: GraphType
 , id: string
-, endId: string
 , layout: UILayoutType
 , uigraph: UIGraphType
 , ctx: UIPosType
@@ -132,12 +131,12 @@ const boxPosition = function
     if ( childId ) {
 
       boxPosition
-      ( graph, childId, endId, layout, uigraph
+      ( graph, childId, layout, uigraph
       , { x, y: ctx.y + dy }
       )
       x += layout.BPAD + uigraph.uiNodeById [ childId ].size.w
     }
-    else if ( childId === null || childId === endId ) {
+    else if ( childId === null ) {
       // empty slot, add padding and click width
       x += layout.SCLICKW/2 + layout.SPAD + 2 * layout.SLOT
     }
@@ -150,20 +149,13 @@ const boxPosition = function
 const uimapOne = function
 ( graph: GraphType
 , id: string
-, endId: string
+, ghostId: string
+, nodeId: string
 , layout: UILayoutType
 , uigraph: UIGraphType
 , cachebox: UINodeByIdType
 ) {
   uigraph.uiNodeById [ id ] = <UINodeType> { id }
-  /*
-  if ( graph.type !== 'processing' ) {
-    // not in graph: draw parent first
-    uigraph.list.push ( id )
-  }
-
-  */
-
 
   const uibox = uigraph.uiNodeById [ id ]
   const cache = cachebox [ id ] || <UINodeType>{}
@@ -173,8 +165,22 @@ const uimapOne = function
 
   uibox.name = obj.name
 
-  if ( link.parent === null ) {
-    uibox.className = 'scene'
+  if ( ghostId === id ) {
+    uibox.isghost = ghostId
+    ghostId = 'ghost'
+  }
+  else if ( nodeId === id ) {
+    ghostId = null
+  }
+  else if ( ghostId === 'ghost' ) {
+    // for children of starting ghost, we set nodeId so that
+    // hovering with mouse during drag operation triggers a new
+    // drop preview.
+    uibox.isghost = ghostId
+  }
+
+  if ( obj.name === 'main' ) {
+    uibox.className = 'main'
   }
 
   else {
@@ -240,7 +246,7 @@ const uimapOne = function
     for ( let i = 0; i < len; i += 1 ) {
       const childId = link.children [ i ]
       const pos = { x: x + sl, y }
-      const free = !childId || childId === endId
+      const free = !childId
 
       if ( ! input [ i ] ) {
         // extra links outside of inputs...
@@ -269,18 +275,9 @@ const uimapOne = function
 
       if ( childId ) {
         const nodes = uigraph.nodes
-        if ( childId === endId ) {
-          // do not store nodes for drag element
-          // but compute extra width
-          uigraph.nodes = []
-        }
 
         // We push in sextra the delta for slot i
-        const w  = uimapOne ( graph, childId, endId, layout, uigraph, cachebox )
-
-        if ( childId === endId ) {
-          uigraph.nodes = nodes
-        }
+        const w  = uimapOne ( graph, childId, ghostId, nodeId, layout, uigraph, cachebox )
 
         if ( i === len - 1 ) {
           // last
@@ -332,8 +329,8 @@ const uimapOne = function
  */
 export const uimap =
 ( graph: GraphType
-, rootId?: string
-, endId?: string
+, ghostId?: string // start considering as ghost from here
+, nodeId?: string  // stop considering as ghost from here
 , alayout?: UILayoutType
 , cache?: UIGraphType
 ) : UIGraphType => {
@@ -355,10 +352,10 @@ export const uimap =
   }
 
   uimapOne
-  ( graph, rootId || rootNodeId, endId, layout, uigraph, cachebox )
+  ( graph, rootNodeId, ghostId, nodeId, layout, uigraph, cachebox )
 
   boxPosition
-  ( graph, rootId || rootNodeId, endId, layout, uigraph, startpos )
+  ( graph, rootNodeId, layout, uigraph, startpos )
 
   return uigraph
 }

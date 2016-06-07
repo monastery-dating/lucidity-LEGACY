@@ -41,6 +41,6 @@ export const Drag = Component
           style={ style }
           ownerType={ 'drag' }
           rootId={ drag.nodeId }
-          graph={ drag.graph } />
+          graph={ drag.dgraph } />
   }
 )

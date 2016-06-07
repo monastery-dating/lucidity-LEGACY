@@ -1,4 +1,6 @@
-import { GraphType, GraphHelper, NodeHelper } from '../../Graph'
+import { GraphType } from '../../Graph'
+import { GraphHelper } from '../../Graph/helper/GraphHelper'
+import { NodeHelper } from '../../Graph/helper/NodeHelper'
 import { DragMoveType, DragDropType, DragStartType } from '../types'
 import { ActionContextType } from '../../context.type'
 
@@ -20,18 +22,11 @@ export const moveAction =
   // If target is not set = no drop operation
   let drop: DragDropType = state.get ( dropp )
 
-  if ( target ) {
-    const [ ownerType, nodeId, apos ] = target.split ( '-' )
+  if ( target && target !== '' ) {
+    let [ ownerType, nodeId, apos ] = target.split ( '-' )
 
     if ( ( drop && target === drop.target ) || nodeId === 'drop' ) {
       // do not change
-
-    }
-
-    else if ( ownerType === drag.ownerType && nodeId === drag.nodeId ) {
-      // dragging on self: do nothing
-      // FIXME: we should also ignore dragging on children of self
-      drop = null
     }
 
     else if ( ownerType === 'library' ) {
@@ -45,20 +40,34 @@ export const moveAction =
 
     else {
       // changed
-      let graph: GraphType = state.get ( [ ownerType, 'graph' ] )
+      let graph: GraphType
+
+      if ( drag.ownerType === ownerType ) {
+        // when dropping on drag origin, we use rest graph
+        graph = drag.rgraph
+      }
+      else {
+        graph = state.get ( [ ownerType, 'graph' ] )
+      }
+
       let newId = nextNodeId ( graph.nodesById )
       let pos: number = parseInt ( apos )
       let parentId: string
-      const child = drag.graph
+      const child = drag.dgraph
 
       if ( apos ) {
         // should have a way to set nodeId to 'drop' here or mark as ghost...
         graph = GraphHelper.insert
         ( graph, nodeId, pos, child )
+        nodeId = null
       }
       else {
         // find node in graph
         const node = graph.nodesById [ nodeId ]
+        if ( !node ) {
+          // drag move happens before proper ui update
+          return
+        }
         parentId = node.parent
         if ( parentId ) {
           const parent = graph.nodesById [ parentId ]
@@ -71,10 +80,14 @@ export const moveAction =
         }
       }
 
+      // TODO: we could save the operation so that we have live preview
+      // of the operation.
+
       // eventual drop operation
       drop =
       { target
-      , nodeId: newId
+      , ghostId: newId
+      , nodeId
       , graph
       , ownerType
       }

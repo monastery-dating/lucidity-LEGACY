@@ -38,18 +38,24 @@ export const Node = Component
     const uinode: UINodeType = props.uinode
     const node: NodeType = props.node
     const ownerType = props.ownerType
-    const isghost: boolean = props.isghost
     const x = uinode.pos.x
     const y = uinode.pos.y
     const transform = `translate(${x},${y})`
     let datainfo = `${ownerType}-${uinode.id}`
-    if ( isghost ) {
-      datainfo = `${ownerType}-drop`
+    if ( uinode.isghost ) {
+      if ( uinode.isghost === node.id ) {
+        // hovering on main element: do nothing
+        datainfo = `${ownerType}-drop`
+      }
+      else {
+        // force change of drop layout
+        datainfo = ``
+      }
     }
 
     const klass = { sel: node.blockId === props.blockId
                   , [ uinode.className ]: true
-                  , ghost: isghost
+                  , ghost: uinode.isghost
                   }
 
     const { mousedown, mousemove, mouseup } = DragDropHelper.drag

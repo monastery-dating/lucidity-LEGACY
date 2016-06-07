@@ -20,7 +20,14 @@ export const dropAction =
 
   state.unset ( dragp )
   state.unset ( movep )
-  state.unset ( dropp )
+
+  let odoc
+  if ( drag.ownerType !== 'library' ) {
+    odoc = IM.update
+    ( state.get ( [ drag.ownerType ] )
+    , 'graph', drag.rgraph
+    )
+  }
 
   if ( !drop ) {
     // Not dropping on a valid zone.
@@ -29,34 +36,32 @@ export const dropAction =
     }
 
     else {
-      // remove
-      const graph = GraphHelper.drop ( drag.graph, drag.nodeId )
-      const elem = state.get ( [ drag.ownerType ] )
-      const doc = Object.assign ( {}, elem, { graph } )
-      output.success ( { doc } )
+      // Remove
+      output.success ( { doc: odoc } )
     }
+
     return
   }
 
   if ( drop.ownerType === 'library' ) {
     // Do we have a block with same name in the library ?
-    const node = drop.graph.nodesById [ rootNodeId ]
-    const block = drop.graph.blocksById [ node.blockId ]
+    const node = drag.dgraph.nodesById [ rootNodeId ]
+    const name = drag.dgraph.blocksById [ node.blockId ].name
 
     const library: BlockByIdType = state.get ( [ 'data', 'component' ] )
     let doc
     for ( const k in library ) {
       const b = library [ k ]
-      if ( b.name === block.name ) {
+      if ( b.name === name ) {
         // replace
-        doc = Object.assign ( {}, b, { graph: drop.graph } )
+        doc = Object.assign ( {}, b, { graph: drag.dgraph } )
         break
       }
     }
 
     if ( !doc ) {
       // new component
-      doc = ComponentHelper.create ( drop.graph )
+      doc = ComponentHelper.create ( drag.dgraph )
     }
     output.success ( { doc } )
   }
@@ -64,6 +69,12 @@ export const dropAction =
   else {
     let doc = state.get ( [ drop.ownerType ] )
     doc = IM.update ( doc, 'graph', drop.graph )
-    output.success ( { doc } )
+    const docs = [ doc ]
+    if ( drop.ownerType !== drag.ownerType && odoc ) {
+      // transfer from one graph to another
+      // also change origin
+      docs.push ( odoc )
+    }
+    output.success ( { docs } )
   }
 }

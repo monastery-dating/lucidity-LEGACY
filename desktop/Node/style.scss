@@ -72,12 +72,8 @@ svg {
     font-size:   getfont(size);
     fill: color( wboxt );
 
-    &.scene {
+    &.main {
       fill:  color( maint );
-    }
-
-    &.ghost {
-      opacity: 0.2
     }
   }
 
@@ -85,7 +81,7 @@ svg {
     stroke-width: $lsbo;
     stroke: color( wboxl );
 
-    &.scene {
+    &.main {
       cursor: pointer;
 
       fill:   color( mainb );
@@ -99,9 +95,9 @@ svg {
     }
 
     &.ghost {
-      // stroke: $high_front;
+      stroke: $high_front;
       // fill: $high_front;
-      animation: ghost 0.6s infinite alternate;
+      // animation: ghost 0.6s infinite alternate;
     }
   }
 }
