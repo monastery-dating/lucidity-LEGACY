@@ -12,6 +12,7 @@ const mapUINodes =
 , uigraph: UIGraphType
 , ownerType: string
 , dropId: string
+, blockId: string
 ) => {
   const nodesById = graph.nodesById
   const nodes = uigraph.nodes
@@ -27,6 +28,7 @@ const mapUINodes =
         isghost = true
       }
       return <Node key={ key + uinode.id }
+        blockId={ blockId }
         uinode={ uinode }
         node={ node }
         ownerType={ ownerType }
@@ -36,13 +38,11 @@ const mapUINodes =
 }
 
 export const Graph = Component
-( { blocksById: [ 'data', 'block' ]
-  , blockId: [ 'user', 'blockId' ]
-    // update ui on block change
-  , block: [ 'block' ]
+( {
     // update graph on drag op
-  , drop: [ '$dragdrop', 'drop' ] // react to drag op
+    drop: [ '$dragdrop', 'drop' ] // react to drag op
   , drag: [ '$dragdrop', 'drag' ]
+  , blockId: [ '$blockId' ]
   }
 , ( { props, state, signals }: ContextType ) => {
     const ownerType = props.ownerType
@@ -51,21 +51,10 @@ export const Graph = Component
     const drag: DragStartType = state.drag
     const rootId = props.rootId || NodeHelper.rootNodeId
     if ( graph ) {
-      let blocksById = state.blocksById
-      // Could we get rid of blocksById dependency ? Or just
-      // pass the required elements from 'scene' to avoid redraw if
-      // any existing block changes ?
       let dropId: string
       if ( drop && drop.ownerType === ownerType ) {
         graph = drop.graph
         dropId = drop.nodeId
-
-        if ( drag.ownerType === 'library' ) {
-          // We need to add the block since it is not
-          // in state.blocksById
-          blocksById =
-          Object.assign ( {}, blocksById, { [ drag.blockId ]: drag.block })
-        }
       }
 
       let dragId: string
@@ -73,15 +62,14 @@ export const Graph = Component
         dragId = drag.nodeId
       }
 
-      const uigraph = uimap
-      ( graph, blocksById, rootId, dragId )
+      const uigraph = uimap ( graph, rootId, dragId )
 
       const klass = Object.assign ( { Graph: true }, props.class )
       const style = props.style || {}
 
       console.log ( 'Graph.class', klass )
 
-      return <svg class={ klass } style={ style }>{ mapUINodes ( graph, uigraph, ownerType, dropId ) }</svg>
+      return <svg class={ klass } style={ style }>{ mapUINodes ( graph, uigraph, ownerType, dropId, state.blockId ) }</svg>
     }
     else {
       return ''

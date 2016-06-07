@@ -24,12 +24,7 @@ export interface BlockSourceInfo {
 }
 
 export interface BlockType extends BlockSourceInfo {
-  // database related
-  _id: string
-  _rev?: string
-  type: string // must be 'block'
-  //
-
+  id: string
   name: string
   source: string
   // If this is true, we have a sub-graph
@@ -45,7 +40,7 @@ export interface BlockAddOperationType {
   pos: number
   parentId: string
   ownerType: string
-  blockId?: string
+  componentId?: string
 }
 
 // basic compiler type checks

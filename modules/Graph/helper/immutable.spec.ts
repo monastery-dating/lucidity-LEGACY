@@ -204,13 +204,12 @@ describe ( 'IM.aset', ( it ) => {
       }
     )
 
-    it ( 'should not set outside array', ( assert ) => {
-        assert.throws
-        ( function () {
-          const a = [10,20]
-          const b = 30
-          IM.aset ( a, 3, b )
-          }
+    it ( 'should set outside array', ( assert ) => {
+        const a = [10,20]
+        const b = 30
+        assert.equal
+        ( IM.aset ( a, 3, b )
+        , [10,20,null,30]
         )
       }
     )

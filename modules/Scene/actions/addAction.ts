@@ -8,8 +8,8 @@ export const addAction =
   } : ActionContextType
 ) => {
 
-  const { scene, block }= SceneHelper.create ()
-  const docs = [ block, scene ]
+  const scene = SceneHelper.create ()
+  const docs = [ scene ]
 
   // This is a flag that will set name editing after db object
   // is selected.

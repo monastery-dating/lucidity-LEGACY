@@ -11,7 +11,6 @@ window['THREE'] = THREE
 
 export const Playback = Component
 ( { graph: [ 'scene', 'graph' ]
-  , blocksById: [ 'data', 'block' ]
   }
 , ( { state, signals } ) => {
     const w = 320
@@ -28,7 +27,7 @@ export const Playback = Component
 
     if ( state.graph ) {
       const func = PlaybackHelper.compile
-      ( state.graph, state.blocksById, cache )
+      ( state.graph, cache )
 
       console.log ( 'play once MOTHER and FATHER' )
       try {

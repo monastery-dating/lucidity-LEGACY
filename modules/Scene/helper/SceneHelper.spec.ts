@@ -6,8 +6,8 @@ import { GraphHelper } from '../../Graph'
 describe ( 'SceneHelper.create', ( it ) => {
 
     it ( 'should return block and scene docs', ( assert ) => {
-        const { scene, block } = SceneHelper.create ()
-        const graph = GraphHelper.create ( <BlockType> block )
+        const scene = SceneHelper.create ()
+        const graph = GraphHelper.create ()
 
         assert.equal
         ( scene

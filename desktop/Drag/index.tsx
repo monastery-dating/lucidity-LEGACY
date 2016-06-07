@@ -31,8 +31,6 @@ export const Drag = Component
       klass [ 'hide' ] = true
     }
 
-    const uinode: UINodeType = drag.uinode
-    const node: NodeType = { id: drag.nodeId, parent: null, children: [], blockId: drag.blockId }
     const x = move.clientPos.x - ARROW_POS.x
     const y = move.clientPos.y - ARROW_POS.y
     const style = { top: y, left: x }
@@ -44,13 +42,5 @@ export const Drag = Component
           ownerType={ 'drag' }
           rootId={ drag.nodeId }
           graph={ drag.graph } />
-
-/*
-    return <svg id='drag' class={ klass } style={ style }>
-          <Node ownerType='drag'
-            uinode={ uinode }
-            node={ node }/>
-        </svg>
-        */
   }
 )

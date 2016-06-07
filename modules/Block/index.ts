@@ -1,11 +1,11 @@
 export interface BlockSignalsType {
   add ( input: { pos: number, parentId: string, ownerType: string } )
   name ( input: { value: string } )
-  select ( input: { _id: string } )
+  select ( input: { ownerType: string, id: string } )
   source ( input: { value: string } )
 }
 
-export * from './helper/BlockHelper'
+export * from './helper'
 export * from './signals/add'
 export * from './BlockType'
 export * from './SlotType'

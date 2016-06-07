@@ -1,33 +1,29 @@
 import { BlockType, BlockByIdType, BlockSourceInfo
        , BlockTypeChanges } from '../BlockType'
-import { makeId } from '../../Factory'
 import * as ts from 'typescript'
-import { Immutable as IM } from '../../Graph'
+import { Immutable as IM } from '../../Graph/helper/Immutable'
 
 declare var require: any
-const MAIN_SOURCE    = require ( './default/main.js.txt' )
 const DEFAULT_SOURCE = require ( './default/block.js.txt')
 
 export module BlockHelper {
+  export const MAIN_SOURCE = require ( './default/main.js.txt' )
+
+  export const nextBlockId =
+  ( blocksById: BlockByIdType
+  ) : string => {
+    let n : number = 0
+    while ( blocksById [ `b${n}` ] ) {
+      n += 1
+    }
+    return `b${n}`
+  }
+
+  export const rootBlockId = nextBlockId ( {} )
 
   export const main =
   (): BlockType => {
     return create ( 'main', MAIN_SOURCE )
-  }
-
-  export const copy =
-  ( block: BlockType
-  ) : BlockType => {
-    const info = processSource ( block.source )
-
-    return IM.merge
-    ( { _id: makeId ()
-      , type: 'block'
-      , name: block.name
-      , source: block.source
-      }
-    , info
-    )
   }
 
   export const create =
@@ -37,8 +33,7 @@ export module BlockHelper {
     const info = processSource ( source )
 
     return IM.merge
-    ( { _id: makeId ()
-      , type: 'block'
+    ( { id: rootBlockId
       , name
       , source
       }

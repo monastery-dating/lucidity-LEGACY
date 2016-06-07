@@ -1,11 +1,13 @@
 import { BlockHelper, BlockByIdType } from '../../Block'
-import { Immutable as IM } from '../../Graph'
+import { Immutable as IM, GraphHelper, NodeHelper } from '../../Graph'
+import { ComponentHelper } from '../../Library'
 import { ActionContextType } from '../../context.type'
 import { DragStartType, DragDropType } from '../'
 
 const dragp = [ '$dragdrop', 'drag' ]
 const movep = [ '$dragdrop', 'move' ]
 const dropp = [ '$dragdrop', 'drop' ]
+const rootNodeId = NodeHelper.rootNodeId
 
 export const dropAction =
 ( { state
@@ -22,47 +24,46 @@ export const dropAction =
 
   if ( !drop ) {
     // Not dropping on a valid zone.
-    // Should it be a remove operation ?
+    if ( drag.ownerType === 'library' ) {
+      // do nothing
+    }
+
+    else {
+      // remove
+      const graph = GraphHelper.drop ( drag.graph, drag.nodeId )
+      const elem = state.get ( [ drag.ownerType ] )
+      const doc = Object.assign ( {}, elem, { graph } )
+      output.success ( { doc } )
+    }
     return
   }
 
-  const docs = []
-
-  const block = BlockHelper.copy ( drag.block )
-
   if ( drop.ownerType === 'library' ) {
     // Do we have a block with same name in the library ?
-    const library: BlockByIdType = state.get ( [ 'data', 'lblock' ] )
-    let lblock
+    const node = drop.graph.nodesById [ rootNodeId ]
+    const block = drop.graph.blocksById [ node.blockId ]
+
+    const library: BlockByIdType = state.get ( [ 'data', 'component' ] )
+    let doc
     for ( const k in library ) {
       const b = library [ k ]
       if ( b.name === block.name ) {
         // replace
-        lblock = Object.assign
-        ( {}, b, block, { type: 'lblock', _id: b._id } )
+        doc = Object.assign ( {}, b, { graph: drop.graph } )
+        break
       }
-
     }
 
-    if ( !lblock ) {
-      lblock = Object.assign ( {}, block, { type: 'lblock' } )
+    if ( !doc ) {
+      // new component
+      doc = ComponentHelper.create ( drop.graph )
     }
-    docs.push ( lblock )
+    output.success ( { doc } )
   }
 
   else {
-    docs.push ( block )
-
-    let graph = drop.graph
-    // replace blockId
-    const nodeId = drop.nodeId
-    graph = IM.update
-    ( graph, 'nodesById', nodeId, 'blockId', block._id )
-
-    let elem = state.get ( [ drop.ownerType ] )
-    elem = IM.update ( elem, 'graph', graph )
-    docs.push ( elem )
+    let doc = state.get ( [ drop.ownerType ] )
+    doc = IM.update ( doc, 'graph', drop.graph )
+    output.success ( { doc } )
   }
-
-  output.success ( { docs } )
 }

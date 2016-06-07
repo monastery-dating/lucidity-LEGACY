@@ -1,6 +1,5 @@
 import { ActionContextType } from '../../context.type'
-import { GraphHelper } from '../../Graph'
-import { BlockHelper } from '../helper/BlockHelper'
+import { GraphHelper, GraphType } from '../../Graph'
 import { BlockAddOperationType } from '../'
 
 export const addAction =
@@ -9,24 +8,24 @@ export const addAction =
   , output
   } : ActionContextType
 ) => {
-  const { pos, parentId, ownerType, blockId } =
+  const { pos, parentId, ownerType, componentId } =
   <BlockAddOperationType>input
   const owner = state.get ( [ ownerType ] )
-  let child
-  if ( blockId ) {
-    child = BlockHelper.copy
-    ( state.get ( [ 'data', 'block', blockId ] ) )
+  let child: GraphType
+  if ( componentId ) {
+    child = state.get ( [ 'data', 'component', componentId ] ).graph
   }
   else {
-    child = BlockHelper.create ( 'new block' )
+    child = GraphHelper.create ( 'new block' )
   }
-  const graph =
-  GraphHelper.insert ( owner.graph, parentId, pos, child )
+  const graph = GraphHelper.insert ( owner.graph, parentId, pos, child )
 
   const ownerupdate = Object.assign ( {}, owner, { graph } )
 
   // triger name edit after object save
-  state.set ( [ '$factory', 'editing' ], child._id )
+  // FIXME
+  // state.set ( [ '$factory', 'editing' ], child._id )
+  
 
-  output ( { docs: [ child, ownerupdate ], doc: child } )
+  output ( { doc: ownerupdate } )
 }

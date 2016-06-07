@@ -1,26 +1,21 @@
 import { ActionContextType } from '../../context.type'
+import { GraphType, Immutable as IM } from '../../Graph'
 
 export const selectAction =
 ( { state
-  , input: { doc, docs, _id }
+  , input: { doc, docs, id, ownerType }
   , output
   } : ActionContextType
 ) => {
-  const user = state.get ( [ 'user' ] )
+  const elem = state.get ( [ ownerType ] )
 
   if ( doc ) {
-    const sel = Object.assign ( {}, user, { blockId: doc._id } )
-    if ( docs ) {
-      output ( { docs: [ ...docs, sel ] } )
-    }
-    else {
-      output ( { docs: [ doc, sel ] } )
-    }
+    const graph: GraphType = doc.graph
+    state.set ( [ '$blockId' ], graph.blockId )
   }
-  
+
   else {
     // simple select
-    const sel = Object.assign ( {}, user, { blockId: _id } )
-    output ( { doc: sel } )
+    state.set ( [ '$blockId' ], id )
   }
 }

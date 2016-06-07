@@ -7,10 +7,10 @@ export module NodeHelper {
   ( nodesById: NodeByIdType
   ) : string => {
     let n : number = 0
-    while ( nodesById [ `id${n}` ] ) {
+    while ( nodesById [ `n${n}` ] ) {
       n += 1
     }
-    return `id${n}`
+    return `n${n}`
   }
 
   export const rootNodeId = nextNodeId ( {} )

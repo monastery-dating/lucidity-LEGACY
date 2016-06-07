@@ -1,17 +1,19 @@
-import { BlockByIdType } from '../Block'
+export * from './helper'
+
+import { SceneByIdType } from '../Scene'
 import * as Model from 'cerebral-model-baobab'
 
 const sortByName = ( a, b ) => a.name > b.name ? 1 : -1
 
 const LibraryRows = Model.monkey
 ( { cursors:
-    { blocks: [ 'data', 'lblock' ]
+    { components: [ 'data', 'component' ]
     }
   , get ( state ) {
-      const blocks: BlockByIdType = state.blocks || {}
+      const components: SceneByIdType = state.components || {}
       const list = []
-      for ( const k in blocks ) {
-        list.push ( blocks [ k ] )
+      for ( const k in components ) {
+        list.push ( components [ k ] )
       }
       list.sort ( sortByName )
       return list

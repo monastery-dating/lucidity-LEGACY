@@ -1,5 +1,5 @@
 import { BlockType } from '../Block'
-import { NodeType, UINodeType, GraphType } from '../Graph'
+import { NodeType, UIGraphType, GraphType } from '../Graph'
 interface PosType {
   x: number
   y: number
@@ -11,18 +11,18 @@ export interface DragStartType {
   ownerType: string
   // relative position on node
   nodePos: PosType
-  blockId: string
 
-  // Used to identify starting node
+  // Used for library start drag operation
+  componentId?: string
+
+  // Used to identify starting node for scene/graph op.
   nodeId?: string
 
-  // Used on scene/project drag operation
+  // Dragged graph (computed on drag start)
   graph?: GraphType
 
-  // Computed on drag signal from blockId
-  block?: BlockType
-  // Computed if not provided (library drag)
-  uinode?: UINodeType
+  // Computed on drag start
+  uigraph?: UIGraphType
 }
 
 // This is the drop zone

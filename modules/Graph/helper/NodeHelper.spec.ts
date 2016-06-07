@@ -5,10 +5,10 @@ import { NodeHelper } from './NodeHelper'
 describe ( 'NodeHelper.create', ( it ) => {
 
     it ( 'should set defaults', ( assert ) => {
-        const node = NodeHelper.create ( 'blockxx', 'id0', 'pa')
+        const node = NodeHelper.create ( 'blockxx', 'n0', 'pa')
         assert.equal
         ( node
-        , { id: 'id0'
+        , { id: 'n0'
           , blockId: 'blockxx'
           , parent: 'pa'
           , children: []
@@ -19,12 +19,12 @@ describe ( 'NodeHelper.create', ( it ) => {
 
     it ( 'should set values', ( assert ) => {
         const node = NodeHelper.create
-        ( 'blockxx' , 'id99', 'id0', [ 'id7', 'id8' ] )
+        ( 'blockxx' , 'id99', 'n0', [ 'id7', 'id8' ] )
         assert.equal
         ( node
         , { id: 'id99'
           , blockId: 'blockxx'
-          , parent: 'id0'
+          , parent: 'n0'
           , children: [ 'id7', 'id8' ]
           }
         )
@@ -34,11 +34,11 @@ describe ( 'NodeHelper.create', ( it ) => {
   }
 )
 
-describe ( 'NodeHelper.nextNodeHelperId', ( it ) => {
+describe ( 'NodeHelper.nextNodeId', ( it ) => {
     it ( 'should return id0 on empty map', ( assert ) => {
         assert.equal
         ( NodeHelper.nextNodeId ( {} )
-        , 'id0'
+        , 'n0'
         )
       }
     )
@@ -46,8 +46,8 @@ describe ( 'NodeHelper.nextNodeHelperId', ( it ) => {
     it ( 'should return first free in graph', ( assert ) => {
         const n = NodeHelper.create ( 'foo', '', '' )
         assert.equal
-        ( NodeHelper.nextNodeId ( <NodeByIdType> { id0: n, id3: n } )
-        , 'id1'
+        ( NodeHelper.nextNodeId ( <NodeByIdType> { n0: n, n3: n } )
+        , 'n1'
         )
       }
     )

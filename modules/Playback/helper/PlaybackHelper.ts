@@ -71,18 +71,17 @@ export module PlaybackHelper {
 
   const updateRender =
   ( graph: GraphType
-  , blocksById: BlockByIdType
   , cache: PlaybackNodeCache
   ): boolean => {
     let shouldClear = false
 
-    for ( const nodeId of graph.nodes ) {
+    for ( const nodeId in graph.nodesById ) {
 
       const node = graph.nodesById [ nodeId ]
       if ( !node ) {
         throw ( `Error in graph: missing '${nodeId}'.`)
       }
-      const block = blocksById [ node.blockId ]
+      const block = graph.blocksById [ node.blockId ]
 
       // main
       let n = cache [ nodeId ]
@@ -122,7 +121,7 @@ export module PlaybackHelper {
       }
 
     }
-    
+
     // Now every node has a render function
     return shouldClear
   }
@@ -135,7 +134,7 @@ export module PlaybackHelper {
     const nc = cache [ key ]
     if ( !nc ) {
       console.log ( graph, cache )
-      throw `Corrupt graph. Child '${key}' not in 'nodes'.`
+      throw `Corrupt graph. Child '${key}' not in 'nodesById'.`
     }
     if ( nc.curry ) {
       return nc.curry
@@ -173,13 +172,12 @@ export module PlaybackHelper {
 
   export const compile =
   ( graph : GraphType
-  , blocksById: BlockByIdType
   , cache: PlaybackCache
   ) : RenderFunc => {
     const output : string[] = []
     // update render functions for each node
     const shouldClear = updateRender
-    ( graph, blocksById, cache.nodecache )
+    ( graph, cache.nodecache )
 
     if ( shouldClear || graph !== cache.oldgraph ) {
       // One of the files has changed or the graph has changed:

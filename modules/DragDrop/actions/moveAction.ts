@@ -49,12 +49,12 @@ export const moveAction =
       let newId = nextNodeId ( graph.nodesById )
       let pos: number = parseInt ( apos )
       let parentId: string
-      const block = drag.block
+      const child = drag.graph
 
       if ( apos ) {
         // should have a way to set nodeId to 'drop' here or mark as ghost...
         graph = GraphHelper.insert
-        ( graph, nodeId, pos, block )
+        ( graph, nodeId, pos, child )
       }
       else {
         // find node in graph
@@ -64,7 +64,7 @@ export const moveAction =
           const parent = graph.nodesById [ parentId ]
           pos = parent.children.indexOf ( nodeId )
           graph = GraphHelper.slip
-          ( graph, parent.id, pos, block )
+          ( graph, parent.id, pos, child )
         }
         else {
           // do not change graph

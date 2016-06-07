@@ -1,29 +1,25 @@
 import { BlockHelper, BlockType } from '../../Block'
 import { makeId } from '../../Factory'
-import { GraphHelper, GraphType } from '../../Graph'
+import { GraphType } from '../../Graph'
+import { GraphHelper } from '../../Graph/helper/GraphHelper'
 import { SceneType } from '../../Scene'
 
-export interface SceneCreateType {
-  scene: SceneType
-  block: BlockType
-}
+const rootBlockId = BlockHelper.rootBlockId
 
 export module SceneHelper {
 
   export const create =
-  () : SceneCreateType => {
+  () : SceneType => {
     const _id = makeId ()
-    const block = BlockHelper.main ()
-    const graph = GraphHelper.create ( block )
-    const scene = Object.assign
+    const graph = GraphHelper.create ()
+    return Object.freeze
     ( { _id
       , type: 'scene'
       , name: 'New scene'
       , graph
+      , blockId: rootBlockId
       }
     )
-
-    return { block, scene }
   }
 
   export const select =
@@ -40,8 +36,6 @@ export module SceneHelper {
         }
       )
     }
-
-    // do not select block on scene change
 
     return Object.assign
     ( {}

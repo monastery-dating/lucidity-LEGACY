@@ -1,8 +1,7 @@
 import { GraphHelper } from '../'
 import { defaultUILayout } from './uilayout'
 import { BlockType, BlockByIdType } from '../../Block'
-import { GraphWithBlocksType
-       , GraphType
+import { GraphType
        , NodeType
        , UINodeType, UINodeByIdType
        , UIGraphType
@@ -95,9 +94,9 @@ const className =
 /** Compute box position.
  */
 const boxPosition = function
-( graph: GraphWithBlocksType
+( graph: GraphType
 , id: string
-, dragId: string
+, endId: string
 , layout: UILayoutType
 , uigraph: UIGraphType
 , ctx: UIPosType
@@ -133,12 +132,12 @@ const boxPosition = function
     if ( childId ) {
 
       boxPosition
-      ( graph, childId, dragId, layout, uigraph
+      ( graph, childId, endId, layout, uigraph
       , { x, y: ctx.y + dy }
       )
       x += layout.BPAD + uigraph.uiNodeById [ childId ].size.w
     }
-    else if ( childId === null || childId === dragId ) {
+    else if ( childId === null || childId === endId ) {
       // empty slot, add padding and click width
       x += layout.SCLICKW/2 + layout.SPAD + 2 * layout.SLOT
     }
@@ -149,9 +148,9 @@ const boxPosition = function
 
 
 const uimapOne = function
-( graph: GraphWithBlocksType
+( graph: GraphType
 , id: string
-, dragId: string
+, endId: string
 , layout: UILayoutType
 , uigraph: UIGraphType
 , cachebox: UINodeByIdType
@@ -173,8 +172,6 @@ const uimapOne = function
   const obj  = graph.blocksById [ link.blockId ]
 
   uibox.name = obj.name
-  uibox.blockId = obj._id
-  uibox.type = obj.type
 
   if ( link.parent === null ) {
     uibox.className = 'scene'
@@ -243,7 +240,7 @@ const uimapOne = function
     for ( let i = 0; i < len; i += 1 ) {
       const childId = link.children [ i ]
       const pos = { x: x + sl, y }
-      const free = !childId || childId === dragId
+      const free = !childId || childId === endId
 
       if ( ! input [ i ] ) {
         // extra links outside of inputs...
@@ -272,16 +269,16 @@ const uimapOne = function
 
       if ( childId ) {
         const nodes = uigraph.nodes
-        if ( childId === dragId ) {
+        if ( childId === endId ) {
           // do not store nodes for drag element
           // but compute extra width
           uigraph.nodes = []
         }
 
         // We push in sextra the delta for slot i
-        const w  = uimapOne ( graph, childId, dragId, layout, uigraph, cachebox )
+        const w  = uimapOne ( graph, childId, endId, layout, uigraph, cachebox )
 
-        if ( childId === dragId ) {
+        if ( childId === endId ) {
           uigraph.nodes = nodes
         }
 
@@ -334,18 +331,12 @@ const uimapOne = function
 /** Compute the layout of a graph.
  */
 export const uimap =
-( agraph: GraphType
-, blocksById: BlockByIdType
+( graph: GraphType
 , rootId?: string
-, dragId?: string
+, endId?: string
 , alayout?: UILayoutType
 , cache?: UIGraphType
 ) : UIGraphType => {
-  const graph =
-  { nodes: agraph.nodes
-  , nodesById: agraph.nodesById
-  , blocksById
-  }
   const layout = alayout || defaultUILayout
   const cachebox : UINodeByIdType = cache ? cache.uiNodeById : {}
 
@@ -364,28 +355,10 @@ export const uimap =
   }
 
   uimapOne
-  ( graph, rootId || rootNodeId, dragId, layout, uigraph, cachebox )
+  ( graph, rootId || rootNodeId, endId, layout, uigraph, cachebox )
 
   boxPosition
-  ( graph, rootId || rootNodeId, dragId, layout, uigraph, startpos )
+  ( graph, rootId || rootNodeId, endId, layout, uigraph, startpos )
 
   return uigraph
-}
-
-export const uimapBlock =
-( block: BlockType
-, alayout?: UILayoutType
-) : UINodeType => {
-  const graph = GraphHelper.create ( block )
-  const blocksById =
-  { [ block._id ]: block }
-
-  const uigraph = uimap
-  ( graph, blocksById )
-
-  const uinode = uigraph.uiNodeById [ rootNodeId ]
-  const klass = className ( block.name, alayout || defaultUILayout )
-
-  return Object.assign
-  ( {}, uinode, { className: klass } )
 }

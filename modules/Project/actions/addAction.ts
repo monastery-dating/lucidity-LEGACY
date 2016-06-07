@@ -8,8 +8,8 @@ export const addAction =
   } : ActionContextType
 ) => {
 
-  const { project, block, scene }= ProjectHelper.create ()
-  const docs = [ scene.block, scene.scene, block, project ]
+  const { project, scene }= ProjectHelper.create ()
+  const docs = [ scene, project ]
 
   // This is a flag that will set name editing after db object
   // is selected.
@@ -22,7 +22,7 @@ export const addAction =
   ( Object.assign
     ( {}
     , user
-    , { projectId: project._id, sceneId: scene.scene._id }
+    , { projectId: project._id, sceneId: scene._id }
     )
   )
 

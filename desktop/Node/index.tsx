@@ -47,7 +47,7 @@ export const Node = Component
       datainfo = `${ownerType}-drop`
     }
 
-    const klass = { sel: uinode.blockId === state.blockId
+    const klass = { sel: node.blockId === props.blockId
                   , [ uinode.className ]: true
                   , ghost: isghost
                   }
@@ -59,16 +59,14 @@ export const Node = Component
         signals.$dragdrop.drag
         ( { drag:
             { ownerType
-            , blockId: node.blockId
             , nodeId: node.id
             , nodePos
-            , uinode
             }
           } )
       }
     , ( e ) => {
         // normal click
-        signals.block.select ( { _id: uinode.blockId } )
+        signals.block.select ( { id: node.blockId, ownerType } )
       }
     )
 

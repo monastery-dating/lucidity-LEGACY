@@ -24,6 +24,7 @@ export const selectAction =
   else {
     // simple select
     const project = state.get ( [ 'data', 'project', _id ] )
+    state.unset ( [ '$blockId' ] )
     const sel = ProjectHelper.select ( state, user, project )
     if ( sel ) {
       output ( { doc: sel } )

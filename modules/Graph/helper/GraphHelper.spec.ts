@@ -6,18 +6,40 @@ import { BlockHelper } from '../../Block'
 
 import { Immutable as IM } from './Immutable'
 
-const rootId = NodeHelper.rootNodeId
+const rootNodeId = NodeHelper.rootNodeId
+const rootBlockId = BlockHelper.rootBlockId
 const SOURCE_A = ``
 
+const traverse =
+( graph: GraphType ) : string[] => {
+
+  const res: string[] = []
+  const op = ( nid, s = '' ) => {
+    if ( nid ) {
+      const node = graph.nodesById [ nid ]
+      const block = graph.blocksById [ node.blockId ]
+      res.push ( `${s}${nid}:${node.blockId}:${block.name}` )
+      for ( const k of node.children ) {
+        op ( k, s + ' ' )
+      }
+    }
+    else {
+      res.push ( `${s}${nid}` )
+    }
+  }
+
+  op ( rootNodeId )
+  return res
+}
+
 describe ( 'GraphHelper.create', ( it ) => {
-    const block = BlockHelper.create ( 'main' )
-    const graph = GraphHelper.create ( block )
+    const graph = GraphHelper.create ()
 
     it ( 'create node for block', ( assert ) => {
         assert.equal
-        ( graph.nodesById [ rootId ]
-        , { id: rootId
-          , blockId: block._id
+        ( graph.nodesById [ rootNodeId ]
+        , { id: rootNodeId
+          , blockId: rootBlockId
           , parent: null
           , children: []
           }
@@ -25,11 +47,19 @@ describe ( 'GraphHelper.create', ( it ) => {
       }
     )
 
-    it ( 'create nodes entry', ( assert ) => {
+    it ( 'should select block', ( assert ) => {
         assert.equal
-        ( graph.nodes
-        , [ 'id0' ]
+        ( graph.blockId
+        , rootBlockId
         )
+      }
+    )
+
+    it ( 'should save block', ( assert ) => {
+        assert.equal
+        ( graph.blocksById [ rootBlockId ].name, 'main' )
+        assert.equal
+        ( graph.blocksById [ rootBlockId ].id, rootBlockId )
       }
     )
 
@@ -47,34 +77,40 @@ describe ( 'GraphHelper.create', ( it ) => {
 )
 
 describe ( 'GraphHelper.append', ( it ) => {
-    const block = BlockHelper.create ( 'main' )
-    const graph = GraphHelper.create ( block )
-    const block2 = BlockHelper.create ( 'foo', SOURCE_A )
-    const graph2 = GraphHelper.append ( graph, 'id0', block2 )
+    let graph = GraphHelper.create ()
+    const graph2 = GraphHelper.create ( 'foo', SOURCE_A )
+    graph = GraphHelper.append ( graph, rootNodeId, graph2 )
 
-    it ( 'append child in parent', ( assert ) => {
-
+    it ( 'should append child in parent', ( assert ) => {
         assert.equal
-        ( graph2.nodesById [ 'id0' ].children
-        , [ 'id1' ]
+        ( graph.nodesById [ rootNodeId ].children
+        , [ 'n1' ]
         )
       }
     )
 
-    it ( 'add child in nodes', ( assert ) => {
+    it ( 'should select block', ( assert ) => {
         assert.equal
-        ( graph2.nodes
-        , [ 'id0', 'id1' ]
+        ( graph.blockId
+        , 'b1' // graph2 blockId
+        )
+      }
+    )
+
+    it ( 'should add block', ( assert ) => {
+        assert.equal
+        ( graph.blocksById [ 'b1' ].name
+        , 'foo'
         )
       }
     )
 
     it ( 'add new node in nodesById', ( assert ) => {
         assert.equal
-        ( graph2.nodesById [ 'id1' ]
-        , { id: 'id1'
-          , blockId: block2._id
-          , parent: 'id0'
+        ( graph.nodesById [ 'n1' ]
+        , { id: 'n1'
+          , blockId: 'b1'
+          , parent: rootNodeId
           , children: []
           }
         )
@@ -85,101 +121,230 @@ describe ( 'GraphHelper.append', ( it ) => {
 )
 
 describe ( 'GraphHelper.insert', ( it ) => {
-    const block = BlockHelper.create ( 'main' )
-    const graph = GraphHelper.create ( block )
-    const block1 = BlockHelper.create ( 'foo', SOURCE_A )
-    const block2 = BlockHelper.create ( 'bar', SOURCE_A )
-    let graph2 = GraphHelper.insert ( graph, 'id0', 0, block1 )
-        graph2 = GraphHelper.insert ( graph2, 'id0', 0, block2 )
+    let graph = GraphHelper.create ()
+    const g1 = GraphHelper.create ( 'foo', SOURCE_A )
+    const g2 = GraphHelper.create ( 'bar', SOURCE_A )
+    graph = GraphHelper.insert ( graph, rootNodeId, 0, g1 )
+    graph = GraphHelper.insert ( graph, rootNodeId, 0, g2 )
 
     it ( 'insert child in parent', ( assert ) => {
 
         assert.equal
-        ( graph2.nodesById [ 'id0' ].children
-        , [ 'id2', 'id1' ]
+        ( graph.nodesById [ rootNodeId ].children
+        , [ 'n2', 'n1' ]
         )
       }
     )
 
-    it ( 'insert null', ( assert ) => {
-    let graph3 = GraphHelper.insert ( graph, 'id0', 1, block1 )
+    it ( 'should select block', ( assert ) => {
         assert.equal
-        ( graph3.nodesById [ 'id0' ].children
-        , [ null, 'id1' ]
+        ( graph.blockId
+        , 'b2' // g2 block id
         )
       }
     )
 
-    it ( 'replace null', ( assert ) => {
-    let graph3 = GraphHelper.insert ( graph, 'id0', 1, block1 )
-        graph3 = GraphHelper.insert ( graph2, 'id0', 0, block2 )
 
+    it ( 'should insert null', ( assert ) => {
+        let graph = GraphHelper.create ()
+        graph = GraphHelper.insert ( graph, rootNodeId, 1, g1 )
         assert.equal
-        ( graph2.nodesById [ 'id0' ].children
-        , [ 'id2', 'id1' ]
+        ( graph.nodesById [ rootNodeId ].children
+        , [ null, 'n1' ]
         )
       }
     )
 
-    it ( 'add child in nodes', ( assert ) => {
+    it ( 'should replace null', ( assert ) => {
+        let graph = GraphHelper.create ()
+        graph = GraphHelper.insert ( graph, rootNodeId, 1, g1 )
+        graph = GraphHelper.insert ( graph, rootNodeId, 0, g2 )
 
         assert.equal
-        ( graph2.nodes
-        , [ 'id0', 'id1', 'id2' ]
+        ( graph.nodesById [ rootNodeId ].children
+        , [ 'n2', 'n1' ]
         )
       }
     )
 
-    it ( 'set child nodesById', ( assert ) => {
+    it ( 'should add blocks', ( assert ) => {
+        assert.equal
+        ( Object.keys ( graph.blocksById ).sort ()
+        , [ 'b0', 'b1', 'b2' ]
+        )
+      }
+    )
+
+    it ( 'should set child nodesById', ( assert ) => {
 
         assert.equal
-        ( graph2.nodesById [ 'id1' ]
-        , { blockId: block1._id, id: 'id1', parent: 'id0', children: [] }
+        ( graph.nodesById [ 'n1' ]
+        , { blockId: 'b1', id: 'n1', parent: rootNodeId, children: [] }
         )
       }
     )
   }
 )
 
-describe ( 'GraphHelper.slipt', ( it ) => {
-    const block = BlockHelper.create ( 'main' )
-    const graph = GraphHelper.create ( block )
-    const block1 = BlockHelper.create ( 'foo', SOURCE_A )
-    const block2 = BlockHelper.create ( 'bar', SOURCE_A )
-    let graph2 = GraphHelper.insert ( graph, 'id0', 0, block1 )
-        graph2 = GraphHelper.slip ( graph2, 'id0', 0, block2 )
+describe ( 'GraphHelper.slip', ( it ) => {
+    // This graph has two objects and will be inserted in graph
+    // between root and 'foo'
+    // [ bar ]
+    // [ baz ] [ bong ]
+    const baz = GraphHelper.create ( 'baz', SOURCE_A )
+    const bong = GraphHelper.create ( 'bong', SOURCE_A )
+    let bar = GraphHelper.create ( 'bar', SOURCE_A )
+    bar = GraphHelper.insert ( bar, rootNodeId, 0, baz )
+    bar = GraphHelper.insert ( bar, rootNodeId, 1, bong )
 
-    it ( 'set child in parent', ( assert ) => {
+    // [ main ]
+    // [ foo ]
+    let graph = GraphHelper.create ()
+    const foo = GraphHelper.create ( 'foo', SOURCE_A )
+    graph = GraphHelper.insert ( graph, rootNodeId, 0, foo )
+    graph = GraphHelper.slip ( graph, rootNodeId, 0, bar )
 
+    const nid: any = {}
+    for ( const k in graph.nodesById ) {
+      const node = graph.nodesById [ k ]
+      const name = graph.blocksById [ node.blockId ].name
+      nid [ name ] = k
+    }
+
+    // [ main ]
+    // [ bar ]
+    // [ baz ] [ bong ]
+    // [ foo ]
+
+    it ( 'should select block', ( assert ) => {
         assert.equal
-        ( graph2.nodesById [ 'id0' ].children
-        , [ 'id2' ]
+        ( graph.blockId
+        , graph.nodesById [ nid.bar ].blockId
         )
       }
     )
 
-    it ( 'set previous child in new child', ( assert ) => {
-
+    it ( 'should set blocks', ( assert ) => {
         assert.equal
-        ( graph2.nodesById [ 'id2' ].children
-        , [ 'id1' ]
+        ( traverse ( graph )
+        , [ 'n0:b0:main'
+          , ' n2:b2:bar'
+          , '  n3:b3:baz'
+          , '   n1:b1:foo'
+          , '  n4:b4:bong'
+          ]
         )
       }
     )
 
-    it ( 'set parent in child and new child', ( assert ) => {
-
+    it ( 'should set child in parent', ( assert ) => {
         assert.equal
-        ( graph2.nodesById [ 'id1' ].parent
-        , 'id2'
-        )
-
-        assert.equal
-        ( graph2.nodesById [ 'id2' ].parent
-        , 'id0'
+        ( graph.nodesById [ rootNodeId ].children
+        , [ nid.bar ]
         )
       }
     )
 
+    it ( 'should set previous child in new child', ( assert ) => {
+        assert.equal
+        ( graph.nodesById [ nid.baz ].children
+        , [ nid.foo ]
+        )
+      }
+    )
+
+    it ( 'should set parent', ( assert ) => {
+        assert.equal
+        ( graph.nodesById [ nid.foo ].parent
+        , nid.baz
+        )
+
+        assert.equal
+        ( graph.nodesById [ nid.baz ].parent
+        , nid.bar
+        )
+
+        assert.equal
+        ( graph.nodesById [ nid.bong ].parent
+        , nid.bar
+        )
+
+        assert.equal
+        ( graph.nodesById [ nid.bar ].parent
+        , rootNodeId
+        )
+      }
+    )
+
+  }
+)
+
+describe ( 'GraphHelper.cut', ( it ) => {
+    let graph = GraphHelper.create ()
+    let g1 = GraphHelper.create ( 'foo', SOURCE_A )
+    let g2 = GraphHelper.create ( 'bar', SOURCE_A )
+    g1 = GraphHelper.insert ( g1, rootNodeId, 0, g2 )
+    graph = GraphHelper.insert ( graph, rootNodeId, 1, g1 )
+    // [ graph ] 'n0'
+    //   null  [ foo ] 'n1'
+    //         [ bar ] 'n2'
+    graph = GraphHelper.cut ( graph, 'n1' )
+    // [ foo ]
+    // [ bar ]
+
+    it ( 'create smaller graph', ( assert ) => {
+
+        assert.equal
+        ( Object.keys ( graph.nodesById ).sort ()
+        , [ 'n0', 'n1' ]
+        )
+
+        assert.equal
+        ( traverse ( graph )
+        , [ 'n0:b0:foo'
+          , ' n1:b1:bar'
+          ]
+        )
+      }
+    )
+
+    it ( 'should select block', ( assert ) => {
+        assert.equal
+        ( graph.blockId
+        , rootBlockId
+        )
+      }
+    )
+  }
+)
+
+describe ( 'GraphHelper.drop', ( it ) => {
+    let graph = GraphHelper.create ()
+    let g1 = GraphHelper.create ( 'foo', SOURCE_A )
+    let g2 = GraphHelper.create ( 'bar', SOURCE_A )
+    g1 = GraphHelper.insert ( g1, rootNodeId, 0, g2 )
+    graph = GraphHelper.insert ( graph, rootNodeId, 1, g1 )
+    // [ graph ] 'n0'
+    //   null  [ foo ] 'n1'
+    //         [ bar ] 'n2'
+    graph = GraphHelper.drop ( graph, 'n1' )
+    // [ graph ] 'n0'
+
+    it ( 'create smaller graph', ( assert ) => {
+
+        assert.equal
+        ( traverse ( graph )
+        , [ 'n0:b0:main' ]
+        )
+      }
+    )
+
+    it ( 'should select block', ( assert ) => {
+        assert.equal
+        ( graph.blockId
+        , rootBlockId
+        )
+      }
+    )
   }
 )

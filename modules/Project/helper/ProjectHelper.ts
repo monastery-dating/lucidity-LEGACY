@@ -1,32 +1,31 @@
-import { BlockHelper, BlockType } from '../../Block'
 import { makeId } from '../../Factory'
-import { GraphHelper } from '../../Graph'
+import { GraphHelper } from '../../Graph/helper/GraphHelper'
 import { ProjectType } from '../../Project'
-import { SceneHelper, SceneCreateType } from '../../Scene'
+import { SceneType } from '../../Scene'
+import { SceneHelper } from '../../Scene/helper/SceneHelper'
 
 export module ProjectHelper {
 
   interface ProjectCreate {
     project: ProjectType
-    block: BlockType
-    scene: SceneCreateType
+    scene: SceneType
   }
 
   export const create =
   () : ProjectCreate => {
     const _id = makeId ()
-    const block = BlockHelper.main ()
-    const graph = GraphHelper.create ( block )
+    const graph = GraphHelper.create ()
     const scene = SceneHelper.create ()
-    const project = Object.assign
+    const project: ProjectType = Object.freeze
     ( { _id
       , type: 'project'
       , name: 'New project'
       , graph
+      , scenes: [ scene._id ]
       }
     )
 
-    return { scene, block, project }
+    return { scene, project }
   }
 
 
@@ -37,7 +36,6 @@ export module ProjectHelper {
     , user
     , { projectId: project._id
       , sceneId: null
-      , blockId: null
       }
     )
 

@@ -67,11 +67,10 @@ export const insert = function<T>
 }
 
 export const aset = function<T>
-( t: T[], pos: number, s: T ) : T[] {
+( t: T[], p: number, s: T ) : T[] {
   const res: any = []
-  const len = t.length
-  let p = pos
-  if ( p >= len || p < 0 ) {
+  const len = Math.max ( t.length, p + 1 )
+  if ( p < 0 ) {
     throw `Cannot set indice ${p} in array of length ${len}.`
   }
   for ( let i = 0; i < len; i += 1 ) {
@@ -79,7 +78,8 @@ export const aset = function<T>
       res [ i ] = s
     }
     else {
-      res [ i ] = t [ i ]
+      // fill with null values if t [ i ] does not exist
+      res [ i ] = t [ i ] || null
     }
   }
   return Object.freeze ( res )
