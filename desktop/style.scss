@@ -18,6 +18,8 @@ html, body, #app {
   height: 100%;
 }
 
+a { text-decoration: none; color: inherit; display: block }
+
 body {
   font-family: getfont(family);
   font-size:   getfont(size);

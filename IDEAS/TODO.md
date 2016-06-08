@@ -80,15 +80,38 @@ Group actions into an operation.
 
 The **init** function takes an object to allow destructuring, avoid any mistakes in argument position, and allow more options if needed later.
 
+The init function is called multiple times (when a local source file is changed, when an asset is changed, etc). The user must take care of using the 'cache' to avoid unwanted multiple initialization. The function is run **at least** once before script rendering.
+
+## INIT Calls
+
+The init function is called when:
+
+  1. The block source changes.
+  2. Used assets are modified/downloaded.
+  3. Scenes are added/removed (optional).
+  4. Screen is moved or resized (optional).
+
+Optional calls are enabled by the init return values: `{ screen: true, scenes: true }`
+
+## INIT Parameters
+
   **cache**
 
   1. Manage state through specialized blocks (db) that pass a state thing to their children.
 
   2. Initialization of this block state is done with the init function, with things written to the cache. Exposition through the script with closures.
 
+  **require**
+  1. Use normal
+     const THREE = require ( 'THREE' )
+  2. If the library is not downloaded yet, the
+     require throws a MissingLibrary error and
+     we download it and retry 'init'.
+
+
   **asset**
 
-  1. Assets are downloaded (and declared) in the init function through an 'asset' function. The project assets are pre-downloaded and are accessed by their filename.
+  1. Assets are downloaded (and declared) in the init function through an 'asset' function. The project assets are pre-downloaded and are accessed by their filename. If an asset is not available, just like 'require', we throw a MissingAsset error, and try to find the asset.
 
   In both **cache** and **asset** a Promise can be returned for async asset fetch/download, etc.
 
@@ -142,6 +165,9 @@ export const init =
 }
 ===============
 
+# PLAYBACK RENDER
+
+This function is called in 'main' once whenever the source code of any element or the structure of the graph changes. If an element animates, the render can be called more often.
 
 # REFACTORING
 

@@ -1,10 +1,9 @@
 import { SignalType } from '../../context.type'
-import { nameAction } from '../actions/nameAction'
-import { selectAction } from '../actions/selectAction'
-import { save } from '../../Data'
+import { saveDoc } from '../../Data'
+import * as set from 'cerebral-addons/set'
 
 export const name: SignalType =
-[ nameAction
-, selectAction
-, ...save
+[ set ( 'output:/type', 'project' )
+, set ( 'output:/key', 'name' )
+, ...saveDoc
 ]

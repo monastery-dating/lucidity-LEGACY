@@ -17,7 +17,7 @@ import { select } from './signals/select'
 const CurrentProject = Model.monkey
 ( { cursors:
     { projectById: [ 'data', 'project' ]
-    , id: [ 'user', 'projectId' ]
+    , id: [ '$projectId' ]
     }
   , get ( data ) {
       const projectById = data.projectById || {}

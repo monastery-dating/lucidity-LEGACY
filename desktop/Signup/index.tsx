@@ -1,6 +1,6 @@
 import './style.scss'
 import { ContextType, SignalsType } from '../../modules/context.type'
-import { Component } from 'cerebral-view-snabbdom'
+import { Component } from '../Component'
 
 export const Signup =
 Component

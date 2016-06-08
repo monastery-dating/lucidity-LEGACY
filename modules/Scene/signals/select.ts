@@ -1,9 +1,6 @@
 import { SignalType } from '../../context.type'
-import { selectAction } from '../actions/selectAction'
-import { save } from '../../Data'
+import * as copy from 'cerebral-addons/copy'
 
 export const select: SignalType =
-// prepare things to add
-[ selectAction
-, ...save
+[ copy ( 'input:/_id', 'state:/$sceneId' )
 ]

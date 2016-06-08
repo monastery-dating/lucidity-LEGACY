@@ -24,6 +24,15 @@ const getSignal =
         case 'name':
           return signals.scene.name
       }
+    case 'user':
+      switch ( attr ) {
+        case 'name':
+          return signals.user.name
+        case 'libraryGithubPath':
+          return signals.user.libraryGithubPath
+        case 'libraryGithubToken':
+          return signals.user.libraryGithubToken
+      }
     break
   }
 }
@@ -55,7 +64,7 @@ export const editable =
       const isediting = state.editing === true
 
       return <EditableText class={ props.class }
-          text={ state.text }
+          text={ state.text || props.default || '-empty-' }
           stext={ state.stext } // shown while saving
           editing={ isediting }
           saving={ state.saving }

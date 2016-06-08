@@ -18,7 +18,7 @@ import { SceneHelper } from './helper/SceneHelper'
 const CurrentScene = Model.monkey
 ( { cursors:
     { sceneById: [ 'data', 'scene' ]
-    , id: [ 'user', 'sceneId' ]
+    , id: [ '$sceneId' ]
     }
   , get ( data ) {
       const sceneById = data.sceneById || {}

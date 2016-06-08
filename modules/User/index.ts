@@ -1,5 +1,16 @@
 import * as Model from 'cerebral-model-baobab'
+import { githubLibraryGet } from './signals/githubLibraryGet'
+import { libraryGithubPath } from './signals/libraryGithubPath'
+import { libraryGithubToken } from './signals/libraryGithubToken'
 import { makeId } from '../../modules/Factory'
+import { name } from './signals/name'
+
+export interface UserSignalsType {
+  githubLibraryGet () // try to fetch library from github
+  libraryGithubPath ( input: { value: string } )
+  libraryGithubToken ( input: { value: string } )
+  name ( input: { value: string } )
+}
 
 const defaultUser =
 { _id: 'gaspard' //makeId ()
@@ -32,7 +43,10 @@ export const User =
     )
 
     module.addSignals
-    ( {
+    ( { name
+      , githubLibraryGet
+      , libraryGithubPath
+      , libraryGithubToken
       }
     )
 

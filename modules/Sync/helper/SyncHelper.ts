@@ -18,6 +18,7 @@ const PORT = 6984
 export module SyncHelper {
   export const start =
   ( { controller, db } ) => {
+    console.log ( 'START SYNC' )
 
     const signals: SignalsType = controller.getSignals ()
 

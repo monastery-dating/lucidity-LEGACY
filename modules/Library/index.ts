@@ -1,7 +1,12 @@
 export * from './helper'
 
+export interface LibrarySignalsType {
+  zip ()
+}
+
 import { SceneByIdType } from '../Scene'
 import * as Model from 'cerebral-model-baobab'
+import { zip } from './signals/zip'
 
 const sortByName = ( a, b ) => a.name > b.name ? 1 : -1
 
@@ -30,7 +35,7 @@ export const Library =
     )
 
     module.addSignals
-    ( {
+    ( { zip
       }
     )
 

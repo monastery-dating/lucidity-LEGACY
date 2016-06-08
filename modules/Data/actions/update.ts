@@ -35,12 +35,8 @@ export const update =
   else {
     state.set ( [ 'data', type, _id ], doc )
 
-    if ( type === 'user' ) {
-    }
-    else {
-      if ( _id === cid || cid === undefined ) {
-        saved = type
-      }
+    if ( _id === cid || cid === undefined ) {
+      saved = type
     }
   }
   output ( { saved, status, doc } )

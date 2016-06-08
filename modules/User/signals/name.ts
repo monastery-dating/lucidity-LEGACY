@@ -3,7 +3,7 @@ import { saveDoc } from '../../Data'
 import * as set from 'cerebral-addons/set'
 
 export const name: SignalType =
-[ set ( 'output:/type', 'scene' )
+[ set ( 'output:/type', 'user' )
 , set ( 'output:/key', 'name' )
 , ...saveDoc
 ]

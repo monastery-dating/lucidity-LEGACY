@@ -2,20 +2,36 @@ import { BlockSignalsType } from './Block'
 import { DataSignalsType, DataServicesType } from './Data'
 import { DragDropSignalsType } from './DragDrop'
 import { FactorySignalsType } from './Factory'
+import { LibrarySignalsType } from './Library'
 import { ProjectSignalsType } from './Project'
 import { SceneSignalsType, SceneHelperType } from './Scene'
 import { StatusSignalsType } from './Status'
 import { SyncSignalsType } from './Sync'
+import { UserSignalsType } from './User'
+
+interface RouterServicesType {
+  // get url from signal name and payload
+  getSignalUrl ( signalName: string, payload?: any ): string
+  // go to signal
+  redirectToSignal ( signalName: string, payload?: any ):void
+
+  // get routable part of current url
+  getUrl (): string
+  // go to url
+  redirect ( url: string, opts?: any ): void
+}
 
 export interface SignalsType {
   block: BlockSignalsType
   data: DataSignalsType
   $dragdrop: DragDropSignalsType
   $factory: FactorySignalsType
+  library: LibrarySignalsType
   project: ProjectSignalsType
   scene: SceneSignalsType
   $status: StatusSignalsType
   $sync: SyncSignalsType
+  user: UserSignalsType
 }
 
 // We make services optional so that we can mock them
@@ -23,6 +39,7 @@ export interface SignalsType {
 interface ServicesType {
   data?: DataServicesType
   scene?: SceneHelperType
+  router?: RouterServicesType
 }
 
 export interface StateType {
@@ -40,6 +57,7 @@ export interface ActionContextType {
 }
 
 export interface ContextType {
+  services?: ServicesType
   state: any
   props: any
   signals: SignalsType

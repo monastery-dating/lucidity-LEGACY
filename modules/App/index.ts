@@ -1,7 +1,11 @@
 import { mounted } from './signals/mounted'
+import { homeUrl } from './signals/homeUrl'
+import { projectUrl } from './signals/projectUrl'
+import { projectsUrl } from './signals/projectsUrl'
+import { userUrl } from './signals/userUrl'
 
-interface Foo {
-  bar: string
+interface AppSignalsType {
+  homeUrl ()
 }
 
 export const App =
@@ -11,6 +15,10 @@ export const App =
 
     module.addSignals
     ( { mounted
+      , homeUrl
+      , projectUrl
+      , projectsUrl
+      , userUrl
       }
     )
 

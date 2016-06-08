@@ -198,7 +198,7 @@ $layout:
   height: 100%;
   display: flex;
   background-color: rgba(20,20,20,0);
-  transition: background-color 0.8s, opacity 0.3s;
+  //transition: background-color 0.8s, opacity 0.3s;
   z-index: -9;
   opacity: 0;
   &.active {
@@ -269,4 +269,19 @@ $layout:
     align-self: flex-end;
   }
 
+}
+
+.Pane {
+  .op {
+    cursor: pointer;
+    padding: $pad;
+    background: darken( color( paneb ), 22% );
+    color: lighten( $text_color, 30% );
+
+    &:hover {
+      color: lighten( $text_color, 60% );
+    }
+
+    text-align: right;
+  }
 }

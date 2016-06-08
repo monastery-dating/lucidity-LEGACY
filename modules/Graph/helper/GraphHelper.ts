@@ -4,6 +4,8 @@ import { BlockHelper, BlockType, SlotType } from '../../Block'
 
 import { Immutable as IM } from './Immutable'
 
+const rootNodeId = NodeHelper.rootNodeId
+
 export module GraphHelper {
 
   const createNode  = NodeHelper.create
@@ -15,7 +17,7 @@ export module GraphHelper {
   , source: string = BlockHelper.MAIN_SOURCE
   ) : GraphType => {
     const block = BlockHelper.create ( name, source )
-    const nid =  NodeHelper.rootNodeId
+    const nid =  rootNodeId
     return Object.freeze
     ( { nodesById: Object.freeze
         ( { [ nid ]: createNode ( block.id, nid, null ) } )
@@ -117,7 +119,7 @@ export module GraphHelper {
     const nid = insertInGraph
     ( g
     , oldgraph
-    , NodeHelper.rootNodeId
+    , rootNodeId
     , parentId
     , tail
     )
@@ -170,7 +172,7 @@ export module GraphHelper {
     const nid = insertInGraph
     ( g
     , oldgraph
-    , NodeHelper.rootNodeId
+    , rootNodeId
     , parentId
     , tail
     )
@@ -254,7 +256,7 @@ export module GraphHelper {
     insertInGraph
     ( g
     , oldgraph
-    , NodeHelper.rootNodeId
+    , rootNodeId
     , null
     , tail
     , nodeId
@@ -263,4 +265,48 @@ export module GraphHelper {
     return g
   }
 
+
+  interface FileExport {
+    ( folderHelper: any, name: string, source: string ): void
+  }
+
+  interface FolderExport {
+    ( folderHelper: any, name: string ): any
+  }
+
+  const exportOne =
+  ( graph: GraphType
+  , context: any
+  , file: FileExport
+  , folder: FolderExport
+  , nodeId: string
+  , slotref?: string
+  ) => {
+    const node = graph.nodesById [ nodeId ]
+    const block = graph.blocksById [ node.blockId ]
+    const name = slotref ? `${slotref}.${block.name}` : block.name
+    file ( context, `${name}.ts`, block.source )
+    let sub
+    const children = node.children
+    for ( let i = 0; i < children.length; ++i ) {
+      const slotref = i < 10 ? `0${i}` : String ( i )
+      const childId = children [ i ]
+      if ( childId ) {
+        if ( !sub ) {
+          // create folder for children
+          sub = folder ( context, name )
+        }
+        exportOne ( graph, sub, file, folder, childId, slotref )
+      }
+    }
+  }
+
+  export const exportGraph =
+  ( graph: GraphType
+  , context: any // this is the context passed for root element
+  , file: FileExport
+  , folder: FolderExport
+  ) => {
+    exportOne ( graph, context, file, folder, rootNodeId )
+  }
 }

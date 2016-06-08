@@ -1,7 +1,7 @@
 import './style.scss'
 import { Component } from '../Component'
 import { ContextType } from '../../modules/context.type'
-import { Editor } from '../Editor'
+import { CodeEditor } from '../CodeEditor'
 import { editable, openModal, pane } from '../../modules/Factory'
 // import { Graph } from '../Graph'
 
@@ -36,7 +36,7 @@ export const Block = Component
             Control
           </div>
         </div>
-        <Editor key='Editor' block={ state.block || {} }/>
+        <CodeEditor key='CodeEditor' block={ state.block || {} }/>
       </div>
   }
 )

@@ -3,12 +3,6 @@ import { Component } from '../Component'
 import { ContextType, SignalsType } from '../../modules/context.type'
 import { add, pane } from '../../modules/Factory'
 
-const selectScene =
-( signals: SignalsType, _id ) => {
-  signals.scene.select
-  ( { _id } )
-}
-
 const sortByName = ( a, b ) => a.name > b.name ? 1 : -1
 
 let oldprops
@@ -25,7 +19,7 @@ const showScenes =
       <div class={{ li: true
                   , sel: scene._id === selectedSceneId
                   }}
-        on-click={ () => selectScene ( signals, scene._id ) }>
+        on-click={ () => signals.scene.select ( { _id: scene._id } ) }>
         <div class='fa fa-film'></div>
         { scene.name }
       </div>
@@ -55,7 +49,7 @@ const Pane = pane ( 'project' )
 export const ProjectPane = Component
 ( { project: [ 'project' ]
   , sceneById: [ 'data', 'scene' ]
-  , selectedSceneId: [ 'scene', '_id' ]
+  , selectedSceneId: [ '$sceneId' ]
   // project pane toggle
   , pane: Pane.path
   }
@@ -73,6 +67,11 @@ export const ProjectPane = Component
         <div class='rarrow'></div>
         &nbsp;
       </Pane.toggle>
+
+      <a class='op' href='/#/project'>
+        projects
+        <div class='fa fa-hand-o-right'></div>
+      </a>
 
       <div class='control'>
         <p>Control</p>

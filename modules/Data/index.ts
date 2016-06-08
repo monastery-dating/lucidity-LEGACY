@@ -2,6 +2,8 @@
 export * from './signals/reload'
 export * from './signals/save'
 export * from './actions/save'
+export * from './signals/saveDoc'
+export * from './actions/downloadAction'
 
 import { db } from './services/db'
 import { Db, AuthDBType } from './types/db.type'
@@ -12,7 +14,8 @@ import { save } from './signals/save'
 export interface DataSignalsType {
   dbChanged ( any )
   reload ( any )
-  save ( any )
+  save ( any ) // is this really used directly ?
+  // saveDoc is only used by other signals
 }
 
 export interface DataServicesType {

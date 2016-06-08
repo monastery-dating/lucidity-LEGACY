@@ -13,7 +13,7 @@ import { Status } from '../modules/Status'
 import { User } from '../modules/User'
 import { Sync } from '../modules/Sync'
 
-// import Router from 'cerebral-module-router'
+import * as Router from 'cerebral-module-router'
 import * as Controller from 'cerebral'
 import * as Devtools from 'cerebral-module-devtools'
 import * as Http from 'cerebral-module-http'
@@ -25,6 +25,18 @@ import { App as AppView } from './App'
 
 const model = Model ( {} )
 const controller = Controller ( model )
+const router = Router
+( { '/': 'app.homeUrl'
+  , '/project': 'app.projectsUrl'
+  , '/project/:_id': 'app.projectUrl'
+  , '/user': 'app.userUrl'
+  //, '/logout': 'app.logoutUrl'
+  //, '/login': 'app.loginUrl'
+  }
+, { onlyHash: true
+  , mapper: { query: true }
+  }
+)
 
 controller.addModules
 ( { app: App ()
@@ -38,6 +50,7 @@ controller.addModules
   , library: Library ()
   , playback: Playback ()
   , project: Project ()
+  , router
   , scene: Scene ()
   , $status: Status ()
   , user: User ()

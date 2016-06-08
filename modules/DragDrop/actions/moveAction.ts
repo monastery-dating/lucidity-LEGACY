@@ -30,11 +30,19 @@ export const moveAction =
     }
 
     else if ( ownerType === 'library' ) {
-      // drop on library
-      state.set ( [ '$factory', 'pane', 'library' ], true )
-      drop =
-      { target
-      , ownerType
+      if ( drag.ownerType === 'library' ) {
+        // abort
+        drop = null
+      }
+
+      else {
+        // drop on library
+        state.set ( [ '$factory', 'pane', 'library' ], true )
+        drop =
+        { target
+        , ownerType
+        }
+
       }
     }
 

@@ -57,11 +57,17 @@ export const Library = Component
           &nbsp;
         </Pane.toggle>
 
+        <div class='op'
+          on-click={ () => signals.library.zip () }>
+          download <div class='fa fa-download'></div>
+        </div>
+
         <div class='search'>
           <p>&nbsp;
             <input value='search' class='fld'/>
           </p>
         </div>
+
 
         <div class={ klass } data-drop='library'>
           <div data-drop='library'>

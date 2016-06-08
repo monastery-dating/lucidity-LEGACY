@@ -1,7 +1,4 @@
-let counter = 0
-export const makeId =
-() => {
-  // ensures unique DB id
-  const date = new Date().toISOString ()
-  return `${date}-${++counter}`
-}
+import * as uuid from 'uuid'
+
+// make sure we do not pass parameters to uuid
+export const makeId = () => uuid ()

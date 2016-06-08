@@ -8,6 +8,7 @@ declare namespace Cerebral {
     addModules ( opts: any )
     getSignals ( path?: string ) : any
     addServices ( opts: any )
+    once ( event: string, clbk: any )
     on: any
   }
 }
@@ -36,6 +37,11 @@ declare module 'cerebral-module-http' {
   export = dummy
 }
 
+declare module 'cerebral-module-router' {
+  const dummy: any
+  export = dummy
+}
+
 declare module 'cerebral-model-baobab' {
   interface Model {
     ( initState: Object ): any
@@ -56,8 +62,25 @@ declare module 'cerebral-addons/set' {
 declare module 'cerebral-addons/copy' {
   interface Copy {
     ( from: any, to: any): any
+    ( from: any, filter: any, to: any): any
   }
   const dummy: Copy
+  export = dummy
+}
+
+declare module 'cerebral-addons/throttle' {
+  interface Throttle {
+    ( ms: number, cont: any, opts?: any ): any
+  }
+  const dummy: Throttle
+  export = dummy
+}
+
+declare module 'cerebral-addons/debounce' {
+  interface Debounce {
+    ( ms: number, cont: any, opts: any ): any
+  }
+  const dummy: Debounce
   export = dummy
 }
 
