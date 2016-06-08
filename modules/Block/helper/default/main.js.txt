@@ -1,4 +1,4 @@
 export const render =
 ( ctx, child ) => {
-  child ()
+  child ( ctx )
 }

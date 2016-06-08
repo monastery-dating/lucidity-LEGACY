@@ -1,16 +1,20 @@
 import './style.scss'
 import { Component } from '../Component'
 import { PlaybackHelper, PlaybackCache } from '../../modules/Playback'
+import { DragDropType, DragStartType } from '../../modules/DragDrop'
 
-const cache: PlaybackCache = { nodecache: {} }
+const cache: PlaybackCache = {}
+const context = PlaybackHelper.context ( {} )
 
 /* ====== PLAYBACK LIBS ======= */
 import * as THREE from 'three'
-window['THREE'] = THREE
+const PRELOADED = { THREE }
 /* ====== PLAYBACK LIBS ======= */
 
 export const Playback = Component
 ( { graph: [ 'scene', 'graph' ]
+  , drop: [ '$dragdrop', 'drop' ] // react to drag op
+  , drag: [ '$dragdrop', 'drag' ]
   }
 , ( { state, signals } ) => {
     const w = 320
@@ -25,14 +29,26 @@ export const Playback = Component
     , height: h + 'px'
     }
 
-    if ( state.graph ) {
-      const func = PlaybackHelper.compile
-      ( state.graph, cache )
+    const ownerType = 'scene'
+    const drop: DragDropType = state.drop
+    const drag: DragStartType = state.drag
 
-      console.log ( 'play once MOTHER and FATHER' )
+    let graph = state.graph
+    if ( drop && drop.ownerType === ownerType ) {
+      graph = drop.graph
+    }
+    else if ( drag && drag.ownerType === ownerType ) {
+      graph = drag.rgraph
+    }
+
+    if ( graph ) {
+      const require = ( name ) => PRELOADED [ name ]
+      // TODO: Get project graph and branch with scene...
+      PlaybackHelper.compile ( graph, cache )
+      PlaybackHelper.init ( cache, { require } )
+
       try {
-        const context = {}
-        // func ( context )
+        cache.main ( context )
       }
       catch ( err ) {
         console.error ( err )

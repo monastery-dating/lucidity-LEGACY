@@ -20,9 +20,9 @@ import { GraphType } from '../Graph'
 const CurrentBlock = Model.monkey
 ( { cursors:
     { sceneById: [ 'data', 'scene' ]
-    , sceneId: [ 'user', 'sceneId' ]
+    , sceneId: [ '$sceneId' ]
     , projectById: [ 'data', 'project' ]
-    , projectId: [ 'user', 'projectId' ]
+    , projectId: [ '$projectId' ]
     , select: [ '$block' ]
     }
   , get ( state ) {

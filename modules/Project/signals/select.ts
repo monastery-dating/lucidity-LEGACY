@@ -7,3 +7,4 @@ export const select: SignalType =
 [ selectAction
 , ...save
 ]
+// FIXME: remove (has been replaced by selectProject in app)

@@ -28,6 +28,7 @@ export const Scene = Component
     if ( !scene ) {
       return ''
     }
+    // console.log ( JSON.stringify ( scene.graph, null, 2 ) )
 
     const deleteModal = openModal
     ( { message: 'Delete scene ?'

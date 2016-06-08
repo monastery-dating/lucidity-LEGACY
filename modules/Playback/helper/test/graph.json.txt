@@ -1,0 +1,96 @@
+{
+  "nodesById": {
+    "n0": {
+      "id": "n0",
+      "blockId": "b0",
+      "parent": null,
+      "children": [
+        "n1"
+      ]
+    },
+    "n1": {
+      "id": "n1",
+      "blockId": "b1",
+      "parent": "n0",
+      "children": [
+        "n2",
+        "n3"
+      ]
+    },
+    "n2": {
+      "id": "n2",
+      "blockId": "b2",
+      "parent": "n1",
+      "children": [
+        "n4"
+      ]
+    },
+    "n3": {
+      "id": "n3",
+      "blockId": "b3",
+      "parent": "n1",
+      "children": []
+    },
+    "n4": {
+      "id": "n4",
+      "blockId": "b4",
+      "parent": "n2",
+      "children": []
+    }
+  },
+  "blocksById": {
+    "b0": {
+      "id": "b0",
+      "name": "main",
+      "source": "export const render =\n( ctx, child ) => {\n  return child ()\n}\n",
+      "input": [
+        "string"
+      ],
+      "js": "\"use strict\";\nexports.render = function (ctx, child) {\n return child();\n};\n",
+      "output": "string",
+      "init": false
+    },
+    "b1": {
+      "id": "b1",
+      "name": "join",
+      "source": "export const render =\n( ctx, child, child2 ) => {\n  return `${child()}${child2()}`\n}\n",
+      "input": [
+        "string",
+        "string"
+      ],
+      "js": "\"use strict\";\nexports.render = function (ctx, child, child2) {\n    return \"\" + child() + child2();\n};\n",
+      "output": "string",
+      "init": false
+    },
+    "b2": {
+      "id": "b2",
+      "name": "a",
+      "source": "export const render =\n( ctx, child ) => {\n  return child ( ctx )\n}\n",
+      "input": [
+        "string"
+      ],
+      "js": "\"use strict\";\nexports.render = function (ctx, child) {\n    return child(ctx);\n};\n",
+      "output": "string",
+      "init": false
+    },
+    "b3": {
+      "id": "b3",
+      "name": "b",
+      "source": "export const render =\n( ctx, child ) => {\n  return 'b' + child ()\n}\n",
+      "input": [ "string" ],
+      "js": "\"use strict\";\nexports.render = function (ctx,child) {\n    return 'b' + child ();\n};\n",
+      "output": "string",
+      "init": false
+    },
+    "b4": {
+      "id": "b4",
+      "name": "cache",
+      "source": "// Test that init is called with\n// cache and require.\n\nlet foo\n\nexport const init =\n( { cache, require } ) => {\n  const counter = require ( 'counter' )\n  if ( !cache.foo ) {\n    cache.foo = counter ()\n  }\n  foo = cache.foo\n}\n\nexport const render =\n( ctx ) => {\n  return foo\n}\n\n",
+      "input": [],
+      "js": "// Test that init is called with\n// cache and require.\n\"use strict\";\nvar foo;\nexports.init = function (_a) {\n    var cache = _a.cache, require = _a.require;\n    var counter = require('counter');\n    if (!cache.foo) {\n        cache.foo = counter();\n    }\n    foo = cache.foo;\n};\nexports.render = function (ctx) {\n    return foo;\n};\n",
+      "output": "string",
+      "init": true
+    }
+  },
+  "blockId": "b4"
+}

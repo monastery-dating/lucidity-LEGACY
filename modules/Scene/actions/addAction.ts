@@ -27,6 +27,6 @@ export const addAction =
     )
   )
 
-  // we set doc for select operation
-  output ( { docs, doc: scene } )
+  // we set _id for select operation
+  output ( { docs, _id: scene._id } )
 }

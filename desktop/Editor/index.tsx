@@ -1,3 +1,4 @@
+import './style.scss'
 import { Block } from '../Block'
 import { Component } from '../Component'
 import { Drag } from '../Drag'
