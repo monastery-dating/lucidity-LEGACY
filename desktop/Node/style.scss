@@ -104,8 +104,8 @@ path.ghost, .Drag path {
   animation: ghost 1.2s linear infinite;
 }
 
-#app path.invalid {
-  fill: red;
+path.invalid {
+  mask: url(#mask-stripe);
 }
 
 svg#files {

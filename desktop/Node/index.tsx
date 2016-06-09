@@ -56,6 +56,7 @@ export const Node = Component
     const klass = { sel: node.blockId === props.blockId
                   , [ uinode.className ]: true
                   , ghost: uinode.isghost
+                  , invalid: node.invalid && true
                   }
 
     const { click, mousedown, mousemove, mouseup } = DragDropHelper.drag
