@@ -18,9 +18,9 @@ export const nameAction =
   // temporary value during save
   state.set ( [ '$factory', ...path, 'value' ], value )
 
-  // prepare doc
   const select = state.get ( [ '$block' ] )
   if ( !select ) {
+    // no block selected
     return
   }
 

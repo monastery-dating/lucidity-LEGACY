@@ -37,6 +37,7 @@ export const dropAction =
 
     else {
       // Remove
+      state.set ( [ '$factory', odoc.type, 'close' ], true )
       output.success ( { doc: odoc } )
     }
 
@@ -63,16 +64,22 @@ export const dropAction =
       // new component
       doc = ComponentHelper.create ( drag.dgraph )
     }
+
+    state.set ( [ '$factory', doc.type, 'close' ], true )
     output.success ( { doc } )
   }
 
   else {
     let doc = state.get ( [ drop.ownerType ] )
     doc = IM.update ( doc, 'graph', drop.graph )
+    state.set ( [ '$factory', doc.type, 'close' ], true )
+
     const docs = [ doc ]
     if ( drop.ownerType !== drag.ownerType && odoc ) {
       // transfer from one graph to another
       // also change origin
+
+      state.set ( [ '$factory', odoc.type, 'close' ], true )
       docs.push ( odoc )
     }
     output.success ( { docs } )

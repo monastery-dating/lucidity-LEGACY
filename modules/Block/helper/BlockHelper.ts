@@ -2,9 +2,12 @@ import { BlockType, BlockByIdType, BlockSourceInfo
        , BlockTypeChanges } from '../BlockType'
 import * as ts from 'typescript'
 import { Immutable as IM } from '../../Graph/helper/Immutable'
+import { PlaybackHelper } from '../../Playback'
 
 declare var require: any
 const DEFAULT_SOURCE = require ( './default/block.js.txt')
+
+const defaultMeta = PlaybackHelper.defaultMeta
 
 export module BlockHelper {
   export const MAIN_SOURCE = require ( './default/main.js.txt' )
@@ -64,40 +67,39 @@ export module BlockHelper {
     try {
       js = ts.transpile ( source )
       const codefunc = new Function ( 'exports', js )
-      // We now run the code. The exports is the cache.
+      // We now run the code.
       const exports: any = {}
       codefunc ( exports )
-      const render = exports.render
-      if ( !render ) {
-        return { input: []
-               , js
-               , output: null
-               , init: exports.init ? true : false
-               }
-      }
-
       const input = []
-      for ( let i = 0; i < render.length - 1; ++i ) {
-        // FIXME: detect input type
-        input.push ( 'string' )
+      let output = null
+
+      const render = exports.render
+      let meta = Object.assign ( {}, defaultMeta, exports.meta || {} )
+      if ( meta.main ) {
+        meta.provide = PlaybackHelper.mainContext
       }
 
-      // FIXME: output type
-      const output = 'string'
+      if ( render ) {
+        const ins = meta.input || []
+        for ( let i = 0; i < render.length - 1; ++i ) {
+          input.push ( ins [ i ] || 'any' )
+        }
+
+        output = meta.output || 'any'
+      }
 
       return { input
              , js
              , output
-             , init: exports.init ? true : false
+             , meta
              }
     }
     catch ( err ) {
-      // FIXME: what do we do with bad code ?
-      // Should we keep old source and js ?
-      return { input: [ 'string', 'string' ]
+      console.log ( err )
+      return { input: []
              , js
-             , output: 'string'
-             , init: false
+             , output: null
+             , meta: defaultMeta
              }
     }
   }

@@ -44,8 +44,11 @@ interface ServicesType {
 
 export interface StateType {
   get ( path: string[] )
+  get ( path: string )
   set ( path: string[], value: any )
+  set ( path: string, value: any )
   unset ( path: string[] )
+  unset ( path: string )
 }
 
 // We mark fields as optional to ease testing mock.

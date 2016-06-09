@@ -2,15 +2,29 @@ import { GraphType } from '../Graph'
 import { SlotType } from './SlotType'
 
 export interface BlockTypeChanges {
-  // True if the node has an init function
-  init?: boolean
-
   name?: string
   source?: string
-  // The following elements should be deduced
-  // from the source code
-  input?: SlotType[]
-  output?: SlotType
+}
+
+interface StringMap {
+  [ key: string ]: string
+}
+
+export interface BlockMetaType {
+  author?: string
+  description?: string
+  tags?: string[]
+  // context changes
+  expect?: StringMap
+  // one for each slot
+  provide?: StringMap
+  // input/output return types
+  input?: string[]
+  output?: string
+  // This should only be true for the 'main' element in a graph.
+  // We use this information to set 'provides' to the root context of
+  // a rendering playback.
+  main?: boolean
 }
 
 export interface BlockSourceInfo {
@@ -19,17 +33,17 @@ export interface BlockSourceInfo {
   js: string // compiled source
   input: SlotType[]
   output: SlotType
-  // True if the node has an init function
-  init: boolean
+  meta: BlockMetaType
 }
 
 export interface BlockType extends BlockSourceInfo {
   id: string
   name: string
   source: string
+
   // If this is true, we have a sub-graph
   // It creates a graph that behaves like an object (a way to group nodes)
-  graph?: GraphType
+  // graph?: GraphType
 }
 
 export interface BlockByIdType {

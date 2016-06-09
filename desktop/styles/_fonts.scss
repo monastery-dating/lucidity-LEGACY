@@ -39,6 +39,7 @@ p {
 }
 
 .EditableText {
+  min-width: 4em;
   input.fld {
     border: none;
     padding: $pad;

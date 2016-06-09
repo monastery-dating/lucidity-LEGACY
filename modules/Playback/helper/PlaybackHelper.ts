@@ -1,6 +1,11 @@
 import { BlockByIdType } from '../../Block'
 import { GraphType, NodeHelper } from '../../Graph'
 
+// This is the context defined before calling main.
+export const MAIN_CONTEXT =
+{
+}
+
 const rootNodeId = NodeHelper.rootNodeId
 
 const DUMMY =
@@ -268,4 +273,12 @@ export module PlaybackHelper {
   ( base: Object ) => {
     return <any> new Context ( {}, base )
   }
+
+  export const mainContext = context ( MAIN_CONTEXT )
+
+  export const defaultMeta = Object.freeze
+  ( { provide: Object.freeze ( {} )
+    , expect: Object.freeze ( {} )
+    }
+  )
 }

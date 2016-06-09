@@ -9,6 +9,32 @@ import { Immutable as IM } from './Immutable'
 const rootNodeId = NodeHelper.rootNodeId
 const rootBlockId = BlockHelper.rootBlockId
 const SOURCE_A = ``
+const SOURCE_bar =
+`export const render = ( ctx, child, child2 ) => {}
+export const meta =
+{ provide: { bar: 'bar.type' }
+}`
+const SOURCE_baz =
+`export const render = ( ctx, child, child2 ) => {}
+export const meta =
+{ provide: { baz: 'baz.type' }
+, expect: { bar: 'bar.type' }
+}`
+const SOURCE_bong =
+`export const render = ( ctx, child, child2 ) => {}
+`
+const SOURCE_main =
+`export const render = ( ctx, child ) => {
+  child ( ctx.set ( { bar: 'bad' } ) )
+}
+export const meta =
+{ provide: { bar: 'bar.bad' }
+}`
+const SOURCE_foo =
+`export const render = ( ctx, child, child2 ) => {}
+export const meta =
+{ expect: { bar: 'bar.type', baz: 'baz.type' }
+}`
 
 const traverse =
 ( graph: GraphType ) : string[] => {
@@ -33,48 +59,50 @@ const traverse =
 }
 
 describe ( 'GraphHelper.create', ( it ) => {
-    const graph = GraphHelper.create ()
+  const graph = GraphHelper.create ()
 
-    it ( 'create node for block', ( assert ) => {
-        assert.equal
-        ( graph.nodesById [ rootNodeId ]
-        , { id: rootNodeId
-          , blockId: rootBlockId
-          , parent: null
-          , children: []
-          }
-        )
+  it ( 'create node for block', ( assert ) => {
+    assert.equal
+    ( graph.nodesById [ rootNodeId ]
+    , { id: rootNodeId
+      , blockId: rootBlockId
+      , parent: null
+      , children: []
       }
     )
+  })
 
-    it ( 'should select block', ( assert ) => {
-        assert.equal
-        ( graph.blockId
-        , rootBlockId
-        )
+  it ( 'should select block', ( assert ) => {
+    assert.equal ( graph.blockId, rootBlockId )
+  })
+
+  it ( 'should save block', ( assert ) => {
+    assert.equal
+    ( graph.blocksById [ rootBlockId ].name, 'main' )
+    assert.equal
+    ( graph.blocksById [ rootBlockId ].id, rootBlockId )
+  })
+
+  it ( 'should be immutable', ( assert ) => {
+    assert.throws
+    ( function () {
+        graph.nodesById [ 'foo' ] =
+        NodeHelper.create ( 'abc', 'idid', null )
       }
     )
+  })
 
-    it ( 'should save block', ( assert ) => {
-        assert.equal
-        ( graph.blocksById [ rootBlockId ].name, 'main' )
-        assert.equal
-        ( graph.blocksById [ rootBlockId ].id, rootBlockId )
+  it ( 'should set meta', ( assert ) => {
+    const graph = GraphHelper.create ( 'foo', SOURCE_foo )
+    assert.equal
+    ( graph.blocksById [ rootBlockId ].meta
+    , { provide: {}
+      , expect: { bar: 'bar.type', baz: 'baz.type' }
       }
     )
+  })
 
-    it ( 'should be immutable', ( assert ) => {
-        assert.throws
-        ( function () {
-            graph.nodesById [ 'foo' ] =
-            NodeHelper.create ( 'abc', 'idid', null )
-          }
-        )
-      }
-    )
-
-  }
-)
+})
 
 describe ( 'GraphHelper.append', ( it ) => {
     let graph = GraphHelper.create ()
@@ -187,97 +215,83 @@ describe ( 'GraphHelper.insert', ( it ) => {
 )
 
 describe ( 'GraphHelper.slip', ( it ) => {
-    // This graph has two objects and will be inserted in graph
-    // between root and 'foo'
-    // [ bar ]
-    // [ baz ] [ bong ]
-    const baz = GraphHelper.create ( 'baz', SOURCE_A )
-    const bong = GraphHelper.create ( 'bong', SOURCE_A )
-    let bar = GraphHelper.create ( 'bar', SOURCE_A )
-    bar = GraphHelper.insert ( bar, rootNodeId, 0, baz )
-    bar = GraphHelper.insert ( bar, rootNodeId, 1, bong )
+  // This graph has two objects and will be inserted in graph
+  // between root and 'foo'
+  // [ bar ]
+  // [ baz ] [ bong ]
+  const baz = GraphHelper.create ( 'baz', SOURCE_A )
+  const bong = GraphHelper.create ( 'bong', SOURCE_A )
+  let bar = GraphHelper.create ( 'bar', SOURCE_A )
+  bar = GraphHelper.insert ( bar, rootNodeId, 0, baz )
+  bar = GraphHelper.insert ( bar, rootNodeId, 1, bong )
 
-    // [ main ]
-    // [ foo ]
-    let graph = GraphHelper.create ()
-    const foo = GraphHelper.create ( 'foo', SOURCE_A )
-    graph = GraphHelper.insert ( graph, rootNodeId, 0, foo )
-    graph = GraphHelper.slip ( graph, rootNodeId, 0, bar )
+  // [ main ]
+  // [ foo ]
+  let graph = GraphHelper.create ()
+  const foo = GraphHelper.create ( 'foo', SOURCE_A )
+  graph = GraphHelper.insert ( graph, rootNodeId, 0, foo )
+  graph = GraphHelper.slip ( graph, rootNodeId, 0, bar )
 
-    const nid: any = {}
-    for ( const k in graph.nodesById ) {
-      const node = graph.nodesById [ k ]
-      const name = graph.blocksById [ node.blockId ].name
-      nid [ name ] = k
-    }
-
-    // [ main ]
-    // [ bar ]
-    // [ baz ] [ bong ]
-    // [ foo ]
-
-    it ( 'should select block', ( assert ) => {
-        assert.equal
-        ( graph.blockId
-        , graph.nodesById [ nid.bar ].blockId
-        )
-      }
-    )
-
-    it ( 'should set blocks', ( assert ) => {
-        assert.equal
-        ( traverse ( graph )
-        , [ 'n0:b0:main'
-          , ' n2:b2:bar'
-          , '  n3:b3:baz'
-          , '   n1:b1:foo'
-          , '  n4:b4:bong'
-          ]
-        )
-      }
-    )
-
-    it ( 'should set child in parent', ( assert ) => {
-        assert.equal
-        ( graph.nodesById [ rootNodeId ].children
-        , [ nid.bar ]
-        )
-      }
-    )
-
-    it ( 'should set previous child in new child', ( assert ) => {
-        assert.equal
-        ( graph.nodesById [ nid.baz ].children
-        , [ nid.foo ]
-        )
-      }
-    )
-
-    it ( 'should set parent', ( assert ) => {
-        assert.equal
-        ( graph.nodesById [ nid.foo ].parent
-        , nid.baz
-        )
-
-        assert.equal
-        ( graph.nodesById [ nid.baz ].parent
-        , nid.bar
-        )
-
-        assert.equal
-        ( graph.nodesById [ nid.bong ].parent
-        , nid.bar
-        )
-
-        assert.equal
-        ( graph.nodesById [ nid.bar ].parent
-        , rootNodeId
-        )
-      }
-    )
-
+  const nid: any = {}
+  for ( const k in graph.nodesById ) {
+    const node = graph.nodesById [ k ]
+    const name = graph.blocksById [ node.blockId ].name
+    nid [ name ] = k
   }
-)
+
+  // [ main ]
+  // [ bar ]
+  // [ baz ] [ bong ]
+  // [ foo ]
+
+  it ( 'should select block', ( assert ) => {
+    assert.equal ( graph.blockId
+    , graph.nodesById [ nid.bar ].blockId
+    )
+  })
+
+  it ( 'should set blocks', ( assert ) => {
+    assert.equal ( traverse ( graph )
+    , [ 'n0:b0:main'
+      , ' n2:b2:bar'
+      , '  n3:b3:baz'
+      , '   n1:b1:foo'
+      , '  n4:b4:bong'
+      ]
+    )
+  })
+
+  it ( 'should set child in parent', ( assert ) => {
+    assert.equal ( graph.nodesById [ rootNodeId ].children
+    , [ nid.bar ]
+    )
+  })
+
+  it ( 'should set previous child in new child', ( assert ) => {
+    assert.equal ( graph.nodesById [ nid.baz ].children
+    , [ nid.foo ]
+    )
+  })
+
+  it ( 'should set parent', ( assert ) => {
+    assert.equal ( graph.nodesById [ nid.foo ].parent
+    , nid.baz
+    )
+
+    assert.equal ( graph.nodesById [ nid.baz ].parent
+    , nid.bar
+    )
+
+    assert.equal ( graph.nodesById [ nid.bong ].parent
+    , nid.bar
+    )
+
+    assert.equal ( graph.nodesById [ nid.bar ].parent
+    , rootNodeId
+    )
+  })
+
+})
 
 describe ( 'GraphHelper.cut', ( it ) => {
     let graph = GraphHelper.create ()
@@ -319,32 +333,71 @@ describe ( 'GraphHelper.cut', ( it ) => {
 )
 
 describe ( 'GraphHelper.drop', ( it ) => {
-    let graph = GraphHelper.create ()
-    let g1 = GraphHelper.create ( 'foo', SOURCE_A )
-    let g2 = GraphHelper.create ( 'bar', SOURCE_A )
-    g1 = GraphHelper.insert ( g1, rootNodeId, 0, g2 )
-    graph = GraphHelper.insert ( graph, rootNodeId, 1, g1 )
-    // [ graph ] 'n0'
-    //   null  [ foo ] 'n1'
-    //         [ bar ] 'n2'
-    graph = GraphHelper.drop ( graph, 'n1' )
-    // [ graph ] 'n0'
+  let graph = GraphHelper.create ()
+  let g1 = GraphHelper.create ( 'foo', SOURCE_A )
+  let g2 = GraphHelper.create ( 'bar', SOURCE_A )
+  g1 = GraphHelper.insert ( g1, rootNodeId, 0, g2 )
+  graph = GraphHelper.insert ( graph, rootNodeId, 1, g1 )
+  // [ graph ] 'n0'
+  //   null  [ foo ] 'n1'
+  //         [ bar ] 'n2'
+  graph = GraphHelper.drop ( graph, 'n1' )
+  // [ graph ] 'n0'
 
-    it ( 'create smaller graph', ( assert ) => {
+  it ( 'create smaller graph', ( assert ) => {
+    assert.equal ( traverse ( graph ), [ 'n0:b0:main' ] )
+  })
 
-        assert.equal
-        ( traverse ( graph )
-        , [ 'n0:b0:main' ]
-        )
-      }
+  it ( 'should select block', ( assert ) => {
+    assert.equal ( graph.blockId, rootBlockId )
+  })
+})
+
+describe ( 'GraphHelper.check', ( it ) => {
+  // This graph has two objects and will be inserted in graph
+  // between root and 'foo'
+  // [ bar ]
+  // [ baz ] [ bong ]
+  const baz = GraphHelper.create ( 'baz', SOURCE_baz )
+  const bong = GraphHelper.create ( 'bong', SOURCE_bong )
+  let bar = GraphHelper.create ( 'bar', SOURCE_bar )
+  bar = GraphHelper.insert ( bar, rootNodeId, 0, baz )
+  bar = GraphHelper.insert ( bar, rootNodeId, 1, bong )
+
+  // [ main ]
+  // [ foo ]
+  let graph1 = GraphHelper.create ( 'main', SOURCE_main )
+  const foo = GraphHelper.create ( 'foo', SOURCE_foo )
+  graph1 = GraphHelper.insert ( graph1, rootNodeId, 0, foo )
+
+  it ( 'should disable invalid node', ( assert ) => {
+    const node = graph1.nodesById [ 'n1' ]
+    const block = graph1.blocksById [ node.blockId ]
+    assert.equal ( block.name, 'foo' )
+    assert.equal
+    ( node.invalid
+    , [ "invalid 'bar' (bar.bad instead of bar.type)"
+      , "missing 'baz' (baz.type)"
+      ]
     )
+  })
 
-    it ( 'should select block', ( assert ) => {
-        assert.equal
-        ( graph.blockId
-        , rootBlockId
-        )
-      }
-    )
+  const graph2 = GraphHelper.slip ( graph1, rootNodeId, 0, bar )
+  // [ main ]
+  // [ bar ]
+  // [ baz ] [ bong ]
+  // [ foo ]
+
+  const nid: any = {}
+  for ( const k in graph2.nodesById ) {
+    const node = graph2.nodesById [ k ]
+    const name = graph2.blocksById [ node.blockId ].name
+    nid [ name ] = k
   }
-)
+
+  it ( 'should update node check', ( assert ) => {
+    const node = graph2.nodesById [ nid.foo ]
+    assert.same ( node.invalid, undefined )
+  })
+
+})

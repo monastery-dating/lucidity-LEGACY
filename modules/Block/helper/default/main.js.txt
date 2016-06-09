@@ -2,3 +2,7 @@ export const render =
 ( ctx, child ) => {
   child ( ctx )
 }
+
+export const meta =
+{ main: true
+}

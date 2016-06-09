@@ -18,12 +18,15 @@ const makeKeyup = function
       // ESC = abort
       e.preventDefault ()
       e.target.setAttribute ( 'data-done', true )
-      on.change ( text )
+      on.save ( text )
     }
     else if ( e.keyCode === 13 ) {
       // enter = save
       e.preventDefault ()
       e.target.setAttribute ( 'data-done', true )
+      on.save ( e.target.value )
+    }
+    else if ( on.change ) {
       on.change ( e.target.value )
     }
   }
@@ -33,7 +36,7 @@ const makeChange = function ( { on } ) {
   return ( e ) => {
     if ( ! e.target.getAttribute ( 'data-done' ) ) {
       e.target.setAttribute ( 'data-done', true )
-      on.change ( e.target.value )
+      on.save ( e.target.value )
     }
   }
 }
@@ -49,11 +52,14 @@ export const EditableText = Component
       )
       const keyup = makeKeyup ( props )
       const change = makeChange ( props )
+      const blur = ( e ) => {
+        change ( e )
+      }
       return <div class={ klass }>
         <input class='fld' value={ props.text }
           hook-create={ focus }
           on-keyup={ keyup }
-          on-blur={ change }
+          on-blur={ blur }
           on-change={ change }
           />
         </div>

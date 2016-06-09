@@ -5,5 +5,7 @@ import { save } from '../../Data/signals/save'
 
 export const source: SignalType =
 [ sourceAction
-, ...save
+, { success: [ ...save ]
+  , error: []
+  }
 ]

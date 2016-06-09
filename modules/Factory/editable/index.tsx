@@ -55,20 +55,24 @@ export const editable =
     }
   , ( { state, signals, props }: ContextType ) => {
       const edit = () => signals.$factory.set
-      ( { path: fpath, value: true } )
+      ( { path: fpath, value: state.text } )
+
+      const changed = ( value ) => signals.$factory.set
+      ( { path: fpath, value } )
 
       const signal = getSignal ( signals, path [ 0 ], path [ 1 ] )
 
-      const changed = ( value ) => signal ( { value } )
+      const save = ( value ) => signal ( { value } )
 
-      const isediting = state.editing === true
+      const isediting = state.editing
 
       return <EditableText class={ props.class }
-          text={ state.text || props.default || '-empty-' }
+          text={ state.text }
           stext={ state.stext } // shown while saving
           editing={ isediting }
           saving={ state.saving }
           on-edit={ edit }
+          on-save={ save }
           on-change={ changed }
           />
     }

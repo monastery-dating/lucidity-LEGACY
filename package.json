@@ -43,6 +43,7 @@
     "jszip": "^3.0.0",
     "pouchdb": "^5.3.2",
     "pouchdb-authentication": "^0.5.1",
+    "string-hash": "^1.1.0",
     "three": "^0.77.1",
     "typescript": "^1.9.0-dev.20160513",
     "uuid": "^2.0.2"

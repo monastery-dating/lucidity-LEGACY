@@ -78,8 +78,8 @@ export module DragDropHelper {
     let clickpos, nodePos
 
     const mouseup = ( e ) => {
-      e.stopPropagation ()
       e.preventDefault ()
+      // Do not stopPropagation here or we miss drag release.
 
       if ( evstate === 'down' ) {
         // Only handle simple click here. The drop operation happens in

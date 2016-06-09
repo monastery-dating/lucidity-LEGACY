@@ -1,16 +1,66 @@
 import { NodeHelper } from './NodeHelper'
-import { GraphType, NodeType } from '../types'
+import { GraphType, NodeType, NodeByIdType } from '../types'
 import { BlockHelper, BlockType, SlotType } from '../../Block'
+import { PlaybackHelper } from '../../Playback'
 
 import { Immutable as IM } from './Immutable'
 
 const rootNodeId = NodeHelper.rootNodeId
+const defaultMeta = PlaybackHelper.defaultMeta
 
 export module GraphHelper {
 
   const createNode  = NodeHelper.create
   const nextNodeId  = NodeHelper.nextNodeId
   const nextBlockId = BlockHelper.nextBlockId
+
+  const checkFreeze =
+  ( graph: GraphType
+  ) => {
+    graph.blocksById = Object.freeze ( graph.blocksById )
+    check ( graph ) // this will freeze nodes
+    graph.nodesById = Object.freeze ( graph.nodesById )
+    return Object.freeze ( graph )
+  }
+
+  const check =
+  ( graph: GraphType
+  , context: any = PlaybackHelper.mainContext
+  , nodeId: string = rootNodeId
+  ) => {
+    const node = graph.nodesById [ nodeId ]
+    const meta = graph.blocksById [ node.blockId ].meta || defaultMeta
+    const expect = meta.expect || {}
+    const errors = []
+    for ( const k in meta.expect ) {
+      const e = expect [ k ]
+      const c = context [ k ]
+      if ( !c ) {
+        errors.push
+        ( `missing '${k}' (${e})`)
+      }
+      else if ( e !== c ) {
+        errors.push
+        ( `invalid '${k}' (${c} instead of ${e})` )
+      }
+    }
+    if ( errors.length > 0 ) {
+      node.invalid = errors
+    }
+    else {
+      delete node.invalid
+    }
+
+    graph.nodesById [ nodeId ] = Object.freeze ( node )
+
+    const sub = context.set ( meta.provide || {} )
+
+    for ( const childId of node.children ) {
+      if ( childId ) {
+        check ( graph, sub, childId )
+      }
+    }
+  }
 
   export const create =
   ( name: string = 'main'
@@ -91,9 +141,19 @@ export module GraphHelper {
       node.children = []
     }
 
-    newgraph.nodesById [ nid ] = Object.freeze ( node )
+    newgraph.nodesById [ nid ] = node
 
     return nid
+  }
+
+  const copyNodes =
+  ( nodesById: NodeByIdType
+  ) => {
+    const r = {}
+    for ( const k in nodesById ) {
+      r [ k ] = Object.assign ( {}, nodesById [ k ] )
+    }
+    return r
   }
 
   export const insert =
@@ -104,13 +164,15 @@ export module GraphHelper {
   ) : GraphType => {
     // add nodes
     let g = // not frozen to ease operations
-    { nodesById: Object.assign  ( {}, graph.nodesById )
+    { nodesById: copyNodes ( graph.nodesById )
     , blocksById: Object.assign ( {}, graph.blocksById )
     , blockId: graph.blockId
     }
 
     const oldgraph =
-    { nodesById: Object.assign  ( {}, achild.nodesById )
+    { nodesById: achild.nodesById
+      // we write in there during insertInGraph to mark
+      // transfered blocks
     , blocksById: Object.assign ( {}, achild.blocksById )
     }
 
@@ -127,16 +189,10 @@ export module GraphHelper {
     g.blockId = g.nodesById [ nid ].blockId
 
     // link in parent
-    g = IM.update
-    ( g, 'nodesById', parentId, 'children'
-    , ( children ) => IM.insert ( children, pos, nid )
-    )
+    const parent = g.nodesById [ parentId ]
+    parent.children = IM.insert ( parent.children, pos, nid )
 
-    g = IM.update
-    ( g, 'blocksById', Object.freeze ( g.blocksById )
-    )
-
-    return g
+    return checkFreeze ( g )
   }
 
   export const append = function
@@ -157,13 +213,13 @@ export module GraphHelper {
   , achild: GraphType
   ) : GraphType => {
     let g = // not frozen to ease operations
-    { nodesById: Object.assign  ( {}, graph.nodesById )
+    { nodesById: copyNodes ( graph.nodesById )
     , blocksById: Object.assign ( {}, graph.blocksById )
     , blockId: graph.blockId
     }
 
     const oldgraph =
-    { nodesById: Object.assign  ( {}, achild.nodesById )
+    { nodesById: achild.nodesById
     , blocksById: Object.assign ( {}, achild.blocksById )
     }
 
@@ -188,24 +244,14 @@ export module GraphHelper {
     const tailnode = g.nodesById [ tail.nid ]
 
     // tail.children [ 0 ] = previd
-    const children = IM.aset ( tailnode.children, 0, previd )
-    g = IM.update
-    ( g, 'nodesById', tail.nid
-    , Object.assign ( {}, tailnode, { children } )
-    )
+    tailnode.children = IM.aset ( tailnode.children, 0, previd )
 
-    // prevnode.parent = tail.nid
-    g = IM.update
-    ( g, 'nodesById', previd, 'parent', tail.nid )
+    prevnode.parent = tail.nid
 
     // parent.children [ pos ] = nid
-    g = IM.update
-    ( g, 'nodesById', parentId, 'children'
-    , ( children ) => IM.aset ( children, pos, nid )
-    )
+    parent.children = IM.aset ( parent.children, pos, nid )
 
-    g = IM.update ( g, 'blocksById', Object.freeze ( g.blocksById ) )
-    return Object.freeze ( g )
+    return checkFreeze ( g )
   }
 
   // Cut a branch a return the branch as a new graph.
@@ -220,7 +266,7 @@ export module GraphHelper {
     }
 
     const oldgraph =
-    { nodesById: Object.assign  ( {}, graph.nodesById )
+    { nodesById: graph.nodesById
     , blocksById: Object.assign ( {}, graph.blocksById )
     }
 
@@ -233,7 +279,7 @@ export module GraphHelper {
     , tail
     )
 
-    return g
+    return checkFreeze ( g )
   }
 
   // Remove a branch and return the smaller tree.
@@ -248,7 +294,7 @@ export module GraphHelper {
     }
 
     const oldgraph =
-    { nodesById: Object.assign  ( {}, graph.nodesById )
+    { nodesById: graph.nodesById
     , blocksById: Object.assign ( {}, graph.blocksById )
     }
 
@@ -262,7 +308,7 @@ export module GraphHelper {
     , nodeId
     )
 
-    return g
+    return checkFreeze ( g )
   }
 
 

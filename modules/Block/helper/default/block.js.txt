@@ -1,4 +1,17 @@
+/**
+ */
+
 export const render =
 ( ctx ) => {
 
+}
+
+export const meta =
+{ author: ''
+, description: ''
+, tags: []
+, expect: {}
+, provide: {}
+, input: []
+, output: 'any'
 }

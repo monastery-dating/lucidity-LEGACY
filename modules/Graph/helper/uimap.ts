@@ -14,6 +14,7 @@ const nextNodeId = NodeHelper.nextNodeId
 const rootNodeId = NodeHelper.rootNodeId
 
 import { minSize } from './minSize'
+import * as stringhash from 'string-hash'
 
 /** Compute svg path of a box with up and down slots.
  * The sizes have to be computed first in the 'info' field.
@@ -84,10 +85,7 @@ const className =
 , layout : UILayoutType
 ) => {
   const name = objName.split ( '.' ) [ 0 ]
-  let num = 7
-  for ( let i = 0; i < name.length; i += 1 ) {
-    num += name.charCodeAt ( i )
-  }
+  let num = stringhash ( name )
   return `box${1 + num % layout.PCOUNT}`
 }
 

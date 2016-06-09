@@ -72,7 +72,7 @@ export const Node = Component
       }
     , ( e ) => {
         // normal click
-        signals.block.select ( { id: node.blockId, ownerType } )
+        signals.block.select ( { select: { id: node.blockId, ownerType } } )
       }
     )
 

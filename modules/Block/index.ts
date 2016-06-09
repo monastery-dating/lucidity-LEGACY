@@ -1,7 +1,7 @@
 export interface BlockSignalsType {
   add ( input: { pos: number, parentId: string, ownerType: string } )
   name ( input: { value: string } )
-  select ( input: { ownerType: string, id: string } )
+  select ( input: { select: { ownerType: string, id: string } } )
   source ( input: { value: string } )
 }
 

@@ -28,7 +28,7 @@ Component
 , ( { state } ) => {
 
     return <div class='App'>
-        { route ( state.route ) }
+        <div class='wrap'>{ route ( state.route ) }</div>
         <StatusBar key='StatusBar'></StatusBar>
         <StatusDetail key='StatusDetail'></StatusDetail>
       </div>

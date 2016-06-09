@@ -94,12 +94,18 @@ svg {
       }
     }
 
-    &.ghost {
-      stroke: $high_front;
-      // fill: $high_front;
-      // animation: ghost 0.6s infinite alternate;
-    }
   }
+}
+
+path.ghost, .Drag path {
+  stroke: white;
+  stroke-dasharray: 5;
+  stroke-dashoffset: 0;
+  animation: ghost 1.2s linear infinite;
+}
+
+#app path.invalid {
+  fill: red;
 }
 
 svg#files {

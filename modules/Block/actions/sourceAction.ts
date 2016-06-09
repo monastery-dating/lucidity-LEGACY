@@ -9,17 +9,25 @@ export const sourceAction =
   } : ActionContextType
 ) => {
 
-  // prepare doc
   const select = state.get ( [ '$block' ] )
   if ( !select ) {
+    // no block visible
+    return
+  }
+
+  const odoc = state.get ( select.ownerType )
+  const graph: GraphType = odoc.graph
+  const source = graph.blocksById [ select.id ].source
+  if ( source === value ) {
+    output.error ( {} )
     return
   }
 
   const doc = IM.update
-  ( state.get ( [ select.ownerType ] )
+  ( odoc
   , 'graph', 'blocksById', select.id
   , ( block ) => BlockHelper.update ( block, { source: value } )
   )
 
-  output ( { doc } )
+  output.success ( { doc } )
 }

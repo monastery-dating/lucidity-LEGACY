@@ -1,12 +1,12 @@
 // Palette color for filters and effects (.box elements)
 
 $pbase: #D30;//#D76D01; // #f00;
-$pcount: 12;
+$pcount: 8;
 
 // palette background
 @function pfill( $index ) {
-  @return darken( desaturate( adjust-hue( $pbase, $index * 360 / $pcount ),
-  70%), 0% );
+  @return darken( desaturate( adjust-hue( #ff0, $index * 360 / $pcount ),
+  65%), 0% );
 //  @return darken( desaturate( adjust-hue( $pbase, $index * 360 / $pcount ), 70%), 10% );
 }
 

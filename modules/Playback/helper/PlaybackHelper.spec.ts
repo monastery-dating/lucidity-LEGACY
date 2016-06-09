@@ -21,7 +21,6 @@ describe ( 'PlaybackHelper.compile', ( it ) => {
   }
 
   const graph: GraphType = JSON.parse ( GRAPH )
-  console.log ( graph )
   const cache: any = {}
   PlaybackHelper.compile ( graph, cache )
   // node cache
@@ -52,7 +51,6 @@ describe ( 'PlaybackHelper.compile', ( it ) => {
     const res = cache.main ()
     assert.equal ( '1bnull', res )
   })
-
 })
 
 describe ( 'PlaybackHelper.context', ( it ) => {
