@@ -17,7 +17,16 @@ export module GraphHelper {
   const checkFreeze =
   ( graph: GraphType
   ) => {
-    graph.blocksById = Object.freeze ( graph.blocksById )
+    if ( Object.isFrozen ( graph ) ) {
+      graph =
+      { nodesById: Object.assign ( {}, graph.nodesById )
+      , blocksById: graph.blocksById
+      }
+    }
+    else {
+      graph.blocksById = Object.freeze ( graph.blocksById )
+    }
+
     check ( graph ) // this will freeze nodes
     graph.nodesById = Object.freeze ( graph.nodesById )
     return Object.freeze ( graph )
@@ -27,11 +36,12 @@ export module GraphHelper {
   ( graph: GraphType
   , context: any = PlaybackHelper.mainContext
   , nodeId: string = rootNodeId
+  , invalid: string[] = []
   ) => {
-    const node = graph.nodesById [ nodeId ]
+    let node: NodeType = graph.nodesById [ nodeId ]
     const meta = graph.blocksById [ node.blockId ].meta || defaultMeta
     const expect = meta.expect || {}
-    const errors = []
+    const errors = [...invalid]
     for ( const k in meta.expect ) {
       const e = expect [ k ]
       const c = context [ k ]
@@ -44,11 +54,35 @@ export module GraphHelper {
         ( `invalid '${k}' (${c} instead of ${e})` )
       }
     }
-    if ( errors.length > 0 ) {
-      node.invalid = errors
+
+    if ( Object.isFrozen ( node ) ) {
+      if ( errors.length > 0 ) {
+        node =
+        { id: node.id
+        , blockId: node.blockId
+        , parent: node.parent
+        , children: node.children
+        , invalid: errors
+        }
+      }
+      else if ( !node.invalid ) {
+      } else {
+        node =
+        { id: node.id
+        , blockId: node.blockId
+        , parent: node.parent
+        , children: node.children
+        }
+      }
     }
+
     else {
-      delete node.invalid
+      if ( errors.length > 0 ) {
+        node.invalid = errors
+      }
+      else {
+        delete node.invalid
+      }
     }
 
     graph.nodesById [ nodeId ] = Object.freeze ( node )
@@ -57,7 +91,7 @@ export module GraphHelper {
 
     for ( const childId of node.children ) {
       if ( childId ) {
-        check ( graph, sub, childId )
+        check ( graph, sub, childId, errors )
       }
     }
   }
@@ -354,5 +388,17 @@ export module GraphHelper {
   , folder: FolderExport
   ) => {
     exportOne ( graph, context, file, folder, rootNodeId )
+  }
+
+  export const updateSource =
+  ( graph: GraphType
+  , blockId: string
+  , source: string
+  ) => {
+    const oblock = graph.blocksById [ blockId ]
+    const block = BlockHelper.update ( oblock, { source } )
+    const g = IM.update ( graph, 'blocksById', blockId, block )
+    // FIXME: checkFreeze
+    return checkFreeze ( g )
   }
 }

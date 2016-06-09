@@ -138,6 +138,7 @@ export module PlaybackHelper {
   , key: string
   ): RenderFunc => {
     const nc = cache.nodecache [ key ]
+    const node = graph.nodesById [ key ]
     if ( !nc ) {
       console.log ( graph, cache )
       throw `Corrupt graph. Child '${key}' not in 'nodesById'.`
@@ -146,7 +147,7 @@ export module PlaybackHelper {
       return nc.curry
     }
 
-    const render = nc.exports.render
+    const render = node.invalid ? DUMMY_INPUT : nc.exports.render
 
     const e = graph.nodesById [ key ]
     if ( !e ) {

@@ -1,6 +1,6 @@
 import { ActionContextType } from '../../context.type'
-import { BlockHelper } from '../'
 import { GraphType, Immutable as IM } from '../../Graph'
+import { GraphHelper } from '../../Graph/helper/GraphHelper'
 
 export const sourceAction =
 ( { state
@@ -17,6 +17,7 @@ export const sourceAction =
 
   const odoc = state.get ( select.ownerType )
   const graph: GraphType = odoc.graph
+
   const source = graph.blocksById [ select.id ].source
   if ( source === value ) {
     output.error ( {} )
@@ -24,9 +25,8 @@ export const sourceAction =
   }
 
   const doc = IM.update
-  ( odoc
-  , 'graph', 'blocksById', select.id
-  , ( block ) => BlockHelper.update ( block, { source: value } )
+  ( odoc, 'graph'
+  , GraphHelper.updateSource ( graph, select.id, value )
   )
 
   output.success ( { doc } )
