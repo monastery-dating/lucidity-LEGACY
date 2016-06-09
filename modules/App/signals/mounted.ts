@@ -1,16 +1,12 @@
 import { setStatus } from '../../Status/actions/status'
 import { reload } from '../../Data/signals/reload'
 import { runtests } from '../../Test/signals/runtests'
+import { init as initMidi } from '../../Midi/signals/init'
 import * as set from 'cerebral-addons/set'
-
-const output = ( a ) => {
-  return ( { output } ) => {
-    output ( a )
-  }
-}
 
 export const mounted =
 [ setStatus ( { type:'info', message: 'Lucidity started' } )
-, [ ...reload ] // async
-, ...runtests   // sync
+, [ ...reload ]   // async
+, [ ...initMidi ] // async
+, ...runtests     // sync
 ]

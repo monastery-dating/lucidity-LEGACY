@@ -1,5 +1,6 @@
 import './style.scss'
 import { Component } from '../Component'
+import { MidiStatus } from '../MidiStatus'
 import { Status } from '../Status'
 import { Sync } from '../Sync'
 
@@ -12,6 +13,7 @@ export const StatusBar = Component
 
     return <div class='StatusBar'>
         { s ? <Status status={s}/> : '' }
+        <MidiStatus/>
         <Sync/>
       </div>
   }

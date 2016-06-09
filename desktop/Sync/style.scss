@@ -2,11 +2,12 @@
 @import '../styles/layout';
 @import '../styles/misc';
 
-.Sync {
+.Sync, .MidiStatus {
   width: 1em;
   height: 1em;
-  margin-right: 2*$pad;
   color: color( success );
+  flex-grow: 0;
+  align-content: flex-end;
 
   &.paused {
     color: color( success );
@@ -24,4 +25,8 @@
     color: color( error );
   }
 
+}
+
+.Sync {
+  margin-right: 2*$pad;
 }

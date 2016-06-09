@@ -3,6 +3,7 @@ import { DataSignalsType, DataServicesType } from './Data'
 import { DragDropSignalsType } from './DragDrop'
 import { FactorySignalsType } from './Factory'
 import { LibrarySignalsType } from './Library'
+import { MidiSignalsType } from './Midi'
 import { ProjectSignalsType } from './Project'
 import { SceneSignalsType, SceneHelperType } from './Scene'
 import { StatusSignalsType } from './Status'
@@ -27,6 +28,7 @@ export interface SignalsType {
   $dragdrop: DragDropSignalsType
   $factory: FactorySignalsType
   library: LibrarySignalsType
+  midi: MidiSignalsType
   project: ProjectSignalsType
   scene: SceneSignalsType
   $status: StatusSignalsType

@@ -6,6 +6,7 @@ import { DragDrop } from '../modules/DragDrop'
 import { Factory } from '../modules/Factory'
 import { Graph } from '../modules/Graph'
 import { Library } from '../modules/Library'
+import { Midi } from '../modules/Midi'
 import { Playback } from '../modules/Playback'
 import { Project } from '../modules/Project'
 import { Scene } from '../modules/Scene'
@@ -48,6 +49,7 @@ controller.addModules
   , devtools: Devtools ()
   , http: Http ()
   , library: Library ()
+  , midi: Midi ()
   , playback: Playback ()
   , project: Project ()
   , router
