@@ -1,5 +1,6 @@
 export * from './helper/ProjectHelper'
 export * from './ProjectType'
+export * from './actions/selectAction'
 
 export interface ProjectSignalsType {
   add ( input: {} )

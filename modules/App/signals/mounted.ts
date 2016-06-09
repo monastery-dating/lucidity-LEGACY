@@ -1,5 +1,5 @@
 import { setStatus } from '../../Status/actions/status'
-import { reload } from '../../Data'
+import { reload } from '../../Data/signals/reload'
 import { runtests } from '../../Test/signals/runtests'
 import * as set from 'cerebral-addons/set'
 

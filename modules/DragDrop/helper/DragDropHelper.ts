@@ -55,6 +55,7 @@ const startDrag = ( signals: SignalsType ) => {
   }
 
   const mouseup = ( e: MouseEvent ) => {
+    e.stopPropagation ()
     e.preventDefault ()
 
     doc.removeEventListener ( 'mousemove', mousemove )
@@ -71,22 +72,26 @@ export module DragDropHelper {
   export const drag =
   ( signals: SignalsType
   , dragclbk: DragCallback
-  , click: ClickCallback
+  , clickClbk: ClickCallback
   ) => {
     let evstate: 'down' | 'dragging' | 'up' = 'up'
     let clickpos, nodePos
 
     const mouseup = ( e ) => {
+      e.stopPropagation ()
+      e.preventDefault ()
+
       if ( evstate === 'down' ) {
         // Only handle simple click here. The drop operation happens in
         // docup.
-        click ( e )
+        clickClbk ( e )
       }
 
       evstate = 'up'
     }
 
     const mousedown = ( e: MouseEvent ) => {
+      e.stopPropagation ()
       e.preventDefault ()
       const target = e.target as HTMLElement
       const rect = target.getBoundingClientRect ()
@@ -117,6 +122,11 @@ export module DragDropHelper {
       }
     }
 
-    return { mousedown, mousemove, mouseup }
+    const click = ( e: MouseEvent ) => {
+      e.preventDefault ()
+      e.stopPropagation ()
+    }
+
+    return { click, mousedown, mousemove, mouseup }
   }
 }

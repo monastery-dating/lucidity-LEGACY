@@ -17,29 +17,29 @@ declare module 'cerebral' {
   interface MakeController {
     ( model: any ): Cerebral.Controller
   }
-  const dummy: MakeController
-  export = dummy
+  const module: MakeController
+  export = module
 }
 
 declare module 'cerebral-module-devtools' {
   interface DevTools {
     (): any
   }
-  const dummy: DevTools
-  export = dummy
+  const module: DevTools
+  export = module
 }
 
 declare module 'cerebral-module-http' {
   interface Http {
     (): any
   }
-  const dummy: Http
-  export = dummy
+  const module: Http
+  export = module
 }
 
 declare module 'cerebral-module-router' {
-  const dummy: any
-  export = dummy
+  const module: any
+  export = module
 }
 
 declare module 'cerebral-model-baobab' {
@@ -47,16 +47,24 @@ declare module 'cerebral-model-baobab' {
     ( initState: Object ): any
     monkey: any
   }
-  const dummy: Model
-  export = dummy
+  const module: Model
+  export = module
 }
 
 declare module 'cerebral-addons/set' {
   interface Set {
     ( path: string, value: any): any
   }
-  const dummy: Set
-  export = dummy
+  const module: Set
+  export = module
+}
+
+declare module 'cerebral-addons/when' {
+  interface When {
+    ( path: string ): any
+  }
+  const module: When
+  export = module
 }
 
 declare module 'cerebral-addons/copy' {
@@ -64,24 +72,24 @@ declare module 'cerebral-addons/copy' {
     ( from: any, to: any): any
     ( from: any, filter: any, to: any): any
   }
-  const dummy: Copy
-  export = dummy
+  const module: Copy
+  export = module
 }
 
 declare module 'cerebral-addons/throttle' {
   interface Throttle {
     ( ms: number, cont: any, opts?: any ): any
   }
-  const dummy: Throttle
-  export = dummy
+  const module: Throttle
+  export = module
 }
 
 declare module 'cerebral-addons/debounce' {
   interface Debounce {
     ( ms: number, cont: any, opts: any ): any
   }
-  const dummy: Debounce
-  export = dummy
+  const module: Debounce
+  export = module
 }
 
 declare module 'cerebral-view-snabbdom' {

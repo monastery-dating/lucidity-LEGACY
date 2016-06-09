@@ -1,5 +1,5 @@
 import { SignalType } from '../../context.type'
-import { selectProject } from '../actions/selectProject'
+import { selectAction as selectProject } from '../../Project'
 import * as set from 'cerebral-addons/set'
 
 export const projectUrl: SignalType =

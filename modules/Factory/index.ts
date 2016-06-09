@@ -5,7 +5,7 @@ export * from './pane'
 export * from './types'
 export * from './makeId'
 
-import { set, add } from './common'
+import { set } from './common'
 
 export const Factory =
 ( options = {} ) => {
@@ -19,8 +19,7 @@ export const Factory =
 
     // FIXME: none of these should exist.
     module.addSignals
-    ( { add
-      , set
+    ( { set
       }
     )
 

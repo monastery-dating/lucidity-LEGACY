@@ -16,7 +16,7 @@ const makeSlot = ( slot: UISlotType, datainfo, clbk ) => {
     return <g transform={ transform }>
         <path d={ slot.plus } class='plus'/>
         <path d={ slot.click } data-drop={ slotinfo }
-          on-click={ () => clbk ( slot.idx ) } class='click' />
+          on-click={ ( e ) => clbk ( e, slot.idx ) } class='click' />
       </g>
   }
   else if ( !flags.detached ){
@@ -58,7 +58,7 @@ export const Node = Component
                   , ghost: uinode.isghost
                   }
 
-    const { mousedown, mousemove, mouseup } = DragDropHelper.drag
+    const { click, mousedown, mousemove, mouseup } = DragDropHelper.drag
     ( signals
     , ( nodePos ) => {
         // start drag
@@ -76,7 +76,9 @@ export const Node = Component
       }
     )
 
-    const slotclick = ( pos ) => {
+    const slotclick = ( e, pos ) => {
+      e.stopPropagation ()
+
       signals.block.add
       ( { pos
         , parentId: uinode.id
@@ -91,6 +93,7 @@ export const Node = Component
           on-mousedown={ mousedown }
           on-mouseup={ mouseup }
           on-mousemove={ mousemove }
+          on-click={ click }
           ></path>
         <text x={ uinode.size.tx } y={ uinode.size.ty }>
           { uinode.name }

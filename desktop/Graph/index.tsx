@@ -64,7 +64,10 @@ export const Graph = Component
       const klass = Object.assign ( { Graph: true }, props.class )
       const style = props.style || {}
 
-      return <svg class={ klass } style={ style }>{ mapUINodes ( graph, uigraph, ownerType, blockId ) }</svg>
+      return <svg class={ klass } style={ style }
+          on-click={ () => signals.block.select ( { id: '', ownerType: '' } ) }>
+          { mapUINodes ( graph, uigraph, ownerType, blockId ) }
+        </svg>
     }
     else {
       return ''

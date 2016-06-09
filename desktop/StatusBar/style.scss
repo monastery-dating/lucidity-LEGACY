@@ -4,8 +4,6 @@
 @import '../styles/misc';
 
 .StatusBar {
-  position: fixed;
-  bottom: 0;
   height: layout( statush );
   width:  100%;
   background: lighten( $back_color, 5% );

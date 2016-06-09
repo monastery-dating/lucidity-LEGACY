@@ -5,11 +5,14 @@
 
 declare module 'jszip' {
   interface JSZip {
-    (): void
     file ( name: string, data: string, opts: any ): void
     folder ( name: string ): JSZip
     generateAsync ( opts?: any )
   }
-  const dummy: JSZip
-  export = dummy
+
+  interface JSZipConstructor {
+    new (): JSZip
+  }
+  const module: JSZipConstructor
+  export = module
 }

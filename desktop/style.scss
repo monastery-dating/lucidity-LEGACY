@@ -14,8 +14,9 @@ html, body, #app {
   height: 100%;
 }
 
-#app>.wrap {
-  height: 100%;
+.App {
+  display: flex;
+  flex-direction: column;
 }
 
 a { text-decoration: none; color: inherit; display: block }

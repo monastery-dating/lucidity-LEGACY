@@ -1,33 +1,31 @@
 import { ActionContextType } from '../../context.type'
-import { ProjectHelper } from '../'
+import * as check from 'check-types'
 
 export const selectAction =
 ( { state
-  , input: { docs, doc, _id }
+  , input: { _id }
   , output
+  , services
   } : ActionContextType
 ) => {
-  const user = state.get ( [ 'user' ] ) || {}
+  const project = state.get ( [ 'data', 'project', _id ] )
+  state.set ( [ '$projectId' ], _id )
 
-  if ( doc ) {
-    // Editing project properties
-    if ( ! user.projectId || ! doc._rev ) {
-      // New project, we select it after creation.
-      const alldocs = docs ? [ ...docs ] : [ doc ]
-      alldocs.push ( ProjectHelper.select ( state, user, doc ) )
-      output ( { docs: alldocs } )
-    }
-    else {
-      // pass through, nothing to select
-    }
+  if ( !project ) {
+    // FIXME: redirect is bad. We should find another way of showing
+    // that the project is not available.
+    return
+  }
+
+  const sceneId = state.get ( [ '$sceneId' ] )
+  if ( project.scenes.indexOf ( sceneId ) >= 0 ) {
+    // do not change
   }
   else {
-    // simple select
-    const project = state.get ( [ 'data', 'project', _id ] )
-    state.unset ( [ '$blockId' ] )
-    const sel = ProjectHelper.select ( state, user, project )
-    if ( sel ) {
-      output ( { doc: sel } )
-    }
+    state.set ( [ '$sceneId' ], project.scenes [ 0 ] )
   }
+}
+
+selectAction [ 'input' ] =
+{ _id: check.string
 }
