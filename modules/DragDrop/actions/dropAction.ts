@@ -32,11 +32,7 @@ export const dropAction =
 
   if ( !drop ) {
     // Not dropping on a valid zone.
-    if ( drag.ownerType === 'library' ) {
-      // do nothing
-    }
-
-    else {
+    if ( odoc ) {
       // Remove
       state.set ( [ '$factory', odoc.type, 'close' ], true )
       output.success ( { doc: odoc } )
