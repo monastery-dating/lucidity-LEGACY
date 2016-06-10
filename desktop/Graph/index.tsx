@@ -37,6 +37,7 @@ export const Graph = Component
     drop: [ '$dragdrop', 'drop' ] // react to drag op
   , drag: [ '$dragdrop', 'drag' ]
   , select: [ '$block' ]
+  , scale: [ '$ui', 'scale' ]
   }
 , ( { props, state, signals }: ContextType ) => {
     const ownerType = props.ownerType
@@ -64,10 +65,15 @@ export const Graph = Component
       const klass = Object.assign ( { Graph: true }, props.class )
       const style = props.style || {}
       const empty = { select: { id: '', ownerType: '' } }
+      // TODO: implement scale change with slider
+      // in the status bar.
+      const scale = state.scale || 1
+      const transform = `scale(${scale})`
 
       return <svg class={ klass } style={ style }
-          on-click={ () => signals.block.select ( empty ) }>
+          on-click={ () => signals.block.select ( empty ) }><g transform={ scale }>
           { mapUINodes ( graph, uigraph, ownerType, blockId ) }
+          </g>
         </svg>
     }
     else {

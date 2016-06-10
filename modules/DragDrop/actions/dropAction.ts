@@ -17,7 +17,7 @@ export const dropAction =
 ) => {
   const drag: DragStartType = state.get ( dragp )
   const drop: DragDropType  = state.get ( dropp )
-  const copy = drag.copy || drop.copy
+  const copy = drag.copy || ( drop && drop.copy )
 
   state.unset ( dragp )
   state.unset ( movep )
