@@ -37,6 +37,13 @@ export module SyncHelper {
     }
 
     const login = ( retry ) => {
+      if ( !navigator.onLine ) {
+        if ( retry ) {
+          retry ()
+        }
+        return
+      }
+
       try {
         remoteDB.login ( 'gaspard', 'devdoompasshopi' )
         .then ( () => {

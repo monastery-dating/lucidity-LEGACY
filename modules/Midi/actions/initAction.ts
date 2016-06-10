@@ -6,7 +6,6 @@ export const initAction =
   , output
   } : ActionContextType
 ) => {
-  console.log ( 'init' )
   MidiHelper.init ()
   .then ( ( message ) => {
     output.success ( { status: 'ok', message } )

@@ -4,7 +4,7 @@ import { PlaybackHelper, PlaybackCache } from '../../modules/Playback'
 import { DragDropType, DragStartType } from '../../modules/DragDrop'
 
 const cache: PlaybackCache = {}
-const context = PlaybackHelper.context ( {} )
+const context = PlaybackHelper.mainContext ()
 
 /* ====== PLAYBACK LIBS ======= */
 import * as THREE from 'three'
@@ -41,22 +41,24 @@ export const Playback = Component
       graph = drag.rgraph
     }
 
+    let update
     if ( graph ) {
       const require = ( name ) => PRELOADED [ name ]
       // TODO: Get project graph and branch with scene...
-      PlaybackHelper.compile ( graph, cache )
-      PlaybackHelper.init ( cache, { require } )
-
-      try {
-        cache.main ( context )
-      }
-      catch ( err ) {
-        console.error ( err )
+      update = () => {
+        PlaybackHelper.compile ( graph, cache )
+        PlaybackHelper.init ( cache, { require } )
+        try {
+          cache.main ( context )
+        }
+        catch ( err ) {
+          console.error ( err )
+        }
       }
     }
 
 
-    return <div class='Playback' style={{ height: usedh + 'px' }}>
+    return <div class='Playback' style={{ height: usedh + 'px' }} hook-update={ update }>
       <div class='wrap'
         style={{ height: usedh + 'px'
                , width: usedw + 'px' }}>

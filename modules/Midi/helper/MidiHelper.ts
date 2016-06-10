@@ -12,6 +12,11 @@ const nav = <NewNavigator>navigator
 
 export module MidiHelper {
 
+  export const setCtrl =
+  ( actrl ) => {
+    // ctrl = actrl
+  }
+  
   export const init =
   () => {
     return new Promise ( ( resolve, reject ) => {

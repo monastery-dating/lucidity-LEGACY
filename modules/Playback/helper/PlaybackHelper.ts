@@ -226,7 +226,7 @@ export module PlaybackHelper {
   // 'scenes', 'resize' and other special operations. Optional
   // init calls have to be asked for through init return value.
   , op?: string
-  ) => {
+  ): boolean => {
     // call in reverse depth-first order
     // (call parent before child)
     const init = cache.init
@@ -239,7 +239,10 @@ export module PlaybackHelper {
         try {
           c.cache = node.cache
           // call init
-          const opts = f ( c )
+          const opts: any = f ( c )
+          if ( opts === false ) {
+            return false // retry later
+          }
 
           if ( opts && typeof opts !== 'object' ) {
             // TODO: ERROR handling
@@ -254,8 +257,41 @@ export module PlaybackHelper {
           // TODO: capture missing required assets and libraries
           // and do proper error handling for init code.
           console.log ( err )
+          // retry later
+          return false
         }
       }
+    }
+
+    return true
+  }
+
+  let retry
+  let running
+
+  export const initRetry =
+  ( cache: PlaybackCache
+  , context: InitContext
+  // 'scenes', 'resize' and other special operations. Optional
+  // init calls have to be asked for through init return value.
+  , op: string
+  , clbk: any
+  ) => {
+    retry = () => {
+      console.log ( 'init' )
+      running = true
+      if ( !init ( cache, context, op ) ) {
+        // calls the updated retry
+        setTimeout ( () => retry (), 500 )
+      }
+      else {
+        running = false
+        clbk ()
+      }
+    }
+
+    if ( !running ) {
+      retry ()
     }
   }
 
