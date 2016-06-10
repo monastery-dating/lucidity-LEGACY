@@ -61,13 +61,14 @@ export const Node = Component
 
     const { click, mousedown, mousemove, mouseup } = DragDropHelper.drag
     ( signals
-    , ( nodePos ) => {
+    , ( nodePos, copy ) => {
         // start drag
         signals.$dragdrop.drag
         ( { drag:
             { ownerType
             , nodeId: node.id
             , nodePos
+            , copy
             }
           } )
       }

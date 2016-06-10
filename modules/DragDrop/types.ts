@@ -25,6 +25,7 @@ export interface DragStartType {
 
   // Computed on drag start
   uigraph?: UIGraphType
+  copy?: boolean
 }
 
 // This is the drop zone
@@ -34,6 +35,7 @@ export interface DragMoveType {
   target: string
   // absolute position
   clientPos: PosType
+  copy?: boolean
 }
 
 // This is the drop zone
@@ -47,4 +49,5 @@ export interface DragDropType {
   ghostId?: string
   // End of ghost
   nodeId?: string
+  copy?: boolean
 }

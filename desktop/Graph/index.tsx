@@ -55,7 +55,7 @@ export const Graph = Component
         nodeId = drop.nodeId
         ghostId = drop.ghostId
       }
-      else if ( drag && drag.ownerType === ownerType ) {
+      else if ( drag && drag.ownerType === ownerType && ! drag.copy ) {
         graph = drag.rgraph
       }
 

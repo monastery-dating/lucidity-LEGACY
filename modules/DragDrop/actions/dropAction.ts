@@ -17,12 +17,13 @@ export const dropAction =
 ) => {
   const drag: DragStartType = state.get ( dragp )
   const drop: DragDropType  = state.get ( dropp )
+  const copy = drag.copy || drop.copy
 
   state.unset ( dragp )
   state.unset ( movep )
 
   let odoc
-  if ( drag.ownerType !== 'library' ) {
+  if ( drag.ownerType !== 'library' && ! copy ) {
     odoc = IM.update
     ( state.get ( [ drag.ownerType ] )
     , 'graph', drag.rgraph

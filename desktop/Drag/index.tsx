@@ -20,11 +20,11 @@ export const Drag = Component
 , ( { state, signals }: ContextType ) => {
     const drag: DragStartType = state.drag
     const move: DragMoveType  = state.move
-    const klass = { Drag: true }
 
     if ( !drag || !move ) {
-      return <svg id='drag' class={ klass }></svg>
+      return <svg id='drag' class={{ Drag: true }}></svg>
     }
+    const klass = { Drag: true, copy: move.copy || drag.ownerType === 'library' || drag.copy }
 
     if ( state.drop && state.drop.ownerType !== 'library' ) {
       // hide drag element

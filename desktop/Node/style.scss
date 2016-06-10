@@ -7,7 +7,6 @@
 @for $i from 1 through $pcount {
   svg path.box#{$i} {
     fill: darken( desaturate( pfill( $i ), 10%), 5%);
-    cursor: pointer;
     &:hover {
       fill: lighten( desaturate( pfill( $i ), 10%), 3%);
     }
@@ -26,9 +25,6 @@
   .li.box#{$i} {
     background:  pbox( $i );
   }
-}
-
-svg path.Folder {
 }
 
 svg * {
@@ -78,6 +74,7 @@ svg {
   }
 
   path {
+    cursor: pointer;
     stroke-width: $lsbo;
     stroke: color( wboxl );
 

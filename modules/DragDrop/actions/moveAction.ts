@@ -19,6 +19,7 @@ export const moveAction =
   const move: DragMoveType = input.move
   const drag: DragStartType = state.get ( dragp )
   const { target, clientPos } = move
+  const copy = drag.copy || move.copy
   // If target is not set = no drop operation
   let drop: DragDropType = state.get ( dropp )
 
@@ -50,7 +51,7 @@ export const moveAction =
       // changed
       let graph: GraphType
 
-      if ( drag.ownerType === ownerType ) {
+      if ( drag.ownerType === ownerType && ! copy ) {
         // when dropping on drag origin, we use rest graph
         graph = drag.rgraph
       }
@@ -98,6 +99,7 @@ export const moveAction =
       , nodeId
       , graph
       , ownerType
+      , copy
       }
 
     }

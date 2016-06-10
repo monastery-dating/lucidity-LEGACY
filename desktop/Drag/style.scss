@@ -4,12 +4,21 @@
   display: block;
   opacity: 0.8;
   z-index: 6; // above library = 5
-  pointer-events: none;
+  // pointer-events: none;
   margin: 0;
 
-  cursor: grabbing;
-  cursor: -moz-grabbing;
-  cursor: -webkit-grabbing;
+  // FIXME: cursor not
+  path {
+    cursor: grabbing;
+    cursor: -moz-grabbing;
+    cursor: -webkit-grabbing;
+
+  }
+
+  &.copy path {
+    cursor: copy;
+  }
+
   // Used to hide the element while
   // looking for element under pointer.
   &.drag-hide {

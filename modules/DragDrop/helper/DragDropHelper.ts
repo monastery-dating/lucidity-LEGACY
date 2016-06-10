@@ -11,7 +11,7 @@ interface Position {
 }
 
 interface DragCallback {
-  ( pos: Position ): void
+  ( pos: Position, copy: boolean ): void
 }
 
 const MIN_DRAG_DIST = 4 // manhattan distance to trigger a drag
@@ -51,7 +51,7 @@ const startDrag = ( signals: SignalsType ) => {
     const clientPos = { x: e.clientX, y: e.clientY }
 
     signals.$dragdrop.move
-    ( { move: { target, clientPos } } )
+    ( { move: { target, clientPos, copy: e.altKey } } )
   }
 
   const mouseup = ( e: MouseEvent ) => {
@@ -116,7 +116,7 @@ export module DragDropHelper {
         }
         evstate = 'dragging'
 
-        dragclbk ( nodePos )
+        dragclbk ( nodePos, e.altKey )
 
         startDrag ( signals )
       }
