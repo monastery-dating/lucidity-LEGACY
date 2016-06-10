@@ -76,7 +76,7 @@ export module BlockHelper {
       const render = exports.render
       let meta = Object.assign ( {}, defaultMeta, exports.meta || {} )
       if ( meta.main ) {
-        meta.provide = PlaybackHelper.mainContext
+        meta.provide = PlaybackHelper.mainContextProvide
       }
 
       if ( render ) {

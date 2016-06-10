@@ -1,9 +1,13 @@
 import { BlockByIdType } from '../../Block'
 import { GraphType, NodeHelper } from '../../Graph'
+import { MidiHelper } from '../../Midi'
+
+const midi = MidiHelper.midiState ()
 
 // This is the context defined before calling main.
 export const MAIN_CONTEXT =
-{
+// midiState contains values for current ctrl and notes
+{ midi: 'midi.State'
 }
 
 const rootNodeId = NodeHelper.rootNodeId
@@ -311,7 +315,13 @@ export module PlaybackHelper {
     return <any> new Context ( {}, base )
   }
 
-  export const mainContext = context ( MAIN_CONTEXT )
+  export const mainContext =
+  ( extra: Object = {} ) => {
+    return <any> new Context ( { midi }, extra )
+  }
+
+  // context type
+  export const mainContextProvide = context ( MAIN_CONTEXT )
 
   export const defaultMeta = Object.freeze
   ( { provide: Object.freeze ( {} )

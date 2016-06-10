@@ -34,7 +34,7 @@ export module GraphHelper {
 
   const check =
   ( graph: GraphType
-  , context: any = PlaybackHelper.mainContext
+  , context: any = PlaybackHelper.mainContextProvide
   , nodeId: string = rootNodeId
   , invalid: string[] = []
   ) => {
