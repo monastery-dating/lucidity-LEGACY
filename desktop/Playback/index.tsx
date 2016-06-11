@@ -46,7 +46,8 @@ export const Playback = Component
       const require = ( name ) => PRELOADED [ name ]
       // TODO: Get project graph and branch with scene...
       update = () => {
-        PlaybackHelper.compile ( graph, cache )
+        PlaybackHelper.changed ( cache, graph, { require } )
+        PlaybackHelper.compile ( cache, graph )
         PlaybackHelper.init ( cache, { require } )
         try {
           cache.main ( context )

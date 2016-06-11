@@ -60,6 +60,7 @@ export const Graph = Component
         graph = drag.rgraph
       }
 
+      // FIXME: use uigraph in cache if { graph, ghostId, nodesId } are all the same...
       const uigraph = uimap ( graph, ghostId, nodeId )
 
       const klass = Object.assign ( { Graph: true }, props.class )
@@ -71,7 +72,7 @@ export const Graph = Component
       const transform = `scale(${scale})`
 
       const pos = props.position
-      console.log ( pos )
+      
       if ( pos ) {
         style.left = (pos.x - uigraph.grabpos.x) + 'px'
         style.top  = (pos.y - uigraph.grabpos.y) + 'px'

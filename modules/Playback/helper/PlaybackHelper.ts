@@ -28,6 +28,7 @@ interface RenderContext {
 interface InitContext {
   cache?: any
   require: any
+  detached?: boolean
 }
 
 interface InitFunc {
@@ -72,6 +73,9 @@ export interface PlaybackCache {
   main?: RenderFunc
   // Ids of nodes with an init function (in depth-first order).
   init?: string[]
+  // Current graph. We use this to diff and detect
+  // nodes to detach.
+  graph?: GraphType
 }
 
 const DUMMY_INPUT = () => null
@@ -184,9 +188,9 @@ export module PlaybackHelper {
         nc.cache = {}
       }
     }
-    else {
-      // clear init cache
-      nc.cache = {}
+    else if ( nc.cache ) {
+      // No init function = remove cache
+      delete nc.cache
     }
 
     // Create the curry function
@@ -198,9 +202,65 @@ export module PlaybackHelper {
     return curry
   }
 
+  const detach =
+  ( cache: PlaybackCache
+  , oldgraph: GraphType
+  , newgraph: GraphType
+  , context: InitContext
+  , nodeId: string
+  , parentDisconnected: boolean
+  ) => {
+    const onode = oldgraph.nodesById [ nodeId ]
+    const nnode = newgraph.nodesById [ nodeId ]
+    let detached = parentDisconnected
+                        || !nnode // = removed
+                        || nnode.parent !== onode.parent
+
+    // Parse children
+    for ( const childId of onode.children ) {
+      detach ( cache, oldgraph, newgraph, context, childId, detached )
+    }
+
+    // detach after childre (depth-first)
+    if ( detached ) {
+      const nc = cache.nodecache [ nodeId ]
+      const init = nc.exports.init
+      if ( init ) {
+        context.cache = nc.cache
+        try {
+          init ( context )
+        }
+        catch (err) {
+          // FIXME: proper error handling
+          console.log ( 'detach error:', err )
+        }
+        // clear cache
+        nc.cache = {}
+      }
+    }
+  }
+
+  export const changed =
+  ( cache: PlaybackCache
+  , graph: GraphType
+  , cont: InitContext
+  ) => {
+    if ( cache.graph && cache.graph !== graph ) {
+      const context = Object.assign ( {}, cont, { detached: true })
+      detach
+      ( cache
+      , cache.graph
+      , graph
+      , context
+      , rootNodeId
+      , cont.detached
+     )
+    }
+  }
+
   export const compile =
-  ( graph : GraphType
-  , cache: PlaybackCache
+  ( cache: PlaybackCache
+  , graph : GraphType
   ) => {
     const output : string[] = []
 
@@ -222,6 +282,9 @@ export module PlaybackHelper {
 
     clearCurry ( cache.nodecache )
     cache.main = updateCurry ( graph, cache, rootNodeId )
+
+    // save current graph to compare on detach.
+    cache.graph = graph
   }
 
   export const init =
@@ -230,7 +293,7 @@ export module PlaybackHelper {
   // 'scenes', 'resize' and other special operations. Optional
   // init calls have to be asked for through init return value.
   , op?: string
-  ): boolean => {
+  ) => {
     // call in reverse depth-first order
     // (call parent before child)
     const init = cache.init
@@ -260,42 +323,10 @@ export module PlaybackHelper {
         catch ( err ) {
           // TODO: capture missing required assets and libraries
           // and do proper error handling for init code.
-          console.log ( err )
-          // retry later
-          return false
+          console.log ( 'init error:', err )
+          return
         }
       }
-    }
-
-    return true
-  }
-
-  let retry
-  let running
-
-  export const initRetry =
-  ( cache: PlaybackCache
-  , context: InitContext
-  // 'scenes', 'resize' and other special operations. Optional
-  // init calls have to be asked for through init return value.
-  , op: string
-  , clbk: any
-  ) => {
-    retry = () => {
-      console.log ( 'init' )
-      running = true
-      if ( !init ( cache, context, op ) ) {
-        // calls the updated retry
-        setTimeout ( () => retry (), 500 )
-      }
-      else {
-        running = false
-        clbk ()
-      }
-    }
-
-    if ( !running ) {
-      retry ()
     }
   }
 

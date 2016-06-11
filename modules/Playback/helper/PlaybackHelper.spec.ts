@@ -22,7 +22,7 @@ describe ( 'PlaybackHelper.compile', ( it ) => {
 
   const graph: GraphType = JSON.parse ( GRAPH )
   const cache: any = {}
-  PlaybackHelper.compile ( graph, cache )
+  PlaybackHelper.compile ( cache, graph )
   // node cache
   const nca: any = {}
   for ( const k in graph.nodesById ) {
