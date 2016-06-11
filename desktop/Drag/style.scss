@@ -4,7 +4,7 @@
   display: block;
   opacity: 0.8;
   z-index: 6; // above library = 5
-  &.Graph { margin: 0; }
+  &.Graph { margin: 0; padding: 0 }
 
   // FIXME: cursor not
   path {

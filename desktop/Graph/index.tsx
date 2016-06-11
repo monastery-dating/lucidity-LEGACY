@@ -71,15 +71,16 @@ export const Graph = Component
       const transform = `scale(${scale})`
 
       const pos = props.position
+      console.log ( pos )
       if ( pos ) {
-        style.left = pos.x - uigraph.grabpos.x
-        style.top  = pos.y - uigraph.grabpos.y
+        style.left = (pos.x - uigraph.grabpos.x) + 'px'
+        style.top  = (pos.y - uigraph.grabpos.y) + 'px'
       }
 
       return <div class={ klass }
+            style={ style }
             on-click={ () => signals.block.select ( empty ) }>
           <svg
-            style={ style }
             width={ uigraph.size.width }
             height={ uigraph.size.height }
             on-click={ () => signals.block.select ( empty ) }>

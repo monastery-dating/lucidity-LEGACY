@@ -17,8 +17,9 @@ export const Drag = Component
     const move: DragMoveType  = state.move
 
     if ( !drag || !move ) {
-      return <svg id='drag' class={{ Drag: true }}></svg>
+      return <div id='drag' class={{ Drag: true }}></div>
     }
+
     const klass = { Drag: true, copy: move.copy || drag.ownerType === 'library' || drag.copy }
 
     if ( state.drop && state.drop.ownerType !== 'library' ) {
