@@ -71,7 +71,8 @@ export const Graph = Component
       const transform = `scale(${scale})`
 
       return <svg class={ klass } style={ style }
-          on-click={ () => signals.block.select ( empty ) }><g transform={ scale }>
+          on-click={ () => signals.block.select ( empty ) }>
+          <g transform={ transform }>
           { mapUINodes ( graph, uigraph, ownerType, blockId ) }
           </g>
         </svg>
