@@ -63,19 +63,31 @@ export const Graph = Component
       const uigraph = uimap ( graph, ghostId, nodeId )
 
       const klass = Object.assign ( { Graph: true }, props.class )
-      const style = props.style || {}
+      const style: any = {}
       const empty = { select: { id: '', ownerType: '' } }
       // TODO: implement scale change with slider
       // in the status bar.
       const scale = state.scale || 1
       const transform = `scale(${scale})`
 
-      return <svg class={ klass } style={ style }
-          on-click={ () => signals.block.select ( empty ) }>
-          <g transform={ transform }>
-          { mapUINodes ( graph, uigraph, ownerType, blockId ) }
-          </g>
-        </svg>
+      const pos = props.position
+      if ( pos ) {
+        style.left = pos.x - uigraph.grabpos.x
+        style.top  = pos.y - uigraph.grabpos.y
+      }
+
+      return <div class={ klass }
+            on-click={ () => signals.block.select ( empty ) }>
+          <svg
+            style={ style }
+            width={ uigraph.size.width }
+            height={ uigraph.size.height }
+            on-click={ () => signals.block.select ( empty ) }>
+            <g transform={ transform }>
+            { mapUINodes ( graph, uigraph, ownerType, blockId ) }
+            </g>
+          </svg>
+        </div>
     }
     else {
       return ''

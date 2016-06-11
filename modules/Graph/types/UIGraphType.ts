@@ -4,6 +4,11 @@ export interface UINodeByIdType {
   [ key: string ]: UINodeType
 }
 
+interface SizeType {
+  width: number
+  height: number
+}
+
 export interface UIGraphType {
   // collect the list of node ids to draw
   nodes: string[]
@@ -11,13 +16,6 @@ export interface UIGraphType {
   uiNodeById: UINodeByIdType
   // location of mouse in dragged object
   grabpos: UIPosType
-}
-
-export const initUIGraph = function
-() : UIGraphType {
-  return {
-      nodes: []
-    , grabpos: { x: 0, y: 0 }
-    , uiNodeById: {}
-    }
+  // total graph size
+  size: SizeType
 }

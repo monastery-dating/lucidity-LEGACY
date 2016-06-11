@@ -4,13 +4,13 @@
 
 .Workbench {
   background: color( workb );
-  width: 100%;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
 
   >.stretch {
     flex-grow: 1;
+    width:100%;
     display: flex;
     position: relative;
   }

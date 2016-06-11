@@ -12,6 +12,7 @@
 html, body, #app {
   margin: 0;
   height: 100%;
+  overflow: hidden;
 }
 
 .App {
@@ -33,7 +34,6 @@ body {
   color: color( workt );
   cursor: default;
 }
-
 
 .fld {
   background: color( inputb );

@@ -3,8 +3,7 @@
 @import '../styles/misc';
 
 .Project {
-  width: layout( filesw );
-  flex-grow: 1;
+  width: 34%;
   border: 1px solid color( boxl );
   border-width: 1px 0 0 0;
   display: flex;

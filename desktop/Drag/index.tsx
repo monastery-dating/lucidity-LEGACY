@@ -7,11 +7,6 @@ import { Graph } from '../Graph'
 import { Node } from '../Node'
 import { UINodeType, UISlotType, NodeType } from '../../modules/Graph/types'
 
-const ARROW_POS =
-{ x: defaultUILayout.RADIUS + defaultUILayout.SPAD + defaultUILayout.SLOT
-, y: 3 * defaultUILayout.SLOT
-}
-
 export const Drag = Component
 ( { drag: [ '$dragdrop', 'drag' ]
   , move: [ '$dragdrop', 'move' ]
@@ -31,14 +26,13 @@ export const Drag = Component
       klass [ 'hide' ] = true
     }
 
-    const x = move.clientPos.x - ARROW_POS.x
-    const y = move.clientPos.y - ARROW_POS.y
-    const style = { top: y, left: x }
+    const x = move.clientPos.x
+    const y = move.clientPos.y
 
     // draw Graph
     return <Graph key='drag.graph'
           class={ klass }
-          style={ style }
+          position={{ x, y }}
           ownerType={ 'drag' }
           rootId={ drag.nodeId }
           graph={ drag.dgraph } />

@@ -3,8 +3,7 @@
 @import '../styles/misc';
 
 .Graph {
-  margin-left: 2 * $ppad;
-  flex-grow: 1;
-  width: 100%;
+  padding: 0 2 * $ppad;
   height: 100%;
+  overflow: auto;
 }

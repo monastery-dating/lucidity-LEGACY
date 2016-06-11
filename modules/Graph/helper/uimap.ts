@@ -91,30 +91,19 @@ const className =
 
 /** Compute box position.
  */
-const boxPosition = function
+const boxPosition =
 ( graph: GraphType
 , id: string
 , layout: UILayoutType
 , uigraph: UIGraphType
 , ctx: UIPosType
-) {
+): number => {
   const node = graph.nodesById [ id ]
   const obj  = graph.blocksById [ node.blockId ]
 
   // store our position given by ctx
   uigraph.uiNodeById [ id ].pos = ctx
-  let dy = layout.HEIGHT
-
-/*
-  if ( graph.type === 'files' ) {
-    dy += layout.SUBPADY
-  }
-  else {
-  */
-    dy += layout.VPAD
-    /*
-  }
-  */
+  const dy = layout.HEIGHT + layout.VPAD
 
   let x  = ctx.x
 
@@ -122,16 +111,18 @@ const boxPosition = function
   const sextra = uigraph.uiNodeById [ id ].sextra
 
   // get children
+  let cheight = 0
   for ( let i = 0; i < len + 1; i += 1 ) {
     const childId = node.children [ i ]
     const wtonext = ( sextra [ i ] || 0 ) + layout.SPAD + 2 * layout.SLOT
 
     if ( childId ) {
 
-      boxPosition
+      const h = boxPosition
       ( graph, childId, layout, uigraph
       , { x, y: ctx.y + dy }
       )
+      cheight = Math.max ( cheight, h )
       x += layout.BPAD + uigraph.uiNodeById [ childId ].size.w
     }
     else if ( childId === null ) {
@@ -140,7 +131,7 @@ const boxPosition = function
     }
   }
 
-  return dy
+  return dy + cheight
 }
 
 
@@ -357,16 +348,21 @@ export const uimap =
   { nodes: []
   , grabpos:
     { x: startpos.x + layout.RADIUS + layout.SPAD + layout.SLOT
-    , y: startpos.y - layout.RADIUS + 6 // why do we need this 6 ?
+    , y: startpos.y + layout.HEIGHT / 2 - 6 // 6 = pointer size
     }
   , uiNodeById: {}
+  , size: { width: 0, height: 0 }
   }
 
   uimapOne
   ( graph, rootNodeId, ghostId, nodeId, layout, uigraph, cachebox )
 
-  boxPosition
-  ( graph, rootNodeId, layout, uigraph, startpos )
+  const height = boxPosition
+  ( graph, rootNodeId, layout, uigraph, startpos ) +
+  layout.SCLICKH +
+  layout.SLOT + 1
+  const width = uigraph.uiNodeById [ rootNodeId ].size.w + 1
+  uigraph.size = { width, height }
 
   return uigraph
 }
