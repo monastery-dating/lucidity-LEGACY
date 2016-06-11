@@ -1,3 +1,8 @@
+# TODO
+ Can we remove passing return value from child to parent ?
+ 
+ To be explored. In this case, we no longer need input/output type checking.
+
 # DATA
 
 We need to store these kinds of data:
@@ -87,6 +92,7 @@ The init function is called multiple times (when a local source file is changed,
 The init function is called when:
 
   1. The block source changes.
+  2. Graph is changed (connect, disconnect, etc).
   2. Used assets are modified/downloaded.
   3. Scenes are added/removed (optional).
   4. Screen is moved or resized (optional).
@@ -94,7 +100,19 @@ The init function is called when:
 Optional calls are enabled by the init return values: `{ screen: true, scenes: true }`
 
 ## INIT Parameters
+  **ctx**
 
+  Rendering context passed at this point in graph.
+
+  **helpers**
+
+  See below.
+
+# INIT Return value
+
+  Init returns the changed context for sub-nodes.
+
+## INIT Helpers
   **cache**
 
   1. Manage state through specialized blocks (db) that pass a state thing to their children.

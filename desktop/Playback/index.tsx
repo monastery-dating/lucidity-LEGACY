@@ -10,6 +10,7 @@ const context = PlaybackHelper.mainContext ()
 import * as THREE from 'three'
 const PRELOADED = { THREE }
 /* ====== PLAYBACK LIBS ======= */
+const helpers = { require: ( name ) => PRELOADED [ name ] }
 
 export const Playback = Component
 ( { graph: [ 'scene', 'graph' ]
@@ -43,14 +44,11 @@ export const Playback = Component
 
     let update
     if ( graph ) {
-      const require = ( name ) => PRELOADED [ name ]
+
       // TODO: Get project graph and branch with scene...
       update = () => {
-        PlaybackHelper.changed ( cache, graph, { require } )
-        PlaybackHelper.compile ( cache, graph )
-        PlaybackHelper.init ( cache, { require } )
         try {
-          cache.main ( context )
+          PlaybackHelper.run ( graph, cache, context, helpers )
         }
         catch ( err ) {
           console.error ( err )

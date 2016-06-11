@@ -22,7 +22,7 @@ describe ( 'PlaybackHelper.compile', ( it ) => {
 
   const graph: GraphType = JSON.parse ( GRAPH )
   const cache: any = {}
-  PlaybackHelper.compile ( cache, graph )
+  PlaybackHelper.compile ( graph, cache )
   // node cache
   const nca: any = {}
   for ( const k in graph.nodesById ) {
@@ -32,13 +32,13 @@ describe ( 'PlaybackHelper.compile', ( it ) => {
   }
 
   it ( 'should run init', ( assert ) => {
-    PlaybackHelper.init ( cache, { require } )
+    PlaybackHelper.init ( graph, cache, {}, { require } )
     assert.equal ( nca.cache.cache, { foo: 1 } )
   })
 
   it ( 'should reuse cache in init', ( assert ) => {
-    PlaybackHelper.init ( cache, { require } )
-    PlaybackHelper.init ( cache, { require } )
+    PlaybackHelper.init ( graph, cache, {}, { require } )
+    PlaybackHelper.init ( graph, cache, {}, { require } )
     assert.equal ( nca.cache.cache, { foo: 1 } )
     assert.equal ( 1, counter )
   })

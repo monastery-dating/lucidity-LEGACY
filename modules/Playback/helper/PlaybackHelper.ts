@@ -25,14 +25,14 @@ interface RenderContext {
   [ key: string ]: any
 }
 
-interface InitContext {
+interface HelpersContext {
   cache?: any
   require: any
   detached?: boolean
 }
 
 interface InitFunc {
-  ( ctx: InitContext ): void
+  ( ctx: RenderContext, helpers: HelpersContext ): Object
 }
 
 interface RenderFunc {
@@ -59,9 +59,8 @@ interface NodeCache {
   curry: CurryFunc
   // to check cache
   js: string
-  // We save the init return value here (indicates when to run
-  // init).
-  initOpts: null
+  // We save the init context so that we can use it when detaching
+  ctx?: RenderContext
 }
 
 interface PlaybackNodeCache {
@@ -180,22 +179,10 @@ export module PlaybackHelper {
       }
     }
 
-    // depth-first
-    if ( nc.exports.init ) {
-      cache.init.push ( key )
-      if ( !nc.cache ) {
-        // cache passed in init call
-        nc.cache = {}
-      }
-    }
-    else if ( nc.cache ) {
-      // No init function = remove cache
-      delete nc.cache
-    }
-
     // Create the curry function
-    const curry = ( ctx: RenderContext ) => {
-      return render ( ctx, ...args )
+    // no arguments from caller
+    const curry = () => {
+      return render ( nc.ctx, ...args )
     }
     nc.curry = curry
 
@@ -206,7 +193,7 @@ export module PlaybackHelper {
   ( cache: PlaybackCache
   , oldgraph: GraphType
   , newgraph: GraphType
-  , context: InitContext
+  , helpers: HelpersContext
   , nodeId: string
   , parentDisconnected: boolean
   ) => {
@@ -218,17 +205,19 @@ export module PlaybackHelper {
 
     // Parse children
     for ( const childId of onode.children ) {
-      detach ( cache, oldgraph, newgraph, context, childId, detached )
+      if ( childId ) {
+        detach ( cache, oldgraph, newgraph, helpers, childId, detached )
+      }
     }
 
-    // detach after childre (depth-first)
+    // detach after children (depth-first)
     if ( detached ) {
       const nc = cache.nodecache [ nodeId ]
       const init = nc.exports.init
       if ( init ) {
-        context.cache = nc.cache
+        helpers.cache = nc.cache
         try {
-          init ( context )
+          init ( nc.ctx, helpers )
         }
         catch (err) {
           // FIXME: proper error handling
@@ -240,27 +229,86 @@ export module PlaybackHelper {
     }
   }
 
-  export const changed =
-  ( cache: PlaybackCache
+  const initDo =
+  ( cache: PlaybackNodeCache
   , graph: GraphType
-  , cont: InitContext
+  , context: Context
+  , helpers: HelpersContext
+  , nodeId: string
   ) => {
+    const nc = cache [ nodeId ]
+    const init = nc.exports.init
+
+    let subctx: Context = context
+    if ( init ) {
+      if ( !nc.cache ) {
+        // cache passed in init call
+        nc.cache = {}
+      }
+      try {
+        helpers.cache = nc.cache
+        let r = init ( context, helpers )
+        if ( r ) {
+          if ( typeof r !== 'object' ) {
+            console.log ( `Init return value must be an object` )
+          }
+          else {
+            subctx = context.set ( r )
+            console.log ( subctx )
+          }
+        }
+      }
+      catch ( err ) {
+        // TODO: capture missing required assets and libraries
+        // and do proper error handling for init code.
+        console.log ( 'init error:', err )
+        // abort init operation
+        return
+      }
+      nc.ctx = context
+    }
+    else if ( nc.cache ) {
+      // No init function = clear cached context and init cache
+      delete nc.cache
+      delete nc.ctx
+    }
+
+    // Trigger init in children with sub context
+    const node = graph.nodesById [ nodeId ]
+    for ( const childId of node.children ) {
+      initDo
+      ( cache
+      , graph
+      , subctx
+      , helpers
+      , childId
+      )
+    }
+  }
+
+  export const detachCheck =
+  ( graph : GraphType
+  , cache: PlaybackCache
+  , context: Object // extra elements for render context
+  , helpers: HelpersContext
+  ) => {
+    // 1. detach if needed
     if ( cache.graph && cache.graph !== graph ) {
-      const context = Object.assign ( {}, cont, { detached: true })
+      const h = Object.assign ( {}, helpers, { detached: true })
       detach
       ( cache
       , cache.graph
       , graph
-      , context
+      , h
       , rootNodeId
-      , cont.detached
+      , false
      )
     }
   }
 
   export const compile =
-  ( cache: PlaybackCache
-  , graph : GraphType
+  ( graph : GraphType
+  , cache: PlaybackCache
   ) => {
     const output : string[] = []
 
@@ -277,8 +325,6 @@ export module PlaybackHelper {
 
     // Rebuild all curry functions.
 
-    // Clear init functions
-    cache.init = []
 
     clearCurry ( cache.nodecache )
     cache.main = updateCurry ( graph, cache, rootNodeId )
@@ -288,46 +334,30 @@ export module PlaybackHelper {
   }
 
   export const init =
-  ( cache: PlaybackCache
-  , context: InitContext
-  // 'scenes', 'resize' and other special operations. Optional
-  // init calls have to be asked for through init return value.
-  , op?: string
+  ( graph : GraphType
+  , cache: PlaybackCache
+  , context: Object // extra elements for render context
+  , helpers: HelpersContext
   ) => {
-    // call in reverse depth-first order
-    // (call parent before child)
-    const init = cache.init
-    const ncache = cache.nodecache
-    const c: InitContext = Object.assign ( {}, context )
-    for ( let i = init.length - 1; i >= 0; --i ) {
-      const node = ncache [ init [ i ] ]
-      const f = node.exports.init
-      if ( !op || ( node.initOpts && node.initOpts [ op ] ) ) {
-        try {
-          c.cache = node.cache
-          // call init
-          const opts: any = f ( c )
-          if ( opts === false ) {
-            return false // retry later
-          }
+    const c = mainContext ( context )
+    const h = Object.assign ( {}, helpers )
+    initDo ( cache.nodecache, graph, c, h, rootNodeId )
+  }
 
-          if ( opts && typeof opts !== 'object' ) {
-            // TODO: ERROR handling
-            console.log ( `Init return value must be an object` )
-          }
-          else {
-            // save init options
-            node.initOpts = opts
-          }
-        }
-        catch ( err ) {
-          // TODO: capture missing required assets and libraries
-          // and do proper error handling for init code.
-          console.log ( 'init error:', err )
-          return
-        }
-      }
-    }
+  export const run =
+  ( graph : GraphType
+  , cache: PlaybackCache
+  , context: Object = {} // extra elements for render context
+  , helpers: HelpersContext
+  ) => {
+    // 1. detach if needed
+    detachCheck ( graph, cache, context, helpers )
+    // 2. compile
+    compile ( graph, cache )
+    // 3. init
+    init ( graph, cache, context, helpers )
+    // 4. run
+    cache.main ( context )
   }
 
   class Context {

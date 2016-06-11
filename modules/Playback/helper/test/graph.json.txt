@@ -85,9 +85,9 @@
     "b4": {
       "id": "b4",
       "name": "cache",
-      "source": "// Test that init is called with\n// cache and require.\n\nlet foo\n\nexport const init =\n( { cache, require } ) => {\n  const counter = require ( 'counter' )\n  if ( !cache.foo ) {\n    cache.foo = counter ()\n  }\n  foo = cache.foo\n}\n\nexport const render =\n( ctx ) => {\n  return foo\n}\n\n",
+      "source": "// Test that init is called with\n// cache and require.\n\nlet foo\n\nexport const init =\n( ctx, { cache, require } ) => {\n  const counter = require ( 'counter' )\n  if ( !cache.foo ) {\n    cache.foo = counter ()\n  }\n  foo = cache.foo\n}\n\nexport const render =\n( ctx ) => {\n  return foo\n}\n\n",
       "input": [],
-      "js": "// Test that init is called with\n// cache and require.\n\"use strict\";\nvar foo;\nexports.init = function (_a) {\n    var cache = _a.cache, require = _a.require;\n    var counter = require('counter');\n    if (!cache.foo) {\n        cache.foo = counter();\n    }\n    foo = cache.foo;\n};\nexports.render = function (ctx) {\n    return foo;\n};\n",
+      "js": "// Test that init is called with\n// cache and require.\n\"use strict\";\nvar foo;\nexports.init = function (ctx, _a) {\n    var cache = _a.cache, require = _a.require;\n    var counter = require('counter');\n    if (!cache.foo) {\n        cache.foo = counter();\n    }\n    foo = cache.foo;\n};\nexports.render = function (ctx) {\n    return foo;\n};\n",
       "output": "string",
       "init": true
     }
