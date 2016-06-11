@@ -98,8 +98,8 @@ const boxPosition = function
 , uigraph: UIGraphType
 , ctx: UIPosType
 ) {
-  const link = graph.nodesById [ id ]
-  const obj  = graph.blocksById [ link.blockId ]
+  const node = graph.nodesById [ id ]
+  const obj  = graph.blocksById [ node.blockId ]
 
   // store our position given by ctx
   uigraph.uiNodeById [ id ].pos = ctx
@@ -118,12 +118,12 @@ const boxPosition = function
 
   let x  = ctx.x
 
-  const len  = Math.max ( link.children.length, ( obj.input || [] ).length )
+  const len  = Math.max ( node.children.length, ( obj.input || [] ).length )
   const sextra = uigraph.uiNodeById [ id ].sextra
 
   // get children
   for ( let i = 0; i < len + 1; i += 1 ) {
-    const childId = link.children [ i ]
+    const childId = node.children [ i ]
     const wtonext = ( sextra [ i ] || 0 ) + layout.SPAD + 2 * layout.SLOT
 
     if ( childId ) {
@@ -158,8 +158,8 @@ const uimapOne = function
   const uibox = uigraph.uiNodeById [ id ]
   const cache = cachebox [ id ] || <UINodeType>{}
 
-  const link = graph.nodesById [ id ]
-  const obj  = graph.blocksById [ link.blockId ]
+  const node = graph.nodesById [ id ]
+  const obj  = graph.blocksById [ node.blockId ]
 
   uibox.name = obj.name
 
@@ -188,7 +188,7 @@ const uimapOne = function
 
 
   // FIXME: only store text size in cache
-  const ds = Math.max ( ( obj.input || [] ).length, ( link.children || [] ).length )
+  const ds = Math.max ( ( obj.input || [] ).length, ( node.children || [] ).length )
 
   let size = cache.size
   if ( !size ||
@@ -196,7 +196,7 @@ const uimapOne = function
         size.us   !== ( obj.output ? 1 : 0 ) ||
         size.ds   !== ds
         ) {
-    size = minSize ( obj, link, layout )
+    size = minSize ( obj, node, layout )
   }
   else {
     // cache.size is immutable
@@ -216,7 +216,7 @@ const uimapOne = function
   if ( input ) {
     let   x = layout.RADIUS + layout.SPAD
     const y = layout.HEIGHT
-    const len = Math.max ( link.children.length, input.length )
+    const len = Math.max ( node.children.length, input.length )
 
 
     // Compute sizes for all children
@@ -241,10 +241,12 @@ const uimapOne = function
 
     const slotpad = layout.SPAD + 2 * layout.SLOT
 
+    const serr = node.serr
     for ( let i = 0; i < len; i += 1 ) {
-      const childId = link.children [ i ]
+      const childId = node.children [ i ]
       const pos = { x: x + sl, y }
       const free = !childId
+      const incompatible = serr && serr [ i ] ? true : false
 
       if ( ! input [ i ] ) {
         // extra links outside of inputs...
@@ -254,7 +256,18 @@ const uimapOne = function
           , pos
           , plus
           , click
-          , flags: { detached: true, free }
+          , flags: { detached: true }
+          }
+        )
+      }
+      else if ( incompatible ) {
+        slots.push
+        ( { path: sline
+          , idx: i
+          , pos
+          , plus
+          , click
+          , flags: { free, incompatible }
           }
         )
       }

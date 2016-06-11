@@ -1,6 +1,6 @@
 import { NodeHelper } from './NodeHelper'
 import { GraphType, NodeType, NodeByIdType } from '../types'
-import { BlockHelper, BlockType, SlotType } from '../../Block'
+import { BlockHelper, BlockType, BlockMetaType, SlotType } from '../../Block'
 import { PlaybackHelper } from '../../Playback'
 
 import { Immutable as IM } from './Immutable'
@@ -36,33 +36,62 @@ export module GraphHelper {
   ( graph: GraphType
   , context: any = PlaybackHelper.mainContextProvide
   , nodeId: string = rootNodeId
-  , invalid: string[] = []
+  , parentError: string = null
   ) => {
     let node: NodeType = graph.nodesById [ nodeId ]
-    const meta = graph.blocksById [ node.blockId ].meta || defaultMeta
+    const block = graph.blocksById [ node.blockId ]
+    const meta: BlockMetaType = block.meta || defaultMeta
     const expect = meta.expect || {}
-    const errors = [...invalid]
+    const cerr = parentError ? [ parentError ] : []
     for ( const k in meta.expect ) {
       const e = expect [ k ]
       const c = context [ k ]
       if ( !c ) {
-        errors.push
+        cerr.push
         ( `missing '${k}' (${e})`)
       }
       else if ( e !== c ) {
-        errors.push
+        cerr.push
         ( `invalid '${k}' (${c} instead of ${e})` )
       }
     }
 
+    const input = meta.input
+    const children = node.children
+    const serr = []
+    if ( input ) {
+      for ( let i = 0; i < input.length; ++i ) {
+        const e = input [ i ]
+        if ( e === 'any' ) {
+          continue
+        }
+        const n = graph.nodesById [ children [ i ] ]
+        let b
+        if ( n ) {
+          b = graph.blocksById [ n.blockId ]
+        }
+        if ( !b ) {
+          serr [ i ] = `missing child ${i+1} (${e})`
+        }
+        else {
+          const c = b.meta.output
+          if ( c !== 'any' && e !== c ) {
+            serr [ i ] = `invalid child ${i+1} (${c} instead of ${e})`
+          }
+        }
+      }
+    }
+
     if ( Object.isFrozen ( node ) ) {
-      if ( errors.length > 0 ) {
+      if ( cerr.length > 0 || serr.length > 0 ) {
         node =
         { id: node.id
         , blockId: node.blockId
         , parent: node.parent
         , children: node.children
-        , invalid: errors
+        , invalid: true
+        , cerr
+        , serr
         }
       }
       else if ( !node.invalid ) {
@@ -77,11 +106,15 @@ export module GraphHelper {
     }
 
     else {
-      if ( errors.length > 0 ) {
-        node.invalid = errors
+      if ( cerr.length > 0 || serr.length > 0 ) {
+        node.invalid = true
+        node.cerr = cerr
+        node.serr = serr
       }
       else {
         delete node.invalid
+        delete node.serr
+        delete node.cerr
       }
     }
 
@@ -89,9 +122,15 @@ export module GraphHelper {
 
     const sub = context.set ( meta.provide || {} )
 
-    for ( const childId of node.children ) {
+    let perror = node.invalid ?
+      `Parent '${block.name}' invalid.` : null
+
+    const inlen = block.input.length
+    for ( let i = 0; i < children.length; ++i ) {
+      const childId = children [ i ]
       if ( childId ) {
-        check ( graph, sub, childId, errors )
+        const detached = i >= inlen ? `Not linked to parent (detached).` : null
+        check ( graph, sub, childId, detached || perror )
       }
     }
   }

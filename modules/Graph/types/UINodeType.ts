@@ -21,6 +21,7 @@ export interface UINodeSize {
 
 export interface SlotFlagType {
   free?: boolean
+  incompatible?: boolean
   detached?: boolean
 }
 

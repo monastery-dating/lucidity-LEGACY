@@ -38,11 +38,15 @@ svg {
     stroke: color( wboxl );
     stroke-width: $lsbo;
 
-    &.detached {
-      @extend ._detachedFx;
+    &.detached, &.incompatible {
+      // @extend ._detachedFx;
       stroke-width: 3 * $lsbo;
-      stroke: black;
+      stroke: red;
       transform: translateY(-1px);
+    }
+    &.incompatible {
+      stroke-width: 2 * $lsbo;
+      transform: translateY(-2px) rotate(45deg);
     }
   }
 

@@ -13,5 +13,5 @@ export const meta =
 , expect: {}
 , provide: {}
 , input: []
-, output: 'any'
+, output: 'void'
 }

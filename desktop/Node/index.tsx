@@ -19,14 +19,14 @@ const makeSlot = ( slot: UISlotType, datainfo, clbk ) => {
           on-click={ ( e ) => clbk ( e, slot.idx ) } class='click' />
       </g>
   }
-  else if ( !flags.detached ){
-    // do not draw slot
-    return ''
-  }
-  else {
+  else if ( flags.detached || flags.incompatible ){
     return <g transform={ transform }>
         <path d={ slot.path } class={ klass }/>
       </g>
+  }
+  else {
+    // do not draw slot
+    return ''
   }
 }
 
@@ -56,7 +56,7 @@ export const Node = Component
     const klass = { sel: node.blockId === props.blockId
                   , [ uinode.className ]: true
                   , ghost: uinode.isghost
-                  , invalid: node.invalid && true
+                  , invalid: node.invalid
                   }
 
     const { click, mousedown, mousemove, mouseup } = DragDropHelper.drag
