@@ -122,7 +122,7 @@ export module GraphHelper {
     if ( valid ) {
       if ( block.meta.isvoid ) {
         // add ourself to the capturing of void updates
-        all.push ( nodeId )
+        allvoid.push ( nodeId )
       }
       // valid
       node =

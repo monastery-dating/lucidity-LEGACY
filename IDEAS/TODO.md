@@ -1,3 +1,7 @@
+# TODO
+
+If an object becomes invalid: detach.
+
 # DATA
 
 We need to store these kinds of data:

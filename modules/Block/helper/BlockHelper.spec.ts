@@ -98,6 +98,11 @@ describe ( 'BlockHelper.create', ( it ) => {
     , BlockHelper.parseMeta ( { meta, update () {} } )
     )
   })
+
+  it ( 'should set isvoid', ( assert ) => {
+    const node = BlockHelper.create ( 'voodoo', 'export const update = () => {}')
+    assert.same ( node.meta.isvoid, true )
+  })
 })
 
 describe ( 'BlockHelper.update', ( it ) => {
@@ -116,6 +121,11 @@ describe ( 'BlockHelper.update', ( it ) => {
   it ( 'should parse source', ( assert ) => {
     assert.notSame ( node.js, n.js )
     assert.same ( node.meta.update, undefined )
+    assert.same ( node.meta.isvoid, true )
+  })
+
+  it ( 'should set isvoid', ( assert ) => {
+    const node = BlockHelper.update ( n, { source: 'export const update = () => {}' } )
     assert.same ( node.meta.isvoid, true )
   })
 })

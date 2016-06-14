@@ -112,7 +112,6 @@ export module BlockHelper {
     return meta
   }
 
-
   const processSource =
   ( source: string
   ) : BlockSourceInfo => {
@@ -123,22 +122,16 @@ export module BlockHelper {
       // We now run the code.
       const exports: any = {}
       codefunc ( exports )
-      const input = []
-      let output = null
 
       const meta = parseMeta ( exports )
 
-      return { input
-             , js
-             , output
+      return { js
              , meta
              }
     }
     catch ( err ) {
       console.log ( err )
-      return { input: []
-             , js
-             , output: null
+      return { js
              , meta: defaultMeta
              }
     }

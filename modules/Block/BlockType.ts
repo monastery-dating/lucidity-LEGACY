@@ -25,8 +25,6 @@ export interface BlockSourceInfo {
   // The following elements should be deduced
   // from the source code
   js: string // compiled source
-  input: SlotType[] // FIXME: remove
-  output: SlotType  // FIXME: remove
   meta: PlaybackMetaType
 }
 

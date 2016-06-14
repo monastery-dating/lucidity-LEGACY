@@ -176,8 +176,10 @@ export module PlaybackHelper {
         // cache passed in init call
         nc.cache = {}
       }
+      nc.ctx = context
       try {
         helpers.cache = nc.cache
+        helpers.context = nc.ctx
         let children: any = []
         if ( node.all ) {
           const list = node.all.map ( ( childId ) => {
@@ -198,14 +200,13 @@ export module PlaybackHelper {
 
         helpers.children = children
 
-        let r = init ( helpers )
+        const r = init ( helpers )
         if ( r ) {
           if ( typeof r !== 'object' ) {
             console.log ( `Init return value must be an object` )
           }
           else {
             subctx = context.set ( r )
-            console.log ( subctx )
           }
         }
       }
@@ -216,7 +217,6 @@ export module PlaybackHelper {
         // abort init operation
         return
       }
-      nc.ctx = context
     }
     else if ( nc.cache ) {
       // No init function = clear cached context and init cache
@@ -224,15 +224,18 @@ export module PlaybackHelper {
       delete nc.ctx
     }
 
+    const block = graph.blocksById [ node.blockId ]
     // Trigger init in children with sub context
     for ( const childId of node.children ) {
-      initDo
-      ( cache
-      , graph
-      , subctx
-      , helpers
-      , childId
-      )
+      if ( childId ) {
+        initDo
+        ( cache
+        , graph
+        , subctx
+        , helpers
+        , childId
+        )
+      }
     }
   }
 
@@ -297,7 +300,17 @@ export module PlaybackHelper {
     // 3. init
     init ( graph, cache, context, helpers )
     // 4. run
-    cache.main ( context )
+    const root = graph.nodesById [ rootNodeId ]
+    if ( !root.invalid ) {
+      const main = cache.nodecache [ rootNodeId ].exports.update
+      if ( main ) {
+        cache.main = main
+        main ( context )
+      }
+    }
+    else {
+      cache.main = null
+    }
   }
 
   class Context {

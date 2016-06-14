@@ -85,7 +85,7 @@ const className =
 , layout : UILayoutType
 ) => {
   const name = objName.split ( '.' ) [ 0 ]
-  let num = stringhash ( name )
+  let num = 9 + stringhash ( name )
   return `box${1 + num % layout.PCOUNT}`
 }
 
@@ -99,7 +99,7 @@ const boxPosition =
 , ctx: UIPosType
 ): number => {
   const node = graph.nodesById [ id ]
-  const obj  = graph.blocksById [ node.blockId ]
+  const block  = graph.blocksById [ node.blockId ]
 
   // store our position given by ctx
   uigraph.uiNodeById [ id ].pos = ctx
@@ -107,12 +107,14 @@ const boxPosition =
 
   let x  = ctx.x
 
-  const len  = Math.max ( node.children.length, ( obj.input || [] ).length )
-  const sextra = uigraph.uiNodeById [ id ].sextra
+  const uinode = uigraph.uiNodeById [ id ]
+  const ds = uinode.size.ds
+
+  const sextra = uinode.sextra
 
   // get children
   let cheight = 0
-  for ( let i = 0; i < len + 1; i += 1 ) {
+  for ( let i = 0; i < ds + 1; i += 1 ) {
     const childId = node.children [ i ]
     const wtonext = ( sextra [ i ] || 0 ) + layout.SPAD + 2 * layout.SLOT
 
@@ -142,17 +144,15 @@ const uimapOne = function
 , nodeId: string
 , layout: UILayoutType
 , uigraph: UIGraphType
-, cachebox: UINodeByIdType
 ) {
   uigraph.uiNodeById [ id ] = <UINodeType> { id }
 
   const uibox = uigraph.uiNodeById [ id ]
-  const cache = cachebox [ id ] || <UINodeType>{}
 
   const node = graph.nodesById [ id ]
-  const obj  = graph.blocksById [ node.blockId ]
+  const block  = graph.blocksById [ node.blockId ]
 
-  uibox.name = obj.name
+  uibox.name = block.name
 
   if ( ghostId === id ) {
     uibox.isghost = ghostId
@@ -168,46 +168,30 @@ const uimapOne = function
     uibox.isghost = ghostId
   }
 
-  if ( obj.name === 'main' ) {
+  if ( block.name === 'main' ) {
     uibox.className = 'main'
   }
 
   else {
-    uibox.className = className ( obj.name, layout )
+    uibox.className = className ( block.name, layout )
   }
 
-
-
-  // FIXME: only store text size in cache
-  const ds = Math.max ( ( obj.input || [] ).length, ( node.children || [] ).length )
-
-  let size = cache.size
-  if ( !size ||
-        size.cacheName !== obj.name ||
-        size.us   !== ( obj.output ? 1 : 0 ) ||
-        size.ds   !== ds
-        ) {
-    size = minSize ( obj, node, layout )
-  }
-  else {
-    // cache.size is immutable
-    size = Object.assign ( {}, size )
-  }
+  const size = minSize ( block, node, layout )
 
   size.wde = 0
 
-  const input = obj.input
+  const childrenTypes = block.meta.children
   const slots : UISlotType[] = []
   const sl = layout.SLOT
 
   const sextra = [ 0 ] // extra spacing before slots
                        // first has 0 extra spacing
                        // second has spacing dependent on first child, etc
+  const ds = size.ds
 
-  if ( input ) {
+  if ( ds > 0 ) {
     let   x = layout.RADIUS + layout.SPAD
     const y = layout.HEIGHT
-    const len = Math.max ( node.children.length, input.length )
 
 
     // Compute sizes for all children
@@ -233,13 +217,14 @@ const uimapOne = function
     const slotpad = layout.SPAD + 2 * layout.SLOT
 
     const serr = node.serr
-    for ( let i = 0; i < len; i += 1 ) {
+    for ( let i = 0; i < ds; i += 1 ) {
       const childId = node.children [ i ]
       const pos = { x: x + sl, y }
       const free = !childId
       const incompatible = serr && serr [ i ] ? true : false
 
-      if ( ! input [ i ] ) {
+      // TODO: could we use slot error 'serr' here ?
+      if ( childrenTypes && !childrenTypes [ i ] ) {
         // extra links outside of inputs...
         slots.push
         ( { path: sline
@@ -279,9 +264,9 @@ const uimapOne = function
         const nodes = uigraph.nodes
 
         // We push in sextra the delta for slot i
-        const w  = uimapOne ( graph, childId, ghostId, nodeId, layout, uigraph, cachebox )
+        const w  = uimapOne ( graph, childId, ghostId, nodeId, layout, uigraph )
 
-        if ( i === len - 1 ) {
+        if ( i === ds - 1 ) {
           // last
           sextra.push ( w + layout.BPAD - 2 * slotpad )
         }
@@ -293,7 +278,7 @@ const uimapOne = function
       else {
         // empty slot
 
-        if ( i === len - 1 ) {
+        if ( i === ds - 1 ) {
           sextra.push ( 0 )
         }
         else {
@@ -334,10 +319,8 @@ export const uimap =
 , ghostId?: string // start considering as ghost from here
 , nodeId?: string  // stop considering as ghost from here
 , alayout?: UILayoutType
-, cache?: UIGraphType
 ) : UIGraphType => {
   const layout = alayout || defaultUILayout
-  const cachebox : UINodeByIdType = cache ? cache.uiNodeById : {}
 
   const startpos =
   { x: 0.5
@@ -355,7 +338,7 @@ export const uimap =
   }
 
   uimapOne
-  ( graph, rootNodeId, ghostId, nodeId, layout, uigraph, cachebox )
+  ( graph, rootNodeId, ghostId, nodeId, layout, uigraph )
 
   const height = boxPosition
   ( graph, rootNodeId, layout, uigraph, startpos ) +

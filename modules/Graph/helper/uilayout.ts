@@ -16,7 +16,7 @@ const DEFAULT_LAYOUT =
 , SCLICKH:  0 // (computed from HEIGHT) slot click rect height
 , TPAD:   8
 , BPAD:   0  // pad between siblings
-, PCOUNT: 8 // palette color count must be the same as _palettee.scss
+, PCOUNT: 12 // palette color count must be the same as _palettee.scss
 , SUBPADX: 0  // (computed  = 2 * GRIDH) pad in sub assets
 , SUBPADY: 4  // (computed  = 2 * GRIDH) pad in sub assets
 , VPAD:   0  // vertical padding between boxes

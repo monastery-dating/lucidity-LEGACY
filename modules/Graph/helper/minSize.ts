@@ -4,14 +4,20 @@ import { BlockType } from '../../Block'
 /** Compute the minimum size to display the element.
  */
 export const minSize =
-( obj: BlockType
-, link: NodeType
+( block: BlockType
+, node: NodeType
 , layout: UILayoutType
 ) : UINodeSize => {
-  const ds     = Math.max ( obj.input.length, link.children.length )
-  const us     = obj.output ? 1 : 0
+  const ds = block.meta.children
+           // exact children length (and cope for extra detached)
+           ? Math.max
+             ( block.meta.children.length, node.children.length )
+           // always keep a free slot for untyped children
+           : node.children.length + 1
+  const us = 1 // alwasy show up slot.
+  // has update = block.meta.isvoid || block.meta.update ? 1 : 0
 
-  const tb = layout.tsizer ( obj.name )
+  const tb = layout.tsizer ( block.name )
 
   let w : number = tb.width + 2 * layout.TPAD
 
@@ -28,7 +34,7 @@ export const minSize =
   w = Math.ceil
   ( Math.max ( w, wd, wu ) / layout.GRIDH ) * layout.GRIDH
 
-  return { cacheName: obj.name // cache reference
+  return { cacheName: block.name // cache reference
          , w
          , h: layout.HEIGHT
          , tx: layout.TPAD
