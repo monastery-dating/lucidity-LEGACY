@@ -1,52 +1,62 @@
 import { describe } from '../../Test/runner'
-import { BlockMetaType, BlockType, BlockByIdType } from '../BlockType'
+import { BlockType, BlockByIdType } from '../BlockType'
+import { Meta } from '../../Playback/types/lucidity'
 import { BlockHelper } from './BlockHelper'
 
 const SOURCE_A = `
 /** Comment, show main context change { foo }
  */
-export const render =
-( ctx, child ) => {
+export const update =
+() => {
 
 }
 
-export const meta =
-{ author: 'John Difool'
-, description: 'Do something'
+export const meta: Meta =
+{ description: 'Do something'
 , tags: [ '3D', 'three.js' ]
+, author: 'John Difool'
+, origin: 'lucidity.io/some.Test'
+, version: '1.0'
 // If we use context changes
 // we set this:
 , expect: { bar: 'some.BarType' }
 , provide: { foo: 'some.FooType' }
 // If we use input/output return values,
 // we set this:
-, input: [ 'some.Type' ]
-, output: 'some.OtherType'
+, children: [ '():some.Type' ]
+, update: '( a: number ):some.OtherType'
 }
 `
 
 const SOURCE_B = `
-/** Comment, show main context change { foo }
- */
-export const render =
-( ctx, child, child2 ) => {
-
+let child
+export const init =
+( { children } ) => {
+  child = children [ 0 ]
+}
+export const update =
+() => {
+  child ()
+}
+export const meta =
+{ children: [ '():b.Type' ]
 }
 `
 
-// Any or all 'meta' fields can be left blank.
-export const meta: BlockMetaType =
-{ author: 'John Difool'
-, description: 'Do something'
+const meta: Meta =
+{ description: 'Do something'
 , tags: [ '3D', 'three.js' ]
+, author: 'John Difool'
+, origin: 'lucidity.io/some.Test'
+, version: '1.0'
 // If we use context changes
 // we set this:
 , expect: { bar: 'some.BarType' }
 , provide: { foo: 'some.FooType' }
 // If we use input/output return values,
 // we set this:
-, input: [ 'some.Type' ]
-, output: 'some.OtherType'
+, children: [ '():some.Type' ]
+, update: '( a: number ):some.OtherType'
 }
 
 describe ( 'BlockHelper.create', ( it ) => {
@@ -81,13 +91,11 @@ describe ( 'BlockHelper.create', ( it ) => {
   it ( 'should parse source', ( assert ) => {
     const node = BlockHelper.create ( 'hello' , SOURCE_A )
 
-    assert.equal ( node.input , [ 'some.Type' ] )
-
-    assert.equal ( node.output , 'some.OtherType' )
+    assert.equal ( typeof node.js, 'string' )
 
     assert.equal
     ( node.meta
-    , meta
+    , BlockHelper.parseMeta ( { meta, update () {} } )
     )
   })
 })
@@ -106,8 +114,82 @@ describe ( 'BlockHelper.update', ( it ) => {
   })
 
   it ( 'should parse source', ( assert ) => {
-    assert.equal ( node.input , [ 'any', 'any' ] )
-    assert.equal ( node.output , 'any' )
-    assert.equal ( node.meta, { provide: {}, expect: {} } )
+    assert.notSame ( node.js, n.js )
+    assert.same ( node.meta.update, undefined )
+    assert.same ( node.meta.isvoid, true )
   })
+})
+
+describe ( 'BlockHelper.normalizeType', ( it ) => {
+  const n = BlockHelper.normalizeType
+
+  it ( 'should remove white space and variable names', ( assert ) => {
+    assert.same
+    ( n ( ' ( a : number , b : some.Type ) : bar.Foo' )
+    , '(number,some.Type):bar.Foo'
+    )
+  })
+
+  it ( 'should allow type without arguments', ( assert ) => {
+    assert.same ( n ( ' ( ) : number ' ), '():number' )
+  })
+
+  it ( 'should allow type no return value', ( assert ) => {
+    assert.same
+    ( n ( ' (a:number, b:boolean ) : void' )
+    , '(number,boolean):void'
+    )
+  })
+
+  it ( 'should reject invalid types', ( assert ) => {
+    assert.throws ( () => n ( '(a:number, b:boolean  : void' ) )
+    assert.throws ( () => n ( ' a:number, b:boolean  : void' ) )
+    assert.throws ( () => n ( ' a:number, b:boolean) : void' ) )
+    assert.throws ( () => n ( '(a, b) : void' ) )
+    assert.throws ( () => n ( '(a: number) void' ) )
+    assert.throws ( () => n ( '(a: number)' ) )
+  })
+
+})
+
+describe ( 'BlockHelper.parseMeta', ( it ) => {
+  const m = BlockHelper.parseMeta ( { meta, update () {} } )
+
+  it ( 'should normalize children types', ( assert ) => {
+    assert.equal
+    ( m.children
+    , [ '():some.Type' ]
+    )
+  })
+
+  it ( 'should set all on children: all', ( assert ) => {
+    const meta2 = Object.assign ( {}, meta, { children: 'all' } )
+    const m = BlockHelper.parseMeta ( { meta: meta2, update () {} } )
+    assert.equal
+    ( m.provide
+    , { foo: 'some.FooType' }
+    )
+  })
+
+  it ( 'should normalize update type', ( assert ) => {
+    assert.equal
+    ( m.update
+    , '(number):some.OtherType'
+    )
+  })
+
+  it ( 'should normalize expect type map', ( assert ) => {
+    assert.equal
+    ( m.expect
+    , { bar: 'some.BarType' }
+    )
+  })
+
+  it ( 'should normalize provide type map', ( assert ) => {
+    assert.equal
+    ( m.provide
+    , { foo: 'some.FooType' }
+    )
+  })
+
 })

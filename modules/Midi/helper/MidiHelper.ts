@@ -29,7 +29,6 @@ const mstate =
 { note: makeChannels ( 16, makeValues, 0 )
 , ctrl: makeChannels ( 16, makeValues, 0 )
 }
-console.log ( mstate )
 
 const NOTE_OFF = 0x80
 const NOTE_ON  = 0x90

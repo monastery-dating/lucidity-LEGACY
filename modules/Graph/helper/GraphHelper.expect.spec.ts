@@ -70,7 +70,7 @@ const traverse =
   return res
 }
 
-describe ( 'GraphHelper.check expect', ( it ) => {
+describe ( 'GraphHelper.check of expect', ( it ) => {
   // This graph has two objects and will be inserted in graph
   // between root and 'foo'
   // [ bar ]
@@ -93,8 +93,8 @@ describe ( 'GraphHelper.check expect', ( it ) => {
     assert.equal ( node.invalid, true )
     assert.equal
     ( node.cerr
-    , [ "invalid 'bar' (bar.bad instead of bar.type)"
-      , "missing 'baz' (baz.type)"
+    , [ "invalid 'bar': bar.bad instead of bar.type"
+      , "missing 'baz': baz.type"
       ]
     )
   })

@@ -10,7 +10,9 @@ const context = PlaybackHelper.mainContext ()
 import * as THREE from 'three'
 const PRELOADED = { THREE }
 /* ====== PLAYBACK LIBS ======= */
-const helpers = { require: ( name ) => PRELOADED [ name ] }
+const helpers =
+{ require: ( name ) => PRELOADED [ name ]
+}
 
 export const Playback = Component
 ( { graph: [ 'scene', 'graph' ]

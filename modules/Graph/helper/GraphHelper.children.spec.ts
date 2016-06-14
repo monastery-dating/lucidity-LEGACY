@@ -9,46 +9,53 @@ import { Immutable as IM } from './Immutable'
 const rootNodeId = NodeHelper.rootNodeId
 const rootBlockId = BlockHelper.rootBlockId
 
-// [ main: [string] -> void ]
-// [ bar: [number] -> string ]
-// [ baz: [number] -> number ] [ bong: [] -> any ]
-// [ foo: [] -> number ]
+// [ main: [():string], ():void ]
+// [ bar: [():number], ():string ]
+// [ baz: [():number], ():number ] [ bong: *, ():void ]
+// [ give: [():number], ():void ] <== lets foo be also used by baz
+// [ foo: *, ():number ]
 const SOURCE_main =
-`export const render = ( ctx, child ) => {
-  child ( ctx.set ( { bar: 'bad' } ) )
+`export const update = () => {
+
 }
 export const meta =
-{ input: [ 'string' ]
+{ children: [ '():string' ]
 }
 `
 
 const SOURCE_bar =
-`export const render = ( ctx, child ) => {}
+`export const update = () => {}
 export const meta =
-{ input: [ 'number' ]
-, output: 'string'
+{ children: [ '():number' ]
+, update: '():string'
 }
 `
 
 const SOURCE_baz =
-`export const render = ( ctx, child ) => {}
+`export const update = () => {}
 export const meta =
-{ input: [ 'number' ]
-, output: 'number'
+{ children: [ '():number' ]
+, update: '():number'
 }
 `
 
 const SOURCE_bong =
-`export const render = ( ctx ) => {}
+`export const update = () => {}
 `
 
 const SOURCE_foo =
-`export const render = ( ctx ) => {}
+`export const update = () => {}
 export const meta =
-{ output: 'number'
+{ update: '():number'
 }
 `
 
+const SOURCE_give =
+`export const update = () => {}
+export const meta =
+{ children: [ '():number' ]
+}
+`
 
 const traverse =
 ( graph: GraphType ) : string[] => {
@@ -72,7 +79,7 @@ const traverse =
   return res
 }
 
-describe ( 'GraphHelper.check input', ( it ) => {
+describe ( 'GraphHelper.check of children', ( it ) => {
   // This graph has two objects and will be inserted in graph
   // between root and 'foo'
   // [ bar ]
@@ -94,7 +101,7 @@ describe ( 'GraphHelper.check input', ( it ) => {
     assert.equal ( node.invalid, true )
     assert.equal
     ( node.serr
-    , [ "invalid child 1 (number instead of string)"
+    , [ "invalid child 1: ():number instead of ():string"
       ]
     )
   })
@@ -120,6 +127,21 @@ describe ( 'GraphHelper.check input', ( it ) => {
   it ( 'should invalidate detached node', ( assert ) => {
     const node = graph2.nodesById [ nid.bong ]
     assert.same ( node.invalid, true )
+  })
+
+  it ( 'should steal child from children', ( assert ) => {
+    const give = GraphHelper.create ( 'give', SOURCE_give )
+    const graph3 = GraphHelper.slip ( graph2, nid.baz, 0, give )
+    // [ main ]
+    // [ bar  ]
+    // [ baz  ] [ bong ]
+    // [ give ]
+    // [ foo ]
+
+    // Now 'baz' uses 'foo' during processing
+    const node = graph3.nodesById [ nid.baz ]
+    assert.same ( node.invalid, undefined )
+    assert.equal ( nid.foo, node.childrenm [ 0 ] )
   })
 
 

@@ -6,34 +6,28 @@ export interface BlockTypeChanges {
   source?: string
 }
 
-interface StringMap {
+interface TypeMap {
   [ key: string ]: string
 }
 
-export interface BlockMetaType {
-  author?: string
-  description?: string
-  tags?: string[]
+export interface PlaybackMetaType {
   // context changes
-  expect?: StringMap
+  expect?: TypeMap
   // one for each slot
-  provide?: StringMap
-  // input/output return types
-  input?: string[]
-  output?: string
-  // This should only be true for the 'main' element in a graph.
-  // We use this information to set 'provides' to the root context of
-  // a rendering playback.
-  main?: boolean
+  provide?: TypeMap
+  all?: boolean // set to true if children: 'all'
+  isvoid?: boolean // set to true if it has an update but not type for update
+  children?: string[]
+  update?: string // normalized type
 }
 
 export interface BlockSourceInfo {
   // The following elements should be deduced
   // from the source code
   js: string // compiled source
-  input: SlotType[]
-  output: SlotType
-  meta: BlockMetaType
+  input: SlotType[] // FIXME: remove
+  output: SlotType  // FIXME: remove
+  meta: PlaybackMetaType
 }
 
 export interface BlockType extends BlockSourceInfo {

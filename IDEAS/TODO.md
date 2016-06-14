@@ -1,8 +1,3 @@
-# TODO
- Can we remove passing return value from child to parent ?
- 
- To be explored. In this case, we no longer need input/output type checking.
-
 # DATA
 
 We need to store these kinds of data:
@@ -81,9 +76,26 @@ Group actions into an operation.
   4. => database on.change
   5. => /$project/saving = false
 
+
+# PLAYBACK TYPE CHECKING
+
+We can type check blocks by adding a 'meta' export with one field per function. For the 'init' function, the type must be two objects, one for the expected values in context and one for what the element provides (if anything). The 'render' function type is made of two values (one for input and one for output). For example:
+
+    // A script that provides a function on number (no init function).
+    export const meta =
+    { render: [ 'number', 'number' ]
+    }
+
+    // A script that provides a function on number
+    export const meta =
+    { init:   [ { renderer: 'THREE.WebGLRenderer' }
+              , { object3D: 'THREE.Object3D' }
+              ]
+    , render: [ 'number', 'number' ]
+    }
 # PLAYBACK INIT
 
-The **init** function takes an object to allow destructuring, avoid any mistakes in argument position, and allow more options if needed later.
+The **init** function takes a context and an object to allow destructuring, avoid any mistakes in argument position, and allow more options if needed later.
 
 The init function is called multiple times (when a local source file is changed, when an asset is changed, etc). The user must take care of using the 'cache' to avoid unwanted multiple initialization. The function is run **at least** once before script rendering.
 
@@ -185,7 +197,7 @@ export const init =
 
 # PLAYBACK RENDER
 
-This function is called in 'main' once whenever the source code of any element or the structure of the graph changes. If an element animates, the render can be called more often.
+This function is called in 'main' once whenever the source code of any element or the structure of the graph changes. If an element animates, the render can be called more often. When a script does not have a 'render' function (purely structural block) the block can grow its children (there is always a free slot). In this case, if the parent calls child () this triggers the render functions found lower in the graph (left depth-first).
 
 # REFACTORING
 
@@ -237,3 +249,10 @@ Con: no per month revenue
                       ==> drag.nodeId === nodeId : do not draw children
                           uimap ( ..., dragNodeId ) ?
    drag library ==> graph with a single node
+
+# COMPONENT semver
+
+Ask user on adding a script to the library for:
+
+- name
+- validation button = [ cancel ] [ major ] [ minor ] [ patch ] if the script has a meta field. The buttons then update the semver version number in the script before saving it.

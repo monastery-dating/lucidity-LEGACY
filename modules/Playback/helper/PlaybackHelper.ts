@@ -1,6 +1,7 @@
 import { BlockByIdType } from '../../Block'
 import { GraphType, NodeHelper } from '../../Graph'
 import { MidiHelper } from '../../Midi'
+import { Block, Helpers } from '../types/lucidity'
 
 const midi = MidiHelper.midiState ()
 
@@ -25,28 +26,17 @@ interface RenderContext {
   [ key: string ]: any
 }
 
-interface HelpersContext {
-  cache?: any
-  require: any
-  detached?: boolean
-}
+type HelpersContext = Helpers
 
 interface InitFunc {
-  ( ctx: RenderContext, helpers: HelpersContext ): Object
+  ( helpers: HelpersContext ): Object
 }
 
-interface RenderFunc {
-  ( ctx: RenderContext, ...any ): any
+interface UpdateFunc {
+  ( ...any ): any
 }
 
-interface CurryFunc {
-  ( ctx: RenderContext ): any
-}
-
-interface NodeExports {
-  render?: RenderFunc
-  init?: InitFunc
-}
+type NodeExports = Block
 
 interface NodeCache {
   // Functions defined by js code
@@ -54,9 +44,6 @@ interface NodeCache {
   // Cached values from 'init' calls. Only exists if there is an
   // init function (removed if init is removed).
   cache?: Object
-  // Closure used by sub-nodes to call the render func.
-  // The closure contains the extra sub-nodes function params.
-  curry: CurryFunc
   // to check cache
   js: string
   // We save the init context so that we can use it when detaching
@@ -69,7 +56,7 @@ interface PlaybackNodeCache {
 
 export interface PlaybackCache {
   nodecache?: PlaybackNodeCache
-  main?: RenderFunc
+  main?: UpdateFunc
   // Ids of nodes with an init function (in depth-first order).
   init?: string[]
   // Current graph. We use this to diff and detect
@@ -81,18 +68,10 @@ const DUMMY_INPUT = () => null
 
 export module PlaybackHelper {
 
-  const clearCurry =
-  ( cache: PlaybackNodeCache ) => {
-    for ( const k in cache ) {
-      delete cache [ k ].curry
-    }
-  }
-
-  const updateRender =
+  const updateCache =
   ( graph: GraphType
   , cache: PlaybackNodeCache
-  ): boolean => {
-    let shouldClear = false
+  ) => {
 
     for ( const nodeId in graph.nodesById ) {
 
@@ -102,13 +81,14 @@ export module PlaybackHelper {
       }
       const block = graph.blocksById [ node.blockId ]
 
-      // main
       let n = cache [ nodeId ]
 
-      if ( !n || n.js !== block.js ) {
-        // clear curry cache
-        shouldClear = true
+      if ( node.invalid ) {
+        // ignore
+        continue
+      }
 
+      if ( !n || n.js !== block.js ) {
         if ( !n ) {
           n = cache [ nodeId ] = <NodeCache> { exports: {} }
         }
@@ -129,64 +109,12 @@ export module PlaybackHelper {
           console.log ( `${block.name} error: ${ err }`)
 
         }
-        if ( !exports.render ) {
-          exports.render = () => { console.log ( `${block.name} error`)}
+        if ( block.meta.update && !exports.update ) {
+          exports.update = () => { console.log ( `${block.name} error: has update type '${block.meta.update}' but no update function.`) }
         }
       }
     }
-
-    // Now every node has a render function
-    return shouldClear
-  }
-
-  const updateCurry =
-  ( graph: GraphType
-  , cache: PlaybackCache
-  , key: string
-  ): RenderFunc => {
-    const nc = cache.nodecache [ key ]
-    const node = graph.nodesById [ key ]
-    if ( !nc ) {
-      console.log ( graph, cache )
-      throw `Corrupt graph. Child '${key}' not in 'nodesById'.`
-    }
-    if ( nc.curry ) {
-      return nc.curry
-    }
-
-    const render = node.invalid ? DUMMY_INPUT : nc.exports.render
-
-    const e = graph.nodesById [ key ]
-    if ( !e ) {
-      // corrupt graph
-      console.log ( `Invalid child ${key} in graph (node not found).`)
-      return () => {}
-    }
-    const b = graph.blocksById [ e.blockId ]
-
-    // Depth-first processing.
-    const args = []
-    const len = Math.max ( e.children.length, b.input.length )
-    for ( let i = 0; i < len; ++i ) {
-      const child = e.children [ i ]
-      if ( !child ) {
-        // FIXME: use a dummy input
-        args.push ( DUMMY_INPUT )
-      }
-      else {
-        const f = updateCurry ( graph, cache, child )
-        args.push ( f )
-      }
-    }
-
-    // Create the curry function
-    // no arguments from caller
-    const curry = () => {
-      return render ( nc.ctx, ...args )
-    }
-    nc.curry = curry
-
-    return curry
+    // Now every updating node is ready for runtime
   }
 
   const detach =
@@ -216,8 +144,9 @@ export module PlaybackHelper {
       const init = nc.exports.init
       if ( init ) {
         helpers.cache = nc.cache
+        helpers.context = nc.ctx
         try {
-          init ( nc.ctx, helpers )
+          init ( helpers )
         }
         catch (err) {
           // FIXME: proper error handling
@@ -238,6 +167,8 @@ export module PlaybackHelper {
   ) => {
     const nc = cache [ nodeId ]
     const init = nc.exports.init
+    const nodesById = graph.nodesById
+    const node = nodesById [ nodeId ]
 
     let subctx: Context = context
     if ( init ) {
@@ -247,7 +178,27 @@ export module PlaybackHelper {
       }
       try {
         helpers.cache = nc.cache
-        let r = init ( context, helpers )
+        let children: any = []
+        if ( node.all ) {
+          const list = node.all.map ( ( childId ) => {
+            return cache [ childId ].exports.update
+          })
+          children.all = () => {
+            for ( const f of list ) {
+              f ()
+            }
+          }
+
+        }
+        else if ( node.childrenm ) {
+          children = node.childrenm.map ( ( childId ) => {
+            return cache [ childId ].exports.update
+          })
+        }
+
+        helpers.children = children
+
+        let r = init ( helpers )
         if ( r ) {
           if ( typeof r !== 'object' ) {
             console.log ( `Init return value must be an object` )
@@ -274,7 +225,6 @@ export module PlaybackHelper {
     }
 
     // Trigger init in children with sub context
-    const node = graph.nodesById [ nodeId ]
     for ( const childId of node.children ) {
       initDo
       ( cache
@@ -289,12 +239,12 @@ export module PlaybackHelper {
   export const detachCheck =
   ( graph : GraphType
   , cache: PlaybackCache
-  , context: Object // extra elements for render context
+  , context: Object // extra elements for update context
   , helpers: HelpersContext
   ) => {
     // 1. detach if needed
     if ( cache.graph && cache.graph !== graph ) {
-      const h = Object.assign ( {}, helpers, { detached: true })
+      const h = Object.assign ( {}, helpers, { detached: true, children: [] })
       detach
       ( cache
       , cache.graph
@@ -316,18 +266,8 @@ export module PlaybackHelper {
       cache.nodecache = {}
     }
 
-    // update render functions for each node
-    const shouldClear = updateRender
-    ( graph, cache.nodecache )
-
-    // TODO: we could probably find a way to not rebuild the
-    // full graph but we might not gain any performance.
-
-    // Rebuild all curry functions.
-
-
-    clearCurry ( cache.nodecache )
-    cache.main = updateCurry ( graph, cache, rootNodeId )
+    // make sure to update functions for valid nodes if their source file changed.
+    updateCache ( graph, cache.nodecache )
 
     // save current graph to compare on detach.
     cache.graph = graph
@@ -336,7 +276,7 @@ export module PlaybackHelper {
   export const init =
   ( graph : GraphType
   , cache: PlaybackCache
-  , context: Object // extra elements for render context
+  , context: Object // extra elements for update context
   , helpers: HelpersContext
   ) => {
     const c = mainContext ( context )
@@ -347,7 +287,7 @@ export module PlaybackHelper {
   export const run =
   ( graph : GraphType
   , cache: PlaybackCache
-  , context: Object = {} // extra elements for render context
+  , context: Object = {} // extra elements for update context
   , helpers: HelpersContext
   ) => {
     // 1. detach if needed

@@ -1,17 +1,19 @@
 /**
  */
 
-export const render =
-( ctx ) => {
+export const init =
+( { context, require, children, cache, detached } ) => {
+
+}
+
+export const update =
+() => {
 
 }
 
 export const meta =
-{ author: ''
-, description: ''
+{ description: ''
 , tags: []
-, expect: {}
-, provide: {}
-, input: []
-, output: 'void'
+, author: ''
+, origin: ''
 }

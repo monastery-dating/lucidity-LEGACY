@@ -1,8 +1,10 @@
 import { BlockType, BlockByIdType, BlockSourceInfo
-       , BlockTypeChanges } from '../BlockType'
+       , BlockTypeChanges, PlaybackMetaType } from '../BlockType'
 import * as ts from 'typescript'
 import { Immutable as IM } from '../../Graph/helper/Immutable'
 import { PlaybackHelper } from '../../Playback'
+import { Block, Meta } from '../../Playback/types/lucidity'
+import * as stringhash from 'string-hash'
 
 declare var require: any
 const DEFAULT_SOURCE = require ( './default/block.js.txt')
@@ -60,6 +62,57 @@ export module BlockHelper {
     }
   }
 
+  const TypeRe = /^\s*\(([^\)]*)\)\s*:\s*(\S+)\s*$/
+  const ArgRe = /^\s*$|^\s*\S+\s*:\s*(\S+)\s*$/
+  export const normalizeType =
+  ( t: string ): string => {
+    if ( !t ) { return null }
+    const m = TypeRe.exec ( t )
+    if ( !m ) { throw `Invalid type '${t}' (SyntaxError).`}
+    const args = []
+    const list = m [ 1 ].split ( ',' )
+    for ( const e of list ) {
+      const a = ArgRe.exec ( e )
+      if ( !a ) { throw `Invalid type '${t}' (SyntaxError).`}
+      args.push ( a [ 1 ] )
+    }
+    return `(${ args.join () }):${ m [ 2 ] }`
+  }
+
+  export const parseMeta =
+  ( exports: Block ): PlaybackMetaType => {
+    const meta = <PlaybackMetaType> {}
+    const emeta = exports.meta || <Meta>{}
+    // expect?: TypeMap
+    const expect = emeta.expect
+    if ( expect ) {
+      meta.expect = expect
+    }
+    // provide?: TypeMap
+    const provide = emeta.provide
+    if ( provide ) {
+      meta.provide = provide
+    }
+    const children = emeta.children
+    // all?: boolean // set to true if children: 'all'
+    if ( emeta.children === 'all' ) {
+      meta.all = true
+    }
+    // children?: number[]
+    else if ( Array.isArray ( children ) ) {
+      meta.children = children.map ( normalizeType )
+    }
+    // update?: number // normalized type
+    if ( exports.update && !emeta.update ) {
+      meta.isvoid = true
+    }
+    else if ( emeta.update ) {
+      meta.update = normalizeType ( emeta.update )
+    }
+    return meta
+  }
+
+
   const processSource =
   ( source: string
   ) : BlockSourceInfo => {
@@ -73,20 +126,7 @@ export module BlockHelper {
       const input = []
       let output = null
 
-      const render = exports.render
-      let meta = Object.assign ( {}, defaultMeta, exports.meta || {} )
-      if ( meta.main ) {
-        meta.provide = PlaybackHelper.mainContextProvide
-      }
-
-      if ( render ) {
-        const ins = meta.input || []
-        for ( let i = 0; i < render.length - 1; ++i ) {
-          input.push ( ins [ i ] || 'any' )
-        }
-
-        output = meta.output || 'any'
-      }
+      const meta = parseMeta ( exports )
 
       return { input
              , js

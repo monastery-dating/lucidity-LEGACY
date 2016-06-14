@@ -9,11 +9,16 @@ export interface NodeType {
   parent?: string    // node id of the parent (null for root)
   children: string[] // node ids of children
 
-  // When a node is invalid, it is not rendered.
+  // When a node is invalid, it is not initialized nor updated.
   invalid?: boolean
 
   // Slot connection errors (also renders the node invalid)
   serr?: string[]
   // Context errors
   cerr?: string[]
+  // compiled children if the node has typed information for them. This can be different from children if the node steals from its descendants.
+  childrenm?: string[]
+  // all 'isvoid' children accessible. Only set if this block has
+  // meta.all set to true
+  all?: string[]
 }

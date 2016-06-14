@@ -77,8 +77,9 @@ describe ( 'GraphHelper.create', ( it ) => {
     const graph = GraphHelper.create ( 'foo', SOURCE_foo )
     assert.equal
     ( graph.blocksById [ rootBlockId ].meta
-    , { provide: {}
-      , expect: { bar: 'bar.type', baz: 'baz.type' }
+    , { expect: { bar: 'bar.type'
+                , baz: 'baz.type'
+                }
       }
     )
   })

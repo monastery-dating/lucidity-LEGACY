@@ -1,6 +1,6 @@
 import { NodeHelper } from './NodeHelper'
 import { GraphType, NodeType, NodeByIdType } from '../types'
-import { BlockHelper, BlockType, BlockMetaType, SlotType } from '../../Block'
+import { BlockHelper, BlockType, PlaybackMetaType, SlotType } from '../../Block'
 import { PlaybackHelper } from '../../Playback'
 
 import { Immutable as IM } from './Immutable'
@@ -36,103 +36,168 @@ export module GraphHelper {
   ( graph: GraphType
   , context: any = PlaybackHelper.mainContextProvide
   , nodeId: string = rootNodeId
+  , allvoid: string[] = []
   , parentError: string = null
-  ) => {
+  , shouldBeVoid: boolean = false
+  ): boolean => {
     let node: NodeType = graph.nodesById [ nodeId ]
     const block = graph.blocksById [ node.blockId ]
-    const meta: BlockMetaType = block.meta || defaultMeta
+    const meta: PlaybackMetaType = block.meta
     const expect = meta.expect || {}
     const cerr = parentError ? [ parentError ] : []
+    let voidUpdateError = false
+    let all: string[] = []
+
+    if ( shouldBeVoid && meta.update ) {
+      cerr.push ( `invalid 'update' (should not be typed)` )
+      voidUpdateError = true
+    }
+
     for ( const k in meta.expect ) {
       const e = expect [ k ]
       const c = context [ k ]
       if ( !c ) {
         cerr.push
-        ( `missing '${k}' (${e})`)
+        ( `missing '${k}': ${e}`)
       }
       else if ( e !== c ) {
         cerr.push
-        ( `invalid '${k}' (${c} instead of ${e})` )
+        ( `invalid '${k}': ${c} instead of ${e}` )
       }
     }
 
-    const input = meta.input
+    const childrenTypes = meta.children
     const children = node.children
+    let childrenm: string[]
+    const nodesById = graph.nodesById
+    const blocksById = graph.blocksById
     const serr = []
-    if ( input ) {
-      for ( let i = 0; i < input.length; ++i ) {
-        const e = input [ i ]
-        if ( e === 'any' ) {
-          continue
-        }
-        const n = graph.nodesById [ children [ i ] ]
+    if ( childrenTypes ) {
+      for ( let i = 0; i < childrenTypes.length; ++i ) {
+        const e = childrenTypes [ i ]
+        const n = nodesById [ children [ i ] ]
         let b
         if ( n ) {
-          b = graph.blocksById [ n.blockId ]
+          b = blocksById [ n.blockId ]
         }
         if ( !b ) {
-          serr [ i ] = `missing child ${i+1} (${e})`
+          serr [ i ] = `missing child ${i+1}: ${e}`
         }
         else {
-          const c = b.meta.output
-          if ( c !== 'any' && e !== c ) {
-            serr [ i ] = `invalid child ${i+1} (${c} instead of ${e})`
+          let c = b.meta.update
+          if ( !c ) {
+            // try to find child in grand-children
+            if ( !childrenm ) {
+              childrenm = Object.assign ( [], children )
+            }
+
+            let nc = n
+            while ( !c && nc ) {
+              const childId = nc.children [ 0 ]
+              nc = null
+              if ( childId ) {
+                nc = nodesById [ childId ]
+                if ( nc ) {
+                  const b = blocksById [ nc.blockId ]
+                  const u = b.meta.update
+                  if ( u ) {
+                    // found child (will check if type is correct)
+                    childrenm [ i ] = childId
+                    c = u
+                  }
+                }
+              }
+            }
+          }
+
+          if ( e !== c ) {
+            serr [ i ] = `invalid child ${i+1}: ${c} instead of ${e}`
           }
         }
       }
     }
 
-    if ( Object.isFrozen ( node ) ) {
-      if ( cerr.length > 0 || serr.length > 0 ) {
-        node =
-        { id: node.id
-        , blockId: node.blockId
-        , parent: node.parent
-        , children: node.children
-        , invalid: true
-        , cerr
-        , serr
-        }
+    const valid = cerr.length === 0 && serr.length === 0
+
+    if ( valid ) {
+      if ( block.meta.isvoid ) {
+        // add ourself to the capturing of void updates
+        all.push ( nodeId )
       }
-      else if ( !node.invalid ) {
-      } else {
-        node =
-        { id: node.id
-        , blockId: node.blockId
-        , parent: node.parent
-        , children: node.children
-        }
+      // valid
+      node =
+      { id: nodeId
+      , blockId: node.blockId
+      , parent: node.parent
+      , children
+      }
+      if ( childrenTypes ) {
+        // Only set direct children for helper if we have explicit
+        // types for them.
+        node.childrenm = childrenm || children
+      }
+      if ( block.meta.all ) {
+        // grab our own list of nodes
+        all = []
+        node.all = all
+      }
+    }
+    else {
+      // invalid
+      node =
+      { id: nodeId
+      , blockId: node.blockId
+      , parent: node.parent
+      , children
+      , invalid: true
+      , cerr
+      , serr
       }
     }
 
-    else {
-      if ( cerr.length > 0 || serr.length > 0 ) {
-        node.invalid = true
-        node.cerr = cerr
-        node.serr = serr
-      }
-      else {
-        delete node.invalid
-        delete node.serr
-        delete node.cerr
+    const sub = context.set ( meta.provide || {} )
+
+    const perror = node.invalid ?
+      `Parent '${block.name}' invalid.` : null
+
+    const inlen = childrenTypes ? childrenTypes.length : null
+    for ( let i = 0; i < children.length; ++i ) {
+      const childId = children [ i ]
+      if ( childId ) {
+        if ( inlen ) {
+          // Typed children
+          const err = i >= inlen ? `Not linked to parent: detached` : null
+          check ( graph, sub, childId, all, err || perror )
+          if ( !node.invalid ) {
+            // valid node
+            const n = nodesById [ childId ]
+            if ( n.invalid ) {
+              // Invalid typed child: we become invalid as well
+              node.invalid = true
+              node.serr = [ `invalid child ${i+1}` ]
+            }
+          }
+        }
+        else {
+          // No type definitions for children: update must have '():void' type.
+          if ( check ( graph, sub, childId, all, perror, true ) ) {
+            serr [ i ] = `invalid child ${i+1}: update is typed`
+          }
+        }
       }
     }
 
     graph.nodesById [ nodeId ] = Object.freeze ( node )
 
-    const sub = context.set ( meta.provide || {} )
-
-    let perror = node.invalid ?
-      `Parent '${block.name}' invalid.` : null
-
-    const inlen = block.input.length
-    for ( let i = 0; i < children.length; ++i ) {
-      const childId = children [ i ]
-      if ( childId ) {
-        const detached = i >= inlen ? `Not linked to parent (detached).` : null
-        check ( graph, sub, childId, detached || perror )
+    if ( !block.meta.all && !node.invalid ) {
+      // node is valid and does not capture `isvoid` children.
+      // Add new elements in all to allvoid.
+      for ( const nid of all ) {
+        allvoid.push ( nid )
       }
     }
+
+    return voidUpdateError
   }
 
   export const create =

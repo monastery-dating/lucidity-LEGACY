@@ -1,8 +1,20 @@
-export const render =
-( ctx, child ) => {
-  child ( ctx )
+/**
+ */
+let updateAll
+
+export const init =
+( { children } ) => {
+  updateAll = children.all
+}
+
+export const update =
+() => {
+  updateAll ()
 }
 
 export const meta =
-{ main: true
+{ description: 'Update all children on.'
+, tags: [ 'main' ]
+, origin: 'lucidity.io/main'
+, children: 'all'
 }
