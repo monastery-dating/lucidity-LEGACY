@@ -3,8 +3,9 @@ import { Component } from '../Component'
 import { PlaybackHelper, PlaybackCache } from '../../modules/Playback'
 import { DragDropType, DragStartType } from '../../modules/DragDrop'
 
-const cache: PlaybackCache = {}
+const cache: PlaybackCache = { nodecache: {} }
 const context = PlaybackHelper.mainContext ()
+let uicontrols: any = null
 
 /* ====== PLAYBACK LIBS ======= */
 import * as THREE from 'three'
@@ -14,10 +15,17 @@ const helpers =
 { require: ( name ) => PRELOADED [ name ]
 }
 
+type NumberArray = number[]
+type Matrix = NumberArray[]
+
 export const Playback = Component
 ( { graph: [ 'scene', 'graph' ]
   , drop: [ '$dragdrop', 'drop' ] // react to drag op
   , drag: [ '$dragdrop', 'drag' ]
+  // The state has ctrl values for the currently selected block.
+  , select: [ '$block']
+  , ctrl: [ '$playback', 'ctrl' ]
+  , tab: [ '$blocktab' ]
   }
 , ( { state, signals } ) => {
     const w = 320
@@ -32,6 +40,8 @@ export const Playback = Component
     , height: h + 'px'
     }
 
+    const select = state.select
+    const playbackctrl: Matrix = state.ctrl
     const ownerType = 'scene'
     const drop: DragDropType = state.drop
     const drag: DragStartType = state.drag
@@ -50,7 +60,33 @@ export const Playback = Component
       // TODO: Get project graph and branch with scene...
       update = () => {
         try {
-          PlaybackHelper.run ( graph, cache, context, helpers )
+          PlaybackHelper.run ( graph, context, cache, helpers )
+
+          if ( select && select.ownerType === 'scene' && state.tab === 'controls' ) {
+            // FIXME: only on changes to ctrl
+            const nodeId = select.nodeId
+            const nc = cache.nodecache [ nodeId ]
+            const controls = nc.controls
+            if ( controls !== uicontrols ) {
+              uicontrols = controls
+              // Prepare ui
+              const controlsm = controls.map ( ( c ) => ( { type: c.type, labels: c.labels, values: Object.assign ( [], c.values ) } ) )
+
+              signals.block.controls
+              ( { controls: controlsm } )
+            }
+
+            if ( playbackctrl ) {
+              // Get values from UI
+              for ( let i = 0; i < controls.length; ++i ) {
+                const ctrl = controls [ i ]
+                const values = playbackctrl [ i ]
+                if ( values ) {
+                  ctrl.set ( values )
+                }
+              }
+            }
+          }
         }
         catch ( err ) {
           console.error ( err )

@@ -1,7 +1,8 @@
 import { BlockByIdType } from '../../Block'
 import { GraphType, NodeHelper } from '../../Graph'
 import { MidiHelper } from '../../Midi'
-import { Block, Helpers } from '../types/lucidity'
+import { Block, Helpers, Control } from '../types/lucidity'
+import { ControlHelper , PlaybackControl } from './ControlHelper'
 
 const midi = MidiHelper.midiState ()
 
@@ -48,6 +49,8 @@ interface NodeCache {
   js: string
   // We save the init context so that we can use it when detaching
   ctx?: RenderContext
+  control?: Control
+  controls?: PlaybackControl[]
 }
 
 interface PlaybackNodeCache {
@@ -55,10 +58,8 @@ interface PlaybackNodeCache {
 }
 
 export interface PlaybackCache {
-  nodecache?: PlaybackNodeCache
+  nodecache: PlaybackNodeCache
   main?: UpdateFunc
-  // Ids of nodes with an init function (in depth-first order).
-  init?: string[]
   // Current graph. We use this to diff and detect
   // nodes to detach.
   graph?: GraphType
@@ -145,6 +146,9 @@ export module PlaybackHelper {
       if ( init ) {
         helpers.cache = nc.cache
         helpers.context = nc.ctx
+        helpers.control = nc.control
+        // clear previous controls
+        nc.controls = []
         try {
           init ( helpers )
         }
@@ -154,6 +158,8 @@ export module PlaybackHelper {
         }
         // clear cache
         nc.cache = {}
+        // clear controls
+        nc.controls = []
       }
     }
   }
@@ -175,31 +181,35 @@ export module PlaybackHelper {
       if ( !nc.cache ) {
         // cache passed in init call
         nc.cache = {}
+        nc.control = ControlHelper.make ( nc )
       }
       nc.ctx = context
-      try {
-        helpers.cache = nc.cache
-        helpers.context = nc.ctx
-        let children: any = []
-        if ( node.all ) {
-          const list = node.all.map ( ( childId ) => {
-            return cache [ childId ].exports.update
-          })
-          children.all = () => {
-            for ( const f of list ) {
-              f ()
-            }
+      helpers.cache = nc.cache
+      helpers.context = nc.ctx
+      helpers.control = nc.control
+      let children: any = []
+      if ( node.all ) {
+        const list = node.all.map ( ( childId ) => {
+          return cache [ childId ].exports.update
+        })
+        children.all = () => {
+          for ( const f of list ) {
+            f ()
           }
-
-        }
-        else if ( node.childrenm ) {
-          children = node.childrenm.map ( ( childId ) => {
-            return cache [ childId ].exports.update
-          })
         }
 
-        helpers.children = children
+      }
+      else if ( node.childrenm ) {
+        children = node.childrenm.map ( ( childId ) => {
+          return cache [ childId ].exports.update
+        })
+      }
 
+      helpers.children = children
+
+      nc.controls = []
+      
+      try {
         const r = init ( helpers )
         if ( r ) {
           if ( typeof r !== 'object' ) {
@@ -278,8 +288,8 @@ export module PlaybackHelper {
 
   export const init =
   ( graph : GraphType
-  , cache: PlaybackCache
   , context: Object // extra elements for update context
+  , cache: PlaybackCache
   , helpers: HelpersContext
   ) => {
     const c = mainContext ( context )
@@ -289,16 +299,20 @@ export module PlaybackHelper {
 
   export const run =
   ( graph : GraphType
-  , cache: PlaybackCache
   , context: Object = {} // extra elements for update context
-  , helpers: HelpersContext
+  , cache: PlaybackCache = { nodecache: {} }
+  , helpers: HelpersContext = {}
   ) => {
+    if ( cache.graph === graph ) {
+      // nothing to recompile, update
+      return
+    }
     // 1. detach if needed
     detachCheck ( graph, cache, context, helpers )
     // 2. compile
     compile ( graph, cache )
     // 3. init
-    init ( graph, cache, context, helpers )
+    init ( graph, context, cache, helpers )
     // 4. run
     const root = graph.nodesById [ rootNodeId ]
     if ( !root.invalid ) {

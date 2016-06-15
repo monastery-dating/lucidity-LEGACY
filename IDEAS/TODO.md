@@ -1,6 +1,13 @@
 # TODO
 
-If an object becomes invalid: detach.
+1. If an object becomes invalid: detach.
+
+2. What out for 'null' values in children in graph. Should only happen if the node
+is typed.
+
+3. Control performance: check after migration to Cerebral state-tree...
+
+4. Could optimize control by simply sharing memory object and directly calling the control callback (without passing by Cerebral). Try to clarify what are "settings" (ultimately saved in scene) and what is "live"...
 
 # DATA
 

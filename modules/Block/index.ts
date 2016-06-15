@@ -1,7 +1,18 @@
+interface TypeAndLabels {
+  type: string
+  labels: string[]
+}
+
+type NumberArray = number[]
+type Matrix = NumberArray[]
+
 export interface BlockSignalsType {
   add ( input: { pos: number, parentId: string, ownerType: string } )
   name ( input: { value: string } )
-  select ( input: { select: { ownerType: string, id: string } } )
+  controls ( input: { controls: TypeAndLabels[] } )
+  select ( input: { select: { ownerType: string, id: string, nodeId: string } } )
+  tab ( input: { value: string } )
+  values ( input: { values: number[], pos: number } )
   source ( input: { value: string } )
 }
 
@@ -12,9 +23,12 @@ export * from './SlotType'
 
 import * as Model from 'cerebral-model-baobab'
 import { add } from './signals/add'
+import { controls } from './signals/controls'
 import { name } from './signals/name'
 import { select } from './signals/select'
 import { source } from './signals/source'
+import { tab } from './signals/tab'
+import { values } from './signals/values'
 import { GraphType } from '../Graph'
 
 const CurrentBlock = Model.monkey
@@ -59,9 +73,12 @@ export const Block =
 
     module.addSignals
     ( { add
+      , controls
       , name
       , select
       , source
+      , tab
+      , values
       }
     )
 

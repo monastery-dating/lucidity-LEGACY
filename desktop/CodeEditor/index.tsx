@@ -51,7 +51,7 @@ export const CodeEditor = Component
       code.setValue ( block.source || '' )
     }
 
-    return <div class='CodeEditor'>
+    return <div class='CodeEditor' style={ props.style }>
         <div hook-create={ create }></div>
       </div>
   }

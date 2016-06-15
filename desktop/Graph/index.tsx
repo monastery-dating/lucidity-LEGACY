@@ -31,6 +31,7 @@ const mapUINodes =
   )
 }
 
+const empty = { select: { id: '', nodeId: '', ownerType: '' } }
 export const Graph = Component
 ( {
     // update graph on drag op
@@ -65,14 +66,13 @@ export const Graph = Component
 
       const klass = Object.assign ( { Graph: true }, props.class )
       const style: any = {}
-      const empty = { select: { id: '', ownerType: '' } }
       // TODO: implement scale change with slider
       // in the status bar.
       const scale = state.scale || 1
       const transform = `scale(${scale})`
 
       const pos = props.position
-      
+
       if ( pos ) {
         style.left = (pos.x - uigraph.grabpos.x) + 'px'
         style.top  = (pos.y - uigraph.grabpos.y) + 'px'

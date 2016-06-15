@@ -23,9 +23,23 @@ interface Require {
   ( libname: string ): any
 }
 
+export interface SliderCallback {
+  ( v: number ): void
+}
+
+export interface PadCallback {
+  ( x: number, y: number ): void
+}
+
+export interface Control {
+  Slider ( name: string, clbk: SliderCallback )
+  Pad ( namex: string, namey: string, clbk: PadCallback )
+}
+
 export interface Helpers {
   // optional to ease testing
   context?: Context
+  control?: Control
   cache?: Cache
   children?: Children
   detached?: boolean
