@@ -4,3 +4,15 @@
 
 .CodeEditor {
 }
+
+#app .CodeEditor {
+  .scrubbing {
+    background: yellow;
+  }
+  .scrub {
+    background: #330;
+    padding: 0 4px;
+    cursor: move;
+    border-radius: 4px;
+  }
+}

@@ -3,6 +3,13 @@ import { GraphType, NodeHelper } from '../../Graph'
 import { MidiHelper } from '../../Midi'
 import { Block, Helpers, Control } from '../types/lucidity'
 import { ControlHelper , PlaybackControl } from './ControlHelper'
+import * as esprima from 'esprima'
+import * as escodegen from 'escodegen'
+
+const SCRUBBER_VAR = '$scrub$'
+// FIXME: how to avoid global like this ?
+const wscrub = { values: [], init () {} }
+window [ 'LUCY_SCRUB' ] = wscrub
 
 const midi = MidiHelper.midiState ()
 
@@ -45,10 +52,14 @@ interface NodeCache {
   // Cached values from 'init' calls. Only exists if there is an
   // init function (removed if init is removed).
   cache?: Object
-  // to check cache
+  // to check cache.
   js: string
+  // scrubbing
+  scrubjs?: string // js source for scrubbing
+  scrubjsOrig?: string // to check cache.
+  scrubber?: number[]
   // We save the init context so that we can use it when detaching
-  ctx?: RenderContext
+  helpers?: Helpers
   control?: Control
   controls?: PlaybackControl[]
 }
@@ -59,6 +70,9 @@ interface PlaybackNodeCache {
 
 export interface PlaybackCache {
   nodecache: PlaybackNodeCache
+  // scrubbing block id
+  scrub?: string
+
   main?: UpdateFunc
   // Current graph. We use this to diff and detect
   // nodes to detach.
@@ -69,10 +83,85 @@ const DUMMY_INPUT = () => null
 
 export module PlaybackHelper {
 
+  const scrubTraverse =
+  ( tree
+  , literals: number[] //LiteralScrub[]
+  ) => {
+    if ( Array.isArray ( tree ) ) {
+      // ensure order
+      for ( let i = 0; i < tree.length; ++i ) {
+        const b = tree [ i ]
+        if ( b && typeof b === 'object' ) {
+          if ( b.type === 'Literal' && typeof b.value === 'number' ) {
+            // we check value type because
+            // 'use strict' shows as literal number...
+            const idx = literals.push ( /* b */ b.value ) - 1
+            // change literal value to SCRUBBER_VAR
+            tree [ i ] =
+            { type: 'MemberExpression'
+            , computed: true
+            , object:
+              { type: 'Identifier'
+              , name: SCRUBBER_VAR
+              }
+            , property:
+              { type: 'Literal'
+              , value: idx
+              }
+            }
+          }
+          else {
+            scrubTraverse ( b, literals )
+          }
+        }
+      }
+    }
+
+    else {
+      for ( const k in tree ) {
+        const b = tree [ k ]
+        if ( b && typeof b === 'object' ) {
+          if ( b.type === 'Literal' && typeof b.value === 'number' ) {
+            // we check value type because
+            // 'use strict' shows as literal number...
+            const idx = literals.push ( /* b */ b.value ) - 1
+            // change literal value to SCRUBBER_VAR
+            tree [ k ] =
+            { type: 'MemberExpression'
+            , computed: true
+            , object:
+              { type: 'Identifier'
+              , name: SCRUBBER_VAR
+              }
+            , property:
+              { type: 'Literal'
+              , value: idx
+              }
+            }
+          }
+          else {
+            scrubTraverse ( b, literals )
+          }
+        }
+      }
+    }
+  }
+
+  export const scrubParse =
+  ( source: string
+  , literals: number[] // LiteralScrub[]
+  ): string => {
+    const tree = esprima.parse ( source )
+    scrubTraverse ( tree, literals )
+    return escodegen.generate ( tree )
+  }
+
   const updateCache =
   ( graph: GraphType
-  , cache: PlaybackNodeCache
+  , cache: PlaybackCache
   ) => {
+    const nodecache = cache.nodecache
+    const scrub = cache.scrub
 
     for ( const nodeId in graph.nodesById ) {
 
@@ -82,16 +171,32 @@ export module PlaybackHelper {
       }
       const block = graph.blocksById [ node.blockId ]
 
-      let n = cache [ nodeId ]
+      let n = nodecache [ nodeId ]
 
       if ( node.invalid ) {
         // ignore
         continue
       }
 
-      if ( !n || n.js !== block.js ) {
+      let js = block.js
+
+      if ( node.blockId === scrub ) {
+        if ( !n.scrubjs || js !== n.scrubjsOrig ) {
+          // update scrubjs
+          n.scrubjsOrig = js
+          n.scrubber = []
+          n.scrubjs = scrubParse ( js, n.scrubber )
+        }
+        // Use special 'scrubbing' js.
+        js = n.scrubjs
+        // We need to set a global for the editor to have
+        // direct access.
+        wscrub.values = n.scrubber
+      }
+
+      if ( !n || n.js !== js ) {
         if ( !n ) {
-          n = cache [ nodeId ] = <NodeCache> { exports: {} }
+          n = nodecache [ nodeId ] = <NodeCache> { exports: {} }
         }
         else {
           // clear
@@ -100,9 +205,9 @@ export module PlaybackHelper {
 
         const exports = n.exports
         try {
-          const codefunc = new Function ( 'exports', block.js )
+          const codefunc = new Function ( 'exports', SCRUBBER_VAR, js )
           // We now run the code. The exports is the cache.
-          codefunc ( exports )
+          codefunc ( exports, n.scrubber )
           n.js = block.js
         }
         catch ( err ) {
@@ -144,13 +249,10 @@ export module PlaybackHelper {
       const nc = cache.nodecache [ nodeId ]
       const init = nc.exports.init
       if ( init ) {
-        helpers.cache = nc.cache
-        helpers.context = nc.ctx
-        helpers.control = nc.control
         // clear previous controls
         nc.controls = []
         try {
-          init ( helpers )
+          init ( nc.helpers )
         }
         catch (err) {
           // FIXME: proper error handling
@@ -165,32 +267,33 @@ export module PlaybackHelper {
   }
 
   const initDo =
-  ( cache: PlaybackNodeCache
+  ( cache: PlaybackCache
   , graph: GraphType
   , context: Context
-  , helpers: HelpersContext
+  , ohelpers: HelpersContext
   , nodeId: string
   ) => {
-    const nc = cache [ nodeId ]
+    const nodecache = cache.nodecache
+    const nc = nodecache [ nodeId ]
     const init = nc.exports.init
     const nodesById = graph.nodesById
     const node = nodesById [ nodeId ]
 
     let subctx: Context = context
     if ( init ) {
+      const helpers = Object.assign ( {}, ohelpers )
       if ( !nc.cache ) {
         // cache passed in init call
         nc.cache = {}
         nc.control = ControlHelper.make ( nc )
       }
-      nc.ctx = context
       helpers.cache = nc.cache
-      helpers.context = nc.ctx
+      helpers.context = context
       helpers.control = nc.control
       let children: any = []
       if ( node.all ) {
         const list = node.all.map ( ( childId ) => {
-          return cache [ childId ].exports.update
+          return nodecache [ childId ].exports.update
         })
         children.all = () => {
           for ( const f of list ) {
@@ -201,14 +304,21 @@ export module PlaybackHelper {
       }
       else if ( node.childrenm ) {
         children = node.childrenm.map ( ( childId ) => {
-          return cache [ childId ].exports.update
+          return nodecache [ childId ].exports.update
         })
       }
 
       helpers.children = children
 
       nc.controls = []
-      
+      nc.helpers = helpers
+
+      if ( cache.scrub === node.blockId ) {
+        wscrub.init = () => {
+          init ( helpers )
+        }
+      }
+
       try {
         const r = init ( helpers )
         if ( r ) {
@@ -231,7 +341,7 @@ export module PlaybackHelper {
     else if ( nc.cache ) {
       // No init function = clear cached context and init cache
       delete nc.cache
-      delete nc.ctx
+      delete nc.helpers
     }
 
     const block = graph.blocksById [ node.blockId ]
@@ -242,7 +352,7 @@ export module PlaybackHelper {
         ( cache
         , graph
         , subctx
-        , helpers
+        , ohelpers
         , childId
         )
       }
@@ -280,7 +390,7 @@ export module PlaybackHelper {
     }
 
     // make sure to update functions for valid nodes if their source file changed.
-    updateCache ( graph, cache.nodecache )
+    updateCache ( graph, cache )
 
     // save current graph to compare on detach.
     cache.graph = graph
@@ -294,7 +404,7 @@ export module PlaybackHelper {
   ) => {
     const c = mainContext ( context )
     const h = Object.assign ( {}, helpers )
-    initDo ( cache.nodecache, graph, c, h, rootNodeId )
+    initDo ( cache, graph, c, h, rootNodeId )
   }
 
   export const run =
@@ -303,7 +413,7 @@ export module PlaybackHelper {
   , cache: PlaybackCache = { nodecache: {} }
   , helpers: HelpersContext = {}
   ) => {
-    if ( cache.graph === graph ) {
+    if ( cache.graph === graph && !cache.scrub ) {
       // nothing to recompile, update
       return
     }

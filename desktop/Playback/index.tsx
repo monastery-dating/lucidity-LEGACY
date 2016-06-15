@@ -60,6 +60,12 @@ export const Playback = Component
       // TODO: Get project graph and branch with scene...
       update = () => {
         try {
+          if ( select && select.ownerType === 'scene' ) {
+            cache.scrub = select.id
+          }
+          else {
+            cache.scrub = null
+          }
           PlaybackHelper.run ( graph, context, cache, helpers )
 
           if ( select && select.ownerType === 'scene' && state.tab === 'controls' ) {

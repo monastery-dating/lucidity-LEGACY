@@ -3,6 +3,7 @@ import { GraphType } from '../../Graph'
 import { GraphHelper } from '../../Graph/helper/GraphHelper'
 import { PlaybackHelper } from './PlaybackHelper'
 import { PlaybackControl } from './ControlHelper'
+import * as ts from 'typescript'
 
 declare var require: any
 const GRAPH = require ( './test/graph.json.txt' )
@@ -197,3 +198,72 @@ describe ( 'PlaybackHelper.controls many', ( it ) => {
   })
 
 })
+
+describe ( 'PlaybackHelper.scrubParse', ( it ) => {
+  const js = ts.transpile
+  ( `export const init =
+     ( { context } ) => {
+       context.test.a = 10
+       context.test.b = 20
+       context.test.x = 30
+       context.test.y = 40
+     }
+
+     export const update =
+     () => {
+       return 10
+     }
+    `
+  )
+  const literals = []
+  const scrubjs = PlaybackHelper.scrubParse
+  ( js, literals )
+  console.log ( scrubjs )
+
+  it ( 'should transform source', ( assert ) => {
+    assert.equal
+    ( literals
+    , [10,20,30,40,10]
+    )
+  })
+
+})
+
+/*
+describe ( 'PlaybackHelper.compile scrub', ( it ) => {
+  const graph = GraphHelper.create
+  ( 'main'
+  , `export const init =
+     ( { context } ) => {
+       context.test.a = 10
+       context.test.b = 20
+       context.test.x = 30
+       context.test.y = 40
+     }
+
+     export const update =
+     () => {
+       return 10
+     }
+    `
+  )
+  const cache = { nodecache: {}, scrub: 'b0' }
+  const context: any = { test: {} }
+  PlaybackHelper.run ( graph, context, cache )
+  // the js source for this node is now a special parsing with the scrubber '$l$' instead of the values.
+  // simulate change
+  const graph2: GraphType = { nodesById: graph.nodesById, blocksById: graph.blocksById }
+  PlaybackHelper.run ( graph2, context, cache )
+  const nc = cache.nodecache [ 'n0' ]
+
+  it ( 'should extract many controls', ( assert ) => {
+    const ctrl: PlaybackControl = nc.controls [ 0 ]
+    assert.equal ( 3, nc.controls.length )
+    assert.equal
+    ( [ [ 'a' ], [ 'b' ], [ 'foo', 'bar' ] ]
+    , nc.controls.map ( ( c ) => c.labels )
+    )
+  })
+
+})
+*/
