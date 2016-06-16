@@ -204,7 +204,7 @@ describe ( 'PlaybackHelper.scrubParse', ( it ) => {
   ( `export const init =
      ( { context } ) => {
        context.test.a = 10
-       context.test.b = 20
+       context.test.b = -20
        context.test.x = 30
        context.test.y = 40
      }
@@ -223,7 +223,7 @@ describe ( 'PlaybackHelper.scrubParse', ( it ) => {
   it ( 'should transform source', ( assert ) => {
     assert.equal
     ( literals
-    , [10,20,30,40,10]
+    , [10,-20,30,40,10]
     )
   })
 

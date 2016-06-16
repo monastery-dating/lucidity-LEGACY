@@ -9,10 +9,21 @@
   .scrubbing {
     background: yellow;
   }
-  .scrub {
-    background: #330;
+  .cm-number {
     padding: 0 4px;
     cursor: move;
+    border: 1px dashed color( workb );
     border-radius: 4px;
   }
+}
+
+#app .CodeEditor {
+  .CodeMirror-overlayscroll-horizontal div,
+  .CodeMirror-overlayscroll-vertical div {
+    background: color( workb )
+  }
+  .CodeMirror {
+    padding: $pad 0 2*$pad $pad;
+  }
+
 }

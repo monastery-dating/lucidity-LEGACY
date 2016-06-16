@@ -1,18 +1,22 @@
 # TODO
 
-1. If an object becomes invalid: detach.
+0. Remove controls ?
 
-2. What out for 'null' values in children in graph. Should only happen if the node
+1. Make scrubber better by using CodeMirror native hook to make numbers active (like scrubby). But for this we need the typescript range... Try to figure out if we can do all that we do with esprima/escodegen but with typescript.
+
+Make changing 0xff0000 numbers like 3 numbers: 0x [ff] [00] [00].
+
+2. If an object becomes invalid: detach.
+
+3. What out for 'null' values in children in graph. Should only happen if the node
 is typed.
 
-3. Control performance: check after migration to Cerebral state-tree...
+4. Control performance: check after migration to Cerebral state-tree...
 
-4. Could optimize control by simply sharing memory object and directly calling the control callback (without passing by Cerebral). Try to clarify what are "settings" (ultimately saved in scene) and what is "live"...
 
 HAD TO MODIFY escodegen LIBRARY SOURCE:
 // exports.version = require('./package.json').version;
 
-5. Make scrubber better by using CodeMirror native hook to make numbers active (like scrubby). But for this we need the typescript range... Try to figure out if we can do all that we do with esprima/escodegen but with typescript.
 
 # DATA
 

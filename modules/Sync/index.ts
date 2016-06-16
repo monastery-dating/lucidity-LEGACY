@@ -21,7 +21,7 @@ export const Sync =
       }
     )
 
-    SyncHelper.start ( { controller, db } )
+    // SyncHelper.start ( { controller, db } )
 
     return {} // meta information
   }

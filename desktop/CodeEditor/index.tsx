@@ -5,9 +5,14 @@ import * as CodeMirror from 'codemirror'
 
 // JS mode
 import 'codemirror/mode/javascript/javascript'
+// Addons, extentions
+import 'codemirror/keymap/vim'
+import 'codemirror/addon/scroll/simplescrollbars'
 // CSS
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/theme/bespin.css'
+import 'codemirror/addon/scroll/simplescrollbars.css'
+import 'codemirror/addon/dialog/dialog.css'
 
 // UGLY UI state...
 let code = null
@@ -20,6 +25,7 @@ interface GlobalScrubber {
 
 // FIXME: Can we cleanly remove this global ?
 const wscrub: GlobalScrubber = window [ 'LUCY_SCRUB' ]
+const floatRe = /\./
 
 const scrubdown = ( e: MouseEvent, el: HTMLElement, i, save ) => {
   // start click
@@ -30,31 +36,49 @@ const scrubdown = ( e: MouseEvent, el: HTMLElement, i, save ) => {
   el.classList.add ( 'scrubbing' )
   // current value
   let v = sv
-  const mousemove = ( e ) => {
-    // moving on global window (like drag)
+  const sfloat = floatRe.test ( el.innerHTML )
+  // move callback on global window (like drag)
+  const mousemove = ( e: MouseEvent ) => {
     e.preventDefault ()
+    const isfloat = e.altKey ? !sfloat : sfloat
     // scale to -0.5, 0.5 in screen
     const dx = ( e.clientX - sx ) / ( window.innerWidth / 2 )
     const dy = - ( e.clientY - sy ) / ( window.innerHeight / 2 )
-    // get dim as 10^2 .... 10^-1 .... 10^2
-    const dimx = Math.pow ( 10, Math.abs ( 6 * dx ) - 2 )
-    const dimy = Math.pow ( 10, Math.abs ( 6 * dy ) - 2 )
-    const dist = ( dx > 0 ? 1 : -1 ) * dimx
-               + ( dy > 0 ? 1 : -1 ) * dimy
-    const v = (sv + dist).toFixed ( 4 )
-    wscrub.values [ i ] = parseFloat ( v )
+    if ( isfloat ) {
+      // FLOAT
+      // get dim as approx 10^2 .... 10^-2 .... 10^2
+      const dimx = Math.pow ( 10, Math.abs ( 6 * dx ) - 2 )
+      const dimy = Math.pow ( 10, Math.abs ( 6 * dy ) - 2 )
+      const dist = ( dx > 0 ? 1 : -1 ) * dimx
+                 + ( dy > 0 ? 1 : -1 ) * dimy
+      const v = (sv + dist).toFixed ( 4 )
+      wscrub.values [ i ] = parseFloat ( v ) // ensures str === live value
+      el.innerHTML = v
+    }
+    else {
+      // INT
+      // get dim as approx 10^2 .... 1 .... 10^2
+      const dimx = Math.pow ( 10, Math.abs ( 2 * dx ) )
+      const dimy = Math.pow ( 10, Math.abs ( 2 * dy ) )
+      const dist = ( dx > 0 ? 1 : -1 ) * dimx
+                 + ( dy > 0 ? 1 : -1 ) * dimy
+      const v = (sv + dist).toFixed ( 0 )
+      console.log ( v )
+      wscrub.values [ i ] = parseInt ( v )
+      el.innerHTML = v
+    }
     try {
       wscrub.init ()
     }
     catch ( err ) {
       console.log ( err )
     }
-    el.innerHTML = v
   }
 
   const mouseup = ( e ) => {
     window.removeEventListener ( 'mousemove', mousemove )
     window.removeEventListener ( 'mouseup', mouseup )
+    // move mouse back
     el.classList.remove ( 'scrubbing' )
     document.body.style.cursor = 'auto'
     // COMMIT CHANGES
@@ -66,14 +90,15 @@ const scrubdown = ( e: MouseEvent, el: HTMLElement, i, save ) => {
     for ( let i = 0; i < lines.length; ++i ) {
       if ( lines [ i ] === line ) {
         const txt = line.textContent
+        console.log ( txt )
         const doc = code.getDoc ()
         const oline = doc.getLine ( i )
         const from = { line: i, ch: 0 }
-        const to   = { line: i, ch: oline.length - 1 }
+        const to   = { line: i, ch: oline.length }
 
-        console.log ( oline )
         code.replaceRange ( txt, from, to )
-        save ()
+        // Save is done with 'changes' detection.
+        // save ()
       }
     }
   }
@@ -91,6 +116,14 @@ const scrubNumbers = ( save ) => {
     const nb = numbers [ i ]
     // FIXME: Make sure we do not have a unary - before number
     // could this go wrong ?
+    const prev = nb.previousElementSibling
+    if ( prev
+         && prev.classList.contains ( 'cm-operator' )
+         && prev.innerHTML === '-' ) {
+           nb.innerHTML = '-' + nb.innerHTML
+           prev.parentNode.removeChild ( prev )
+    }
+
     nb.addEventListener ( 'mousedown', ( e: MouseEvent ) => {
       e.preventDefault ()
       e.stopPropagation ()
@@ -103,10 +136,18 @@ const scrubNumbers = ( save ) => {
   // instead of numbers ?
 }
 
+let lock // prevent save to update content while we have focus
+let block
+
 export const CodeEditor = Component
 ( {}
 , ( { props, signals }: ContextType ) => {
-    const block = props.block
+    block = props.block
+    const save = () => {
+      // Save callback
+      signals.block.source
+      ( { value: code.getValue () } )
+    }
 
     const create = ( _, { elm } ) => {
       if ( code === null ) {
@@ -116,36 +157,44 @@ export const CodeEditor = Component
             code = CodeMirror
             ( elm
             , { value: block.source || ''
-              , lineNumbers: true
+              , scrollbarStyle: 'overlay'
+              , lineWrapping: true
               , theme: 'bespin'
               , mode: 'javascript'
-              }
+              , keyMap: 'vim' // FIXME: should come from user prefs
+            } as any
             )
-            code.on
-            ( 'blur', () => {
-                signals.block.source
-                ( { value: code.getValue () } )
-              }
-            )
+            code.on ( 'focus', () => {
+              lock = block.id
+            })
+            code.on ( 'blur', () => {
+              lock = false
+            })
+            code.on ( 'changes', save )
           }
         , 100
         )
       }
     }
 
+    if ( block.id !== lock ) {
+
+    }
+
     if ( source !== block.source && code ) {
       source = block.source
-      code.setValue ( block.source || '' )
-      // Scrub
-      scrubNumbers ( () => {
-        // Save callback
-        signals.block.source
-        ( { value: code.getValue () } )
-      })
+      if ( !lock || lock !== block.id ) {
+        code.setValue ( block.source || '' )
+        if ( lock ) {
+          lock = block.id
+        }
+      }
+      // Scrub. This could happen on 'blur' if it is confusing.
+      scrubNumbers ( save )
     }
 
     return <div class='CodeEditor' style={ props.style }>
-        <div hook-create={ create }></div>
+        <div class='codeholder' hook-create={ create }></div>
       </div>
   }
 )

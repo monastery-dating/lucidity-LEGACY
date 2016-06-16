@@ -24,10 +24,17 @@ export const sourceAction =
     return
   }
 
-  const doc = IM.update
-  ( odoc, 'graph'
-  , GraphHelper.updateSource ( graph, select.id, value )
-  )
+  try {
+    // updateSource throws an exception if the source is invalid.
+    // FIXME: Bubble this error up to state => Editor
+    const doc = IM.update
+    ( odoc, 'graph'
+    , GraphHelper.updateSource ( graph, select.id, value )
+    )
+    output.success ( { doc } )
+  }
+  catch ( err ) {
+    console.log ( err )
+  }
 
-  output.success ( { doc } )
 }

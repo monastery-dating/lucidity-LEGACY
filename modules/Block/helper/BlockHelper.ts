@@ -116,25 +116,18 @@ export module BlockHelper {
   ( source: string
   ) : BlockSourceInfo => {
     let js = ''
-    try {
-      js = ts.transpile ( source )
-      const codefunc = new Function ( 'exports', js )
-      // We now run the code.
-      const exports: any = {}
-      codefunc ( exports )
 
-      const meta = parseMeta ( exports )
+    js = ts.transpile ( source )
+    const codefunc = new Function ( 'exports', js )
+    // We now run the code.
+    const exports: any = {}
+    codefunc ( exports )
 
-      return { js
-             , meta
-             }
-    }
-    catch ( err ) {
-      console.log ( err )
-      return { js
-             , meta: defaultMeta
-             }
-    }
+    const meta = parseMeta ( exports )
+
+    return { js
+           , meta
+           }
   }
 
 }

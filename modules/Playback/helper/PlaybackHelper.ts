@@ -81,6 +81,21 @@ export interface PlaybackCache {
 
 const DUMMY_INPUT = () => null
 
+const replaceWithScrubber =
+( literals: number[]
+, value
+): Object => {
+  const idx = literals.push ( value ) - 1
+  return { type: 'MemberExpression'
+         , computed: true
+         , object:
+           { type: 'Identifier'
+           , name: SCRUBBER_VAR
+           }
+         , property: { type: 'Literal', value: idx }
+         }
+}
+
 export module PlaybackHelper {
 
   const scrubTraverse =
@@ -95,20 +110,7 @@ export module PlaybackHelper {
           if ( b.type === 'Literal' && typeof b.value === 'number' ) {
             // we check value type because
             // 'use strict' shows as literal number...
-            const idx = literals.push ( /* b */ b.value ) - 1
-            // change literal value to SCRUBBER_VAR
-            tree [ i ] =
-            { type: 'MemberExpression'
-            , computed: true
-            , object:
-              { type: 'Identifier'
-              , name: SCRUBBER_VAR
-              }
-            , property:
-              { type: 'Literal'
-              , value: idx
-              }
-            }
+            tree [ i ] = replaceWithScrubber ( literals, b.value )
           }
           else {
             scrubTraverse ( b, literals )
@@ -121,23 +123,12 @@ export module PlaybackHelper {
       for ( const k in tree ) {
         const b = tree [ k ]
         if ( b && typeof b === 'object' ) {
-          if ( b.type === 'Literal' && typeof b.value === 'number' ) {
-            // we check value type because
-            // 'use strict' shows as literal number...
-            const idx = literals.push ( /* b */ b.value ) - 1
-            // change literal value to SCRUBBER_VAR
-            tree [ k ] =
-            { type: 'MemberExpression'
-            , computed: true
-            , object:
-              { type: 'Identifier'
-              , name: SCRUBBER_VAR
-              }
-            , property:
-              { type: 'Literal'
-              , value: idx
-              }
-            }
+          if ( b.type === 'UnaryExpression'
+            && b.argument.type === 'Literal' ) {
+            const arg = b.argument
+            tree [ k ] = replaceWithScrubber ( literals, - arg.value )
+          } else if ( b.type === 'Literal' && typeof b.value === 'number' ) {
+            tree [ k ] = replaceWithScrubber ( literals, b.value )
           }
           else {
             scrubTraverse ( b, literals )
