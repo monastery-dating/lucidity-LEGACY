@@ -1,5 +1,5 @@
 import { BlockByIdType } from '../../Block'
-import { CodeHelper, wscrub, Scrubber, SCRUBBER_VAR } from '../../Code/helper/CodeHelper'
+import { CodeHelper, Scrubber, SCRUBBER_VAR } from '../../Code/helper/CodeHelper'
 import { GraphType, NodeHelper } from '../../Graph'
 import { MidiHelper } from '../../Midi'
 import { Block, Helpers, Control } from '../types/lucidity'
@@ -66,6 +66,8 @@ export interface PlaybackCache {
   nodecache: PlaybackNodeCache
   // scrubbing block id
   scrub?: string
+  // Holds the communication between the editor and playback.
+  scrubber?: Scrubber
 
   main?: UpdateFunc
   // Current graph. We use this to diff and detect
@@ -104,12 +106,12 @@ export module PlaybackHelper {
           // update scrubjs
           n.scrubjsOrig = js
           n.scrubber = {}
-          n.scrubjs = CodeHelper.transpile ( js, n.scrubber )
+          n.scrubjs = CodeHelper.transpile ( block.source, n.scrubber )
         }
         // Use special 'scrubbing' js.
         js = n.scrubjs
-        // Update global wscrub
-        Object.assign ( wscrub, n.scrubber )
+        // Update scrubber
+        Object.assign ( cache.scrubber, n.scrubber )
       }
 
       if ( !n || n.js !== js ) {
@@ -233,7 +235,7 @@ export module PlaybackHelper {
       nc.helpers = helpers
 
       if ( cache.scrub === node.blockId ) {
-        wscrub.init = () => {
+        cache.scrubber.init = () => {
           init ( helpers )
         }
       }

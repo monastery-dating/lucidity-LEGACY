@@ -7,7 +7,7 @@ import * as throttle from 'cerebral-addons/throttle'
 export const source: SignalType =
 [ sourceAction
 , { success:
-  [ throttle ( 200, [ ...save ] ) ]
+  [ throttle ( 500, [ ...save ] ) ]
   , error: []
   }
 ]

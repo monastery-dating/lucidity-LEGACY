@@ -1,6 +1,7 @@
 import './style.scss'
 import { Component } from '../Component'
 import { PlaybackHelper, PlaybackCache } from '../../modules/Playback'
+import { CodeHelper } from '../../modules/Code/helper/CodeHelper'
 import { DragDropType, DragStartType } from '../../modules/DragDrop'
 
 const cache: PlaybackCache = { nodecache: {} }
@@ -17,6 +18,8 @@ const helpers =
 
 type NumberArray = number[]
 type Matrix = NumberArray[]
+
+let editor
 
 export const Playback = Component
 ( { graph: [ 'scene', 'graph' ]
@@ -38,6 +41,13 @@ export const Playback = Component
     , left: 4 + hair + 'px'
     , width: w + 'px'
     , height: h + 'px'
+    }
+
+    if ( !editor ) {
+      editor = CodeHelper.getEditor ()
+      if ( editor ) {
+        cache.scrubber = editor.options.scrubber
+      }
     }
 
     const select = state.select
@@ -67,6 +77,10 @@ export const Playback = Component
             cache.scrub = null
           }
           PlaybackHelper.run ( graph, context, cache, helpers )
+          // New scrubber is ready: update editor
+          if ( editor ) {
+            CodeHelper.scrubMark ( editor )
+          }
 
           if ( select && select.ownerType === 'scene' && state.tab === 'controls' ) {
             // FIXME: only on changes to ctrl
