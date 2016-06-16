@@ -3,7 +3,6 @@ import { GraphType } from '../../Graph'
 import { GraphHelper } from '../../Graph/helper/GraphHelper'
 import { PlaybackHelper } from './PlaybackHelper'
 import { PlaybackControl } from './ControlHelper'
-import * as ts from 'typescript'
 
 declare var require: any
 const GRAPH = require ( './test/graph.json.txt' )
@@ -194,36 +193,6 @@ describe ( 'PlaybackHelper.controls many', ( it ) => {
     assert.equal
     ( [ [ 'a' ], [ 'b' ], [ 'foo', 'bar' ] ]
     , nc.controls.map ( ( c ) => c.labels )
-    )
-  })
-
-})
-
-describe ( 'PlaybackHelper.scrubParse', ( it ) => {
-  const js = ts.transpile
-  ( `export const init =
-     ( { context } ) => {
-       context.test.a = 10
-       context.test.b = -20
-       context.test.x = 30
-       context.test.y = 40
-     }
-
-     export const update =
-     () => {
-       return 10
-     }
-    `
-  )
-  const literals = []
-  const scrubjs = PlaybackHelper.scrubParse
-  ( js, literals )
-  console.log ( scrubjs )
-
-  it ( 'should transform source', ( assert ) => {
-    assert.equal
-    ( literals
-    , [10,-20,30,40,10]
     )
   })
 

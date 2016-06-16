@@ -1,14 +1,9 @@
 import './style.scss'
 import { Component } from '../Component'
 import { ContextType } from '../../modules/context.type'
-import * as CodeMirror from 'codemirror'
+import { CodeHelper, wscrub } from '../../modules/Code/helper/CodeHelper'
 
-// JS mode
-import 'codemirror/mode/javascript/javascript'
-// Addons, extentions
-import 'codemirror/keymap/vim'
-import 'codemirror/addon/scroll/simplescrollbars'
-// CSS
+// CodeMirror CSS
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/theme/bespin.css'
 import 'codemirror/addon/scroll/simplescrollbars.css'
@@ -23,8 +18,6 @@ interface GlobalScrubber {
   init (): void
 }
 
-// FIXME: Can we cleanly remove this global ?
-const wscrub: GlobalScrubber = window [ 'LUCY_SCRUB' ]
 const floatRe = /\./
 
 const scrubdown = ( e: MouseEvent, el: HTMLElement, i, save ) => {
@@ -63,7 +56,6 @@ const scrubdown = ( e: MouseEvent, el: HTMLElement, i, save ) => {
       const dist = ( dx > 0 ? 1 : -1 ) * dimx
                  + ( dy > 0 ? 1 : -1 ) * dimy
       const v = (sv + dist).toFixed ( 0 )
-      console.log ( v )
       wscrub.values [ i ] = parseInt ( v )
       el.innerHTML = v
     }
@@ -90,7 +82,6 @@ const scrubdown = ( e: MouseEvent, el: HTMLElement, i, save ) => {
     for ( let i = 0; i < lines.length; ++i ) {
       if ( lines [ i ] === line ) {
         const txt = line.textContent
-        console.log ( txt )
         const doc = code.getDoc ()
         const oline = doc.getLine ( i )
         const from = { line: i, ch: 0 }
@@ -154,15 +145,9 @@ export const CodeEditor = Component
         code = false
         setTimeout
         ( () => {
-            code = CodeMirror
+            code = CodeHelper.editor
             ( elm
-            , { value: block.source || ''
-              , scrollbarStyle: 'overlay'
-              , lineWrapping: true
-              , theme: 'bespin'
-              , mode: 'javascript'
-              , keyMap: 'vim' // FIXME: should come from user prefs
-            } as any
+            , block.source
             )
             code.on ( 'focus', () => {
               lock = block.id

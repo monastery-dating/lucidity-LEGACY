@@ -40,8 +40,6 @@
     "cerebral-view-snabbdom": "^0.5.0",
     "check-types": "^7.0.0",
     "codemirror": "^5.15.2",
-    "escodegen": "^1.8.0",
-    "esprima": "^2.7.2",
     "jszip": "^3.0.0",
     "pouchdb": "^5.3.2",
     "pouchdb-authentication": "^0.5.1",

@@ -14,6 +14,10 @@ html, body, #app {
   height: 100%;
   overflow: hidden;
 }
+#app *::-webkit-scrollbar {
+  width: 0px;  /* remove scrollbar space */
+  background: transparent;  /* optional: just make scrollbar invisible */
+}
 
 .App {
   display: flex;

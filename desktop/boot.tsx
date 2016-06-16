@@ -1,6 +1,7 @@
 // modules
 import { App } from '../modules/App'
 import { Block } from '../modules/Block'
+import { Code } from '../modules/Code'
 import { Data } from '../modules/Data'
 import { DragDrop } from '../modules/DragDrop'
 import { Factory } from '../modules/Factory'
@@ -42,6 +43,7 @@ const router = Router
 controller.addModules
 ( { app: App ()
   , block: Block ()
+  , code: Code ()
   , data: Data ()
   , $dragdrop: DragDrop ()
   , $factory: Factory ()

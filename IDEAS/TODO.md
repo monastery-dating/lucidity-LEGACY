@@ -17,6 +17,7 @@ is typed.
 HAD TO MODIFY escodegen LIBRARY SOURCE:
 // exports.version = require('./package.json').version;
 
+5. Refuse to change block selection if current code is invalid = not saved.
 
 # DATA
 

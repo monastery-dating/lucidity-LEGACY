@@ -1,15 +1,9 @@
 import { BlockByIdType } from '../../Block'
+import { CodeHelper, wscrub, Scrubber, SCRUBBER_VAR } from '../../Code/helper/CodeHelper'
 import { GraphType, NodeHelper } from '../../Graph'
 import { MidiHelper } from '../../Midi'
 import { Block, Helpers, Control } from '../types/lucidity'
 import { ControlHelper , PlaybackControl } from './ControlHelper'
-import * as esprima from 'esprima'
-import * as escodegen from 'escodegen'
-
-const SCRUBBER_VAR = '$scrub$'
-// FIXME: how to avoid global like this ?
-const wscrub = { values: [], init () {} }
-window [ 'LUCY_SCRUB' ] = wscrub
 
 const midi = MidiHelper.midiState ()
 
@@ -57,7 +51,7 @@ interface NodeCache {
   // scrubbing
   scrubjs?: string // js source for scrubbing
   scrubjsOrig?: string // to check cache.
-  scrubber?: number[]
+  scrubber?: Scrubber
   // We save the init context so that we can use it when detaching
   helpers?: Helpers
   control?: Control
@@ -79,73 +73,7 @@ export interface PlaybackCache {
   graph?: GraphType
 }
 
-const DUMMY_INPUT = () => null
-
-const replaceWithScrubber =
-( literals: number[]
-, value
-): Object => {
-  const idx = literals.push ( value ) - 1
-  return { type: 'MemberExpression'
-         , computed: true
-         , object:
-           { type: 'Identifier'
-           , name: SCRUBBER_VAR
-           }
-         , property: { type: 'Literal', value: idx }
-         }
-}
-
 export module PlaybackHelper {
-
-  const scrubTraverse =
-  ( tree
-  , literals: number[] //LiteralScrub[]
-  ) => {
-    if ( Array.isArray ( tree ) ) {
-      // ensure order
-      for ( let i = 0; i < tree.length; ++i ) {
-        const b = tree [ i ]
-        if ( b && typeof b === 'object' ) {
-          if ( b.type === 'Literal' && typeof b.value === 'number' ) {
-            // we check value type because
-            // 'use strict' shows as literal number...
-            tree [ i ] = replaceWithScrubber ( literals, b.value )
-          }
-          else {
-            scrubTraverse ( b, literals )
-          }
-        }
-      }
-    }
-
-    else {
-      for ( const k in tree ) {
-        const b = tree [ k ]
-        if ( b && typeof b === 'object' ) {
-          if ( b.type === 'UnaryExpression'
-            && b.argument.type === 'Literal' ) {
-            const arg = b.argument
-            tree [ k ] = replaceWithScrubber ( literals, - arg.value )
-          } else if ( b.type === 'Literal' && typeof b.value === 'number' ) {
-            tree [ k ] = replaceWithScrubber ( literals, b.value )
-          }
-          else {
-            scrubTraverse ( b, literals )
-          }
-        }
-      }
-    }
-  }
-
-  export const scrubParse =
-  ( source: string
-  , literals: number[] // LiteralScrub[]
-  ): string => {
-    const tree = esprima.parse ( source )
-    scrubTraverse ( tree, literals )
-    return escodegen.generate ( tree )
-  }
 
   const updateCache =
   ( graph: GraphType
@@ -175,14 +103,13 @@ export module PlaybackHelper {
         if ( !n.scrubjs || js !== n.scrubjsOrig ) {
           // update scrubjs
           n.scrubjsOrig = js
-          n.scrubber = []
-          n.scrubjs = scrubParse ( js, n.scrubber )
+          n.scrubber = {}
+          n.scrubjs = CodeHelper.transpile ( js, n.scrubber )
         }
         // Use special 'scrubbing' js.
         js = n.scrubjs
-        // We need to set a global for the editor to have
-        // direct access.
-        wscrub.values = n.scrubber
+        // Update global wscrub
+        Object.assign ( wscrub, n.scrubber )
       }
 
       if ( !n || n.js !== js ) {
@@ -198,7 +125,8 @@ export module PlaybackHelper {
         try {
           const codefunc = new Function ( 'exports', SCRUBBER_VAR, js )
           // We now run the code. The exports is the cache.
-          codefunc ( exports, n.scrubber )
+          const scrub = n.scrubber ? n.scrubber.values : null
+          codefunc ( exports, scrub )
           n.js = block.js
         }
         catch ( err ) {
