@@ -79,6 +79,8 @@ export const Playback = Component
           PlaybackHelper.run ( graph, context, cache, helpers )
           // New scrubber is ready: update editor
           if ( editor ) {
+            console.log ( 'WRITE SCRUB' )
+            // New marks ready. Update editor.
             CodeHelper.scrubMark ( editor )
           }
 

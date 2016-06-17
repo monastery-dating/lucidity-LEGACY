@@ -9,10 +9,11 @@ import { editable, openModal, pane } from '../../modules/Factory'
 const BlockName = editable ( [ 'block', 'name' ] )
 
 export const Block = Component
-( { block: [ 'block' ]
-  , select: [ '$block' ]
-  , tab: [ '$blocktab' ]
+( { tab: [ '$blocktab' ]
+    // for controls ?
   , controls: [ '$controls' ]
+    // for block name ?
+  , block: [ 'block' ]
     // update ui on block name edit
   , editing: BlockName.path
   }
@@ -47,7 +48,7 @@ export const Block = Component
             Control
           </div>
         </div>
-        <CodeEditor key='CodeEditor' block={ state.block || {} } style={ codetab }/>
+        <CodeEditor key='CodeEditor' style={ codetab }/>
         <Controls key='Controls' style={ controlstab }/>
       </div>
   }

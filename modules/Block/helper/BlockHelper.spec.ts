@@ -1,12 +1,13 @@
 import { describe } from '../../Test/runner'
 import { BlockType, BlockByIdType } from '../BlockType'
-import { Meta } from '../../Playback/types/lucidity'
+import { Meta } from 'lucidity'
 import { BlockHelper } from './BlockHelper'
 
 const SOURCE_A = `
+import { Update, Meta } from 'lucidity'
 /** Comment, show main context change { foo }
  */
-export const update =
+export const update: Update =
 () => {
 
 }
@@ -76,10 +77,10 @@ describe ( 'BlockHelper.create', ( it ) => {
   })
 
   it ( 'should compile js', ( assert ) => {
-    const node = BlockHelper.create ( 'hello' , `export const render = () => 'hop'`)
+    const node = BlockHelper.create ( 'hello' , `interface Foo {}\nexport const update = () => 'hop'`)
     assert.equal
     ( node.js
-    , "\"use strict\";\r\nexports.render = function () { return 'hop'; };\r\n"
+    , "\"use strict\";\nexports.update = () => 'hop';\n"
     )
   })
 

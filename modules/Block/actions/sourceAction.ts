@@ -8,6 +8,7 @@ export const sourceAction =
   , output
   } : ActionContextType
 ) => {
+  console.log ( 'SOURCE ACTION' )
 
   const select = state.get ( [ '$block' ] )
   if ( !select ) {
@@ -20,7 +21,8 @@ export const sourceAction =
 
   const source = graph.blocksById [ select.id ].source
   if ( source === value ) {
-    output.error ( {} )
+    // Why do we need this ?
+    output ( {} )
     return
   }
 
@@ -31,10 +33,10 @@ export const sourceAction =
     ( odoc, 'graph'
     , GraphHelper.updateSource ( graph, select.id, value )
     )
-    output.success ( { doc } )
+    output ( { doc } )
   }
-  catch ( err ) {
-    console.log ( err )
+  catch ( errors ) {
+    output ( { errors } )
   }
 
 }

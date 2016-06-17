@@ -1,9 +1,9 @@
 import { BlockType, BlockByIdType, BlockSourceInfo
        , BlockTypeChanges, PlaybackMetaType } from '../BlockType'
-import * as ts from 'typescript'
+import { CodeHelper } from '../../Code/helper/CodeHelper'
 import { Immutable as IM } from '../../Graph/helper/Immutable'
 import { PlaybackHelper } from '../../Playback'
-import { Block, Meta } from '../../Playback/types/lucidity'
+import { Block, Meta } from 'lucidity'
 import * as stringhash from 'string-hash'
 
 declare var require: any
@@ -117,7 +117,7 @@ export module BlockHelper {
   ) : BlockSourceInfo => {
     let js = ''
 
-    js = ts.transpile ( source )
+    js = CodeHelper.transpile ( source )
     const codefunc = new Function ( 'exports', js )
     // We now run the code.
     const exports: any = {}

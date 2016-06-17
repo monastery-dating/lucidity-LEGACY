@@ -2,7 +2,7 @@ import { BlockByIdType } from '../../Block'
 import { CodeHelper, Scrubber, SCRUBBER_VAR } from '../../Code/helper/CodeHelper'
 import { GraphType, NodeHelper } from '../../Graph'
 import { MidiHelper } from '../../Midi'
-import { Block, Helpers, Control } from '../types/lucidity'
+import { Block, Helpers, Control } from 'lucidity'
 import { ControlHelper , PlaybackControl } from './ControlHelper'
 
 const midi = MidiHelper.midiState ()

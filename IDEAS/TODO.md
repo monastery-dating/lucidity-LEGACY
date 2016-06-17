@@ -224,14 +224,7 @@ This function is called in 'main' once whenever the source code of any element o
 
   1. Remove default exports: they are confusing since any name
      can be used and this can lead to stupid mistakes.
-
-  2. Transform code from boxdrag to use the store instead of a service...
-    --
-    StartDrag => Post event to store
-    DragMove => Post event to store
-    --
-    Drop => etc
-
+  2. Remove 'export module' and import libs with * as Foo. This makes it easier to import just a function and it's simpler.
   3. Make 'parent' and 'parentId' consistent (use parentId).
 
 # FINANCES

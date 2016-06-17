@@ -9,11 +9,13 @@
   .scrubbing {
     background: yellow;
   }
-  .cm-number.scrub {
-    padding: 0 4px;
-    cursor: move;
-    border: 1px dashed color( workb );
-    border-radius: 4px;
+  .cm-number {
+    border: 1px dashed rgba(0,0,0,0);
+    &.scrub {
+      cursor: move;
+      border: 1px dashed lighten( color( workb ), 10% );
+      border-radius: 4px;
+    }
   }
 }
 
@@ -25,5 +27,14 @@
   .CodeMirror {
     padding: $pad 0 2*$pad $pad;
   }
-
+  .CodeMirror-linewidget {
+    margin-top: 4px;
+    left: -1px;
+    padding-left: 0px;
+    width: 460px;
+    background: #353030;
+    color: #959663;
+    padding: 4px;
+    border-top: 1px dashed #899266;
+  }
 }

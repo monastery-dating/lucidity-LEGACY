@@ -1,5 +1,6 @@
 import '../../desktop/Component.spec.tsx'
 import '../Code/helper/CodeHelper.spec.ts'
+import '../Code/helper/LanguageService.spec.ts'
 import '../Data/actions/save.spec.ts'
 import '../Factory/common/makeDoc.spec.ts'
 import '../Factory/common/set.spec.ts'

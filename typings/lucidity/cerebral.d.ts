@@ -51,6 +51,14 @@ declare module 'cerebral-model-baobab' {
   export = module
 }
 
+declare module 'cerebral-addons/unset' {
+  interface UnSet {
+    ( path: string ): any
+  }
+  const module: UnSet
+  export = module
+}
+
 declare module 'cerebral-addons/set' {
   interface Set {
     ( path: string, value: any): any

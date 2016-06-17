@@ -21,7 +21,7 @@ Component
         <div class='stretch'>
           <Project key='Project'/>
           <Scene key='Scene'/>
-          <Block key='Block'/>
+          <Block/>
         </div>
       </div>
       <Library key='Library'></Library>

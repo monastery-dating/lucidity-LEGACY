@@ -1,4 +1,4 @@
-import { Control, SliderCallback, PadCallback } from '../types/lucidity'
+import { Control, SliderCallback, PadCallback } from 'lucidity'
 
 interface SetControl {
   ( values: number[] ):void
