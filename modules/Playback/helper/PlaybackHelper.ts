@@ -102,9 +102,9 @@ export module PlaybackHelper {
       let js = block.js
 
       if ( node.blockId === scrub ) {
-        if ( !n.scrubjs || js !== n.scrubjsOrig ) {
+        if ( !n.scrubjs || block.source !== n.scrubjsOrig ) {
           // update scrubjs
-          n.scrubjsOrig = js
+          n.scrubjsOrig = block.source
           n.scrubber = {}
           n.scrubjs = CodeHelper.transpile ( block.source, n.scrubber )
         }

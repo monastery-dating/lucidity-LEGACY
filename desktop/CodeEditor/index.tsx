@@ -46,12 +46,11 @@ export const CodeEditor = Component
   }
 , ( { props, state, signals }: ContextType ) => {
     const block: BlockType = state.block || {}
+    
     const save = () => {
-      // Save callback
       source = cm.getValue ()
       signals.block.source
       ( { value: source } )
-      // HACK
     }
 
     if ( cm ) {

@@ -46,6 +46,7 @@ export const Playback = Component
     if ( !editor ) {
       editor = CodeHelper.getEditor ()
       if ( editor ) {
+        // Share scrubber with editor.
         cache.scrubber = editor.options.scrubber
       }
     }
@@ -69,6 +70,7 @@ export const Playback = Component
 
       // TODO: Get project graph and branch with scene...
       update = () => {
+        
         try {
           if ( select && select.ownerType === 'scene' ) {
             cache.scrub = select.id
@@ -79,7 +81,6 @@ export const Playback = Component
           PlaybackHelper.run ( graph, context, cache, helpers )
           // New scrubber is ready: update editor
           if ( editor ) {
-            console.log ( 'WRITE SCRUB' )
             // New marks ready. Update editor.
             CodeHelper.scrubMark ( editor )
           }

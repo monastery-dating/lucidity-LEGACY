@@ -9,21 +9,15 @@ import * as unset from 'cerebral-addons/unset'
 import * as when from 'cerebral-addons/when'
 import { update } from '../../Data/actions/update'
 
-const foo = ( msg ) => {
-  return () => {
-    console.log ( msg )
-  }
-}
-
 export const source: SignalType =
-[ debounce ( 200 ) // Wait before we do anything: the user is typing
+[ debounce ( 100 ) // Wait before we do anything: the user is typing
 , sourceAction
 , copy ( 'input:/errors', 'state:/$editor.errors' )
 , when ( 'input:/doc' )
 , { true: // Valid source
     [ unset ( 'state:/$editor.errors' ) // Immediate clear of errors
     , update // Optimistic write in state
-    // , debounce ( 500 ) // Wait for more inactivity before saving
+    , debounce ( 500 ) // Wait for more inactivity before saving ?
     , ...save
     ]
   , false: []

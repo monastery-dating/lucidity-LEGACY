@@ -9,7 +9,7 @@ Component
 , ( { state, signals }: ContextType ) => {
     let username, password, email
     const submit = ( e ) => {
-      console.log ( username, password, email )
+      // console.log ( username, password, email )
     }
     const usernameClbk = ( e ) => username = e.traget.value ()
     const passwordClbk = ( e ) => password = e.traget.value ()

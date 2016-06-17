@@ -120,15 +120,20 @@ interface CompileReturn {
 
 export const compile =
 ( source: string
+, typecheck: boolean = true
 ): CompileReturn => {
   mainFile.source = source
   mainFile.version++
   // First check for errors
-  const diagnostics =
-  [ ...LS.getCompilerOptionsDiagnostics ()
-  , ...LS.getSyntacticDiagnostics ( 'main.ts' )
-  , ...LS.getSemanticDiagnostics ( 'main.ts' )
-  ]
+  let diagnostics = []
+  if ( typecheck ) {
+    diagnostics =
+    // This doesn't seem to give any useful information.
+    // [ ...LS.getCompilerOptionsDiagnostics ()
+    [ ...LS.getSyntacticDiagnostics ( 'main.ts' )
+    , ...LS.getSemanticDiagnostics ( 'main.ts' )
+    ]
+  }
 
   if ( diagnostics.length > 0 ) {
     let errors = diagnostics.map ( d => {

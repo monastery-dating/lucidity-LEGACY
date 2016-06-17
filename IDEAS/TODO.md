@@ -19,6 +19,8 @@ HAD TO MODIFY escodegen LIBRARY SOURCE:
 
 5. Refuse to change block selection if current code is invalid = not saved.
 
+6. Show scrollbars on graph views (but style them).
+
 # DATA
 
 We need to store these kinds of data:

@@ -17,7 +17,6 @@ const getStatus = ( doc ) => (
 
 export const update =
 ( { state, input, output }: ActionContextType ) => {
-  console.log ( 'UPDATE' )
   const doc = input.doc || input.change.doc
   const { _id, type } = doc
 

@@ -8,7 +8,6 @@ export const sourceAction =
   , output
   } : ActionContextType
 ) => {
-  console.log ( 'SOURCE ACTION' )
 
   const select = state.get ( [ '$block' ] )
   if ( !select ) {

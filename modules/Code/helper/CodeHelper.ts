@@ -40,6 +40,7 @@ interface LucidEditor {
   noscrub?: boolean
   blockId?: string // to detect change of block selection
   cursorMarkCleared?: boolean
+  nosave?: boolean
 }
 
 interface ScrubberEditor {
@@ -47,6 +48,7 @@ interface ScrubberEditor {
   noscrub?: boolean
   blockId?: string // to detect change of block selection
   cursorMarkCleared?: boolean
+  nosave?: boolean
 }
 
 export interface Scrubber {
@@ -88,9 +90,9 @@ const scrubdown = ( e: MouseEvent, i: number, cm: CMEditor ) => {
   const mousemove = ( e: MouseEvent ) => {
     e.preventDefault ()
     const isfloat = ( sfloat && !e.shiftKey ) || e.altKey
-    // scale to -0.5, 0.5 in screen
-    const dx = ( e.clientX - sx ) / ( window.innerWidth / 2 )
-    const dy = - ( e.clientY - sy ) / ( window.innerHeight / 2 )
+    // scale to approx -0.5, 0.5 in comfortable drag zone
+    const dx = ( e.clientX - sx ) / 384   // some magic numbers...
+    const dy = - ( e.clientY - sy ) / 200
     if ( isfloat ) {
       // FLOAT
       // get dim as approx 10^2 .... 10^-2 .... 10^2
@@ -239,16 +241,21 @@ export module CodeHelper {
   , scrubber?: Scrubber
   ) => {
     let src = source
+    let literals
     if ( scrubber ) {
       scrubber.literals = []
       src = scrubParse ( source, scrubber.literals )
       scrubber.values = scrubber.literals.map ( l => l.value )
+      const { code, errors } = LanguageService.compile ( src, false )
+      return code
     }
-    const { code, errors } = LanguageService.compile ( src )
-    if ( !code ) {
-      throw errors
+    else {
+      const { code, errors } = LanguageService.compile ( src )
+      if ( !code ) {
+        throw errors
+      }
+      return code
     }
-    return code
   }
 
   let updating = false
@@ -277,7 +284,6 @@ export module CodeHelper {
       updating = false
       return
     }
-
 
     for ( let i = 0; i < literals.length; ++i ) {
       const l = literals [ i ]
@@ -329,14 +335,17 @@ export module CodeHelper {
       return
     }
     else {
-      sedit.blockId = block.id
-      cm.setValue ( block.source )
-      // clear marks until we get updated ones
-      const doc = cm.getDoc ()
-      const marks = doc.getAllMarks ()
-      for ( const m of marks ) {
-        m.clear ()
-      }
+      // prevent save while we update the source
+      sedit.nosave = true
+        sedit.blockId = block.id
+        cm.setValue ( block.source || '' )
+        // clear marks until we get updated ones
+        const doc = cm.getDoc ()
+        const marks = doc.getAllMarks ()
+        for ( const m of marks ) {
+          m.clear ()
+        }
+      sedit.nosave = false
     }
   }
 
@@ -413,20 +422,24 @@ export module CodeHelper {
         const loc = doc.getCursor ()
         const before = doc.getRange ( { line: loc.line, ch: loc.ch - 1 }, loc )
         const after = doc.getRange ( loc, { line: loc.line, ch: loc.ch + 1 } )
-        console.log ( JSON.stringify ( [before,after, isLiteral.test(before),isLiteral.test(after)]))
         if ( isLiteral.test ( before ) || isLiteral.test ( after ) ) {
           // ignore
         }
         else {
           // mark and clear
-          console.log ( 'mark' )
           scrubMark ( <CMEditor>cm )
         }
       }
     })
 
     if ( save ) {
-      cm.on ( 'changes' , save )
+      cm.on ( 'changes' , () => {
+        // Do not trigger 'save' while we are updating the
+        // source through setValue.
+        if ( !scrubber.editor.nosave ) {
+          save ()
+        }
+      })
     }
 
     return cm
