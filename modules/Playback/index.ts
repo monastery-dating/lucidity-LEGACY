@@ -1,11 +1,20 @@
 export * from './helper/PlaybackHelper'
+export interface PlaybackSignalsType {
+  mode ( { mode: string } )
+}
+
+import { mode } from './signals/mode'
 
 export const Playback =
 ( options = {} ) => {
   return (module, controller) => {
     module.addState
-    ( { $main: function () {}
-      , $visible: true
+    ( { mode: 'normal'
+      }
+    )
+
+    module.addSignals
+    ( { mode
       }
     )
 

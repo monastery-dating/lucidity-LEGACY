@@ -20,6 +20,7 @@ type NumberArray = number[]
 type Matrix = NumberArray[]
 
 let editor
+let lastmode
 
 export const Playback = Component
 ( { graph: [ 'scene', 'graph' ]
@@ -28,13 +29,14 @@ export const Playback = Component
   // The state has ctrl values for the currently selected block.
   , select: [ '$block']
   , ctrl: [ '$playback', 'ctrl' ]
+  , mode: [ '$playback', 'mode' ]
   , tab: [ '$blocktab' ]
   }
 , ( { state, signals } ) => {
     const w = 320
     const h = 180
     const hair = 6
-    const usedh = 2 * ( 4 + hair ) + h
+    const usedh = state.mode === 'normal' ? 2 * ( 4 + hair ) + h : 0
     const usedw = 2 * ( 4 + hair ) + w
     const portStyle =
     { top: 4 + hair + 'px'
@@ -70,7 +72,7 @@ export const Playback = Component
 
       // TODO: Get project graph and branch with scene...
       update = () => {
-        
+
         try {
           if ( select && select.ownerType === 'scene' ) {
             cache.scrub = select.id
@@ -79,6 +81,10 @@ export const Playback = Component
             cache.scrub = null
           }
           PlaybackHelper.run ( graph, context, cache, helpers )
+          if ( lastmode !== state.mode ) {
+            // force resize
+            PlaybackHelper.init ( graph, context, cache, helpers )
+          }
           // New scrubber is ready: update editor
           if ( editor ) {
             // New marks ready. Update editor.

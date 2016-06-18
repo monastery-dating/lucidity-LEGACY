@@ -127,6 +127,8 @@ export const compile =
   // First check for errors
   let diagnostics = []
   if ( typecheck ) {
+    // Type checking should happen in web worker
+    // and we send back errors with a signal: easy.
     diagnostics =
     // This doesn't seem to give any useful information.
     // [ ...LS.getCompilerOptionsDiagnostics ()

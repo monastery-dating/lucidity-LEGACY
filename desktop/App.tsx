@@ -1,6 +1,7 @@
 import './style.scss'
 import './Workbench/style.scss'
 import { Component } from './Component'
+import { ContextType } from '../modules/context.type'
 import { Editor } from './Editor'
 import { Login } from './Login'
 import { ProjectChooser } from './ProjectChooser'
@@ -24,10 +25,12 @@ const route =
 export const App =
 Component
 ( { route: [ '$route' ]
+  , mode: [ '$playback', 'mode' ]
   }
-, ( { state } ) => {
+, ( { state, signals }: ContextType ) => {
+    const klass = { App: true, [ state.mode || 'normal' ]: true }
 
-    return <div class='App'>
+    return <div class={ klass }>
         <div class='wrap'>{ route ( state.route ) }</div>
         <StatusBar key='StatusBar'></StatusBar>
         <StatusDetail key='StatusDetail'></StatusDetail>

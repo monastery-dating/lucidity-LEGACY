@@ -4,6 +4,7 @@ import { DragDropSignalsType } from './DragDrop'
 import { FactorySignalsType } from './Factory'
 import { LibrarySignalsType } from './Library'
 import { MidiSignalsType } from './Midi'
+import { PlaybackSignalsType } from './Playback'
 import { ProjectSignalsType } from './Project'
 import { SceneSignalsType, SceneHelperType } from './Scene'
 import { StatusSignalsType } from './Status'
@@ -29,6 +30,7 @@ export interface SignalsType {
   $factory: FactorySignalsType
   library: LibrarySignalsType
   midi: MidiSignalsType
+  $playback: PlaybackSignalsType
   project: ProjectSignalsType
   scene: SceneSignalsType
   $status: StatusSignalsType

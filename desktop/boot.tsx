@@ -1,5 +1,6 @@
 // modules
 import { App } from '../modules/App'
+import { setKeySignals } from '../modules/App/actions/bindkeys'
 import { Block } from '../modules/Block'
 import { Code } from '../modules/Code'
 import { Data } from '../modules/Data'
@@ -52,7 +53,7 @@ controller.addModules
   , http: Http ()
   , library: Library ()
   , midi: Midi ()
-  , playback: Playback ()
+  , $playback: Playback ()
   , project: Project ()
   , router
   , scene: Scene ()
@@ -73,5 +74,10 @@ console.warn = ( msg ) => {
   console.trace ()
   warn.call ( console, msg )
 }
+
+setKeySignals
+( { setMode: controller.getSignals ().$playback.mode
+  }
+)
 
 controller.getSignals().app.mounted ()
