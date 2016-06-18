@@ -129,6 +129,7 @@ export module GraphHelper {
       { id: nodeId
       , blockId: node.blockId
       , parent: node.parent
+      , closed: node.closed
       , children
       }
       if ( childrenTypes ) {
@@ -148,6 +149,7 @@ export module GraphHelper {
       { id: nodeId
       , blockId: node.blockId
       , parent: node.parent
+      , closed: node.closed
       , children
       , invalid: true
       , cerr
@@ -243,6 +245,7 @@ export module GraphHelper {
     const node: NodeType =
     { id: nid
     , blockId: block.id
+    , closed: oldnode.closed
     , parent: parentId
     , children: []
     }

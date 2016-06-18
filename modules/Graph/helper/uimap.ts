@@ -5,6 +5,7 @@ import { GraphType
        , NodeType
        , UINodeType, UINodeByIdType
        , UIGraphType
+       , UIArrowType
        , UILayoutType
        , UIPosType
        , UISlotType } from '../types'
@@ -19,10 +20,10 @@ import * as stringhash from 'string-hash'
 /** Compute svg path of a box with up and down slots.
  * The sizes have to be computed first in the 'info' field.
  */
-const path = function
+const path =
 ( boxdef : UINodeType
 , layout : UILayoutType
-) {
+) => {
   const { size, sextra }  = boxdef
   const { us, ds, w, wd, wde, wu, h } = size
   const r    = layout.RADIUS
@@ -114,22 +115,26 @@ const boxPosition =
 
   // get children
   let cheight = 0
-  for ( let i = 0; i < ds + 1; i += 1 ) {
-    const childId = node.children [ i ]
-    const wtonext = ( sextra [ i ] || 0 ) + layout.SPAD + 2 * layout.SLOT
+  if ( node.closed ) {
+    // do nothing
+  }
+  else {
+    for ( let i = 0; i < ds + 1; i += 1 ) {
+      const childId = node.children [ i ]
+      const wtonext = ( sextra [ i ] || 0 ) + layout.SPAD + 2 * layout.SLOT
 
-    if ( childId ) {
-
-      const h = boxPosition
-      ( graph, childId, layout, uigraph
-      , { x, y: ctx.y + dy }
-      )
-      cheight = Math.max ( cheight, h )
-      x += layout.BPAD + uigraph.uiNodeById [ childId ].size.w
-    }
-    else if ( childId === null ) {
-      // empty slot, add padding and click width
-      x += layout.SCLICKW/2 + layout.SPAD + 2 * layout.SLOT
+      if ( childId ) {
+        const h = boxPosition
+        ( graph, childId, layout, uigraph
+        , { x, y: ctx.y + dy }
+        )
+        cheight = Math.max ( cheight, h )
+        x += layout.BPAD + uigraph.uiNodeById [ childId ].size.w
+      }
+      else if ( childId === null ) {
+        // empty slot, add padding and click width
+        x += layout.SCLICKW/2 + layout.SPAD + 2 * layout.SLOT
+      }
     }
   }
 
@@ -137,14 +142,14 @@ const boxPosition =
 }
 
 
-const uimapOne = function
+const uimapOne =
 ( graph: GraphType
 , id: string
 , ghostId: string
 , nodeId: string
 , layout: UILayoutType
 , uigraph: UIGraphType
-) {
+) => {
   uigraph.uiNodeById [ id ] = <UINodeType> { id }
 
   const uibox = uigraph.uiNodeById [ id ]
@@ -261,19 +266,24 @@ const uimapOne = function
 
 
       if ( childId ) {
-        const nodes = uigraph.nodes
-
-        // We push in sextra the delta for slot i
-        const w  = uimapOne ( graph, childId, ghostId, nodeId, layout, uigraph )
-
-        if ( i === ds - 1 ) {
-          // last
-          sextra.push ( w + layout.BPAD - 2 * slotpad )
+        if ( node.closed ) {
+          // should not draw slot
         }
         else {
-          sextra.push ( w + layout.BPAD - slotpad )
+          const nodes = uigraph.nodes
+
+          // We push in sextra the delta for slot i
+          const w  = uimapOne ( graph, childId, ghostId, nodeId, layout, uigraph )
+
+          if ( i === ds - 1 ) {
+            // last
+            sextra.push ( w + layout.BPAD - 2 * slotpad )
+          }
+          else {
+            sextra.push ( w + layout.BPAD - slotpad )
+          }
+          x += w
         }
-        x += w
       }
       else {
         // empty slot
@@ -305,6 +315,7 @@ const uimapOne = function
   uibox.size = size
 
   uibox.path  = path ( uibox, layout )
+  uibox.arrow = node.closed ? layout.ARROW_CLOSED : layout.ARROW_OPEN
   uibox.slots = slots
 
   // draw nodes from child to parent

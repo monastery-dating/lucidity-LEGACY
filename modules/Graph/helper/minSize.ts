@@ -8,18 +8,25 @@ export const minSize =
 , node: NodeType
 , layout: UILayoutType
 ) : UINodeSize => {
-  const ds = block.meta.children
-           // exact children length (and cope for extra detached)
-           ? Math.max
-             ( block.meta.children.length, node.children.length )
-           // always keep a free slot for untyped children
-           : node.children.length + 1
+  let ds
+  if ( node.closed ) {
+    // done
+    ds = 0
+  }
+  else if ( block.meta.children ) {
+   // exact children length (and cope for extra detached)
+   ds = Math.max ( block.meta.children.length, node.children.length )
+  }
+  else {
+   // always keep a free slot for untyped children
+   ds = node.children.length + 1
+  }
   const us = 1 // alwasy show up slot.
   // has update = block.meta.isvoid || block.meta.update ? 1 : 0
 
   const tb = layout.tsizer ( block.name )
 
-  let w : number = tb.width + 2 * layout.TPAD
+  let w : number = 6 * layout.ARROW + tb.width + layout.TPAD
 
   // width down (taken by inlets)
   const wd = layout.RADIUS +
@@ -37,7 +44,7 @@ export const minSize =
   return { cacheName: block.name // cache reference
          , w
          , h: layout.HEIGHT
-         , tx: layout.TPAD
+         , tx: 6 * layout.ARROW
          , ty: layout.HEIGHT / 2 + layout.THEIGHT / 4
          , wd
          , wu

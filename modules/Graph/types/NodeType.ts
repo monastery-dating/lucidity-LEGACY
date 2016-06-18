@@ -9,6 +9,10 @@ export interface NodeType {
   parent?: string    // node id of the parent (null for root)
   children: string[] // node ids of children
 
+  //// UI
+  closed?: boolean // children not shown
+
+  //// Computed
   // When a node is invalid, it is not initialized nor updated.
   invalid?: boolean
 

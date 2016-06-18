@@ -8,6 +8,7 @@ type Matrix = NumberArray[]
 
 export interface BlockSignalsType {
   add ( input: { pos: number, parentId: string, ownerType: string } )
+  arrow ( input: { arrow: { ownerType: string, nodeId: string, closed: boolean } } )
   name ( input: { value: string } )
   controls ( input: { controls: TypeAndLabels[] } )
   select ( input: { select: { ownerType: string, id: string, nodeId: string } } )
@@ -23,6 +24,7 @@ export * from './SlotType'
 
 import * as Model from 'cerebral-model-baobab'
 import { add } from './signals/add'
+import { arrow } from './signals/arrow'
 import { controls } from './signals/controls'
 import { name } from './signals/name'
 import { select } from './signals/select'
@@ -73,6 +75,7 @@ export const Block =
 
     module.addSignals
     ( { add
+      , arrow
       , controls
       , name
       , select

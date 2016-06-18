@@ -343,15 +343,19 @@ export module PlaybackHelper {
   , cache: PlaybackCache = { nodecache: {} }
   , helpers: HelpersContext = {}
   ) => {
-    if ( cache.graph === graph && !cache.scrub ) {
-      // nothing to recompile, update
-      return
+    if ( !cache.scrub ) {
+      if ( cache.graph && cache.graph.blocksById === graph.blocksById ) {
+        // Avoir compilation if blocks did not change ( which they do if we do
+        // any kind of operation: move is remove block / add block, etc.)
+        return
+      }
     }
     // 1. detach if needed
     detachCheck ( graph, cache, context, helpers )
     // 2. compile
     compile ( graph, cache )
     // 3. init
+    // FIXME: Can we improve and only call init on top most changed elements ?
     init ( graph, context, cache, helpers )
     // 4. run
     update ( cache, context )

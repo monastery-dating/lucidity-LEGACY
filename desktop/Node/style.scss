@@ -67,6 +67,23 @@ svg {
     }
   }
 
+  .arrow {
+    fill: none;
+    stroke-width: 2*$lsbo;
+    stroke: rgba( color( wboxl ), 0.5 );
+
+    &.open {
+    }
+
+    &.closed {
+    }
+  }
+  .arrowclick {
+    stroke: none;
+    cursor: pointer;
+    fill: rgba( 0, 0, 0, 0 );
+  }
+
   text {
     pointer-events: none;
     font-size:   getfont(size);
@@ -98,7 +115,7 @@ svg {
   }
 }
 
-path.ghost, .Drag path {
+path.ghost, .Drag path.node {
   stroke: white;
   stroke-dasharray: 5;
   stroke-dashoffset: 0;

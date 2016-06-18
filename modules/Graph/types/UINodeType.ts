@@ -42,6 +42,12 @@ export interface UISlotType {
   plus: string
 }
 
+export interface UIArrowType {
+  path: string
+  click: string // click zone
+  class: { open?: boolean, closed?:boolean, arrow: boolean }
+}
+
 export interface UINodeType {
   type?: string
   name: string
@@ -58,6 +64,7 @@ export interface UINodeType {
   slots: UISlotType[]
   // true if the element is part of the eventual drop
   isghost?: string
+  arrow: UIArrowType
 }
 
 export interface UIDropType {

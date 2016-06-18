@@ -57,6 +57,7 @@ export const Node = Component
                   , [ uinode.className ]: true
                   , ghost: uinode.isghost
                   , invalid: node.invalid
+                  , node: true
                   }
 
     const { click, mousedown, mousemove, mouseup } = DragDropHelper.drag
@@ -78,6 +79,13 @@ export const Node = Component
       }
     )
 
+    const arrowclick = ( e: MouseEvent ) => {
+      e.stopPropagation ()
+
+      signals.block.arrow
+      ( { arrow: { nodeId: node.id, ownerType, closed: !node.closed } } )
+    }
+
     const slotclick = ( e, pos ) => {
       e.stopPropagation ()
 
@@ -88,6 +96,7 @@ export const Node = Component
         }
       )
     }
+    const arrow = uinode.arrow
 
     return <g transform={ transform }>
         <path d={ uinode.path } class={ klass }
@@ -100,6 +109,9 @@ export const Node = Component
         <text x={ uinode.size.tx } y={ uinode.size.ty }>
           { uinode.name }
         </text>
+        <path d={ arrow.path } class={ arrow.class }></path>
+        <path d={ arrow.click }
+          on-click={ arrowclick } class='arrowclick'></path>
         { uinode.slots.map
           ( ( s ) => makeSlot ( s, datainfo, slotclick ) )
         }

@@ -1,4 +1,5 @@
 import { GetTextSizeType } from './GetTextSizeType'
+import { UIArrowType } from './UINodeType'
 
 export interface UILayoutType {
   GRIDH:  number
@@ -6,6 +7,10 @@ export interface UILayoutType {
   THEIGHT: number // text height (should be changed if font changes)
   RADIUS: number
   SLOT:   number
+  ARROW: number
+  ARROW_OPEN:  UIArrowType
+  ARROW_CLOSED: UIArrowType
+  ARROW_CLICK: string
   SPAD:   number
   SCLICKH: number
   SCLICKW: number
