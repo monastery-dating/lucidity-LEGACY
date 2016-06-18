@@ -88,6 +88,7 @@ export const Playback = Component
             lastsize = state.size
             lastmode = state.mode
             PlaybackHelper.init ( graph, context, cache, helpers )
+            PlaybackHelper.update ( cache, context )
           }
           // New scrubber is ready: update editor
           if ( editor ) {

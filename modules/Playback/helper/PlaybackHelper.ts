@@ -315,6 +315,15 @@ export module PlaybackHelper {
 
     // save current graph to compare on detach.
     cache.graph = graph
+
+    const root = graph.nodesById [ rootNodeId ]
+    if ( !root.invalid ) {
+      const main = cache.nodecache [ rootNodeId ].exports.update
+      cache.main = main
+    }
+    else {
+      cache.main = null
+    }
   }
 
   export const init =
@@ -345,16 +354,16 @@ export module PlaybackHelper {
     // 3. init
     init ( graph, context, cache, helpers )
     // 4. run
-    const root = graph.nodesById [ rootNodeId ]
-    if ( !root.invalid ) {
-      const main = cache.nodecache [ rootNodeId ].exports.update
-      if ( main ) {
-        cache.main = main
-        main ( context )
-      }
-    }
-    else {
-      cache.main = null
+    update ( cache, context )
+  }
+
+  export const update =
+  ( cache: PlaybackCache = { nodecache: {} }
+  , context: Object = {} // extra elements for update context
+  ) => {
+    const main = cache.main
+    if ( main ) {
+      main ( context )
     }
   }
 
