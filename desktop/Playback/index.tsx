@@ -20,6 +20,7 @@ type NumberArray = number[]
 type Matrix = NumberArray[]
 
 let editor
+let lastsize
 let lastmode
 
 export const Playback = Component
@@ -29,6 +30,7 @@ export const Playback = Component
   // The state has ctrl values for the currently selected block.
   , select: [ '$block']
   , ctrl: [ '$playback', 'ctrl' ]
+  , size: [ '$playback', 'size' ]
   , mode: [ '$playback', 'mode' ]
   , tab: [ '$blocktab' ]
   }
@@ -81,8 +83,10 @@ export const Playback = Component
             cache.scrub = null
           }
           PlaybackHelper.run ( graph, context, cache, helpers )
-          if ( lastmode !== state.mode ) {
+          if ( lastsize !== state.size || lastmode !== state.mode ) {
             // force resize
+            lastsize = state.size
+            lastmode = state.mode
             PlaybackHelper.init ( graph, context, cache, helpers )
           }
           // New scrubber is ready: update editor

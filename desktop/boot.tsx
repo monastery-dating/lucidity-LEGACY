@@ -76,7 +76,8 @@ console.warn = ( msg ) => {
 }
 
 setKeySignals
-( { setMode: controller.getSignals ().$playback.mode
+( { mode: controller.getSignals ().app.mode
+  , resized: controller.getSignals ().app.resized
   }
 )
 

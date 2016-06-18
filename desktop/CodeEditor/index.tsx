@@ -9,7 +9,7 @@ import 'codemirror/lib/codemirror.css'
 import 'codemirror/theme/bespin.css'
 import 'codemirror/addon/scroll/simplescrollbars.css'
 import 'codemirror/addon/dialog/dialog.css'
-import { debounce } from '../../modules/Block/actions/debounce'
+import { debounce } from '../../modules/Utils'
 let cm = null
 let source
 const ederror = []
@@ -46,7 +46,7 @@ export const CodeEditor = Component
   }
 , ( { props, state, signals }: ContextType ) => {
     const block: BlockType = state.block || {}
-    
+
     const save = () => {
       source = cm.getValue ()
       signals.block.source

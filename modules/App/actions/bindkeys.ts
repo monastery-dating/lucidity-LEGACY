@@ -1,8 +1,10 @@
 import { ActionContextType } from '../../context.type'
 
-let setMode
+let modeSignal
+let resizedSignal
 export const setKeySignals = ( signals ) => {
-  setMode = signals.setMode
+  modeSignal = signals.mode
+  resizedSignal = signals.resized
 }
 
 export const bindkeys =
@@ -21,7 +23,7 @@ export const bindkeys =
   // 'Alt-s' in code editor: toggle scrubber
   }
 
-  const appkeys = ( e: KeyboardEvent ) => {
+  const keydown = ( e: KeyboardEvent ) => {
     const editoropen = state.get ( [ '$block' ] )
     const cmd = ( e.shiftKey ? 'Shift-' : '' )
               + ( e.ctrlKey ? 'Ctrl-' : '' )
@@ -34,9 +36,14 @@ export const bindkeys =
       doit ()
       const mode = fullscreen ? 'fullscreen' : ( mixedtype ? 'mixed' : 'normal' )
       e.preventDefault ()
-      setMode ( { mode } )
+      modeSignal ( { mode } )
     }
   }
 
-  window.addEventListener ( 'keydown', appkeys )
+  const resize = ( e: UIEvent ) => {
+    resizedSignal ( { size: { width: window.innerWidth, height: window.innerHeight } } )
+  }
+
+  window.addEventListener ( 'keydown', keydown )
+  window.addEventListener ( 'resize', resize )
 }
