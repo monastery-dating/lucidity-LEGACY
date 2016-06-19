@@ -1,5 +1,4 @@
 import { BlockType } from '../../Block'
-import * as LanguageService from './LanguageService'
 
 import * as ts from 'typescript'
 import * as CodeMirror from 'codemirror'
@@ -9,10 +8,18 @@ import 'codemirror/mode/javascript/javascript'
 import 'codemirror/keymap/vim'
 import 'codemirror/addon/scroll/simplescrollbars'
 import 'codemirror/addon/runmode/runmode'
+import { TranspileCallback } from './types'
 
-export const SCRUBBER_VAR = '$scrub$'
+const worker = new Worker ( 'codeWorker.js' )
 
-const UNARY_AFTER = [ '=', '(', '?', ':', '[' ]
+let workerclbk
+worker.addEventListener ( 'message', ( e ) => {
+  if ( workerclbk ) {
+    // e.data === TranspileCallbackArgs
+    workerclbk ( e.data )
+    workerclbk = null
+  }
+})
 
 interface ScrubberOptions {
   scrubber: Scrubber
@@ -24,13 +31,6 @@ interface CMEditor extends CodeMirror.Editor {
 
 interface RunModeCallback {
   ( text: string, klass: string ): void
-}
-
-export interface LiteralScrub {
-  value: number
-  text: string
-  ch: number
-  line: number
 }
 
 // FIXME: Replace all 'scrubber' options with 'lucid'.
@@ -147,115 +147,13 @@ const scrubdown = ( e: MouseEvent, i: number, cm: CMEditor ) => {
 
 export module CodeHelper {
 
-  const replaceWithScrubber =
-  ( literals: number[]
-  , value
-  ): Object => {
-    const idx = literals.push ( value ) - 1
-    return `${SCRUBBER_VAR}[${idx}]`
-  }
-
-  export const scrubParse =
+  export const compile =
   ( source: string
-  , literals: LiteralScrub[]
-  , mode: string = 'javascript'
-  ): string => {
-    const output = []
-    let line = 0
-    let ch = 0
-    const CM = <any>CodeMirror // this is annoying
-    CM.runMode ( source, mode, ( text, klass ) => {
-      if ( text === '\n' ) {
-        ++line
-        ch = 0
-        output.push ( text )
-      }
-      else {
-        if ( klass === 'number' ) {
-          // const foo = 4 - 5
-          const idx = literals.push ( { text, line, ch, value: parseFloat ( text ) } ) - 1
-          let p = output.length - 1
-          let uch = ''
-          let unarypos = null
-          let getMinus = true
-
-          while ( true ) {
-            const op = output [ p ]
-            if ( op[ 0 ] === ' ' ) {
-              // whitespace
-              if ( getMinus ) {
-                uch = op + uch
-              }
-
-              --p
-            }
-            else if ( getMinus ) {
-              if ( op === '-' ) {
-                getMinus = false
-                unarypos = p
-                uch = op + uch
-                --p
-              }
-              else {
-                // not unary minus
-                break
-              }
-            }
-            else if ( UNARY_AFTER.indexOf ( op ) >= 0 ) {
-              break
-            }
-            else {
-              unarypos = null
-              break
-            }
-          }
-
-          const s = `${SCRUBBER_VAR}[${idx}]`
-          if ( unarypos ) {
-            // unary minus
-            while ( output.length > unarypos ) {
-              output.pop ()
-            }
-            output.push ( s )
-            // make unary
-            const l = literals [ idx ]
-            l.value = - l.value
-            l.text = uch + l.text
-            l.ch -= uch.length
-          }
-          else {
-            output.push ( s )
-          }
-        }
-        else {
-          output.push ( text )
-        }
-        ch += text.length
-      }
-    })
-    return output.join ( '' )
-  }
-
-  export const transpile =
-  ( source: string
-  , scrubber?: Scrubber
+  , done: TranspileCallback
   ) => {
-    let src = source
-    let literals
-    if ( scrubber ) {
-      scrubber.literals = []
-      src = scrubParse ( source, scrubber.literals )
-      scrubber.values = scrubber.literals.map ( l => l.value )
-      const { code, errors } = LanguageService.compile ( src, false )
-      return code
-    }
-    else {
-      const { code, errors } = LanguageService.compile ( src )
-      if ( !code ) {
-        throw errors
-      }
-      return code
-    }
+    // Call 'done' with TranspileCallbackArgs when compilation is finished
+    workerclbk = done
+    worker.postMessage ( source )
   }
 
   let updating = false

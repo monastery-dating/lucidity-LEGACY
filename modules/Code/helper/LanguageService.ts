@@ -1,5 +1,9 @@
 import * as ts from 'typescript'
 
+import { SCRUBBER_VAR, CompilerError } from './types'
+
+const UNARY_AFTER = [ '=', '(', '?', ':', '[' ]
+
 interface SourceMap {
   [ key: string ]: string
 }
@@ -108,14 +112,91 @@ export const create =
 
 const LS = create ()
 
-interface CompilerError {
-  message: string
-  loc: { line: number, ch: number }
-}
 
 interface CompileReturn {
   code?: string
   errors?: CompilerError[]
+}
+
+export const scrubParse =
+( source: string
+, literals: LiteralScrub[]
+, mode: string = 'javascript'
+): string => {
+  const output = []
+  let line = 0
+  let ch = 0
+  const CM = <any>CodeMirror // this is annoying
+  CM.runMode ( source, mode, ( text, klass ) => {
+    if ( text === '\n' ) {
+      ++line
+      ch = 0
+      output.push ( text )
+    }
+    else {
+      if ( klass === 'number' ) {
+        // const foo = 4 - 5
+        const idx = literals.push ( { text, line, ch, value: parseFloat ( text ) } ) - 1
+        let p = output.length - 1
+        let uch = ''
+        let unarypos = null
+        let getMinus = true
+
+        while ( true ) {
+          const op = output [ p ]
+          if ( op[ 0 ] === ' ' ) {
+            // whitespace
+            if ( getMinus ) {
+              uch = op + uch
+            }
+
+            --p
+          }
+          else if ( getMinus ) {
+            if ( op === '-' ) {
+              getMinus = false
+              unarypos = p
+              uch = op + uch
+              --p
+            }
+            else {
+              // not unary minus
+              break
+            }
+          }
+          else if ( UNARY_AFTER.indexOf ( op ) >= 0 ) {
+            break
+          }
+          else {
+            unarypos = null
+            break
+          }
+        }
+
+        const s = `${SCRUBBER_VAR}[${idx}]`
+        if ( unarypos ) {
+          // unary minus
+          while ( output.length > unarypos ) {
+            output.pop ()
+          }
+          output.push ( s )
+          // make unary
+          const l = literals [ idx ]
+          l.value = - l.value
+          l.text = uch + l.text
+          l.ch -= uch.length
+        }
+        else {
+          output.push ( s )
+        }
+      }
+      else {
+        output.push ( text )
+      }
+      ch += text.length
+    }
+  })
+  return output.join ( '' )
 }
 
 export const compile =
@@ -129,6 +210,7 @@ export const compile =
   if ( typecheck ) {
     // Type checking should happen in web worker
     // and we send back errors with a signal: easy.
+    // http://www.html5rocks.com/en/tutorials/workers/basics/
     diagnostics =
     // This doesn't seem to give any useful information.
     // [ ...LS.getCompilerOptionsDiagnostics ()
