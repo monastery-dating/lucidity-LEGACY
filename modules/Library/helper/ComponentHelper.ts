@@ -1,8 +1,6 @@
 import { makeId } from '../../Factory'
 import { SceneType } from '../../Scene'
-import { GraphType, NodeHelper } from '../../Graph'
-
-const rootNodeId = NodeHelper.rootNodeId
+import { GraphType, rootNodeId } from '../../Graph'
 
 export module ComponentHelper {
   export const create =

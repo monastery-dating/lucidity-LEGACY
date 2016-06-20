@@ -1,7 +1,7 @@
 import { describe } from '../../Test'
 import { GraphType } from '../../Graph'
-import { GraphHelper } from '../../Graph/helper/GraphHelper'
-import { PlaybackHelper } from './PlaybackHelper'
+import { createGraph } from '../../Graph/helper/GraphHelper'
+import { compileGraph, makeContext, runGraph, NodeCache } from './PlaybackHelper'
 import { PlaybackControl } from './ControlHelper'
 
 declare var require: any
@@ -13,7 +13,7 @@ const GRAPH = require ( './test/graph.json.txt' )
 [ cache ]       ==> calls init
 */
 
-describe ( 'PlaybackHelper.compile', ( it ) => {
+describe ( 'compileGraph', ( it ) => {
   /* TODO: create graph here, eventually with
   const graph = GraphHelper.fromYAML
   ( `name: foo
@@ -39,7 +39,7 @@ describe ( 'PlaybackHelper.compile', ( it ) => {
 
   const graph: GraphType = JSON.parse ( GRAPH )
   const cache: any = {}
-  PlaybackHelper.compile ( graph, cache )
+  compileGraph ( graph, cache )
   // node cache
   const nca: any = {}
   for ( const k in graph.nodesById ) {
@@ -49,13 +49,13 @@ describe ( 'PlaybackHelper.compile', ( it ) => {
   }
 
   it ( 'should run init', ( assert ) => {
-    PlaybackHelper.init ( graph, cache, {}, { require } )
+    initGraph ( graph, cache, {}, { require } )
     assert.equal ( nca.cache.cache, { foo: 1 } )
   })
 
   it ( 'should reuse cache in init', ( assert ) => {
-    PlaybackHelper.init ( graph, cache, {}, { require } )
-    PlaybackHelper.init ( graph, cache, {}, { require } )
+    initGraph ( graph, cache, {}, { require } )
+    initGraph ( graph, cache, {}, { require } )
     assert.equal ( nca.cache.cache, { foo: 1 } )
     assert.equal ( 1, counter )
   })
@@ -74,8 +74,8 @@ describe ( 'PlaybackHelper.compile', ( it ) => {
   })
 })
 
-describe ( 'PlaybackHelper.context', ( it ) => {
-  const context = PlaybackHelper.context ( { foo: 'bar' } )
+describe ( 'context', ( it ) => {
+  const context = makeContext ( { foo: 'bar' } )
 
   it ( 'should be immutable', ( assert ) => {
     assert.throws ( () => { context.foo = 'baz' } )
@@ -92,8 +92,13 @@ describe ( 'PlaybackHelper.context', ( it ) => {
 
 })
 
-describe ( 'PlaybackHelper.controls Slider ', ( it ) => {
-  const graph = GraphHelper.create
+describe ( 'PlaybackHelper.controls Slider ', ( it, setupDone ) => {
+  let graph: GraphType
+  const cache = { nodecache: {} }
+  const context: any = { test: {} }
+  let nc: NodeCache
+
+  createGraph
   ( 'main'
   , `export const init =
      ( { context, control } ) => {
@@ -102,10 +107,17 @@ describe ( 'PlaybackHelper.controls Slider ', ( it ) => {
        })
      }`
   )
-  const cache = { nodecache: {} }
-  const context: any = { test: {} }
-  PlaybackHelper.run ( graph, context, cache )
-  const nc = cache.nodecache [ 'n0' ]
+  .then ( ( g ) => {
+    graph = g
+
+    runGraph ( graph, context, cache )
+    nc = cache.nodecache [ 'n0' ]
+
+    setupDone ()
+  })
+  .catch ( ( errors ) => {
+    console.log ( `Errors in PlaybackHelper controls test setup.`, errors )
+  })
 
   it ( 'should extract controls', ( assert ) => {
     const ctrl: PlaybackControl = nc.controls [ 0 ]
@@ -126,8 +138,13 @@ describe ( 'PlaybackHelper.controls Slider ', ( it ) => {
 
 })
 
-describe ( 'PlaybackHelper.controls Pad', ( it ) => {
-  const graph = GraphHelper.create
+describe ( 'PlaybackHelper.controls Pad', ( it, setupDone ) => {
+  let graph: GraphType
+  const cache = { nodecache: {} }
+  const context: any = { test: {} }
+  let nc: NodeCache
+
+  createGraph
   ( 'main'
   , `export const init =
      ( { context, control } ) => {
@@ -137,10 +154,17 @@ describe ( 'PlaybackHelper.controls Pad', ( it ) => {
        })
      }`
   )
-  const cache = { nodecache: {} }
-  const context: any = { test: {} }
-  PlaybackHelper.run ( graph, context, cache )
-  const nc = cache.nodecache [ 'n0' ]
+  .then ( ( g ) => {
+    graph = g
+
+    runGraph ( graph, context, cache )
+    nc = cache.nodecache [ 'n0' ]
+
+    setupDone ()
+  })
+  .catch ( ( errors ) => {
+    console.log ( `Errors in PlaybackHelper controls Pad test setup.`, errors )
+  })
 
   it ( 'should extract controls', ( assert ) => {
     const ctrl: PlaybackControl = nc.controls [ 0 ]
@@ -162,8 +186,12 @@ describe ( 'PlaybackHelper.controls Pad', ( it ) => {
 
 })
 
-describe ( 'PlaybackHelper.controls many', ( it ) => {
-  const graph = GraphHelper.create
+describe ( 'PlaybackHelper.controls many', ( it, setupDone ) => {
+  let graph: GraphType
+  const cache = { nodecache: {} }
+  const context: any = { test: {} }
+  let nc: NodeCache
+  createGraph
   ( 'main'
   , `export const init =
      ( { context, control } ) => {
@@ -179,13 +207,19 @@ describe ( 'PlaybackHelper.controls many', ( it ) => {
        })
      }`
   )
-  const cache = { nodecache: {} }
-  const context: any = { test: {} }
-  PlaybackHelper.run ( graph, context, cache )
-  // simulate change
-  const graph2: GraphType = { nodesById: graph.nodesById, blocksById: graph.blocksById }
-  PlaybackHelper.run ( graph2, context, cache )
-  const nc = cache.nodecache [ 'n0' ]
+  .then ( ( g ) => {
+    graph = g
+    // simulate change
+    const graph2: GraphType = { nodesById: graph.nodesById, blocksById: graph.blocksById }
+    runGraph ( graph2, context, cache )
+    nc = cache.nodecache [ 'n0' ]
+    runGraph ( graph, context, cache )
+
+    setupDone ()
+  })
+  .catch ( ( errors ) => {
+    console.log ( `Errors in PlaybackHelper controls many test setup.`, errors )
+  })
 
   it ( 'should extract many controls', ( assert ) => {
     const ctrl: PlaybackControl = nc.controls [ 0 ]

@@ -1,4 +1,6 @@
-export const debounce = ( ms: number ) => {
+import { SignalAction } from '../../context.type'
+
+export const debounce = ( ms: number ): SignalAction => {
   let done
   let last
 

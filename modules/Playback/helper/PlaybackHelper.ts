@@ -1,9 +1,10 @@
 import { BlockByIdType } from '../../Block'
-import { CodeHelper, Scrubber, SCRUBBER_VAR } from '../../Code/helper/CodeHelper'
-import { GraphType, NodeHelper } from '../../Graph'
+import { Scrubber } from '../../Code/helper/CodeHelper'
+import { GraphType, rootNodeId } from '../../Graph'
 import { MidiHelper } from '../../Midi'
 import { Block, Helpers, Control } from 'lucidity'
 import { ControlHelper , PlaybackControl } from './ControlHelper'
+import { SCRUBBER_VAR } from '../../Code'
 
 const midi = MidiHelper.midiState ()
 
@@ -13,11 +14,8 @@ export const MAIN_CONTEXT =
 { midi: 'midi.State'
 }
 
-const rootNodeId = NodeHelper.rootNodeId
 
-const DUMMY =
-{ 'text:string': 'dummy.emptyText'
-}
+const DUMMY_UPDATE = () => {}
 
 export interface PlaybackRender {
   (): void
@@ -40,17 +38,15 @@ interface UpdateFunc {
 
 type NodeExports = Block
 
-interface NodeCache {
+export interface NodeCache {
   // Functions defined by js code
-  exports: NodeExports
-  // Cached values from 'init' calls. Only exists if there is an
+  exported: NodeExports
+  // Cache used in 'init' calls. Only exists if there is an
   // init function (removed if init is removed).
   cache?: Object
-  // to check cache.
+  // to check function cache.
   js: string
-  // scrubbing
-  scrubjs?: string // js source for scrubbing
-  scrubjsOrig?: string // to check cache.
+  // Live value update link
   scrubber?: Scrubber
   // We save the init context so that we can use it when detaching
   helpers?: Helpers
@@ -75,329 +71,327 @@ export interface PlaybackCache {
   graph?: GraphType
 }
 
-export module PlaybackHelper {
 
-  const updateCache =
-  ( graph: GraphType
-  , cache: PlaybackCache
-  ) => {
-    const nodecache = cache.nodecache
-    const scrub = cache.scrub
+const updateCache =
+( graph: GraphType
+, cache: PlaybackCache
+) => {
+  const nodecache = cache.nodecache
+  const scrub = cache.scrub
 
-    for ( const nodeId in graph.nodesById ) {
+  for ( const nodeId in graph.nodesById ) {
 
-      const node = graph.nodesById [ nodeId ]
-      if ( !node ) {
-        throw ( `Error in graph: missing '${nodeId}'.`)
-      }
-      const block = graph.blocksById [ node.blockId ]
+    const node = graph.nodesById [ nodeId ]
+    if ( !node ) {
+      throw ( `Error in graph: missing '${nodeId}'.`)
+    }
+    const block = graph.blocksById [ node.blockId ]
 
-      let n = nodecache [ nodeId ]
+    let n = nodecache [ nodeId ]
 
-      if ( node.invalid ) {
-        // ignore
-        continue
-      }
+    if ( node.invalid ) {
+      // ignore
+      n.exported = { update: DUMMY_UPDATE }
+      continue
+    }
+    
+    if ( !n ) {
+      n = nodecache [ nodeId ] = <NodeCache> { exported: {} }
+      n.scrubber = { values: [], literals: [], js: null }
+    }
 
-      let js = block.js
+    let js = block.js
+    let changed = n.js !== js
 
-      if ( node.blockId === scrub ) {
-        if ( !n.scrubjs || block.source !== n.scrubjsOrig ) {
-          // update scrubjs
-          n.scrubjsOrig = block.source
-          n.scrubber = {}
-          n.scrubjs = CodeHelper.transpile ( block.source, n.scrubber )
-        }
-        // Use special 'scrubbing' js.
-        js = n.scrubjs
+    if ( node.blockId === scrub && block.scrub ) {
+      // Use special 'scrubbing' js.
+      js = block.scrub.js
+      if ( changed ) {
         // Update scrubber
-        Object.assign ( cache.scrubber, n.scrubber )
+        n.scrubber.values = [ ...block.scrub.values ]
+        n.scrubber.literals = block.scrub.literals
       }
-
-      if ( !n || n.js !== js ) {
-        if ( !n ) {
-          n = nodecache [ nodeId ] = <NodeCache> { exports: {} }
-        }
-        else {
-          // clear
-          n.exports = {}
-        }
-
-        const exports = n.exports
-        try {
-          const codefunc = new Function ( 'exports', SCRUBBER_VAR, js )
-          // We now run the code. The exports is the cache.
-          const scrub = n.scrubber ? n.scrubber.values : null
-          codefunc ( exports, scrub )
-          n.js = block.js
-        }
-        catch ( err ) {
-          // TODO: proper error handling
-          console.log ( `${block.name} error: ${ err }`)
-
-        }
-        if ( block.meta.update && !exports.update ) {
-          exports.update = () => { console.log ( `${block.name} error: has update type '${block.meta.update}' but no update function.`) }
-        }
-      }
-    }
-    // Now every updating node is ready for runtime
-  }
-
-  const detach =
-  ( cache: PlaybackCache
-  , oldgraph: GraphType
-  , newgraph: GraphType
-  , helpers: HelpersContext
-  , nodeId: string
-  , parentDisconnected: boolean
-  ) => {
-    const onode = oldgraph.nodesById [ nodeId ]
-    const nnode = newgraph.nodesById [ nodeId ]
-    let detached = parentDisconnected
-                        || !nnode // = removed
-                        || nnode.parent !== onode.parent
-
-    // Parse children
-    for ( const childId of onode.children ) {
-      if ( childId ) {
-        detach ( cache, oldgraph, newgraph, helpers, childId, detached )
-      }
+      Object.assign ( cache.scrubber, n.scrubber )
     }
 
-    // detach after children (depth-first)
-    if ( detached ) {
-      const nc = cache.nodecache [ nodeId ]
-      const init = nc.exports.init
-      if ( init ) {
-        // clear previous controls
-        nc.controls = []
-        try {
-          init ( nc.helpers )
-        }
-        catch (err) {
-          // FIXME: proper error handling
-          console.log ( 'detach error:', err )
-        }
-        // clear cache
-        nc.cache = {}
-        // clear controls
-        nc.controls = []
-      }
-    }
-  }
+    if ( changed ) {
+      // clear
+      n.exported = {}
 
-  const initDo =
-  ( cache: PlaybackCache
-  , graph: GraphType
-  , context: Context
-  , ohelpers: HelpersContext
-  , nodeId: string
-  ) => {
-    const nodecache = cache.nodecache
-    const nc = nodecache [ nodeId ]
-    const init = nc.exports.init
-    const nodesById = graph.nodesById
-    const node = nodesById [ nodeId ]
-
-    let subctx: Context = context
-    if ( init ) {
-      const helpers = Object.assign ( {}, ohelpers )
-      if ( !nc.cache ) {
-        // cache passed in init call
-        nc.cache = {}
-        nc.control = ControlHelper.make ( nc )
-      }
-      helpers.cache = nc.cache
-      helpers.context = context
-      helpers.control = nc.control
-      let children: any = []
-      if ( node.all ) {
-        const list = node.all.map ( ( childId ) => {
-          return nodecache [ childId ].exports.update
-        })
-        children.all = () => {
-          for ( const f of list ) {
-            f ()
-          }
-        }
-
-      }
-      else if ( node.childrenm ) {
-        children = node.childrenm.map ( ( childId ) => {
-          return nodecache [ childId ].exports.update
-        })
-      }
-
-      helpers.children = children
-
-      nc.controls = []
-      nc.helpers = helpers
-
-      if ( cache.scrub === node.blockId ) {
-        cache.scrubber.init = () => {
-          init ( helpers )
-        }
-      }
-
+      const exported = n.exported
       try {
-        const r = init ( helpers )
-        if ( r ) {
-          if ( typeof r !== 'object' ) {
-            console.log ( `Init return value must be an object` )
-          }
-          else {
-            subctx = context.set ( r )
-          }
-        }
+        const codefunc = new Function ( 'exports', SCRUBBER_VAR, js )
+        // We now run the code. The exports is the cache.
+        const scrub = n.scrubber ? n.scrubber.values : null
+        codefunc ( exported, scrub )
+        n.js = js
       }
       catch ( err ) {
-        // TODO: capture missing required assets and libraries
-        // and do proper error handling for init code.
-        console.log ( 'init error:', err )
-        // abort init operation
-        return
+        // TODO: Proper error handling. These errors should not
+        // happen that much since we do all the type checking.
+        console.log ( `${block.name} error: ${ err }`)
       }
-    }
-    else if ( nc.cache ) {
-      // No init function = clear cached context and init cache
-      delete nc.cache
-      delete nc.helpers
-    }
-
-    const block = graph.blocksById [ node.blockId ]
-    // Trigger init in children with sub context
-    for ( const childId of node.children ) {
-      if ( childId ) {
-        initDo
-        ( cache
-        , graph
-        , subctx
-        , ohelpers
-        , childId
-        )
+      if ( block.meta.update && !exported.update ) {
+        exported.update = () => { console.log ( `${block.name} error: has update type '${block.meta.update}' but no update function.`) }
       }
     }
   }
-
-  export const detachCheck =
-  ( graph : GraphType
-  , cache: PlaybackCache
-  , context: Object // extra elements for update context
-  , helpers: HelpersContext
-  ) => {
-    // 1. detach if needed
-    if ( cache.graph && cache.graph !== graph ) {
-      const h = Object.assign ( {}, helpers, { detached: true, children: [] })
-      detach
-      ( cache
-      , cache.graph
-      , graph
-      , h
-      , rootNodeId
-      , false
-     )
-    }
-  }
-
-  export const compile =
-  ( graph : GraphType
-  , cache: PlaybackCache
-  ) => {
-    const output : string[] = []
-
-    if ( !cache.nodecache ) {
-      cache.nodecache = {}
-    }
-
-    // make sure to update functions for valid nodes if their source file changed.
-    updateCache ( graph, cache )
-
-    // save current graph to compare on detach.
-    cache.graph = graph
-
-    const root = graph.nodesById [ rootNodeId ]
-    if ( !root.invalid ) {
-      const main = cache.nodecache [ rootNodeId ].exports.update
-      cache.main = main
-    }
-    else {
-      cache.main = null
-    }
-  }
-
-  export const init =
-  ( graph : GraphType
-  , context: Object // extra elements for update context
-  , cache: PlaybackCache
-  , helpers: HelpersContext
-  ) => {
-    const c = mainContext ( context )
-    const h = Object.assign ( {}, helpers )
-    initDo ( cache, graph, c, h, rootNodeId )
-  }
-
-  export const run =
-  ( graph : GraphType
-  , context: Object = {} // extra elements for update context
-  , cache: PlaybackCache = { nodecache: {} }
-  , helpers: HelpersContext = {}
-  ) => {
-    if ( !cache.scrub ) {
-      if ( cache.graph && cache.graph.blocksById === graph.blocksById ) {
-        // Avoir compilation if blocks did not change ( which they do if we do
-        // any kind of operation: move is remove block / add block, etc.)
-        return
-      }
-    }
-    // 1. detach if needed
-    detachCheck ( graph, cache, context, helpers )
-    // 2. compile
-    compile ( graph, cache )
-    // 3. init
-    // FIXME: Can we improve and only call init on top most changed elements ?
-    init ( graph, context, cache, helpers )
-    // 4. run
-    update ( cache, context )
-  }
-
-  export const update =
-  ( cache: PlaybackCache = { nodecache: {} }
-  , context: Object = {} // extra elements for update context
-  ) => {
-    const main = cache.main
-    if ( main ) {
-      main ( context )
-    }
-  }
-
-  class Context {
-    constructor ( b: Object, n: Object ) {
-      Object.assign ( this, b, n )
-      Object.freeze ( this )
-    }
-
-    set ( n: Object ) {
-      return new Context ( this, n )
-    }
-  }
-
-  export const context =
-  ( base: Object ) => {
-    return <any> new Context ( {}, base )
-  }
-
-  export const mainContext =
-  ( extra: Object = {} ) => {
-    return <any> new Context ( { midi }, extra )
-  }
-
-  // context type
-  export const mainContextProvide = context ( MAIN_CONTEXT )
-
-  export const defaultMeta = Object.freeze
-  ( { provide: Object.freeze ( {} )
-    , expect: Object.freeze ( {} )
-    }
-  )
+  // Now every updating node is ready for runtime
 }
+
+const detach =
+( cache: PlaybackCache
+, oldgraph: GraphType
+, newgraph: GraphType
+, helpers: HelpersContext
+, nodeId: string
+, parentDisconnected: boolean
+) => {
+  const onode = oldgraph.nodesById [ nodeId ]
+  const nnode = newgraph.nodesById [ nodeId ]
+  let detached = parentDisconnected
+                      || !nnode // = removed
+                      || nnode.parent !== onode.parent
+
+  // Parse children
+  for ( const childId of onode.children ) {
+    if ( childId ) {
+      detach ( cache, oldgraph, newgraph, helpers, childId, detached )
+    }
+  }
+
+  // detach after children (depth-first)
+  if ( detached ) {
+    const nc = cache.nodecache [ nodeId ]
+    const init = nc.exported.init
+    if ( init ) {
+      // clear previous controls
+      nc.controls = []
+      try {
+        init ( nc.helpers )
+      }
+      catch (err) {
+        // FIXME: proper error handling
+        console.log ( 'detach error:', err )
+      }
+      // clear cache
+      nc.cache = {}
+      // clear controls
+      nc.controls = []
+    }
+  }
+}
+
+const initDo =
+( cache: PlaybackCache
+, graph: GraphType
+, context: Context
+, ohelpers: HelpersContext
+, nodeId: string
+) => {
+  const nodecache = cache.nodecache
+  const nc = nodecache [ nodeId ]
+  const init = nc.exported.init
+  const nodesById = graph.nodesById
+  const node = nodesById [ nodeId ]
+
+  let subctx: Context = context
+  if ( init ) {
+    const helpers = Object.assign ( {}, ohelpers )
+    if ( !nc.cache ) {
+      // cache passed in init call
+      nc.cache = {}
+      nc.control = ControlHelper.make ( nc )
+    }
+    helpers.cache = nc.cache
+    helpers.context = context
+    helpers.control = nc.control
+    let children: any = []
+    if ( node.all ) {
+      const list = node.all.map ( ( childId ) => {
+        return nodecache [ childId ].exported.update
+      })
+      children.all = () => {
+        for ( const f of list ) {
+          f ()
+        }
+      }
+
+    }
+    else if ( node.childrenm ) {
+      children = node.childrenm.map ( ( childId ) => {
+        return nodecache [ childId ].exported.update
+      })
+    }
+
+    helpers.children = children
+
+    nc.controls = []
+    nc.helpers = helpers
+
+    if ( cache.scrub === node.blockId ) {
+      cache.scrubber.init = () => {
+        init ( helpers )
+      }
+    }
+
+    try {
+      const r = init ( helpers )
+      if ( r ) {
+        if ( typeof r !== 'object' ) {
+          console.log ( `Init return value must be an object` )
+        }
+        else {
+          subctx = context.set ( r )
+        }
+      }
+    }
+    catch ( err ) {
+      // TODO: capture missing required assets and libraries
+      // and do proper error handling for init code.
+      console.log ( 'init error:', err )
+      // abort init operation
+      return
+    }
+  }
+  else if ( nc.cache ) {
+    // No init function = clear cached context and init cache
+    delete nc.cache
+    delete nc.helpers
+  }
+
+  const block = graph.blocksById [ node.blockId ]
+  // Trigger init in children with sub context
+  for ( const childId of node.children ) {
+    if ( childId ) {
+      initDo
+      ( cache
+      , graph
+      , subctx
+      , ohelpers
+      , childId
+      )
+    }
+  }
+}
+
+export const detachCheck =
+( graph : GraphType
+, cache: PlaybackCache
+, context: Object // extra elements for update context
+, helpers: HelpersContext
+) => {
+  // 1. detach if needed
+  if ( cache.graph && cache.graph !== graph ) {
+    const h = Object.assign ( {}, helpers, { detached: true, children: [] })
+    detach
+    ( cache
+    , cache.graph
+    , graph
+    , h
+    , rootNodeId
+    , false
+   )
+  }
+}
+
+export const compileGraph =
+( graph : GraphType
+, cache: PlaybackCache
+) => {
+  const output : string[] = []
+
+  if ( !cache.nodecache ) {
+    cache.nodecache = {}
+  }
+
+  // make sure to update functions for valid nodes if their source file changed.
+  updateCache ( graph, cache )
+
+  // save current graph to compare on detach.
+  cache.graph = graph
+
+  const root = graph.nodesById [ rootNodeId ]
+  if ( !root.invalid ) {
+    const main = cache.nodecache [ rootNodeId ].exported.update
+    cache.main = main
+  }
+  else {
+    cache.main = null
+  }
+}
+
+export const initGraph =
+( graph : GraphType
+, context: Object // extra elements for update context
+, cache: PlaybackCache
+, helpers: HelpersContext
+) => {
+  const c = mainContext ( context )
+  const h = Object.assign ( {}, helpers )
+  initDo ( cache, graph, c, h, rootNodeId )
+}
+
+export const runGraph =
+( graph : GraphType
+, context: Object = {} // extra elements for update context
+, cache: PlaybackCache = { nodecache: {} }
+, helpers: HelpersContext = {}
+) => {
+  if ( !cache.scrub ) {
+    if ( cache.graph && cache.graph.blocksById === graph.blocksById ) {
+      // Avoir compilation if blocks did not change ( which they do if we do
+      // any kind of operation: move is remove block / add block, etc.)
+      return
+    }
+  }
+  // 1. detach if needed
+  detachCheck ( graph, cache, context, helpers )
+  // 2. compile
+  compileGraph ( graph, cache )
+  // 3. init
+  // FIXME: Can we improve and only call init on top most changed elements ?
+  initGraph ( graph, context, cache, helpers )
+  // 4. run
+  callGraph ( cache, context )
+}
+
+export const callGraph =
+( cache: PlaybackCache = { nodecache: {} }
+, context: Object = {} // extra elements for update context
+) => {
+  const main = cache.main
+  if ( main ) {
+    main ( context )
+  }
+}
+
+class Context {
+  constructor ( b: Object, n: Object ) {
+    Object.assign ( this, b, n )
+    Object.freeze ( this )
+  }
+
+  set ( n: Object ) {
+    return new Context ( this, n )
+  }
+}
+
+export const makeContext =
+( base: Object ) => {
+  return <any> new Context ( {}, base )
+}
+
+export const mainContext =
+( extra: Object = {} ) => {
+  return <any> new Context ( { midi }, extra )
+}
+
+// context type
+export const mainContextProvide = makeContext ( MAIN_CONTEXT )
+
+export const defaultMeta = Object.freeze
+( { provide: Object.freeze ( {} )
+  , expect: Object.freeze ( {} )
+  }
+)

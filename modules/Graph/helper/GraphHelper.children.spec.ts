@@ -1,13 +1,10 @@
 import { describe } from '../../Test/runner'
 import { GraphType } from '../types'
-import { GraphHelper } from './GraphHelper'
-import { NodeHelper } from './NodeHelper'
-import { BlockHelper } from '../../Block'
+import { createGraph, slipGraph, insertGraph } from './GraphHelper'
+import { rootNodeId } from './NodeHelper'
+import { rootBlockId } from '../../Block/helper/BlockHelper'
 
 import { Immutable as IM } from './Immutable'
-
-const rootNodeId = NodeHelper.rootNodeId
-const rootBlockId = BlockHelper.rootBlockId
 
 // [ main: [():string], ():void ]
 // [ bar: [():number], ():string ]
@@ -79,25 +76,68 @@ const traverse =
   return res
 }
 
-describe ( 'GraphHelper.check of children', ( it ) => {
+describe ( 'GraphHelper.check of children', ( it, setupDone ) => {
+  // ======= async setup =======
   // This graph has two objects and will be inserted in graph
-  // between root and 'foo'
-  // [ bar ]
-  // [ baz ] [ bong ]
-  const baz = GraphHelper.create ( 'baz', SOURCE_baz )
-  const bong = GraphHelper.create ( 'bong', SOURCE_bong )
-  let bar = GraphHelper.create ( 'bar', SOURCE_bar )
-  bar = GraphHelper.insert ( bar, rootNodeId, 0, baz )
-  bar = GraphHelper.insert ( bar, rootNodeId, 1, bong )
+  // between main and foo
+  let baz: GraphType
+  let bong: GraphType
+  let bar: GraphType
 
-  // [ main ]
-  // [ foo ]
-  let graph1 = GraphHelper.create ( 'main', SOURCE_main )
-  const foo = GraphHelper.create ( 'foo', SOURCE_foo )
-  graph1 = GraphHelper.insert ( graph1, rootNodeId, 0, foo )
+  let main: GraphType
+  let foo: GraphType
+  let give: GraphType
+
+  let main2: GraphType
+  const nid: any = {}
+
+  Promise.all
+  ( [ createGraph ( 'baz', SOURCE_baz )
+      .then ( ( g ) => { baz = g } )
+    , createGraph ( 'bong', SOURCE_bong )
+      .then ( ( g ) => { bong = g } )
+    , createGraph ( 'bar', SOURCE_bar )
+      .then ( ( g ) => { bar = g } )
+    , createGraph ( 'main', SOURCE_main )
+      .then ( ( g ) => { main = g } )
+    , createGraph ( 'foo', SOURCE_foo )
+      .then ( ( g ) => { foo = g } )
+    , createGraph ( 'give', SOURCE_give )
+      .then ( ( g ) => { give = g } )
+    ]
+  )
+  .then ( () => {
+    bar = insertGraph ( bar, rootNodeId, 0, baz )
+    bar = insertGraph ( bar, rootNodeId, 1, bong )
+    // [ bar ]
+    // [ baz ] [ bong ]
+
+    main = insertGraph ( main, rootNodeId, 0, foo )
+    // [ main ]
+    // [ foo ]
+
+    main2 = slipGraph ( main, rootNodeId, 0, bar )
+    // [ main ]
+    // [ bar ]
+    // [ baz ] [ bong ]
+    // [ foo ]
+
+    for ( const k in main2.nodesById ) {
+      const node = main2.nodesById [ k ]
+      const name = main2.blocksById [ node.blockId ].name
+      nid [ name ] = k
+    }
+
+    setupDone ()
+  })
+  .catch ( ( err ) => {
+    console.log ( 'Error in GraphHelper.children.spec setup', err )
+  })
+  // ======= async done  =======
+
 
   it ( 'should disable invalid node', ( assert ) => {
-    const node = graph1.nodesById [ 'n0' ]
+    const node = main.nodesById [ 'n0' ]
     assert.equal ( node.invalid, true )
     assert.equal
     ( node.serr
@@ -106,32 +146,18 @@ describe ( 'GraphHelper.check of children', ( it ) => {
     )
   })
 
-  const graph2 = GraphHelper.slip ( graph1, rootNodeId, 0, bar )
-  // [ main ]
-  // [ bar ]
-  // [ baz ] [ bong ]
-  // [ foo ]
-
-  const nid: any = {}
-  for ( const k in graph2.nodesById ) {
-    const node = graph2.nodesById [ k ]
-    const name = graph2.blocksById [ node.blockId ].name
-    nid [ name ] = k
-  }
-
   it ( 'should check on update', ( assert ) => {
-    const node = graph2.nodesById [ nid.foo ]
+    const node = main2.nodesById [ nid.foo ]
     assert.same ( node.invalid, undefined )
   })
 
   it ( 'should invalidate detached node', ( assert ) => {
-    const node = graph2.nodesById [ nid.bong ]
+    const node = main2.nodesById [ nid.bong ]
     assert.same ( node.invalid, true )
   })
 
   it ( 'should steal child from children', ( assert ) => {
-    const give = GraphHelper.create ( 'give', SOURCE_give )
-    const graph3 = GraphHelper.slip ( graph2, nid.baz, 0, give )
+    const graph3 = slipGraph ( main2, nid.baz, 0, give )
     // [ main ]
     // [ bar  ]
     // [ baz  ] [ bong ]

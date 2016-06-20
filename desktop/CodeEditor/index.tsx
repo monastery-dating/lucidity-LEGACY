@@ -2,7 +2,8 @@ import './style.scss'
 import { BlockType } from '../../modules/Block'
 import { Component } from '../Component'
 import { ContextType } from '../../modules/context.type'
-import { CodeHelper } from '../../modules/Code/helper/CodeHelper'
+import { sourceChanged, makeEditor } from '../../modules/Code/helper/CodeHelper'
+import { CompilerError } from '../../modules/Code/helper/types'
 
 // CodeMirror CSS
 import 'codemirror/lib/codemirror.css'
@@ -14,7 +15,7 @@ let cm = null
 let source
 const ederror = []
 
-let serrors
+let serrors: CompilerError[]
 
 const debounceErrors = debounce ( 1000 )
 const doShowErrors = () => {
@@ -26,7 +27,7 @@ const doShowErrors = () => {
       msg.className = 'error'
       ederror.push
       ( doc.addLineWidget
-        ( v.loc.line, msg, { coverGutter: false, noHScroll: true } )
+        ( v.line, msg, { coverGutter: false, noHScroll: true } )
       )
     }
     serrors = null
@@ -72,7 +73,7 @@ export const CodeEditor = Component
         cm = false
         setTimeout
         ( () => {
-            cm = CodeHelper.editor
+            cm = makeEditor
             ( elm
             , block.source || ''
             , save
@@ -85,7 +86,7 @@ export const CodeEditor = Component
 
     if ( source !== block.source && cm ) {
       source = block.source
-      CodeHelper.sourceChanged ( cm, block )
+      sourceChanged ( cm, block )
     }
 
     return <div class='CodeEditor' style={ props.style }>

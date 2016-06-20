@@ -2,15 +2,23 @@
 // script.
 //
 // This whole script is used by CodeHelper async 'compile' function.
+// Remove normal browser self types. We are in the worker.
+const me = <any>self
+if ( typeof document === 'undefined' ) {
+  // codemirror.js tests 'document.createRange'
+  me [ 'document' ] = { createElement ( tag ) { return { setAttribute () {} } } }
+  me [ 'window' ] = {}
+}
 
 import * as LanguageService from './LanguageService'
 import { TranspileCallbackArgs, ScrubCode } from './types'
 
-self.addEventListener ( 'message', ( e ) => {
-  const source: string = e.data
+// We export compile in case we want to work without a worker
+export const compile =
+( source: string ): TranspileCallbackArgs => {
   // Compile source and return compilation result
   const scrub: ScrubCode = { js: '', values: [], literals: [] }
-  const { code, errors } = LanguageService.compile ( source )
+  const { js, errors } = LanguageService.compile ( source )
   if ( errors ) {
     // do not compile scrubber
   }
@@ -20,7 +28,15 @@ self.addEventListener ( 'message', ( e ) => {
   }
 
   // Done. Post result back.
-  const data: TranspileCallbackArgs = { code, scrub, errors }
+  const data: TranspileCallbackArgs = { js, scrub, errors }
 
-  self.postMessage ( data, [])
+  return data
+}
+
+self.addEventListener ( 'message', ( e ) => {
+  const { id, source } = e.data
+  const data = compile ( source )
+  me.postMessage ( { id, data } )
 })
+
+me.postMessage ( { id: 'ready' } )

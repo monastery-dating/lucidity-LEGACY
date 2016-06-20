@@ -2,24 +2,21 @@
 
 0. Remove controls ?
 
-1. Make scrubber better by using CodeMirror native hook to make numbers active (like scrubby). But for this we need the typescript range... Try to figure out if we can do all that we do with esprima/escodegen but with typescript.
-
-Make changing 0xff0000 numbers like 3 numbers: 0x [ff] [00] [00].
+1. Make changing 0xff0000 numbers like 3 numbers: 0x [ff] [00] [00].
 
 2. If an object becomes invalid: detach.
 
-3. What out for 'null' values in children in graph. Should only happen if the node
+3. Whatch out for 'null' values in children in graph. Should only happen if the node
 is typed.
 
 4. Control performance: check after migration to Cerebral state-tree...
 
+5. Show scrollbars on graph views (but style them).
 
-HAD TO MODIFY escodegen LIBRARY SOURCE:
-// exports.version = require('./package.json').version;
-
-5. Refuse to change block selection if current code is invalid = not saved.
-
-6. Show scrollbars on graph views (but style them).
+6. Move LanguageService to a Web Worker:
+  0. Make codeWorker.js webpack bundle.
+  1. Async 'source' action: 1. post message on source change
+  2. When worker has result: 2. continue callback ()
 
 # DATA
 

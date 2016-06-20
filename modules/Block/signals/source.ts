@@ -12,14 +12,14 @@ import { update } from '../../Data/actions/update'
 export const source: SignalType =
 [ debounce ( 100 ) // Wait before we do anything: the user is typing
 , sourceAction
-, copy ( 'input:/errors', 'state:/$editor.errors' )
-, when ( 'input:/doc' )
-, { true: // Valid source
-    [ unset ( 'state:/$editor.errors' ) // Immediate clear of errors
+, { success:
+    [ unset ( 'state:/$editor.errors' )
     , update // Optimistic write in state
     , debounce ( 500 ) // Wait for more inactivity before saving ?
     , ...save
     ]
-  , false: []
+  , error:
+    [ copy ( 'input:/errors', 'state:/$editor.errors' )
+    ]
   }
 ]

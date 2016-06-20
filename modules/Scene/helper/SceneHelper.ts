@@ -1,50 +1,53 @@
-import { BlockHelper, BlockType } from '../../Block'
+import { BlockType } from '../../Block'
+import { rootBlockId } from '../../Block/helper/BlockHelper'
 import { makeId } from '../../Factory'
 import { GraphType } from '../../Graph'
-import { GraphHelper } from '../../Graph/helper/GraphHelper'
+import { createGraph } from '../../Graph/helper/GraphHelper'
 import { SceneType } from '../../Scene'
 
-const rootBlockId = BlockHelper.rootBlockId
-
-export module SceneHelper {
-
-  export const create =
-  () : SceneType => {
-    const _id = makeId ()
-    const graph = GraphHelper.create ()
-    return Object.freeze
-    ( { _id
-      , type: 'scene'
-      , name: 'New scene'
-      , graph
-      , blockId: rootBlockId
-      }
-    )
-  }
-
-  export const select =
-  ( state
-  , user
-  , scene : SceneType
-  ) => {
-
-    if ( !scene ) {
-      return Object.assign
-      ( {}
-      , user
-      , { sceneId: null
-        }
+export const createScene =
+() : Promise<SceneType> => {
+  const _id = makeId ()
+  const p = new Promise<SceneType>
+  ( ( resolve, reject ) => {
+    createGraph ()
+    .then ( ( graph ) => {
+      resolve
+      ( Object.freeze
+        ( { _id
+          , type: 'scene'
+          , name: 'New scene'
+          , graph
+          , blockId: rootBlockId
+          }
+        )
       )
-    }
+    })
+    .catch ( reject )
+  })
 
+  return p
+}
+
+export const selectScene =
+( state
+, user
+, scene : SceneType
+) => {
+
+  if ( !scene ) {
     return Object.assign
     ( {}
     , user
-    , { sceneId: scene._id
+    , { sceneId: null
       }
     )
   }
 
+  return Object.assign
+  ( {}
+  , user
+  , { sceneId: scene._id
+    }
+  )
 }
-
-export type SceneHelperType = typeof SceneHelper

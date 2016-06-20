@@ -1,14 +1,14 @@
 import { describe } from '../../Test'
-import { CodeHelper } from './CodeHelper'
+import { compileCode } from './CodeHelper'
 
-describe ( 'CodeHelper.compile', ( it ) => {
+describe ( 'compileCode', ( it ) => {
 
   it ( 'should return errors on invalid code', ( assert, done ) => {
-    CodeHelper.compile ( 'x', ( { code, errors } ) => {
-      assert.same ( code, undefined )
+    compileCode ( 'x', ( { js, errors } ) => {
+      assert.same ( js, undefined )
 
       assert.equal
-      ( { message: "Cannot find name 'x'.", loc: { line: 0, ch: 0 } }
+      ( { message: "Cannot find name 'x'.", line: 0, ch: 0 }
       , errors [ 0 ]
       )
     })
@@ -17,15 +17,15 @@ describe ( 'CodeHelper.compile', ( it ) => {
 
   it ( 'should recognize lucidity', ( assert ) => {
     const src = "import { Meta } from 'lucidity'"
-    CodeHelper.compile ( src, ( { code, errors } ) => {
+    compileCode ( src, ( { js, errors } ) => {
       assert.same ( errors, undefined )
-      assert.equal ( code, '"use strict";\n' )
+      assert.equal ( js, '"use strict";\n' )
     })
   })
 
   it ( 'should recognize browser libs', ( assert ) => {
     const src = "window.boom()"
-    CodeHelper.compile ( src, ( { code, errors } ) => {
+    compileCode ( src, ( { js, errors } ) => {
       assert.equal
       ( "Property 'boom' does not exist on type 'Window'."
       , errors [ 0 ].message
@@ -34,7 +34,7 @@ describe ( 'CodeHelper.compile', ( it ) => {
   })
 })
 
-describe ( 'CodeHelper.compile scrub', ( it ) => {
+describe ( 'compileCode scrub', ( it ) => {
   const src =
   `// This is a comment
    export const init =
@@ -53,7 +53,7 @@ describe ( 'CodeHelper.compile scrub', ( it ) => {
    }
   `
 
-  CodeHelper.compile ( src, ( { scrub } ) => {
+  compileCode ( src, ( { scrub } ) => {
     const literals = scrub.literals
 
     it ( 'should get values with unary minus', ( assert ) => {

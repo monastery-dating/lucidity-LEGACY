@@ -1,8 +1,9 @@
 import * as ts from 'typescript'
-
-import { SCRUBBER_VAR, CompilerError } from './types'
+import { CompilerError, LiteralScrub, SCRUBBER_VAR } from './types'
+import { CodeMirror } from './CodeMirror'
 
 const UNARY_AFTER = [ '=', '(', '?', ':', '[' ]
+const SCRUB_PREFIX = `declare var ${SCRUBBER_VAR}: number[]\n`
 
 interface SourceMap {
   [ key: string ]: string
@@ -114,7 +115,7 @@ const LS = create ()
 
 
 interface CompileReturn {
-  code?: string
+  js?: string
   errors?: CompilerError[]
 }
 
@@ -196,7 +197,13 @@ export const scrubParse =
       ch += text.length
     }
   })
-  return output.join ( '' )
+  const newsource = output.join ( '' )
+  const { errors, js } = compile ( SCRUB_PREFIX + newsource )
+  // should not generate compilation errors
+  if ( errors ) {
+    console.log ( 'scrubParse compilation error', errors )
+  }
+  return js
 }
 
 export const compile =
@@ -225,10 +232,10 @@ export const compile =
       ts.flattenDiagnosticMessageText ( d.messageText, '\n' )
       if ( d.file ) {
         const { line, character } = d.file.getLineAndCharacterOfPosition ( d.start )
-        return { loc: { line, ch: character }, message }
+        return { line, ch: character, message }
       }
       else {
-        return { loc: { line: 0, ch: 0 }, message }
+        return { line: 0, ch: 0, message }
       }
     })
     return { errors }
@@ -237,7 +244,16 @@ export const compile =
   const output = LS.getEmitOutput ( 'main.ts' )
   if (!output.emitSkipped) {
     // valid
-    const code = output.outputFiles [ 0 ].text
-    return { code }
+    const js = output.outputFiles [ 0 ].text
+    return { js }
+  }
+  else {
+    // FIXME: Improve this error message
+    const error =
+    { message: 'Could not compile (emitSkipped).'
+    , line: 0
+    , ch: 0
+    }
+    return { errors: [ error ] }
   }
 }

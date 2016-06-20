@@ -1,7 +1,7 @@
 import { describe } from '../../Test/runner'
 import { BlockType, BlockByIdType } from '../BlockType'
 import { Meta } from 'lucidity'
-import { BlockHelper } from './BlockHelper'
+import { createBlock, normalizeType, extractMeta, updateBlock } from './BlockHelper'
 
 const SOURCE_A = `
 import { Update, Meta } from 'lucidity'
@@ -60,79 +60,103 @@ const meta: Meta =
 , update: '( a: number ):some.OtherType'
 }
 
-describe ( 'BlockHelper.create', ( it ) => {
+describe ( 'createBlock', ( it, setupDone ) => {
+  let block: BlockType
+  createBlock ( 'hello' , SOURCE_A )
+  .then ( ( b ) => {
+    block = b
+    setupDone ()
+  })
+
   it ( 'should set new _id', ( assert ) => {
-    const node = BlockHelper.create ( 'hello' , SOURCE_A )
-    assert.equal ( typeof node.id, 'string' )
+    assert.equal ( typeof block.id, 'string' )
   })
 
   it ( 'should set name', ( assert ) => {
-    const node = BlockHelper.create ( 'hello' , SOURCE_A )
-    assert.equal ( node.name, 'hello' )
+    assert.equal ( block.name, 'hello' )
   })
 
   it ( 'should set source', ( assert ) => {
-    const node = BlockHelper.create ( 'hello' , SOURCE_A )
-    assert.equal ( node.source, SOURCE_A )
+    assert.equal ( block.source, SOURCE_A )
   })
 
-  it ( 'should compile js', ( assert ) => {
-    const node = BlockHelper.create ( 'hello' , `interface Foo {}\nexport const update = () => 'hop'`)
-    assert.equal
-    ( node.js
-    , "\"use strict\";\nexports.update = () => 'hop';\n"
+  it ( 'should compile js', ( assert, done ) => {
+    createBlock
+    ( 'hello'
+    , `interface Foo {}\nexport const update = () => 'hop'`
     )
+    .then ( ( block ) => {
+      assert.equal
+      ( block.js
+      , "\"use strict\";\nexports.update = () => 'hop';\n"
+      )
+      done ()
+    })
   })
 
   it ( 'should be immutable', ( assert ) => {
-    const node = BlockHelper.create ( 'hello' , SOURCE_A )
-    assert.throws ( () => { node.name = 'foobar' } )
+    assert.throws ( () => { block.name = 'foobar' } )
   })
 
   it ( 'should parse source', ( assert ) => {
-    const node = BlockHelper.create ( 'hello' , SOURCE_A )
-
-    assert.equal ( typeof node.js, 'string' )
+    assert.equal ( typeof block.js, 'string' )
+    assert.equal ( typeof extractMeta, 'function' )
 
     assert.equal
-    ( node.meta
-    , BlockHelper.parseMeta ( { meta, update () {} } )
+    ( block.meta
+    , extractMeta ( { meta, update () {} } )
     )
   })
 
   it ( 'should set isvoid', ( assert ) => {
-    const node = BlockHelper.create ( 'voodoo', 'export const update = () => {}')
-    assert.same ( node.meta.isvoid, true )
+    assert.same ( block.meta.isvoid, true )
   })
 })
 
-describe ( 'BlockHelper.update', ( it ) => {
-  const n = BlockHelper.create ( 'hello' , SOURCE_A )
-  const node = BlockHelper.update
-  ( n, { name: 'new name', source: SOURCE_B } )
+describe ( 'updateBlock', ( it ) => {
+  const update = ( changes, clbk ) => {
+    createBlock ( 'hello' , SOURCE_A )
+    .then ( ( b ) => {
+      updateBlock ( b, changes )
+      .then ( ( b2 ) => {
+        clbk ( null, b2, b )
+      })
+      .catch ( clbk )
+    })
+  }
 
-  it ( 'should set name', ( assert ) => {
-    assert.equal ( node.name , 'new name' )
+  it ( 'should set name', ( assert, done ) => {
+    update ( { name: 'new name', source: SOURCE_B }, ( err, block ) => {
+      assert.equal ( block.name , 'new name' )
+      done ()
+    })
   })
 
-  it ( 'should set source', ( assert ) => {
-    assert.equal ( node.source , SOURCE_B )
+  it ( 'should set source', ( assert, done ) => {
+    update ( { name: 'new name', source: SOURCE_B }, ( err, block ) => {
+      assert.equal ( block.source , SOURCE_B )
+      done ()
+    })
   })
 
-  it ( 'should parse source', ( assert ) => {
-    assert.notSame ( node.js, n.js )
-    assert.same ( node.meta.update, undefined )
-    assert.same ( node.meta.isvoid, true )
+  it ( 'should parse source', ( assert, done ) => {
+    update ( { name: 'new name', source: SOURCE_B }, ( err, b2, b1 ) => {
+      assert.notSame ( b2.js, b1.js )
+      assert.same ( b2.meta.update, undefined )
+      assert.same ( b2.meta.isvoid, true )
+      done ()
+    })
   })
 
-  it ( 'should set isvoid', ( assert ) => {
-    const node = BlockHelper.update ( n, { source: 'export const update = () => {}' } )
-    assert.same ( node.meta.isvoid, true )
+  it ( 'should set isvoid', ( assert, done ) => {
+    update ( { source: 'export const update = () => {}'}, ( err, block ) => {
+      assert.same ( block.meta.isvoid, true )
+    })
   })
 })
 
-describe ( 'BlockHelper.normalizeType', ( it ) => {
-  const n = BlockHelper.normalizeType
+describe ( 'normalizeType', ( it ) => {
+  const n = normalizeType
 
   it ( 'should remove white space and variable names', ( assert ) => {
     assert.same
@@ -163,8 +187,8 @@ describe ( 'BlockHelper.normalizeType', ( it ) => {
 
 })
 
-describe ( 'BlockHelper.parseMeta', ( it ) => {
-  const m = BlockHelper.parseMeta ( { meta, update () {} } )
+describe ( 'extractMeta', ( it ) => {
+  const m = extractMeta ( { meta, update () {} } )
 
   it ( 'should normalize children types', ( assert ) => {
     assert.equal
@@ -175,7 +199,7 @@ describe ( 'BlockHelper.parseMeta', ( it ) => {
 
   it ( 'should set all on children: all', ( assert ) => {
     const meta2 = Object.assign ( {}, meta, { children: 'all' } )
-    const m = BlockHelper.parseMeta ( { meta: meta2, update () {} } )
+    const m = extractMeta ( { meta: meta2, update () {} } )
     assert.equal
     ( m.provide
     , { foo: 'some.FooType' }

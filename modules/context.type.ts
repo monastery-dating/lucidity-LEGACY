@@ -6,7 +6,7 @@ import { LibrarySignalsType } from './Library'
 import { MidiSignalsType } from './Midi'
 import { PlaybackSignalsType } from './Playback'
 import { ProjectSignalsType } from './Project'
-import { SceneSignalsType, SceneHelperType } from './Scene'
+import { SceneSignalsType } from './Scene'
 import { StatusSignalsType } from './Status'
 import { SyncSignalsType } from './Sync'
 import { UserSignalsType } from './User'
@@ -42,7 +42,6 @@ export interface SignalsType {
 // during testing.
 interface ServicesType {
   data?: DataServicesType
-  scene?: SceneHelperType
   router?: RouterServicesType
 }
 
@@ -72,13 +71,13 @@ export interface ContextType {
 }
 
 // Generic types
-interface Action {
-  ( context: ContextType ): void
+export interface SignalAction {
+  ( context: ActionContextType ): void
 }
 
 interface Path {
   [ key: string ]: SignalType
 }
 
-type SignalElement = Action | Path
+type SignalElement = SignalAction | Path
 export type SignalType = SignalElement[]

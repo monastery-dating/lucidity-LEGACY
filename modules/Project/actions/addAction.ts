@@ -1,5 +1,5 @@
 import { ActionContextType } from '../../context.type'
-import { ProjectHelper } from '../../Project'
+import { createProject } from '../../Project'
 
 export const addAction =
 ( { state
@@ -7,24 +7,27 @@ export const addAction =
   , output
   } : ActionContextType
 ) => {
+  createProject ()
+  .then ( ( { project, scene } ) => {
+    const docs = [ scene, project ]
 
-  const { project, scene }= ProjectHelper.create ()
-  const docs = [ scene, project ]
-
-  // This is a flag that will set name editing after db object
-  // is selected.
-  state.set ( [ '$factory', 'editing' ], project._id )
-
-  // add to user's projects
-  const user = state.get ( [ 'user' ] )
-  const projects = [ project._id, ...( user.projects || []) ]
-  docs.push
-  ( Object.assign
-    ( {}
-    , user
-    , { projectId: project._id, sceneId: scene._id }
+    // add to user's projects
+    const user = state.get ( [ 'user' ] )
+    const projects = [ project._id, ...( user.projects || []) ]
+    docs.push
+    ( Object.assign
+      ( {}
+      , user
+      , { projectId: project._id, sceneId: scene._id }
+      )
     )
-  )
 
-  output ( { docs } )
+    output.success ( { docs, projectId: project._id } )
+  })
+  .catch ( ( errors ) => {
+    console.log ( errors )
+    output.error ( { errors } )
+  })
 }
+
+addAction [ 'async' ] = true

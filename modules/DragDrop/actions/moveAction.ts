@@ -1,14 +1,12 @@
 import { GraphType } from '../../Graph'
-import { GraphHelper } from '../../Graph/helper/GraphHelper'
-import { NodeHelper } from '../../Graph/helper/NodeHelper'
+import { insertGraph, slipGraph } from '../../Graph/helper/GraphHelper'
+import { nextNodeId } from '../../Graph/helper/NodeHelper'
 import { DragMoveType, DragDropType, DragStartType } from '../types'
 import { ActionContextType } from '../../context.type'
 
 const movep = [ '$dragdrop', 'move' ]
 const dropp = [ '$dragdrop', 'drop' ]
 const dragp = [ '$dragdrop', 'drag' ]
-
-const nextNodeId = NodeHelper.nextNodeId
 
 export const moveAction =
 ( { state
@@ -66,7 +64,7 @@ export const moveAction =
 
       if ( apos ) {
         // should have a way to set nodeId to 'drop' here or mark as ghost...
-        graph = GraphHelper.insert
+        graph = insertGraph
         ( graph, nodeId, pos, child )
         nodeId = null
       }
@@ -81,7 +79,7 @@ export const moveAction =
         if ( parentId ) {
           const parent = graph.nodesById [ parentId ]
           pos = parent.children.indexOf ( nodeId )
-          graph = GraphHelper.slip
+          graph = slipGraph
           ( graph, parent.id, pos, child )
         }
         else {

@@ -1,5 +1,5 @@
-import { BlockHelper, BlockByIdType } from '../../Block'
-import { Immutable as IM, GraphHelper, NodeHelper } from '../../Graph'
+import { BlockByIdType } from '../../Block'
+import { Immutable as IM, rootNodeId } from '../../Graph'
 import { ComponentHelper } from '../../Library'
 import { ActionContextType } from '../../context.type'
 import { DragStartType, DragDropType } from '../'
@@ -7,7 +7,6 @@ import { DragStartType, DragDropType } from '../'
 const dragp = [ '$dragdrop', 'drag' ]
 const movep = [ '$dragdrop', 'move' ]
 const dropp = [ '$dragdrop', 'drop' ]
-const rootNodeId = NodeHelper.rootNodeId
 
 export const dropAction =
 ( { state

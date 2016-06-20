@@ -1,41 +1,48 @@
 import { GraphType } from '../Graph'
 import { SlotType } from './SlotType'
+import { ScrubCode } from '../Code'
+import { StringMap } from 'lucidity'
 
 export interface BlockTypeChanges {
   name?: string
   source?: string
 }
 
-interface TypeMap {
-  [ key: string ]: string
-}
 
 export interface PlaybackMetaType {
   // context changes
-  expect?: TypeMap
+  expect?: StringMap
   // one for each slot
-  provide?: TypeMap
+  provide?: StringMap
   all?: boolean // set to true if children: 'all'
   isvoid?: boolean // set to true if it has an update but not type for update
   children?: string[]
   update?: string // normalized type
 }
 
-export interface BlockSourceInfo {
-  // The following elements should be deduced
-  // from the source code
-  js: string // compiled source
-  meta: PlaybackMetaType
+export interface SourceCode {
+  name: string
+  source: string
+  type: string
+}
+
+export interface CompiledCode {
+  js?: string
+  scrub?: ScrubCode
+  meta?: PlaybackMetaType
+}
+
+export interface BlockSourceInfo extends CompiledCode {
+  // Extra compilation information.
+  compiled?: Map<string, CompiledCode>
 }
 
 export interface BlockType extends BlockSourceInfo {
   id: string
   name: string
   source: string
-
-  // If this is true, we have a sub-graph
-  // It creates a graph that behaves like an object (a way to group nodes)
-  // graph?: GraphType
+  // Extra file sources
+  sources?: Map<string, SourceCode>
 }
 
 export interface BlockByIdType {

@@ -24,7 +24,7 @@ interface ItCallback {
 }
 
 interface DescribeCallback {
-  ( it: ItCallback )
+  ( it: ItCallback, done?: Done )
 }
 
 interface Test {
@@ -37,14 +37,18 @@ interface Test {
 interface Suite {
   name: string
   tests: Test[]
+  // We must wait for async setup to finish
+  wait?: boolean
 }
 
 const suites: Suite[] = []
+// This is set when the test 'run' needs to wait for async setup.
+let startTest = () => {}
 
-export const describe = function
+export const describe =
 ( name: string
 , clbk: DescribeCallback
-) {
+) => {
   const suite: Suite = { name, tests: [] }
   suites.push ( suite )
   const it = ( testname: string, test: TestFunction ) => {
@@ -56,7 +60,18 @@ export const describe = function
       }
     )
   }
-  clbk ( it )
+  if ( clbk.length === 2 ) {
+    // async
+    suite.wait = true
+    const done = () => {
+      suite.wait = false
+      startTest ()
+    }
+    clbk ( it, done )
+  }
+  else {
+    clbk ( it )
+  }
 }
 
 const defaultSuccess : OnSuccess =
@@ -264,7 +279,33 @@ export const run = function
   let gen
   const f = () => runNext ( gen, f )
   gen = testGen ( onfinish, opts || {}, f )
-  f ()
+  let waitdone = false
+  startTest = () => {
+    for ( const s of suites ) {
+      if ( s.wait ) {
+        // wait some more
+        return
+      }
+    }
+    // no more wait
+    waitdone = true
+    startTest = () => {}
+    f ()
+  }
+  // wait timeout
+  setTimeout ( () => {
+      if ( !waitdone ) {
+        for ( const s of suites ) {
+          if ( s.wait ) {
+            // FIXME: Add proper error on this suite
+            console.log ( `Suite '${s.name}' is blocking setup (done not called before ${DEFAULT_TIMEOUT}ms).`)
+          }
+        }
+      }
+    }
+  , DEFAULT_TIMEOUT * 4 // One timeout for all suites
+  )
+  startTest ()
 }
 
 const testGen = function*

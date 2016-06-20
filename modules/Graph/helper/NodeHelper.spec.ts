@@ -1,11 +1,11 @@
 import { describe } from '../../Test/runner'
 import { NodeType, NodeByIdType } from '../types'
-import { NodeHelper } from './NodeHelper'
+import { createNode, nextNodeId } from './NodeHelper'
 
-describe ( 'NodeHelper.create', ( it ) => {
+describe ( 'createNode', ( it ) => {
 
     it ( 'should set defaults', ( assert ) => {
-        const node = NodeHelper.create ( 'blockxx', 'n0', 'pa')
+        const node = createNode ( 'blockxx', 'n0', 'pa')
         assert.equal
         ( node
         , { id: 'n0'
@@ -18,7 +18,7 @@ describe ( 'NodeHelper.create', ( it ) => {
     )
 
     it ( 'should set values', ( assert ) => {
-        const node = NodeHelper.create
+        const node = createNode
         ( 'blockxx' , 'id99', 'n0', [ 'id7', 'id8' ] )
         assert.equal
         ( node
@@ -34,19 +34,19 @@ describe ( 'NodeHelper.create', ( it ) => {
   }
 )
 
-describe ( 'NodeHelper.nextNodeId', ( it ) => {
+describe ( 'nextNodeId', ( it ) => {
     it ( 'should return id0 on empty map', ( assert ) => {
         assert.equal
-        ( NodeHelper.nextNodeId ( {} )
+        ( nextNodeId ( {} )
         , 'n0'
         )
       }
     )
 
     it ( 'should return first free in graph', ( assert ) => {
-        const n = NodeHelper.create ( 'foo', '', '' )
+        const n = createNode ( 'foo', '', '' )
         assert.equal
-        ( NodeHelper.nextNodeId ( <NodeByIdType> { n0: n, n3: n } )
+        ( nextNodeId ( <NodeByIdType> { n0: n, n3: n } )
         , 'n1'
         )
       }

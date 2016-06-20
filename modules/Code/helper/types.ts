@@ -9,23 +9,50 @@ export interface LiteralScrub {
 }
 
 
+export interface CMOptions {
+  lucidity: EditorLucidityOptions
+}
+
+export interface CMEditor extends CodeMirror.Editor {
+  options: CMOptions
+}
+
+interface RunModeCallback {
+  ( text: string, klass: string ): void
+}
+
+interface EditorLucidityOptions {
+  scrubber: Scrubber
+  lock?: string
+  noscrub?: boolean
+  blockId?: string // to detect change of block selection
+  cursorMarkCleared?: boolean
+  nosave?: boolean
+}
+
+export interface Scrubber extends ScrubCode {
+  // Call init on block if value changes
+  init?: any
+}
+
 export interface ScrubCode {
   js: string
   values: number[]
   literals: LiteralScrub[]
 }
 
-interface CompilerError {
+export interface CompilerError {
   message: string
-  loc: { line: number, ch: number }
+  line: number
+  ch: number
 }
 
 export interface TranspileCallbackArgs {
-  code: string
+  js: string
   scrub: ScrubCode
   errors: CompilerError[]
 }
 
 export interface TranspileCallback {
-  ( { code, scrub, errors }: TranspileCallbackArgs )
+  ( { js, scrub, errors }: TranspileCallbackArgs )
 }

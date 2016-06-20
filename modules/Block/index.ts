@@ -17,7 +17,6 @@ export interface BlockSignalsType {
   source ( input: { value: string } )
 }
 
-export * from './helper'
 export * from './signals/add'
 export * from './BlockType'
 export * from './SlotType'

@@ -27,7 +27,6 @@ module.exports =
     // , 'cerebral-addons'
     ////
     // playback
-    , 'typescript'
     , 'three'
     ]
   }

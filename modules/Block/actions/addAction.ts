@@ -2,11 +2,10 @@ import { ActionContextType } from '../../context.type'
 import { GraphType } from '../../Graph'
 import { Immutable as IM } from '../../Graph/helper/Immutable'
 // FIXME: why is this 'undefined' if imported from 'Graph' above ?
-import { GraphHelper } from '../../Graph/helper/GraphHelper'
-import { BlockHelper } from '../../Block/helper/BlockHelper'
+import { createGraph, insertGraph } from '../../Graph/helper/GraphHelper'
+import { rootBlockId } from '../../Block/helper/BlockHelper'
 import { BlockAddOperationType } from '../'
-
-const rootBlockId = BlockHelper.rootBlockId
+import { MAIN_SOURCE } from '../../Block/helper/BlockHelper'
 
 export const addAction =
 ( { state
@@ -17,9 +16,27 @@ export const addAction =
   const { pos, parentId, ownerType, componentId } =
   <BlockAddOperationType>input
   const owner = state.get ( [ ownerType ] )
+
+  const doit = ( child ) => {
+    const graph = insertGraph ( owner.graph, parentId, pos, child )
+    const ownerupdate = Object.assign ( {}, owner, { graph } )
+
+    let editname
+    if ( state.get ( '$block' ) ) {
+      const nid = graph.nodesById [ parentId ].children [ pos ]
+      const id = graph.nodesById [ nid ].blockId
+      // if editor is open, start editing name
+      editname = id
+    }
+
+    output.success ( { doc: ownerupdate, editname } )
+  }
+
   let child: GraphType
   if ( componentId ) {
-    child = state.get ( [ 'data', 'component', componentId ] ).graph
+    const child =
+    state.get ( [ 'data', 'component', componentId ] ).graph
+    doit ( child )
   }
   else {
     // if we have a block named 'default' in library, we use this
@@ -33,20 +50,18 @@ export const addAction =
       }
     }
     if ( !child ) {
-      child = GraphHelper.create ( 'new block' )
+      createGraph ( 'new block' )
+      .then ( ( child ) => {
+        doit ( child )
+      })
+      .catch ( ( errors ) => {
+        output.errors ( { errors } )
+      })
+    }
+    else {
+      doit ( child )
     }
   }
-
-  const graph = GraphHelper.insert ( owner.graph, parentId, pos, child )
-
-  const ownerupdate = Object.assign ( {}, owner, { graph } )
-
-  if ( state.get ( '$block' ) ) {
-    const nid = graph.nodesById [ parentId ].children [ pos ]
-    const id = graph.nodesById [ nid ].blockId
-    // if editor is open, start editing name
-    state.set ( '$factory.block.add', id )
-  }
-
-  output ( { doc: ownerupdate } )
 }
+
+addAction [ 'async' ] = true

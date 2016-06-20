@@ -1,6 +1,3 @@
-// This is for scrubbing. This variable is set by lucidity. Do not use it
-// directly.
-declare var $scrub$: any
 
 declare module 'lucidity' {
 
@@ -79,7 +76,7 @@ declare module 'lucidity' {
     require?: Require
   }
 
-  interface ContextType {
+  interface StringMap {
     [ key: string ]: string
   }
 
@@ -91,8 +88,8 @@ declare module 'lucidity' {
     origin: string
     version: string
     // end mandatory
-    expect?: ContextType
-    provide?: ContextType
+    expect?: StringMap
+    provide?: StringMap
     children?: string[] | 'all'
     update?: string
   }

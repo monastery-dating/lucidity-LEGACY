@@ -1,14 +1,12 @@
 import { GraphType } from '../../Graph'
-import { NodeHelper } from '../../Graph/helper/NodeHelper'
-import { GraphHelper } from '../../Graph/helper/GraphHelper'
+import { rootNodeId } from '../../Graph/helper/NodeHelper'
+import { cutGraph, dropGraph } from '../../Graph/helper/GraphHelper'
 import { uimap } from '../../Graph/helper/uimap'
 import { DragStartType } from '../types'
-import { BlockHelper } from '../../Block/helper/BlockHelper'
 import { ActionContextType } from '../../context.type'
 import * as check from 'check-types'
 
 const dragp = [ '$dragdrop', 'drag' ]
-const rootNodeId = NodeHelper.rootNodeId
 
 export const dragAction =
 ( { state
@@ -26,11 +24,11 @@ export const dragAction =
   else {
     let graph = state.get ( [ drag.ownerType, 'graph' ] )
     const otype = drag.ownerType === 'project' ? 'scene' : 'project'
-    drag.dgraph = GraphHelper.cut
+    drag.dgraph = cutGraph
     ( graph
     , drag.nodeId
     )
-    drag.rgraph = GraphHelper.drop ( graph, drag.nodeId )
+    drag.rgraph = dropGraph ( graph, drag.nodeId )
   }
 
   drag.uigraph = uimap ( drag.dgraph )

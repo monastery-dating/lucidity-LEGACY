@@ -12,7 +12,6 @@ import * as Model from 'cerebral-model-baobab'
 import { makeId } from '../../modules/Factory'
 import { add } from './signals/add'
 import { name } from './signals/name'
-import { ProjectHelper } from './helper/ProjectHelper'
 import { select } from './signals/select'
 
 const CurrentProject = Model.monkey

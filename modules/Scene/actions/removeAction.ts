@@ -1,6 +1,6 @@
 import { ActionContextType } from '../../context.type'
 import { ProjectType } from '../../Project'
-import { SceneHelper, SceneType, SceneByIdType } from '../'
+import { selectScene, SceneType, SceneByIdType } from '../'
 
 export const removeAction =
 ( { state
@@ -65,7 +65,7 @@ export const removeAction =
 
   // Select new scene
   docs.push
-  ( SceneHelper.select ( state, user, newScene )
+  ( selectScene ( state, user, newScene )
   )
 
   // Remove element

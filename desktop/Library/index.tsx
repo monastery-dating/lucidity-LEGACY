@@ -1,6 +1,5 @@
 import './style.scss'
 import { Component } from '../Component'
-import { NodeHelper } from '../../modules/Graph'
 import { DragDropHelper } from '../../modules/DragDrop'
 import { ContextType, SignalsType } from '../../modules/context.type'
 import { pane } from '../../modules/Factory'

@@ -1,40 +1,86 @@
 import { BlockType } from '../../Block'
 
-import * as ts from 'typescript'
-import * as CodeMirror from 'codemirror'
-// JS mode
-import 'codemirror/mode/javascript/javascript'
-// Addons, extentions
-import 'codemirror/keymap/vim'
-import 'codemirror/addon/scroll/simplescrollbars'
-import 'codemirror/addon/runmode/runmode'
-import { TranspileCallback } from './types'
+import { CodeMirror } from './CodeMirror'
 
-const worker = new Worker ( 'codeWorker.js' )
+import { TranspileCallback, ScrubCode } from './types'
 
-let workerclbk
+const worker = new Worker ( 'build/codeWorker.js' )
+
+interface Operation {
+  id: string
+  source: string
+  callback: TranspileCallback
+}
+
+interface WorkerOperations {
+  [ key: string ]: Operation
+}
+
+const WORKER_OPS: WorkerOperations = {}
+const PENDING_OPS: string[] = []
+let opid: number = 0
+
 worker.addEventListener ( 'message', ( e ) => {
-  if ( workerclbk ) {
+  const { id, data } = e.data
+  const op = WORKER_OPS [ id ]
+  delete WORKER_OPS [ id ]
+
+  if ( !op ) {
+    console.log ( `ERROR: Wrong worker response (operation ${id} not found).`)
+  }
+  else {
     // e.data === TranspileCallbackArgs
-    workerclbk ( e.data )
-    workerclbk = null
+    op.callback ( data )
   }
 })
 
-interface ScrubberOptions {
-  scrubber: Scrubber
+let runWork =
+( source, callback ) => {
+  ++opid
+  const id = opid.toString ()
+  WORKER_OPS [ id ] = { id, source, callback }
+  PENDING_OPS.push ( id )
+  // Without worker
+  // callback ( compile ( source ) )
+}
+
+const ready: any = () => {
+  console.log ( 'WORKER READY' )
+  runWork =
+  ( source, callback ) => {
+    ++opid
+    const id = opid.toString ()
+    WORKER_OPS [ id ] = { id, source, callback }
+    worker.postMessage ( { id, source } )
+    // Without worker
+    // callback ( compile ( source ) )
+  }
+  for ( const v of PENDING_OPS ) {
+    const { id, source } = WORKER_OPS [ v ]
+    worker.postMessage ( { id, source })
+  }
+  PENDING_OPS.length = 0
+}
+
+WORKER_OPS [ 'ready' ] = ( { id: 'ready', callback: ready, source: '' } )
+
+// Without worker
+// import { compile } from './codeWorker'
+
+
+interface CMOptions {
+  lucidity: EditorLucidityOptions
 }
 
 interface CMEditor extends CodeMirror.Editor {
-  options: ScrubberOptions
+  options: CMOptions
 }
 
 interface RunModeCallback {
   ( text: string, klass: string ): void
 }
 
-// FIXME: Replace all 'scrubber' options with 'lucid'.
-interface LucidEditor {
+interface EditorLucidityOptions {
   scrubber: Scrubber
   lock?: string
   noscrub?: boolean
@@ -43,32 +89,19 @@ interface LucidEditor {
   nosave?: boolean
 }
 
-interface ScrubberEditor {
-  lock?: string
-  noscrub?: boolean
-  blockId?: string // to detect change of block selection
-  cursorMarkCleared?: boolean
-  nosave?: boolean
-}
-
-export interface Scrubber {
-  literals?: LiteralScrub[]
-  values?: number[]
+export interface Scrubber extends ScrubCode {
   // Call init on block if value changes
   init?: any
-  // Editor options to properly handle scrubbing.
-  // and focus
-  editor?: ScrubberEditor
 }
 
 const floatRe = /\./
 
 const scrubdown = ( e: MouseEvent, i: number, cm: CMEditor ) => {
   // start click
-  const scrubber = cm.options.scrubber
-  const sedit = scrubber.editor
-  if ( !sedit.lock ) {
-    sedit.lock = 'scrub'
+  const ledit = cm.options.lucidity
+  const scrubber = ledit.scrubber
+  if ( !ledit.lock ) {
+    ledit.lock = 'scrub'
   }
   e.preventDefault ()
   const el = <HTMLElement>e.target
@@ -134,8 +167,8 @@ const scrubdown = ( e: MouseEvent, i: number, cm: CMEditor ) => {
     const nline = before + v + after
     const f = { line: lit.line, ch: 0 }
     const t = { line: lit.line, ch: oline.length }
-    if ( scrubber.editor.lock === 'scrub' ) {
-      scrubber.editor.lock = null
+    if ( ledit.lock === 'scrub' ) {
+      ledit.lock = null
     }
     doc.replaceRange ( nline, f, t )
   }
@@ -145,204 +178,206 @@ const scrubdown = ( e: MouseEvent, i: number, cm: CMEditor ) => {
   window.addEventListener ( 'mouseup', mouseup )
 }
 
-export module CodeHelper {
+export const compileCode =
+( source: string
+, done: TranspileCallback
+) => {
+  // Call 'done' with TranspileCallbackArgs when compilation is finished
+  runWork ( source, done )
+}
 
-  export const compile =
-  ( source: string
-  , done: TranspileCallback
-  ) => {
-    // Call 'done' with TranspileCallbackArgs when compilation is finished
-    workerclbk = done
-    worker.postMessage ( source )
+let updating = false
+
+// Called by playback when the content is compiled.
+export const scrubMark =
+( cm: CMEditor
+) => {
+  const ledit = cm.options.lucidity
+  const scrubber = ledit.scrubber
+
+  if ( updating || ledit.noscrub ) {
+    // update could be called while we update the tree. Avoid.
+    return
   }
+  updating = true
+  // clear previous marks
+  const doc = cm.getDoc ()
+  const marks = doc.getAllMarks ()
+  for ( const m of marks ) {
+    m.clear ()
+  }
+  ledit.cursorMarkCleared = false
 
-  let updating = false
-
-  // Called by playback when the content is compiled.
-  export const scrubMark =
-  ( cm: CMEditor
-  ) => {
-    const scrubber = cm.options.scrubber
-
-    if ( updating || scrubber.editor.noscrub ) {
-      // update could be called while we update the tree. Avoid.
-      return
-    }
-    updating = true
-    // clear previous marks
-    const doc = cm.getDoc ()
-    const marks = doc.getAllMarks ()
-    for ( const m of marks ) {
-      m.clear ()
-    }
-    scrubber.editor.cursorMarkCleared = false
-
-    const literals = scrubber.literals
-    if ( !literals ) {
-      updating = false
-      return
-    }
-
-    for ( let i = 0; i < literals.length; ++i ) {
-      const l = literals [ i ]
-      const span = document.createElement ( 'span' )
-      span.textContent = l.text
-      const start = { line: l.line, ch: l.ch }
-      const end = { line: l.line, ch: l.ch + l.text.length }
-      span.classList.add ( 'cm-number' )
-      span.classList.add ( 'scrub' )
-      const mark = doc.markText
-      ( start
-      , end
-      , { handleMouseEvents: true
-        , replacedWith: span
-        , atomic: false
-        }
-      )
-      CodeMirror.on ( mark, 'beforeCursorEnter', () => {
-        // mark around cursor are a mess
-        scrubber.editor.cursorMarkCleared = true
-        mark.clear ()
-      })
-
-      span.addEventListener
-      ( 'mousedown'
-      , ( e ) => {
-          scrubdown ( e, i, cm )
-        }
-      )
-    }
-
+  const literals = scrubber.literals
+  if ( !literals ) {
     updating = false
+    return
   }
 
-  export const scrubSetup = // called on new CodeMirror and setOptions
-  ( cm, scrubber, old) => {
-    if ( scrubber ) {
-      cm.options.scrubber = scrubber
-      scrubMark ( cm )
-    }
+  for ( let i = 0; i < literals.length; ++i ) {
+    const l = literals [ i ]
+    const span = document.createElement ( 'span' )
+    span.textContent = l.text
+    const start = { line: l.line, ch: l.ch }
+    const end = { line: l.line, ch: l.ch + l.text.length }
+    span.classList.add ( 'cm-number' )
+    span.classList.add ( 'scrub' )
+    const mark = doc.markText
+    ( start
+    , end
+    , { handleMouseEvents: true
+      , replacedWith: span
+      , atomic: false
+      }
+    )
+    CodeMirror.on ( mark, 'beforeCursorEnter', () => {
+      // mark around cursor are a mess
+      ledit.cursorMarkCleared = true
+      mark.clear ()
+    })
+
+    span.addEventListener
+    ( 'mousedown'
+    , ( e ) => {
+        scrubdown ( e, i, cm )
+      }
+    )
   }
 
-  export const sourceChanged =
-  ( cm: CMEditor
-  , block: BlockType
-  ) => {
-    const sedit = cm.options.scrubber.editor
-    if ( sedit.lock && sedit.blockId === block.id ) {
-      return
-    }
-    else {
-      // prevent save while we update the source
-      sedit.nosave = true
-        sedit.blockId = block.id
-        cm.setValue ( block.source || '' )
-        // clear marks until we get updated ones
-        const doc = cm.getDoc ()
-        const marks = doc.getAllMarks ()
-        for ( const m of marks ) {
-          m.clear ()
-        }
-      sedit.nosave = false
-    }
-  }
+  updating = false
+}
 
-  let defaultEditor
-  export const getEditor =
-  () => {
-    return defaultEditor
+const scrubSetup =
+// called on new CodeMirror and setOptions
+( cm: CMEditor, opts, old) => {
+  if ( opts ) {
+    cm.options.lucidity = opts
+    scrubMark ( cm )
   }
+}
 
-  const NoScrubToggle =
-  ( cm: CMEditor ) => {
-    const sedit = cm.options.scrubber.editor
-    sedit.noscrub = ! sedit.noscrub
-    if ( sedit.noscrub ) {
-      // clear marks
+export const sourceChanged =
+( cm: CMEditor
+, block: BlockType
+) => {
+  const ledit = cm.options.lucidity
+  if ( ledit.lock && ledit.blockId === block.id ) {
+    return
+  }
+  else {
+    // prevent save while we update the source
+    ledit.nosave = true
+      ledit.blockId = block.id
+      cm.setValue ( block.source || '' )
+      // clear marks until we get updated ones
       const doc = cm.getDoc ()
       const marks = doc.getAllMarks ()
       for ( const m of marks ) {
         m.clear ()
       }
-    }
-    else {
-      scrubMark ( cm )
-    }
-  }
-
-  const isLiteral = /[0-9\.]/
-
-  export const editor =
-  ( elm: HTMLElement
-  , source: string = ''
-  , save: any = null
-  ): any => {
-
-    // We copy in here the currently loaded block's scrubber so that
-    // we can access it from the editor.
-    const scrubber: Scrubber = { values: [], init () {}, literals: [], editor: {} }
-
-    const opts =
-    { value: source
-    , indentUnit: 2
-    , lineWrapping: true
-    , theme: 'bespin'
-    , mode: 'javascript'
-    , keyMap: 'vim' // FIXME: should come from user prefs
-    , gutters: [ 'lucy-gutter' ]
-    , extraKeys:
-      { Tab: 'indentMore'
-      , [ 'Shift-Tab' ]: 'indentLess'
-      , [ 'Alt-S' ]: NoScrubToggle
-      }
-    , smartIndent: false
-    }
-
-    // addons
-    opts [ 'scrollbarStyle' ] = 'overlay'
-    opts [ 'scrubber' ] = scrubber
-
-    const cm = CodeMirror ( elm, opts )
-    defaultEditor = cm
-
-    cm.on ( 'focus', () => {
-      scrubber.editor.lock = 'focus'// block.id
-    })
-
-    cm.on ( 'blur', () => {
-      scrubber.editor.lock = null
-    })
-
-    cm.on ( 'cursorActivity', () => {
-      if ( scrubber.editor.cursorMarkCleared ) {
-        // Check cursor distance to literal number
-        const doc = cm.getDoc ()
-        const loc = doc.getCursor ()
-        const before = doc.getRange ( { line: loc.line, ch: loc.ch - 1 }, loc )
-        const after = doc.getRange ( loc, { line: loc.line, ch: loc.ch + 1 } )
-        if ( isLiteral.test ( before ) || isLiteral.test ( after ) ) {
-          // ignore
-        }
-        else {
-          // mark and clear
-          scrubMark ( <CMEditor>cm )
-        }
-      }
-    })
-
-    if ( save ) {
-      cm.on ( 'changes' , () => {
-        // Do not trigger 'save' while we are updating the
-        // source through setValue.
-        if ( !scrubber.editor.nosave ) {
-          save ()
-        }
-      })
-    }
-
-    return cm
+    ledit.nosave = false
   }
 }
 
+let defaultEditor
+export const getEditor =
+() => {
+  return defaultEditor
+}
+
+const NoScrubToggle =
+( cm: CMEditor ) => {
+  const ledit = cm.options.lucidity
+  ledit.noscrub = ! ledit.noscrub
+  if ( ledit.noscrub ) {
+    // clear marks
+    const doc = cm.getDoc ()
+    const marks = doc.getAllMarks ()
+    for ( const m of marks ) {
+      m.clear ()
+    }
+  }
+  else {
+    scrubMark ( cm )
+  }
+}
+
+const isLiteral = /[0-9\.]/
+
+export const makeEditor =
+( elm: HTMLElement
+, source: string = ''
+, save: any = null
+): any => {
+
+  // We copy in here the currently loaded block's scrubber so that
+  // we can access it from the editor.
+  const scrubber: Scrubber =
+  { js: '', values: [], init () {}, literals: [] }
+
+  const ledit: EditorLucidityOptions = { scrubber }
+
+  const opts =
+  { value: source
+  , indentUnit: 2
+  , lineWrapping: true
+  , theme: 'bespin'
+  , mode: 'javascript'
+  , keyMap: 'vim' // FIXME: should come from user prefs
+  , gutters: [ 'lucy-gutter' ]
+  , extraKeys:
+    { Tab: 'indentMore'
+    , [ 'Shift-Tab' ]: 'indentLess'
+    , [ 'Alt-S' ]: NoScrubToggle
+    }
+  , smartIndent: false
+  }
+
+  // addons
+  opts [ 'scrollbarStyle' ] = 'overlay'
+  opts [ 'lucidity' ] = ledit
+
+  const cm = CodeMirror ( elm, opts )
+  defaultEditor = cm
+
+  cm.on ( 'focus', () => {
+    ledit.lock = 'focus'// block.id
+  })
+
+  cm.on ( 'blur', () => {
+    ledit.lock = null
+  })
+
+  cm.on ( 'cursorActivity', () => {
+    if ( ledit.cursorMarkCleared ) {
+      // Check cursor distance to literal number
+      const doc = cm.getDoc ()
+      const loc = doc.getCursor ()
+      const before = doc.getRange ( { line: loc.line, ch: loc.ch - 1 }, loc )
+      const after = doc.getRange ( loc, { line: loc.line, ch: loc.ch + 1 } )
+      console.log ( `before '${before}' after '${after}'`)
+      if ( isLiteral.test ( before ) || isLiteral.test ( after ) ) {
+        // ignore
+      }
+      else {
+        // mark back
+        scrubMark ( <CMEditor>cm )
+      }
+    }
+  })
+
+  if ( save ) {
+    cm.on ( 'changes' , () => {
+      // Do not trigger 'save' while we are updating the
+      // source through setValue.
+      if ( !ledit.nosave ) {
+        save ()
+      }
+    })
+  }
+
+  return cm
+}
+
 CodeMirror.defineOption
-( 'scrubber', {}, CodeHelper.scrubSetup )
+( 'lucidity', {}, scrubSetup )

@@ -1,6 +1,6 @@
 import { ActionContextType } from '../../context.type'
 import { GraphType, Immutable as IM } from '../../Graph'
-import { GraphHelper } from '../../Graph/helper/GraphHelper'
+import { updateGraphSource } from '../../Graph/helper/GraphHelper'
 
 export const sourceAction =
 ( { state
@@ -16,26 +16,17 @@ export const sourceAction =
   }
 
   const odoc = state.get ( select.ownerType )
-  const graph: GraphType = odoc.graph
+  const ograph: GraphType = odoc.graph
 
-  const source = graph.blocksById [ select.id ].source
-  if ( source === value ) {
-    // Why do we need this ?
-    output ( {} )
-    return
-  }
-
-  try {
-    // updateSource throws an exception if the source is invalid.
-    // FIXME: Bubble this error up to state => Editor
-    const doc = IM.update
-    ( odoc, 'graph'
-    , GraphHelper.updateSource ( graph, select.id, value )
-    )
-    output ( { doc } )
-  }
-  catch ( errors ) {
-    output ( { errors } )
-  }
-
+  updateGraphSource ( ograph, select.id, value, ( errors, graph ) => {
+    if ( errors ) {
+      output.error ( { errors } )
+    }
+    else {
+      const doc = IM.update ( odoc, 'graph', graph )
+      output.success ( { doc } )
+    }
+  })
 }
+
+sourceAction [ 'async' ] = true

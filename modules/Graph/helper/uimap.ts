@@ -1,4 +1,3 @@
-import { GraphHelper } from '../'
 import { defaultUILayout } from './uilayout'
 import { BlockType, BlockByIdType } from '../../Block'
 import { GraphType
@@ -10,9 +9,7 @@ import { GraphType
        , UIPosType
        , UISlotType } from '../types'
 
-import { NodeHelper } from './NodeHelper'
-const nextNodeId = NodeHelper.nextNodeId
-const rootNodeId = NodeHelper.rootNodeId
+import { nextNodeId, rootNodeId } from './NodeHelper'
 
 import { minSize } from './minSize'
 import * as stringhash from 'string-hash'

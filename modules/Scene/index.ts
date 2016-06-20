@@ -13,7 +13,6 @@ import { add } from './signals/add'
 import { name } from './signals/name'
 import { remove } from './signals/remove'
 import { select } from './signals/select'
-import { SceneHelper } from './helper/SceneHelper'
 
 const CurrentScene = Model.monkey
 ( { cursors:

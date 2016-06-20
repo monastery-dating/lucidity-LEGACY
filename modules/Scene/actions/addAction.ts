@@ -1,5 +1,5 @@
 import { ActionContextType } from '../../context.type'
-import { SceneHelper } from '../../Scene'
+import { createScene } from '../../Scene'
 
 export const addAction =
 ( { state
@@ -8,25 +8,29 @@ export const addAction =
   } : ActionContextType
 ) => {
 
-  const scene = SceneHelper.create ()
-  const docs = [ scene ]
+  createScene ()
+  .then ( ( scene ) => {
+    const docs = [ scene ]
 
-  // This is a flag that will set name editing after db object
-  // is selected.
-  state.set ( [ '$factory', 'editing' ], scene._id )
 
-  // add to project
-  const project = state.get ( [ 'project' ] )
-  const scenes = project.scenes || []
-  const list = [ ...scenes, scene._id ]
-  docs.push
-  ( Object.assign
-    ( {}
-    , project
-    , { scenes: list }
+    // add to project
+    const project = state.get ( [ 'project' ] )
+    const scenes = project.scenes || []
+    const list = [ ...scenes, scene._id ]
+    docs.push
+    ( Object.assign
+      ( {}
+      , project
+      , { scenes: list }
+      )
     )
-  )
 
-  // we set _id for select operation
-  output ( { docs, _id: scene._id } )
+    // we set _id for select operation
+    output ( { docs, _id: scene._id } )
+
+  })
+  .catch ( ( errors ) => {
+    console.log ( errors )
+    output.error ( { errors } )
+  })
 }

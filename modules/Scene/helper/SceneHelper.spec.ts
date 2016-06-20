@@ -1,14 +1,17 @@
 import { BlockType } from '../../Block'
 import { describe } from '../../Test/runner'
-import { SceneHelper } from './SceneHelper'
-import { GraphHelper } from '../../Graph'
+import { createScene } from './SceneHelper'
+import { createGraph } from '../../Graph'
 
-describe ( 'SceneHelper.create', ( it ) => {
+describe ( 'createScene', ( it ) => {
 
-    it ( 'should return block and scene docs', ( assert ) => {
-        const scene = SceneHelper.create ()
-        const graph = GraphHelper.create ()
+  it ( 'should return block and scene docs', ( assert, done ) => {
+    const scene =
+    createScene ()
+    .then ( ( scene ) => {
 
+      createGraph ()
+      .then ( ( graph ) => {
         assert.equal
         ( scene
         , { _id: scene._id ? scene._id : 'bad'
@@ -16,9 +19,9 @@ describe ( 'SceneHelper.create', ( it ) => {
           , graph
           }
         )
+      })
 
-      }
-    )
+    })
 
-  }
-)
+  })
+})

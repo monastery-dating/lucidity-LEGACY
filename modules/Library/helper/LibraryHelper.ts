@@ -1,5 +1,5 @@
 import { GraphType } from '../../Graph'
-import { GraphHelper } from '../../Graph/helper/GraphHelper'
+import { exportGraph } from '../../Graph/helper/GraphHelper'
 import { SceneByIdType } from '../../Scene'
 import * as JSZip from 'jszip'
 
@@ -37,7 +37,7 @@ export module LibraryHelper {
     const jszip = new JSZip ()
     for ( const k in components ) {
       const comp = components [ k ]
-      GraphHelper.exportGraph
+      exportGraph
       ( comp.graph, jszip, zipfile, zipfolder )
     }
 

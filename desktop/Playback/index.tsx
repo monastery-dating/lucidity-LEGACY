@@ -1,17 +1,18 @@
 import './style.scss'
 import { Component } from '../Component'
-import { PlaybackHelper, PlaybackCache } from '../../modules/Playback'
-import { CodeHelper } from '../../modules/Code/helper/CodeHelper'
+import { mainContext, runGraph, initGraph, callGraph, PlaybackCache } from '../../modules/Playback/helper/PlaybackHelper'
+import { getEditor, scrubMark } from '../../modules/Code/helper/CodeHelper'
 import { DragDropType, DragStartType } from '../../modules/DragDrop'
 
 const cache: PlaybackCache = { nodecache: {} }
-const context = PlaybackHelper.mainContext ()
+const context = mainContext ()
 let uicontrols: any = null
 
 /* ====== PLAYBACK LIBS ======= */
 import * as THREE from 'three'
 const PRELOADED = { THREE }
 /* ====== PLAYBACK LIBS ======= */
+
 const helpers =
 { require: ( name ) => PRELOADED [ name ]
 }
@@ -48,10 +49,10 @@ export const Playback = Component
     }
 
     if ( !editor ) {
-      editor = CodeHelper.getEditor ()
+      editor = getEditor ()
       if ( editor ) {
         // Share scrubber with editor.
-        cache.scrubber = editor.options.scrubber
+        cache.scrubber = editor.options.lucidity.scrubber
       }
     }
 
@@ -82,18 +83,18 @@ export const Playback = Component
           else {
             cache.scrub = null
           }
-          PlaybackHelper.run ( graph, context, cache, helpers )
+          runGraph ( graph, context, cache, helpers )
           if ( lastsize !== state.size || lastmode !== state.mode ) {
             // force resize
             lastsize = state.size
             lastmode = state.mode
-            PlaybackHelper.init ( graph, context, cache, helpers )
-            PlaybackHelper.update ( cache, context )
+            initGraph ( graph, context, cache, helpers )
+            callGraph ( cache, context )
           }
           // New scrubber is ready: update editor
           if ( editor ) {
             // New marks ready. Update editor.
-            CodeHelper.scrubMark ( editor )
+            scrubMark ( editor )
           }
 
           if ( select && select.ownerType === 'scene' && state.tab === 'controls' ) {

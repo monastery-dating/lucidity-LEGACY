@@ -1,7 +1,7 @@
 import './style.scss'
 import { Component } from '../Component'
 import { ContextType } from '../../modules/context.type'
-import { uimap, GraphType, GraphHelper, NodeHelper, UIGraphType } from '../../modules/Graph'
+import { uimap, GraphType, rootNodeId, UIGraphType } from '../../modules/Graph'
 import { Node } from '../Node'
 import { SceneType } from '../../modules/Scene'
 import { ProjectType } from '../../modules/Project'
@@ -48,7 +48,7 @@ export const Graph = Component
     let graph: GraphType = props.graph
     const drop: DragDropType = state.drop
     const drag: DragStartType = state.drag
-    const rootId = props.rootId || NodeHelper.rootNodeId
+    const rootId = props.rootId || rootNodeId
     if ( graph ) {
       let nodeId: string
       let ghostId: string
