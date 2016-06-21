@@ -401,6 +401,7 @@ export const makeEditor =
 
   cm.on ( 'blur', () => {
     ledit.lock = null
+    SaveSource ( <CMEditor>cm )
   })
 
   cm.on ( 'cursorActivity', () => {

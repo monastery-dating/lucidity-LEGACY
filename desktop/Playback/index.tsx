@@ -101,6 +101,7 @@ export const Playback = Component
               const ob = graph.blocksById [ select.id ]
               const nb = g.blocksById [ select.id ]
               if ( nb && nb !== ob ) {
+                console.log ( ob, nb )
                 // This is the only thing that can change for now.
                 signals.block.sources ( { sources: nb.sources } )
               }

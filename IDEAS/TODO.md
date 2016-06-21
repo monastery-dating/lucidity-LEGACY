@@ -1,8 +1,8 @@
 # TODO
 
-0. Remove controls ?
+0. Check detach: seems to not work
 
-1. Make changing 0xff0000 numbers like 3 numbers: 0x [ff] [00] [00].
+1. Less glitches everywhere... please.
 
 2. If an object becomes invalid: detach.
 
@@ -13,10 +13,10 @@ is typed.
 
 5. Show scrollbars on graph views (but style them).
 
-6. Move LanguageService to a Web Worker:
-  0. Make codeWorker.js webpack bundle.
-  1. Async 'source' action: 1. post message on source change
-  2. When worker has result: 2. continue callback ()
+6. Make changing 0xff0000 numbers like 3 numbers: 0x [ff] [00] [00].
+
+7. Remove controls ?
+
 
 # DATA
 
