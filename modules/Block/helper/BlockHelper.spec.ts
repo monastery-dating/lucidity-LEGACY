@@ -161,6 +161,7 @@ describe ( 'updateBlock', ( it ) => {
       done ()
     })
   })
+
 })
 
 describe ( 'normalizeType', ( it ) => {

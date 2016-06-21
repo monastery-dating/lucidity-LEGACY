@@ -19,6 +19,12 @@ module.exports =
     , 'cerebral-view-snabbdom'
     , 'baobab'
     , 'codemirror'
+    , 'codemirror/mode/javascript/javascript'
+      // Addons, extentions
+    , 'codemirror/keymap/vim'
+    , 'codemirror/addon/scroll/simplescrollbars'
+    , 'codemirror/addon/runmode/runmode'
+    , 'codemirror/mode/clike/clike'
     , 'pouchdb'
     , 'pouchdb-authentication'
     , 'check-types'

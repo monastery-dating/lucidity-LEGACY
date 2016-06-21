@@ -87,6 +87,10 @@ interface EditorLucidityOptions {
   blockId?: string // to detect change of block selection
   cursorMarkCleared?: boolean
   nosave?: boolean
+  filename?: string
+  // cache source to avoid setting the same source more then once
+  source?: string
+  mode?: string
 }
 
 export interface Scrubber extends ScrubCode {
@@ -256,19 +260,47 @@ const scrubSetup =
   }
 }
 
+const EXT_TO_MODE =
+{ js: 'javascript'
+, ts: 'javascript'
+, glsl: 'x-shader/x-vertex'
+}
+const getMode =
+( filename: string ) => {
+  const fl = filename.split ( '.' )
+  const ext = fl [ fl.length - 1 ]
+  return EXT_TO_MODE [ ext ] || 'text'
+}
+
 export const sourceChanged =
 ( cm: CMEditor
-, block: BlockType
+, filename: string
+, source: string
+, blockId: string
 ) => {
   const ledit = cm.options.lucidity
-  if ( ledit.lock && ledit.blockId === block.id ) {
+  if ( ledit.lock && ledit.blockId === blockId && ledit.filename === filename ) {
+    return
+  }
+  else if ( source === ledit.source && filename === ledit.filename ) {
+    // ignore
     return
   }
   else {
     // prevent save while we update the source
     ledit.nosave = true
-      ledit.blockId = block.id
-      cm.setValue ( block.source || '' )
+      ledit.source = source
+      if ( filename !== ledit.filename ) {
+        ledit.filename = filename
+        const mode = getMode ( filename )
+        console.log ( filename, mode )
+        if ( ledit.mode !== mode ) {
+          ledit.mode = mode
+          cm.setOption ( 'mode', mode )
+        }
+      }
+      ledit.blockId = blockId
+      cm.setValue ( source || '' )
       // clear marks until we get updated ones
       const doc = cm.getDoc ()
       const marks = doc.getAllMarks ()
@@ -304,10 +336,14 @@ const NoScrubToggle =
 
 const isLiteral = /[0-9\.]/
 
+interface SaveCallback {
+  ( filename: string, source: string ): void
+}
+
 export const makeEditor =
 ( elm: HTMLElement
 , source: string = ''
-, save: any = null
+, save: SaveCallback = null
 ): any => {
 
   // We copy in here the currently loaded block's scrubber so that
@@ -371,7 +407,8 @@ export const makeEditor =
       // Do not trigger 'save' while we are updating the
       // source through setValue.
       if ( !ledit.nosave ) {
-        save ()
+        const source = cm.getValue ()
+        save ( ledit.filename, source )
       }
     })
   }

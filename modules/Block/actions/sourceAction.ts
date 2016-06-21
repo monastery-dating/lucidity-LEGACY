@@ -4,7 +4,7 @@ import { updateGraphSource } from '../../Graph/helper/GraphHelper'
 
 export const sourceAction =
 ( { state
-  , input: { value }
+  , input: { source }
   , output
   } : ActionContextType
 ) => {
@@ -18,7 +18,7 @@ export const sourceAction =
   const odoc = state.get ( select.ownerType )
   const ograph: GraphType = odoc.graph
 
-  updateGraphSource ( ograph, select.id, value, ( errors, graph ) => {
+  updateGraphSource ( ograph, select.id, source, ( errors, graph ) => {
     if ( errors ) {
       output.error ( { errors } )
     }

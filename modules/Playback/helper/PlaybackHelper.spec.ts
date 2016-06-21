@@ -13,8 +13,20 @@ const GRAPH = require ( './test/graph.json.txt' )
 [ cache ]       ==> calls init
 */
 
+const SOURCE_EXTRA = `
+export const init =
+( { context, asset } ) => {
+  asset.source ( 'frag.glsl', ( s ) => {
+    context.test.frag = s
+  })
+  asset.source ( 'vert.glsl', ( s ) => {
+    context.test.vert = s
+  })
+}
+`
+
+/* TODO: create graph here, eventually with
 describe ( 'compileGraph', ( it ) => {
-  /* TODO: create graph here, eventually with
   const graph = GraphHelper.fromYAML
   ( `name: foo
      source: |
@@ -68,11 +80,8 @@ describe ( 'compileGraph', ( it ) => {
     const res = cache.main ()
     assert.equal ( '1bnull', res )
   })
-  */
-  it ( 'should be fixed', ( assert ) => {
-    assert.pending ( 'build graph from yaml to fix compile tests' )
-  })
 })
+*/
 
 describe ( 'context', ( it ) => {
   const context = makeContext ( { foo: 'bar' } )
@@ -209,11 +218,12 @@ describe ( 'PlaybackHelper.controls many', ( it, setupDone ) => {
   )
   .then ( ( g ) => {
     graph = g
+    runGraph ( graph, context, cache )
+    nc = cache.nodecache [ 'n0' ]
     // simulate change
     const graph2: GraphType = { nodesById: graph.nodesById, blocksById: graph.blocksById }
     runGraph ( graph2, context, cache )
     nc = cache.nodecache [ 'n0' ]
-    runGraph ( graph, context, cache )
 
     setupDone ()
   })
@@ -232,41 +242,51 @@ describe ( 'PlaybackHelper.controls many', ( it, setupDone ) => {
 
 })
 
-/*
-describe ( 'PlaybackHelper.compile scrub', ( it ) => {
-  const graph = GraphHelper.create
+describe ( 'PlaybackHelper asset.source', ( it, setupDone ) => {
+  let graph: GraphType
+  let graph2: GraphType
+  let graph3: GraphType
+  const cache = { nodecache: {} }
+  const context: any = { test: { frag: 'x', vert: 'x' } }
+  let nc: NodeCache
+
+  createGraph
   ( 'main'
-  , `export const init =
-     ( { context } ) => {
-       context.test.a = 10
-       context.test.b = 20
-       context.test.x = 30
-       context.test.y = 40
-     }
-
-     export const update =
-     () => {
-       return 10
-     }
-    `
+  , SOURCE_EXTRA
   )
-  const cache = { nodecache: {}, scrub: 'b0' }
-  const context: any = { test: {} }
-  PlaybackHelper.run ( graph, context, cache )
-  // the js source for this node is now a special parsing with the scrubber '$l$' instead of the values.
-  // simulate change
-  const graph2: GraphType = { nodesById: graph.nodesById, blocksById: graph.blocksById }
-  PlaybackHelper.run ( graph2, context, cache )
-  const nc = cache.nodecache [ 'n0' ]
+  .then ( ( g ) => {
+    graph = runGraph ( g, context, cache )
+    nc = cache.nodecache [ 'n0' ]
+    graph2 = { nodesById: graph.nodesById, blocksById: graph.blocksById }
+    graph3 = runGraph ( graph2, context, cache )
 
-  it ( 'should extract many controls', ( assert ) => {
-    const ctrl: PlaybackControl = nc.controls [ 0 ]
-    assert.equal ( 3, nc.controls.length )
+    nc = cache.nodecache [ 'n0' ]
+
+    setupDone ()
+  })
+
+  it ( 'should not modify graph without changes', ( assert ) => {
+    assert.same ( graph3, graph2 )
+  })
+
+  it ( 'should set extra sources', ( assert ) => {
+    const block = graph.blocksById [ 'b0' ]
     assert.equal
-    ( [ [ 'a' ], [ 'b' ], [ 'foo', 'bar' ] ]
-    , nc.controls.map ( ( c ) => c.labels )
+    ( Object.keys ( block.sources ).sort ()
+    , [ 'frag.glsl', 'vert.glsl' ]
     )
+
+    assert.equal
+    ( Object.keys ( nc.sourceCallbacks ).sort ()
+    , [ 'frag.glsl', 'vert.glsl' ]
+    )
+
+    assert.equal ( '', context.test.frag )
+    assert.equal ( '', context.test.vert )
+
+    nc.sourceCallbacks [ 'frag.glsl' ].callback ( 'fragment' )
+    assert.equal ( 'fragment', context.test.frag )
+    assert.equal ( '', context.test.vert )
   })
 
 })
-*/

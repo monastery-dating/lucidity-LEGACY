@@ -3,6 +3,10 @@ interface TypeAndLabels {
   labels: string[]
 }
 
+interface StringMap {
+  [ key: string ]: string
+}
+
 type NumberArray = number[]
 type Matrix = NumberArray[]
 
@@ -14,7 +18,8 @@ export interface BlockSignalsType {
   select ( input: { select: { ownerType: string, id: string, nodeId: string } } )
   tab ( input: { value: string } )
   values ( input: { values: number[], pos: number } )
-  source ( input: { value: string } )
+  source ( input: { source: string } )
+  sources ( input: { sources: StringMap } )
 }
 
 export * from './signals/add'
@@ -28,6 +33,7 @@ import { controls } from './signals/controls'
 import { name } from './signals/name'
 import { select } from './signals/select'
 import { source } from './signals/source'
+import { sources } from './signals/sources'
 import { tab } from './signals/tab'
 import { values } from './signals/values'
 import { GraphType } from '../Graph'
@@ -79,6 +85,7 @@ export const Block =
       , name
       , select
       , source
+      , sources
       , tab
       , values
       }

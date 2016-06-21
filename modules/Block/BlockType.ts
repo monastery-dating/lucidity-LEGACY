@@ -21,9 +21,7 @@ export interface PlaybackMetaType {
 }
 
 export interface SourceCode {
-  name: string
   source: string
-  type: string
 }
 
 export interface CompiledCode {
@@ -32,9 +30,13 @@ export interface CompiledCode {
   meta?: PlaybackMetaType
 }
 
+interface MMap<T> {
+  [ key: string ]: T
+}
+
 export interface BlockSourceInfo extends CompiledCode {
   // Extra compilation information.
-  compiled?: Map<string, CompiledCode>
+  compiled?: MMap<CompiledCode>
 }
 
 export interface BlockType extends BlockSourceInfo {
@@ -42,7 +44,7 @@ export interface BlockType extends BlockSourceInfo {
   name: string
   source: string
   // Extra file sources
-  sources?: Map<string, SourceCode>
+  sources?: StringMap
 }
 
 export interface BlockByIdType {

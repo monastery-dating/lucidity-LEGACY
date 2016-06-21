@@ -83,13 +83,22 @@ export const Playback = Component
           else {
             cache.scrub = null
           }
-          runGraph ( graph, context, cache, helpers )
+          let g = runGraph ( graph, context, cache, helpers )
           if ( lastsize !== state.size || lastmode !== state.mode ) {
             // force resize
             lastsize = state.size
             lastmode = state.mode
             initGraph ( graph, context, cache, helpers )
             callGraph ( cache, context )
+          }
+          if ( g !== graph ) {
+            // Currently only the selected block could change on runtime
+            const ob = graph.blocksById [ select.id ]
+            const nb = g.blocksById [ select.id ]
+            if ( nb && nb !== ob ) {
+              // This is the only thing that can change for now.
+              signals.block.sources ( { sources: nb.sources } )
+            }
           }
           // New scrubber is ready: update editor
           if ( editor ) {

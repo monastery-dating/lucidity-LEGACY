@@ -1,12 +1,9 @@
 import { SignalType } from '../../context.type'
-import { nameAction } from '../actions/nameAction'
 import { sourceAction } from '../actions/sourceAction'
 import { save } from '../../Data/signals/save'
 import * as copy from 'cerebral-addons/copy'
 import { debounce } from '../../Utils'
-import * as throttle from 'cerebral-addons/throttle'
 import * as unset from 'cerebral-addons/unset'
-import * as when from 'cerebral-addons/when'
 import { update } from '../../Data/actions/update'
 
 export const source: SignalType =
@@ -14,7 +11,7 @@ export const source: SignalType =
 , sourceAction
 , { success:
     [ unset ( 'state:/$editor.errors' )
-    , update // Optimistic write in state
+    , update // Optimistic write in state. This can trigger a 'sources' update.
     , debounce ( 500 ) // Wait for more inactivity before saving ?
     , ...save
     ]

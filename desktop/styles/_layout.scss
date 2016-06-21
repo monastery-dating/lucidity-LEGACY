@@ -98,6 +98,7 @@ $layout:
   }
 
   .tab {
+    cursor: pointer;
     border-left: 1px solid darken( color( workb ), 10% );
     color: desaturate( color( maint ), 100% );
     padding: $pad 2*$pad;

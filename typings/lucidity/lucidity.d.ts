@@ -53,6 +53,14 @@ declare module 'lucidity' {
     ( libname: string ): any
   }
 
+  interface SourceCallback {
+    ( content: string ): void
+  }
+
+  interface Asset {
+    source ( name: string, callback: SourceCallback ): void
+  }
+
   export interface SliderCallback {
     ( v: number ): void
   }
@@ -70,10 +78,11 @@ declare module 'lucidity' {
     // optional to ease testing
     context?: Context
     control?: Control
-    cache?: Cache
-    children?: Children
-    detached?: boolean
     require?: Require
+    asset?: Asset
+    children?: Children
+    cache?: Cache
+    detached?: boolean
   }
 
   interface StringMap {

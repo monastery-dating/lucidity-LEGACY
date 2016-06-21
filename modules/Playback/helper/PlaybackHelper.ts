@@ -38,6 +38,15 @@ interface UpdateFunc {
 
 type NodeExports = Block
 
+interface SourceCallback {
+  callback?: ( content: string ) => void
+  source?: string
+}
+
+interface SourceCallbacks {
+  [ key: string ]: SourceCallback
+}
+
 export interface NodeCache {
   // Functions defined by js code
   exported: NodeExports
@@ -50,6 +59,11 @@ export interface NodeCache {
   scrubber?: Scrubber
   // We save the init context so that we can use it when detaching
   helpers?: Helpers
+
+  sourceCallbacks?: SourceCallbacks
+
+  // TODO: Remove these ? I don't want sliders and dummy controls. People should
+  // use OSC, etc. We have scrubbing. It's better, no ?
   control?: Control
   controls?: PlaybackControl[]
 }
@@ -94,7 +108,7 @@ const updateCache =
       n.exported = { update: DUMMY_UPDATE }
       continue
     }
-    
+
     if ( !n ) {
       n = nodecache [ nodeId ] = <NodeCache> { exported: {} }
       n.scrubber = { values: [], literals: [], js: null }
@@ -182,18 +196,22 @@ const detach =
   }
 }
 
+// Returns a new graph if init running alters a block (by declaring new assets
+// for example).
 const initDo =
 ( cache: PlaybackCache
 , graph: GraphType
 , context: Context
 , ohelpers: HelpersContext
 , nodeId: string
-) => {
+): GraphType => {
+  let g = graph
   const nodecache = cache.nodecache
   const nc = nodecache [ nodeId ]
   const init = nc.exported.init
-  const nodesById = graph.nodesById
+  const nodesById = g.nodesById
   const node = nodesById [ nodeId ]
+  const block = g.blocksById [ node.blockId ]
 
   let subctx: Context = context
   if ( init ) {
@@ -235,6 +253,34 @@ const initDo =
       }
     }
 
+    // FIXME: optimize by only creating these handlers once
+    const sources = block.sources || {}
+    const nsources = {}
+    if ( !nc.sourceCallbacks ) {
+      nc.sourceCallbacks = {}
+    }
+    helpers.asset = {
+      source ( name, callback ) {
+        const content = sources [ name ]
+        if ( content ) {
+          nsources [ name ] = content
+        }
+        else {
+          // Add new source
+          nsources [ name ] = ''
+        }
+        let sclb = nc.sourceCallbacks [ name ]
+        if ( !sclb ) {
+          sclb = nc.sourceCallbacks [ name ] = {}
+        }
+        sclb.callback = callback
+        if ( content !== sclb.source ) {
+          callback ( content )
+          sclb.source = content
+        }
+      }
+    }
+
     try {
       const r = init ( helpers )
       if ( r ) {
@@ -251,28 +297,63 @@ const initDo =
       // and do proper error handling for init code.
       console.log ( 'init error:', err )
       // abort init operation
-      return
+      return g
+    }
+
+    const nsk = Object.keys ( nsources )
+    if ( nsk.length > 0 || block.sources ) {
+      // Check if something changed
+      let srcchanged = !block.sources || nsk.length === 0
+      for ( const k of nsk ) {
+        if ( srcchanged || sources [ k ] !== nsources [ k ] ) {
+          srcchanged = true
+          break
+        }
+      }
+      if ( srcchanged ) {
+        // block changed, we need to update graph
+        if ( Object.isFrozen ( g ) ) {
+          const blocksById = Object.assign ( {}, g.blocksById )
+          g = { nodesById: g.nodesById, blocksById }
+        }
+        let sources
+        if ( nsk.length > 0 ) {
+          sources = nsources
+        }
+        g.blocksById [ node.blockId ] =
+        Object.freeze ( Object.assign ( {}, block, { sources } ) )
+      }
     }
   }
-  else if ( nc.cache ) {
+  else {
     // No init function = clear cached context and init cache
     delete nc.cache
     delete nc.helpers
+    delete nc.sourceCallbacks
+    if ( block.sources ) {
+      // block changed, we need to update graph
+      if ( Object.isFrozen ( g ) ) {
+        const blocksById = Object.assign ( {}, g.blocksById )
+        g = { nodesById: g.nodesById, blocksById }
+      }
+      g.blocksById [ node.blockId ] =
+      Object.freeze ( Object.assign ( {}, block, { sources: undefined } ) )
+    }
   }
 
-  const block = graph.blocksById [ node.blockId ]
   // Trigger init in children with sub context
   for ( const childId of node.children ) {
     if ( childId ) {
-      initDo
+      g = initDo
       ( cache
-      , graph
+      , g
       , subctx
       , ohelpers
       , childId
       )
     }
   }
+  return g
 }
 
 export const detachCheck =
@@ -321,23 +402,33 @@ export const compileGraph =
   }
 }
 
+// If the graph needs to be updated on init run (like adding new sources to
+// block), initGraph returns the new graph.
 export const initGraph =
 ( graph : GraphType
 , context: Object // extra elements for update context
 , cache: PlaybackCache
 , helpers: HelpersContext
-) => {
+): GraphType => {
   const c = mainContext ( context )
   const h = Object.assign ( {}, helpers )
-  initDo ( cache, graph, c, h, rootNodeId )
+  let g = initDo ( cache, graph, c, h, rootNodeId )
+  if ( !Object.isFrozen ( g ) ) {
+    // changed
+    g.blocksById = Object.freeze ( g.blocksById )
+    return Object.freeze ( g )
+  }
+  return graph
 }
 
+// If the graph needs to be updated on init run (like adding new sources to
+// block), the runGraph returns the new graph.
 export const runGraph =
 ( graph : GraphType
 , context: Object = {} // extra elements for update context
 , cache: PlaybackCache = { nodecache: {} }
 , helpers: HelpersContext = {}
-) => {
+): GraphType => {
   if ( !cache.scrub ) {
     if ( cache.graph && cache.graph.blocksById === graph.blocksById ) {
       // Avoir compilation if blocks did not change ( which they do if we do
@@ -351,9 +442,11 @@ export const runGraph =
   compileGraph ( graph, cache )
   // 3. init
   // FIXME: Can we improve and only call init on top most changed elements ?
-  initGraph ( graph, context, cache, helpers )
+  let g = initGraph ( graph, context, cache, helpers )
   // 4. run
   callGraph ( cache, context )
+
+  return g
 }
 
 export const callGraph =

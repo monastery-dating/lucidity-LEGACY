@@ -12,7 +12,6 @@ import 'codemirror/addon/scroll/simplescrollbars.css'
 import 'codemirror/addon/dialog/dialog.css'
 import { debounce } from '../../modules/Utils'
 let cm = null
-let source
 const ederror = []
 
 let serrors: CompilerError[]
@@ -40,18 +39,39 @@ const showErrors = ( errors ) => {
   debounceErrors ( { output: doShowErrors } )
 }
 
+let block: BlockType = null
+
 export const CodeEditor = Component
 ( { block: [ 'block' ]
   , select: [ '$block' ]
   , errors: [ '$editor', 'errors' ]
   }
 , ( { props, state, signals }: ContextType ) => {
-    const block: BlockType = state.block || {}
+    block = state.block || {}
+    const tab = props.tab
 
-    const save = () => {
-      source = cm.getValue ()
-      signals.block.source
-      ( { value: source } )
+    const save = ( filename: string, source: string ) => {
+      if ( filename === 'main.ts' ) {
+        signals.block.source
+        ( { source } )
+      }
+      else {
+        if ( block && block.sources ) {
+          const src = block.sources [ filename ]
+          if ( typeof src === 'string' ) {
+            const sources = Object.assign ( {}, block.sources )
+            sources [ filename ] = source
+            signals.block.sources
+            ( { sources } )
+          }
+          else {
+            console.log ( `Invalid filename '${filename}'. Cannot save.` )
+          }
+        }
+        else {
+          console.log ( `No extra sources. Cannot save.` )
+        }
+      }
     }
 
     if ( cm ) {
@@ -84,9 +104,14 @@ export const CodeEditor = Component
       }
     }
 
-    if ( source !== block.source && cm ) {
-      source = block.source
-      sourceChanged ( cm, block )
+    let source = block.source
+    if ( tab !== 'main.ts' && tab !== 'controls' ) {
+      const sources = block.sources || {}
+      source = sources [ tab ]
+    }
+
+    if ( cm && tab !== 'controls' ) {
+      sourceChanged ( cm, tab, source, block.id )
     }
 
     return <div class='CodeEditor' style={ props.style }>
