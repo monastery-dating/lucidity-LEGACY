@@ -11,7 +11,7 @@ export const sources: SignalType =
 // FIXME: Simplest thing to do would be to call playback's runGraph from within
 // sourceAction... We then know if we need to save more then just the main
 // source... It might also make Playback code simpler.
-[ debounce ( 1500 ) // slower then 'source' update.
+[ debounce ( 2000 ) // slower then 'source' update.
 , sourcesAction
 , { success:
     [ unset ( 'state:/$editor.errors' )

@@ -92,12 +92,18 @@ export const Playback = Component
             callGraph ( cache, context )
           }
           if ( g !== graph ) {
-            // Currently only the selected block could change on runtime
-            const ob = graph.blocksById [ select.id ]
-            const nb = g.blocksById [ select.id ]
-            if ( nb && nb !== ob ) {
-              // This is the only thing that can change for now.
-              signals.block.sources ( { sources: nb.sources } )
+            if ( !select ) {
+              // How could this change ?
+              console.log ( g )
+            }
+            else {
+              // Currently only the selected block could change on runtime
+              const ob = graph.blocksById [ select.id ]
+              const nb = g.blocksById [ select.id ]
+              if ( nb && nb !== ob ) {
+                // This is the only thing that can change for now.
+                signals.block.sources ( { sources: nb.sources } )
+              }
             }
           }
           // New scrubber is ready: update editor

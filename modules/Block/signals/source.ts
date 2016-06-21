@@ -7,7 +7,7 @@ import * as unset from 'cerebral-addons/unset'
 import { update } from '../../Data/actions/update'
 
 export const source: SignalType =
-[ debounce ( 100 ) // Wait before we do anything: the user is typing
+[ debounce ( 500 ) // Wait before we do anything: the user is typing
 , sourceAction
 , { success:
     [ unset ( 'state:/$editor.errors' )

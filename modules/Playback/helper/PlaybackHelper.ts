@@ -11,7 +11,8 @@ const midi = MidiHelper.midiState ()
 // This is the context defined before calling main.
 export const MAIN_CONTEXT =
 // midiState contains values for current ctrl and notes
-{ midi: 'midi.State'
+{ midi: 'lucidity.Midi' // FIXME: this should be in a separate object. midi.State for
+// example
 }
 
 
