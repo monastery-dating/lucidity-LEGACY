@@ -134,7 +134,7 @@ const processSource =
           // FIXME: validate meta ?
           const meta = extractMeta ( exported )
           const b = Object.assign ( block, { js, scrub, meta } )
-          resolve ( b )
+          resolve ( Object.freeze ( b ) )
         }
         catch ( err ) {
           console.log ( err )

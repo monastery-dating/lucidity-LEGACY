@@ -88,6 +88,7 @@ describe ( 'createGraph', ( it, setupDone ) => {
                   }
         }
       )
+      done ()
     })
   })
 
@@ -148,6 +149,7 @@ describe ( 'appendGraph', ( it, setupDone ) => {
 })
 
 describe ( 'insertGraph', ( it, setupDone ) => {
+  let main: GraphType
   let graph: GraphType
   let g1: GraphType
   let g2: GraphType
@@ -162,6 +164,7 @@ describe ( 'insertGraph', ( it, setupDone ) => {
     ]
   )
   .then ( () => {
+    main = graph
     graph = insertGraph ( graph, rootNodeId, 0, g1 )
     graph = insertGraph ( graph, rootNodeId, 0, g2 )
     setupDone ()
@@ -186,7 +189,7 @@ describe ( 'insertGraph', ( it, setupDone ) => {
 
 
   it ( 'should insert null', ( assert ) => {
-      let g = insertGraph ( graph, rootNodeId, 1, g1 )
+      let g = insertGraph ( main, rootNodeId, 1, g1 )
       assert.equal
       ( g.nodesById [ rootNodeId ].children
       , [ null, 'n1' ]
@@ -195,7 +198,7 @@ describe ( 'insertGraph', ( it, setupDone ) => {
   )
 
   it ( 'should replace null', ( assert ) => {
-      let g = insertGraph ( graph, rootNodeId, 1, g1 )
+      let g = insertGraph ( main, rootNodeId, 1, g1 )
       g = insertGraph ( g, rootNodeId, 0, g2 )
 
       assert.equal
@@ -362,8 +365,8 @@ describe ( 'GraphHelper.cut', ( it, setupDone ) => {
 
     assert.equal
     ( traverse ( main )
-    , [ 'n0:b0:foo'
-      , ' n1:b1:bar'
+    , [ 'n0:b0:g1'
+      , ' n1:b1:g2'
       ]
     )
   })

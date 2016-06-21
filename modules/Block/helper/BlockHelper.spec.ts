@@ -108,8 +108,15 @@ describe ( 'createBlock', ( it, setupDone ) => {
     )
   })
 
-  it ( 'should set isvoid', ( assert ) => {
-    assert.same ( block.meta.isvoid, true )
+  it ( 'should set isvoid', ( assert, done ) => {
+    createBlock
+    ( 'hello'
+    , `interface Foo {}\nexport const update = () => 'hop'`
+    )
+    .then ( ( block ) => {
+      assert.same ( block.meta.isvoid, true )
+      done ()
+    })
   })
 })
 
@@ -151,6 +158,7 @@ describe ( 'updateBlock', ( it ) => {
   it ( 'should set isvoid', ( assert, done ) => {
     update ( { source: 'export const update = () => {}'}, ( err, block ) => {
       assert.same ( block.meta.isvoid, true )
+      done ()
     })
   })
 })

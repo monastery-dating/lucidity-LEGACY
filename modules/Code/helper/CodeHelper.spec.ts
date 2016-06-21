@@ -1,7 +1,7 @@
 import { describe } from '../../Test'
 import { compileCode } from './CodeHelper'
 
-describe ( 'compileCode', ( it ) => {
+describe ( 'CodeHelper compileCode', ( it ) => {
 
   it ( 'should return errors on invalid code', ( assert, done ) => {
     compileCode ( 'x', ( { js, errors } ) => {
@@ -11,34 +11,39 @@ describe ( 'compileCode', ( it ) => {
       ( { message: "Cannot find name 'x'.", line: 0, ch: 0 }
       , errors [ 0 ]
       )
+      done ()
     })
 
   })
 
-  it ( 'should recognize lucidity', ( assert ) => {
+  it ( 'should recognize lucidity', ( assert, done ) => {
     const src = "import { Meta } from 'lucidity'"
     compileCode ( src, ( { js, errors } ) => {
       assert.same ( errors, undefined )
       assert.equal ( js, '"use strict";\n' )
+      done ()
     })
   })
 
-  it ( 'should recognize browser libs', ( assert ) => {
+  it ( 'should recognize browser libs', ( assert, done ) => {
     const src = "window.boom()"
     compileCode ( src, ( { js, errors } ) => {
       assert.equal
       ( "Property 'boom' does not exist on type 'Window'."
       , errors [ 0 ].message
       )
+      done ()
     })
   })
 })
 
-describe ( 'compileCode scrub', ( it ) => {
+describe ( 'CodeHelper compileCode scrub', ( it, setupDone ) => {
   const src =
   `// This is a comment
    export const init =
    ( { context } ) => {
+     const foo = ( a, b ) => a + b
+     const x = 0
      context.test.a = 10
      context.test.b = -20
      context.test.x = x - 30
@@ -53,21 +58,28 @@ describe ( 'compileCode scrub', ( it ) => {
    }
   `
 
-  compileCode ( src, ( { scrub } ) => {
-    const literals = scrub.literals
+  let scrub, errors
+  compileCode ( src, ( res ) => {
+    errors = res.errors
+    scrub = res.scrub
+    setupDone ()
+  })
 
-    it ( 'should get values with unary minus', ( assert ) => {
-      assert.equal
-      ( literals.map ( l => l.value )
-      , [10,-20,30,-40,-50,60,-70,-80,90,100,110,120]
-      )
-    })
+  it ( 'should compile', ( assert ) => {
+    assert.same ( errors, undefined )
+  })
 
-    it ( 'should get literal position', ( assert ) => {
-      assert.equal
-      ( literals.map ( l => l.line )
-      , [3,4,5,6,7,7,8,8,8,8,8,13]
-      )
-    })
+  it ( 'should get values with unary minus', ( assert ) => {
+    assert.equal
+    ( scrub.literals.map ( l => l.value )
+    , [0,10,-20,30,-40,-50,60,-70,-80,90,100,110,120]
+    )
+  })
+
+  it ( 'should get literal position', ( assert ) => {
+    assert.equal
+    ( scrub.literals.map ( l => l.line )
+    , [4,5,6,7,8,9,9,10,10,10,10,10,15]
+    )
   })
 })

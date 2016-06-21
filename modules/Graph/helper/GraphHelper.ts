@@ -122,12 +122,15 @@ const check =
       allvoid.push ( nodeId )
     }
     // valid
+    const closed = node.closed
     node =
     { id: nodeId
     , blockId: node.blockId
     , parent: node.parent
-    , closed: node.closed
     , children
+    }
+    if ( closed ) {
+      node.closed = true
     }
     if ( childrenTypes ) {
       // Only set direct children for helper if we have explicit
