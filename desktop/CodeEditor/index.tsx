@@ -74,6 +74,11 @@ export const CodeEditor = Component
       }
     }
 
+    const typecheck = ( filename: string, source: string ) => {
+      signals.block.typecheck
+      ( { source } )
+    }
+
     if ( cm ) {
       const errors = state.errors
       cm.operation
@@ -97,6 +102,7 @@ export const CodeEditor = Component
             ( elm
             , block.source || ''
             , save
+            , typecheck
             )
           }
         , 100

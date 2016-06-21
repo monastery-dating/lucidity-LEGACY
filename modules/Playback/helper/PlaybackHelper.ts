@@ -104,16 +104,17 @@ const updateCache =
 
     let n = nodecache [ nodeId ]
 
+    if ( !n ) {
+      n = nodecache [ nodeId ] = <NodeCache> { exported: {} }
+      n.scrubber = { values: [], literals: [], js: null }
+    }
+
     if ( node.invalid ) {
       // ignore
       n.exported = { update: DUMMY_UPDATE }
       continue
     }
 
-    if ( !n ) {
-      n = nodecache [ nodeId ] = <NodeCache> { exported: {} }
-      n.scrubber = { values: [], literals: [], js: null }
-    }
 
     let js = block.js
     let changed = n.js !== js
@@ -326,7 +327,9 @@ const initDo =
       }
     }
   }
-  else {
+  else if ( !node.invalid ){
+    // Only clear if node is valid = user wants to remove init
+
     // No init function = clear cached context and init cache
     delete nc.cache
     delete nc.helpers

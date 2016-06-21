@@ -19,6 +19,7 @@ export interface BlockSignalsType {
   tab ( input: { value: string } )
   values ( input: { values: number[], pos: number } )
   source ( input: { source: string } )
+  typecheck ( input: { source: string } )
   sources ( input: { sources: StringMap } )
 }
 
@@ -35,6 +36,7 @@ import { select } from './signals/select'
 import { source } from './signals/source'
 import { sources } from './signals/sources'
 import { tab } from './signals/tab'
+import { typecheck } from './signals/typecheck'
 import { values } from './signals/values'
 import { GraphType } from '../Graph'
 
@@ -87,6 +89,7 @@ export const Block =
       , source
       , sources
       , tab
+      , typecheck
       , values
       }
     )

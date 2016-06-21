@@ -91,6 +91,8 @@ interface EditorLucidityOptions {
   // cache source to avoid setting the same source more then once
   source?: string
   mode?: string
+  // save callback
+  save: SaveCallback
 }
 
 export interface Scrubber extends ScrubCode {
@@ -334,6 +336,21 @@ const NoScrubToggle =
   }
 }
 
+const SaveSource =
+( cm: CMEditor ) => {
+  const ledit = cm.options.lucidity
+  const save = ledit.save
+
+  if ( save ) {
+    // Do not trigger 'save' while we are updating the
+    // source through setValue. With 'CMD+S' we probably do not
+    // need this.
+    if ( !ledit.nosave ) {
+      const source = cm.getValue ()
+      save ( ledit.filename, source )
+    }
+  }
+}
 const isLiteral = /[0-9\.]/
 
 interface SaveCallback {
@@ -344,6 +361,7 @@ export const makeEditor =
 ( elm: HTMLElement
 , source: string = ''
 , save: SaveCallback = null
+, typecheck: SaveCallback = null
 ): any => {
 
   // We copy in here the currently loaded block's scrubber so that
@@ -351,7 +369,7 @@ export const makeEditor =
   const scrubber: Scrubber =
   { js: '', values: [], init () {}, literals: [] }
 
-  const ledit: EditorLucidityOptions = { scrubber }
+  const ledit: EditorLucidityOptions = { scrubber, save }
 
   const opts =
   { value: source
@@ -365,6 +383,7 @@ export const makeEditor =
     { Tab: 'indentMore'
     , [ 'Shift-Tab' ]: 'indentLess'
     , [ 'Alt-S' ]: NoScrubToggle
+    , [ 'Cmd-S' ]: SaveSource
     }
   , smartIndent: false
   }
@@ -402,16 +421,15 @@ export const makeEditor =
     }
   })
 
-  if ( save ) {
-    cm.on ( 'changes' , () => {
-      // Do not trigger 'save' while we are updating the
-      // source through setValue.
-      if ( !ledit.nosave ) {
-        const source = cm.getValue ()
-        save ( ledit.filename, source )
-      }
-    })
-  }
+  cm.on ( 'changes', () => {
+    // Do not trigger 'typecheck' while we are updating the
+    // source through setValue.
+    if ( !ledit.nosave && ledit.mode === 'javascript' ) {
+      const source = cm.getValue ()
+      typecheck ( ledit.filename, source )
+    }
+
+  })
 
   return cm
 }

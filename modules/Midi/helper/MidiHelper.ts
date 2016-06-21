@@ -41,6 +41,7 @@ const receive =
   const type = s & 0xf0
   const key = m.data [ 1 ] & 0x7f
   const value = m.data [ 2 ] & 0x7f
+  console.log ( type, key, value )
   switch ( type ) {
     case NOTE_OFF:
       mstate.note [ c ] [ key ] = 0

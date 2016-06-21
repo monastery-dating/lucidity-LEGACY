@@ -101,20 +101,14 @@ export const moveAction =
       }
 
     }
+
+    state.set ( dropp, drop )
   }
 
-  else {
+  else if ( drop ) {
     // no target = abort
-    drop = null
+    state.unset ( dropp )
   }
 
-  state.set
-  ( dropp
-  , drop
-  )
-
-  state.set
-  ( movep
-  , move
-  )
+  state.set ( movep, move )
 }
