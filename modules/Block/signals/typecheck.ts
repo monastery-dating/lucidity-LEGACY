@@ -1,7 +1,8 @@
-import { SignalType } from '../../context.type'
-import { sourceAction } from '../actions/sourceAction'
 import * as copy from 'cerebral-addons/copy'
 import { debounce } from '../../Utils'
+import { source } from './source'
+import { SignalType } from '../../context.type'
+import { sourceAction } from '../actions/sourceAction'
 import * as unset from 'cerebral-addons/unset'
 import { update } from '../../Data/actions/update'
 
@@ -11,6 +12,10 @@ export const typecheck: SignalType =
     [ sourceAction
     , { success:
         [ unset ( 'state:/$editor.errors' )
+        , debounce ( 1000 ) // valid code is auto-saved after some s
+        , { accepted: [ ...source ]
+          , ignored: []
+          }
         ]
       , error:
         [ copy ( 'input:/errors', 'state:/$editor.errors' )
