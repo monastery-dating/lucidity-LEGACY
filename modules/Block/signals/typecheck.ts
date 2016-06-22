@@ -7,12 +7,16 @@ import { update } from '../../Data/actions/update'
 
 export const typecheck: SignalType =
 [ debounce ( 500 ) // Wait before we do anything: the user is typing
-, sourceAction
-, { success:
-    [ unset ( 'state:/$editor.errors' )
+, { accepted:
+    [ sourceAction
+    , { success:
+        [ unset ( 'state:/$editor.errors' )
+        ]
+      , error:
+        [ copy ( 'input:/errors', 'state:/$editor.errors' )
+        ]
+      }
     ]
-  , error:
-    [ copy ( 'input:/errors', 'state:/$editor.errors' )
-    ]
+  , ignored: []
   }
 ]

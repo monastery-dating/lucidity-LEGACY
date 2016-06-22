@@ -48,27 +48,27 @@
 	// modules
 	const App_1 = __webpack_require__(1);
 	const bindkeys_1 = __webpack_require__(5);
-	const Block_1 = __webpack_require__(132);
-	const Code_1 = __webpack_require__(68);
-	const Data_1 = __webpack_require__(151);
-	const DragDrop_1 = __webpack_require__(158);
+	const Block_1 = __webpack_require__(130);
+	const Code_1 = __webpack_require__(66);
+	const Data_1 = __webpack_require__(152);
+	const DragDrop_1 = __webpack_require__(159);
 	const Factory_1 = __webpack_require__(11);
 	const Graph_1 = __webpack_require__(26);
-	const Library_1 = __webpack_require__(164);
-	const Midi_1 = __webpack_require__(49);
-	const Playback_1 = __webpack_require__(263);
+	const Library_1 = __webpack_require__(165);
+	const Midi_1 = __webpack_require__(47);
+	const Playback_1 = __webpack_require__(264);
 	const Project_1 = __webpack_require__(9);
-	const Scene_1 = __webpack_require__(71);
-	const Status_1 = __webpack_require__(53);
-	const User_1 = __webpack_require__(264);
-	const Sync_1 = __webpack_require__(270);
-	const Router = __webpack_require__(275);
-	const Controller = __webpack_require__(107);
-	const Devtools = __webpack_require__(291);
-	const Http = __webpack_require__(292);
-	const Model = __webpack_require__(73);
+	const Scene_1 = __webpack_require__(69);
+	const Status_1 = __webpack_require__(51);
+	const User_1 = __webpack_require__(265);
+	const Sync_1 = __webpack_require__(271);
+	const Router = __webpack_require__(276);
+	const Controller = __webpack_require__(105);
+	const Devtools = __webpack_require__(292);
+	const Http = __webpack_require__(293);
+	const Model = __webpack_require__(71);
 	const Component_1 = __webpack_require__(13); // Component for jsx on this page
-	const App_2 = __webpack_require__(293);
+	const App_2 = __webpack_require__(294);
 	//import { TestView as AppView } from './TestView'
 	const model = Model({});
 	const controller = Controller(model);
@@ -116,12 +116,12 @@
 
 	"use strict";
 	const mounted_1 = __webpack_require__(2);
-	const homeUrl_1 = __webpack_require__(124);
-	const mode_1 = __webpack_require__(125);
-	const projectUrl_1 = __webpack_require__(126);
-	const projectsUrl_1 = __webpack_require__(127);
-	const resized_1 = __webpack_require__(128);
-	const userUrl_1 = __webpack_require__(131);
+	const homeUrl_1 = __webpack_require__(122);
+	const mode_1 = __webpack_require__(123);
+	const projectUrl_1 = __webpack_require__(124);
+	const projectsUrl_1 = __webpack_require__(125);
+	const resized_1 = __webpack_require__(126);
+	const userUrl_1 = __webpack_require__(129);
 	exports.App = (options = {}) => {
 	    return (module, controller) => {
 	        // no state added
@@ -146,8 +146,8 @@
 	const status_1 = __webpack_require__(3);
 	const bindkeys_1 = __webpack_require__(5);
 	const reload_1 = __webpack_require__(6);
-	const runtests_1 = __webpack_require__(95);
-	const init_1 = __webpack_require__(50);
+	const runtests_1 = __webpack_require__(93);
+	const init_1 = __webpack_require__(48);
 	exports.mounted = [status_1.setStatus({ type: 'info', message: 'Lucidity started' }),
 	    bindkeys_1.bindkeys,
 	    [...reload_1.reload] // async
@@ -280,8 +280,8 @@
 	const reload_1 = __webpack_require__(7);
 	const dataToState_1 = __webpack_require__(8);
 	const Project_1 = __webpack_require__(9);
-	const copy = __webpack_require__(78);
-	const when = __webpack_require__(93);
+	const copy = __webpack_require__(76);
+	const when = __webpack_require__(91);
 	exports.reload = [reload_1.reload,
 	    { success: [dataToState_1.dataToState,
 	            when('state:/$projectId'),
@@ -344,11 +344,11 @@
 	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 	}
 	__export(__webpack_require__(10));
-	__export(__webpack_require__(88));
-	const Model = __webpack_require__(73);
-	const add_1 = __webpack_require__(89);
-	const name_1 = __webpack_require__(91);
-	const select_1 = __webpack_require__(92);
+	__export(__webpack_require__(86));
+	const Model = __webpack_require__(71);
+	const add_1 = __webpack_require__(87);
+	const name_1 = __webpack_require__(89);
+	const select_1 = __webpack_require__(90);
 	const CurrentProject = Model.monkey({ cursors: { projectById: ['data', 'project'],
 	        id: ['$projectId']
 	    },
@@ -376,7 +376,7 @@
 	"use strict";
 	const Factory_1 = __webpack_require__(11);
 	const Graph_1 = __webpack_require__(26);
-	const Scene_1 = __webpack_require__(71);
+	const Scene_1 = __webpack_require__(69);
 	exports.createProject = () => {
 	    const _id = Factory_1.makeId();
 	    let graph;
@@ -634,7 +634,7 @@
 /* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = (__webpack_require__(15))(101);
+	module.exports = (__webpack_require__(15))(129);
 
 /***/ },
 /* 15 */
@@ -911,7 +911,7 @@
 /* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = (__webpack_require__(15))(138);
+	module.exports = (__webpack_require__(15))(99);
 
 /***/ },
 /* 26 */
@@ -942,7 +942,7 @@
 	__export(__webpack_require__(34));
 	__export(__webpack_require__(31));
 	// FIXME: Immutable should be in 'utils'
-	__export(__webpack_require__(70));
+	__export(__webpack_require__(68));
 
 
 /***/ },
@@ -1383,8 +1383,8 @@
 	"use strict";
 	const BlockHelper_1 = __webpack_require__(35);
 	const NodeHelper_1 = __webpack_require__(31);
-	const PlaybackHelper_1 = __webpack_require__(48);
-	const Immutable_1 = __webpack_require__(70);
+	const PlaybackHelper_1 = __webpack_require__(46);
+	const Immutable_1 = __webpack_require__(68);
 	const checkFreeze = (graph) => {
 	    if (Object.isFrozen(graph)) {
 	        graph =
@@ -1476,13 +1476,16 @@
 	            allvoid.push(nodeId);
 	        }
 	        // valid
+	        const closed = node.closed;
 	        node =
 	            { id: nodeId,
 	                blockId: node.blockId,
 	                parent: node.parent,
-	                closed: node.closed,
 	                children
 	            };
+	        if (closed) {
+	            node.closed = true;
+	        }
 	        if (childrenTypes) {
 	            // Only set direct children for helper if we have explicit
 	            // types for them.
@@ -1726,8 +1729,8 @@
 
 	"use strict";
 	const CodeHelper_1 = __webpack_require__(36);
-	const DEFAULT_SOURCE = __webpack_require__(46);
-	exports.MAIN_SOURCE = __webpack_require__(47);
+	const DEFAULT_SOURCE = __webpack_require__(44);
+	exports.MAIN_SOURCE = __webpack_require__(45);
 	exports.nextBlockId = (blocksById) => {
 	    let n = 0;
 	    while (blocksById[`b${n}`]) {
@@ -1779,11 +1782,7 @@
 	    }
 	    return `(${args.join()}):${m[2]}`;
 	};
-	// FIXME: Why isn't normalizeType working ? Why does foo work ?
-	console.log('WTF?', exports.normalizeType);
-	const foo = exports.normalizeType;
 	exports.extractMeta = (exported) => {
-	    console.log('FOO', foo);
 	    const meta = {};
 	    const emeta = exported.meta || {};
 	    // expect?: TypeMap
@@ -1802,14 +1801,14 @@
 	        meta.all = true;
 	    }
 	    else if (Array.isArray(children)) {
-	        meta.children = children.map(foo);
+	        meta.children = children.map(exports.normalizeType);
 	    }
 	    // update?: number // normalized type
 	    if (exported.update && !emeta.update) {
 	        meta.isvoid = true;
 	    }
 	    else if (emeta.update) {
-	        meta.update = foo(emeta.update);
+	        meta.update = exports.normalizeType(emeta.update);
 	    }
 	    return meta;
 	};
@@ -1825,7 +1824,7 @@
 	                    // FIXME: validate meta ?
 	                    const meta = exports.extractMeta(exported);
 	                    const b = Object.assign(block, { js, scrub, meta });
-	                    resolve(b);
+	                    resolve(Object.freeze(b));
 	                }
 	                catch (err) {
 	                    console.log(err);
@@ -1837,7 +1836,6 @@
 	                }
 	            }
 	            else {
-	                console.log(block.source, errors);
 	                reject(errors);
 	            }
 	        });
@@ -1853,22 +1851,47 @@
 	"use strict";
 	const CodeMirror_1 = __webpack_require__(37);
 	const worker = new Worker('build/codeWorker.js');
-	const WORKER_OPS = [];
+	const WORKER_OPS = {};
+	const PENDING_OPS = [];
+	let opid = 0;
 	worker.addEventListener('message', (e) => {
-	    const callback = WORKER_OPS.shift();
-	    if (callback) {
+	    const { id, data } = e.data;
+	    const op = WORKER_OPS[id];
+	    delete WORKER_OPS[id];
+	    if (!op) {
+	        console.log(`ERROR: Wrong worker response (operation ${id} not found).`);
+	    }
+	    else {
 	        // e.data === TranspileCallbackArgs
-	        callback(e.data);
+	        op.callback(data);
 	    }
 	});
-	// Without worker
-	// import { compile } from './codeWorker'
-	const runWork = (source, callback) => {
-	    WORKER_OPS.push(callback);
-	    worker.postMessage(source);
+	let runWork = (source, callback) => {
+	    ++opid;
+	    const id = opid.toString();
+	    WORKER_OPS[id] = { id, source, callback };
+	    PENDING_OPS.push(id);
 	    // Without worker
 	    // callback ( compile ( source ) )
 	};
+	const ready = () => {
+	    console.log('WORKER READY');
+	    runWork =
+	            (source, callback) => {
+	            ++opid;
+	            const id = opid.toString();
+	            WORKER_OPS[id] = { id, source, callback };
+	            worker.postMessage({ id, source });
+	            // Without worker
+	            // callback ( compile ( source ) )
+	        };
+	    for (const v of PENDING_OPS) {
+	        const { id, source } = WORKER_OPS[v];
+	        worker.postMessage({ id, source });
+	    }
+	    PENDING_OPS.length = 0;
+	};
+	WORKER_OPS['ready'] = ({ id: 'ready', callback: ready, source: '' });
 	const floatRe = /\./;
 	const scrubdown = (e, i, cm) => {
 	    // start click
@@ -1954,6 +1977,7 @@
 	let updating = false;
 	// Called by playback when the content is compiled.
 	exports.scrubMark = (cm) => {
+	    console.log(exports.scrubMark);
 	    const ledit = cm.options.lucidity;
 	    const scrubber = ledit.scrubber;
 	    if (updating || ledit.noscrub) {
@@ -2005,22 +2029,39 @@
 	        exports.scrubMark(cm);
 	    }
 	};
-	exports.sourceChanged = (cm, block) => {
+	const EXT_TO_MODE = { js: 'javascript',
+	    ts: 'javascript',
+	    glsl: 'x-shader/x-vertex'
+	};
+	const getMode = (filename) => {
+	    const fl = filename.split('.');
+	    const ext = fl[fl.length - 1];
+	    return EXT_TO_MODE[ext] || 'text';
+	};
+	exports.sourceChanged = (cm, filename, source, block) => {
 	    const ledit = cm.options.lucidity;
-	    if (ledit.lock && ledit.blockId === block.id) {
+	    if (ledit.lock && ledit.blockId === block.id && ledit.filename === filename) {
+	        return;
+	    }
+	    else if (source === ledit.source && filename === ledit.filename) {
+	        // ignore
 	        return;
 	    }
 	    else {
 	        // prevent save while we update the source
 	        ledit.nosave = true;
-	        ledit.blockId = block.id;
-	        cm.setValue(block.source || '');
-	        // clear marks until we get updated ones
-	        const doc = cm.getDoc();
-	        const marks = doc.getAllMarks();
-	        for (const m of marks) {
-	            m.clear();
+	        ledit.source = source;
+	        if (filename !== ledit.filename) {
+	            ledit.filename = filename;
+	            const mode = getMode(filename);
+	            console.log(filename, mode);
+	            if (ledit.mode !== mode) {
+	                ledit.mode = mode;
+	                cm.setOption('mode', mode);
+	            }
 	        }
+	        ledit.blockId = block.id;
+	        cm.setValue(source || '');
 	        ledit.nosave = false;
 	    }
 	};
@@ -2043,12 +2084,25 @@
 	        exports.scrubMark(cm);
 	    }
 	};
+	const SaveSource = (cm) => {
+	    const ledit = cm.options.lucidity;
+	    const save = ledit.save;
+	    if (save) {
+	        // Do not trigger 'save' while we are updating the
+	        // source through setValue. With 'CMD+S' we probably do not
+	        // need this.
+	        if (!ledit.nosave) {
+	            const source = cm.getValue();
+	            save(ledit.filename, source);
+	        }
+	    }
+	};
 	const isLiteral = /[0-9\.]/;
-	exports.makeEditor = (elm, source = '', save = null) => {
+	exports.makeEditor = (elm, source = '', save = null, typecheck = null) => {
 	    // We copy in here the currently loaded block's scrubber so that
 	    // we can access it from the editor.
 	    const scrubber = { js: '', values: [], init() { }, literals: [] };
-	    const ledit = { scrubber };
+	    const ledit = { scrubber, save };
 	    const opts = { value: source,
 	        indentUnit: 2,
 	        lineWrapping: true,
@@ -2059,7 +2113,8 @@
 	        gutters: ['lucy-gutter'],
 	        extraKeys: { Tab: 'indentMore',
 	            ['Shift-Tab']: 'indentLess',
-	            ['Alt-S']: NoScrubToggle
+	            ['Alt-S']: NoScrubToggle,
+	            ['Cmd-S']: SaveSource
 	        },
 	        smartIndent: false
 	    };
@@ -2073,6 +2128,7 @@
 	    });
 	    cm.on('blur', () => {
 	        ledit.lock = null;
+	        SaveSource(cm);
 	    });
 	    cm.on('cursorActivity', () => {
 	        if (ledit.cursorMarkCleared) {
@@ -2081,26 +2137,26 @@
 	            const loc = doc.getCursor();
 	            const before = doc.getRange({ line: loc.line, ch: loc.ch - 1 }, loc);
 	            const after = doc.getRange(loc, { line: loc.line, ch: loc.ch + 1 });
+	            console.log(`before '${before}' after '${after}'`);
 	            if (isLiteral.test(before) || isLiteral.test(after)) {
 	            }
 	            else {
-	                // mark and clear
+	                // mark back
 	                exports.scrubMark(cm);
 	            }
 	        }
 	    });
-	    if (save) {
-	        cm.on('changes', () => {
-	            // Do not trigger 'save' while we are updating the
-	            // source through setValue.
-	            if (!ledit.nosave) {
-	                save();
-	            }
-	        });
-	    }
+	    cm.on('changes', () => {
+	        // Do not trigger 'typecheck' while we are updating the
+	        // source through setValue.
+	        if (!ledit.nosave && ledit.mode === 'javascript') {
+	            const source = cm.getValue();
+	            typecheck(ledit.filename, source);
+	        }
+	    });
 	    return cm;
 	};
-	CodeMirror_1.CodeMirror.defineOption('scrubber', {}, scrubSetup);
+	CodeMirror_1.CodeMirror.defineOption('lucidity', {}, scrubSetup);
 
 
 /***/ },
@@ -2113,8 +2169,12 @@
 	__webpack_require__(39);
 	// Addons, extentions
 	__webpack_require__(40);
-	__webpack_require__(44);
-	__webpack_require__(45);
+	__webpack_require__(41);
+	__webpack_require__(42);
+	// Modes
+	// TODO: Could use webgl.js (smaller file, easier to tune for WebGL).
+	// import './mode/webgl'
+	__webpack_require__(43);
 	exports.CodeMirror = CM;
 
 
@@ -2122,6582 +2182,66 @@
 /* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = (__webpack_require__(15))(113);
+	module.exports = (__webpack_require__(15))(73);
 
 /***/ },
 /* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// CodeMirror, copyright (c) by Marijn Haverbeke and others
-	// Distributed under an MIT license: http://codemirror.net/LICENSE
-	
-	// TODO actually recognize syntax of TypeScript constructs
-	
-	(function(mod) {
-	  if (true) // CommonJS
-	    mod(__webpack_require__(38));
-	  else if (typeof define == "function" && define.amd) // AMD
-	    define(["../../lib/codemirror"], mod);
-	  else // Plain browser env
-	    mod(CodeMirror);
-	})(function(CodeMirror) {
-	"use strict";
-	
-	function expressionAllowed(stream, state, backUp) {
-	  return /^(?:operator|sof|keyword c|case|new|[\[{}\(,;:]|=>)$/.test(state.lastType) ||
-	    (state.lastType == "quasi" && /\{\s*$/.test(stream.string.slice(0, stream.pos - (backUp || 0))))
-	}
-	
-	CodeMirror.defineMode("javascript", function(config, parserConfig) {
-	  var indentUnit = config.indentUnit;
-	  var statementIndent = parserConfig.statementIndent;
-	  var jsonldMode = parserConfig.jsonld;
-	  var jsonMode = parserConfig.json || jsonldMode;
-	  var isTS = parserConfig.typescript;
-	  var wordRE = parserConfig.wordCharacters || /[\w$\xa1-\uffff]/;
-	
-	  // Tokenizer
-	
-	  var keywords = function(){
-	    function kw(type) {return {type: type, style: "keyword"};}
-	    var A = kw("keyword a"), B = kw("keyword b"), C = kw("keyword c");
-	    var operator = kw("operator"), atom = {type: "atom", style: "atom"};
-	
-	    var jsKeywords = {
-	      "if": kw("if"), "while": A, "with": A, "else": B, "do": B, "try": B, "finally": B,
-	      "return": C, "break": C, "continue": C, "new": kw("new"), "delete": C, "throw": C, "debugger": C,
-	      "var": kw("var"), "const": kw("var"), "let": kw("var"),
-	      "function": kw("function"), "catch": kw("catch"),
-	      "for": kw("for"), "switch": kw("switch"), "case": kw("case"), "default": kw("default"),
-	      "in": operator, "typeof": operator, "instanceof": operator,
-	      "true": atom, "false": atom, "null": atom, "undefined": atom, "NaN": atom, "Infinity": atom,
-	      "this": kw("this"), "class": kw("class"), "super": kw("atom"),
-	      "yield": C, "export": kw("export"), "import": kw("import"), "extends": C,
-	      "await": C, "async": kw("async")
-	    };
-	
-	    // Extend the 'normal' keywords with the TypeScript language extensions
-	    if (isTS) {
-	      var type = {type: "variable", style: "variable-3"};
-	      var tsKeywords = {
-	        // object-like things
-	        "interface": kw("class"),
-	        "implements": C,
-	        "namespace": C,
-	        "module": kw("module"),
-	        "enum": kw("module"),
-	
-	        // scope modifiers
-	        "public": kw("modifier"),
-	        "private": kw("modifier"),
-	        "protected": kw("modifier"),
-	        "abstract": kw("modifier"),
-	
-	        // operators
-	        "as": operator,
-	
-	        // types
-	        "string": type, "number": type, "boolean": type, "any": type
-	      };
-	
-	      for (var attr in tsKeywords) {
-	        jsKeywords[attr] = tsKeywords[attr];
-	      }
-	    }
-	
-	    return jsKeywords;
-	  }();
-	
-	  var isOperatorChar = /[+\-*&%=<>!?|~^]/;
-	  var isJsonldKeyword = /^@(context|id|value|language|type|container|list|set|reverse|index|base|vocab|graph)"/;
-	
-	  function readRegexp(stream) {
-	    var escaped = false, next, inSet = false;
-	    while ((next = stream.next()) != null) {
-	      if (!escaped) {
-	        if (next == "/" && !inSet) return;
-	        if (next == "[") inSet = true;
-	        else if (inSet && next == "]") inSet = false;
-	      }
-	      escaped = !escaped && next == "\\";
-	    }
-	  }
-	
-	  // Used as scratch variables to communicate multiple values without
-	  // consing up tons of objects.
-	  var type, content;
-	  function ret(tp, style, cont) {
-	    type = tp; content = cont;
-	    return style;
-	  }
-	  function tokenBase(stream, state) {
-	    var ch = stream.next();
-	    if (ch == '"' || ch == "'") {
-	      state.tokenize = tokenString(ch);
-	      return state.tokenize(stream, state);
-	    } else if (ch == "." && stream.match(/^\d+(?:[eE][+\-]?\d+)?/)) {
-	      return ret("number", "number");
-	    } else if (ch == "." && stream.match("..")) {
-	      return ret("spread", "meta");
-	    } else if (/[\[\]{}\(\),;\:\.]/.test(ch)) {
-	      return ret(ch);
-	    } else if (ch == "=" && stream.eat(">")) {
-	      return ret("=>", "operator");
-	    } else if (ch == "0" && stream.eat(/x/i)) {
-	      stream.eatWhile(/[\da-f]/i);
-	      return ret("number", "number");
-	    } else if (ch == "0" && stream.eat(/o/i)) {
-	      stream.eatWhile(/[0-7]/i);
-	      return ret("number", "number");
-	    } else if (ch == "0" && stream.eat(/b/i)) {
-	      stream.eatWhile(/[01]/i);
-	      return ret("number", "number");
-	    } else if (/\d/.test(ch)) {
-	      stream.match(/^\d*(?:\.\d*)?(?:[eE][+\-]?\d+)?/);
-	      return ret("number", "number");
-	    } else if (ch == "/") {
-	      if (stream.eat("*")) {
-	        state.tokenize = tokenComment;
-	        return tokenComment(stream, state);
-	      } else if (stream.eat("/")) {
-	        stream.skipToEnd();
-	        return ret("comment", "comment");
-	      } else if (expressionAllowed(stream, state, 1)) {
-	        readRegexp(stream);
-	        stream.match(/^\b(([gimyu])(?![gimyu]*\2))+\b/);
-	        return ret("regexp", "string-2");
-	      } else {
-	        stream.eatWhile(isOperatorChar);
-	        return ret("operator", "operator", stream.current());
-	      }
-	    } else if (ch == "`") {
-	      state.tokenize = tokenQuasi;
-	      return tokenQuasi(stream, state);
-	    } else if (ch == "#") {
-	      stream.skipToEnd();
-	      return ret("error", "error");
-	    } else if (isOperatorChar.test(ch)) {
-	      stream.eatWhile(isOperatorChar);
-	      return ret("operator", "operator", stream.current());
-	    } else if (wordRE.test(ch)) {
-	      stream.eatWhile(wordRE);
-	      var word = stream.current(), known = keywords.propertyIsEnumerable(word) && keywords[word];
-	      return (known && state.lastType != ".") ? ret(known.type, known.style, word) :
-	                     ret("variable", "variable", word);
-	    }
-	  }
-	
-	  function tokenString(quote) {
-	    return function(stream, state) {
-	      var escaped = false, next;
-	      if (jsonldMode && stream.peek() == "@" && stream.match(isJsonldKeyword)){
-	        state.tokenize = tokenBase;
-	        return ret("jsonld-keyword", "meta");
-	      }
-	      while ((next = stream.next()) != null) {
-	        if (next == quote && !escaped) break;
-	        escaped = !escaped && next == "\\";
-	      }
-	      if (!escaped) state.tokenize = tokenBase;
-	      return ret("string", "string");
-	    };
-	  }
-	
-	  function tokenComment(stream, state) {
-	    var maybeEnd = false, ch;
-	    while (ch = stream.next()) {
-	      if (ch == "/" && maybeEnd) {
-	        state.tokenize = tokenBase;
-	        break;
-	      }
-	      maybeEnd = (ch == "*");
-	    }
-	    return ret("comment", "comment");
-	  }
-	
-	  function tokenQuasi(stream, state) {
-	    var escaped = false, next;
-	    while ((next = stream.next()) != null) {
-	      if (!escaped && (next == "`" || next == "$" && stream.eat("{"))) {
-	        state.tokenize = tokenBase;
-	        break;
-	      }
-	      escaped = !escaped && next == "\\";
-	    }
-	    return ret("quasi", "string-2", stream.current());
-	  }
-	
-	  var brackets = "([{}])";
-	  // This is a crude lookahead trick to try and notice that we're
-	  // parsing the argument patterns for a fat-arrow function before we
-	  // actually hit the arrow token. It only works if the arrow is on
-	  // the same line as the arguments and there's no strange noise
-	  // (comments) in between. Fallback is to only notice when we hit the
-	  // arrow, and not declare the arguments as locals for the arrow
-	  // body.
-	  function findFatArrow(stream, state) {
-	    if (state.fatArrowAt) state.fatArrowAt = null;
-	    var arrow = stream.string.indexOf("=>", stream.start);
-	    if (arrow < 0) return;
-	
-	    var depth = 0, sawSomething = false;
-	    for (var pos = arrow - 1; pos >= 0; --pos) {
-	      var ch = stream.string.charAt(pos);
-	      var bracket = brackets.indexOf(ch);
-	      if (bracket >= 0 && bracket < 3) {
-	        if (!depth) { ++pos; break; }
-	        if (--depth == 0) break;
-	      } else if (bracket >= 3 && bracket < 6) {
-	        ++depth;
-	      } else if (wordRE.test(ch)) {
-	        sawSomething = true;
-	      } else if (/["'\/]/.test(ch)) {
-	        return;
-	      } else if (sawSomething && !depth) {
-	        ++pos;
-	        break;
-	      }
-	    }
-	    if (sawSomething && !depth) state.fatArrowAt = pos;
-	  }
-	
-	  // Parser
-	
-	  var atomicTypes = {"atom": true, "number": true, "variable": true, "string": true, "regexp": true, "this": true, "jsonld-keyword": true};
-	
-	  function JSLexical(indented, column, type, align, prev, info) {
-	    this.indented = indented;
-	    this.column = column;
-	    this.type = type;
-	    this.prev = prev;
-	    this.info = info;
-	    if (align != null) this.align = align;
-	  }
-	
-	  function inScope(state, varname) {
-	    for (var v = state.localVars; v; v = v.next)
-	      if (v.name == varname) return true;
-	    for (var cx = state.context; cx; cx = cx.prev) {
-	      for (var v = cx.vars; v; v = v.next)
-	        if (v.name == varname) return true;
-	    }
-	  }
-	
-	  function parseJS(state, style, type, content, stream) {
-	    var cc = state.cc;
-	    // Communicate our context to the combinators.
-	    // (Less wasteful than consing up a hundred closures on every call.)
-	    cx.state = state; cx.stream = stream; cx.marked = null, cx.cc = cc; cx.style = style;
-	
-	    if (!state.lexical.hasOwnProperty("align"))
-	      state.lexical.align = true;
-	
-	    while(true) {
-	      var combinator = cc.length ? cc.pop() : jsonMode ? expression : statement;
-	      if (combinator(type, content)) {
-	        while(cc.length && cc[cc.length - 1].lex)
-	          cc.pop()();
-	        if (cx.marked) return cx.marked;
-	        if (type == "variable" && inScope(state, content)) return "variable-2";
-	        return style;
-	      }
-	    }
-	  }
-	
-	  // Combinator utils
-	
-	  var cx = {state: null, column: null, marked: null, cc: null};
-	  function pass() {
-	    for (var i = arguments.length - 1; i >= 0; i--) cx.cc.push(arguments[i]);
-	  }
-	  function cont() {
-	    pass.apply(null, arguments);
-	    return true;
-	  }
-	  function register(varname) {
-	    function inList(list) {
-	      for (var v = list; v; v = v.next)
-	        if (v.name == varname) return true;
-	      return false;
-	    }
-	    var state = cx.state;
-	    cx.marked = "def";
-	    if (state.context) {
-	      if (inList(state.localVars)) return;
-	      state.localVars = {name: varname, next: state.localVars};
-	    } else {
-	      if (inList(state.globalVars)) return;
-	      if (parserConfig.globalVars)
-	        state.globalVars = {name: varname, next: state.globalVars};
-	    }
-	  }
-	
-	  // Combinators
-	
-	  var defaultVars = {name: "this", next: {name: "arguments"}};
-	  function pushcontext() {
-	    cx.state.context = {prev: cx.state.context, vars: cx.state.localVars};
-	    cx.state.localVars = defaultVars;
-	  }
-	  function popcontext() {
-	    cx.state.localVars = cx.state.context.vars;
-	    cx.state.context = cx.state.context.prev;
-	  }
-	  function pushlex(type, info) {
-	    var result = function() {
-	      var state = cx.state, indent = state.indented;
-	      if (state.lexical.type == "stat") indent = state.lexical.indented;
-	      else for (var outer = state.lexical; outer && outer.type == ")" && outer.align; outer = outer.prev)
-	        indent = outer.indented;
-	      state.lexical = new JSLexical(indent, cx.stream.column(), type, null, state.lexical, info);
-	    };
-	    result.lex = true;
-	    return result;
-	  }
-	  function poplex() {
-	    var state = cx.state;
-	    if (state.lexical.prev) {
-	      if (state.lexical.type == ")")
-	        state.indented = state.lexical.indented;
-	      state.lexical = state.lexical.prev;
-	    }
-	  }
-	  poplex.lex = true;
-	
-	  function expect(wanted) {
-	    function exp(type) {
-	      if (type == wanted) return cont();
-	      else if (wanted == ";") return pass();
-	      else return cont(exp);
-	    };
-	    return exp;
-	  }
-	
-	  function statement(type, value) {
-	    if (type == "var") return cont(pushlex("vardef", value.length), vardef, expect(";"), poplex);
-	    if (type == "keyword a") return cont(pushlex("form"), expression, statement, poplex);
-	    if (type == "keyword b") return cont(pushlex("form"), statement, poplex);
-	    if (type == "{") return cont(pushlex("}"), block, poplex);
-	    if (type == ";") return cont();
-	    if (type == "if") {
-	      if (cx.state.lexical.info == "else" && cx.state.cc[cx.state.cc.length - 1] == poplex)
-	        cx.state.cc.pop()();
-	      return cont(pushlex("form"), expression, statement, poplex, maybeelse);
-	    }
-	    if (type == "function") return cont(functiondef);
-	    if (type == "for") return cont(pushlex("form"), forspec, statement, poplex);
-	    if (type == "variable") return cont(pushlex("stat"), maybelabel);
-	    if (type == "switch") return cont(pushlex("form"), expression, pushlex("}", "switch"), expect("{"),
-	                                      block, poplex, poplex);
-	    if (type == "case") return cont(expression, expect(":"));
-	    if (type == "default") return cont(expect(":"));
-	    if (type == "catch") return cont(pushlex("form"), pushcontext, expect("("), funarg, expect(")"),
-	                                     statement, poplex, popcontext);
-	    if (type == "class") return cont(pushlex("form"), className, poplex);
-	    if (type == "export") return cont(pushlex("stat"), afterExport, poplex);
-	    if (type == "import") return cont(pushlex("stat"), afterImport, poplex);
-	    if (type == "module") return cont(pushlex("form"), pattern, pushlex("}"), expect("{"), block, poplex, poplex)
-	    if (type == "async") return cont(statement)
-	    return pass(pushlex("stat"), expression, expect(";"), poplex);
-	  }
-	  function expression(type) {
-	    return expressionInner(type, false);
-	  }
-	  function expressionNoComma(type) {
-	    return expressionInner(type, true);
-	  }
-	  function expressionInner(type, noComma) {
-	    if (cx.state.fatArrowAt == cx.stream.start) {
-	      var body = noComma ? arrowBodyNoComma : arrowBody;
-	      if (type == "(") return cont(pushcontext, pushlex(")"), commasep(pattern, ")"), poplex, expect("=>"), body, popcontext);
-	      else if (type == "variable") return pass(pushcontext, pattern, expect("=>"), body, popcontext);
-	    }
-	
-	    var maybeop = noComma ? maybeoperatorNoComma : maybeoperatorComma;
-	    if (atomicTypes.hasOwnProperty(type)) return cont(maybeop);
-	    if (type == "function") return cont(functiondef, maybeop);
-	    if (type == "keyword c") return cont(noComma ? maybeexpressionNoComma : maybeexpression);
-	    if (type == "(") return cont(pushlex(")"), maybeexpression, comprehension, expect(")"), poplex, maybeop);
-	    if (type == "operator" || type == "spread") return cont(noComma ? expressionNoComma : expression);
-	    if (type == "[") return cont(pushlex("]"), arrayLiteral, poplex, maybeop);
-	    if (type == "{") return contCommasep(objprop, "}", null, maybeop);
-	    if (type == "quasi") return pass(quasi, maybeop);
-	    if (type == "new") return cont(maybeTarget(noComma));
-	    return cont();
-	  }
-	  function maybeexpression(type) {
-	    if (type.match(/[;\}\)\],]/)) return pass();
-	    return pass(expression);
-	  }
-	  function maybeexpressionNoComma(type) {
-	    if (type.match(/[;\}\)\],]/)) return pass();
-	    return pass(expressionNoComma);
-	  }
-	
-	  function maybeoperatorComma(type, value) {
-	    if (type == ",") return cont(expression);
-	    return maybeoperatorNoComma(type, value, false);
-	  }
-	  function maybeoperatorNoComma(type, value, noComma) {
-	    var me = noComma == false ? maybeoperatorComma : maybeoperatorNoComma;
-	    var expr = noComma == false ? expression : expressionNoComma;
-	    if (type == "=>") return cont(pushcontext, noComma ? arrowBodyNoComma : arrowBody, popcontext);
-	    if (type == "operator") {
-	      if (/\+\+|--/.test(value)) return cont(me);
-	      if (value == "?") return cont(expression, expect(":"), expr);
-	      return cont(expr);
-	    }
-	    if (type == "quasi") { return pass(quasi, me); }
-	    if (type == ";") return;
-	    if (type == "(") return contCommasep(expressionNoComma, ")", "call", me);
-	    if (type == ".") return cont(property, me);
-	    if (type == "[") return cont(pushlex("]"), maybeexpression, expect("]"), poplex, me);
-	  }
-	  function quasi(type, value) {
-	    if (type != "quasi") return pass();
-	    if (value.slice(value.length - 2) != "${") return cont(quasi);
-	    return cont(expression, continueQuasi);
-	  }
-	  function continueQuasi(type) {
-	    if (type == "}") {
-	      cx.marked = "string-2";
-	      cx.state.tokenize = tokenQuasi;
-	      return cont(quasi);
-	    }
-	  }
-	  function arrowBody(type) {
-	    findFatArrow(cx.stream, cx.state);
-	    return pass(type == "{" ? statement : expression);
-	  }
-	  function arrowBodyNoComma(type) {
-	    findFatArrow(cx.stream, cx.state);
-	    return pass(type == "{" ? statement : expressionNoComma);
-	  }
-	  function maybeTarget(noComma) {
-	    return function(type) {
-	      if (type == ".") return cont(noComma ? targetNoComma : target);
-	      else return pass(noComma ? expressionNoComma : expression);
-	    };
-	  }
-	  function target(_, value) {
-	    if (value == "target") { cx.marked = "keyword"; return cont(maybeoperatorComma); }
-	  }
-	  function targetNoComma(_, value) {
-	    if (value == "target") { cx.marked = "keyword"; return cont(maybeoperatorNoComma); }
-	  }
-	  function maybelabel(type) {
-	    if (type == ":") return cont(poplex, statement);
-	    return pass(maybeoperatorComma, expect(";"), poplex);
-	  }
-	  function property(type) {
-	    if (type == "variable") {cx.marked = "property"; return cont();}
-	  }
-	  function objprop(type, value) {
-	    if (type == "variable" || cx.style == "keyword") {
-	      cx.marked = "property";
-	      if (value == "get" || value == "set") return cont(getterSetter);
-	      return cont(afterprop);
-	    } else if (type == "number" || type == "string") {
-	      cx.marked = jsonldMode ? "property" : (cx.style + " property");
-	      return cont(afterprop);
-	    } else if (type == "jsonld-keyword") {
-	      return cont(afterprop);
-	    } else if (type == "modifier") {
-	      return cont(objprop)
-	    } else if (type == "[") {
-	      return cont(expression, expect("]"), afterprop);
-	    } else if (type == "spread") {
-	      return cont(expression);
-	    }
-	  }
-	  function getterSetter(type) {
-	    if (type != "variable") return pass(afterprop);
-	    cx.marked = "property";
-	    return cont(functiondef);
-	  }
-	  function afterprop(type) {
-	    if (type == ":") return cont(expressionNoComma);
-	    if (type == "(") return pass(functiondef);
-	  }
-	  function commasep(what, end) {
-	    function proceed(type, value) {
-	      if (type == ",") {
-	        var lex = cx.state.lexical;
-	        if (lex.info == "call") lex.pos = (lex.pos || 0) + 1;
-	        return cont(what, proceed);
-	      }
-	      if (type == end || value == end) return cont();
-	      return cont(expect(end));
-	    }
-	    return function(type, value) {
-	      if (type == end || value == end) return cont();
-	      return pass(what, proceed);
-	    };
-	  }
-	  function contCommasep(what, end, info) {
-	    for (var i = 3; i < arguments.length; i++)
-	      cx.cc.push(arguments[i]);
-	    return cont(pushlex(end, info), commasep(what, end), poplex);
-	  }
-	  function block(type) {
-	    if (type == "}") return cont();
-	    return pass(statement, block);
-	  }
-	  function maybetype(type) {
-	    if (isTS && type == ":") return cont(typeexpr);
-	  }
-	  function maybedefault(_, value) {
-	    if (value == "=") return cont(expressionNoComma);
-	  }
-	  function typeexpr(type) {
-	    if (type == "variable") {cx.marked = "variable-3"; return cont(afterType);}
-	  }
-	  function afterType(type, value) {
-	    if (value == "<") return cont(commasep(typeexpr, ">"), afterType)
-	    if (type == "[") return cont(expect("]"), afterType)
-	  }
-	  function vardef() {
-	    return pass(pattern, maybetype, maybeAssign, vardefCont);
-	  }
-	  function pattern(type, value) {
-	    if (type == "modifier") return cont(pattern)
-	    if (type == "variable") { register(value); return cont(); }
-	    if (type == "spread") return cont(pattern);
-	    if (type == "[") return contCommasep(pattern, "]");
-	    if (type == "{") return contCommasep(proppattern, "}");
-	  }
-	  function proppattern(type, value) {
-	    if (type == "variable" && !cx.stream.match(/^\s*:/, false)) {
-	      register(value);
-	      return cont(maybeAssign);
-	    }
-	    if (type == "variable") cx.marked = "property";
-	    if (type == "spread") return cont(pattern);
-	    if (type == "}") return pass();
-	    return cont(expect(":"), pattern, maybeAssign);
-	  }
-	  function maybeAssign(_type, value) {
-	    if (value == "=") return cont(expressionNoComma);
-	  }
-	  function vardefCont(type) {
-	    if (type == ",") return cont(vardef);
-	  }
-	  function maybeelse(type, value) {
-	    if (type == "keyword b" && value == "else") return cont(pushlex("form", "else"), statement, poplex);
-	  }
-	  function forspec(type) {
-	    if (type == "(") return cont(pushlex(")"), forspec1, expect(")"), poplex);
-	  }
-	  function forspec1(type) {
-	    if (type == "var") return cont(vardef, expect(";"), forspec2);
-	    if (type == ";") return cont(forspec2);
-	    if (type == "variable") return cont(formaybeinof);
-	    return pass(expression, expect(";"), forspec2);
-	  }
-	  function formaybeinof(_type, value) {
-	    if (value == "in" || value == "of") { cx.marked = "keyword"; return cont(expression); }
-	    return cont(maybeoperatorComma, forspec2);
-	  }
-	  function forspec2(type, value) {
-	    if (type == ";") return cont(forspec3);
-	    if (value == "in" || value == "of") { cx.marked = "keyword"; return cont(expression); }
-	    return pass(expression, expect(";"), forspec3);
-	  }
-	  function forspec3(type) {
-	    if (type != ")") cont(expression);
-	  }
-	  function functiondef(type, value) {
-	    if (value == "*") {cx.marked = "keyword"; return cont(functiondef);}
-	    if (type == "variable") {register(value); return cont(functiondef);}
-	    if (type == "(") return cont(pushcontext, pushlex(")"), commasep(funarg, ")"), poplex, maybetype, statement, popcontext);
-	  }
-	  function funarg(type) {
-	    if (type == "spread") return cont(funarg);
-	    return pass(pattern, maybetype, maybedefault);
-	  }
-	  function className(type, value) {
-	    if (type == "variable") {register(value); return cont(classNameAfter);}
-	  }
-	  function classNameAfter(type, value) {
-	    if (value == "extends") return cont(expression, classNameAfter);
-	    if (type == "{") return cont(pushlex("}"), classBody, poplex);
-	  }
-	  function classBody(type, value) {
-	    if (type == "variable" || cx.style == "keyword") {
-	      if (value == "static") {
-	        cx.marked = "keyword";
-	        return cont(classBody);
-	      }
-	      cx.marked = "property";
-	      if (value == "get" || value == "set") return cont(classGetterSetter, functiondef, classBody);
-	      return cont(functiondef, classBody);
-	    }
-	    if (value == "*") {
-	      cx.marked = "keyword";
-	      return cont(classBody);
-	    }
-	    if (type == ";") return cont(classBody);
-	    if (type == "}") return cont();
-	  }
-	  function classGetterSetter(type) {
-	    if (type != "variable") return pass();
-	    cx.marked = "property";
-	    return cont();
-	  }
-	  function afterExport(_type, value) {
-	    if (value == "*") { cx.marked = "keyword"; return cont(maybeFrom, expect(";")); }
-	    if (value == "default") { cx.marked = "keyword"; return cont(expression, expect(";")); }
-	    return pass(statement);
-	  }
-	  function afterImport(type) {
-	    if (type == "string") return cont();
-	    return pass(importSpec, maybeFrom);
-	  }
-	  function importSpec(type, value) {
-	    if (type == "{") return contCommasep(importSpec, "}");
-	    if (type == "variable") register(value);
-	    if (value == "*") cx.marked = "keyword";
-	    return cont(maybeAs);
-	  }
-	  function maybeAs(_type, value) {
-	    if (value == "as") { cx.marked = "keyword"; return cont(importSpec); }
-	  }
-	  function maybeFrom(_type, value) {
-	    if (value == "from") { cx.marked = "keyword"; return cont(expression); }
-	  }
-	  function arrayLiteral(type) {
-	    if (type == "]") return cont();
-	    return pass(expressionNoComma, maybeArrayComprehension);
-	  }
-	  function maybeArrayComprehension(type) {
-	    if (type == "for") return pass(comprehension, expect("]"));
-	    if (type == ",") return cont(commasep(maybeexpressionNoComma, "]"));
-	    return pass(commasep(expressionNoComma, "]"));
-	  }
-	  function comprehension(type) {
-	    if (type == "for") return cont(forspec, comprehension);
-	    if (type == "if") return cont(expression, comprehension);
-	  }
-	
-	  function isContinuedStatement(state, textAfter) {
-	    return state.lastType == "operator" || state.lastType == "," ||
-	      isOperatorChar.test(textAfter.charAt(0)) ||
-	      /[,.]/.test(textAfter.charAt(0));
-	  }
-	
-	  // Interface
-	
-	  return {
-	    startState: function(basecolumn) {
-	      var state = {
-	        tokenize: tokenBase,
-	        lastType: "sof",
-	        cc: [],
-	        lexical: new JSLexical((basecolumn || 0) - indentUnit, 0, "block", false),
-	        localVars: parserConfig.localVars,
-	        context: parserConfig.localVars && {vars: parserConfig.localVars},
-	        indented: basecolumn || 0
-	      };
-	      if (parserConfig.globalVars && typeof parserConfig.globalVars == "object")
-	        state.globalVars = parserConfig.globalVars;
-	      return state;
-	    },
-	
-	    token: function(stream, state) {
-	      if (stream.sol()) {
-	        if (!state.lexical.hasOwnProperty("align"))
-	          state.lexical.align = false;
-	        state.indented = stream.indentation();
-	        findFatArrow(stream, state);
-	      }
-	      if (state.tokenize != tokenComment && stream.eatSpace()) return null;
-	      var style = state.tokenize(stream, state);
-	      if (type == "comment") return style;
-	      state.lastType = type == "operator" && (content == "++" || content == "--") ? "incdec" : type;
-	      return parseJS(state, style, type, content, stream);
-	    },
-	
-	    indent: function(state, textAfter) {
-	      if (state.tokenize == tokenComment) return CodeMirror.Pass;
-	      if (state.tokenize != tokenBase) return 0;
-	      var firstChar = textAfter && textAfter.charAt(0), lexical = state.lexical;
-	      // Kludge to prevent 'maybelse' from blocking lexical scope pops
-	      if (!/^\s*else\b/.test(textAfter)) for (var i = state.cc.length - 1; i >= 0; --i) {
-	        var c = state.cc[i];
-	        if (c == poplex) lexical = lexical.prev;
-	        else if (c != maybeelse) break;
-	      }
-	      if (lexical.type == "stat" && firstChar == "}") lexical = lexical.prev;
-	      if (statementIndent && lexical.type == ")" && lexical.prev.type == "stat")
-	        lexical = lexical.prev;
-	      var type = lexical.type, closing = firstChar == type;
-	
-	      if (type == "vardef") return lexical.indented + (state.lastType == "operator" || state.lastType == "," ? lexical.info + 1 : 0);
-	      else if (type == "form" && firstChar == "{") return lexical.indented;
-	      else if (type == "form") return lexical.indented + indentUnit;
-	      else if (type == "stat")
-	        return lexical.indented + (isContinuedStatement(state, textAfter) ? statementIndent || indentUnit : 0);
-	      else if (lexical.info == "switch" && !closing && parserConfig.doubleIndentSwitch != false)
-	        return lexical.indented + (/^(?:case|default)\b/.test(textAfter) ? indentUnit : 2 * indentUnit);
-	      else if (lexical.align) return lexical.column + (closing ? 0 : 1);
-	      else return lexical.indented + (closing ? 0 : indentUnit);
-	    },
-	
-	    electricInput: /^\s*(?:case .*?:|default:|\{|\})$/,
-	    blockCommentStart: jsonMode ? null : "/*",
-	    blockCommentEnd: jsonMode ? null : "*/",
-	    lineComment: jsonMode ? null : "//",
-	    fold: "brace",
-	    closeBrackets: "()[]{}''\"\"``",
-	
-	    helperType: jsonMode ? "json" : "javascript",
-	    jsonldMode: jsonldMode,
-	    jsonMode: jsonMode,
-	
-	    expressionAllowed: expressionAllowed,
-	    skipExpression: function(state) {
-	      var top = state.cc[state.cc.length - 1]
-	      if (top == expression || top == expressionNoComma) state.cc.pop()
-	    }
-	  };
-	});
-	
-	CodeMirror.registerHelper("wordChars", "javascript", /[\w$]/);
-	
-	CodeMirror.defineMIME("text/javascript", "javascript");
-	CodeMirror.defineMIME("text/ecmascript", "javascript");
-	CodeMirror.defineMIME("application/javascript", "javascript");
-	CodeMirror.defineMIME("application/x-javascript", "javascript");
-	CodeMirror.defineMIME("application/ecmascript", "javascript");
-	CodeMirror.defineMIME("application/json", {name: "javascript", json: true});
-	CodeMirror.defineMIME("application/x-json", {name: "javascript", json: true});
-	CodeMirror.defineMIME("application/ld+json", {name: "javascript", jsonld: true});
-	CodeMirror.defineMIME("text/typescript", { name: "javascript", typescript: true });
-	CodeMirror.defineMIME("application/typescript", { name: "javascript", typescript: true });
-	
-	});
-
+	module.exports = (__webpack_require__(15))(141);
 
 /***/ },
 /* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// CodeMirror, copyright (c) by Marijn Haverbeke and others
-	// Distributed under an MIT license: http://codemirror.net/LICENSE
-	
-	/**
-	 * Supported keybindings:
-	 *   Too many to list. Refer to defaultKeyMap below.
-	 *
-	 * Supported Ex commands:
-	 *   Refer to defaultExCommandMap below.
-	 *
-	 * Registers: unnamed, -, a-z, A-Z, 0-9
-	 *   (Does not respect the special case for number registers when delete
-	 *    operator is made with these commands: %, (, ),  , /, ?, n, N, {, } )
-	 *   TODO: Implement the remaining registers.
-	 *
-	 * Marks: a-z, A-Z, and 0-9
-	 *   TODO: Implement the remaining special marks. They have more complex
-	 *       behavior.
-	 *
-	 * Events:
-	 *  'vim-mode-change' - raised on the editor anytime the current mode changes,
-	 *                      Event object: {mode: "visual", subMode: "linewise"}
-	 *
-	 * Code structure:
-	 *  1. Default keymap
-	 *  2. Variable declarations and short basic helpers
-	 *  3. Instance (External API) implementation
-	 *  4. Internal state tracking objects (input state, counter) implementation
-	 *     and instantiation
-	 *  5. Key handler (the main command dispatcher) implementation
-	 *  6. Motion, operator, and action implementations
-	 *  7. Helper functions for the key handler, motions, operators, and actions
-	 *  8. Set up Vim to work as a keymap for CodeMirror.
-	 *  9. Ex command implementations.
-	 */
-	
-	(function(mod) {
-	  if (true) // CommonJS
-	    mod(__webpack_require__(38), __webpack_require__(41), __webpack_require__(42), __webpack_require__(43));
-	  else if (typeof define == "function" && define.amd) // AMD
-	    define(["../lib/codemirror", "../addon/search/searchcursor", "../addon/dialog/dialog", "../addon/edit/matchbrackets"], mod);
-	  else // Plain browser env
-	    mod(CodeMirror);
-	})(function(CodeMirror) {
-	  'use strict';
-	
-	  var defaultKeymap = [
-	    // Key to key mapping. This goes first to make it possible to override
-	    // existing mappings.
-	    { keys: '<Left>', type: 'keyToKey', toKeys: 'h' },
-	    { keys: '<Right>', type: 'keyToKey', toKeys: 'l' },
-	    { keys: '<Up>', type: 'keyToKey', toKeys: 'k' },
-	    { keys: '<Down>', type: 'keyToKey', toKeys: 'j' },
-	    { keys: '<Space>', type: 'keyToKey', toKeys: 'l' },
-	    { keys: '<BS>', type: 'keyToKey', toKeys: 'h', context: 'normal'},
-	    { keys: '<C-Space>', type: 'keyToKey', toKeys: 'W' },
-	    { keys: '<C-BS>', type: 'keyToKey', toKeys: 'B', context: 'normal' },
-	    { keys: '<S-Space>', type: 'keyToKey', toKeys: 'w' },
-	    { keys: '<S-BS>', type: 'keyToKey', toKeys: 'b', context: 'normal' },
-	    { keys: '<C-n>', type: 'keyToKey', toKeys: 'j' },
-	    { keys: '<C-p>', type: 'keyToKey', toKeys: 'k' },
-	    { keys: '<C-[>', type: 'keyToKey', toKeys: '<Esc>' },
-	    { keys: '<C-c>', type: 'keyToKey', toKeys: '<Esc>' },
-	    { keys: '<C-[>', type: 'keyToKey', toKeys: '<Esc>', context: 'insert' },
-	    { keys: '<C-c>', type: 'keyToKey', toKeys: '<Esc>', context: 'insert' },
-	    { keys: 's', type: 'keyToKey', toKeys: 'cl', context: 'normal' },
-	    { keys: 's', type: 'keyToKey', toKeys: 'c', context: 'visual'},
-	    { keys: 'S', type: 'keyToKey', toKeys: 'cc', context: 'normal' },
-	    { keys: 'S', type: 'keyToKey', toKeys: 'VdO', context: 'visual' },
-	    { keys: '<Home>', type: 'keyToKey', toKeys: '0' },
-	    { keys: '<End>', type: 'keyToKey', toKeys: '$' },
-	    { keys: '<PageUp>', type: 'keyToKey', toKeys: '<C-b>' },
-	    { keys: '<PageDown>', type: 'keyToKey', toKeys: '<C-f>' },
-	    { keys: '<CR>', type: 'keyToKey', toKeys: 'j^', context: 'normal' },
-	    // Motions
-	    { keys: 'H', type: 'motion', motion: 'moveToTopLine', motionArgs: { linewise: true, toJumplist: true }},
-	    { keys: 'M', type: 'motion', motion: 'moveToMiddleLine', motionArgs: { linewise: true, toJumplist: true }},
-	    { keys: 'L', type: 'motion', motion: 'moveToBottomLine', motionArgs: { linewise: true, toJumplist: true }},
-	    { keys: 'h', type: 'motion', motion: 'moveByCharacters', motionArgs: { forward: false }},
-	    { keys: 'l', type: 'motion', motion: 'moveByCharacters', motionArgs: { forward: true }},
-	    { keys: 'j', type: 'motion', motion: 'moveByLines', motionArgs: { forward: true, linewise: true }},
-	    { keys: 'k', type: 'motion', motion: 'moveByLines', motionArgs: { forward: false, linewise: true }},
-	    { keys: 'gj', type: 'motion', motion: 'moveByDisplayLines', motionArgs: { forward: true }},
-	    { keys: 'gk', type: 'motion', motion: 'moveByDisplayLines', motionArgs: { forward: false }},
-	    { keys: 'w', type: 'motion', motion: 'moveByWords', motionArgs: { forward: true, wordEnd: false }},
-	    { keys: 'W', type: 'motion', motion: 'moveByWords', motionArgs: { forward: true, wordEnd: false, bigWord: true }},
-	    { keys: 'e', type: 'motion', motion: 'moveByWords', motionArgs: { forward: true, wordEnd: true, inclusive: true }},
-	    { keys: 'E', type: 'motion', motion: 'moveByWords', motionArgs: { forward: true, wordEnd: true, bigWord: true, inclusive: true }},
-	    { keys: 'b', type: 'motion', motion: 'moveByWords', motionArgs: { forward: false, wordEnd: false }},
-	    { keys: 'B', type: 'motion', motion: 'moveByWords', motionArgs: { forward: false, wordEnd: false, bigWord: true }},
-	    { keys: 'ge', type: 'motion', motion: 'moveByWords', motionArgs: { forward: false, wordEnd: true, inclusive: true }},
-	    { keys: 'gE', type: 'motion', motion: 'moveByWords', motionArgs: { forward: false, wordEnd: true, bigWord: true, inclusive: true }},
-	    { keys: '{', type: 'motion', motion: 'moveByParagraph', motionArgs: { forward: false, toJumplist: true }},
-	    { keys: '}', type: 'motion', motion: 'moveByParagraph', motionArgs: { forward: true, toJumplist: true }},
-	    { keys: '<C-f>', type: 'motion', motion: 'moveByPage', motionArgs: { forward: true }},
-	    { keys: '<C-b>', type: 'motion', motion: 'moveByPage', motionArgs: { forward: false }},
-	    { keys: '<C-d>', type: 'motion', motion: 'moveByScroll', motionArgs: { forward: true, explicitRepeat: true }},
-	    { keys: '<C-u>', type: 'motion', motion: 'moveByScroll', motionArgs: { forward: false, explicitRepeat: true }},
-	    { keys: 'gg', type: 'motion', motion: 'moveToLineOrEdgeOfDocument', motionArgs: { forward: false, explicitRepeat: true, linewise: true, toJumplist: true }},
-	    { keys: 'G', type: 'motion', motion: 'moveToLineOrEdgeOfDocument', motionArgs: { forward: true, explicitRepeat: true, linewise: true, toJumplist: true }},
-	    { keys: '0', type: 'motion', motion: 'moveToStartOfLine' },
-	    { keys: '^', type: 'motion', motion: 'moveToFirstNonWhiteSpaceCharacter' },
-	    { keys: '+', type: 'motion', motion: 'moveByLines', motionArgs: { forward: true, toFirstChar:true }},
-	    { keys: '-', type: 'motion', motion: 'moveByLines', motionArgs: { forward: false, toFirstChar:true }},
-	    { keys: '_', type: 'motion', motion: 'moveByLines', motionArgs: { forward: true, toFirstChar:true, repeatOffset:-1 }},
-	    { keys: '$', type: 'motion', motion: 'moveToEol', motionArgs: { inclusive: true }},
-	    { keys: '%', type: 'motion', motion: 'moveToMatchedSymbol', motionArgs: { inclusive: true, toJumplist: true }},
-	    { keys: 'f<character>', type: 'motion', motion: 'moveToCharacter', motionArgs: { forward: true , inclusive: true }},
-	    { keys: 'F<character>', type: 'motion', motion: 'moveToCharacter', motionArgs: { forward: false }},
-	    { keys: 't<character>', type: 'motion', motion: 'moveTillCharacter', motionArgs: { forward: true, inclusive: true }},
-	    { keys: 'T<character>', type: 'motion', motion: 'moveTillCharacter', motionArgs: { forward: false }},
-	    { keys: ';', type: 'motion', motion: 'repeatLastCharacterSearch', motionArgs: { forward: true }},
-	    { keys: ',', type: 'motion', motion: 'repeatLastCharacterSearch', motionArgs: { forward: false }},
-	    { keys: '\'<character>', type: 'motion', motion: 'goToMark', motionArgs: {toJumplist: true, linewise: true}},
-	    { keys: '`<character>', type: 'motion', motion: 'goToMark', motionArgs: {toJumplist: true}},
-	    { keys: ']`', type: 'motion', motion: 'jumpToMark', motionArgs: { forward: true } },
-	    { keys: '[`', type: 'motion', motion: 'jumpToMark', motionArgs: { forward: false } },
-	    { keys: ']\'', type: 'motion', motion: 'jumpToMark', motionArgs: { forward: true, linewise: true } },
-	    { keys: '[\'', type: 'motion', motion: 'jumpToMark', motionArgs: { forward: false, linewise: true } },
-	    // the next two aren't motions but must come before more general motion declarations
-	    { keys: ']p', type: 'action', action: 'paste', isEdit: true, actionArgs: { after: true, isEdit: true, matchIndent: true}},
-	    { keys: '[p', type: 'action', action: 'paste', isEdit: true, actionArgs: { after: false, isEdit: true, matchIndent: true}},
-	    { keys: ']<character>', type: 'motion', motion: 'moveToSymbol', motionArgs: { forward: true, toJumplist: true}},
-	    { keys: '[<character>', type: 'motion', motion: 'moveToSymbol', motionArgs: { forward: false, toJumplist: true}},
-	    { keys: '|', type: 'motion', motion: 'moveToColumn'},
-	    { keys: 'o', type: 'motion', motion: 'moveToOtherHighlightedEnd', context:'visual'},
-	    { keys: 'O', type: 'motion', motion: 'moveToOtherHighlightedEnd', motionArgs: {sameLine: true}, context:'visual'},
-	    // Operators
-	    { keys: 'd', type: 'operator', operator: 'delete' },
-	    { keys: 'y', type: 'operator', operator: 'yank' },
-	    { keys: 'c', type: 'operator', operator: 'change' },
-	    { keys: '>', type: 'operator', operator: 'indent', operatorArgs: { indentRight: true }},
-	    { keys: '<', type: 'operator', operator: 'indent', operatorArgs: { indentRight: false }},
-	    { keys: 'g~', type: 'operator', operator: 'changeCase' },
-	    { keys: 'gu', type: 'operator', operator: 'changeCase', operatorArgs: {toLower: true}, isEdit: true },
-	    { keys: 'gU', type: 'operator', operator: 'changeCase', operatorArgs: {toLower: false}, isEdit: true },
-	    { keys: 'n', type: 'motion', motion: 'findNext', motionArgs: { forward: true, toJumplist: true }},
-	    { keys: 'N', type: 'motion', motion: 'findNext', motionArgs: { forward: false, toJumplist: true }},
-	    // Operator-Motion dual commands
-	    { keys: 'x', type: 'operatorMotion', operator: 'delete', motion: 'moveByCharacters', motionArgs: { forward: true }, operatorMotionArgs: { visualLine: false }},
-	    { keys: 'X', type: 'operatorMotion', operator: 'delete', motion: 'moveByCharacters', motionArgs: { forward: false }, operatorMotionArgs: { visualLine: true }},
-	    { keys: 'D', type: 'operatorMotion', operator: 'delete', motion: 'moveToEol', motionArgs: { inclusive: true }, context: 'normal'},
-	    { keys: 'D', type: 'operator', operator: 'delete', operatorArgs: { linewise: true }, context: 'visual'},
-	    { keys: 'Y', type: 'operatorMotion', operator: 'yank', motion: 'moveToEol', motionArgs: { inclusive: true }, context: 'normal'},
-	    { keys: 'Y', type: 'operator', operator: 'yank', operatorArgs: { linewise: true }, context: 'visual'},
-	    { keys: 'C', type: 'operatorMotion', operator: 'change', motion: 'moveToEol', motionArgs: { inclusive: true }, context: 'normal'},
-	    { keys: 'C', type: 'operator', operator: 'change', operatorArgs: { linewise: true }, context: 'visual'},
-	    { keys: '~', type: 'operatorMotion', operator: 'changeCase', motion: 'moveByCharacters', motionArgs: { forward: true }, operatorArgs: { shouldMoveCursor: true }, context: 'normal'},
-	    { keys: '~', type: 'operator', operator: 'changeCase', context: 'visual'},
-	    { keys: '<C-w>', type: 'operatorMotion', operator: 'delete', motion: 'moveByWords', motionArgs: { forward: false, wordEnd: false }, context: 'insert' },
-	    // Actions
-	    { keys: '<C-i>', type: 'action', action: 'jumpListWalk', actionArgs: { forward: true }},
-	    { keys: '<C-o>', type: 'action', action: 'jumpListWalk', actionArgs: { forward: false }},
-	    { keys: '<C-e>', type: 'action', action: 'scroll', actionArgs: { forward: true, linewise: true }},
-	    { keys: '<C-y>', type: 'action', action: 'scroll', actionArgs: { forward: false, linewise: true }},
-	    { keys: 'a', type: 'action', action: 'enterInsertMode', isEdit: true, actionArgs: { insertAt: 'charAfter' }, context: 'normal' },
-	    { keys: 'A', type: 'action', action: 'enterInsertMode', isEdit: true, actionArgs: { insertAt: 'eol' }, context: 'normal' },
-	    { keys: 'A', type: 'action', action: 'enterInsertMode', isEdit: true, actionArgs: { insertAt: 'endOfSelectedArea' }, context: 'visual' },
-	    { keys: 'i', type: 'action', action: 'enterInsertMode', isEdit: true, actionArgs: { insertAt: 'inplace' }, context: 'normal' },
-	    { keys: 'I', type: 'action', action: 'enterInsertMode', isEdit: true, actionArgs: { insertAt: 'firstNonBlank'}, context: 'normal' },
-	    { keys: 'I', type: 'action', action: 'enterInsertMode', isEdit: true, actionArgs: { insertAt: 'startOfSelectedArea' }, context: 'visual' },
-	    { keys: 'o', type: 'action', action: 'newLineAndEnterInsertMode', isEdit: true, interlaceInsertRepeat: true, actionArgs: { after: true }, context: 'normal' },
-	    { keys: 'O', type: 'action', action: 'newLineAndEnterInsertMode', isEdit: true, interlaceInsertRepeat: true, actionArgs: { after: false }, context: 'normal' },
-	    { keys: 'v', type: 'action', action: 'toggleVisualMode' },
-	    { keys: 'V', type: 'action', action: 'toggleVisualMode', actionArgs: { linewise: true }},
-	    { keys: '<C-v>', type: 'action', action: 'toggleVisualMode', actionArgs: { blockwise: true }},
-	    { keys: '<C-q>', type: 'action', action: 'toggleVisualMode', actionArgs: { blockwise: true }},
-	    { keys: 'gv', type: 'action', action: 'reselectLastSelection' },
-	    { keys: 'J', type: 'action', action: 'joinLines', isEdit: true },
-	    { keys: 'p', type: 'action', action: 'paste', isEdit: true, actionArgs: { after: true, isEdit: true }},
-	    { keys: 'P', type: 'action', action: 'paste', isEdit: true, actionArgs: { after: false, isEdit: true }},
-	    { keys: 'r<character>', type: 'action', action: 'replace', isEdit: true },
-	    { keys: '@<character>', type: 'action', action: 'replayMacro' },
-	    { keys: 'q<character>', type: 'action', action: 'enterMacroRecordMode' },
-	    // Handle Replace-mode as a special case of insert mode.
-	    { keys: 'R', type: 'action', action: 'enterInsertMode', isEdit: true, actionArgs: { replace: true }},
-	    { keys: 'u', type: 'action', action: 'undo', context: 'normal' },
-	    { keys: 'u', type: 'operator', operator: 'changeCase', operatorArgs: {toLower: true}, context: 'visual', isEdit: true },
-	    { keys: 'U', type: 'operator', operator: 'changeCase', operatorArgs: {toLower: false}, context: 'visual', isEdit: true },
-	    { keys: '<C-r>', type: 'action', action: 'redo' },
-	    { keys: 'm<character>', type: 'action', action: 'setMark' },
-	    { keys: '"<character>', type: 'action', action: 'setRegister' },
-	    { keys: 'zz', type: 'action', action: 'scrollToCursor', actionArgs: { position: 'center' }},
-	    { keys: 'z.', type: 'action', action: 'scrollToCursor', actionArgs: { position: 'center' }, motion: 'moveToFirstNonWhiteSpaceCharacter' },
-	    { keys: 'zt', type: 'action', action: 'scrollToCursor', actionArgs: { position: 'top' }},
-	    { keys: 'z<CR>', type: 'action', action: 'scrollToCursor', actionArgs: { position: 'top' }, motion: 'moveToFirstNonWhiteSpaceCharacter' },
-	    { keys: 'z-', type: 'action', action: 'scrollToCursor', actionArgs: { position: 'bottom' }},
-	    { keys: 'zb', type: 'action', action: 'scrollToCursor', actionArgs: { position: 'bottom' }, motion: 'moveToFirstNonWhiteSpaceCharacter' },
-	    { keys: '.', type: 'action', action: 'repeatLastEdit' },
-	    { keys: '<C-a>', type: 'action', action: 'incrementNumberToken', isEdit: true, actionArgs: {increase: true, backtrack: false}},
-	    { keys: '<C-x>', type: 'action', action: 'incrementNumberToken', isEdit: true, actionArgs: {increase: false, backtrack: false}},
-	    // Text object motions
-	    { keys: 'a<character>', type: 'motion', motion: 'textObjectManipulation' },
-	    { keys: 'i<character>', type: 'motion', motion: 'textObjectManipulation', motionArgs: { textObjectInner: true }},
-	    // Search
-	    { keys: '/', type: 'search', searchArgs: { forward: true, querySrc: 'prompt', toJumplist: true }},
-	    { keys: '?', type: 'search', searchArgs: { forward: false, querySrc: 'prompt', toJumplist: true }},
-	    { keys: '*', type: 'search', searchArgs: { forward: true, querySrc: 'wordUnderCursor', wholeWordOnly: true, toJumplist: true }},
-	    { keys: '#', type: 'search', searchArgs: { forward: false, querySrc: 'wordUnderCursor', wholeWordOnly: true, toJumplist: true }},
-	    { keys: 'g*', type: 'search', searchArgs: { forward: true, querySrc: 'wordUnderCursor', toJumplist: true }},
-	    { keys: 'g#', type: 'search', searchArgs: { forward: false, querySrc: 'wordUnderCursor', toJumplist: true }},
-	    // Ex command
-	    { keys: ':', type: 'ex' }
-	  ];
-	
-	  /**
-	   * Ex commands
-	   * Care must be taken when adding to the default Ex command map. For any
-	   * pair of commands that have a shared prefix, at least one of their
-	   * shortNames must not match the prefix of the other command.
-	   */
-	  var defaultExCommandMap = [
-	    { name: 'colorscheme', shortName: 'colo' },
-	    { name: 'map' },
-	    { name: 'imap', shortName: 'im' },
-	    { name: 'nmap', shortName: 'nm' },
-	    { name: 'vmap', shortName: 'vm' },
-	    { name: 'unmap' },
-	    { name: 'write', shortName: 'w' },
-	    { name: 'undo', shortName: 'u' },
-	    { name: 'redo', shortName: 'red' },
-	    { name: 'set', shortName: 'se' },
-	    { name: 'set', shortName: 'se' },
-	    { name: 'setlocal', shortName: 'setl' },
-	    { name: 'setglobal', shortName: 'setg' },
-	    { name: 'sort', shortName: 'sor' },
-	    { name: 'substitute', shortName: 's', possiblyAsync: true },
-	    { name: 'nohlsearch', shortName: 'noh' },
-	    { name: 'yank', shortName: 'y' },
-	    { name: 'delmarks', shortName: 'delm' },
-	    { name: 'registers', shortName: 'reg', excludeFromCommandHistory: true },
-	    { name: 'global', shortName: 'g' }
-	  ];
-	
-	  var Pos = CodeMirror.Pos;
-	
-	  var Vim = function() {
-	    function enterVimMode(cm) {
-	      cm.setOption('disableInput', true);
-	      cm.setOption('showCursorWhenSelecting', false);
-	      CodeMirror.signal(cm, "vim-mode-change", {mode: "normal"});
-	      cm.on('cursorActivity', onCursorActivity);
-	      maybeInitVimState(cm);
-	      CodeMirror.on(cm.getInputField(), 'paste', getOnPasteFn(cm));
-	    }
-	
-	    function leaveVimMode(cm) {
-	      cm.setOption('disableInput', false);
-	      cm.off('cursorActivity', onCursorActivity);
-	      CodeMirror.off(cm.getInputField(), 'paste', getOnPasteFn(cm));
-	      cm.state.vim = null;
-	    }
-	
-	    function detachVimMap(cm, next) {
-	      if (this == CodeMirror.keyMap.vim)
-	        CodeMirror.rmClass(cm.getWrapperElement(), "cm-fat-cursor");
-	
-	      if (!next || next.attach != attachVimMap)
-	        leaveVimMode(cm, false);
-	    }
-	    function attachVimMap(cm, prev) {
-	      if (this == CodeMirror.keyMap.vim)
-	        CodeMirror.addClass(cm.getWrapperElement(), "cm-fat-cursor");
-	
-	      if (!prev || prev.attach != attachVimMap)
-	        enterVimMode(cm);
-	    }
-	
-	    // Deprecated, simply setting the keymap works again.
-	    CodeMirror.defineOption('vimMode', false, function(cm, val, prev) {
-	      if (val && cm.getOption("keyMap") != "vim")
-	        cm.setOption("keyMap", "vim");
-	      else if (!val && prev != CodeMirror.Init && /^vim/.test(cm.getOption("keyMap")))
-	        cm.setOption("keyMap", "default");
-	    });
-	
-	    function cmKey(key, cm) {
-	      if (!cm) { return undefined; }
-	      var vimKey = cmKeyToVimKey(key);
-	      if (!vimKey) {
-	        return false;
-	      }
-	      var cmd = CodeMirror.Vim.findKey(cm, vimKey);
-	      if (typeof cmd == 'function') {
-	        CodeMirror.signal(cm, 'vim-keypress', vimKey);
-	      }
-	      return cmd;
-	    }
-	
-	    var modifiers = {'Shift': 'S', 'Ctrl': 'C', 'Alt': 'A', 'Cmd': 'D', 'Mod': 'A'};
-	    var specialKeys = {Enter:'CR',Backspace:'BS',Delete:'Del'};
-	    function cmKeyToVimKey(key) {
-	      if (key.charAt(0) == '\'') {
-	        // Keypress character binding of format "'a'"
-	        return key.charAt(1);
-	      }
-	      var pieces = key.split(/-(?!$)/);
-	      var lastPiece = pieces[pieces.length - 1];
-	      if (pieces.length == 1 && pieces[0].length == 1) {
-	        // No-modifier bindings use literal character bindings above. Skip.
-	        return false;
-	      } else if (pieces.length == 2 && pieces[0] == 'Shift' && lastPiece.length == 1) {
-	        // Ignore Shift+char bindings as they should be handled by literal character.
-	        return false;
-	      }
-	      var hasCharacter = false;
-	      for (var i = 0; i < pieces.length; i++) {
-	        var piece = pieces[i];
-	        if (piece in modifiers) { pieces[i] = modifiers[piece]; }
-	        else { hasCharacter = true; }
-	        if (piece in specialKeys) { pieces[i] = specialKeys[piece]; }
-	      }
-	      if (!hasCharacter) {
-	        // Vim does not support modifier only keys.
-	        return false;
-	      }
-	      // TODO: Current bindings expect the character to be lower case, but
-	      // it looks like vim key notation uses upper case.
-	      if (isUpperCase(lastPiece)) {
-	        pieces[pieces.length - 1] = lastPiece.toLowerCase();
-	      }
-	      return '<' + pieces.join('-') + '>';
-	    }
-	
-	    function getOnPasteFn(cm) {
-	      var vim = cm.state.vim;
-	      if (!vim.onPasteFn) {
-	        vim.onPasteFn = function() {
-	          if (!vim.insertMode) {
-	            cm.setCursor(offsetCursor(cm.getCursor(), 0, 1));
-	            actions.enterInsertMode(cm, {}, vim);
-	          }
-	        };
-	      }
-	      return vim.onPasteFn;
-	    }
-	
-	    var numberRegex = /[\d]/;
-	    var wordCharTest = [CodeMirror.isWordChar, function(ch) {
-	      return ch && !CodeMirror.isWordChar(ch) && !/\s/.test(ch);
-	    }], bigWordCharTest = [function(ch) {
-	      return /\S/.test(ch);
-	    }];
-	    function makeKeyRange(start, size) {
-	      var keys = [];
-	      for (var i = start; i < start + size; i++) {
-	        keys.push(String.fromCharCode(i));
-	      }
-	      return keys;
-	    }
-	    var upperCaseAlphabet = makeKeyRange(65, 26);
-	    var lowerCaseAlphabet = makeKeyRange(97, 26);
-	    var numbers = makeKeyRange(48, 10);
-	    var validMarks = [].concat(upperCaseAlphabet, lowerCaseAlphabet, numbers, ['<', '>']);
-	    var validRegisters = [].concat(upperCaseAlphabet, lowerCaseAlphabet, numbers, ['-', '"', '.', ':', '/']);
-	
-	    function isLine(cm, line) {
-	      return line >= cm.firstLine() && line <= cm.lastLine();
-	    }
-	    function isLowerCase(k) {
-	      return (/^[a-z]$/).test(k);
-	    }
-	    function isMatchableSymbol(k) {
-	      return '()[]{}'.indexOf(k) != -1;
-	    }
-	    function isNumber(k) {
-	      return numberRegex.test(k);
-	    }
-	    function isUpperCase(k) {
-	      return (/^[A-Z]$/).test(k);
-	    }
-	    function isWhiteSpaceString(k) {
-	      return (/^\s*$/).test(k);
-	    }
-	    function inArray(val, arr) {
-	      for (var i = 0; i < arr.length; i++) {
-	        if (arr[i] == val) {
-	          return true;
-	        }
-	      }
-	      return false;
-	    }
-	
-	    var options = {};
-	    function defineOption(name, defaultValue, type, aliases, callback) {
-	      if (defaultValue === undefined && !callback) {
-	        throw Error('defaultValue is required unless callback is provided');
-	      }
-	      if (!type) { type = 'string'; }
-	      options[name] = {
-	        type: type,
-	        defaultValue: defaultValue,
-	        callback: callback
-	      };
-	      if (aliases) {
-	        for (var i = 0; i < aliases.length; i++) {
-	          options[aliases[i]] = options[name];
-	        }
-	      }
-	      if (defaultValue) {
-	        setOption(name, defaultValue);
-	      }
-	    }
-	
-	    function setOption(name, value, cm, cfg) {
-	      var option = options[name];
-	      cfg = cfg || {};
-	      var scope = cfg.scope;
-	      if (!option) {
-	        throw Error('Unknown option: ' + name);
-	      }
-	      if (option.type == 'boolean') {
-	        if (value && value !== true) {
-	          throw Error('Invalid argument: ' + name + '=' + value);
-	        } else if (value !== false) {
-	          // Boolean options are set to true if value is not defined.
-	          value = true;
-	        }
-	      }
-	      if (option.callback) {
-	        if (scope !== 'local') {
-	          option.callback(value, undefined);
-	        }
-	        if (scope !== 'global' && cm) {
-	          option.callback(value, cm);
-	        }
-	      } else {
-	        if (scope !== 'local') {
-	          option.value = option.type == 'boolean' ? !!value : value;
-	        }
-	        if (scope !== 'global' && cm) {
-	          cm.state.vim.options[name] = {value: value};
-	        }
-	      }
-	    }
-	
-	    function getOption(name, cm, cfg) {
-	      var option = options[name];
-	      cfg = cfg || {};
-	      var scope = cfg.scope;
-	      if (!option) {
-	        throw Error('Unknown option: ' + name);
-	      }
-	      if (option.callback) {
-	        var local = cm && option.callback(undefined, cm);
-	        if (scope !== 'global' && local !== undefined) {
-	          return local;
-	        }
-	        if (scope !== 'local') {
-	          return option.callback();
-	        }
-	        return;
-	      } else {
-	        var local = (scope !== 'global') && (cm && cm.state.vim.options[name]);
-	        return (local || (scope !== 'local') && option || {}).value;
-	      }
-	    }
-	
-	    defineOption('filetype', undefined, 'string', ['ft'], function(name, cm) {
-	      // Option is local. Do nothing for global.
-	      if (cm === undefined) {
-	        return;
-	      }
-	      // The 'filetype' option proxies to the CodeMirror 'mode' option.
-	      if (name === undefined) {
-	        var mode = cm.getOption('mode');
-	        return mode == 'null' ? '' : mode;
-	      } else {
-	        var mode = name == '' ? 'null' : name;
-	        cm.setOption('mode', mode);
-	      }
-	    });
-	
-	    var createCircularJumpList = function() {
-	      var size = 100;
-	      var pointer = -1;
-	      var head = 0;
-	      var tail = 0;
-	      var buffer = new Array(size);
-	      function add(cm, oldCur, newCur) {
-	        var current = pointer % size;
-	        var curMark = buffer[current];
-	        function useNextSlot(cursor) {
-	          var next = ++pointer % size;
-	          var trashMark = buffer[next];
-	          if (trashMark) {
-	            trashMark.clear();
-	          }
-	          buffer[next] = cm.setBookmark(cursor);
-	        }
-	        if (curMark) {
-	          var markPos = curMark.find();
-	          // avoid recording redundant cursor position
-	          if (markPos && !cursorEqual(markPos, oldCur)) {
-	            useNextSlot(oldCur);
-	          }
-	        } else {
-	          useNextSlot(oldCur);
-	        }
-	        useNextSlot(newCur);
-	        head = pointer;
-	        tail = pointer - size + 1;
-	        if (tail < 0) {
-	          tail = 0;
-	        }
-	      }
-	      function move(cm, offset) {
-	        pointer += offset;
-	        if (pointer > head) {
-	          pointer = head;
-	        } else if (pointer < tail) {
-	          pointer = tail;
-	        }
-	        var mark = buffer[(size + pointer) % size];
-	        // skip marks that are temporarily removed from text buffer
-	        if (mark && !mark.find()) {
-	          var inc = offset > 0 ? 1 : -1;
-	          var newCur;
-	          var oldCur = cm.getCursor();
-	          do {
-	            pointer += inc;
-	            mark = buffer[(size + pointer) % size];
-	            // skip marks that are the same as current position
-	            if (mark &&
-	                (newCur = mark.find()) &&
-	                !cursorEqual(oldCur, newCur)) {
-	              break;
-	            }
-	          } while (pointer < head && pointer > tail);
-	        }
-	        return mark;
-	      }
-	      return {
-	        cachedCursor: undefined, //used for # and * jumps
-	        add: add,
-	        move: move
-	      };
-	    };
-	
-	    // Returns an object to track the changes associated insert mode.  It
-	    // clones the object that is passed in, or creates an empty object one if
-	    // none is provided.
-	    var createInsertModeChanges = function(c) {
-	      if (c) {
-	        // Copy construction
-	        return {
-	          changes: c.changes,
-	          expectCursorActivityForChange: c.expectCursorActivityForChange
-	        };
-	      }
-	      return {
-	        // Change list
-	        changes: [],
-	        // Set to true on change, false on cursorActivity.
-	        expectCursorActivityForChange: false
-	      };
-	    };
-	
-	    function MacroModeState() {
-	      this.latestRegister = undefined;
-	      this.isPlaying = false;
-	      this.isRecording = false;
-	      this.replaySearchQueries = [];
-	      this.onRecordingDone = undefined;
-	      this.lastInsertModeChanges = createInsertModeChanges();
-	    }
-	    MacroModeState.prototype = {
-	      exitMacroRecordMode: function() {
-	        var macroModeState = vimGlobalState.macroModeState;
-	        if (macroModeState.onRecordingDone) {
-	          macroModeState.onRecordingDone(); // close dialog
-	        }
-	        macroModeState.onRecordingDone = undefined;
-	        macroModeState.isRecording = false;
-	      },
-	      enterMacroRecordMode: function(cm, registerName) {
-	        var register =
-	            vimGlobalState.registerController.getRegister(registerName);
-	        if (register) {
-	          register.clear();
-	          this.latestRegister = registerName;
-	          if (cm.openDialog) {
-	            this.onRecordingDone = cm.openDialog(
-	                '(recording)['+registerName+']', null, {bottom:true});
-	          }
-	          this.isRecording = true;
-	        }
-	      }
-	    };
-	
-	    function maybeInitVimState(cm) {
-	      if (!cm.state.vim) {
-	        // Store instance state in the CodeMirror object.
-	        cm.state.vim = {
-	          inputState: new InputState(),
-	          // Vim's input state that triggered the last edit, used to repeat
-	          // motions and operators with '.'.
-	          lastEditInputState: undefined,
-	          // Vim's action command before the last edit, used to repeat actions
-	          // with '.' and insert mode repeat.
-	          lastEditActionCommand: undefined,
-	          // When using jk for navigation, if you move from a longer line to a
-	          // shorter line, the cursor may clip to the end of the shorter line.
-	          // If j is pressed again and cursor goes to the next line, the
-	          // cursor should go back to its horizontal position on the longer
-	          // line if it can. This is to keep track of the horizontal position.
-	          lastHPos: -1,
-	          // Doing the same with screen-position for gj/gk
-	          lastHSPos: -1,
-	          // The last motion command run. Cleared if a non-motion command gets
-	          // executed in between.
-	          lastMotion: null,
-	          marks: {},
-	          // Mark for rendering fake cursor for visual mode.
-	          fakeCursor: null,
-	          insertMode: false,
-	          // Repeat count for changes made in insert mode, triggered by key
-	          // sequences like 3,i. Only exists when insertMode is true.
-	          insertModeRepeat: undefined,
-	          visualMode: false,
-	          // If we are in visual line mode. No effect if visualMode is false.
-	          visualLine: false,
-	          visualBlock: false,
-	          lastSelection: null,
-	          lastPastedText: null,
-	          sel: {},
-	          // Buffer-local/window-local values of vim options.
-	          options: {}
-	        };
-	      }
-	      return cm.state.vim;
-	    }
-	    var vimGlobalState;
-	    function resetVimGlobalState() {
-	      vimGlobalState = {
-	        // The current search query.
-	        searchQuery: null,
-	        // Whether we are searching backwards.
-	        searchIsReversed: false,
-	        // Replace part of the last substituted pattern
-	        lastSubstituteReplacePart: undefined,
-	        jumpList: createCircularJumpList(),
-	        macroModeState: new MacroModeState,
-	        // Recording latest f, t, F or T motion command.
-	        lastCharacterSearch: {increment:0, forward:true, selectedCharacter:''},
-	        registerController: new RegisterController({}),
-	        // search history buffer
-	        searchHistoryController: new HistoryController({}),
-	        // ex Command history buffer
-	        exCommandHistoryController : new HistoryController({})
-	      };
-	      for (var optionName in options) {
-	        var option = options[optionName];
-	        option.value = option.defaultValue;
-	      }
-	    }
-	
-	    var lastInsertModeKeyTimer;
-	    var vimApi= {
-	      buildKeyMap: function() {
-	        // TODO: Convert keymap into dictionary format for fast lookup.
-	      },
-	      // Testing hook, though it might be useful to expose the register
-	      // controller anyways.
-	      getRegisterController: function() {
-	        return vimGlobalState.registerController;
-	      },
-	      // Testing hook.
-	      resetVimGlobalState_: resetVimGlobalState,
-	
-	      // Testing hook.
-	      getVimGlobalState_: function() {
-	        return vimGlobalState;
-	      },
-	
-	      // Testing hook.
-	      maybeInitVimState_: maybeInitVimState,
-	
-	      suppressErrorLogging: false,
-	
-	      InsertModeKey: InsertModeKey,
-	      map: function(lhs, rhs, ctx) {
-	        // Add user defined key bindings.
-	        exCommandDispatcher.map(lhs, rhs, ctx);
-	      },
-	      unmap: function(lhs, ctx) {
-	        exCommandDispatcher.unmap(lhs, ctx);
-	      },
-	      // TODO: Expose setOption and getOption as instance methods. Need to decide how to namespace
-	      // them, or somehow make them work with the existing CodeMirror setOption/getOption API.
-	      setOption: setOption,
-	      getOption: getOption,
-	      defineOption: defineOption,
-	      defineEx: function(name, prefix, func){
-	        if (!prefix) {
-	          prefix = name;
-	        } else if (name.indexOf(prefix) !== 0) {
-	          throw new Error('(Vim.defineEx) "'+prefix+'" is not a prefix of "'+name+'", command not registered');
-	        }
-	        exCommands[name]=func;
-	        exCommandDispatcher.commandMap_[prefix]={name:name, shortName:prefix, type:'api'};
-	      },
-	      handleKey: function (cm, key, origin) {
-	        var command = this.findKey(cm, key, origin);
-	        if (typeof command === 'function') {
-	          return command();
-	        }
-	      },
-	      /**
-	       * This is the outermost function called by CodeMirror, after keys have
-	       * been mapped to their Vim equivalents.
-	       *
-	       * Finds a command based on the key (and cached keys if there is a
-	       * multi-key sequence). Returns `undefined` if no key is matched, a noop
-	       * function if a partial match is found (multi-key), and a function to
-	       * execute the bound command if a a key is matched. The function always
-	       * returns true.
-	       */
-	      findKey: function(cm, key, origin) {
-	        var vim = maybeInitVimState(cm);
-	        function handleMacroRecording() {
-	          var macroModeState = vimGlobalState.macroModeState;
-	          if (macroModeState.isRecording) {
-	            if (key == 'q') {
-	              macroModeState.exitMacroRecordMode();
-	              clearInputState(cm);
-	              return true;
-	            }
-	            if (origin != 'mapping') {
-	              logKey(macroModeState, key);
-	            }
-	          }
-	        }
-	        function handleEsc() {
-	          if (key == '<Esc>') {
-	            // Clear input state and get back to normal mode.
-	            clearInputState(cm);
-	            if (vim.visualMode) {
-	              exitVisualMode(cm);
-	            } else if (vim.insertMode) {
-	              exitInsertMode(cm);
-	            }
-	            return true;
-	          }
-	        }
-	        function doKeyToKey(keys) {
-	          // TODO: prevent infinite recursion.
-	          var match;
-	          while (keys) {
-	            // Pull off one command key, which is either a single character
-	            // or a special sequence wrapped in '<' and '>', e.g. '<Space>'.
-	            match = (/<\w+-.+?>|<\w+>|./).exec(keys);
-	            key = match[0];
-	            keys = keys.substring(match.index + key.length);
-	            CodeMirror.Vim.handleKey(cm, key, 'mapping');
-	          }
-	        }
-	
-	        function handleKeyInsertMode() {
-	          if (handleEsc()) { return true; }
-	          var keys = vim.inputState.keyBuffer = vim.inputState.keyBuffer + key;
-	          var keysAreChars = key.length == 1;
-	          var match = commandDispatcher.matchCommand(keys, defaultKeymap, vim.inputState, 'insert');
-	          // Need to check all key substrings in insert mode.
-	          while (keys.length > 1 && match.type != 'full') {
-	            var keys = vim.inputState.keyBuffer = keys.slice(1);
-	            var thisMatch = commandDispatcher.matchCommand(keys, defaultKeymap, vim.inputState, 'insert');
-	            if (thisMatch.type != 'none') { match = thisMatch; }
-	          }
-	          if (match.type == 'none') { clearInputState(cm); return false; }
-	          else if (match.type == 'partial') {
-	            if (lastInsertModeKeyTimer) { window.clearTimeout(lastInsertModeKeyTimer); }
-	            lastInsertModeKeyTimer = window.setTimeout(
-	              function() { if (vim.insertMode && vim.inputState.keyBuffer) { clearInputState(cm); } },
-	              getOption('insertModeEscKeysTimeout'));
-	            return !keysAreChars;
-	          }
-	
-	          if (lastInsertModeKeyTimer) { window.clearTimeout(lastInsertModeKeyTimer); }
-	          if (keysAreChars) {
-	            var here = cm.getCursor();
-	            cm.replaceRange('', offsetCursor(here, 0, -(keys.length - 1)), here, '+input');
-	          }
-	          clearInputState(cm);
-	          return match.command;
-	        }
-	
-	        function handleKeyNonInsertMode() {
-	          if (handleMacroRecording() || handleEsc()) { return true; };
-	
-	          var keys = vim.inputState.keyBuffer = vim.inputState.keyBuffer + key;
-	          if (/^[1-9]\d*$/.test(keys)) { return true; }
-	
-	          var keysMatcher = /^(\d*)(.*)$/.exec(keys);
-	          if (!keysMatcher) { clearInputState(cm); return false; }
-	          var context = vim.visualMode ? 'visual' :
-	                                         'normal';
-	          var match = commandDispatcher.matchCommand(keysMatcher[2] || keysMatcher[1], defaultKeymap, vim.inputState, context);
-	          if (match.type == 'none') { clearInputState(cm); return false; }
-	          else if (match.type == 'partial') { return true; }
-	
-	          vim.inputState.keyBuffer = '';
-	          var keysMatcher = /^(\d*)(.*)$/.exec(keys);
-	          if (keysMatcher[1] && keysMatcher[1] != '0') {
-	            vim.inputState.pushRepeatDigit(keysMatcher[1]);
-	          }
-	          return match.command;
-	        }
-	
-	        var command;
-	        if (vim.insertMode) { command = handleKeyInsertMode(); }
-	        else { command = handleKeyNonInsertMode(); }
-	        if (command === false) {
-	          return undefined;
-	        } else if (command === true) {
-	          // TODO: Look into using CodeMirror's multi-key handling.
-	          // Return no-op since we are caching the key. Counts as handled, but
-	          // don't want act on it just yet.
-	          return function() {};
-	        } else {
-	          return function() {
-	            return cm.operation(function() {
-	              cm.curOp.isVimOp = true;
-	              try {
-	                if (command.type == 'keyToKey') {
-	                  doKeyToKey(command.toKeys);
-	                } else {
-	                  commandDispatcher.processCommand(cm, vim, command);
-	                }
-	              } catch (e) {
-	                // clear VIM state in case it's in a bad state.
-	                cm.state.vim = undefined;
-	                maybeInitVimState(cm);
-	                if (!CodeMirror.Vim.suppressErrorLogging) {
-	                  console['log'](e);
-	                }
-	                throw e;
-	              }
-	              return true;
-	            });
-	          };
-	        }
-	      },
-	      handleEx: function(cm, input) {
-	        exCommandDispatcher.processCommand(cm, input);
-	      },
-	
-	      defineMotion: defineMotion,
-	      defineAction: defineAction,
-	      defineOperator: defineOperator,
-	      mapCommand: mapCommand,
-	      _mapCommand: _mapCommand,
-	
-	      defineRegister: defineRegister,
-	
-	      exitVisualMode: exitVisualMode,
-	      exitInsertMode: exitInsertMode
-	    };
-	
-	    // Represents the current input state.
-	    function InputState() {
-	      this.prefixRepeat = [];
-	      this.motionRepeat = [];
-	
-	      this.operator = null;
-	      this.operatorArgs = null;
-	      this.motion = null;
-	      this.motionArgs = null;
-	      this.keyBuffer = []; // For matching multi-key commands.
-	      this.registerName = null; // Defaults to the unnamed register.
-	    }
-	    InputState.prototype.pushRepeatDigit = function(n) {
-	      if (!this.operator) {
-	        this.prefixRepeat = this.prefixRepeat.concat(n);
-	      } else {
-	        this.motionRepeat = this.motionRepeat.concat(n);
-	      }
-	    };
-	    InputState.prototype.getRepeat = function() {
-	      var repeat = 0;
-	      if (this.prefixRepeat.length > 0 || this.motionRepeat.length > 0) {
-	        repeat = 1;
-	        if (this.prefixRepeat.length > 0) {
-	          repeat *= parseInt(this.prefixRepeat.join(''), 10);
-	        }
-	        if (this.motionRepeat.length > 0) {
-	          repeat *= parseInt(this.motionRepeat.join(''), 10);
-	        }
-	      }
-	      return repeat;
-	    };
-	
-	    function clearInputState(cm, reason) {
-	      cm.state.vim.inputState = new InputState();
-	      CodeMirror.signal(cm, 'vim-command-done', reason);
-	    }
-	
-	    /*
-	     * Register stores information about copy and paste registers.  Besides
-	     * text, a register must store whether it is linewise (i.e., when it is
-	     * pasted, should it insert itself into a new line, or should the text be
-	     * inserted at the cursor position.)
-	     */
-	    function Register(text, linewise, blockwise) {
-	      this.clear();
-	      this.keyBuffer = [text || ''];
-	      this.insertModeChanges = [];
-	      this.searchQueries = [];
-	      this.linewise = !!linewise;
-	      this.blockwise = !!blockwise;
-	    }
-	    Register.prototype = {
-	      setText: function(text, linewise, blockwise) {
-	        this.keyBuffer = [text || ''];
-	        this.linewise = !!linewise;
-	        this.blockwise = !!blockwise;
-	      },
-	      pushText: function(text, linewise) {
-	        // if this register has ever been set to linewise, use linewise.
-	        if (linewise) {
-	          if (!this.linewise) {
-	            this.keyBuffer.push('\n');
-	          }
-	          this.linewise = true;
-	        }
-	        this.keyBuffer.push(text);
-	      },
-	      pushInsertModeChanges: function(changes) {
-	        this.insertModeChanges.push(createInsertModeChanges(changes));
-	      },
-	      pushSearchQuery: function(query) {
-	        this.searchQueries.push(query);
-	      },
-	      clear: function() {
-	        this.keyBuffer = [];
-	        this.insertModeChanges = [];
-	        this.searchQueries = [];
-	        this.linewise = false;
-	      },
-	      toString: function() {
-	        return this.keyBuffer.join('');
-	      }
-	    };
-	
-	    /**
-	     * Defines an external register.
-	     *
-	     * The name should be a single character that will be used to reference the register.
-	     * The register should support setText, pushText, clear, and toString(). See Register
-	     * for a reference implementation.
-	     */
-	    function defineRegister(name, register) {
-	      var registers = vimGlobalState.registerController.registers[name];
-	      if (!name || name.length != 1) {
-	        throw Error('Register name must be 1 character');
-	      }
-	      if (registers[name]) {
-	        throw Error('Register already defined ' + name);
-	      }
-	      registers[name] = register;
-	      validRegisters.push(name);
-	    }
-	
-	    /*
-	     * vim registers allow you to keep many independent copy and paste buffers.
-	     * See http://usevim.com/2012/04/13/registers/ for an introduction.
-	     *
-	     * RegisterController keeps the state of all the registers.  An initial
-	     * state may be passed in.  The unnamed register '"' will always be
-	     * overridden.
-	     */
-	    function RegisterController(registers) {
-	      this.registers = registers;
-	      this.unnamedRegister = registers['"'] = new Register();
-	      registers['.'] = new Register();
-	      registers[':'] = new Register();
-	      registers['/'] = new Register();
-	    }
-	    RegisterController.prototype = {
-	      pushText: function(registerName, operator, text, linewise, blockwise) {
-	        if (linewise && text.charAt(0) == '\n') {
-	          text = text.slice(1) + '\n';
-	        }
-	        if (linewise && text.charAt(text.length - 1) !== '\n'){
-	          text += '\n';
-	        }
-	        // Lowercase and uppercase registers refer to the same register.
-	        // Uppercase just means append.
-	        var register = this.isValidRegister(registerName) ?
-	            this.getRegister(registerName) : null;
-	        // if no register/an invalid register was specified, things go to the
-	        // default registers
-	        if (!register) {
-	          switch (operator) {
-	            case 'yank':
-	              // The 0 register contains the text from the most recent yank.
-	              this.registers['0'] = new Register(text, linewise, blockwise);
-	              break;
-	            case 'delete':
-	            case 'change':
-	              if (text.indexOf('\n') == -1) {
-	                // Delete less than 1 line. Update the small delete register.
-	                this.registers['-'] = new Register(text, linewise);
-	              } else {
-	                // Shift down the contents of the numbered registers and put the
-	                // deleted text into register 1.
-	                this.shiftNumericRegisters_();
-	                this.registers['1'] = new Register(text, linewise);
-	              }
-	              break;
-	          }
-	          // Make sure the unnamed register is set to what just happened
-	          this.unnamedRegister.setText(text, linewise, blockwise);
-	          return;
-	        }
-	
-	        // If we've gotten to this point, we've actually specified a register
-	        var append = isUpperCase(registerName);
-	        if (append) {
-	          register.pushText(text, linewise);
-	        } else {
-	          register.setText(text, linewise, blockwise);
-	        }
-	        // The unnamed register always has the same value as the last used
-	        // register.
-	        this.unnamedRegister.setText(register.toString(), linewise);
-	      },
-	      // Gets the register named @name.  If one of @name doesn't already exist,
-	      // create it.  If @name is invalid, return the unnamedRegister.
-	      getRegister: function(name) {
-	        if (!this.isValidRegister(name)) {
-	          return this.unnamedRegister;
-	        }
-	        name = name.toLowerCase();
-	        if (!this.registers[name]) {
-	          this.registers[name] = new Register();
-	        }
-	        return this.registers[name];
-	      },
-	      isValidRegister: function(name) {
-	        return name && inArray(name, validRegisters);
-	      },
-	      shiftNumericRegisters_: function() {
-	        for (var i = 9; i >= 2; i--) {
-	          this.registers[i] = this.getRegister('' + (i - 1));
-	        }
-	      }
-	    };
-	    function HistoryController() {
-	        this.historyBuffer = [];
-	        this.iterator = 0;
-	        this.initialPrefix = null;
-	    }
-	    HistoryController.prototype = {
-	      // the input argument here acts a user entered prefix for a small time
-	      // until we start autocompletion in which case it is the autocompleted.
-	      nextMatch: function (input, up) {
-	        var historyBuffer = this.historyBuffer;
-	        var dir = up ? -1 : 1;
-	        if (this.initialPrefix === null) this.initialPrefix = input;
-	        for (var i = this.iterator + dir; up ? i >= 0 : i < historyBuffer.length; i+= dir) {
-	          var element = historyBuffer[i];
-	          for (var j = 0; j <= element.length; j++) {
-	            if (this.initialPrefix == element.substring(0, j)) {
-	              this.iterator = i;
-	              return element;
-	            }
-	          }
-	        }
-	        // should return the user input in case we reach the end of buffer.
-	        if (i >= historyBuffer.length) {
-	          this.iterator = historyBuffer.length;
-	          return this.initialPrefix;
-	        }
-	        // return the last autocompleted query or exCommand as it is.
-	        if (i < 0 ) return input;
-	      },
-	      pushInput: function(input) {
-	        var index = this.historyBuffer.indexOf(input);
-	        if (index > -1) this.historyBuffer.splice(index, 1);
-	        if (input.length) this.historyBuffer.push(input);
-	      },
-	      reset: function() {
-	        this.initialPrefix = null;
-	        this.iterator = this.historyBuffer.length;
-	      }
-	    };
-	    var commandDispatcher = {
-	      matchCommand: function(keys, keyMap, inputState, context) {
-	        var matches = commandMatches(keys, keyMap, context, inputState);
-	        if (!matches.full && !matches.partial) {
-	          return {type: 'none'};
-	        } else if (!matches.full && matches.partial) {
-	          return {type: 'partial'};
-	        }
-	
-	        var bestMatch;
-	        for (var i = 0; i < matches.full.length; i++) {
-	          var match = matches.full[i];
-	          if (!bestMatch) {
-	            bestMatch = match;
-	          }
-	        }
-	        if (bestMatch.keys.slice(-11) == '<character>') {
-	          inputState.selectedCharacter = lastChar(keys);
-	        }
-	        return {type: 'full', command: bestMatch};
-	      },
-	      processCommand: function(cm, vim, command) {
-	        vim.inputState.repeatOverride = command.repeatOverride;
-	        switch (command.type) {
-	          case 'motion':
-	            this.processMotion(cm, vim, command);
-	            break;
-	          case 'operator':
-	            this.processOperator(cm, vim, command);
-	            break;
-	          case 'operatorMotion':
-	            this.processOperatorMotion(cm, vim, command);
-	            break;
-	          case 'action':
-	            this.processAction(cm, vim, command);
-	            break;
-	          case 'search':
-	            this.processSearch(cm, vim, command);
-	            break;
-	          case 'ex':
-	          case 'keyToEx':
-	            this.processEx(cm, vim, command);
-	            break;
-	          default:
-	            break;
-	        }
-	      },
-	      processMotion: function(cm, vim, command) {
-	        vim.inputState.motion = command.motion;
-	        vim.inputState.motionArgs = copyArgs(command.motionArgs);
-	        this.evalInput(cm, vim);
-	      },
-	      processOperator: function(cm, vim, command) {
-	        var inputState = vim.inputState;
-	        if (inputState.operator) {
-	          if (inputState.operator == command.operator) {
-	            // Typing an operator twice like 'dd' makes the operator operate
-	            // linewise
-	            inputState.motion = 'expandToLine';
-	            inputState.motionArgs = { linewise: true };
-	            this.evalInput(cm, vim);
-	            return;
-	          } else {
-	            // 2 different operators in a row doesn't make sense.
-	            clearInputState(cm);
-	          }
-	        }
-	        inputState.operator = command.operator;
-	        inputState.operatorArgs = copyArgs(command.operatorArgs);
-	        if (vim.visualMode) {
-	          // Operating on a selection in visual mode. We don't need a motion.
-	          this.evalInput(cm, vim);
-	        }
-	      },
-	      processOperatorMotion: function(cm, vim, command) {
-	        var visualMode = vim.visualMode;
-	        var operatorMotionArgs = copyArgs(command.operatorMotionArgs);
-	        if (operatorMotionArgs) {
-	          // Operator motions may have special behavior in visual mode.
-	          if (visualMode && operatorMotionArgs.visualLine) {
-	            vim.visualLine = true;
-	          }
-	        }
-	        this.processOperator(cm, vim, command);
-	        if (!visualMode) {
-	          this.processMotion(cm, vim, command);
-	        }
-	      },
-	      processAction: function(cm, vim, command) {
-	        var inputState = vim.inputState;
-	        var repeat = inputState.getRepeat();
-	        var repeatIsExplicit = !!repeat;
-	        var actionArgs = copyArgs(command.actionArgs) || {};
-	        if (inputState.selectedCharacter) {
-	          actionArgs.selectedCharacter = inputState.selectedCharacter;
-	        }
-	        // Actions may or may not have motions and operators. Do these first.
-	        if (command.operator) {
-	          this.processOperator(cm, vim, command);
-	        }
-	        if (command.motion) {
-	          this.processMotion(cm, vim, command);
-	        }
-	        if (command.motion || command.operator) {
-	          this.evalInput(cm, vim);
-	        }
-	        actionArgs.repeat = repeat || 1;
-	        actionArgs.repeatIsExplicit = repeatIsExplicit;
-	        actionArgs.registerName = inputState.registerName;
-	        clearInputState(cm);
-	        vim.lastMotion = null;
-	        if (command.isEdit) {
-	          this.recordLastEdit(vim, inputState, command);
-	        }
-	        actions[command.action](cm, actionArgs, vim);
-	      },
-	      processSearch: function(cm, vim, command) {
-	        if (!cm.getSearchCursor) {
-	          // Search depends on SearchCursor.
-	          return;
-	        }
-	        var forward = command.searchArgs.forward;
-	        var wholeWordOnly = command.searchArgs.wholeWordOnly;
-	        getSearchState(cm).setReversed(!forward);
-	        var promptPrefix = (forward) ? '/' : '?';
-	        var originalQuery = getSearchState(cm).getQuery();
-	        var originalScrollPos = cm.getScrollInfo();
-	        function handleQuery(query, ignoreCase, smartCase) {
-	          vimGlobalState.searchHistoryController.pushInput(query);
-	          vimGlobalState.searchHistoryController.reset();
-	          try {
-	            updateSearchQuery(cm, query, ignoreCase, smartCase);
-	          } catch (e) {
-	            showConfirm(cm, 'Invalid regex: ' + query);
-	            clearInputState(cm);
-	            return;
-	          }
-	          commandDispatcher.processMotion(cm, vim, {
-	            type: 'motion',
-	            motion: 'findNext',
-	            motionArgs: { forward: true, toJumplist: command.searchArgs.toJumplist }
-	          });
-	        }
-	        function onPromptClose(query) {
-	          cm.scrollTo(originalScrollPos.left, originalScrollPos.top);
-	          handleQuery(query, true /** ignoreCase */, true /** smartCase */);
-	          var macroModeState = vimGlobalState.macroModeState;
-	          if (macroModeState.isRecording) {
-	            logSearchQuery(macroModeState, query);
-	          }
-	        }
-	        function onPromptKeyUp(e, query, close) {
-	          var keyName = CodeMirror.keyName(e), up;
-	          if (keyName == 'Up' || keyName == 'Down') {
-	            up = keyName == 'Up' ? true : false;
-	            query = vimGlobalState.searchHistoryController.nextMatch(query, up) || '';
-	            close(query);
-	          } else {
-	            if ( keyName != 'Left' && keyName != 'Right' && keyName != 'Ctrl' && keyName != 'Alt' && keyName != 'Shift')
-	              vimGlobalState.searchHistoryController.reset();
-	          }
-	          var parsedQuery;
-	          try {
-	            parsedQuery = updateSearchQuery(cm, query,
-	                true /** ignoreCase */, true /** smartCase */);
-	          } catch (e) {
-	            // Swallow bad regexes for incremental search.
-	          }
-	          if (parsedQuery) {
-	            cm.scrollIntoView(findNext(cm, !forward, parsedQuery), 30);
-	          } else {
-	            clearSearchHighlight(cm);
-	            cm.scrollTo(originalScrollPos.left, originalScrollPos.top);
-	          }
-	        }
-	        function onPromptKeyDown(e, query, close) {
-	          var keyName = CodeMirror.keyName(e);
-	          if (keyName == 'Esc' || keyName == 'Ctrl-C' || keyName == 'Ctrl-[' ||
-	              (keyName == 'Backspace' && query == '')) {
-	            vimGlobalState.searchHistoryController.pushInput(query);
-	            vimGlobalState.searchHistoryController.reset();
-	            updateSearchQuery(cm, originalQuery);
-	            clearSearchHighlight(cm);
-	            cm.scrollTo(originalScrollPos.left, originalScrollPos.top);
-	            CodeMirror.e_stop(e);
-	            clearInputState(cm);
-	            close();
-	            cm.focus();
-	          } else if (keyName == 'Ctrl-U') {
-	            // Ctrl-U clears input.
-	            CodeMirror.e_stop(e);
-	            close('');
-	          }
-	        }
-	        switch (command.searchArgs.querySrc) {
-	          case 'prompt':
-	            var macroModeState = vimGlobalState.macroModeState;
-	            if (macroModeState.isPlaying) {
-	              var query = macroModeState.replaySearchQueries.shift();
-	              handleQuery(query, true /** ignoreCase */, false /** smartCase */);
-	            } else {
-	              showPrompt(cm, {
-	                  onClose: onPromptClose,
-	                  prefix: promptPrefix,
-	                  desc: searchPromptDesc,
-	                  onKeyUp: onPromptKeyUp,
-	                  onKeyDown: onPromptKeyDown
-	              });
-	            }
-	            break;
-	          case 'wordUnderCursor':
-	            var word = expandWordUnderCursor(cm, false /** inclusive */,
-	                true /** forward */, false /** bigWord */,
-	                true /** noSymbol */);
-	            var isKeyword = true;
-	            if (!word) {
-	              word = expandWordUnderCursor(cm, false /** inclusive */,
-	                  true /** forward */, false /** bigWord */,
-	                  false /** noSymbol */);
-	              isKeyword = false;
-	            }
-	            if (!word) {
-	              return;
-	            }
-	            var query = cm.getLine(word.start.line).substring(word.start.ch,
-	                word.end.ch);
-	            if (isKeyword && wholeWordOnly) {
-	                query = '\\b' + query + '\\b';
-	            } else {
-	              query = escapeRegex(query);
-	            }
-	
-	            // cachedCursor is used to save the old position of the cursor
-	            // when * or # causes vim to seek for the nearest word and shift
-	            // the cursor before entering the motion.
-	            vimGlobalState.jumpList.cachedCursor = cm.getCursor();
-	            cm.setCursor(word.start);
-	
-	            handleQuery(query, true /** ignoreCase */, false /** smartCase */);
-	            break;
-	        }
-	      },
-	      processEx: function(cm, vim, command) {
-	        function onPromptClose(input) {
-	          // Give the prompt some time to close so that if processCommand shows
-	          // an error, the elements don't overlap.
-	          vimGlobalState.exCommandHistoryController.pushInput(input);
-	          vimGlobalState.exCommandHistoryController.reset();
-	          exCommandDispatcher.processCommand(cm, input);
-	        }
-	        function onPromptKeyDown(e, input, close) {
-	          var keyName = CodeMirror.keyName(e), up;
-	          if (keyName == 'Esc' || keyName == 'Ctrl-C' || keyName == 'Ctrl-[' ||
-	              (keyName == 'Backspace' && input == '')) {
-	            vimGlobalState.exCommandHistoryController.pushInput(input);
-	            vimGlobalState.exCommandHistoryController.reset();
-	            CodeMirror.e_stop(e);
-	            clearInputState(cm);
-	            close();
-	            cm.focus();
-	          }
-	          if (keyName == 'Up' || keyName == 'Down') {
-	            up = keyName == 'Up' ? true : false;
-	            input = vimGlobalState.exCommandHistoryController.nextMatch(input, up) || '';
-	            close(input);
-	          } else if (keyName == 'Ctrl-U') {
-	            // Ctrl-U clears input.
-	            CodeMirror.e_stop(e);
-	            close('');
-	          } else {
-	            if ( keyName != 'Left' && keyName != 'Right' && keyName != 'Ctrl' && keyName != 'Alt' && keyName != 'Shift')
-	              vimGlobalState.exCommandHistoryController.reset();
-	          }
-	        }
-	        if (command.type == 'keyToEx') {
-	          // Handle user defined Ex to Ex mappings
-	          exCommandDispatcher.processCommand(cm, command.exArgs.input);
-	        } else {
-	          if (vim.visualMode) {
-	            showPrompt(cm, { onClose: onPromptClose, prefix: ':', value: '\'<,\'>',
-	                onKeyDown: onPromptKeyDown});
-	          } else {
-	            showPrompt(cm, { onClose: onPromptClose, prefix: ':',
-	                onKeyDown: onPromptKeyDown});
-	          }
-	        }
-	      },
-	      evalInput: function(cm, vim) {
-	        // If the motion command is set, execute both the operator and motion.
-	        // Otherwise return.
-	        var inputState = vim.inputState;
-	        var motion = inputState.motion;
-	        var motionArgs = inputState.motionArgs || {};
-	        var operator = inputState.operator;
-	        var operatorArgs = inputState.operatorArgs || {};
-	        var registerName = inputState.registerName;
-	        var sel = vim.sel;
-	        // TODO: Make sure cm and vim selections are identical outside visual mode.
-	        var origHead = copyCursor(vim.visualMode ? clipCursorToContent(cm, sel.head): cm.getCursor('head'));
-	        var origAnchor = copyCursor(vim.visualMode ? clipCursorToContent(cm, sel.anchor) : cm.getCursor('anchor'));
-	        var oldHead = copyCursor(origHead);
-	        var oldAnchor = copyCursor(origAnchor);
-	        var newHead, newAnchor;
-	        var repeat;
-	        if (operator) {
-	          this.recordLastEdit(vim, inputState);
-	        }
-	        if (inputState.repeatOverride !== undefined) {
-	          // If repeatOverride is specified, that takes precedence over the
-	          // input state's repeat. Used by Ex mode and can be user defined.
-	          repeat = inputState.repeatOverride;
-	        } else {
-	          repeat = inputState.getRepeat();
-	        }
-	        if (repeat > 0 && motionArgs.explicitRepeat) {
-	          motionArgs.repeatIsExplicit = true;
-	        } else if (motionArgs.noRepeat ||
-	            (!motionArgs.explicitRepeat && repeat === 0)) {
-	          repeat = 1;
-	          motionArgs.repeatIsExplicit = false;
-	        }
-	        if (inputState.selectedCharacter) {
-	          // If there is a character input, stick it in all of the arg arrays.
-	          motionArgs.selectedCharacter = operatorArgs.selectedCharacter =
-	              inputState.selectedCharacter;
-	        }
-	        motionArgs.repeat = repeat;
-	        clearInputState(cm);
-	        if (motion) {
-	          var motionResult = motions[motion](cm, origHead, motionArgs, vim);
-	          vim.lastMotion = motions[motion];
-	          if (!motionResult) {
-	            return;
-	          }
-	          if (motionArgs.toJumplist) {
-	            var jumpList = vimGlobalState.jumpList;
-	            // if the current motion is # or *, use cachedCursor
-	            var cachedCursor = jumpList.cachedCursor;
-	            if (cachedCursor) {
-	              recordJumpPosition(cm, cachedCursor, motionResult);
-	              delete jumpList.cachedCursor;
-	            } else {
-	              recordJumpPosition(cm, origHead, motionResult);
-	            }
-	          }
-	          if (motionResult instanceof Array) {
-	            newAnchor = motionResult[0];
-	            newHead = motionResult[1];
-	          } else {
-	            newHead = motionResult;
-	          }
-	          // TODO: Handle null returns from motion commands better.
-	          if (!newHead) {
-	            newHead = copyCursor(origHead);
-	          }
-	          if (vim.visualMode) {
-	            if (!(vim.visualBlock && newHead.ch === Infinity)) {
-	              newHead = clipCursorToContent(cm, newHead, vim.visualBlock);
-	            }
-	            if (newAnchor) {
-	              newAnchor = clipCursorToContent(cm, newAnchor, true);
-	            }
-	            newAnchor = newAnchor || oldAnchor;
-	            sel.anchor = newAnchor;
-	            sel.head = newHead;
-	            updateCmSelection(cm);
-	            updateMark(cm, vim, '<',
-	                cursorIsBefore(newAnchor, newHead) ? newAnchor
-	                    : newHead);
-	            updateMark(cm, vim, '>',
-	                cursorIsBefore(newAnchor, newHead) ? newHead
-	                    : newAnchor);
-	          } else if (!operator) {
-	            newHead = clipCursorToContent(cm, newHead);
-	            cm.setCursor(newHead.line, newHead.ch);
-	          }
-	        }
-	        if (operator) {
-	          if (operatorArgs.lastSel) {
-	            // Replaying a visual mode operation
-	            newAnchor = oldAnchor;
-	            var lastSel = operatorArgs.lastSel;
-	            var lineOffset = Math.abs(lastSel.head.line - lastSel.anchor.line);
-	            var chOffset = Math.abs(lastSel.head.ch - lastSel.anchor.ch);
-	            if (lastSel.visualLine) {
-	              // Linewise Visual mode: The same number of lines.
-	              newHead = Pos(oldAnchor.line + lineOffset, oldAnchor.ch);
-	            } else if (lastSel.visualBlock) {
-	              // Blockwise Visual mode: The same number of lines and columns.
-	              newHead = Pos(oldAnchor.line + lineOffset, oldAnchor.ch + chOffset);
-	            } else if (lastSel.head.line == lastSel.anchor.line) {
-	              // Normal Visual mode within one line: The same number of characters.
-	              newHead = Pos(oldAnchor.line, oldAnchor.ch + chOffset);
-	            } else {
-	              // Normal Visual mode with several lines: The same number of lines, in the
-	              // last line the same number of characters as in the last line the last time.
-	              newHead = Pos(oldAnchor.line + lineOffset, oldAnchor.ch);
-	            }
-	            vim.visualMode = true;
-	            vim.visualLine = lastSel.visualLine;
-	            vim.visualBlock = lastSel.visualBlock;
-	            sel = vim.sel = {
-	              anchor: newAnchor,
-	              head: newHead
-	            };
-	            updateCmSelection(cm);
-	          } else if (vim.visualMode) {
-	            operatorArgs.lastSel = {
-	              anchor: copyCursor(sel.anchor),
-	              head: copyCursor(sel.head),
-	              visualBlock: vim.visualBlock,
-	              visualLine: vim.visualLine
-	            };
-	          }
-	          var curStart, curEnd, linewise, mode;
-	          var cmSel;
-	          if (vim.visualMode) {
-	            // Init visual op
-	            curStart = cursorMin(sel.head, sel.anchor);
-	            curEnd = cursorMax(sel.head, sel.anchor);
-	            linewise = vim.visualLine || operatorArgs.linewise;
-	            mode = vim.visualBlock ? 'block' :
-	                   linewise ? 'line' :
-	                   'char';
-	            cmSel = makeCmSelection(cm, {
-	              anchor: curStart,
-	              head: curEnd
-	            }, mode);
-	            if (linewise) {
-	              var ranges = cmSel.ranges;
-	              if (mode == 'block') {
-	                // Linewise operators in visual block mode extend to end of line
-	                for (var i = 0; i < ranges.length; i++) {
-	                  ranges[i].head.ch = lineLength(cm, ranges[i].head.line);
-	                }
-	              } else if (mode == 'line') {
-	                ranges[0].head = Pos(ranges[0].head.line + 1, 0);
-	              }
-	            }
-	          } else {
-	            // Init motion op
-	            curStart = copyCursor(newAnchor || oldAnchor);
-	            curEnd = copyCursor(newHead || oldHead);
-	            if (cursorIsBefore(curEnd, curStart)) {
-	              var tmp = curStart;
-	              curStart = curEnd;
-	              curEnd = tmp;
-	            }
-	            linewise = motionArgs.linewise || operatorArgs.linewise;
-	            if (linewise) {
-	              // Expand selection to entire line.
-	              expandSelectionToLine(cm, curStart, curEnd);
-	            } else if (motionArgs.forward) {
-	              // Clip to trailing newlines only if the motion goes forward.
-	              clipToLine(cm, curStart, curEnd);
-	            }
-	            mode = 'char';
-	            var exclusive = !motionArgs.inclusive || linewise;
-	            cmSel = makeCmSelection(cm, {
-	              anchor: curStart,
-	              head: curEnd
-	            }, mode, exclusive);
-	          }
-	          cm.setSelections(cmSel.ranges, cmSel.primary);
-	          vim.lastMotion = null;
-	          operatorArgs.repeat = repeat; // For indent in visual mode.
-	          operatorArgs.registerName = registerName;
-	          // Keep track of linewise as it affects how paste and change behave.
-	          operatorArgs.linewise = linewise;
-	          var operatorMoveTo = operators[operator](
-	            cm, operatorArgs, cmSel.ranges, oldAnchor, newHead);
-	          if (vim.visualMode) {
-	            exitVisualMode(cm, operatorMoveTo != null);
-	          }
-	          if (operatorMoveTo) {
-	            cm.setCursor(operatorMoveTo);
-	          }
-	        }
-	      },
-	      recordLastEdit: function(vim, inputState, actionCommand) {
-	        var macroModeState = vimGlobalState.macroModeState;
-	        if (macroModeState.isPlaying) { return; }
-	        vim.lastEditInputState = inputState;
-	        vim.lastEditActionCommand = actionCommand;
-	        macroModeState.lastInsertModeChanges.changes = [];
-	        macroModeState.lastInsertModeChanges.expectCursorActivityForChange = false;
-	      }
-	    };
-	
-	    /**
-	     * typedef {Object{line:number,ch:number}} Cursor An object containing the
-	     *     position of the cursor.
-	     */
-	    // All of the functions below return Cursor objects.
-	    var motions = {
-	      moveToTopLine: function(cm, _head, motionArgs) {
-	        var line = getUserVisibleLines(cm).top + motionArgs.repeat -1;
-	        return Pos(line, findFirstNonWhiteSpaceCharacter(cm.getLine(line)));
-	      },
-	      moveToMiddleLine: function(cm) {
-	        var range = getUserVisibleLines(cm);
-	        var line = Math.floor((range.top + range.bottom) * 0.5);
-	        return Pos(line, findFirstNonWhiteSpaceCharacter(cm.getLine(line)));
-	      },
-	      moveToBottomLine: function(cm, _head, motionArgs) {
-	        var line = getUserVisibleLines(cm).bottom - motionArgs.repeat +1;
-	        return Pos(line, findFirstNonWhiteSpaceCharacter(cm.getLine(line)));
-	      },
-	      expandToLine: function(_cm, head, motionArgs) {
-	        // Expands forward to end of line, and then to next line if repeat is
-	        // >1. Does not handle backward motion!
-	        var cur = head;
-	        return Pos(cur.line + motionArgs.repeat - 1, Infinity);
-	      },
-	      findNext: function(cm, _head, motionArgs) {
-	        var state = getSearchState(cm);
-	        var query = state.getQuery();
-	        if (!query) {
-	          return;
-	        }
-	        var prev = !motionArgs.forward;
-	        // If search is initiated with ? instead of /, negate direction.
-	        prev = (state.isReversed()) ? !prev : prev;
-	        highlightSearchMatches(cm, query);
-	        return findNext(cm, prev/** prev */, query, motionArgs.repeat);
-	      },
-	      goToMark: function(cm, _head, motionArgs, vim) {
-	        var mark = vim.marks[motionArgs.selectedCharacter];
-	        if (mark) {
-	          var pos = mark.find();
-	          return motionArgs.linewise ? { line: pos.line, ch: findFirstNonWhiteSpaceCharacter(cm.getLine(pos.line)) } : pos;
-	        }
-	        return null;
-	      },
-	      moveToOtherHighlightedEnd: function(cm, _head, motionArgs, vim) {
-	        if (vim.visualBlock && motionArgs.sameLine) {
-	          var sel = vim.sel;
-	          return [
-	            clipCursorToContent(cm, Pos(sel.anchor.line, sel.head.ch)),
-	            clipCursorToContent(cm, Pos(sel.head.line, sel.anchor.ch))
-	          ];
-	        } else {
-	          return ([vim.sel.head, vim.sel.anchor]);
-	        }
-	      },
-	      jumpToMark: function(cm, head, motionArgs, vim) {
-	        var best = head;
-	        for (var i = 0; i < motionArgs.repeat; i++) {
-	          var cursor = best;
-	          for (var key in vim.marks) {
-	            if (!isLowerCase(key)) {
-	              continue;
-	            }
-	            var mark = vim.marks[key].find();
-	            var isWrongDirection = (motionArgs.forward) ?
-	              cursorIsBefore(mark, cursor) : cursorIsBefore(cursor, mark);
-	
-	            if (isWrongDirection) {
-	              continue;
-	            }
-	            if (motionArgs.linewise && (mark.line == cursor.line)) {
-	              continue;
-	            }
-	
-	            var equal = cursorEqual(cursor, best);
-	            var between = (motionArgs.forward) ?
-	              cursorIsBetween(cursor, mark, best) :
-	              cursorIsBetween(best, mark, cursor);
-	
-	            if (equal || between) {
-	              best = mark;
-	            }
-	          }
-	        }
-	
-	        if (motionArgs.linewise) {
-	          // Vim places the cursor on the first non-whitespace character of
-	          // the line if there is one, else it places the cursor at the end
-	          // of the line, regardless of whether a mark was found.
-	          best = Pos(best.line, findFirstNonWhiteSpaceCharacter(cm.getLine(best.line)));
-	        }
-	        return best;
-	      },
-	      moveByCharacters: function(_cm, head, motionArgs) {
-	        var cur = head;
-	        var repeat = motionArgs.repeat;
-	        var ch = motionArgs.forward ? cur.ch + repeat : cur.ch - repeat;
-	        return Pos(cur.line, ch);
-	      },
-	      moveByLines: function(cm, head, motionArgs, vim) {
-	        var cur = head;
-	        var endCh = cur.ch;
-	        // Depending what our last motion was, we may want to do different
-	        // things. If our last motion was moving vertically, we want to
-	        // preserve the HPos from our last horizontal move.  If our last motion
-	        // was going to the end of a line, moving vertically we should go to
-	        // the end of the line, etc.
-	        switch (vim.lastMotion) {
-	          case this.moveByLines:
-	          case this.moveByDisplayLines:
-	          case this.moveByScroll:
-	          case this.moveToColumn:
-	          case this.moveToEol:
-	            endCh = vim.lastHPos;
-	            break;
-	          default:
-	            vim.lastHPos = endCh;
-	        }
-	        var repeat = motionArgs.repeat+(motionArgs.repeatOffset||0);
-	        var line = motionArgs.forward ? cur.line + repeat : cur.line - repeat;
-	        var first = cm.firstLine();
-	        var last = cm.lastLine();
-	        // Vim go to line begin or line end when cursor at first/last line and
-	        // move to previous/next line is triggered.
-	        if (line < first && cur.line == first){
-	          return this.moveToStartOfLine(cm, head, motionArgs, vim);
-	        }else if (line > last && cur.line == last){
-	            return this.moveToEol(cm, head, motionArgs, vim);
-	        }
-	        if (motionArgs.toFirstChar){
-	          endCh=findFirstNonWhiteSpaceCharacter(cm.getLine(line));
-	          vim.lastHPos = endCh;
-	        }
-	        vim.lastHSPos = cm.charCoords(Pos(line, endCh),'div').left;
-	        return Pos(line, endCh);
-	      },
-	      moveByDisplayLines: function(cm, head, motionArgs, vim) {
-	        var cur = head;
-	        switch (vim.lastMotion) {
-	          case this.moveByDisplayLines:
-	          case this.moveByScroll:
-	          case this.moveByLines:
-	          case this.moveToColumn:
-	          case this.moveToEol:
-	            break;
-	          default:
-	            vim.lastHSPos = cm.charCoords(cur,'div').left;
-	        }
-	        var repeat = motionArgs.repeat;
-	        var res=cm.findPosV(cur,(motionArgs.forward ? repeat : -repeat),'line',vim.lastHSPos);
-	        if (res.hitSide) {
-	          if (motionArgs.forward) {
-	            var lastCharCoords = cm.charCoords(res, 'div');
-	            var goalCoords = { top: lastCharCoords.top + 8, left: vim.lastHSPos };
-	            var res = cm.coordsChar(goalCoords, 'div');
-	          } else {
-	            var resCoords = cm.charCoords(Pos(cm.firstLine(), 0), 'div');
-	            resCoords.left = vim.lastHSPos;
-	            res = cm.coordsChar(resCoords, 'div');
-	          }
-	        }
-	        vim.lastHPos = res.ch;
-	        return res;
-	      },
-	      moveByPage: function(cm, head, motionArgs) {
-	        // CodeMirror only exposes functions that move the cursor page down, so
-	        // doing this bad hack to move the cursor and move it back. evalInput
-	        // will move the cursor to where it should be in the end.
-	        var curStart = head;
-	        var repeat = motionArgs.repeat;
-	        return cm.findPosV(curStart, (motionArgs.forward ? repeat : -repeat), 'page');
-	      },
-	      moveByParagraph: function(cm, head, motionArgs) {
-	        var dir = motionArgs.forward ? 1 : -1;
-	        return findParagraph(cm, head, motionArgs.repeat, dir);
-	      },
-	      moveByScroll: function(cm, head, motionArgs, vim) {
-	        var scrollbox = cm.getScrollInfo();
-	        var curEnd = null;
-	        var repeat = motionArgs.repeat;
-	        if (!repeat) {
-	          repeat = scrollbox.clientHeight / (2 * cm.defaultTextHeight());
-	        }
-	        var orig = cm.charCoords(head, 'local');
-	        motionArgs.repeat = repeat;
-	        var curEnd = motions.moveByDisplayLines(cm, head, motionArgs, vim);
-	        if (!curEnd) {
-	          return null;
-	        }
-	        var dest = cm.charCoords(curEnd, 'local');
-	        cm.scrollTo(null, scrollbox.top + dest.top - orig.top);
-	        return curEnd;
-	      },
-	      moveByWords: function(cm, head, motionArgs) {
-	        return moveToWord(cm, head, motionArgs.repeat, !!motionArgs.forward,
-	            !!motionArgs.wordEnd, !!motionArgs.bigWord);
-	      },
-	      moveTillCharacter: function(cm, _head, motionArgs) {
-	        var repeat = motionArgs.repeat;
-	        var curEnd = moveToCharacter(cm, repeat, motionArgs.forward,
-	            motionArgs.selectedCharacter);
-	        var increment = motionArgs.forward ? -1 : 1;
-	        recordLastCharacterSearch(increment, motionArgs);
-	        if (!curEnd) return null;
-	        curEnd.ch += increment;
-	        return curEnd;
-	      },
-	      moveToCharacter: function(cm, head, motionArgs) {
-	        var repeat = motionArgs.repeat;
-	        recordLastCharacterSearch(0, motionArgs);
-	        return moveToCharacter(cm, repeat, motionArgs.forward,
-	            motionArgs.selectedCharacter) || head;
-	      },
-	      moveToSymbol: function(cm, head, motionArgs) {
-	        var repeat = motionArgs.repeat;
-	        return findSymbol(cm, repeat, motionArgs.forward,
-	            motionArgs.selectedCharacter) || head;
-	      },
-	      moveToColumn: function(cm, head, motionArgs, vim) {
-	        var repeat = motionArgs.repeat;
-	        // repeat is equivalent to which column we want to move to!
-	        vim.lastHPos = repeat - 1;
-	        vim.lastHSPos = cm.charCoords(head,'div').left;
-	        return moveToColumn(cm, repeat);
-	      },
-	      moveToEol: function(cm, head, motionArgs, vim) {
-	        var cur = head;
-	        vim.lastHPos = Infinity;
-	        var retval= Pos(cur.line + motionArgs.repeat - 1, Infinity);
-	        var end=cm.clipPos(retval);
-	        end.ch--;
-	        vim.lastHSPos = cm.charCoords(end,'div').left;
-	        return retval;
-	      },
-	      moveToFirstNonWhiteSpaceCharacter: function(cm, head) {
-	        // Go to the start of the line where the text begins, or the end for
-	        // whitespace-only lines
-	        var cursor = head;
-	        return Pos(cursor.line,
-	                   findFirstNonWhiteSpaceCharacter(cm.getLine(cursor.line)));
-	      },
-	      moveToMatchedSymbol: function(cm, head) {
-	        var cursor = head;
-	        var line = cursor.line;
-	        var ch = cursor.ch;
-	        var lineText = cm.getLine(line);
-	        var symbol;
-	        do {
-	          symbol = lineText.charAt(ch++);
-	          if (symbol && isMatchableSymbol(symbol)) {
-	            var style = cm.getTokenTypeAt(Pos(line, ch));
-	            if (style !== "string" && style !== "comment") {
-	              break;
-	            }
-	          }
-	        } while (symbol);
-	        if (symbol) {
-	          var matched = cm.findMatchingBracket(Pos(line, ch));
-	          return matched.to;
-	        } else {
-	          return cursor;
-	        }
-	      },
-	      moveToStartOfLine: function(_cm, head) {
-	        return Pos(head.line, 0);
-	      },
-	      moveToLineOrEdgeOfDocument: function(cm, _head, motionArgs) {
-	        var lineNum = motionArgs.forward ? cm.lastLine() : cm.firstLine();
-	        if (motionArgs.repeatIsExplicit) {
-	          lineNum = motionArgs.repeat - cm.getOption('firstLineNumber');
-	        }
-	        return Pos(lineNum,
-	                   findFirstNonWhiteSpaceCharacter(cm.getLine(lineNum)));
-	      },
-	      textObjectManipulation: function(cm, head, motionArgs, vim) {
-	        // TODO: lots of possible exceptions that can be thrown here. Try da(
-	        //     outside of a () block.
-	
-	        // TODO: adding <> >< to this map doesn't work, presumably because
-	        // they're operators
-	        var mirroredPairs = {'(': ')', ')': '(',
-	                             '{': '}', '}': '{',
-	                             '[': ']', ']': '['};
-	        var selfPaired = {'\'': true, '"': true};
-	
-	        var character = motionArgs.selectedCharacter;
-	        // 'b' refers to  '()' block.
-	        // 'B' refers to  '{}' block.
-	        if (character == 'b') {
-	          character = '(';
-	        } else if (character == 'B') {
-	          character = '{';
-	        }
-	
-	        // Inclusive is the difference between a and i
-	        // TODO: Instead of using the additional text object map to perform text
-	        //     object operations, merge the map into the defaultKeyMap and use
-	        //     motionArgs to define behavior. Define separate entries for 'aw',
-	        //     'iw', 'a[', 'i[', etc.
-	        var inclusive = !motionArgs.textObjectInner;
-	
-	        var tmp;
-	        if (mirroredPairs[character]) {
-	          tmp = selectCompanionObject(cm, head, character, inclusive);
-	        } else if (selfPaired[character]) {
-	          tmp = findBeginningAndEnd(cm, head, character, inclusive);
-	        } else if (character === 'W') {
-	          tmp = expandWordUnderCursor(cm, inclusive, true /** forward */,
-	                                                     true /** bigWord */);
-	        } else if (character === 'w') {
-	          tmp = expandWordUnderCursor(cm, inclusive, true /** forward */,
-	                                                     false /** bigWord */);
-	        } else if (character === 'p') {
-	          tmp = findParagraph(cm, head, motionArgs.repeat, 0, inclusive);
-	          motionArgs.linewise = true;
-	          if (vim.visualMode) {
-	            if (!vim.visualLine) { vim.visualLine = true; }
-	          } else {
-	            var operatorArgs = vim.inputState.operatorArgs;
-	            if (operatorArgs) { operatorArgs.linewise = true; }
-	            tmp.end.line--;
-	          }
-	        } else {
-	          // No text object defined for this, don't move.
-	          return null;
-	        }
-	
-	        if (!cm.state.vim.visualMode) {
-	          return [tmp.start, tmp.end];
-	        } else {
-	          return expandSelection(cm, tmp.start, tmp.end);
-	        }
-	      },
-	
-	      repeatLastCharacterSearch: function(cm, head, motionArgs) {
-	        var lastSearch = vimGlobalState.lastCharacterSearch;
-	        var repeat = motionArgs.repeat;
-	        var forward = motionArgs.forward === lastSearch.forward;
-	        var increment = (lastSearch.increment ? 1 : 0) * (forward ? -1 : 1);
-	        cm.moveH(-increment, 'char');
-	        motionArgs.inclusive = forward ? true : false;
-	        var curEnd = moveToCharacter(cm, repeat, forward, lastSearch.selectedCharacter);
-	        if (!curEnd) {
-	          cm.moveH(increment, 'char');
-	          return head;
-	        }
-	        curEnd.ch += increment;
-	        return curEnd;
-	      }
-	    };
-	
-	    function defineMotion(name, fn) {
-	      motions[name] = fn;
-	    }
-	
-	    function fillArray(val, times) {
-	      var arr = [];
-	      for (var i = 0; i < times; i++) {
-	        arr.push(val);
-	      }
-	      return arr;
-	    }
-	    /**
-	     * An operator acts on a text selection. It receives the list of selections
-	     * as input. The corresponding CodeMirror selection is guaranteed to
-	    * match the input selection.
-	     */
-	    var operators = {
-	      change: function(cm, args, ranges) {
-	        var finalHead, text;
-	        var vim = cm.state.vim;
-	        vimGlobalState.macroModeState.lastInsertModeChanges.inVisualBlock = vim.visualBlock;
-	        if (!vim.visualMode) {
-	          var anchor = ranges[0].anchor,
-	              head = ranges[0].head;
-	          text = cm.getRange(anchor, head);
-	          var lastState = vim.lastEditInputState || {};
-	          if (lastState.motion == "moveByWords" && !isWhiteSpaceString(text)) {
-	            // Exclude trailing whitespace if the range is not all whitespace.
-	            var match = (/\s+$/).exec(text);
-	            if (match && lastState.motionArgs && lastState.motionArgs.forward) {
-	              head = offsetCursor(head, 0, - match[0].length);
-	              text = text.slice(0, - match[0].length);
-	            }
-	          }
-	          var prevLineEnd = new Pos(anchor.line - 1, Number.MAX_VALUE);
-	          var wasLastLine = cm.firstLine() == cm.lastLine();
-	          if (head.line > cm.lastLine() && args.linewise && !wasLastLine) {
-	            cm.replaceRange('', prevLineEnd, head);
-	          } else {
-	            cm.replaceRange('', anchor, head);
-	          }
-	          if (args.linewise) {
-	            // Push the next line back down, if there is a next line.
-	            if (!wasLastLine) {
-	              cm.setCursor(prevLineEnd);
-	              CodeMirror.commands.newlineAndIndent(cm);
-	            }
-	            // make sure cursor ends up at the end of the line.
-	            anchor.ch = Number.MAX_VALUE;
-	          }
-	          finalHead = anchor;
-	        } else {
-	          text = cm.getSelection();
-	          var replacement = fillArray('', ranges.length);
-	          cm.replaceSelections(replacement);
-	          finalHead = cursorMin(ranges[0].head, ranges[0].anchor);
-	        }
-	        vimGlobalState.registerController.pushText(
-	            args.registerName, 'change', text,
-	            args.linewise, ranges.length > 1);
-	        actions.enterInsertMode(cm, {head: finalHead}, cm.state.vim);
-	      },
-	      // delete is a javascript keyword.
-	      'delete': function(cm, args, ranges) {
-	        var finalHead, text;
-	        var vim = cm.state.vim;
-	        if (!vim.visualBlock) {
-	          var anchor = ranges[0].anchor,
-	              head = ranges[0].head;
-	          if (args.linewise &&
-	              head.line != cm.firstLine() &&
-	              anchor.line == cm.lastLine() &&
-	              anchor.line == head.line - 1) {
-	            // Special case for dd on last line (and first line).
-	            if (anchor.line == cm.firstLine()) {
-	              anchor.ch = 0;
-	            } else {
-	              anchor = Pos(anchor.line - 1, lineLength(cm, anchor.line - 1));
-	            }
-	          }
-	          text = cm.getRange(anchor, head);
-	          cm.replaceRange('', anchor, head);
-	          finalHead = anchor;
-	          if (args.linewise) {
-	            finalHead = motions.moveToFirstNonWhiteSpaceCharacter(cm, anchor);
-	          }
-	        } else {
-	          text = cm.getSelection();
-	          var replacement = fillArray('', ranges.length);
-	          cm.replaceSelections(replacement);
-	          finalHead = ranges[0].anchor;
-	        }
-	        vimGlobalState.registerController.pushText(
-	            args.registerName, 'delete', text,
-	            args.linewise, vim.visualBlock);
-	        return clipCursorToContent(cm, finalHead);
-	      },
-	      indent: function(cm, args, ranges) {
-	        var vim = cm.state.vim;
-	        var startLine = ranges[0].anchor.line;
-	        var endLine = vim.visualBlock ?
-	          ranges[ranges.length - 1].anchor.line :
-	          ranges[0].head.line;
-	        // In visual mode, n> shifts the selection right n times, instead of
-	        // shifting n lines right once.
-	        var repeat = (vim.visualMode) ? args.repeat : 1;
-	        if (args.linewise) {
-	          // The only way to delete a newline is to delete until the start of
-	          // the next line, so in linewise mode evalInput will include the next
-	          // line. We don't want this in indent, so we go back a line.
-	          endLine--;
-	        }
-	        for (var i = startLine; i <= endLine; i++) {
-	          for (var j = 0; j < repeat; j++) {
-	            cm.indentLine(i, args.indentRight);
-	          }
-	        }
-	        return motions.moveToFirstNonWhiteSpaceCharacter(cm, ranges[0].anchor);
-	      },
-	      changeCase: function(cm, args, ranges, oldAnchor, newHead) {
-	        var selections = cm.getSelections();
-	        var swapped = [];
-	        var toLower = args.toLower;
-	        for (var j = 0; j < selections.length; j++) {
-	          var toSwap = selections[j];
-	          var text = '';
-	          if (toLower === true) {
-	            text = toSwap.toLowerCase();
-	          } else if (toLower === false) {
-	            text = toSwap.toUpperCase();
-	          } else {
-	            for (var i = 0; i < toSwap.length; i++) {
-	              var character = toSwap.charAt(i);
-	              text += isUpperCase(character) ? character.toLowerCase() :
-	                  character.toUpperCase();
-	            }
-	          }
-	          swapped.push(text);
-	        }
-	        cm.replaceSelections(swapped);
-	        if (args.shouldMoveCursor){
-	          return newHead;
-	        } else if (!cm.state.vim.visualMode && args.linewise && ranges[0].anchor.line + 1 == ranges[0].head.line) {
-	          return motions.moveToFirstNonWhiteSpaceCharacter(cm, oldAnchor);
-	        } else if (args.linewise){
-	          return oldAnchor;
-	        } else {
-	          return cursorMin(ranges[0].anchor, ranges[0].head);
-	        }
-	      },
-	      yank: function(cm, args, ranges, oldAnchor) {
-	        var vim = cm.state.vim;
-	        var text = cm.getSelection();
-	        var endPos = vim.visualMode
-	          ? cursorMin(vim.sel.anchor, vim.sel.head, ranges[0].head, ranges[0].anchor)
-	          : oldAnchor;
-	        vimGlobalState.registerController.pushText(
-	            args.registerName, 'yank',
-	            text, args.linewise, vim.visualBlock);
-	        return endPos;
-	      }
-	    };
-	
-	    function defineOperator(name, fn) {
-	      operators[name] = fn;
-	    }
-	
-	    var actions = {
-	      jumpListWalk: function(cm, actionArgs, vim) {
-	        if (vim.visualMode) {
-	          return;
-	        }
-	        var repeat = actionArgs.repeat;
-	        var forward = actionArgs.forward;
-	        var jumpList = vimGlobalState.jumpList;
-	
-	        var mark = jumpList.move(cm, forward ? repeat : -repeat);
-	        var markPos = mark ? mark.find() : undefined;
-	        markPos = markPos ? markPos : cm.getCursor();
-	        cm.setCursor(markPos);
-	      },
-	      scroll: function(cm, actionArgs, vim) {
-	        if (vim.visualMode) {
-	          return;
-	        }
-	        var repeat = actionArgs.repeat || 1;
-	        var lineHeight = cm.defaultTextHeight();
-	        var top = cm.getScrollInfo().top;
-	        var delta = lineHeight * repeat;
-	        var newPos = actionArgs.forward ? top + delta : top - delta;
-	        var cursor = copyCursor(cm.getCursor());
-	        var cursorCoords = cm.charCoords(cursor, 'local');
-	        if (actionArgs.forward) {
-	          if (newPos > cursorCoords.top) {
-	             cursor.line += (newPos - cursorCoords.top) / lineHeight;
-	             cursor.line = Math.ceil(cursor.line);
-	             cm.setCursor(cursor);
-	             cursorCoords = cm.charCoords(cursor, 'local');
-	             cm.scrollTo(null, cursorCoords.top);
-	          } else {
-	             // Cursor stays within bounds.  Just reposition the scroll window.
-	             cm.scrollTo(null, newPos);
-	          }
-	        } else {
-	          var newBottom = newPos + cm.getScrollInfo().clientHeight;
-	          if (newBottom < cursorCoords.bottom) {
-	             cursor.line -= (cursorCoords.bottom - newBottom) / lineHeight;
-	             cursor.line = Math.floor(cursor.line);
-	             cm.setCursor(cursor);
-	             cursorCoords = cm.charCoords(cursor, 'local');
-	             cm.scrollTo(
-	                 null, cursorCoords.bottom - cm.getScrollInfo().clientHeight);
-	          } else {
-	             // Cursor stays within bounds.  Just reposition the scroll window.
-	             cm.scrollTo(null, newPos);
-	          }
-	        }
-	      },
-	      scrollToCursor: function(cm, actionArgs) {
-	        var lineNum = cm.getCursor().line;
-	        var charCoords = cm.charCoords(Pos(lineNum, 0), 'local');
-	        var height = cm.getScrollInfo().clientHeight;
-	        var y = charCoords.top;
-	        var lineHeight = charCoords.bottom - y;
-	        switch (actionArgs.position) {
-	          case 'center': y = y - (height / 2) + lineHeight;
-	            break;
-	          case 'bottom': y = y - height + lineHeight;
-	            break;
-	        }
-	        cm.scrollTo(null, y);
-	      },
-	      replayMacro: function(cm, actionArgs, vim) {
-	        var registerName = actionArgs.selectedCharacter;
-	        var repeat = actionArgs.repeat;
-	        var macroModeState = vimGlobalState.macroModeState;
-	        if (registerName == '@') {
-	          registerName = macroModeState.latestRegister;
-	        }
-	        while(repeat--){
-	          executeMacroRegister(cm, vim, macroModeState, registerName);
-	        }
-	      },
-	      enterMacroRecordMode: function(cm, actionArgs) {
-	        var macroModeState = vimGlobalState.macroModeState;
-	        var registerName = actionArgs.selectedCharacter;
-	        macroModeState.enterMacroRecordMode(cm, registerName);
-	      },
-	      enterInsertMode: function(cm, actionArgs, vim) {
-	        if (cm.getOption('readOnly')) { return; }
-	        vim.insertMode = true;
-	        vim.insertModeRepeat = actionArgs && actionArgs.repeat || 1;
-	        var insertAt = (actionArgs) ? actionArgs.insertAt : null;
-	        var sel = vim.sel;
-	        var head = actionArgs.head || cm.getCursor('head');
-	        var height = cm.listSelections().length;
-	        if (insertAt == 'eol') {
-	          head = Pos(head.line, lineLength(cm, head.line));
-	        } else if (insertAt == 'charAfter') {
-	          head = offsetCursor(head, 0, 1);
-	        } else if (insertAt == 'firstNonBlank') {
-	          head = motions.moveToFirstNonWhiteSpaceCharacter(cm, head);
-	        } else if (insertAt == 'startOfSelectedArea') {
-	          if (!vim.visualBlock) {
-	            if (sel.head.line < sel.anchor.line) {
-	              head = sel.head;
-	            } else {
-	              head = Pos(sel.anchor.line, 0);
-	            }
-	          } else {
-	            head = Pos(
-	                Math.min(sel.head.line, sel.anchor.line),
-	                Math.min(sel.head.ch, sel.anchor.ch));
-	            height = Math.abs(sel.head.line - sel.anchor.line) + 1;
-	          }
-	        } else if (insertAt == 'endOfSelectedArea') {
-	          if (!vim.visualBlock) {
-	            if (sel.head.line >= sel.anchor.line) {
-	              head = offsetCursor(sel.head, 0, 1);
-	            } else {
-	              head = Pos(sel.anchor.line, 0);
-	            }
-	          } else {
-	            head = Pos(
-	                Math.min(sel.head.line, sel.anchor.line),
-	                Math.max(sel.head.ch + 1, sel.anchor.ch));
-	            height = Math.abs(sel.head.line - sel.anchor.line) + 1;
-	          }
-	        } else if (insertAt == 'inplace') {
-	          if (vim.visualMode){
-	            return;
-	          }
-	        }
-	        cm.setOption('keyMap', 'vim-insert');
-	        cm.setOption('disableInput', false);
-	        if (actionArgs && actionArgs.replace) {
-	          // Handle Replace-mode as a special case of insert mode.
-	          cm.toggleOverwrite(true);
-	          cm.setOption('keyMap', 'vim-replace');
-	          CodeMirror.signal(cm, "vim-mode-change", {mode: "replace"});
-	        } else {
-	          cm.setOption('keyMap', 'vim-insert');
-	          CodeMirror.signal(cm, "vim-mode-change", {mode: "insert"});
-	        }
-	        if (!vimGlobalState.macroModeState.isPlaying) {
-	          // Only record if not replaying.
-	          cm.on('change', onChange);
-	          CodeMirror.on(cm.getInputField(), 'keydown', onKeyEventTargetKeyDown);
-	        }
-	        if (vim.visualMode) {
-	          exitVisualMode(cm);
-	        }
-	        selectForInsert(cm, head, height);
-	      },
-	      toggleVisualMode: function(cm, actionArgs, vim) {
-	        var repeat = actionArgs.repeat;
-	        var anchor = cm.getCursor();
-	        var head;
-	        // TODO: The repeat should actually select number of characters/lines
-	        //     equal to the repeat times the size of the previous visual
-	        //     operation.
-	        if (!vim.visualMode) {
-	          // Entering visual mode
-	          vim.visualMode = true;
-	          vim.visualLine = !!actionArgs.linewise;
-	          vim.visualBlock = !!actionArgs.blockwise;
-	          head = clipCursorToContent(
-	              cm, Pos(anchor.line, anchor.ch + repeat - 1),
-	              true /** includeLineBreak */);
-	          vim.sel = {
-	            anchor: anchor,
-	            head: head
-	          };
-	          CodeMirror.signal(cm, "vim-mode-change", {mode: "visual", subMode: vim.visualLine ? "linewise" : vim.visualBlock ? "blockwise" : ""});
-	          updateCmSelection(cm);
-	          updateMark(cm, vim, '<', cursorMin(anchor, head));
-	          updateMark(cm, vim, '>', cursorMax(anchor, head));
-	        } else if (vim.visualLine ^ actionArgs.linewise ||
-	            vim.visualBlock ^ actionArgs.blockwise) {
-	          // Toggling between modes
-	          vim.visualLine = !!actionArgs.linewise;
-	          vim.visualBlock = !!actionArgs.blockwise;
-	          CodeMirror.signal(cm, "vim-mode-change", {mode: "visual", subMode: vim.visualLine ? "linewise" : vim.visualBlock ? "blockwise" : ""});
-	          updateCmSelection(cm);
-	        } else {
-	          exitVisualMode(cm);
-	        }
-	      },
-	      reselectLastSelection: function(cm, _actionArgs, vim) {
-	        var lastSelection = vim.lastSelection;
-	        if (vim.visualMode) {
-	          updateLastSelection(cm, vim);
-	        }
-	        if (lastSelection) {
-	          var anchor = lastSelection.anchorMark.find();
-	          var head = lastSelection.headMark.find();
-	          if (!anchor || !head) {
-	            // If the marks have been destroyed due to edits, do nothing.
-	            return;
-	          }
-	          vim.sel = {
-	            anchor: anchor,
-	            head: head
-	          };
-	          vim.visualMode = true;
-	          vim.visualLine = lastSelection.visualLine;
-	          vim.visualBlock = lastSelection.visualBlock;
-	          updateCmSelection(cm);
-	          updateMark(cm, vim, '<', cursorMin(anchor, head));
-	          updateMark(cm, vim, '>', cursorMax(anchor, head));
-	          CodeMirror.signal(cm, 'vim-mode-change', {
-	            mode: 'visual',
-	            subMode: vim.visualLine ? 'linewise' :
-	                     vim.visualBlock ? 'blockwise' : ''});
-	        }
-	      },
-	      joinLines: function(cm, actionArgs, vim) {
-	        var curStart, curEnd;
-	        if (vim.visualMode) {
-	          curStart = cm.getCursor('anchor');
-	          curEnd = cm.getCursor('head');
-	          if (cursorIsBefore(curEnd, curStart)) {
-	            var tmp = curEnd;
-	            curEnd = curStart;
-	            curStart = tmp;
-	          }
-	          curEnd.ch = lineLength(cm, curEnd.line) - 1;
-	        } else {
-	          // Repeat is the number of lines to join. Minimum 2 lines.
-	          var repeat = Math.max(actionArgs.repeat, 2);
-	          curStart = cm.getCursor();
-	          curEnd = clipCursorToContent(cm, Pos(curStart.line + repeat - 1,
-	                                               Infinity));
-	        }
-	        var finalCh = 0;
-	        for (var i = curStart.line; i < curEnd.line; i++) {
-	          finalCh = lineLength(cm, curStart.line);
-	          var tmp = Pos(curStart.line + 1,
-	                        lineLength(cm, curStart.line + 1));
-	          var text = cm.getRange(curStart, tmp);
-	          text = text.replace(/\n\s*/g, ' ');
-	          cm.replaceRange(text, curStart, tmp);
-	        }
-	        var curFinalPos = Pos(curStart.line, finalCh);
-	        if (vim.visualMode) {
-	          exitVisualMode(cm, false);
-	        }
-	        cm.setCursor(curFinalPos);
-	      },
-	      newLineAndEnterInsertMode: function(cm, actionArgs, vim) {
-	        vim.insertMode = true;
-	        var insertAt = copyCursor(cm.getCursor());
-	        if (insertAt.line === cm.firstLine() && !actionArgs.after) {
-	          // Special case for inserting newline before start of document.
-	          cm.replaceRange('\n', Pos(cm.firstLine(), 0));
-	          cm.setCursor(cm.firstLine(), 0);
-	        } else {
-	          insertAt.line = (actionArgs.after) ? insertAt.line :
-	              insertAt.line - 1;
-	          insertAt.ch = lineLength(cm, insertAt.line);
-	          cm.setCursor(insertAt);
-	          var newlineFn = CodeMirror.commands.newlineAndIndentContinueComment ||
-	              CodeMirror.commands.newlineAndIndent;
-	          newlineFn(cm);
-	        }
-	        this.enterInsertMode(cm, { repeat: actionArgs.repeat }, vim);
-	      },
-	      paste: function(cm, actionArgs, vim) {
-	        var cur = copyCursor(cm.getCursor());
-	        var register = vimGlobalState.registerController.getRegister(
-	            actionArgs.registerName);
-	        var text = register.toString();
-	        if (!text) {
-	          return;
-	        }
-	        if (actionArgs.matchIndent) {
-	          var tabSize = cm.getOption("tabSize");
-	          // length that considers tabs and tabSize
-	          var whitespaceLength = function(str) {
-	            var tabs = (str.split("\t").length - 1);
-	            var spaces = (str.split(" ").length - 1);
-	            return tabs * tabSize + spaces * 1;
-	          };
-	          var currentLine = cm.getLine(cm.getCursor().line);
-	          var indent = whitespaceLength(currentLine.match(/^\s*/)[0]);
-	          // chomp last newline b/c don't want it to match /^\s*/gm
-	          var chompedText = text.replace(/\n$/, '');
-	          var wasChomped = text !== chompedText;
-	          var firstIndent = whitespaceLength(text.match(/^\s*/)[0]);
-	          var text = chompedText.replace(/^\s*/gm, function(wspace) {
-	            var newIndent = indent + (whitespaceLength(wspace) - firstIndent);
-	            if (newIndent < 0) {
-	              return "";
-	            }
-	            else if (cm.getOption("indentWithTabs")) {
-	              var quotient = Math.floor(newIndent / tabSize);
-	              return Array(quotient + 1).join('\t');
-	            }
-	            else {
-	              return Array(newIndent + 1).join(' ');
-	            }
-	          });
-	          text += wasChomped ? "\n" : "";
-	        }
-	        if (actionArgs.repeat > 1) {
-	          var text = Array(actionArgs.repeat + 1).join(text);
-	        }
-	        var linewise = register.linewise;
-	        var blockwise = register.blockwise;
-	        if (linewise) {
-	          if(vim.visualMode) {
-	            text = vim.visualLine ? text.slice(0, -1) : '\n' + text.slice(0, text.length - 1) + '\n';
-	          } else if (actionArgs.after) {
-	            // Move the newline at the end to the start instead, and paste just
-	            // before the newline character of the line we are on right now.
-	            text = '\n' + text.slice(0, text.length - 1);
-	            cur.ch = lineLength(cm, cur.line);
-	          } else {
-	            cur.ch = 0;
-	          }
-	        } else {
-	          if (blockwise) {
-	            text = text.split('\n');
-	            for (var i = 0; i < text.length; i++) {
-	              text[i] = (text[i] == '') ? ' ' : text[i];
-	            }
-	          }
-	          cur.ch += actionArgs.after ? 1 : 0;
-	        }
-	        var curPosFinal;
-	        var idx;
-	        if (vim.visualMode) {
-	          //  save the pasted text for reselection if the need arises
-	          vim.lastPastedText = text;
-	          var lastSelectionCurEnd;
-	          var selectedArea = getSelectedAreaRange(cm, vim);
-	          var selectionStart = selectedArea[0];
-	          var selectionEnd = selectedArea[1];
-	          var selectedText = cm.getSelection();
-	          var selections = cm.listSelections();
-	          var emptyStrings = new Array(selections.length).join('1').split('1');
-	          // save the curEnd marker before it get cleared due to cm.replaceRange.
-	          if (vim.lastSelection) {
-	            lastSelectionCurEnd = vim.lastSelection.headMark.find();
-	          }
-	          // push the previously selected text to unnamed register
-	          vimGlobalState.registerController.unnamedRegister.setText(selectedText);
-	          if (blockwise) {
-	            // first delete the selected text
-	            cm.replaceSelections(emptyStrings);
-	            // Set new selections as per the block length of the yanked text
-	            selectionEnd = Pos(selectionStart.line + text.length-1, selectionStart.ch);
-	            cm.setCursor(selectionStart);
-	            selectBlock(cm, selectionEnd);
-	            cm.replaceSelections(text);
-	            curPosFinal = selectionStart;
-	          } else if (vim.visualBlock) {
-	            cm.replaceSelections(emptyStrings);
-	            cm.setCursor(selectionStart);
-	            cm.replaceRange(text, selectionStart, selectionStart);
-	            curPosFinal = selectionStart;
-	          } else {
-	            cm.replaceRange(text, selectionStart, selectionEnd);
-	            curPosFinal = cm.posFromIndex(cm.indexFromPos(selectionStart) + text.length - 1);
-	          }
-	          // restore the the curEnd marker
-	          if(lastSelectionCurEnd) {
-	            vim.lastSelection.headMark = cm.setBookmark(lastSelectionCurEnd);
-	          }
-	          if (linewise) {
-	            curPosFinal.ch=0;
-	          }
-	        } else {
-	          if (blockwise) {
-	            cm.setCursor(cur);
-	            for (var i = 0; i < text.length; i++) {
-	              var line = cur.line+i;
-	              if (line > cm.lastLine()) {
-	                cm.replaceRange('\n',  Pos(line, 0));
-	              }
-	              var lastCh = lineLength(cm, line);
-	              if (lastCh < cur.ch) {
-	                extendLineToColumn(cm, line, cur.ch);
-	              }
-	            }
-	            cm.setCursor(cur);
-	            selectBlock(cm, Pos(cur.line + text.length-1, cur.ch));
-	            cm.replaceSelections(text);
-	            curPosFinal = cur;
-	          } else {
-	            cm.replaceRange(text, cur);
-	            // Now fine tune the cursor to where we want it.
-	            if (linewise && actionArgs.after) {
-	              curPosFinal = Pos(
-	              cur.line + 1,
-	              findFirstNonWhiteSpaceCharacter(cm.getLine(cur.line + 1)));
-	            } else if (linewise && !actionArgs.after) {
-	              curPosFinal = Pos(
-	                cur.line,
-	                findFirstNonWhiteSpaceCharacter(cm.getLine(cur.line)));
-	            } else if (!linewise && actionArgs.after) {
-	              idx = cm.indexFromPos(cur);
-	              curPosFinal = cm.posFromIndex(idx + text.length - 1);
-	            } else {
-	              idx = cm.indexFromPos(cur);
-	              curPosFinal = cm.posFromIndex(idx + text.length);
-	            }
-	          }
-	        }
-	        if (vim.visualMode) {
-	          exitVisualMode(cm, false);
-	        }
-	        cm.setCursor(curPosFinal);
-	      },
-	      undo: function(cm, actionArgs) {
-	        cm.operation(function() {
-	          repeatFn(cm, CodeMirror.commands.undo, actionArgs.repeat)();
-	          cm.setCursor(cm.getCursor('anchor'));
-	        });
-	      },
-	      redo: function(cm, actionArgs) {
-	        repeatFn(cm, CodeMirror.commands.redo, actionArgs.repeat)();
-	      },
-	      setRegister: function(_cm, actionArgs, vim) {
-	        vim.inputState.registerName = actionArgs.selectedCharacter;
-	      },
-	      setMark: function(cm, actionArgs, vim) {
-	        var markName = actionArgs.selectedCharacter;
-	        updateMark(cm, vim, markName, cm.getCursor());
-	      },
-	      replace: function(cm, actionArgs, vim) {
-	        var replaceWith = actionArgs.selectedCharacter;
-	        var curStart = cm.getCursor();
-	        var replaceTo;
-	        var curEnd;
-	        var selections = cm.listSelections();
-	        if (vim.visualMode) {
-	          curStart = cm.getCursor('start');
-	          curEnd = cm.getCursor('end');
-	        } else {
-	          var line = cm.getLine(curStart.line);
-	          replaceTo = curStart.ch + actionArgs.repeat;
-	          if (replaceTo > line.length) {
-	            replaceTo=line.length;
-	          }
-	          curEnd = Pos(curStart.line, replaceTo);
-	        }
-	        if (replaceWith=='\n') {
-	          if (!vim.visualMode) cm.replaceRange('', curStart, curEnd);
-	          // special case, where vim help says to replace by just one line-break
-	          (CodeMirror.commands.newlineAndIndentContinueComment || CodeMirror.commands.newlineAndIndent)(cm);
-	        } else {
-	          var replaceWithStr = cm.getRange(curStart, curEnd);
-	          //replace all characters in range by selected, but keep linebreaks
-	          replaceWithStr = replaceWithStr.replace(/[^\n]/g, replaceWith);
-	          if (vim.visualBlock) {
-	            // Tabs are split in visua block before replacing
-	            var spaces = new Array(cm.getOption("tabSize")+1).join(' ');
-	            replaceWithStr = cm.getSelection();
-	            replaceWithStr = replaceWithStr.replace(/\t/g, spaces).replace(/[^\n]/g, replaceWith).split('\n');
-	            cm.replaceSelections(replaceWithStr);
-	          } else {
-	            cm.replaceRange(replaceWithStr, curStart, curEnd);
-	          }
-	          if (vim.visualMode) {
-	            curStart = cursorIsBefore(selections[0].anchor, selections[0].head) ?
-	                         selections[0].anchor : selections[0].head;
-	            cm.setCursor(curStart);
-	            exitVisualMode(cm, false);
-	          } else {
-	            cm.setCursor(offsetCursor(curEnd, 0, -1));
-	          }
-	        }
-	      },
-	      incrementNumberToken: function(cm, actionArgs) {
-	        var cur = cm.getCursor();
-	        var lineStr = cm.getLine(cur.line);
-	        var re = /-?\d+/g;
-	        var match;
-	        var start;
-	        var end;
-	        var numberStr;
-	        var token;
-	        while ((match = re.exec(lineStr)) !== null) {
-	          token = match[0];
-	          start = match.index;
-	          end = start + token.length;
-	          if (cur.ch < end)break;
-	        }
-	        if (!actionArgs.backtrack && (end <= cur.ch))return;
-	        if (token) {
-	          var increment = actionArgs.increase ? 1 : -1;
-	          var number = parseInt(token) + (increment * actionArgs.repeat);
-	          var from = Pos(cur.line, start);
-	          var to = Pos(cur.line, end);
-	          numberStr = number.toString();
-	          cm.replaceRange(numberStr, from, to);
-	        } else {
-	          return;
-	        }
-	        cm.setCursor(Pos(cur.line, start + numberStr.length - 1));
-	      },
-	      repeatLastEdit: function(cm, actionArgs, vim) {
-	        var lastEditInputState = vim.lastEditInputState;
-	        if (!lastEditInputState) { return; }
-	        var repeat = actionArgs.repeat;
-	        if (repeat && actionArgs.repeatIsExplicit) {
-	          vim.lastEditInputState.repeatOverride = repeat;
-	        } else {
-	          repeat = vim.lastEditInputState.repeatOverride || repeat;
-	        }
-	        repeatLastEdit(cm, vim, repeat, false /** repeatForInsert */);
-	      },
-	      exitInsertMode: exitInsertMode
-	    };
-	
-	    function defineAction(name, fn) {
-	      actions[name] = fn;
-	    }
-	
-	    /*
-	     * Below are miscellaneous utility functions used by vim.js
-	     */
-	
-	    /**
-	     * Clips cursor to ensure that line is within the buffer's range
-	     * If includeLineBreak is true, then allow cur.ch == lineLength.
-	     */
-	    function clipCursorToContent(cm, cur, includeLineBreak) {
-	      var line = Math.min(Math.max(cm.firstLine(), cur.line), cm.lastLine() );
-	      var maxCh = lineLength(cm, line) - 1;
-	      maxCh = (includeLineBreak) ? maxCh + 1 : maxCh;
-	      var ch = Math.min(Math.max(0, cur.ch), maxCh);
-	      return Pos(line, ch);
-	    }
-	    function copyArgs(args) {
-	      var ret = {};
-	      for (var prop in args) {
-	        if (args.hasOwnProperty(prop)) {
-	          ret[prop] = args[prop];
-	        }
-	      }
-	      return ret;
-	    }
-	    function offsetCursor(cur, offsetLine, offsetCh) {
-	      if (typeof offsetLine === 'object') {
-	        offsetCh = offsetLine.ch;
-	        offsetLine = offsetLine.line;
-	      }
-	      return Pos(cur.line + offsetLine, cur.ch + offsetCh);
-	    }
-	    function getOffset(anchor, head) {
-	      return {
-	        line: head.line - anchor.line,
-	        ch: head.line - anchor.line
-	      };
-	    }
-	    function commandMatches(keys, keyMap, context, inputState) {
-	      // Partial matches are not applied. They inform the key handler
-	      // that the current key sequence is a subsequence of a valid key
-	      // sequence, so that the key buffer is not cleared.
-	      var match, partial = [], full = [];
-	      for (var i = 0; i < keyMap.length; i++) {
-	        var command = keyMap[i];
-	        if (context == 'insert' && command.context != 'insert' ||
-	            command.context && command.context != context ||
-	            inputState.operator && command.type == 'action' ||
-	            !(match = commandMatch(keys, command.keys))) { continue; }
-	        if (match == 'partial') { partial.push(command); }
-	        if (match == 'full') { full.push(command); }
-	      }
-	      return {
-	        partial: partial.length && partial,
-	        full: full.length && full
-	      };
-	    }
-	    function commandMatch(pressed, mapped) {
-	      if (mapped.slice(-11) == '<character>') {
-	        // Last character matches anything.
-	        var prefixLen = mapped.length - 11;
-	        var pressedPrefix = pressed.slice(0, prefixLen);
-	        var mappedPrefix = mapped.slice(0, prefixLen);
-	        return pressedPrefix == mappedPrefix && pressed.length > prefixLen ? 'full' :
-	               mappedPrefix.indexOf(pressedPrefix) == 0 ? 'partial' : false;
-	      } else {
-	        return pressed == mapped ? 'full' :
-	               mapped.indexOf(pressed) == 0 ? 'partial' : false;
-	      }
-	    }
-	    function lastChar(keys) {
-	      var match = /^.*(<[\w\-]+>)$/.exec(keys);
-	      var selectedCharacter = match ? match[1] : keys.slice(-1);
-	      if (selectedCharacter.length > 1){
-	        switch(selectedCharacter){
-	          case '<CR>':
-	            selectedCharacter='\n';
-	            break;
-	          case '<Space>':
-	            selectedCharacter=' ';
-	            break;
-	          default:
-	            break;
-	        }
-	      }
-	      return selectedCharacter;
-	    }
-	    function repeatFn(cm, fn, repeat) {
-	      return function() {
-	        for (var i = 0; i < repeat; i++) {
-	          fn(cm);
-	        }
-	      };
-	    }
-	    function copyCursor(cur) {
-	      return Pos(cur.line, cur.ch);
-	    }
-	    function cursorEqual(cur1, cur2) {
-	      return cur1.ch == cur2.ch && cur1.line == cur2.line;
-	    }
-	    function cursorIsBefore(cur1, cur2) {
-	      if (cur1.line < cur2.line) {
-	        return true;
-	      }
-	      if (cur1.line == cur2.line && cur1.ch < cur2.ch) {
-	        return true;
-	      }
-	      return false;
-	    }
-	    function cursorMin(cur1, cur2) {
-	      if (arguments.length > 2) {
-	        cur2 = cursorMin.apply(undefined, Array.prototype.slice.call(arguments, 1));
-	      }
-	      return cursorIsBefore(cur1, cur2) ? cur1 : cur2;
-	    }
-	    function cursorMax(cur1, cur2) {
-	      if (arguments.length > 2) {
-	        cur2 = cursorMax.apply(undefined, Array.prototype.slice.call(arguments, 1));
-	      }
-	      return cursorIsBefore(cur1, cur2) ? cur2 : cur1;
-	    }
-	    function cursorIsBetween(cur1, cur2, cur3) {
-	      // returns true if cur2 is between cur1 and cur3.
-	      var cur1before2 = cursorIsBefore(cur1, cur2);
-	      var cur2before3 = cursorIsBefore(cur2, cur3);
-	      return cur1before2 && cur2before3;
-	    }
-	    function lineLength(cm, lineNum) {
-	      return cm.getLine(lineNum).length;
-	    }
-	    function trim(s) {
-	      if (s.trim) {
-	        return s.trim();
-	      }
-	      return s.replace(/^\s+|\s+$/g, '');
-	    }
-	    function escapeRegex(s) {
-	      return s.replace(/([.?*+$\[\]\/\\(){}|\-])/g, '\\$1');
-	    }
-	    function extendLineToColumn(cm, lineNum, column) {
-	      var endCh = lineLength(cm, lineNum);
-	      var spaces = new Array(column-endCh+1).join(' ');
-	      cm.setCursor(Pos(lineNum, endCh));
-	      cm.replaceRange(spaces, cm.getCursor());
-	    }
-	    // This functions selects a rectangular block
-	    // of text with selectionEnd as any of its corner
-	    // Height of block:
-	    // Difference in selectionEnd.line and first/last selection.line
-	    // Width of the block:
-	    // Distance between selectionEnd.ch and any(first considered here) selection.ch
-	    function selectBlock(cm, selectionEnd) {
-	      var selections = [], ranges = cm.listSelections();
-	      var head = copyCursor(cm.clipPos(selectionEnd));
-	      var isClipped = !cursorEqual(selectionEnd, head);
-	      var curHead = cm.getCursor('head');
-	      var primIndex = getIndex(ranges, curHead);
-	      var wasClipped = cursorEqual(ranges[primIndex].head, ranges[primIndex].anchor);
-	      var max = ranges.length - 1;
-	      var index = max - primIndex > primIndex ? max : 0;
-	      var base = ranges[index].anchor;
-	
-	      var firstLine = Math.min(base.line, head.line);
-	      var lastLine = Math.max(base.line, head.line);
-	      var baseCh = base.ch, headCh = head.ch;
-	
-	      var dir = ranges[index].head.ch - baseCh;
-	      var newDir = headCh - baseCh;
-	      if (dir > 0 && newDir <= 0) {
-	        baseCh++;
-	        if (!isClipped) { headCh--; }
-	      } else if (dir < 0 && newDir >= 0) {
-	        baseCh--;
-	        if (!wasClipped) { headCh++; }
-	      } else if (dir < 0 && newDir == -1) {
-	        baseCh--;
-	        headCh++;
-	      }
-	      for (var line = firstLine; line <= lastLine; line++) {
-	        var range = {anchor: new Pos(line, baseCh), head: new Pos(line, headCh)};
-	        selections.push(range);
-	      }
-	      primIndex = head.line == lastLine ? selections.length - 1 : 0;
-	      cm.setSelections(selections);
-	      selectionEnd.ch = headCh;
-	      base.ch = baseCh;
-	      return base;
-	    }
-	    function selectForInsert(cm, head, height) {
-	      var sel = [];
-	      for (var i = 0; i < height; i++) {
-	        var lineHead = offsetCursor(head, i, 0);
-	        sel.push({anchor: lineHead, head: lineHead});
-	      }
-	      cm.setSelections(sel, 0);
-	    }
-	    // getIndex returns the index of the cursor in the selections.
-	    function getIndex(ranges, cursor, end) {
-	      for (var i = 0; i < ranges.length; i++) {
-	        var atAnchor = end != 'head' && cursorEqual(ranges[i].anchor, cursor);
-	        var atHead = end != 'anchor' && cursorEqual(ranges[i].head, cursor);
-	        if (atAnchor || atHead) {
-	          return i;
-	        }
-	      }
-	      return -1;
-	    }
-	    function getSelectedAreaRange(cm, vim) {
-	      var lastSelection = vim.lastSelection;
-	      var getCurrentSelectedAreaRange = function() {
-	        var selections = cm.listSelections();
-	        var start =  selections[0];
-	        var end = selections[selections.length-1];
-	        var selectionStart = cursorIsBefore(start.anchor, start.head) ? start.anchor : start.head;
-	        var selectionEnd = cursorIsBefore(end.anchor, end.head) ? end.head : end.anchor;
-	        return [selectionStart, selectionEnd];
-	      };
-	      var getLastSelectedAreaRange = function() {
-	        var selectionStart = cm.getCursor();
-	        var selectionEnd = cm.getCursor();
-	        var block = lastSelection.visualBlock;
-	        if (block) {
-	          var width = block.width;
-	          var height = block.height;
-	          selectionEnd = Pos(selectionStart.line + height, selectionStart.ch + width);
-	          var selections = [];
-	          // selectBlock creates a 'proper' rectangular block.
-	          // We do not want that in all cases, so we manually set selections.
-	          for (var i = selectionStart.line; i < selectionEnd.line; i++) {
-	            var anchor = Pos(i, selectionStart.ch);
-	            var head = Pos(i, selectionEnd.ch);
-	            var range = {anchor: anchor, head: head};
-	            selections.push(range);
-	          }
-	          cm.setSelections(selections);
-	        } else {
-	          var start = lastSelection.anchorMark.find();
-	          var end = lastSelection.headMark.find();
-	          var line = end.line - start.line;
-	          var ch = end.ch - start.ch;
-	          selectionEnd = {line: selectionEnd.line + line, ch: line ? selectionEnd.ch : ch + selectionEnd.ch};
-	          if (lastSelection.visualLine) {
-	            selectionStart = Pos(selectionStart.line, 0);
-	            selectionEnd = Pos(selectionEnd.line, lineLength(cm, selectionEnd.line));
-	          }
-	          cm.setSelection(selectionStart, selectionEnd);
-	        }
-	        return [selectionStart, selectionEnd];
-	      };
-	      if (!vim.visualMode) {
-	      // In case of replaying the action.
-	        return getLastSelectedAreaRange();
-	      } else {
-	        return getCurrentSelectedAreaRange();
-	      }
-	    }
-	    // Updates the previous selection with the current selection's values. This
-	    // should only be called in visual mode.
-	    function updateLastSelection(cm, vim) {
-	      var anchor = vim.sel.anchor;
-	      var head = vim.sel.head;
-	      // To accommodate the effect of lastPastedText in the last selection
-	      if (vim.lastPastedText) {
-	        head = cm.posFromIndex(cm.indexFromPos(anchor) + vim.lastPastedText.length);
-	        vim.lastPastedText = null;
-	      }
-	      vim.lastSelection = {'anchorMark': cm.setBookmark(anchor),
-	                           'headMark': cm.setBookmark(head),
-	                           'anchor': copyCursor(anchor),
-	                           'head': copyCursor(head),
-	                           'visualMode': vim.visualMode,
-	                           'visualLine': vim.visualLine,
-	                           'visualBlock': vim.visualBlock};
-	    }
-	    function expandSelection(cm, start, end) {
-	      var sel = cm.state.vim.sel;
-	      var head = sel.head;
-	      var anchor = sel.anchor;
-	      var tmp;
-	      if (cursorIsBefore(end, start)) {
-	        tmp = end;
-	        end = start;
-	        start = tmp;
-	      }
-	      if (cursorIsBefore(head, anchor)) {
-	        head = cursorMin(start, head);
-	        anchor = cursorMax(anchor, end);
-	      } else {
-	        anchor = cursorMin(start, anchor);
-	        head = cursorMax(head, end);
-	        head = offsetCursor(head, 0, -1);
-	        if (head.ch == -1 && head.line != cm.firstLine()) {
-	          head = Pos(head.line - 1, lineLength(cm, head.line - 1));
-	        }
-	      }
-	      return [anchor, head];
-	    }
-	    /**
-	     * Updates the CodeMirror selection to match the provided vim selection.
-	     * If no arguments are given, it uses the current vim selection state.
-	     */
-	    function updateCmSelection(cm, sel, mode) {
-	      var vim = cm.state.vim;
-	      sel = sel || vim.sel;
-	      var mode = mode ||
-	        vim.visualLine ? 'line' : vim.visualBlock ? 'block' : 'char';
-	      var cmSel = makeCmSelection(cm, sel, mode);
-	      cm.setSelections(cmSel.ranges, cmSel.primary);
-	      updateFakeCursor(cm);
-	    }
-	    function makeCmSelection(cm, sel, mode, exclusive) {
-	      var head = copyCursor(sel.head);
-	      var anchor = copyCursor(sel.anchor);
-	      if (mode == 'char') {
-	        var headOffset = !exclusive && !cursorIsBefore(sel.head, sel.anchor) ? 1 : 0;
-	        var anchorOffset = cursorIsBefore(sel.head, sel.anchor) ? 1 : 0;
-	        head = offsetCursor(sel.head, 0, headOffset);
-	        anchor = offsetCursor(sel.anchor, 0, anchorOffset);
-	        return {
-	          ranges: [{anchor: anchor, head: head}],
-	          primary: 0
-	        };
-	      } else if (mode == 'line') {
-	        if (!cursorIsBefore(sel.head, sel.anchor)) {
-	          anchor.ch = 0;
-	
-	          var lastLine = cm.lastLine();
-	          if (head.line > lastLine) {
-	            head.line = lastLine;
-	          }
-	          head.ch = lineLength(cm, head.line);
-	        } else {
-	          head.ch = 0;
-	          anchor.ch = lineLength(cm, anchor.line);
-	        }
-	        return {
-	          ranges: [{anchor: anchor, head: head}],
-	          primary: 0
-	        };
-	      } else if (mode == 'block') {
-	        var top = Math.min(anchor.line, head.line),
-	            left = Math.min(anchor.ch, head.ch),
-	            bottom = Math.max(anchor.line, head.line),
-	            right = Math.max(anchor.ch, head.ch) + 1;
-	        var height = bottom - top + 1;
-	        var primary = head.line == top ? 0 : height - 1;
-	        var ranges = [];
-	        for (var i = 0; i < height; i++) {
-	          ranges.push({
-	            anchor: Pos(top + i, left),
-	            head: Pos(top + i, right)
-	          });
-	        }
-	        return {
-	          ranges: ranges,
-	          primary: primary
-	        };
-	      }
-	    }
-	    function getHead(cm) {
-	      var cur = cm.getCursor('head');
-	      if (cm.getSelection().length == 1) {
-	        // Small corner case when only 1 character is selected. The "real"
-	        // head is the left of head and anchor.
-	        cur = cursorMin(cur, cm.getCursor('anchor'));
-	      }
-	      return cur;
-	    }
-	
-	    /**
-	     * If moveHead is set to false, the CodeMirror selection will not be
-	     * touched. The caller assumes the responsibility of putting the cursor
-	    * in the right place.
-	     */
-	    function exitVisualMode(cm, moveHead) {
-	      var vim = cm.state.vim;
-	      if (moveHead !== false) {
-	        cm.setCursor(clipCursorToContent(cm, vim.sel.head));
-	      }
-	      updateLastSelection(cm, vim);
-	      vim.visualMode = false;
-	      vim.visualLine = false;
-	      vim.visualBlock = false;
-	      CodeMirror.signal(cm, "vim-mode-change", {mode: "normal"});
-	      if (vim.fakeCursor) {
-	        vim.fakeCursor.clear();
-	      }
-	    }
-	
-	    // Remove any trailing newlines from the selection. For
-	    // example, with the caret at the start of the last word on the line,
-	    // 'dw' should word, but not the newline, while 'w' should advance the
-	    // caret to the first character of the next line.
-	    function clipToLine(cm, curStart, curEnd) {
-	      var selection = cm.getRange(curStart, curEnd);
-	      // Only clip if the selection ends with trailing newline + whitespace
-	      if (/\n\s*$/.test(selection)) {
-	        var lines = selection.split('\n');
-	        // We know this is all whitespace.
-	        lines.pop();
-	
-	        // Cases:
-	        // 1. Last word is an empty line - do not clip the trailing '\n'
-	        // 2. Last word is not an empty line - clip the trailing '\n'
-	        var line;
-	        // Find the line containing the last word, and clip all whitespace up
-	        // to it.
-	        for (var line = lines.pop(); lines.length > 0 && line && isWhiteSpaceString(line); line = lines.pop()) {
-	          curEnd.line--;
-	          curEnd.ch = 0;
-	        }
-	        // If the last word is not an empty line, clip an additional newline
-	        if (line) {
-	          curEnd.line--;
-	          curEnd.ch = lineLength(cm, curEnd.line);
-	        } else {
-	          curEnd.ch = 0;
-	        }
-	      }
-	    }
-	
-	    // Expand the selection to line ends.
-	    function expandSelectionToLine(_cm, curStart, curEnd) {
-	      curStart.ch = 0;
-	      curEnd.ch = 0;
-	      curEnd.line++;
-	    }
-	
-	    function findFirstNonWhiteSpaceCharacter(text) {
-	      if (!text) {
-	        return 0;
-	      }
-	      var firstNonWS = text.search(/\S/);
-	      return firstNonWS == -1 ? text.length : firstNonWS;
-	    }
-	
-	    function expandWordUnderCursor(cm, inclusive, _forward, bigWord, noSymbol) {
-	      var cur = getHead(cm);
-	      var line = cm.getLine(cur.line);
-	      var idx = cur.ch;
-	
-	      // Seek to first word or non-whitespace character, depending on if
-	      // noSymbol is true.
-	      var test = noSymbol ? wordCharTest[0] : bigWordCharTest [0];
-	      while (!test(line.charAt(idx))) {
-	        idx++;
-	        if (idx >= line.length) { return null; }
-	      }
-	
-	      if (bigWord) {
-	        test = bigWordCharTest[0];
-	      } else {
-	        test = wordCharTest[0];
-	        if (!test(line.charAt(idx))) {
-	          test = wordCharTest[1];
-	        }
-	      }
-	
-	      var end = idx, start = idx;
-	      while (test(line.charAt(end)) && end < line.length) { end++; }
-	      while (test(line.charAt(start)) && start >= 0) { start--; }
-	      start++;
-	
-	      if (inclusive) {
-	        // If present, include all whitespace after word.
-	        // Otherwise, include all whitespace before word, except indentation.
-	        var wordEnd = end;
-	        while (/\s/.test(line.charAt(end)) && end < line.length) { end++; }
-	        if (wordEnd == end) {
-	          var wordStart = start;
-	          while (/\s/.test(line.charAt(start - 1)) && start > 0) { start--; }
-	          if (!start) { start = wordStart; }
-	        }
-	      }
-	      return { start: Pos(cur.line, start), end: Pos(cur.line, end) };
-	    }
-	
-	    function recordJumpPosition(cm, oldCur, newCur) {
-	      if (!cursorEqual(oldCur, newCur)) {
-	        vimGlobalState.jumpList.add(cm, oldCur, newCur);
-	      }
-	    }
-	
-	    function recordLastCharacterSearch(increment, args) {
-	        vimGlobalState.lastCharacterSearch.increment = increment;
-	        vimGlobalState.lastCharacterSearch.forward = args.forward;
-	        vimGlobalState.lastCharacterSearch.selectedCharacter = args.selectedCharacter;
-	    }
-	
-	    var symbolToMode = {
-	        '(': 'bracket', ')': 'bracket', '{': 'bracket', '}': 'bracket',
-	        '[': 'section', ']': 'section',
-	        '*': 'comment', '/': 'comment',
-	        'm': 'method', 'M': 'method',
-	        '#': 'preprocess'
-	    };
-	    var findSymbolModes = {
-	      bracket: {
-	        isComplete: function(state) {
-	          if (state.nextCh === state.symb) {
-	            state.depth++;
-	            if (state.depth >= 1)return true;
-	          } else if (state.nextCh === state.reverseSymb) {
-	            state.depth--;
-	          }
-	          return false;
-	        }
-	      },
-	      section: {
-	        init: function(state) {
-	          state.curMoveThrough = true;
-	          state.symb = (state.forward ? ']' : '[') === state.symb ? '{' : '}';
-	        },
-	        isComplete: function(state) {
-	          return state.index === 0 && state.nextCh === state.symb;
-	        }
-	      },
-	      comment: {
-	        isComplete: function(state) {
-	          var found = state.lastCh === '*' && state.nextCh === '/';
-	          state.lastCh = state.nextCh;
-	          return found;
-	        }
-	      },
-	      // TODO: The original Vim implementation only operates on level 1 and 2.
-	      // The current implementation doesn't check for code block level and
-	      // therefore it operates on any levels.
-	      method: {
-	        init: function(state) {
-	          state.symb = (state.symb === 'm' ? '{' : '}');
-	          state.reverseSymb = state.symb === '{' ? '}' : '{';
-	        },
-	        isComplete: function(state) {
-	          if (state.nextCh === state.symb)return true;
-	          return false;
-	        }
-	      },
-	      preprocess: {
-	        init: function(state) {
-	          state.index = 0;
-	        },
-	        isComplete: function(state) {
-	          if (state.nextCh === '#') {
-	            var token = state.lineText.match(/#(\w+)/)[1];
-	            if (token === 'endif') {
-	              if (state.forward && state.depth === 0) {
-	                return true;
-	              }
-	              state.depth++;
-	            } else if (token === 'if') {
-	              if (!state.forward && state.depth === 0) {
-	                return true;
-	              }
-	              state.depth--;
-	            }
-	            if (token === 'else' && state.depth === 0)return true;
-	          }
-	          return false;
-	        }
-	      }
-	    };
-	    function findSymbol(cm, repeat, forward, symb) {
-	      var cur = copyCursor(cm.getCursor());
-	      var increment = forward ? 1 : -1;
-	      var endLine = forward ? cm.lineCount() : -1;
-	      var curCh = cur.ch;
-	      var line = cur.line;
-	      var lineText = cm.getLine(line);
-	      var state = {
-	        lineText: lineText,
-	        nextCh: lineText.charAt(curCh),
-	        lastCh: null,
-	        index: curCh,
-	        symb: symb,
-	        reverseSymb: (forward ?  { ')': '(', '}': '{' } : { '(': ')', '{': '}' })[symb],
-	        forward: forward,
-	        depth: 0,
-	        curMoveThrough: false
-	      };
-	      var mode = symbolToMode[symb];
-	      if (!mode)return cur;
-	      var init = findSymbolModes[mode].init;
-	      var isComplete = findSymbolModes[mode].isComplete;
-	      if (init) { init(state); }
-	      while (line !== endLine && repeat) {
-	        state.index += increment;
-	        state.nextCh = state.lineText.charAt(state.index);
-	        if (!state.nextCh) {
-	          line += increment;
-	          state.lineText = cm.getLine(line) || '';
-	          if (increment > 0) {
-	            state.index = 0;
-	          } else {
-	            var lineLen = state.lineText.length;
-	            state.index = (lineLen > 0) ? (lineLen-1) : 0;
-	          }
-	          state.nextCh = state.lineText.charAt(state.index);
-	        }
-	        if (isComplete(state)) {
-	          cur.line = line;
-	          cur.ch = state.index;
-	          repeat--;
-	        }
-	      }
-	      if (state.nextCh || state.curMoveThrough) {
-	        return Pos(line, state.index);
-	      }
-	      return cur;
-	    }
-	
-	    /**
-	     * Returns the boundaries of the next word. If the cursor in the middle of
-	     * the word, then returns the boundaries of the current word, starting at
-	     * the cursor. If the cursor is at the start/end of a word, and we are going
-	     * forward/backward, respectively, find the boundaries of the next word.
-	     *
-	     * @param {CodeMirror} cm CodeMirror object.
-	     * @param {Cursor} cur The cursor position.
-	     * @param {boolean} forward True to search forward. False to search
-	     *     backward.
-	     * @param {boolean} bigWord True if punctuation count as part of the word.
-	     *     False if only [a-zA-Z0-9] characters count as part of the word.
-	     * @param {boolean} emptyLineIsWord True if empty lines should be treated
-	     *     as words.
-	     * @return {Object{from:number, to:number, line: number}} The boundaries of
-	     *     the word, or null if there are no more words.
-	     */
-	    function findWord(cm, cur, forward, bigWord, emptyLineIsWord) {
-	      var lineNum = cur.line;
-	      var pos = cur.ch;
-	      var line = cm.getLine(lineNum);
-	      var dir = forward ? 1 : -1;
-	      var charTests = bigWord ? bigWordCharTest: wordCharTest;
-	
-	      if (emptyLineIsWord && line == '') {
-	        lineNum += dir;
-	        line = cm.getLine(lineNum);
-	        if (!isLine(cm, lineNum)) {
-	          return null;
-	        }
-	        pos = (forward) ? 0 : line.length;
-	      }
-	
-	      while (true) {
-	        if (emptyLineIsWord && line == '') {
-	          return { from: 0, to: 0, line: lineNum };
-	        }
-	        var stop = (dir > 0) ? line.length : -1;
-	        var wordStart = stop, wordEnd = stop;
-	        // Find bounds of next word.
-	        while (pos != stop) {
-	          var foundWord = false;
-	          for (var i = 0; i < charTests.length && !foundWord; ++i) {
-	            if (charTests[i](line.charAt(pos))) {
-	              wordStart = pos;
-	              // Advance to end of word.
-	              while (pos != stop && charTests[i](line.charAt(pos))) {
-	                pos += dir;
-	              }
-	              wordEnd = pos;
-	              foundWord = wordStart != wordEnd;
-	              if (wordStart == cur.ch && lineNum == cur.line &&
-	                  wordEnd == wordStart + dir) {
-	                // We started at the end of a word. Find the next one.
-	                continue;
-	              } else {
-	                return {
-	                  from: Math.min(wordStart, wordEnd + 1),
-	                  to: Math.max(wordStart, wordEnd),
-	                  line: lineNum };
-	              }
-	            }
-	          }
-	          if (!foundWord) {
-	            pos += dir;
-	          }
-	        }
-	        // Advance to next/prev line.
-	        lineNum += dir;
-	        if (!isLine(cm, lineNum)) {
-	          return null;
-	        }
-	        line = cm.getLine(lineNum);
-	        pos = (dir > 0) ? 0 : line.length;
-	      }
-	    }
-	
-	    /**
-	     * @param {CodeMirror} cm CodeMirror object.
-	     * @param {Pos} cur The position to start from.
-	     * @param {int} repeat Number of words to move past.
-	     * @param {boolean} forward True to search forward. False to search
-	     *     backward.
-	     * @param {boolean} wordEnd True to move to end of word. False to move to
-	     *     beginning of word.
-	     * @param {boolean} bigWord True if punctuation count as part of the word.
-	     *     False if only alphabet characters count as part of the word.
-	     * @return {Cursor} The position the cursor should move to.
-	     */
-	    function moveToWord(cm, cur, repeat, forward, wordEnd, bigWord) {
-	      var curStart = copyCursor(cur);
-	      var words = [];
-	      if (forward && !wordEnd || !forward && wordEnd) {
-	        repeat++;
-	      }
-	      // For 'e', empty lines are not considered words, go figure.
-	      var emptyLineIsWord = !(forward && wordEnd);
-	      for (var i = 0; i < repeat; i++) {
-	        var word = findWord(cm, cur, forward, bigWord, emptyLineIsWord);
-	        if (!word) {
-	          var eodCh = lineLength(cm, cm.lastLine());
-	          words.push(forward
-	              ? {line: cm.lastLine(), from: eodCh, to: eodCh}
-	              : {line: 0, from: 0, to: 0});
-	          break;
-	        }
-	        words.push(word);
-	        cur = Pos(word.line, forward ? (word.to - 1) : word.from);
-	      }
-	      var shortCircuit = words.length != repeat;
-	      var firstWord = words[0];
-	      var lastWord = words.pop();
-	      if (forward && !wordEnd) {
-	        // w
-	        if (!shortCircuit && (firstWord.from != curStart.ch || firstWord.line != curStart.line)) {
-	          // We did not start in the middle of a word. Discard the extra word at the end.
-	          lastWord = words.pop();
-	        }
-	        return Pos(lastWord.line, lastWord.from);
-	      } else if (forward && wordEnd) {
-	        return Pos(lastWord.line, lastWord.to - 1);
-	      } else if (!forward && wordEnd) {
-	        // ge
-	        if (!shortCircuit && (firstWord.to != curStart.ch || firstWord.line != curStart.line)) {
-	          // We did not start in the middle of a word. Discard the extra word at the end.
-	          lastWord = words.pop();
-	        }
-	        return Pos(lastWord.line, lastWord.to);
-	      } else {
-	        // b
-	        return Pos(lastWord.line, lastWord.from);
-	      }
-	    }
-	
-	    function moveToCharacter(cm, repeat, forward, character) {
-	      var cur = cm.getCursor();
-	      var start = cur.ch;
-	      var idx;
-	      for (var i = 0; i < repeat; i ++) {
-	        var line = cm.getLine(cur.line);
-	        idx = charIdxInLine(start, line, character, forward, true);
-	        if (idx == -1) {
-	          return null;
-	        }
-	        start = idx;
-	      }
-	      return Pos(cm.getCursor().line, idx);
-	    }
-	
-	    function moveToColumn(cm, repeat) {
-	      // repeat is always >= 1, so repeat - 1 always corresponds
-	      // to the column we want to go to.
-	      var line = cm.getCursor().line;
-	      return clipCursorToContent(cm, Pos(line, repeat - 1));
-	    }
-	
-	    function updateMark(cm, vim, markName, pos) {
-	      if (!inArray(markName, validMarks)) {
-	        return;
-	      }
-	      if (vim.marks[markName]) {
-	        vim.marks[markName].clear();
-	      }
-	      vim.marks[markName] = cm.setBookmark(pos);
-	    }
-	
-	    function charIdxInLine(start, line, character, forward, includeChar) {
-	      // Search for char in line.
-	      // motion_options: {forward, includeChar}
-	      // If includeChar = true, include it too.
-	      // If forward = true, search forward, else search backwards.
-	      // If char is not found on this line, do nothing
-	      var idx;
-	      if (forward) {
-	        idx = line.indexOf(character, start + 1);
-	        if (idx != -1 && !includeChar) {
-	          idx -= 1;
-	        }
-	      } else {
-	        idx = line.lastIndexOf(character, start - 1);
-	        if (idx != -1 && !includeChar) {
-	          idx += 1;
-	        }
-	      }
-	      return idx;
-	    }
-	
-	    function findParagraph(cm, head, repeat, dir, inclusive) {
-	      var line = head.line;
-	      var min = cm.firstLine();
-	      var max = cm.lastLine();
-	      var start, end, i = line;
-	      function isEmpty(i) { return !cm.getLine(i); }
-	      function isBoundary(i, dir, any) {
-	        if (any) { return isEmpty(i) != isEmpty(i + dir); }
-	        return !isEmpty(i) && isEmpty(i + dir);
-	      }
-	      if (dir) {
-	        while (min <= i && i <= max && repeat > 0) {
-	          if (isBoundary(i, dir)) { repeat--; }
-	          i += dir;
-	        }
-	        return new Pos(i, 0);
-	      }
-	
-	      var vim = cm.state.vim;
-	      if (vim.visualLine && isBoundary(line, 1, true)) {
-	        var anchor = vim.sel.anchor;
-	        if (isBoundary(anchor.line, -1, true)) {
-	          if (!inclusive || anchor.line != line) {
-	            line += 1;
-	          }
-	        }
-	      }
-	      var startState = isEmpty(line);
-	      for (i = line; i <= max && repeat; i++) {
-	        if (isBoundary(i, 1, true)) {
-	          if (!inclusive || isEmpty(i) != startState) {
-	            repeat--;
-	          }
-	        }
-	      }
-	      end = new Pos(i, 0);
-	      // select boundary before paragraph for the last one
-	      if (i > max && !startState) { startState = true; }
-	      else { inclusive = false; }
-	      for (i = line; i > min; i--) {
-	        if (!inclusive || isEmpty(i) == startState || i == line) {
-	          if (isBoundary(i, -1, true)) { break; }
-	        }
-	      }
-	      start = new Pos(i, 0);
-	      return { start: start, end: end };
-	    }
-	
-	    // TODO: perhaps this finagling of start and end positions belonds
-	    // in codemirror/replaceRange?
-	    function selectCompanionObject(cm, head, symb, inclusive) {
-	      var cur = head, start, end;
-	
-	      var bracketRegexp = ({
-	        '(': /[()]/, ')': /[()]/,
-	        '[': /[[\]]/, ']': /[[\]]/,
-	        '{': /[{}]/, '}': /[{}]/})[symb];
-	      var openSym = ({
-	        '(': '(', ')': '(',
-	        '[': '[', ']': '[',
-	        '{': '{', '}': '{'})[symb];
-	      var curChar = cm.getLine(cur.line).charAt(cur.ch);
-	      // Due to the behavior of scanForBracket, we need to add an offset if the
-	      // cursor is on a matching open bracket.
-	      var offset = curChar === openSym ? 1 : 0;
-	
-	      start = cm.scanForBracket(Pos(cur.line, cur.ch + offset), -1, null, {'bracketRegex': bracketRegexp});
-	      end = cm.scanForBracket(Pos(cur.line, cur.ch + offset), 1, null, {'bracketRegex': bracketRegexp});
-	
-	      if (!start || !end) {
-	        return { start: cur, end: cur };
-	      }
-	
-	      start = start.pos;
-	      end = end.pos;
-	
-	      if ((start.line == end.line && start.ch > end.ch)
-	          || (start.line > end.line)) {
-	        var tmp = start;
-	        start = end;
-	        end = tmp;
-	      }
-	
-	      if (inclusive) {
-	        end.ch += 1;
-	      } else {
-	        start.ch += 1;
-	      }
-	
-	      return { start: start, end: end };
-	    }
-	
-	    // Takes in a symbol and a cursor and tries to simulate text objects that
-	    // have identical opening and closing symbols
-	    // TODO support across multiple lines
-	    function findBeginningAndEnd(cm, head, symb, inclusive) {
-	      var cur = copyCursor(head);
-	      var line = cm.getLine(cur.line);
-	      var chars = line.split('');
-	      var start, end, i, len;
-	      var firstIndex = chars.indexOf(symb);
-	
-	      // the decision tree is to always look backwards for the beginning first,
-	      // but if the cursor is in front of the first instance of the symb,
-	      // then move the cursor forward
-	      if (cur.ch < firstIndex) {
-	        cur.ch = firstIndex;
-	        // Why is this line even here???
-	        // cm.setCursor(cur.line, firstIndex+1);
-	      }
-	      // otherwise if the cursor is currently on the closing symbol
-	      else if (firstIndex < cur.ch && chars[cur.ch] == symb) {
-	        end = cur.ch; // assign end to the current cursor
-	        --cur.ch; // make sure to look backwards
-	      }
-	
-	      // if we're currently on the symbol, we've got a start
-	      if (chars[cur.ch] == symb && !end) {
-	        start = cur.ch + 1; // assign start to ahead of the cursor
-	      } else {
-	        // go backwards to find the start
-	        for (i = cur.ch; i > -1 && !start; i--) {
-	          if (chars[i] == symb) {
-	            start = i + 1;
-	          }
-	        }
-	      }
-	
-	      // look forwards for the end symbol
-	      if (start && !end) {
-	        for (i = start, len = chars.length; i < len && !end; i++) {
-	          if (chars[i] == symb) {
-	            end = i;
-	          }
-	        }
-	      }
-	
-	      // nothing found
-	      if (!start || !end) {
-	        return { start: cur, end: cur };
-	      }
-	
-	      // include the symbols
-	      if (inclusive) {
-	        --start; ++end;
-	      }
-	
-	      return {
-	        start: Pos(cur.line, start),
-	        end: Pos(cur.line, end)
-	      };
-	    }
-	
-	    // Search functions
-	    defineOption('pcre', true, 'boolean');
-	    function SearchState() {}
-	    SearchState.prototype = {
-	      getQuery: function() {
-	        return vimGlobalState.query;
-	      },
-	      setQuery: function(query) {
-	        vimGlobalState.query = query;
-	      },
-	      getOverlay: function() {
-	        return this.searchOverlay;
-	      },
-	      setOverlay: function(overlay) {
-	        this.searchOverlay = overlay;
-	      },
-	      isReversed: function() {
-	        return vimGlobalState.isReversed;
-	      },
-	      setReversed: function(reversed) {
-	        vimGlobalState.isReversed = reversed;
-	      },
-	      getScrollbarAnnotate: function() {
-	        return this.annotate;
-	      },
-	      setScrollbarAnnotate: function(annotate) {
-	        this.annotate = annotate;
-	      }
-	    };
-	    function getSearchState(cm) {
-	      var vim = cm.state.vim;
-	      return vim.searchState_ || (vim.searchState_ = new SearchState());
-	    }
-	    function dialog(cm, template, shortText, onClose, options) {
-	      if (cm.openDialog) {
-	        cm.openDialog(template, onClose, { bottom: true, value: options.value,
-	            onKeyDown: options.onKeyDown, onKeyUp: options.onKeyUp,
-	            selectValueOnOpen: false});
-	      }
-	      else {
-	        onClose(prompt(shortText, ''));
-	      }
-	    }
-	    function splitBySlash(argString) {
-	      var slashes = findUnescapedSlashes(argString) || [];
-	      if (!slashes.length) return [];
-	      var tokens = [];
-	      // in case of strings like foo/bar
-	      if (slashes[0] !== 0) return;
-	      for (var i = 0; i < slashes.length; i++) {
-	        if (typeof slashes[i] == 'number')
-	          tokens.push(argString.substring(slashes[i] + 1, slashes[i+1]));
-	      }
-	      return tokens;
-	    }
-	
-	    function findUnescapedSlashes(str) {
-	      var escapeNextChar = false;
-	      var slashes = [];
-	      for (var i = 0; i < str.length; i++) {
-	        var c = str.charAt(i);
-	        if (!escapeNextChar && c == '/') {
-	          slashes.push(i);
-	        }
-	        escapeNextChar = !escapeNextChar && (c == '\\');
-	      }
-	      return slashes;
-	    }
-	
-	    // Translates a search string from ex (vim) syntax into javascript form.
-	    function translateRegex(str) {
-	      // When these match, add a '\' if unescaped or remove one if escaped.
-	      var specials = '|(){';
-	      // Remove, but never add, a '\' for these.
-	      var unescape = '}';
-	      var escapeNextChar = false;
-	      var out = [];
-	      for (var i = -1; i < str.length; i++) {
-	        var c = str.charAt(i) || '';
-	        var n = str.charAt(i+1) || '';
-	        var specialComesNext = (n && specials.indexOf(n) != -1);
-	        if (escapeNextChar) {
-	          if (c !== '\\' || !specialComesNext) {
-	            out.push(c);
-	          }
-	          escapeNextChar = false;
-	        } else {
-	          if (c === '\\') {
-	            escapeNextChar = true;
-	            // Treat the unescape list as special for removing, but not adding '\'.
-	            if (n && unescape.indexOf(n) != -1) {
-	              specialComesNext = true;
-	            }
-	            // Not passing this test means removing a '\'.
-	            if (!specialComesNext || n === '\\') {
-	              out.push(c);
-	            }
-	          } else {
-	            out.push(c);
-	            if (specialComesNext && n !== '\\') {
-	              out.push('\\');
-	            }
-	          }
-	        }
-	      }
-	      return out.join('');
-	    }
-	
-	    // Translates the replace part of a search and replace from ex (vim) syntax into
-	    // javascript form.  Similar to translateRegex, but additionally fixes back references
-	    // (translates '\[0..9]' to '$[0..9]') and follows different rules for escaping '$'.
-	    var charUnescapes = {'\\n': '\n', '\\r': '\r', '\\t': '\t'};
-	    function translateRegexReplace(str) {
-	      var escapeNextChar = false;
-	      var out = [];
-	      for (var i = -1; i < str.length; i++) {
-	        var c = str.charAt(i) || '';
-	        var n = str.charAt(i+1) || '';
-	        if (charUnescapes[c + n]) {
-	          out.push(charUnescapes[c+n]);
-	          i++;
-	        } else if (escapeNextChar) {
-	          // At any point in the loop, escapeNextChar is true if the previous
-	          // character was a '\' and was not escaped.
-	          out.push(c);
-	          escapeNextChar = false;
-	        } else {
-	          if (c === '\\') {
-	            escapeNextChar = true;
-	            if ((isNumber(n) || n === '$')) {
-	              out.push('$');
-	            } else if (n !== '/' && n !== '\\') {
-	              out.push('\\');
-	            }
-	          } else {
-	            if (c === '$') {
-	              out.push('$');
-	            }
-	            out.push(c);
-	            if (n === '/') {
-	              out.push('\\');
-	            }
-	          }
-	        }
-	      }
-	      return out.join('');
-	    }
-	
-	    // Unescape \ and / in the replace part, for PCRE mode.
-	    var unescapes = {'\\/': '/', '\\\\': '\\', '\\n': '\n', '\\r': '\r', '\\t': '\t'};
-	    function unescapeRegexReplace(str) {
-	      var stream = new CodeMirror.StringStream(str);
-	      var output = [];
-	      while (!stream.eol()) {
-	        // Search for \.
-	        while (stream.peek() && stream.peek() != '\\') {
-	          output.push(stream.next());
-	        }
-	        var matched = false;
-	        for (var matcher in unescapes) {
-	          if (stream.match(matcher, true)) {
-	            matched = true;
-	            output.push(unescapes[matcher]);
-	            break;
-	          }
-	        }
-	        if (!matched) {
-	          // Don't change anything
-	          output.push(stream.next());
-	        }
-	      }
-	      return output.join('');
-	    }
-	
-	    /**
-	     * Extract the regular expression from the query and return a Regexp object.
-	     * Returns null if the query is blank.
-	     * If ignoreCase is passed in, the Regexp object will have the 'i' flag set.
-	     * If smartCase is passed in, and the query contains upper case letters,
-	     *   then ignoreCase is overridden, and the 'i' flag will not be set.
-	     * If the query contains the /i in the flag part of the regular expression,
-	     *   then both ignoreCase and smartCase are ignored, and 'i' will be passed
-	     *   through to the Regex object.
-	     */
-	    function parseQuery(query, ignoreCase, smartCase) {
-	      // First update the last search register
-	      var lastSearchRegister = vimGlobalState.registerController.getRegister('/');
-	      lastSearchRegister.setText(query);
-	      // Check if the query is already a regex.
-	      if (query instanceof RegExp) { return query; }
-	      // First try to extract regex + flags from the input. If no flags found,
-	      // extract just the regex. IE does not accept flags directly defined in
-	      // the regex string in the form /regex/flags
-	      var slashes = findUnescapedSlashes(query);
-	      var regexPart;
-	      var forceIgnoreCase;
-	      if (!slashes.length) {
-	        // Query looks like 'regexp'
-	        regexPart = query;
-	      } else {
-	        // Query looks like 'regexp/...'
-	        regexPart = query.substring(0, slashes[0]);
-	        var flagsPart = query.substring(slashes[0]);
-	        forceIgnoreCase = (flagsPart.indexOf('i') != -1);
-	      }
-	      if (!regexPart) {
-	        return null;
-	      }
-	      if (!getOption('pcre')) {
-	        regexPart = translateRegex(regexPart);
-	      }
-	      if (smartCase) {
-	        ignoreCase = (/^[^A-Z]*$/).test(regexPart);
-	      }
-	      var regexp = new RegExp(regexPart,
-	          (ignoreCase || forceIgnoreCase) ? 'i' : undefined);
-	      return regexp;
-	    }
-	    function showConfirm(cm, text) {
-	      if (cm.openNotification) {
-	        cm.openNotification('<span style="color: red">' + text + '</span>',
-	                            {bottom: true, duration: 5000});
-	      } else {
-	        alert(text);
-	      }
-	    }
-	    function makePrompt(prefix, desc) {
-	      var raw = '<span style="font-family: monospace; white-space: pre">' +
-	          (prefix || "") + '<input type="text"></span>';
-	      if (desc)
-	        raw += ' <span style="color: #888">' + desc + '</span>';
-	      return raw;
-	    }
-	    var searchPromptDesc = '(Javascript regexp)';
-	    function showPrompt(cm, options) {
-	      var shortText = (options.prefix || '') + ' ' + (options.desc || '');
-	      var prompt = makePrompt(options.prefix, options.desc);
-	      dialog(cm, prompt, shortText, options.onClose, options);
-	    }
-	    function regexEqual(r1, r2) {
-	      if (r1 instanceof RegExp && r2 instanceof RegExp) {
-	          var props = ['global', 'multiline', 'ignoreCase', 'source'];
-	          for (var i = 0; i < props.length; i++) {
-	              var prop = props[i];
-	              if (r1[prop] !== r2[prop]) {
-	                  return false;
-	              }
-	          }
-	          return true;
-	      }
-	      return false;
-	    }
-	    // Returns true if the query is valid.
-	    function updateSearchQuery(cm, rawQuery, ignoreCase, smartCase) {
-	      if (!rawQuery) {
-	        return;
-	      }
-	      var state = getSearchState(cm);
-	      var query = parseQuery(rawQuery, !!ignoreCase, !!smartCase);
-	      if (!query) {
-	        return;
-	      }
-	      highlightSearchMatches(cm, query);
-	      if (regexEqual(query, state.getQuery())) {
-	        return query;
-	      }
-	      state.setQuery(query);
-	      return query;
-	    }
-	    function searchOverlay(query) {
-	      if (query.source.charAt(0) == '^') {
-	        var matchSol = true;
-	      }
-	      return {
-	        token: function(stream) {
-	          if (matchSol && !stream.sol()) {
-	            stream.skipToEnd();
-	            return;
-	          }
-	          var match = stream.match(query, false);
-	          if (match) {
-	            if (match[0].length == 0) {
-	              // Matched empty string, skip to next.
-	              stream.next();
-	              return 'searching';
-	            }
-	            if (!stream.sol()) {
-	              // Backtrack 1 to match \b
-	              stream.backUp(1);
-	              if (!query.exec(stream.next() + match[0])) {
-	                stream.next();
-	                return null;
-	              }
-	            }
-	            stream.match(query);
-	            return 'searching';
-	          }
-	          while (!stream.eol()) {
-	            stream.next();
-	            if (stream.match(query, false)) break;
-	          }
-	        },
-	        query: query
-	      };
-	    }
-	    function highlightSearchMatches(cm, query) {
-	      var searchState = getSearchState(cm);
-	      var overlay = searchState.getOverlay();
-	      if (!overlay || query != overlay.query) {
-	        if (overlay) {
-	          cm.removeOverlay(overlay);
-	        }
-	        overlay = searchOverlay(query);
-	        cm.addOverlay(overlay);
-	        if (cm.showMatchesOnScrollbar) {
-	          if (searchState.getScrollbarAnnotate()) {
-	            searchState.getScrollbarAnnotate().clear();
-	          }
-	          searchState.setScrollbarAnnotate(cm.showMatchesOnScrollbar(query));
-	        }
-	        searchState.setOverlay(overlay);
-	      }
-	    }
-	    function findNext(cm, prev, query, repeat) {
-	      if (repeat === undefined) { repeat = 1; }
-	      return cm.operation(function() {
-	        var pos = cm.getCursor();
-	        var cursor = cm.getSearchCursor(query, pos);
-	        for (var i = 0; i < repeat; i++) {
-	          var found = cursor.find(prev);
-	          if (i == 0 && found && cursorEqual(cursor.from(), pos)) { found = cursor.find(prev); }
-	          if (!found) {
-	            // SearchCursor may have returned null because it hit EOF, wrap
-	            // around and try again.
-	            cursor = cm.getSearchCursor(query,
-	                (prev) ? Pos(cm.lastLine()) : Pos(cm.firstLine(), 0) );
-	            if (!cursor.find(prev)) {
-	              return;
-	            }
-	          }
-	        }
-	        return cursor.from();
-	      });
-	    }
-	    function clearSearchHighlight(cm) {
-	      var state = getSearchState(cm);
-	      cm.removeOverlay(getSearchState(cm).getOverlay());
-	      state.setOverlay(null);
-	      if (state.getScrollbarAnnotate()) {
-	        state.getScrollbarAnnotate().clear();
-	        state.setScrollbarAnnotate(null);
-	      }
-	    }
-	    /**
-	     * Check if pos is in the specified range, INCLUSIVE.
-	     * Range can be specified with 1 or 2 arguments.
-	     * If the first range argument is an array, treat it as an array of line
-	     * numbers. Match pos against any of the lines.
-	     * If the first range argument is a number,
-	     *   if there is only 1 range argument, check if pos has the same line
-	     *       number
-	     *   if there are 2 range arguments, then check if pos is in between the two
-	     *       range arguments.
-	     */
-	    function isInRange(pos, start, end) {
-	      if (typeof pos != 'number') {
-	        // Assume it is a cursor position. Get the line number.
-	        pos = pos.line;
-	      }
-	      if (start instanceof Array) {
-	        return inArray(pos, start);
-	      } else {
-	        if (end) {
-	          return (pos >= start && pos <= end);
-	        } else {
-	          return pos == start;
-	        }
-	      }
-	    }
-	    function getUserVisibleLines(cm) {
-	      var scrollInfo = cm.getScrollInfo();
-	      var occludeToleranceTop = 6;
-	      var occludeToleranceBottom = 10;
-	      var from = cm.coordsChar({left:0, top: occludeToleranceTop + scrollInfo.top}, 'local');
-	      var bottomY = scrollInfo.clientHeight - occludeToleranceBottom + scrollInfo.top;
-	      var to = cm.coordsChar({left:0, top: bottomY}, 'local');
-	      return {top: from.line, bottom: to.line};
-	    }
-	
-	    var ExCommandDispatcher = function() {
-	      this.buildCommandMap_();
-	    };
-	    ExCommandDispatcher.prototype = {
-	      processCommand: function(cm, input, opt_params) {
-	        var that = this;
-	        cm.operation(function () {
-	          cm.curOp.isVimOp = true;
-	          that._processCommand(cm, input, opt_params);
-	        });
-	      },
-	      _processCommand: function(cm, input, opt_params) {
-	        var vim = cm.state.vim;
-	        var commandHistoryRegister = vimGlobalState.registerController.getRegister(':');
-	        var previousCommand = commandHistoryRegister.toString();
-	        if (vim.visualMode) {
-	          exitVisualMode(cm);
-	        }
-	        var inputStream = new CodeMirror.StringStream(input);
-	        // update ": with the latest command whether valid or invalid
-	        commandHistoryRegister.setText(input);
-	        var params = opt_params || {};
-	        params.input = input;
-	        try {
-	          this.parseInput_(cm, inputStream, params);
-	        } catch(e) {
-	          showConfirm(cm, e);
-	          throw e;
-	        }
-	        var command;
-	        var commandName;
-	        if (!params.commandName) {
-	          // If only a line range is defined, move to the line.
-	          if (params.line !== undefined) {
-	            commandName = 'move';
-	          }
-	        } else {
-	          command = this.matchCommand_(params.commandName);
-	          if (command) {
-	            commandName = command.name;
-	            if (command.excludeFromCommandHistory) {
-	              commandHistoryRegister.setText(previousCommand);
-	            }
-	            this.parseCommandArgs_(inputStream, params, command);
-	            if (command.type == 'exToKey') {
-	              // Handle Ex to Key mapping.
-	              for (var i = 0; i < command.toKeys.length; i++) {
-	                CodeMirror.Vim.handleKey(cm, command.toKeys[i], 'mapping');
-	              }
-	              return;
-	            } else if (command.type == 'exToEx') {
-	              // Handle Ex to Ex mapping.
-	              this.processCommand(cm, command.toInput);
-	              return;
-	            }
-	          }
-	        }
-	        if (!commandName) {
-	          showConfirm(cm, 'Not an editor command ":' + input + '"');
-	          return;
-	        }
-	        try {
-	          exCommands[commandName](cm, params);
-	          // Possibly asynchronous commands (e.g. substitute, which might have a
-	          // user confirmation), are responsible for calling the callback when
-	          // done. All others have it taken care of for them here.
-	          if ((!command || !command.possiblyAsync) && params.callback) {
-	            params.callback();
-	          }
-	        } catch(e) {
-	          showConfirm(cm, e);
-	          throw e;
-	        }
-	      },
-	      parseInput_: function(cm, inputStream, result) {
-	        inputStream.eatWhile(':');
-	        // Parse range.
-	        if (inputStream.eat('%')) {
-	          result.line = cm.firstLine();
-	          result.lineEnd = cm.lastLine();
-	        } else {
-	          result.line = this.parseLineSpec_(cm, inputStream);
-	          if (result.line !== undefined && inputStream.eat(',')) {
-	            result.lineEnd = this.parseLineSpec_(cm, inputStream);
-	          }
-	        }
-	
-	        // Parse command name.
-	        var commandMatch = inputStream.match(/^(\w+)/);
-	        if (commandMatch) {
-	          result.commandName = commandMatch[1];
-	        } else {
-	          result.commandName = inputStream.match(/.*/)[0];
-	        }
-	
-	        return result;
-	      },
-	      parseLineSpec_: function(cm, inputStream) {
-	        var numberMatch = inputStream.match(/^(\d+)/);
-	        if (numberMatch) {
-	          return parseInt(numberMatch[1], 10) - 1;
-	        }
-	        switch (inputStream.next()) {
-	          case '.':
-	            return cm.getCursor().line;
-	          case '$':
-	            return cm.lastLine();
-	          case '\'':
-	            var mark = cm.state.vim.marks[inputStream.next()];
-	            if (mark && mark.find()) {
-	              return mark.find().line;
-	            }
-	            throw new Error('Mark not set');
-	          default:
-	            inputStream.backUp(1);
-	            return undefined;
-	        }
-	      },
-	      parseCommandArgs_: function(inputStream, params, command) {
-	        if (inputStream.eol()) {
-	          return;
-	        }
-	        params.argString = inputStream.match(/.*/)[0];
-	        // Parse command-line arguments
-	        var delim = command.argDelimiter || /\s+/;
-	        var args = trim(params.argString).split(delim);
-	        if (args.length && args[0]) {
-	          params.args = args;
-	        }
-	      },
-	      matchCommand_: function(commandName) {
-	        // Return the command in the command map that matches the shortest
-	        // prefix of the passed in command name. The match is guaranteed to be
-	        // unambiguous if the defaultExCommandMap's shortNames are set up
-	        // correctly. (see @code{defaultExCommandMap}).
-	        for (var i = commandName.length; i > 0; i--) {
-	          var prefix = commandName.substring(0, i);
-	          if (this.commandMap_[prefix]) {
-	            var command = this.commandMap_[prefix];
-	            if (command.name.indexOf(commandName) === 0) {
-	              return command;
-	            }
-	          }
-	        }
-	        return null;
-	      },
-	      buildCommandMap_: function() {
-	        this.commandMap_ = {};
-	        for (var i = 0; i < defaultExCommandMap.length; i++) {
-	          var command = defaultExCommandMap[i];
-	          var key = command.shortName || command.name;
-	          this.commandMap_[key] = command;
-	        }
-	      },
-	      map: function(lhs, rhs, ctx) {
-	        if (lhs != ':' && lhs.charAt(0) == ':') {
-	          if (ctx) { throw Error('Mode not supported for ex mappings'); }
-	          var commandName = lhs.substring(1);
-	          if (rhs != ':' && rhs.charAt(0) == ':') {
-	            // Ex to Ex mapping
-	            this.commandMap_[commandName] = {
-	              name: commandName,
-	              type: 'exToEx',
-	              toInput: rhs.substring(1),
-	              user: true
-	            };
-	          } else {
-	            // Ex to key mapping
-	            this.commandMap_[commandName] = {
-	              name: commandName,
-	              type: 'exToKey',
-	              toKeys: rhs,
-	              user: true
-	            };
-	          }
-	        } else {
-	          if (rhs != ':' && rhs.charAt(0) == ':') {
-	            // Key to Ex mapping.
-	            var mapping = {
-	              keys: lhs,
-	              type: 'keyToEx',
-	              exArgs: { input: rhs.substring(1) },
-	              user: true};
-	            if (ctx) { mapping.context = ctx; }
-	            defaultKeymap.unshift(mapping);
-	          } else {
-	            // Key to key mapping
-	            var mapping = {
-	              keys: lhs,
-	              type: 'keyToKey',
-	              toKeys: rhs,
-	              user: true
-	            };
-	            if (ctx) { mapping.context = ctx; }
-	            defaultKeymap.unshift(mapping);
-	          }
-	        }
-	      },
-	      unmap: function(lhs, ctx) {
-	        if (lhs != ':' && lhs.charAt(0) == ':') {
-	          // Ex to Ex or Ex to key mapping
-	          if (ctx) { throw Error('Mode not supported for ex mappings'); }
-	          var commandName = lhs.substring(1);
-	          if (this.commandMap_[commandName] && this.commandMap_[commandName].user) {
-	            delete this.commandMap_[commandName];
-	            return;
-	          }
-	        } else {
-	          // Key to Ex or key to key mapping
-	          var keys = lhs;
-	          for (var i = 0; i < defaultKeymap.length; i++) {
-	            if (keys == defaultKeymap[i].keys
-	                && defaultKeymap[i].context === ctx
-	                && defaultKeymap[i].user) {
-	              defaultKeymap.splice(i, 1);
-	              return;
-	            }
-	          }
-	        }
-	        throw Error('No such mapping.');
-	      }
-	    };
-	
-	    var exCommands = {
-	      colorscheme: function(cm, params) {
-	        if (!params.args || params.args.length < 1) {
-	          showConfirm(cm, cm.getOption('theme'));
-	          return;
-	        }
-	        cm.setOption('theme', params.args[0]);
-	      },
-	      map: function(cm, params, ctx) {
-	        var mapArgs = params.args;
-	        if (!mapArgs || mapArgs.length < 2) {
-	          if (cm) {
-	            showConfirm(cm, 'Invalid mapping: ' + params.input);
-	          }
-	          return;
-	        }
-	        exCommandDispatcher.map(mapArgs[0], mapArgs[1], ctx);
-	      },
-	      imap: function(cm, params) { this.map(cm, params, 'insert'); },
-	      nmap: function(cm, params) { this.map(cm, params, 'normal'); },
-	      vmap: function(cm, params) { this.map(cm, params, 'visual'); },
-	      unmap: function(cm, params, ctx) {
-	        var mapArgs = params.args;
-	        if (!mapArgs || mapArgs.length < 1) {
-	          if (cm) {
-	            showConfirm(cm, 'No such mapping: ' + params.input);
-	          }
-	          return;
-	        }
-	        exCommandDispatcher.unmap(mapArgs[0], ctx);
-	      },
-	      move: function(cm, params) {
-	        commandDispatcher.processCommand(cm, cm.state.vim, {
-	            type: 'motion',
-	            motion: 'moveToLineOrEdgeOfDocument',
-	            motionArgs: { forward: false, explicitRepeat: true,
-	              linewise: true },
-	            repeatOverride: params.line+1});
-	      },
-	      set: function(cm, params) {
-	        var setArgs = params.args;
-	        // Options passed through to the setOption/getOption calls. May be passed in by the
-	        // local/global versions of the set command
-	        var setCfg = params.setCfg || {};
-	        if (!setArgs || setArgs.length < 1) {
-	          if (cm) {
-	            showConfirm(cm, 'Invalid mapping: ' + params.input);
-	          }
-	          return;
-	        }
-	        var expr = setArgs[0].split('=');
-	        var optionName = expr[0];
-	        var value = expr[1];
-	        var forceGet = false;
-	
-	        if (optionName.charAt(optionName.length - 1) == '?') {
-	          // If post-fixed with ?, then the set is actually a get.
-	          if (value) { throw Error('Trailing characters: ' + params.argString); }
-	          optionName = optionName.substring(0, optionName.length - 1);
-	          forceGet = true;
-	        }
-	        if (value === undefined && optionName.substring(0, 2) == 'no') {
-	          // To set boolean options to false, the option name is prefixed with
-	          // 'no'.
-	          optionName = optionName.substring(2);
-	          value = false;
-	        }
-	
-	        var optionIsBoolean = options[optionName] && options[optionName].type == 'boolean';
-	        if (optionIsBoolean && value == undefined) {
-	          // Calling set with a boolean option sets it to true.
-	          value = true;
-	        }
-	        // If no value is provided, then we assume this is a get.
-	        if (!optionIsBoolean && value === undefined || forceGet) {
-	          var oldValue = getOption(optionName, cm, setCfg);
-	          if (oldValue === true || oldValue === false) {
-	            showConfirm(cm, ' ' + (oldValue ? '' : 'no') + optionName);
-	          } else {
-	            showConfirm(cm, '  ' + optionName + '=' + oldValue);
-	          }
-	        } else {
-	          setOption(optionName, value, cm, setCfg);
-	        }
-	      },
-	      setlocal: function (cm, params) {
-	        // setCfg is passed through to setOption
-	        params.setCfg = {scope: 'local'};
-	        this.set(cm, params);
-	      },
-	      setglobal: function (cm, params) {
-	        // setCfg is passed through to setOption
-	        params.setCfg = {scope: 'global'};
-	        this.set(cm, params);
-	      },
-	      registers: function(cm, params) {
-	        var regArgs = params.args;
-	        var registers = vimGlobalState.registerController.registers;
-	        var regInfo = '----------Registers----------<br><br>';
-	        if (!regArgs) {
-	          for (var registerName in registers) {
-	            var text = registers[registerName].toString();
-	            if (text.length) {
-	              regInfo += '"' + registerName + '    ' + text + '<br>';
-	            }
-	          }
-	        } else {
-	          var registerName;
-	          regArgs = regArgs.join('');
-	          for (var i = 0; i < regArgs.length; i++) {
-	            registerName = regArgs.charAt(i);
-	            if (!vimGlobalState.registerController.isValidRegister(registerName)) {
-	              continue;
-	            }
-	            var register = registers[registerName] || new Register();
-	            regInfo += '"' + registerName + '    ' + register.toString() + '<br>';
-	          }
-	        }
-	        showConfirm(cm, regInfo);
-	      },
-	      sort: function(cm, params) {
-	        var reverse, ignoreCase, unique, number;
-	        function parseArgs() {
-	          if (params.argString) {
-	            var args = new CodeMirror.StringStream(params.argString);
-	            if (args.eat('!')) { reverse = true; }
-	            if (args.eol()) { return; }
-	            if (!args.eatSpace()) { return 'Invalid arguments'; }
-	            var opts = args.match(/[a-z]+/);
-	            if (opts) {
-	              opts = opts[0];
-	              ignoreCase = opts.indexOf('i') != -1;
-	              unique = opts.indexOf('u') != -1;
-	              var decimal = opts.indexOf('d') != -1 && 1;
-	              var hex = opts.indexOf('x') != -1 && 1;
-	              var octal = opts.indexOf('o') != -1 && 1;
-	              if (decimal + hex + octal > 1) { return 'Invalid arguments'; }
-	              number = decimal && 'decimal' || hex && 'hex' || octal && 'octal';
-	            }
-	            if (args.match(/\/.*\//)) { return 'patterns not supported'; }
-	          }
-	        }
-	        var err = parseArgs();
-	        if (err) {
-	          showConfirm(cm, err + ': ' + params.argString);
-	          return;
-	        }
-	        var lineStart = params.line || cm.firstLine();
-	        var lineEnd = params.lineEnd || params.line || cm.lastLine();
-	        if (lineStart == lineEnd) { return; }
-	        var curStart = Pos(lineStart, 0);
-	        var curEnd = Pos(lineEnd, lineLength(cm, lineEnd));
-	        var text = cm.getRange(curStart, curEnd).split('\n');
-	        var numberRegex = (number == 'decimal') ? /(-?)([\d]+)/ :
-	           (number == 'hex') ? /(-?)(?:0x)?([0-9a-f]+)/i :
-	           (number == 'octal') ? /([0-7]+)/ : null;
-	        var radix = (number == 'decimal') ? 10 : (number == 'hex') ? 16 : (number == 'octal') ? 8 : null;
-	        var numPart = [], textPart = [];
-	        if (number) {
-	          for (var i = 0; i < text.length; i++) {
-	            if (numberRegex.exec(text[i])) {
-	              numPart.push(text[i]);
-	            } else {
-	              textPart.push(text[i]);
-	            }
-	          }
-	        } else {
-	          textPart = text;
-	        }
-	        function compareFn(a, b) {
-	          if (reverse) { var tmp; tmp = a; a = b; b = tmp; }
-	          if (ignoreCase) { a = a.toLowerCase(); b = b.toLowerCase(); }
-	          var anum = number && numberRegex.exec(a);
-	          var bnum = number && numberRegex.exec(b);
-	          if (!anum) { return a < b ? -1 : 1; }
-	          anum = parseInt((anum[1] + anum[2]).toLowerCase(), radix);
-	          bnum = parseInt((bnum[1] + bnum[2]).toLowerCase(), radix);
-	          return anum - bnum;
-	        }
-	        numPart.sort(compareFn);
-	        textPart.sort(compareFn);
-	        text = (!reverse) ? textPart.concat(numPart) : numPart.concat(textPart);
-	        if (unique) { // Remove duplicate lines
-	          var textOld = text;
-	          var lastLine;
-	          text = [];
-	          for (var i = 0; i < textOld.length; i++) {
-	            if (textOld[i] != lastLine) {
-	              text.push(textOld[i]);
-	            }
-	            lastLine = textOld[i];
-	          }
-	        }
-	        cm.replaceRange(text.join('\n'), curStart, curEnd);
-	      },
-	      global: function(cm, params) {
-	        // a global command is of the form
-	        // :[range]g/pattern/[cmd]
-	        // argString holds the string /pattern/[cmd]
-	        var argString = params.argString;
-	        if (!argString) {
-	          showConfirm(cm, 'Regular Expression missing from global');
-	          return;
-	        }
-	        // range is specified here
-	        var lineStart = (params.line !== undefined) ? params.line : cm.firstLine();
-	        var lineEnd = params.lineEnd || params.line || cm.lastLine();
-	        // get the tokens from argString
-	        var tokens = splitBySlash(argString);
-	        var regexPart = argString, cmd;
-	        if (tokens.length) {
-	          regexPart = tokens[0];
-	          cmd = tokens.slice(1, tokens.length).join('/');
-	        }
-	        if (regexPart) {
-	          // If regex part is empty, then use the previous query. Otherwise
-	          // use the regex part as the new query.
-	          try {
-	           updateSearchQuery(cm, regexPart, true /** ignoreCase */,
-	             true /** smartCase */);
-	          } catch (e) {
-	           showConfirm(cm, 'Invalid regex: ' + regexPart);
-	           return;
-	          }
-	        }
-	        // now that we have the regexPart, search for regex matches in the
-	        // specified range of lines
-	        var query = getSearchState(cm).getQuery();
-	        var matchedLines = [], content = '';
-	        for (var i = lineStart; i <= lineEnd; i++) {
-	          var matched = query.test(cm.getLine(i));
-	          if (matched) {
-	            matchedLines.push(i+1);
-	            content+= cm.getLine(i) + '<br>';
-	          }
-	        }
-	        // if there is no [cmd], just display the list of matched lines
-	        if (!cmd) {
-	          showConfirm(cm, content);
-	          return;
-	        }
-	        var index = 0;
-	        var nextCommand = function() {
-	          if (index < matchedLines.length) {
-	            var command = matchedLines[index] + cmd;
-	            exCommandDispatcher.processCommand(cm, command, {
-	              callback: nextCommand
-	            });
-	          }
-	          index++;
-	        };
-	        nextCommand();
-	      },
-	      substitute: function(cm, params) {
-	        if (!cm.getSearchCursor) {
-	          throw new Error('Search feature not available. Requires searchcursor.js or ' +
-	              'any other getSearchCursor implementation.');
-	        }
-	        var argString = params.argString;
-	        var tokens = argString ? splitBySlash(argString) : [];
-	        var regexPart, replacePart = '', trailing, flagsPart, count;
-	        var confirm = false; // Whether to confirm each replace.
-	        var global = false; // True to replace all instances on a line, false to replace only 1.
-	        if (tokens.length) {
-	          regexPart = tokens[0];
-	          replacePart = tokens[1];
-	          if (replacePart !== undefined) {
-	            if (getOption('pcre')) {
-	              replacePart = unescapeRegexReplace(replacePart);
-	            } else {
-	              replacePart = translateRegexReplace(replacePart);
-	            }
-	            vimGlobalState.lastSubstituteReplacePart = replacePart;
-	          }
-	          trailing = tokens[2] ? tokens[2].split(' ') : [];
-	        } else {
-	          // either the argString is empty or its of the form ' hello/world'
-	          // actually splitBySlash returns a list of tokens
-	          // only if the string starts with a '/'
-	          if (argString && argString.length) {
-	            showConfirm(cm, 'Substitutions should be of the form ' +
-	                ':s/pattern/replace/');
-	            return;
-	          }
-	        }
-	        // After the 3rd slash, we can have flags followed by a space followed
-	        // by count.
-	        if (trailing) {
-	          flagsPart = trailing[0];
-	          count = parseInt(trailing[1]);
-	          if (flagsPart) {
-	            if (flagsPart.indexOf('c') != -1) {
-	              confirm = true;
-	              flagsPart.replace('c', '');
-	            }
-	            if (flagsPart.indexOf('g') != -1) {
-	              global = true;
-	              flagsPart.replace('g', '');
-	            }
-	            regexPart = regexPart + '/' + flagsPart;
-	          }
-	        }
-	        if (regexPart) {
-	          // If regex part is empty, then use the previous query. Otherwise use
-	          // the regex part as the new query.
-	          try {
-	            updateSearchQuery(cm, regexPart, true /** ignoreCase */,
-	              true /** smartCase */);
-	          } catch (e) {
-	            showConfirm(cm, 'Invalid regex: ' + regexPart);
-	            return;
-	          }
-	        }
-	        replacePart = replacePart || vimGlobalState.lastSubstituteReplacePart;
-	        if (replacePart === undefined) {
-	          showConfirm(cm, 'No previous substitute regular expression');
-	          return;
-	        }
-	        var state = getSearchState(cm);
-	        var query = state.getQuery();
-	        var lineStart = (params.line !== undefined) ? params.line : cm.getCursor().line;
-	        var lineEnd = params.lineEnd || lineStart;
-	        if (lineStart == cm.firstLine() && lineEnd == cm.lastLine()) {
-	          lineEnd = Infinity;
-	        }
-	        if (count) {
-	          lineStart = lineEnd;
-	          lineEnd = lineStart + count - 1;
-	        }
-	        var startPos = clipCursorToContent(cm, Pos(lineStart, 0));
-	        var cursor = cm.getSearchCursor(query, startPos);
-	        doReplace(cm, confirm, global, lineStart, lineEnd, cursor, query, replacePart, params.callback);
-	      },
-	      redo: CodeMirror.commands.redo,
-	      undo: CodeMirror.commands.undo,
-	      write: function(cm) {
-	        if (CodeMirror.commands.save) {
-	          // If a save command is defined, call it.
-	          CodeMirror.commands.save(cm);
-	        } else if (cm.save) {
-	          // Saves to text area if no save command is defined and cm.save() is available.
-	          cm.save();
-	        }
-	      },
-	      nohlsearch: function(cm) {
-	        clearSearchHighlight(cm);
-	      },
-	      yank: function (cm) {
-	        var cur = copyCursor(cm.getCursor());
-	        var line = cur.line;
-	        var lineText = cm.getLine(line);
-	        vimGlobalState.registerController.pushText(
-	          '0', 'yank', lineText, true, true);
-	      },
-	      delmarks: function(cm, params) {
-	        if (!params.argString || !trim(params.argString)) {
-	          showConfirm(cm, 'Argument required');
-	          return;
-	        }
-	
-	        var state = cm.state.vim;
-	        var stream = new CodeMirror.StringStream(trim(params.argString));
-	        while (!stream.eol()) {
-	          stream.eatSpace();
-	
-	          // Record the streams position at the beginning of the loop for use
-	          // in error messages.
-	          var count = stream.pos;
-	
-	          if (!stream.match(/[a-zA-Z]/, false)) {
-	            showConfirm(cm, 'Invalid argument: ' + params.argString.substring(count));
-	            return;
-	          }
-	
-	          var sym = stream.next();
-	          // Check if this symbol is part of a range
-	          if (stream.match('-', true)) {
-	            // This symbol is part of a range.
-	
-	            // The range must terminate at an alphabetic character.
-	            if (!stream.match(/[a-zA-Z]/, false)) {
-	              showConfirm(cm, 'Invalid argument: ' + params.argString.substring(count));
-	              return;
-	            }
-	
-	            var startMark = sym;
-	            var finishMark = stream.next();
-	            // The range must terminate at an alphabetic character which
-	            // shares the same case as the start of the range.
-	            if (isLowerCase(startMark) && isLowerCase(finishMark) ||
-	                isUpperCase(startMark) && isUpperCase(finishMark)) {
-	              var start = startMark.charCodeAt(0);
-	              var finish = finishMark.charCodeAt(0);
-	              if (start >= finish) {
-	                showConfirm(cm, 'Invalid argument: ' + params.argString.substring(count));
-	                return;
-	              }
-	
-	              // Because marks are always ASCII values, and we have
-	              // determined that they are the same case, we can use
-	              // their char codes to iterate through the defined range.
-	              for (var j = 0; j <= finish - start; j++) {
-	                var mark = String.fromCharCode(start + j);
-	                delete state.marks[mark];
-	              }
-	            } else {
-	              showConfirm(cm, 'Invalid argument: ' + startMark + '-');
-	              return;
-	            }
-	          } else {
-	            // This symbol is a valid mark, and is not part of a range.
-	            delete state.marks[sym];
-	          }
-	        }
-	      }
-	    };
-	
-	    var exCommandDispatcher = new ExCommandDispatcher();
-	
-	    /**
-	    * @param {CodeMirror} cm CodeMirror instance we are in.
-	    * @param {boolean} confirm Whether to confirm each replace.
-	    * @param {Cursor} lineStart Line to start replacing from.
-	    * @param {Cursor} lineEnd Line to stop replacing at.
-	    * @param {RegExp} query Query for performing matches with.
-	    * @param {string} replaceWith Text to replace matches with. May contain $1,
-	    *     $2, etc for replacing captured groups using Javascript replace.
-	    * @param {function()} callback A callback for when the replace is done.
-	    */
-	    function doReplace(cm, confirm, global, lineStart, lineEnd, searchCursor, query,
-	        replaceWith, callback) {
-	      // Set up all the functions.
-	      cm.state.vim.exMode = true;
-	      var done = false;
-	      var lastPos = searchCursor.from();
-	      function replaceAll() {
-	        cm.operation(function() {
-	          while (!done) {
-	            replace();
-	            next();
-	          }
-	          stop();
-	        });
-	      }
-	      function replace() {
-	        var text = cm.getRange(searchCursor.from(), searchCursor.to());
-	        var newText = text.replace(query, replaceWith);
-	        searchCursor.replace(newText);
-	      }
-	      function next() {
-	        // The below only loops to skip over multiple occurrences on the same
-	        // line when 'global' is not true.
-	        while(searchCursor.findNext() &&
-	              isInRange(searchCursor.from(), lineStart, lineEnd)) {
-	          if (!global && lastPos && searchCursor.from().line == lastPos.line) {
-	            continue;
-	          }
-	          cm.scrollIntoView(searchCursor.from(), 30);
-	          cm.setSelection(searchCursor.from(), searchCursor.to());
-	          lastPos = searchCursor.from();
-	          done = false;
-	          return;
-	        }
-	        done = true;
-	      }
-	      function stop(close) {
-	        if (close) { close(); }
-	        cm.focus();
-	        if (lastPos) {
-	          cm.setCursor(lastPos);
-	          var vim = cm.state.vim;
-	          vim.exMode = false;
-	          vim.lastHPos = vim.lastHSPos = lastPos.ch;
-	        }
-	        if (callback) { callback(); }
-	      }
-	      function onPromptKeyDown(e, _value, close) {
-	        // Swallow all keys.
-	        CodeMirror.e_stop(e);
-	        var keyName = CodeMirror.keyName(e);
-	        switch (keyName) {
-	          case 'Y':
-	            replace(); next(); break;
-	          case 'N':
-	            next(); break;
-	          case 'A':
-	            // replaceAll contains a call to close of its own. We don't want it
-	            // to fire too early or multiple times.
-	            var savedCallback = callback;
-	            callback = undefined;
-	            cm.operation(replaceAll);
-	            callback = savedCallback;
-	            break;
-	          case 'L':
-	            replace();
-	            // fall through and exit.
-	          case 'Q':
-	          case 'Esc':
-	          case 'Ctrl-C':
-	          case 'Ctrl-[':
-	            stop(close);
-	            break;
-	        }
-	        if (done) { stop(close); }
-	        return true;
-	      }
-	
-	      // Actually do replace.
-	      next();
-	      if (done) {
-	        showConfirm(cm, 'No matches for ' + query.source);
-	        return;
-	      }
-	      if (!confirm) {
-	        replaceAll();
-	        if (callback) { callback(); };
-	        return;
-	      }
-	      showPrompt(cm, {
-	        prefix: 'replace with <strong>' + replaceWith + '</strong> (y/n/a/q/l)',
-	        onKeyDown: onPromptKeyDown
-	      });
-	    }
-	
-	    CodeMirror.keyMap.vim = {
-	      attach: attachVimMap,
-	      detach: detachVimMap,
-	      call: cmKey
-	    };
-	
-	    function exitInsertMode(cm) {
-	      var vim = cm.state.vim;
-	      var macroModeState = vimGlobalState.macroModeState;
-	      var insertModeChangeRegister = vimGlobalState.registerController.getRegister('.');
-	      var isPlaying = macroModeState.isPlaying;
-	      var lastChange = macroModeState.lastInsertModeChanges;
-	      // In case of visual block, the insertModeChanges are not saved as a
-	      // single word, so we convert them to a single word
-	      // so as to update the ". register as expected in real vim.
-	      var text = [];
-	      if (!isPlaying) {
-	        var selLength = lastChange.inVisualBlock ? vim.lastSelection.visualBlock.height : 1;
-	        var changes = lastChange.changes;
-	        var text = [];
-	        var i = 0;
-	        // In case of multiple selections in blockwise visual,
-	        // the inserted text, for example: 'f<Backspace>oo', is stored as
-	        // 'f', 'f', InsertModeKey 'o', 'o', 'o', 'o'. (if you have a block with 2 lines).
-	        // We push the contents of the changes array as per the following:
-	        // 1. In case of InsertModeKey, just increment by 1.
-	        // 2. In case of a character, jump by selLength (2 in the example).
-	        while (i < changes.length) {
-	          // This loop will convert 'ff<bs>oooo' to 'f<bs>oo'.
-	          text.push(changes[i]);
-	          if (changes[i] instanceof InsertModeKey) {
-	             i++;
-	          } else {
-	             i+= selLength;
-	          }
-	        }
-	        lastChange.changes = text;
-	        cm.off('change', onChange);
-	        CodeMirror.off(cm.getInputField(), 'keydown', onKeyEventTargetKeyDown);
-	      }
-	      if (!isPlaying && vim.insertModeRepeat > 1) {
-	        // Perform insert mode repeat for commands like 3,a and 3,o.
-	        repeatLastEdit(cm, vim, vim.insertModeRepeat - 1,
-	            true /** repeatForInsert */);
-	        vim.lastEditInputState.repeatOverride = vim.insertModeRepeat;
-	      }
-	      delete vim.insertModeRepeat;
-	      vim.insertMode = false;
-	      cm.setCursor(cm.getCursor().line, cm.getCursor().ch-1);
-	      cm.setOption('keyMap', 'vim');
-	      cm.setOption('disableInput', true);
-	      cm.toggleOverwrite(false); // exit replace mode if we were in it.
-	      // update the ". register before exiting insert mode
-	      insertModeChangeRegister.setText(lastChange.changes.join(''));
-	      CodeMirror.signal(cm, "vim-mode-change", {mode: "normal"});
-	      if (macroModeState.isRecording) {
-	        logInsertModeChange(macroModeState);
-	      }
-	    }
-	
-	    function _mapCommand(command) {
-	      defaultKeymap.unshift(command);
-	    }
-	
-	    function mapCommand(keys, type, name, args, extra) {
-	      var command = {keys: keys, type: type};
-	      command[type] = name;
-	      command[type + "Args"] = args;
-	      for (var key in extra)
-	        command[key] = extra[key];
-	      _mapCommand(command);
-	    }
-	
-	    // The timeout in milliseconds for the two-character ESC keymap should be
-	    // adjusted according to your typing speed to prevent false positives.
-	    defineOption('insertModeEscKeysTimeout', 200, 'number');
-	
-	    CodeMirror.keyMap['vim-insert'] = {
-	      // TODO: override navigation keys so that Esc will cancel automatic
-	      // indentation from o, O, i_<CR>
-	      'Ctrl-N': 'autocomplete',
-	      'Ctrl-P': 'autocomplete',
-	      'Enter': function(cm) {
-	        var fn = CodeMirror.commands.newlineAndIndentContinueComment ||
-	            CodeMirror.commands.newlineAndIndent;
-	        fn(cm);
-	      },
-	      fallthrough: ['default'],
-	      attach: attachVimMap,
-	      detach: detachVimMap,
-	      call: cmKey
-	    };
-	
-	    CodeMirror.keyMap['vim-replace'] = {
-	      'Backspace': 'goCharLeft',
-	      fallthrough: ['vim-insert'],
-	      attach: attachVimMap,
-	      detach: detachVimMap,
-	      call: cmKey
-	    };
-	
-	    function executeMacroRegister(cm, vim, macroModeState, registerName) {
-	      var register = vimGlobalState.registerController.getRegister(registerName);
-	      if (registerName == ':') {
-	        // Read-only register containing last Ex command.
-	        if (register.keyBuffer[0]) {
-	          exCommandDispatcher.processCommand(cm, register.keyBuffer[0]);
-	        }
-	        macroModeState.isPlaying = false;
-	        return;
-	      }
-	      var keyBuffer = register.keyBuffer;
-	      var imc = 0;
-	      macroModeState.isPlaying = true;
-	      macroModeState.replaySearchQueries = register.searchQueries.slice(0);
-	      for (var i = 0; i < keyBuffer.length; i++) {
-	        var text = keyBuffer[i];
-	        var match, key;
-	        while (text) {
-	          // Pull off one command key, which is either a single character
-	          // or a special sequence wrapped in '<' and '>', e.g. '<Space>'.
-	          match = (/<\w+-.+?>|<\w+>|./).exec(text);
-	          key = match[0];
-	          text = text.substring(match.index + key.length);
-	          CodeMirror.Vim.handleKey(cm, key, 'macro');
-	          if (vim.insertMode) {
-	            var changes = register.insertModeChanges[imc++].changes;
-	            vimGlobalState.macroModeState.lastInsertModeChanges.changes =
-	                changes;
-	            repeatInsertModeChanges(cm, changes, 1);
-	            exitInsertMode(cm);
-	          }
-	        }
-	      };
-	      macroModeState.isPlaying = false;
-	    }
-	
-	    function logKey(macroModeState, key) {
-	      if (macroModeState.isPlaying) { return; }
-	      var registerName = macroModeState.latestRegister;
-	      var register = vimGlobalState.registerController.getRegister(registerName);
-	      if (register) {
-	        register.pushText(key);
-	      }
-	    }
-	
-	    function logInsertModeChange(macroModeState) {
-	      if (macroModeState.isPlaying) { return; }
-	      var registerName = macroModeState.latestRegister;
-	      var register = vimGlobalState.registerController.getRegister(registerName);
-	      if (register && register.pushInsertModeChanges) {
-	        register.pushInsertModeChanges(macroModeState.lastInsertModeChanges);
-	      }
-	    }
-	
-	    function logSearchQuery(macroModeState, query) {
-	      if (macroModeState.isPlaying) { return; }
-	      var registerName = macroModeState.latestRegister;
-	      var register = vimGlobalState.registerController.getRegister(registerName);
-	      if (register && register.pushSearchQuery) {
-	        register.pushSearchQuery(query);
-	      }
-	    }
-	
-	    /**
-	     * Listens for changes made in insert mode.
-	     * Should only be active in insert mode.
-	     */
-	    function onChange(_cm, changeObj) {
-	      var macroModeState = vimGlobalState.macroModeState;
-	      var lastChange = macroModeState.lastInsertModeChanges;
-	      if (!macroModeState.isPlaying) {
-	        while(changeObj) {
-	          lastChange.expectCursorActivityForChange = true;
-	          if (changeObj.origin == '+input' || changeObj.origin == 'paste'
-	              || changeObj.origin === undefined /* only in testing */) {
-	            var text = changeObj.text.join('\n');
-	            lastChange.changes.push(text);
-	          }
-	          // Change objects may be chained with next.
-	          changeObj = changeObj.next;
-	        }
-	      }
-	    }
-	
-	    /**
-	    * Listens for any kind of cursor activity on CodeMirror.
-	    */
-	    function onCursorActivity(cm) {
-	      var vim = cm.state.vim;
-	      if (vim.insertMode) {
-	        // Tracking cursor activity in insert mode (for macro support).
-	        var macroModeState = vimGlobalState.macroModeState;
-	        if (macroModeState.isPlaying) { return; }
-	        var lastChange = macroModeState.lastInsertModeChanges;
-	        if (lastChange.expectCursorActivityForChange) {
-	          lastChange.expectCursorActivityForChange = false;
-	        } else {
-	          // Cursor moved outside the context of an edit. Reset the change.
-	          lastChange.changes = [];
-	        }
-	      } else if (!cm.curOp.isVimOp) {
-	        handleExternalSelection(cm, vim);
-	      }
-	      if (vim.visualMode) {
-	        updateFakeCursor(cm);
-	      }
-	    }
-	    function updateFakeCursor(cm) {
-	      var vim = cm.state.vim;
-	      var from = clipCursorToContent(cm, copyCursor(vim.sel.head));
-	      var to = offsetCursor(from, 0, 1);
-	      if (vim.fakeCursor) {
-	        vim.fakeCursor.clear();
-	      }
-	      vim.fakeCursor = cm.markText(from, to, {className: 'cm-animate-fat-cursor'});
-	    }
-	    function handleExternalSelection(cm, vim) {
-	      var anchor = cm.getCursor('anchor');
-	      var head = cm.getCursor('head');
-	      // Enter or exit visual mode to match mouse selection.
-	      if (vim.visualMode && !cm.somethingSelected()) {
-	        exitVisualMode(cm, false);
-	      } else if (!vim.visualMode && !vim.insertMode && cm.somethingSelected()) {
-	        vim.visualMode = true;
-	        vim.visualLine = false;
-	        CodeMirror.signal(cm, "vim-mode-change", {mode: "visual"});
-	      }
-	      if (vim.visualMode) {
-	        // Bind CodeMirror selection model to vim selection model.
-	        // Mouse selections are considered visual characterwise.
-	        var headOffset = !cursorIsBefore(head, anchor) ? -1 : 0;
-	        var anchorOffset = cursorIsBefore(head, anchor) ? -1 : 0;
-	        head = offsetCursor(head, 0, headOffset);
-	        anchor = offsetCursor(anchor, 0, anchorOffset);
-	        vim.sel = {
-	          anchor: anchor,
-	          head: head
-	        };
-	        updateMark(cm, vim, '<', cursorMin(head, anchor));
-	        updateMark(cm, vim, '>', cursorMax(head, anchor));
-	      } else if (!vim.insertMode) {
-	        // Reset lastHPos if selection was modified by something outside of vim mode e.g. by mouse.
-	        vim.lastHPos = cm.getCursor().ch;
-	      }
-	    }
-	
-	    /** Wrapper for special keys pressed in insert mode */
-	    function InsertModeKey(keyName) {
-	      this.keyName = keyName;
-	    }
-	
-	    /**
-	    * Handles raw key down events from the text area.
-	    * - Should only be active in insert mode.
-	    * - For recording deletes in insert mode.
-	    */
-	    function onKeyEventTargetKeyDown(e) {
-	      var macroModeState = vimGlobalState.macroModeState;
-	      var lastChange = macroModeState.lastInsertModeChanges;
-	      var keyName = CodeMirror.keyName(e);
-	      if (!keyName) { return; }
-	      function onKeyFound() {
-	        lastChange.changes.push(new InsertModeKey(keyName));
-	        return true;
-	      }
-	      if (keyName.indexOf('Delete') != -1 || keyName.indexOf('Backspace') != -1) {
-	        CodeMirror.lookupKey(keyName, 'vim-insert', onKeyFound);
-	      }
-	    }
-	
-	    /**
-	     * Repeats the last edit, which includes exactly 1 command and at most 1
-	     * insert. Operator and motion commands are read from lastEditInputState,
-	     * while action commands are read from lastEditActionCommand.
-	     *
-	     * If repeatForInsert is true, then the function was called by
-	     * exitInsertMode to repeat the insert mode changes the user just made. The
-	     * corresponding enterInsertMode call was made with a count.
-	     */
-	    function repeatLastEdit(cm, vim, repeat, repeatForInsert) {
-	      var macroModeState = vimGlobalState.macroModeState;
-	      macroModeState.isPlaying = true;
-	      var isAction = !!vim.lastEditActionCommand;
-	      var cachedInputState = vim.inputState;
-	      function repeatCommand() {
-	        if (isAction) {
-	          commandDispatcher.processAction(cm, vim, vim.lastEditActionCommand);
-	        } else {
-	          commandDispatcher.evalInput(cm, vim);
-	        }
-	      }
-	      function repeatInsert(repeat) {
-	        if (macroModeState.lastInsertModeChanges.changes.length > 0) {
-	          // For some reason, repeat cw in desktop VIM does not repeat
-	          // insert mode changes. Will conform to that behavior.
-	          repeat = !vim.lastEditActionCommand ? 1 : repeat;
-	          var changeObject = macroModeState.lastInsertModeChanges;
-	          repeatInsertModeChanges(cm, changeObject.changes, repeat);
-	        }
-	      }
-	      vim.inputState = vim.lastEditInputState;
-	      if (isAction && vim.lastEditActionCommand.interlaceInsertRepeat) {
-	        // o and O repeat have to be interlaced with insert repeats so that the
-	        // insertions appear on separate lines instead of the last line.
-	        for (var i = 0; i < repeat; i++) {
-	          repeatCommand();
-	          repeatInsert(1);
-	        }
-	      } else {
-	        if (!repeatForInsert) {
-	          // Hack to get the cursor to end up at the right place. If I is
-	          // repeated in insert mode repeat, cursor will be 1 insert
-	          // change set left of where it should be.
-	          repeatCommand();
-	        }
-	        repeatInsert(repeat);
-	      }
-	      vim.inputState = cachedInputState;
-	      if (vim.insertMode && !repeatForInsert) {
-	        // Don't exit insert mode twice. If repeatForInsert is set, then we
-	        // were called by an exitInsertMode call lower on the stack.
-	        exitInsertMode(cm);
-	      }
-	      macroModeState.isPlaying = false;
-	    };
-	
-	    function repeatInsertModeChanges(cm, changes, repeat) {
-	      function keyHandler(binding) {
-	        if (typeof binding == 'string') {
-	          CodeMirror.commands[binding](cm);
-	        } else {
-	          binding(cm);
-	        }
-	        return true;
-	      }
-	      var head = cm.getCursor('head');
-	      var inVisualBlock = vimGlobalState.macroModeState.lastInsertModeChanges.inVisualBlock;
-	      if (inVisualBlock) {
-	        // Set up block selection again for repeating the changes.
-	        var vim = cm.state.vim;
-	        var lastSel = vim.lastSelection;
-	        var offset = getOffset(lastSel.anchor, lastSel.head);
-	        selectForInsert(cm, head, offset.line + 1);
-	        repeat = cm.listSelections().length;
-	        cm.setCursor(head);
-	      }
-	      for (var i = 0; i < repeat; i++) {
-	        if (inVisualBlock) {
-	          cm.setCursor(offsetCursor(head, i, 0));
-	        }
-	        for (var j = 0; j < changes.length; j++) {
-	          var change = changes[j];
-	          if (change instanceof InsertModeKey) {
-	            CodeMirror.lookupKey(change.keyName, 'vim-insert', keyHandler);
-	          } else {
-	            var cur = cm.getCursor();
-	            cm.replaceRange(change, cur, cur);
-	          }
-	        }
-	      }
-	      if (inVisualBlock) {
-	        cm.setCursor(offsetCursor(head, 0, 1));
-	      }
-	    }
-	
-	    resetVimGlobalState();
-	    return vimApi;
-	  };
-	  // Initialize Vim and make it available as an API.
-	  CodeMirror.Vim = Vim();
-	});
-
+	module.exports = (__webpack_require__(15))(142);
 
 /***/ },
 /* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// CodeMirror, copyright (c) by Marijn Haverbeke and others
-	// Distributed under an MIT license: http://codemirror.net/LICENSE
-	
-	(function(mod) {
-	  if (true) // CommonJS
-	    mod(__webpack_require__(38));
-	  else if (typeof define == "function" && define.amd) // AMD
-	    define(["../../lib/codemirror"], mod);
-	  else // Plain browser env
-	    mod(CodeMirror);
-	})(function(CodeMirror) {
-	  "use strict";
-	  var Pos = CodeMirror.Pos;
-	
-	  function SearchCursor(doc, query, pos, caseFold) {
-	    this.atOccurrence = false; this.doc = doc;
-	    if (caseFold == null && typeof query == "string") caseFold = false;
-	
-	    pos = pos ? doc.clipPos(pos) : Pos(0, 0);
-	    this.pos = {from: pos, to: pos};
-	
-	    // The matches method is filled in based on the type of query.
-	    // It takes a position and a direction, and returns an object
-	    // describing the next occurrence of the query, or null if no
-	    // more matches were found.
-	    if (typeof query != "string") { // Regexp match
-	      if (!query.global) query = new RegExp(query.source, query.ignoreCase ? "ig" : "g");
-	      this.matches = function(reverse, pos) {
-	        if (reverse) {
-	          query.lastIndex = 0;
-	          var line = doc.getLine(pos.line).slice(0, pos.ch), cutOff = 0, match, start;
-	          for (;;) {
-	            query.lastIndex = cutOff;
-	            var newMatch = query.exec(line);
-	            if (!newMatch) break;
-	            match = newMatch;
-	            start = match.index;
-	            cutOff = match.index + (match[0].length || 1);
-	            if (cutOff == line.length) break;
-	          }
-	          var matchLen = (match && match[0].length) || 0;
-	          if (!matchLen) {
-	            if (start == 0 && line.length == 0) {match = undefined;}
-	            else if (start != doc.getLine(pos.line).length) {
-	              matchLen++;
-	            }
-	          }
-	        } else {
-	          query.lastIndex = pos.ch;
-	          var line = doc.getLine(pos.line), match = query.exec(line);
-	          var matchLen = (match && match[0].length) || 0;
-	          var start = match && match.index;
-	          if (start + matchLen != line.length && !matchLen) matchLen = 1;
-	        }
-	        if (match && matchLen)
-	          return {from: Pos(pos.line, start),
-	                  to: Pos(pos.line, start + matchLen),
-	                  match: match};
-	      };
-	    } else { // String query
-	      var origQuery = query;
-	      if (caseFold) query = query.toLowerCase();
-	      var fold = caseFold ? function(str){return str.toLowerCase();} : function(str){return str;};
-	      var target = query.split("\n");
-	      // Different methods for single-line and multi-line queries
-	      if (target.length == 1) {
-	        if (!query.length) {
-	          // Empty string would match anything and never progress, so
-	          // we define it to match nothing instead.
-	          this.matches = function() {};
-	        } else {
-	          this.matches = function(reverse, pos) {
-	            if (reverse) {
-	              var orig = doc.getLine(pos.line).slice(0, pos.ch), line = fold(orig);
-	              var match = line.lastIndexOf(query);
-	              if (match > -1) {
-	                match = adjustPos(orig, line, match);
-	                return {from: Pos(pos.line, match), to: Pos(pos.line, match + origQuery.length)};
-	              }
-	             } else {
-	               var orig = doc.getLine(pos.line).slice(pos.ch), line = fold(orig);
-	               var match = line.indexOf(query);
-	               if (match > -1) {
-	                 match = adjustPos(orig, line, match) + pos.ch;
-	                 return {from: Pos(pos.line, match), to: Pos(pos.line, match + origQuery.length)};
-	               }
-	            }
-	          };
-	        }
-	      } else {
-	        var origTarget = origQuery.split("\n");
-	        this.matches = function(reverse, pos) {
-	          var last = target.length - 1;
-	          if (reverse) {
-	            if (pos.line - (target.length - 1) < doc.firstLine()) return;
-	            if (fold(doc.getLine(pos.line).slice(0, origTarget[last].length)) != target[target.length - 1]) return;
-	            var to = Pos(pos.line, origTarget[last].length);
-	            for (var ln = pos.line - 1, i = last - 1; i >= 1; --i, --ln)
-	              if (target[i] != fold(doc.getLine(ln))) return;
-	            var line = doc.getLine(ln), cut = line.length - origTarget[0].length;
-	            if (fold(line.slice(cut)) != target[0]) return;
-	            return {from: Pos(ln, cut), to: to};
-	          } else {
-	            if (pos.line + (target.length - 1) > doc.lastLine()) return;
-	            var line = doc.getLine(pos.line), cut = line.length - origTarget[0].length;
-	            if (fold(line.slice(cut)) != target[0]) return;
-	            var from = Pos(pos.line, cut);
-	            for (var ln = pos.line + 1, i = 1; i < last; ++i, ++ln)
-	              if (target[i] != fold(doc.getLine(ln))) return;
-	            if (fold(doc.getLine(ln).slice(0, origTarget[last].length)) != target[last]) return;
-	            return {from: from, to: Pos(ln, origTarget[last].length)};
-	          }
-	        };
-	      }
-	    }
-	  }
-	
-	  SearchCursor.prototype = {
-	    findNext: function() {return this.find(false);},
-	    findPrevious: function() {return this.find(true);},
-	
-	    find: function(reverse) {
-	      var self = this, pos = this.doc.clipPos(reverse ? this.pos.from : this.pos.to);
-	      function savePosAndFail(line) {
-	        var pos = Pos(line, 0);
-	        self.pos = {from: pos, to: pos};
-	        self.atOccurrence = false;
-	        return false;
-	      }
-	
-	      for (;;) {
-	        if (this.pos = this.matches(reverse, pos)) {
-	          this.atOccurrence = true;
-	          return this.pos.match || true;
-	        }
-	        if (reverse) {
-	          if (!pos.line) return savePosAndFail(0);
-	          pos = Pos(pos.line-1, this.doc.getLine(pos.line-1).length);
-	        }
-	        else {
-	          var maxLine = this.doc.lineCount();
-	          if (pos.line == maxLine - 1) return savePosAndFail(maxLine);
-	          pos = Pos(pos.line + 1, 0);
-	        }
-	      }
-	    },
-	
-	    from: function() {if (this.atOccurrence) return this.pos.from;},
-	    to: function() {if (this.atOccurrence) return this.pos.to;},
-	
-	    replace: function(newText, origin) {
-	      if (!this.atOccurrence) return;
-	      var lines = CodeMirror.splitLines(newText);
-	      this.doc.replaceRange(lines, this.pos.from, this.pos.to, origin);
-	      this.pos.to = Pos(this.pos.from.line + lines.length - 1,
-	                        lines[lines.length - 1].length + (lines.length == 1 ? this.pos.from.ch : 0));
-	    }
-	  };
-	
-	  // Maps a position in a case-folded line back to a position in the original line
-	  // (compensating for codepoints increasing in number during folding)
-	  function adjustPos(orig, folded, pos) {
-	    if (orig.length == folded.length) return pos;
-	    for (var pos1 = Math.min(pos, orig.length);;) {
-	      var len1 = orig.slice(0, pos1).toLowerCase().length;
-	      if (len1 < pos) ++pos1;
-	      else if (len1 > pos) --pos1;
-	      else return pos1;
-	    }
-	  }
-	
-	  CodeMirror.defineExtension("getSearchCursor", function(query, pos, caseFold) {
-	    return new SearchCursor(this.doc, query, pos, caseFold);
-	  });
-	  CodeMirror.defineDocExtension("getSearchCursor", function(query, pos, caseFold) {
-	    return new SearchCursor(this, query, pos, caseFold);
-	  });
-	
-	  CodeMirror.defineExtension("selectMatches", function(query, caseFold) {
-	    var ranges = [];
-	    var cur = this.getSearchCursor(query, this.getCursor("from"), caseFold);
-	    while (cur.findNext()) {
-	      if (CodeMirror.cmpPos(cur.to(), this.getCursor("to")) > 0) break;
-	      ranges.push({anchor: cur.from(), head: cur.to()});
-	    }
-	    if (ranges.length)
-	      this.setSelections(ranges, 0);
-	  });
-	});
-
+	module.exports = (__webpack_require__(15))(146);
 
 /***/ },
 /* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// CodeMirror, copyright (c) by Marijn Haverbeke and others
-	// Distributed under an MIT license: http://codemirror.net/LICENSE
-	
-	// Open simple dialogs on top of an editor. Relies on dialog.css.
-	
-	(function(mod) {
-	  if (true) // CommonJS
-	    mod(__webpack_require__(38));
-	  else if (typeof define == "function" && define.amd) // AMD
-	    define(["../../lib/codemirror"], mod);
-	  else // Plain browser env
-	    mod(CodeMirror);
-	})(function(CodeMirror) {
-	  function dialogDiv(cm, template, bottom) {
-	    var wrap = cm.getWrapperElement();
-	    var dialog;
-	    dialog = wrap.appendChild(document.createElement("div"));
-	    if (bottom)
-	      dialog.className = "CodeMirror-dialog CodeMirror-dialog-bottom";
-	    else
-	      dialog.className = "CodeMirror-dialog CodeMirror-dialog-top";
-	
-	    if (typeof template == "string") {
-	      dialog.innerHTML = template;
-	    } else { // Assuming it's a detached DOM element.
-	      dialog.appendChild(template);
-	    }
-	    return dialog;
-	  }
-	
-	  function closeNotification(cm, newVal) {
-	    if (cm.state.currentNotificationClose)
-	      cm.state.currentNotificationClose();
-	    cm.state.currentNotificationClose = newVal;
-	  }
-	
-	  CodeMirror.defineExtension("openDialog", function(template, callback, options) {
-	    if (!options) options = {};
-	
-	    closeNotification(this, null);
-	
-	    var dialog = dialogDiv(this, template, options.bottom);
-	    var closed = false, me = this;
-	    function close(newVal) {
-	      if (typeof newVal == 'string') {
-	        inp.value = newVal;
-	      } else {
-	        if (closed) return;
-	        closed = true;
-	        dialog.parentNode.removeChild(dialog);
-	        me.focus();
-	
-	        if (options.onClose) options.onClose(dialog);
-	      }
-	    }
-	
-	    var inp = dialog.getElementsByTagName("input")[0], button;
-	    if (inp) {
-	      inp.focus();
-	
-	      if (options.value) {
-	        inp.value = options.value;
-	        if (options.selectValueOnOpen !== false) {
-	          inp.select();
-	        }
-	      }
-	
-	      if (options.onInput)
-	        CodeMirror.on(inp, "input", function(e) { options.onInput(e, inp.value, close);});
-	      if (options.onKeyUp)
-	        CodeMirror.on(inp, "keyup", function(e) {options.onKeyUp(e, inp.value, close);});
-	
-	      CodeMirror.on(inp, "keydown", function(e) {
-	        if (options && options.onKeyDown && options.onKeyDown(e, inp.value, close)) { return; }
-	        if (e.keyCode == 27 || (options.closeOnEnter !== false && e.keyCode == 13)) {
-	          inp.blur();
-	          CodeMirror.e_stop(e);
-	          close();
-	        }
-	        if (e.keyCode == 13) callback(inp.value, e);
-	      });
-	
-	      if (options.closeOnBlur !== false) CodeMirror.on(inp, "blur", close);
-	    } else if (button = dialog.getElementsByTagName("button")[0]) {
-	      CodeMirror.on(button, "click", function() {
-	        close();
-	        me.focus();
-	      });
-	
-	      if (options.closeOnBlur !== false) CodeMirror.on(button, "blur", close);
-	
-	      button.focus();
-	    }
-	    return close;
-	  });
-	
-	  CodeMirror.defineExtension("openConfirm", function(template, callbacks, options) {
-	    closeNotification(this, null);
-	    var dialog = dialogDiv(this, template, options && options.bottom);
-	    var buttons = dialog.getElementsByTagName("button");
-	    var closed = false, me = this, blurring = 1;
-	    function close() {
-	      if (closed) return;
-	      closed = true;
-	      dialog.parentNode.removeChild(dialog);
-	      me.focus();
-	    }
-	    buttons[0].focus();
-	    for (var i = 0; i < buttons.length; ++i) {
-	      var b = buttons[i];
-	      (function(callback) {
-	        CodeMirror.on(b, "click", function(e) {
-	          CodeMirror.e_preventDefault(e);
-	          close();
-	          if (callback) callback(me);
-	        });
-	      })(callbacks[i]);
-	      CodeMirror.on(b, "blur", function() {
-	        --blurring;
-	        setTimeout(function() { if (blurring <= 0) close(); }, 200);
-	      });
-	      CodeMirror.on(b, "focus", function() { ++blurring; });
-	    }
-	  });
-	
-	  /*
-	   * openNotification
-	   * Opens a notification, that can be closed with an optional timer
-	   * (default 5000ms timer) and always closes on click.
-	   *
-	   * If a notification is opened while another is opened, it will close the
-	   * currently opened one and open the new one immediately.
-	   */
-	  CodeMirror.defineExtension("openNotification", function(template, options) {
-	    closeNotification(this, close);
-	    var dialog = dialogDiv(this, template, options && options.bottom);
-	    var closed = false, doneTimer;
-	    var duration = options && typeof options.duration !== "undefined" ? options.duration : 5000;
-	
-	    function close() {
-	      if (closed) return;
-	      closed = true;
-	      clearTimeout(doneTimer);
-	      dialog.parentNode.removeChild(dialog);
-	    }
-	
-	    CodeMirror.on(dialog, 'click', function(e) {
-	      CodeMirror.e_preventDefault(e);
-	      close();
-	    });
-	
-	    if (duration)
-	      doneTimer = setTimeout(close, duration);
-	
-	    return close;
-	  });
-	});
-
+	module.exports = (__webpack_require__(15))(72);
 
 /***/ },
 /* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// CodeMirror, copyright (c) by Marijn Haverbeke and others
-	// Distributed under an MIT license: http://codemirror.net/LICENSE
-	
-	(function(mod) {
-	  if (true) // CommonJS
-	    mod(__webpack_require__(38));
-	  else if (typeof define == "function" && define.amd) // AMD
-	    define(["../../lib/codemirror"], mod);
-	  else // Plain browser env
-	    mod(CodeMirror);
-	})(function(CodeMirror) {
-	  var ie_lt8 = /MSIE \d/.test(navigator.userAgent) &&
-	    (document.documentMode == null || document.documentMode < 8);
-	
-	  var Pos = CodeMirror.Pos;
-	
-	  var matching = {"(": ")>", ")": "(<", "[": "]>", "]": "[<", "{": "}>", "}": "{<"};
-	
-	  function findMatchingBracket(cm, where, strict, config) {
-	    var line = cm.getLineHandle(where.line), pos = where.ch - 1;
-	    var match = (pos >= 0 && matching[line.text.charAt(pos)]) || matching[line.text.charAt(++pos)];
-	    if (!match) return null;
-	    var dir = match.charAt(1) == ">" ? 1 : -1;
-	    if (strict && (dir > 0) != (pos == where.ch)) return null;
-	    var style = cm.getTokenTypeAt(Pos(where.line, pos + 1));
-	
-	    var found = scanForBracket(cm, Pos(where.line, pos + (dir > 0 ? 1 : 0)), dir, style || null, config);
-	    if (found == null) return null;
-	    return {from: Pos(where.line, pos), to: found && found.pos,
-	            match: found && found.ch == match.charAt(0), forward: dir > 0};
-	  }
-	
-	  // bracketRegex is used to specify which type of bracket to scan
-	  // should be a regexp, e.g. /[[\]]/
-	  //
-	  // Note: If "where" is on an open bracket, then this bracket is ignored.
-	  //
-	  // Returns false when no bracket was found, null when it reached
-	  // maxScanLines and gave up
-	  function scanForBracket(cm, where, dir, style, config) {
-	    var maxScanLen = (config && config.maxScanLineLength) || 10000;
-	    var maxScanLines = (config && config.maxScanLines) || 1000;
-	
-	    var stack = [];
-	    var re = config && config.bracketRegex ? config.bracketRegex : /[(){}[\]]/;
-	    var lineEnd = dir > 0 ? Math.min(where.line + maxScanLines, cm.lastLine() + 1)
-	                          : Math.max(cm.firstLine() - 1, where.line - maxScanLines);
-	    for (var lineNo = where.line; lineNo != lineEnd; lineNo += dir) {
-	      var line = cm.getLine(lineNo);
-	      if (!line) continue;
-	      var pos = dir > 0 ? 0 : line.length - 1, end = dir > 0 ? line.length : -1;
-	      if (line.length > maxScanLen) continue;
-	      if (lineNo == where.line) pos = where.ch - (dir < 0 ? 1 : 0);
-	      for (; pos != end; pos += dir) {
-	        var ch = line.charAt(pos);
-	        if (re.test(ch) && (style === undefined || cm.getTokenTypeAt(Pos(lineNo, pos + 1)) == style)) {
-	          var match = matching[ch];
-	          if ((match.charAt(1) == ">") == (dir > 0)) stack.push(ch);
-	          else if (!stack.length) return {pos: Pos(lineNo, pos), ch: ch};
-	          else stack.pop();
-	        }
-	      }
-	    }
-	    return lineNo - dir == (dir > 0 ? cm.lastLine() : cm.firstLine()) ? false : null;
-	  }
-	
-	  function matchBrackets(cm, autoclear, config) {
-	    // Disable brace matching in long lines, since it'll cause hugely slow updates
-	    var maxHighlightLen = cm.state.matchBrackets.maxHighlightLineLength || 1000;
-	    var marks = [], ranges = cm.listSelections();
-	    for (var i = 0; i < ranges.length; i++) {
-	      var match = ranges[i].empty() && findMatchingBracket(cm, ranges[i].head, false, config);
-	      if (match && cm.getLine(match.from.line).length <= maxHighlightLen) {
-	        var style = match.match ? "CodeMirror-matchingbracket" : "CodeMirror-nonmatchingbracket";
-	        marks.push(cm.markText(match.from, Pos(match.from.line, match.from.ch + 1), {className: style}));
-	        if (match.to && cm.getLine(match.to.line).length <= maxHighlightLen)
-	          marks.push(cm.markText(match.to, Pos(match.to.line, match.to.ch + 1), {className: style}));
-	      }
-	    }
-	
-	    if (marks.length) {
-	      // Kludge to work around the IE bug from issue #1193, where text
-	      // input stops going to the textare whever this fires.
-	      if (ie_lt8 && cm.state.focused) cm.focus();
-	
-	      var clear = function() {
-	        cm.operation(function() {
-	          for (var i = 0; i < marks.length; i++) marks[i].clear();
-	        });
-	      };
-	      if (autoclear) setTimeout(clear, 800);
-	      else return clear;
-	    }
-	  }
-	
-	  var currentlyHighlighted = null;
-	  function doMatchBrackets(cm) {
-	    cm.operation(function() {
-	      if (currentlyHighlighted) {currentlyHighlighted(); currentlyHighlighted = null;}
-	      currentlyHighlighted = matchBrackets(cm, false, cm.state.matchBrackets);
-	    });
-	  }
-	
-	  CodeMirror.defineOption("matchBrackets", false, function(cm, val, old) {
-	    if (old && old != CodeMirror.Init)
-	      cm.off("cursorActivity", doMatchBrackets);
-	    if (val) {
-	      cm.state.matchBrackets = typeof val == "object" ? val : {};
-	      cm.on("cursorActivity", doMatchBrackets);
-	    }
-	  });
-	
-	  CodeMirror.defineExtension("matchBrackets", function() {matchBrackets(this, true);});
-	  CodeMirror.defineExtension("findMatchingBracket", function(pos, strict, config){
-	    return findMatchingBracket(this, pos, strict, config);
-	  });
-	  CodeMirror.defineExtension("scanForBracket", function(pos, dir, style, config){
-	    return scanForBracket(this, pos, dir, style, config);
-	  });
-	});
-
+	module.exports = (__webpack_require__(15))(74);
 
 /***/ },
 /* 44 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// CodeMirror, copyright (c) by Marijn Haverbeke and others
-	// Distributed under an MIT license: http://codemirror.net/LICENSE
-	
-	(function(mod) {
-	  if (true) // CommonJS
-	    mod(__webpack_require__(38));
-	  else if (typeof define == "function" && define.amd) // AMD
-	    define(["../../lib/codemirror"], mod);
-	  else // Plain browser env
-	    mod(CodeMirror);
-	})(function(CodeMirror) {
-	  "use strict";
-	
-	  function Bar(cls, orientation, scroll) {
-	    this.orientation = orientation;
-	    this.scroll = scroll;
-	    this.screen = this.total = this.size = 1;
-	    this.pos = 0;
-	
-	    this.node = document.createElement("div");
-	    this.node.className = cls + "-" + orientation;
-	    this.inner = this.node.appendChild(document.createElement("div"));
-	
-	    var self = this;
-	    CodeMirror.on(this.inner, "mousedown", function(e) {
-	      if (e.which != 1) return;
-	      CodeMirror.e_preventDefault(e);
-	      var axis = self.orientation == "horizontal" ? "pageX" : "pageY";
-	      var start = e[axis], startpos = self.pos;
-	      function done() {
-	        CodeMirror.off(document, "mousemove", move);
-	        CodeMirror.off(document, "mouseup", done);
-	      }
-	      function move(e) {
-	        if (e.which != 1) return done();
-	        self.moveTo(startpos + (e[axis] - start) * (self.total / self.size));
-	      }
-	      CodeMirror.on(document, "mousemove", move);
-	      CodeMirror.on(document, "mouseup", done);
-	    });
-	
-	    CodeMirror.on(this.node, "click", function(e) {
-	      CodeMirror.e_preventDefault(e);
-	      var innerBox = self.inner.getBoundingClientRect(), where;
-	      if (self.orientation == "horizontal")
-	        where = e.clientX < innerBox.left ? -1 : e.clientX > innerBox.right ? 1 : 0;
-	      else
-	        where = e.clientY < innerBox.top ? -1 : e.clientY > innerBox.bottom ? 1 : 0;
-	      self.moveTo(self.pos + where * self.screen);
-	    });
-	
-	    function onWheel(e) {
-	      var moved = CodeMirror.wheelEventPixels(e)[self.orientation == "horizontal" ? "x" : "y"];
-	      var oldPos = self.pos;
-	      self.moveTo(self.pos + moved);
-	      if (self.pos != oldPos) CodeMirror.e_preventDefault(e);
-	    }
-	    CodeMirror.on(this.node, "mousewheel", onWheel);
-	    CodeMirror.on(this.node, "DOMMouseScroll", onWheel);
-	  }
-	
-	  Bar.prototype.setPos = function(pos, force) {
-	    if (pos < 0) pos = 0;
-	    if (pos > this.total - this.screen) pos = this.total - this.screen;
-	    if (!force && pos == this.pos) return false;
-	    this.pos = pos;
-	    this.inner.style[this.orientation == "horizontal" ? "left" : "top"] =
-	      (pos * (this.size / this.total)) + "px";
-	    return true
-	  };
-	
-	  Bar.prototype.moveTo = function(pos) {
-	    if (this.setPos(pos)) this.scroll(pos, this.orientation);
-	  }
-	
-	  var minButtonSize = 10;
-	
-	  Bar.prototype.update = function(scrollSize, clientSize, barSize) {
-	    var sizeChanged = this.screen != clientSize || this.total != scrollSize || this.size != barSize
-	    if (sizeChanged) {
-	      this.screen = clientSize;
-	      this.total = scrollSize;
-	      this.size = barSize;
-	    }
-	
-	    var buttonSize = this.screen * (this.size / this.total);
-	    if (buttonSize < minButtonSize) {
-	      this.size -= minButtonSize - buttonSize;
-	      buttonSize = minButtonSize;
-	    }
-	    this.inner.style[this.orientation == "horizontal" ? "width" : "height"] =
-	      buttonSize + "px";
-	    this.setPos(this.pos, sizeChanged);
-	  };
-	
-	  function SimpleScrollbars(cls, place, scroll) {
-	    this.addClass = cls;
-	    this.horiz = new Bar(cls, "horizontal", scroll);
-	    place(this.horiz.node);
-	    this.vert = new Bar(cls, "vertical", scroll);
-	    place(this.vert.node);
-	    this.width = null;
-	  }
-	
-	  SimpleScrollbars.prototype.update = function(measure) {
-	    if (this.width == null) {
-	      var style = window.getComputedStyle ? window.getComputedStyle(this.horiz.node) : this.horiz.node.currentStyle;
-	      if (style) this.width = parseInt(style.height);
-	    }
-	    var width = this.width || 0;
-	
-	    var needsH = measure.scrollWidth > measure.clientWidth + 1;
-	    var needsV = measure.scrollHeight > measure.clientHeight + 1;
-	    this.vert.node.style.display = needsV ? "block" : "none";
-	    this.horiz.node.style.display = needsH ? "block" : "none";
-	
-	    if (needsV) {
-	      this.vert.update(measure.scrollHeight, measure.clientHeight,
-	                       measure.viewHeight - (needsH ? width : 0));
-	      this.vert.node.style.bottom = needsH ? width + "px" : "0";
-	    }
-	    if (needsH) {
-	      this.horiz.update(measure.scrollWidth, measure.clientWidth,
-	                        measure.viewWidth - (needsV ? width : 0) - measure.barLeft);
-	      this.horiz.node.style.right = needsV ? width + "px" : "0";
-	      this.horiz.node.style.left = measure.barLeft + "px";
-	    }
-	
-	    return {right: needsV ? width : 0, bottom: needsH ? width : 0};
-	  };
-	
-	  SimpleScrollbars.prototype.setScrollTop = function(pos) {
-	    this.vert.setPos(pos);
-	  };
-	
-	  SimpleScrollbars.prototype.setScrollLeft = function(pos) {
-	    this.horiz.setPos(pos);
-	  };
-	
-	  SimpleScrollbars.prototype.clear = function() {
-	    var parent = this.horiz.node.parentNode;
-	    parent.removeChild(this.horiz.node);
-	    parent.removeChild(this.vert.node);
-	  };
-	
-	  CodeMirror.scrollbarModel.simple = function(place, scroll) {
-	    return new SimpleScrollbars("CodeMirror-simplescroll", place, scroll);
-	  };
-	  CodeMirror.scrollbarModel.overlay = function(place, scroll) {
-	    return new SimpleScrollbars("CodeMirror-overlayscroll", place, scroll);
-	  };
-	});
-
-
-/***/ },
-/* 45 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// CodeMirror, copyright (c) by Marijn Haverbeke and others
-	// Distributed under an MIT license: http://codemirror.net/LICENSE
-	
-	(function(mod) {
-	  if (true) // CommonJS
-	    mod(__webpack_require__(38));
-	  else if (typeof define == "function" && define.amd) // AMD
-	    define(["../../lib/codemirror"], mod);
-	  else // Plain browser env
-	    mod(CodeMirror);
-	})(function(CodeMirror) {
-	"use strict";
-	
-	CodeMirror.runMode = function(string, modespec, callback, options) {
-	  var mode = CodeMirror.getMode(CodeMirror.defaults, modespec);
-	  var ie = /MSIE \d/.test(navigator.userAgent);
-	  var ie_lt9 = ie && (document.documentMode == null || document.documentMode < 9);
-	
-	  if (callback.appendChild) {
-	    var tabSize = (options && options.tabSize) || CodeMirror.defaults.tabSize;
-	    var node = callback, col = 0;
-	    node.innerHTML = "";
-	    callback = function(text, style) {
-	      if (text == "\n") {
-	        // Emitting LF or CRLF on IE8 or earlier results in an incorrect display.
-	        // Emitting a carriage return makes everything ok.
-	        node.appendChild(document.createTextNode(ie_lt9 ? '\r' : text));
-	        col = 0;
-	        return;
-	      }
-	      var content = "";
-	      // replace tabs
-	      for (var pos = 0;;) {
-	        var idx = text.indexOf("\t", pos);
-	        if (idx == -1) {
-	          content += text.slice(pos);
-	          col += text.length - pos;
-	          break;
-	        } else {
-	          col += idx - pos;
-	          content += text.slice(pos, idx);
-	          var size = tabSize - col % tabSize;
-	          col += size;
-	          for (var i = 0; i < size; ++i) content += " ";
-	          pos = idx + 1;
-	        }
-	      }
-	
-	      if (style) {
-	        var sp = node.appendChild(document.createElement("span"));
-	        sp.className = "cm-" + style.replace(/ +/g, " cm-");
-	        sp.appendChild(document.createTextNode(content));
-	      } else {
-	        node.appendChild(document.createTextNode(content));
-	      }
-	    };
-	  }
-	
-	  var lines = CodeMirror.splitLines(string), state = (options && options.state) || CodeMirror.startState(mode);
-	  for (var i = 0, e = lines.length; i < e; ++i) {
-	    if (i) callback("\n");
-	    var stream = new CodeMirror.StringStream(lines[i]);
-	    if (!stream.string && mode.blankLine) mode.blankLine(state);
-	    while (!stream.eol()) {
-	      var style = mode.token(stream, state);
-	      callback(stream.current(), style, i, stream.start, state);
-	      stream.start = stream.pos;
-	    }
-	  }
-	};
-	
-	});
-
-
-/***/ },
-/* 46 */
 /***/ function(module, exports) {
 
 	module.exports = "/**\n */\n\nexport const init =\n( { context, require, children, cache, detached } ) => {\n\n}\n\nexport const update =\n() => {\n\n}\n\nexport const meta =\n{ description: ''\n, tags: []\n, author: ''\n, origin: ''\n}\n"
 
 /***/ },
-/* 47 */
+/* 45 */
 /***/ function(module, exports) {
 
 	module.exports = "/**\n */\nlet updateAll\n\nexport const init =\n( { children } ) => {\n  updateAll = children.all\n}\n\nexport const update =\n() => {\n  updateAll ()\n}\n\nexport const meta =\n{ description: 'Update all children on.'\n, tags: [ 'main' ]\n, origin: 'lucidity.io/main'\n, children: 'all'\n}\n"
 
 /***/ },
-/* 48 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	const Graph_1 = __webpack_require__(26);
-	const Midi_1 = __webpack_require__(49);
-	const ControlHelper_1 = __webpack_require__(67);
-	const Code_1 = __webpack_require__(68);
+	const Midi_1 = __webpack_require__(47);
+	const ControlHelper_1 = __webpack_require__(65);
+	const Code_1 = __webpack_require__(66);
 	const midi = Midi_1.MidiHelper.midiState();
 	// This is the context defined before calling main.
 	exports.MAIN_CONTEXT = 
 	// midiState contains values for current ctrl and notes
-	{ midi: 'midi.State'
+	{ midi: 'lucidity.Midi' // FIXME: this should be in a separate object. midi.State for
 	};
-	const DUMMY = { 'text:string': 'dummy.emptyText'
-	};
+	const DUMMY_UPDATE = () => { };
 	const updateCache = (graph, cache) => {
 	    const nodecache = cache.nodecache;
 	    const scrub = cache.scrub;
@@ -8708,16 +2252,14 @@
 	        }
 	        const block = graph.blocksById[node.blockId];
 	        let n = nodecache[nodeId];
-	        if (node.invalid) {
-	            // ignore
-	            continue;
-	        }
 	        if (!n) {
 	            n = nodecache[nodeId] = { exported: {} };
+	            n.scrubber = { values: [], literals: [], js: null };
 	        }
-	        else {
-	            // clear
-	            n.exported = {};
+	        if (node.invalid) {
+	            // ignore
+	            n.exported = { update: DUMMY_UPDATE };
+	            continue;
 	        }
 	        let js = block.js;
 	        let changed = n.js !== js;
@@ -8727,10 +2269,13 @@
 	            if (changed) {
 	                // Update scrubber
 	                n.scrubber.values = [...block.scrub.values];
+	                n.scrubber.literals = block.scrub.literals;
 	            }
 	            Object.assign(cache.scrubber, n.scrubber);
 	        }
 	        if (changed) {
+	            // clear
+	            n.exported = {};
 	            const exported = n.exported;
 	            try {
 	                const codefunc = new Function('exports', Code_1.SCRUBBER_VAR, js);
@@ -8784,12 +2329,16 @@
 	        }
 	    }
 	};
+	// Returns a new graph if init running alters a block (by declaring new assets
+	// for example).
 	const initDo = (cache, graph, context, ohelpers, nodeId) => {
+	    let g = graph;
 	    const nodecache = cache.nodecache;
 	    const nc = nodecache[nodeId];
 	    const init = nc.exported.init;
-	    const nodesById = graph.nodesById;
+	    const nodesById = g.nodesById;
 	    const node = nodesById[nodeId];
+	    const block = g.blocksById[node.blockId];
 	    let subctx = context;
 	    if (init) {
 	        const helpers = Object.assign({}, ohelpers);
@@ -8825,6 +2374,33 @@
 	                init(helpers);
 	            };
 	        }
+	        // FIXME: optimize by only creating these handlers once
+	        const sources = block.sources || {};
+	        const nsources = {};
+	        if (!nc.sourceCallbacks) {
+	            nc.sourceCallbacks = {};
+	        }
+	        helpers.asset = {
+	            source(name, callback) {
+	                const content = sources[name];
+	                if (content) {
+	                    nsources[name] = content;
+	                }
+	                else {
+	                    // Add new source
+	                    nsources[name] = '';
+	                }
+	                let sclb = nc.sourceCallbacks[name];
+	                if (!sclb) {
+	                    sclb = nc.sourceCallbacks[name] = {};
+	                }
+	                sclb.callback = callback;
+	                if (content !== sclb.source) {
+	                    callback(content);
+	                    sclb.source = content;
+	                }
+	            }
+	        };
 	        try {
 	            const r = init(helpers);
 	            if (r) {
@@ -8841,21 +2417,56 @@
 	            // and do proper error handling for init code.
 	            console.log('init error:', err);
 	            // abort init operation
-	            return;
+	            return g;
+	        }
+	        const nsk = Object.keys(nsources);
+	        if (nsk.length > 0 || block.sources) {
+	            // Check if something changed
+	            let srcchanged = !block.sources || nsk.length === 0;
+	            for (const k of nsk) {
+	                if (srcchanged || sources[k] !== nsources[k]) {
+	                    srcchanged = true;
+	                    break;
+	                }
+	            }
+	            if (srcchanged) {
+	                // block changed, we need to update graph
+	                if (Object.isFrozen(g)) {
+	                    const blocksById = Object.assign({}, g.blocksById);
+	                    g = { nodesById: g.nodesById, blocksById };
+	                }
+	                let sources;
+	                if (nsk.length > 0) {
+	                    sources = nsources;
+	                }
+	                g.blocksById[node.blockId] =
+	                    Object.freeze(Object.assign({}, block, { sources }));
+	            }
 	        }
 	    }
-	    else if (nc.cache) {
+	    else if (!node.invalid) {
+	        // Only clear if node is valid = user wants to remove init
 	        // No init function = clear cached context and init cache
 	        delete nc.cache;
 	        delete nc.helpers;
+	        delete nc.sourceCallbacks;
+	        if (block.sources) {
+	            // block changed, we need to update graph
+	            if (Object.isFrozen(g)) {
+	                const blocksById = Object.assign({}, g.blocksById);
+	                g = { nodesById: g.nodesById, blocksById };
+	            }
+	            g.blocksById[node.blockId] =
+	                Object.freeze(Object.assign({}, block, { sources: undefined }));
+	        }
 	    }
-	    const block = graph.blocksById[node.blockId];
 	    // Trigger init in children with sub context
 	    for (const childId of node.children) {
 	        if (childId) {
-	            initDo(cache, graph, subctx, ohelpers, childId);
+	            g = initDo(cache, g, subctx, ohelpers, childId);
 	        }
 	    }
+	    return g;
 	};
 	exports.detachCheck = (graph, cache, context // extra elements for update context
 	    , helpers) => {
@@ -8883,12 +2494,22 @@
 	        cache.main = null;
 	    }
 	};
+	// If the graph needs to be updated on init run (like adding new sources to
+	// block), initGraph returns the new graph.
 	exports.initGraph = (graph, context // extra elements for update context
 	    , cache, helpers) => {
 	    const c = exports.mainContext(context);
 	    const h = Object.assign({}, helpers);
-	    initDo(cache, graph, c, h, Graph_1.rootNodeId);
+	    let g = initDo(cache, graph, c, h, Graph_1.rootNodeId);
+	    if (!Object.isFrozen(g)) {
+	        // changed
+	        g.blocksById = Object.freeze(g.blocksById);
+	        return Object.freeze(g);
+	    }
+	    return graph;
 	};
+	// If the graph needs to be updated on init run (like adding new sources to
+	// block), the runGraph returns the new graph.
 	exports.runGraph = (graph, context = {} // extra elements for update context
 	    , cache = { nodecache: {} }, helpers = {}) => {
 	    if (!cache.scrub) {
@@ -8904,9 +2525,10 @@
 	    exports.compileGraph(graph, cache);
 	    // 3. init
 	    // FIXME: Can we improve and only call init on top most changed elements ?
-	    exports.initGraph(graph, context, cache, helpers);
+	    let g = exports.initGraph(graph, context, cache, helpers);
 	    // 4. run
 	    exports.callGraph(cache, context);
+	    return g;
 	};
 	exports.callGraph = (cache = { nodecache: {} }, context = {} // extra elements for update context
 	    ) => {
@@ -8938,15 +2560,15 @@
 
 
 /***/ },
-/* 49 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	function __export(m) {
 	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 	}
-	const init_1 = __webpack_require__(50);
-	__export(__webpack_require__(52));
+	const init_1 = __webpack_require__(48);
+	__export(__webpack_require__(50));
 	exports.Midi = (options = {}) => {
 	    return (module, controller) => {
 	        module.addState();
@@ -8958,13 +2580,13 @@
 
 
 /***/ },
-/* 50 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const initAction_1 = __webpack_require__(51);
-	const Status_1 = __webpack_require__(53);
-	const set = __webpack_require__(56);
+	const initAction_1 = __webpack_require__(49);
+	const Status_1 = __webpack_require__(51);
+	const set = __webpack_require__(54);
 	exports.init = [initAction_1.initAction,
 	    { success: [Status_1.status,
 	            set('state:/$midi.status', 'on')
@@ -8977,11 +2599,11 @@
 
 
 /***/ },
-/* 51 */
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const MidiHelper_1 = __webpack_require__(52);
+	const MidiHelper_1 = __webpack_require__(50);
 	exports.initAction = ({ state, output }) => {
 	    MidiHelper_1.MidiHelper.init()
 	        .then((message) => {
@@ -8995,7 +2617,7 @@
 
 
 /***/ },
-/* 52 */
+/* 50 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -9068,7 +2690,7 @@
 
 
 /***/ },
-/* 53 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9076,8 +2698,8 @@
 	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 	}
 	__export(__webpack_require__(3));
-	const changed_1 = __webpack_require__(54);
-	const toggledDetail_1 = __webpack_require__(55);
+	const changed_1 = __webpack_require__(52);
+	const toggledDetail_1 = __webpack_require__(53);
 	exports.Status = (options = {}) => {
 	    return (module, controller) => {
 	        module.addState({ list: [],
@@ -9093,7 +2715,7 @@
 
 
 /***/ },
-/* 54 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9103,7 +2725,7 @@
 
 
 /***/ },
-/* 55 */
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9113,14 +2735,14 @@
 
 
 /***/ },
-/* 56 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(57).default
+	module.exports = __webpack_require__(55).default
 
 
 /***/ },
-/* 57 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9144,25 +2766,25 @@
 	  return set;
 	};
 	
-	var _set = __webpack_require__(58);
+	var _set = __webpack_require__(56);
 	
 	var _set2 = _interopRequireDefault(_set);
 	
-	var _toDisplayName = __webpack_require__(66);
+	var _toDisplayName = __webpack_require__(64);
 	
 	var _toDisplayName2 = _interopRequireDefault(_toDisplayName);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
-/* 58 */
+/* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(59).default
+	module.exports = __webpack_require__(57).default
 
 
 /***/ },
-/* 59 */
+/* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9172,7 +2794,7 @@
 	});
 	exports.default = compile;
 	
-	var _compiler = __webpack_require__(60);
+	var _compiler = __webpack_require__(58);
 	
 	var _compiler2 = _interopRequireDefault(_compiler);
 	
@@ -9185,7 +2807,7 @@
 	}
 
 /***/ },
-/* 60 */
+/* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9195,19 +2817,19 @@
 	});
 	exports.default = compile;
 	
-	var _input = __webpack_require__(61);
+	var _input = __webpack_require__(59);
 	
 	var _input2 = _interopRequireDefault(_input);
 	
-	var _output = __webpack_require__(63);
+	var _output = __webpack_require__(61);
 	
 	var _output2 = _interopRequireDefault(_output);
 	
-	var _state = __webpack_require__(64);
+	var _state = __webpack_require__(62);
 	
 	var _state2 = _interopRequireDefault(_state);
 	
-	var _parseUrl = __webpack_require__(65);
+	var _parseUrl = __webpack_require__(63);
 	
 	var _parseUrl2 = _interopRequireDefault(_parseUrl);
 	
@@ -9257,7 +2879,7 @@
 	}
 
 /***/ },
-/* 61 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9266,7 +2888,7 @@
 	  value: true
 	});
 	
-	var _objectPath = __webpack_require__(62);
+	var _objectPath = __webpack_require__(60);
 	
 	exports.default = function (path, url, urlPath) {
 	  // get the value from the input object
@@ -9278,7 +2900,7 @@
 	};
 
 /***/ },
-/* 62 */
+/* 60 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -9321,7 +2943,7 @@
 	}
 
 /***/ },
-/* 63 */
+/* 61 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9330,7 +2952,7 @@
 	  value: true
 	});
 	
-	var _objectPath = __webpack_require__(62);
+	var _objectPath = __webpack_require__(60);
 	
 	exports.default = function (path, url, urlPath) {
 	  // add the value to the input object and pass it to output
@@ -9350,7 +2972,7 @@
 	};
 
 /***/ },
-/* 64 */
+/* 62 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -9411,7 +3033,7 @@
 	};
 
 /***/ },
-/* 65 */
+/* 63 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -9432,7 +3054,7 @@
 	}
 
 /***/ },
-/* 66 */
+/* 64 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -9446,7 +3068,7 @@
 	};
 
 /***/ },
-/* 67 */
+/* 65 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -9484,14 +3106,14 @@
 
 
 /***/ },
-/* 68 */
+/* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	function __export(m) {
 	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 	}
-	__export(__webpack_require__(69));
+	__export(__webpack_require__(67));
 	exports.Code = (options = {}) => {
 	    return (module, controller) => {
 	        module.addState({});
@@ -9502,7 +3124,7 @@
 
 
 /***/ },
-/* 69 */
+/* 67 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -9510,7 +3132,7 @@
 
 
 /***/ },
-/* 70 */
+/* 68 */
 /***/ function(module, exports) {
 
 	// Object.assign polyfill
@@ -9617,19 +3239,19 @@
 
 
 /***/ },
-/* 71 */
+/* 69 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	function __export(m) {
 	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 	}
-	__export(__webpack_require__(72));
-	const Model = __webpack_require__(73);
-	const add_1 = __webpack_require__(74);
-	const name_1 = __webpack_require__(82);
-	const remove_1 = __webpack_require__(85);
-	const select_1 = __webpack_require__(87);
+	__export(__webpack_require__(70));
+	const Model = __webpack_require__(71);
+	const add_1 = __webpack_require__(72);
+	const name_1 = __webpack_require__(80);
+	const remove_1 = __webpack_require__(83);
+	const select_1 = __webpack_require__(85);
 	const CurrentScene = Model.monkey({ cursors: { sceneById: ['data', 'scene'],
 	        id: ['$sceneId']
 	    },
@@ -9652,7 +3274,7 @@
 
 
 /***/ },
-/* 72 */
+/* 70 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9686,19 +3308,19 @@
 
 
 /***/ },
-/* 73 */
+/* 71 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = (__webpack_require__(15))(92);
+	module.exports = (__webpack_require__(15))(120);
 
 /***/ },
-/* 74 */
+/* 72 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const addAction_1 = __webpack_require__(75);
-	const save_1 = __webpack_require__(76);
-	const copy = __webpack_require__(78);
+	const addAction_1 = __webpack_require__(73);
+	const save_1 = __webpack_require__(74);
+	const copy = __webpack_require__(76);
 	exports.add = [addAction_1.addAction,
 	    { success: [copy('input:/_id', 'state:/$sceneId'),
 	            copy('input:/_id', 'state:/$factory.editing'),
@@ -9710,11 +3332,11 @@
 
 
 /***/ },
-/* 75 */
+/* 73 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const Scene_1 = __webpack_require__(71);
+	const Scene_1 = __webpack_require__(69);
 	exports.addAction = ({ state, input: {  }, output }) => {
 	    Scene_1.createScene()
 	        .then((scene) => {
@@ -9735,11 +3357,11 @@
 
 
 /***/ },
-/* 76 */
+/* 74 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const saveAction_1 = __webpack_require__(77);
+	const saveAction_1 = __webpack_require__(75);
 	const status_1 = __webpack_require__(3);
 	exports.save = [saveAction_1.saveAction,
 	    { success: [],
@@ -9749,7 +3371,7 @@
 
 
 /***/ },
-/* 77 */
+/* 75 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9793,14 +3415,14 @@
 
 
 /***/ },
-/* 78 */
+/* 76 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(79).default
+	module.exports = __webpack_require__(77).default
 
 
 /***/ },
-/* 79 */
+/* 77 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9855,29 +3477,29 @@
 	  return copy;
 	};
 	
-	var _get = __webpack_require__(80);
+	var _get = __webpack_require__(78);
 	
 	var _get2 = _interopRequireDefault(_get);
 	
-	var _set = __webpack_require__(58);
+	var _set = __webpack_require__(56);
 	
 	var _set2 = _interopRequireDefault(_set);
 	
-	var _toDisplayName = __webpack_require__(66);
+	var _toDisplayName = __webpack_require__(64);
 	
 	var _toDisplayName2 = _interopRequireDefault(_toDisplayName);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
-/* 80 */
+/* 78 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(81).default
+	module.exports = __webpack_require__(79).default
 
 
 /***/ },
-/* 81 */
+/* 79 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9887,7 +3509,7 @@
 	});
 	exports.default = compile;
 	
-	var _compiler = __webpack_require__(60);
+	var _compiler = __webpack_require__(58);
 	
 	var _compiler2 = _interopRequireDefault(_compiler);
 	
@@ -9900,12 +3522,12 @@
 	}
 
 /***/ },
-/* 82 */
+/* 80 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const saveDoc_1 = __webpack_require__(83);
-	const set = __webpack_require__(56);
+	const saveDoc_1 = __webpack_require__(81);
+	const set = __webpack_require__(54);
 	exports.name = [set('output:/type', 'scene'),
 	    set('output:/key', 'name'),
 	    set('state:/$factory.scene.close', true),
@@ -9914,19 +3536,19 @@
 
 
 /***/ },
-/* 83 */
+/* 81 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const docAction_1 = __webpack_require__(84);
-	const save_1 = __webpack_require__(76);
+	const docAction_1 = __webpack_require__(82);
+	const save_1 = __webpack_require__(74);
 	exports.saveDoc = [docAction_1.docAction,
 	    ...save_1.save
 	];
 
 
 /***/ },
-/* 84 */
+/* 82 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9949,13 +3571,13 @@
 
 
 /***/ },
-/* 85 */
+/* 83 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const removeAction_1 = __webpack_require__(86);
-	const save_1 = __webpack_require__(76);
-	const Status_1 = __webpack_require__(53);
+	const removeAction_1 = __webpack_require__(84);
+	const save_1 = __webpack_require__(74);
+	const Status_1 = __webpack_require__(51);
 	exports.remove = [removeAction_1.removeAction,
 	    { success: [...save_1.save],
 	        error: [Status_1.status]
@@ -9964,11 +3586,11 @@
 
 
 /***/ },
-/* 86 */
+/* 84 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const _1 = __webpack_require__(71);
+	const _1 = __webpack_require__(69);
 	exports.removeAction = ({ state, input: { _id }, output }) => {
 	    // clear modal
 	    state.set(['$factory', 'modal', 'active'], false);
@@ -10015,17 +3637,17 @@
 
 
 /***/ },
-/* 87 */
+/* 85 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const copy = __webpack_require__(78);
+	const copy = __webpack_require__(76);
 	exports.select = [copy('input:/_id', 'state:/$sceneId')
 	];
 
 
 /***/ },
-/* 88 */
+/* 86 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10051,13 +3673,13 @@
 
 
 /***/ },
-/* 89 */
+/* 87 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const addAction_1 = __webpack_require__(90);
-	const save_1 = __webpack_require__(76);
-	const copy = __webpack_require__(78);
+	const addAction_1 = __webpack_require__(88);
+	const save_1 = __webpack_require__(74);
+	const copy = __webpack_require__(76);
 	exports.add = [addAction_1.addAction,
 	    { success: [
 	            // is selected.
@@ -10072,7 +3694,7 @@
 
 
 /***/ },
-/* 90 */
+/* 88 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10096,12 +3718,12 @@
 
 
 /***/ },
-/* 91 */
+/* 89 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const saveDoc_1 = __webpack_require__(83);
-	const set = __webpack_require__(56);
+	const saveDoc_1 = __webpack_require__(81);
+	const set = __webpack_require__(54);
 	exports.name = [set('output:/type', 'project'),
 	    set('output:/key', 'name'),
 	    set('state:/$factory.project.close', true),
@@ -10110,12 +3732,12 @@
 
 
 /***/ },
-/* 92 */
+/* 90 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const selectAction_1 = __webpack_require__(88);
-	const save_1 = __webpack_require__(76);
+	const selectAction_1 = __webpack_require__(86);
+	const save_1 = __webpack_require__(74);
 	exports.select = 
 	// prepare things to add
 	[selectAction_1.selectAction,
@@ -10125,14 +3747,14 @@
 
 
 /***/ },
-/* 93 */
+/* 91 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(94).default
+	module.exports = __webpack_require__(92).default
 
 
 /***/ },
-/* 94 */
+/* 92 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10143,11 +3765,11 @@
 	
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 	
-	var _get = __webpack_require__(80);
+	var _get = __webpack_require__(78);
 	
 	var _get2 = _interopRequireDefault(_get);
 	
-	var _toDisplayName = __webpack_require__(66);
+	var _toDisplayName = __webpack_require__(64);
 	
 	var _toDisplayName2 = _interopRequireDefault(_toDisplayName);
 	
@@ -10228,13 +3850,13 @@
 	exports.default = when;
 
 /***/ },
-/* 95 */
+/* 93 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const testing_1 = __webpack_require__(96);
-	const runall_1 = __webpack_require__(97);
-	const stats_1 = __webpack_require__(123);
+	const testing_1 = __webpack_require__(94);
+	const runall_1 = __webpack_require__(95);
+	const stats_1 = __webpack_require__(121);
 	const status_1 = __webpack_require__(3);
 	exports.runtests = [testing_1.testing,
 	    status_1.status,
@@ -10243,7 +3865,7 @@
 
 
 /***/ },
-/* 96 */
+/* 94 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -10253,12 +3875,12 @@
 
 
 /***/ },
-/* 97 */
+/* 95 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	__webpack_require__(98);
-	const runner_1 = __webpack_require__(100);
+	__webpack_require__(96);
+	const runner_1 = __webpack_require__(98);
 	exports.runall = ({ state, output }) => {
 	    runner_1.run((stats) => {
 	        output.success({ stats });
@@ -10268,14 +3890,16 @@
 
 
 /***/ },
-/* 98 */
+/* 96 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	__webpack_require__(99);
-	__webpack_require__(104);
+	__webpack_require__(97);
+	__webpack_require__(102);
+	__webpack_require__(106);
 	__webpack_require__(108);
 	__webpack_require__(110);
+	__webpack_require__(111);
 	__webpack_require__(112);
 	__webpack_require__(113);
 	__webpack_require__(114);
@@ -10283,18 +3907,16 @@
 	__webpack_require__(116);
 	__webpack_require__(117);
 	__webpack_require__(118);
-	__webpack_require__(119);
 	__webpack_require__(120);
-	__webpack_require__(122);
 
 
 /***/ },
-/* 99 */
+/* 97 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	const Component_1 = __webpack_require__(13);
-	const runner_1 = __webpack_require__(100);
+	const runner_1 = __webpack_require__(98);
 	const e = (sel, klass, obj) => {
 	    const o = Object.assign({ sel, data: {}, children: [] }, obj || {});
 	    if (klass) {
@@ -10424,11 +4046,11 @@
 
 
 /***/ },
-/* 100 */
+/* 98 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const deepEqual = __webpack_require__(101);
+	const deepEqual = __webpack_require__(99);
 	const DEFAULT_TIMEOUT = 3000;
 	const NO_ERR = { message: 'did not throw' };
 	const suites = [];
@@ -10612,7 +4234,8 @@
 	                }
 	            }
 	        }
-	    }, DEFAULT_TIMEOUT);
+	    }, DEFAULT_TIMEOUT * 4 // One timeout for all suites
+	    );
 	    startTest();
 	};
 	const testGen = function* (onfinish, { onsuccess = defaultSuccess, onfail = defaultFail, onpending = defaultPending, onsuite, ontest }, forward) {
@@ -10714,12 +4337,12 @@
 
 
 /***/ },
-/* 101 */
+/* 99 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var pSlice = Array.prototype.slice;
-	var objectKeys = __webpack_require__(102);
-	var isArguments = __webpack_require__(103);
+	var objectKeys = __webpack_require__(100);
+	var isArguments = __webpack_require__(101);
 	
 	var deepEqual = module.exports = function (actual, expected, opts) {
 	  if (!opts) opts = {};
@@ -10814,7 +4437,7 @@
 
 
 /***/ },
-/* 102 */
+/* 100 */
 /***/ function(module, exports) {
 
 	exports = module.exports = typeof Object.keys === 'function'
@@ -10829,7 +4452,7 @@
 
 
 /***/ },
-/* 103 */
+/* 101 */
 /***/ function(module, exports) {
 
 	var supportsArgumentsClass = (function(){
@@ -10855,37 +4478,42 @@
 
 
 /***/ },
-/* 104 */
+/* 102 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const Test_1 = __webpack_require__(105);
+	const Test_1 = __webpack_require__(103);
 	const CodeHelper_1 = __webpack_require__(36);
-	Test_1.describe('compileCode', (it) => {
+	Test_1.describe('CodeHelper compileCode', (it) => {
 	    it('should return errors on invalid code', (assert, done) => {
 	        CodeHelper_1.compileCode('x', ({ js, errors }) => {
 	            assert.same(js, undefined);
 	            assert.equal({ message: "Cannot find name 'x'.", line: 0, ch: 0 }, errors[0]);
+	            done();
 	        });
 	    });
-	    it('should recognize lucidity', (assert) => {
+	    it('should recognize lucidity', (assert, done) => {
 	        const src = "import { Meta } from 'lucidity'";
 	        CodeHelper_1.compileCode(src, ({ js, errors }) => {
 	            assert.same(errors, undefined);
 	            assert.equal(js, '"use strict";\n');
+	            done();
 	        });
 	    });
-	    it('should recognize browser libs', (assert) => {
+	    it('should recognize browser libs', (assert, done) => {
 	        const src = "window.boom()";
 	        CodeHelper_1.compileCode(src, ({ js, errors }) => {
 	            assert.equal("Property 'boom' does not exist on type 'Window'.", errors[0].message);
+	            done();
 	        });
 	    });
 	});
-	Test_1.describe('compileCode scrub', (it) => {
+	Test_1.describe('CodeHelper compileCode scrub', (it, setupDone) => {
 	    const src = `// This is a comment
 	   export const init =
 	   ( { context } ) => {
+	     const foo = ( a, b ) => a + b
+	     const x = 0
 	     context.test.a = 10
 	     context.test.b = -20
 	     context.test.x = x - 30
@@ -10899,28 +4527,34 @@
 	     return 120
 	   }
 	  `;
-	    CodeHelper_1.compileCode(src, ({ scrub }) => {
-	        const literals = scrub.literals;
-	        it('should get values with unary minus', (assert) => {
-	            assert.equal(literals.map(l => l.value), [10, -20, 30, -40, -50, 60, -70, -80, 90, 100, 110, 120]);
-	        });
-	        it('should get literal position', (assert) => {
-	            assert.equal(literals.map(l => l.line), [3, 4, 5, 6, 7, 7, 8, 8, 8, 8, 8, 13]);
-	        });
+	    let scrub, errors;
+	    CodeHelper_1.compileCode(src, (res) => {
+	        errors = res.errors;
+	        scrub = res.scrub;
+	        setupDone();
+	    });
+	    it('should compile', (assert) => {
+	        assert.same(errors, undefined);
+	    });
+	    it('should get values with unary minus', (assert) => {
+	        assert.equal(scrub.literals.map(l => l.value), [0, 10, -20, 30, -40, -50, 60, -70, -80, 90, 100, 110, 120]);
+	    });
+	    it('should get literal position', (assert) => {
+	        assert.equal(scrub.literals.map(l => l.line), [4, 5, 6, 7, 8, 9, 9, 10, 10, 10, 10, 10, 15]);
 	    });
 	});
 
 
 /***/ },
-/* 105 */
+/* 103 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	function __export(m) {
 	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 	}
-	__export(__webpack_require__(106));
-	__export(__webpack_require__(100));
+	__export(__webpack_require__(104));
+	__export(__webpack_require__(98));
 	exports.Test = (options = {}) => {
 	    return (module, controller) => {
 	        /*
@@ -10941,13 +4575,13 @@
 
 
 /***/ },
-/* 106 */
+/* 104 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// modules
 	"use strict";
-	const Controller = __webpack_require__(107);
-	const Model = __webpack_require__(73);
+	const Controller = __webpack_require__(105);
+	const Model = __webpack_require__(71);
 	const testModule = (signal) => (module, controller) => {
 	    module.addSignals({ signal });
 	};
@@ -10970,19 +4604,19 @@
 
 
 /***/ },
-/* 107 */
+/* 105 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = (__webpack_require__(15))(1);
 
 /***/ },
-/* 108 */
+/* 106 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const runner_1 = __webpack_require__(100);
-	const saveAction_1 = __webpack_require__(77);
-	const Baobab = __webpack_require__(109);
+	const runner_1 = __webpack_require__(98);
+	const saveAction_1 = __webpack_require__(75);
+	const Baobab = __webpack_require__(107);
 	runner_1.describe('Data save action', (it) => {
 	    it('should save to db', (assert) => {
 	        const state = new Baobab({ project: { _id: 'foobar' }
@@ -11015,19 +4649,19 @@
 
 
 /***/ },
-/* 109 */
+/* 107 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = (__webpack_require__(15))(93);
+	module.exports = (__webpack_require__(15))(121);
 
 /***/ },
-/* 110 */
+/* 108 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const runner_1 = __webpack_require__(100);
-	const makeDoc_action_1 = __webpack_require__(111);
-	const Baobab = __webpack_require__(109);
+	const runner_1 = __webpack_require__(98);
+	const makeDoc_action_1 = __webpack_require__(109);
+	const Baobab = __webpack_require__(107);
 	runner_1.describe('Factory makeDoc action', (it) => {
 	    it('should prepare for db', (assert) => {
 	        const state = new Baobab({ data: { main: { foo: { value: 'bong', _rev: '1-x' } } } });
@@ -11047,7 +4681,7 @@
 
 
 /***/ },
-/* 111 */
+/* 109 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -11066,13 +4700,13 @@
 
 
 /***/ },
-/* 112 */
+/* 110 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const runner_1 = __webpack_require__(100);
+	const runner_1 = __webpack_require__(98);
 	const set_action_1 = __webpack_require__(24);
-	const Baobab = __webpack_require__(109);
+	const Baobab = __webpack_require__(107);
 	runner_1.describe('Factory set action', (it) => {
 	    it('should set state', (assert) => {
 	        const state = new Baobab({ foo: { bar: true, bing: 'bong' } });
@@ -11091,11 +4725,11 @@
 
 
 /***/ },
-/* 113 */
+/* 111 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const runner_1 = __webpack_require__(100);
+	const runner_1 = __webpack_require__(98);
 	const BlockHelper_1 = __webpack_require__(35);
 	const SOURCE_A = `
 	import { Update, Meta } from 'lucidity'
@@ -11177,8 +4811,12 @@
 	        assert.equal(typeof BlockHelper_1.extractMeta, 'function');
 	        assert.equal(block.meta, BlockHelper_1.extractMeta({ meta, update() { } }));
 	    });
-	    it('should set isvoid', (assert) => {
-	        assert.same(block.meta.isvoid, true);
+	    it('should set isvoid', (assert, done) => {
+	        BlockHelper_1.createBlock('hello', `interface Foo {}\nexport const update = () => 'hop'`)
+	            .then((block) => {
+	            assert.same(block.meta.isvoid, true);
+	            done();
+	        });
 	    });
 	});
 	runner_1.describe('updateBlock', (it) => {
@@ -11215,6 +4853,7 @@
 	    it('should set isvoid', (assert, done) => {
 	        update({ source: 'export const update = () => {}' }, (err, block) => {
 	            assert.same(block.meta.isvoid, true);
+	            done();
 	        });
 	    });
 	});
@@ -11261,11 +4900,11 @@
 
 
 /***/ },
-/* 114 */
+/* 112 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const runner_1 = __webpack_require__(100);
+	const runner_1 = __webpack_require__(98);
 	const GraphHelper_1 = __webpack_require__(34);
 	const NodeHelper_1 = __webpack_require__(31);
 	// [ main ]
@@ -11379,11 +5018,11 @@
 
 
 /***/ },
-/* 115 */
+/* 113 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const runner_1 = __webpack_require__(100);
+	const runner_1 = __webpack_require__(98);
 	const GraphHelper_1 = __webpack_require__(34);
 	const NodeHelper_1 = __webpack_require__(31);
 	// [ main: [():string], ():void ]
@@ -11519,11 +5158,11 @@
 
 
 /***/ },
-/* 116 */
+/* 114 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const runner_1 = __webpack_require__(100);
+	const runner_1 = __webpack_require__(98);
 	const GraphHelper_1 = __webpack_require__(34);
 	const NodeHelper_1 = __webpack_require__(31);
 	const BlockHelper_1 = __webpack_require__(35);
@@ -11587,6 +5226,7 @@
 	                    baz: 'baz.type'
 	                }
 	            });
+	            done();
 	        });
 	    });
 	});
@@ -11621,6 +5261,7 @@
 	    });
 	});
 	runner_1.describe('insertGraph', (it, setupDone) => {
+	    let main;
 	    let graph;
 	    let g1;
 	    let g2;
@@ -11632,6 +5273,7 @@
 	            .then((g) => { g2 = g; })
 	    ])
 	        .then(() => {
+	        main = graph;
 	        graph = GraphHelper_1.insertGraph(graph, NodeHelper_1.rootNodeId, 0, g1);
 	        graph = GraphHelper_1.insertGraph(graph, NodeHelper_1.rootNodeId, 0, g2);
 	        setupDone();
@@ -11644,11 +5286,11 @@
 	        );
 	    });
 	    it('should insert null', (assert) => {
-	        let g = GraphHelper_1.insertGraph(graph, NodeHelper_1.rootNodeId, 1, g1);
+	        let g = GraphHelper_1.insertGraph(main, NodeHelper_1.rootNodeId, 1, g1);
 	        assert.equal(g.nodesById[NodeHelper_1.rootNodeId].children, [null, 'n1']);
 	    });
 	    it('should replace null', (assert) => {
-	        let g = GraphHelper_1.insertGraph(graph, NodeHelper_1.rootNodeId, 1, g1);
+	        let g = GraphHelper_1.insertGraph(main, NodeHelper_1.rootNodeId, 1, g1);
 	        g = GraphHelper_1.insertGraph(g, NodeHelper_1.rootNodeId, 0, g2);
 	        assert.equal(g.nodesById[NodeHelper_1.rootNodeId].children, ['n2', 'n1']);
 	    });
@@ -11672,10 +5314,10 @@
 	    const nid = {};
 	    Promise.all([GraphHelper_1.createGraph('baz', SOURCE_A)
 	            .then((g) => { baz = g; }),
-	        GraphHelper_1.createGraph('bon', SOURCE_A)
+	        GraphHelper_1.createGraph('bong', SOURCE_A)
 	            .then((g) => { bong = g; }),
 	        GraphHelper_1.createGraph('bar', SOURCE_A)
-	            .then((g) => { bong = g; }),
+	            .then((g) => { bar = g; }),
 	        GraphHelper_1.createGraph()
 	            .then((g) => { main = g; }),
 	        GraphHelper_1.createGraph('foo', SOURCE_A)
@@ -11751,8 +5393,8 @@
 	    });
 	    it('create smaller graph', (assert) => {
 	        assert.equal(Object.keys(main.nodesById).sort(), ['n0', 'n1']);
-	        assert.equal(traverse(main), ['n0:b0:foo',
-	            ' n1:b1:bar'
+	        assert.equal(traverse(main), ['n0:b0:g1',
+	            ' n1:b1:g2'
 	        ]);
 	    });
 	    it('should select block', (assert) => {
@@ -11778,6 +5420,7 @@
 	        //         [ bar ] 'n2'
 	        main = GraphHelper_1.dropGraph(main, 'n1');
 	        // [ graph ] 'n0'
+	        setupDone();
 	    });
 	    it('create smaller graph', (assert) => {
 	        assert.equal(traverse(main), ['n0:b0:main']);
@@ -11789,12 +5432,12 @@
 
 
 /***/ },
-/* 117 */
+/* 115 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const runner_1 = __webpack_require__(100);
-	const Immutable_1 = __webpack_require__(70);
+	const runner_1 = __webpack_require__(98);
+	const Immutable_1 = __webpack_require__(68);
 	runner_1.describe('IM.merge', (it) => {
 	    it('should create new object', (assert) => {
 	        const a = {};
@@ -11961,11 +5604,11 @@
 
 
 /***/ },
-/* 118 */
+/* 116 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const runner_1 = __webpack_require__(100);
+	const runner_1 = __webpack_require__(98);
 	const NodeHelper_1 = __webpack_require__(31);
 	runner_1.describe('createNode', (it) => {
 	    it('should set defaults', (assert) => {
@@ -11997,11 +5640,11 @@
 
 
 /***/ },
-/* 119 */
+/* 117 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const runner_1 = __webpack_require__(100);
+	const runner_1 = __webpack_require__(98);
 	runner_1.describe('uimap cache', (it) => {
 	    // When and what can be reused ?
 	    // Can reuse what does not depend on children:
@@ -12015,80 +5658,88 @@
 
 
 /***/ },
-/* 120 */
+/* 118 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const Test_1 = __webpack_require__(105);
+	const Test_1 = __webpack_require__(103);
 	const GraphHelper_1 = __webpack_require__(34);
-	const PlaybackHelper_1 = __webpack_require__(48);
-	const GRAPH = __webpack_require__(121);
+	const PlaybackHelper_1 = __webpack_require__(46);
+	const GRAPH = __webpack_require__(119);
 	/** GRAPH structure
 	[ main        ]
 	[ join        ]
 	[ a     ] [ b ] 'b' ==> calls child with an empty slot
 	[ cache ]       ==> calls init
 	*/
-	Test_1.describe('compileGraph', (it) => {
-	    /* TODO: create graph here, eventually with
-	    const graph = GraphHelper.fromYAML
-	    ( `name: foo
-	       source: |
-	         this is the
-	         source of this
-	         thing.
-	       children:
-	         - name: child1
-	           source: ...
-	         - name: child2
-	           source: ...
-	      `
-	    )
-	    /*
-	    let counter = 0
-	    // simulate preloaded libraries
-	    const PRELOADED = { counter () { return ++counter } }
-	    // mock playback require for now
-	    const require = ( name ) => {
-	      return PRELOADED [ name ]
-	    }
-	  
-	    const graph: GraphType = JSON.parse ( GRAPH )
-	    const cache: any = {}
-	    compileGraph ( graph, cache )
-	    // node cache
-	    const nca: any = {}
-	    for ( const k in graph.nodesById ) {
-	      const node = graph.nodesById [ k ]
-	      const block = graph.blocksById [ node.blockId ]
-	      nca [ block.name ] = cache.nodecache [ k ]
-	    }
-	  
-	    it ( 'should run init', ( assert ) => {
-	      initGraph ( graph, cache, {}, { require } )
-	      assert.equal ( nca.cache.cache, { foo: 1 } )
-	    })
-	  
-	    it ( 'should reuse cache in init', ( assert ) => {
-	      initGraph ( graph, cache, {}, { require } )
-	      initGraph ( graph, cache, {}, { require } )
-	      assert.equal ( nca.cache.cache, { foo: 1 } )
-	      assert.equal ( 1, counter )
-	    })
-	  
-	    it ( 'should compile graph into a function', ( assert ) => {
-	      assert.equal ( 'function' , typeof cache.main )
-	    })
-	  
-	    it ( 'should run main', ( assert ) => {
-	      const res = cache.main ()
-	      assert.equal ( '1bnull', res )
-	    })
-	    */
-	    it('should be fixed', (assert) => {
-	        assert.pending('build graph from yaml to fix compile tests');
-	    });
-	});
+	const SOURCE_EXTRA = `
+	export const init =
+	( { context, asset } ) => {
+	  asset.source ( 'frag.glsl', ( s ) => {
+	    context.test.frag = s
+	  })
+	  asset.source ( 'vert.glsl', ( s ) => {
+	    context.test.vert = s
+	  })
+	}
+	`;
+	/* TODO: create graph here, eventually with
+	describe ( 'compileGraph', ( it ) => {
+	  const graph = GraphHelper.fromYAML
+	  ( `name: foo
+	     source: |
+	       this is the
+	       source of this
+	       thing.
+	     children:
+	       - name: child1
+	         source: ...
+	       - name: child2
+	         source: ...
+	    `
+	  )
+	  /*
+	  let counter = 0
+	  // simulate preloaded libraries
+	  const PRELOADED = { counter () { return ++counter } }
+	  // mock playback require for now
+	  const require = ( name ) => {
+	    return PRELOADED [ name ]
+	  }
+	
+	  const graph: GraphType = JSON.parse ( GRAPH )
+	  const cache: any = {}
+	  compileGraph ( graph, cache )
+	  // node cache
+	  const nca: any = {}
+	  for ( const k in graph.nodesById ) {
+	    const node = graph.nodesById [ k ]
+	    const block = graph.blocksById [ node.blockId ]
+	    nca [ block.name ] = cache.nodecache [ k ]
+	  }
+	
+	  it ( 'should run init', ( assert ) => {
+	    initGraph ( graph, cache, {}, { require } )
+	    assert.equal ( nca.cache.cache, { foo: 1 } )
+	  })
+	
+	  it ( 'should reuse cache in init', ( assert ) => {
+	    initGraph ( graph, cache, {}, { require } )
+	    initGraph ( graph, cache, {}, { require } )
+	    assert.equal ( nca.cache.cache, { foo: 1 } )
+	    assert.equal ( 1, counter )
+	  })
+	
+	  it ( 'should compile graph into a function', ( assert ) => {
+	    assert.equal ( 'function' , typeof cache.main )
+	  })
+	
+	  it ( 'should run main', ( assert ) => {
+	    const res = cache.main ()
+	    assert.equal ( '1bnull', res )
+	  })
+	})
+	*/
 	Test_1.describe('context', (it) => {
 	    const context = PlaybackHelper_1.makeContext({ foo: 'bar' });
 	    it('should be immutable', (assert) => {
@@ -12194,11 +5845,12 @@
 	     }`)
 	        .then((g) => {
 	        graph = g;
+	        PlaybackHelper_1.runGraph(graph, context, cache);
+	        nc = cache.nodecache['n0'];
 	        // simulate change
 	        const graph2 = { nodesById: graph.nodesById, blocksById: graph.blocksById };
 	        PlaybackHelper_1.runGraph(graph2, context, cache);
 	        nc = cache.nodecache['n0'];
-	        PlaybackHelper_1.runGraph(graph, context, cache);
 	        setupDone();
 	    })
 	        .catch((errors) => {
@@ -12210,60 +5862,52 @@
 	        assert.equal([['a'], ['b'], ['foo', 'bar']], nc.controls.map((c) => c.labels));
 	    });
 	});
-	/*
-	describe ( 'PlaybackHelper.compile scrub', ( it ) => {
-	  const graph = GraphHelper.create
-	  ( 'main'
-	  , `export const init =
-	     ( { context } ) => {
-	       context.test.a = 10
-	       context.test.b = 20
-	       context.test.x = 30
-	       context.test.y = 40
-	     }
-	
-	     export const update =
-	     () => {
-	       return 10
-	     }
-	    `
-	  )
-	  const cache = { nodecache: {}, scrub: 'b0' }
-	  const context: any = { test: {} }
-	  PlaybackHelper.run ( graph, context, cache )
-	  // the js source for this node is now a special parsing with the scrubber '$l$' instead of the values.
-	  // simulate change
-	  const graph2: GraphType = { nodesById: graph.nodesById, blocksById: graph.blocksById }
-	  PlaybackHelper.run ( graph2, context, cache )
-	  const nc = cache.nodecache [ 'n0' ]
-	
-	  it ( 'should extract many controls', ( assert ) => {
-	    const ctrl: PlaybackControl = nc.controls [ 0 ]
-	    assert.equal ( 3, nc.controls.length )
-	    assert.equal
-	    ( [ [ 'a' ], [ 'b' ], [ 'foo', 'bar' ] ]
-	    , nc.controls.map ( ( c ) => c.labels )
-	    )
-	  })
-	
-	})
-	*/
+	Test_1.describe('PlaybackHelper asset.source', (it, setupDone) => {
+	    let graph;
+	    let graph2;
+	    let graph3;
+	    const cache = { nodecache: {} };
+	    const context = { test: { frag: 'x', vert: 'x' } };
+	    let nc;
+	    GraphHelper_1.createGraph('main', SOURCE_EXTRA)
+	        .then((g) => {
+	        graph = PlaybackHelper_1.runGraph(g, context, cache);
+	        nc = cache.nodecache['n0'];
+	        graph2 = { nodesById: graph.nodesById, blocksById: graph.blocksById };
+	        graph3 = PlaybackHelper_1.runGraph(graph2, context, cache);
+	        nc = cache.nodecache['n0'];
+	        setupDone();
+	    });
+	    it('should not modify graph without changes', (assert) => {
+	        assert.same(graph3, graph2);
+	    });
+	    it('should set extra sources', (assert) => {
+	        const block = graph.blocksById['b0'];
+	        assert.equal(Object.keys(block.sources).sort(), ['frag.glsl', 'vert.glsl']);
+	        assert.equal(Object.keys(nc.sourceCallbacks).sort(), ['frag.glsl', 'vert.glsl']);
+	        assert.equal('', context.test.frag);
+	        assert.equal('', context.test.vert);
+	        nc.sourceCallbacks['frag.glsl'].callback('fragment');
+	        assert.equal('fragment', context.test.frag);
+	        assert.equal('', context.test.vert);
+	    });
+	});
 
 
 /***/ },
-/* 121 */
+/* 119 */
 /***/ function(module, exports) {
 
 	module.exports = "{\n  \"nodesById\": {\n    \"n0\": {\n      \"id\": \"n0\",\n      \"blockId\": \"b0\",\n      \"parent\": null,\n      \"children\": [\n        \"n1\"\n      ]\n    },\n    \"n1\": {\n      \"id\": \"n1\",\n      \"blockId\": \"b1\",\n      \"parent\": \"n0\",\n      \"children\": [\n        \"n2\",\n        \"n3\"\n      ]\n    },\n    \"n2\": {\n      \"id\": \"n2\",\n      \"blockId\": \"b2\",\n      \"parent\": \"n1\",\n      \"children\": [\n        \"n4\"\n      ]\n    },\n    \"n3\": {\n      \"id\": \"n3\",\n      \"blockId\": \"b3\",\n      \"parent\": \"n1\",\n      \"children\": []\n    },\n    \"n4\": {\n      \"id\": \"n4\",\n      \"blockId\": \"b4\",\n      \"parent\": \"n2\",\n      \"children\": []\n    }\n  },\n  \"blocksById\": {\n    \"b0\": {\n      \"id\": \"b0\",\n      \"name\": \"main\",\n      \"source\": \"export const render =\\n( ctx, child ) => {\\n  return child ()\\n}\\n\",\n      \"input\": [\n        \"string\"\n      ],\n      \"js\": \"\\\"use strict\\\";\\nexports.render = function (ctx, child) {\\n return child();\\n};\\n\",\n      \"output\": \"string\",\n      \"init\": false\n    },\n    \"b1\": {\n      \"id\": \"b1\",\n      \"name\": \"join\",\n      \"source\": \"export const render =\\n( ctx, child, child2 ) => {\\n  return `${child()}${child2()}`\\n}\\n\",\n      \"input\": [\n        \"string\",\n        \"string\"\n      ],\n      \"js\": \"\\\"use strict\\\";\\nexports.render = function (ctx, child, child2) {\\n    return \\\"\\\" + child() + child2();\\n};\\n\",\n      \"output\": \"string\",\n      \"init\": false\n    },\n    \"b2\": {\n      \"id\": \"b2\",\n      \"name\": \"a\",\n      \"source\": \"export const render =\\n( ctx, child ) => {\\n  return child ( ctx )\\n}\\n\",\n      \"input\": [\n        \"string\"\n      ],\n      \"js\": \"\\\"use strict\\\";\\nexports.render = function (ctx, child) {\\n    return child(ctx);\\n};\\n\",\n      \"output\": \"string\",\n      \"init\": false\n    },\n    \"b3\": {\n      \"id\": \"b3\",\n      \"name\": \"b\",\n      \"source\": \"export const render =\\n( ctx, child ) => {\\n  return 'b' + child ()\\n}\\n\",\n      \"input\": [ \"string\" ],\n      \"js\": \"\\\"use strict\\\";\\nexports.render = function (ctx,child) {\\n    return 'b' + child ();\\n};\\n\",\n      \"output\": \"string\",\n      \"init\": false\n    },\n    \"b4\": {\n      \"id\": \"b4\",\n      \"name\": \"cache\",\n      \"source\": \"// Test that init is called with\\n// cache and require.\\n\\nlet foo\\n\\nexport const init =\\n( ctx, { cache, require } ) => {\\n  const counter = require ( 'counter' )\\n  if ( !cache.foo ) {\\n    cache.foo = counter ()\\n  }\\n  foo = cache.foo\\n}\\n\\nexport const render =\\n( ctx ) => {\\n  return foo\\n}\\n\\n\",\n      \"input\": [],\n      \"js\": \"// Test that init is called with\\n// cache and require.\\n\\\"use strict\\\";\\nvar foo;\\nexports.init = function (ctx, _a) {\\n    var cache = _a.cache, require = _a.require;\\n    var counter = require('counter');\\n    if (!cache.foo) {\\n        cache.foo = counter();\\n    }\\n    foo = cache.foo;\\n};\\nexports.render = function (ctx) {\\n    return foo;\\n};\\n\",\n      \"output\": \"string\",\n      \"init\": true\n    }\n  },\n  \"blockId\": \"b4\"\n}\n"
 
 /***/ },
-/* 122 */
+/* 120 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const runner_1 = __webpack_require__(100);
+	const runner_1 = __webpack_require__(98);
 	const status_1 = __webpack_require__(3);
-	const Baobab = __webpack_require__(109);
+	const Baobab = __webpack_require__(107);
 	runner_1.describe('Status set action', (it) => {
 	    it('should set status in state', (assert) => {
 	        status_1.resetRef();
@@ -12291,11 +5935,11 @@
 
 
 /***/ },
-/* 123 */
+/* 121 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const runner_1 = __webpack_require__(100);
+	const runner_1 = __webpack_require__(98);
 	exports.stats = ({ state, input, output }) => {
 	    const stats = input.stats;
 	    const m = [`${stats.passCount}/${stats.testCount} tests pass`];
@@ -12320,12 +5964,34 @@
 
 
 /***/ },
+/* 122 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	const set = __webpack_require__(54);
+	exports.homeUrl = [set('state:/$route', 'home')
+	];
+
+
+/***/ },
+/* 123 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	const copy = __webpack_require__(76);
+	exports.mode = [copy('input:/mode', 'state:/$playback.mode')
+	];
+
+
+/***/ },
 /* 124 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const set = __webpack_require__(56);
-	exports.homeUrl = [set('state:/$route', 'home')
+	const Project_1 = __webpack_require__(9);
+	const set = __webpack_require__(54);
+	exports.projectUrl = [set('state:/$route', 'project'),
+	    Project_1.selectAction
 	];
 
 
@@ -12334,8 +6000,9 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const copy = __webpack_require__(78);
-	exports.mode = [copy('input:/mode', 'state:/$playback.mode')
+	const set = __webpack_require__(54);
+	exports.projectsUrl = [set('state:/$route', 'projects'),
+	    set('state:/$projectId', '')
 	];
 
 
@@ -12344,10 +6011,10 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const Project_1 = __webpack_require__(9);
-	const set = __webpack_require__(56);
-	exports.projectUrl = [set('state:/$route', 'project'),
-	    Project_1.selectAction
+	const Utils_1 = __webpack_require__(127);
+	const copy = __webpack_require__(76);
+	exports.resized = [Utils_1.debounce(16),
+	    copy('input:/size', 'state:/$playback.size')
 	];
 
 
@@ -12356,22 +6023,42 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const set = __webpack_require__(56);
-	exports.projectsUrl = [set('state:/$route', 'projects'),
-	    set('state:/$projectId', '')
-	];
+	function __export(m) {
+	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+	}
+	__export(__webpack_require__(128));
 
 
 /***/ },
 /* 128 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	"use strict";
-	const Utils_1 = __webpack_require__(129);
-	const copy = __webpack_require__(78);
-	exports.resized = [Utils_1.debounce(16),
-	    copy('input:/size', 'state:/$playback.size')
-	];
+	exports.debounce = (ms) => {
+	    let out;
+	    let done = false;
+	    let last;
+	    const doit = () => {
+	        if (done) {
+	            out.ignored({});
+	        }
+	        else if (Date.now() - last >= ms) {
+	            out.accepted({});
+	            done = true;
+	        }
+	        else {
+	            out.ignored({});
+	        }
+	    };
+	    const action = ({ output }) => {
+	        out = output;
+	        last = Date.now();
+	        setTimeout(doit, ms);
+	    };
+	    action['async'] = true;
+	    action['outputs'] = ['accepted', 'ignored'];
+	    return action;
+	};
 
 
 /***/ },
@@ -12379,67 +6066,32 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	function __export(m) {
-	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-	}
-	__export(__webpack_require__(130));
-
-
-/***/ },
-/* 130 */
-/***/ function(module, exports) {
-
-	"use strict";
-	exports.debounce = (ms) => {
-	    let done;
-	    let last;
-	    const doit = () => {
-	        if (done && Date.now() - last >= ms) {
-	            done();
-	            done = null;
-	        }
-	    };
-	    const action = ({ output }) => {
-	        done = () => {
-	            output();
-	        };
-	        last = Date.now();
-	        setTimeout(doit, ms);
-	    };
-	    action['async'] = true;
-	    return action;
-	};
-
-
-/***/ },
-/* 131 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	const set = __webpack_require__(56);
+	const set = __webpack_require__(54);
 	exports.userUrl = [set('state:/$route', 'user')
 	];
 
 
 /***/ },
-/* 132 */
+/* 130 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	function __export(m) {
 	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 	}
+	__export(__webpack_require__(131));
 	__export(__webpack_require__(133));
-	__export(__webpack_require__(135));
-	const Model = __webpack_require__(73);
-	const add_2 = __webpack_require__(133);
-	const arrow_1 = __webpack_require__(136);
-	const controls_1 = __webpack_require__(138);
-	const name_1 = __webpack_require__(139);
-	const select_1 = __webpack_require__(141);
-	const source_1 = __webpack_require__(143);
+	const Model = __webpack_require__(71);
+	const add_2 = __webpack_require__(131);
+	const arrow_1 = __webpack_require__(134);
+	const controls_1 = __webpack_require__(136);
+	const name_1 = __webpack_require__(137);
+	const select_1 = __webpack_require__(139);
+	const source_1 = __webpack_require__(141);
+	const sources_1 = __webpack_require__(146);
 	const tab_1 = __webpack_require__(148);
-	const values_1 = __webpack_require__(149);
+	const typecheck_1 = __webpack_require__(149);
+	const values_1 = __webpack_require__(150);
 	const CurrentBlock = Model.monkey({ cursors: { sceneById: ['data', 'scene'],
 	        sceneId: ['$sceneId'],
 	        projectById: ['data', 'project'],
@@ -12477,7 +6129,9 @@
 	            name: name_1.name,
 	            select: select_1.select,
 	            source: source_1.source,
+	            sources: sources_1.sources,
 	            tab: tab_1.tab,
+	            typecheck: typecheck_1.typecheck,
 	            values: values_1.values
 	        });
 	        return {}; // meta information
@@ -12486,13 +6140,13 @@
 
 
 /***/ },
-/* 133 */
+/* 131 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const addAction_1 = __webpack_require__(134);
-	const save_1 = __webpack_require__(76);
-	const copy = __webpack_require__(78);
+	const addAction_1 = __webpack_require__(132);
+	const save_1 = __webpack_require__(74);
+	const copy = __webpack_require__(76);
 	exports.add = [addAction_1.addAction,
 	    { success: [copy('input:/editname', 'state:/$factory.block.add'),
 	            ...save_1.save
@@ -12503,11 +6157,11 @@
 
 
 /***/ },
-/* 134 */
+/* 132 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const Immutable_1 = __webpack_require__(70);
+	const Immutable_1 = __webpack_require__(68);
 	// FIXME: why is this 'undefined' if imported from 'Graph' above ?
 	const GraphHelper_1 = __webpack_require__(34);
 	const BlockHelper_1 = __webpack_require__(35);
@@ -12558,7 +6212,7 @@
 
 
 /***/ },
-/* 135 */
+/* 133 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -12566,12 +6220,12 @@
 
 
 /***/ },
-/* 136 */
+/* 134 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const save_1 = __webpack_require__(76);
-	const arrowAction_1 = __webpack_require__(137);
+	const save_1 = __webpack_require__(74);
+	const arrowAction_1 = __webpack_require__(135);
 	// import { source } from '../signals/source'
 	exports.arrow = [arrowAction_1.arrowAction,
 	    ...save_1.save
@@ -12579,7 +6233,7 @@
 
 
 /***/ },
-/* 137 */
+/* 135 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -12591,23 +6245,23 @@
 
 
 /***/ },
-/* 138 */
+/* 136 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const copy = __webpack_require__(78);
+	const copy = __webpack_require__(76);
 	exports.controls = [copy('input:/controls', 'state:/$controls')
 	];
 
 
 /***/ },
-/* 139 */
+/* 137 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const nameAction_1 = __webpack_require__(140);
-	const save_1 = __webpack_require__(76);
-	const set = __webpack_require__(56);
+	const nameAction_1 = __webpack_require__(138);
+	const save_1 = __webpack_require__(74);
+	const set = __webpack_require__(54);
 	exports.name = [nameAction_1.nameAction,
 	    set('state:/$factory.block.close', true),
 	    ...save_1.save
@@ -12615,7 +6269,7 @@
 
 
 /***/ },
-/* 140 */
+/* 138 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -12638,18 +6292,18 @@
 	    const oblock = odoc.graph.blocksById[select.id];
 	    const block = BlockHelper_1.nameBlock(oblock, value);
 	    const doc = Graph_1.Immutable.update(odoc, 'graph', 'blocksById', select.id, block);
-	    output.success({ doc });
+	    output({ doc });
 	};
 
 
 /***/ },
-/* 141 */
+/* 139 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const nameAction_1 = __webpack_require__(140);
-	const save_1 = __webpack_require__(76);
-	const selectAction_1 = __webpack_require__(142);
+	const nameAction_1 = __webpack_require__(138);
+	const save_1 = __webpack_require__(74);
+	const selectAction_1 = __webpack_require__(140);
 	// import { source } from '../signals/source'
 	exports.select = [selectAction_1.selectAction,
 	    { error: [nameAction_1.nameAction,
@@ -12662,7 +6316,7 @@
 
 
 /***/ },
-/* 142 */
+/* 140 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -12698,23 +6352,18 @@
 
 
 /***/ },
-/* 143 */
+/* 141 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const sourceAction_1 = __webpack_require__(144);
-	const save_1 = __webpack_require__(76);
-	const copy = __webpack_require__(78);
-	const Utils_1 = __webpack_require__(129);
-	const unset = __webpack_require__(145);
-	const update_1 = __webpack_require__(147);
-	exports.source = [Utils_1.debounce(100) // Wait before we do anything: the user is typing
-	    ,
-	    sourceAction_1.sourceAction,
+	const sourceAction_1 = __webpack_require__(142);
+	const save_1 = __webpack_require__(74);
+	const copy = __webpack_require__(76);
+	const unset = __webpack_require__(143);
+	const update_1 = __webpack_require__(145);
+	exports.source = [sourceAction_1.sourceAction,
 	    { success: [unset('state:/$editor.errors'),
-	            update_1.update // Optimistic write in state
-	            ,
-	            Utils_1.debounce(500) // Wait for more inactivity before saving ?
+	            update_1.update // Optimistic write in state. This can trigger a 'sources' update.
 	            ,
 	            ...save_1.save
 	        ],
@@ -12725,13 +6374,13 @@
 
 
 /***/ },
-/* 144 */
+/* 142 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	const Graph_1 = __webpack_require__(26);
 	const GraphHelper_1 = __webpack_require__(34);
-	exports.sourceAction = ({ state, input: { value }, output }) => {
+	exports.sourceAction = ({ state, input: { source }, output }) => {
 	    const select = state.get(['$block']);
 	    if (!select) {
 	        // no block visible
@@ -12739,9 +6388,9 @@
 	    }
 	    const odoc = state.get(select.ownerType);
 	    const ograph = odoc.graph;
-	    GraphHelper_1.updateGraphSource(ograph, select.id, value, (errors, graph) => {
+	    GraphHelper_1.updateGraphSource(ograph, select.id, source, (errors, graph) => {
 	        if (errors) {
-	            output.errors({ errors });
+	            output.error({ errors });
 	        }
 	        else {
 	            const doc = Graph_1.Immutable.update(odoc, 'graph', graph);
@@ -12753,14 +6402,14 @@
 
 
 /***/ },
-/* 145 */
+/* 143 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(146).default
+	module.exports = __webpack_require__(144).default
 
 
 /***/ },
-/* 146 */
+/* 144 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12781,14 +6430,14 @@
 	  return unset;
 	};
 	
-	var _get = __webpack_require__(80);
+	var _get = __webpack_require__(78);
 	
 	var _get2 = _interopRequireDefault(_get);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
-/* 147 */
+/* 145 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -12823,11 +6472,61 @@
 
 
 /***/ },
+/* 146 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	const sourcesAction_1 = __webpack_require__(147);
+	const save_1 = __webpack_require__(74);
+	const copy = __webpack_require__(76);
+	const unset = __webpack_require__(143);
+	const update_1 = __webpack_require__(145);
+	// Changes to extra sources go here.
+	exports.sources = 
+	// FIXME: Simplest thing to do would be to call playback's runGraph from within
+	// sourceAction... We then know if we need to save more then just the main
+	// source... It might also make Playback code simpler.
+	// When 'source' changes, we have a race condition. Bad.
+	// [ debounce ( 2000 ) // slower then 'source' update.
+	[sourcesAction_1.sourcesAction,
+	    { success: [unset('state:/$editor.errors'),
+	            update_1.update // Optimistic write in state
+	            ,
+	            ...save_1.save
+	        ],
+	        error: [copy('input:/errors', 'state:/$editor.errors')
+	        ]
+	    }
+	];
+
+
+/***/ },
+/* 147 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	const Graph_1 = __webpack_require__(26);
+	exports.sourcesAction = ({ state, input: { sources }, output }) => {
+	    const select = state.get(['$block']);
+	    if (!select) {
+	        // no block visible
+	        return;
+	    }
+	    const odoc = state.get(select.ownerType);
+	    const ograph = odoc.graph;
+	    // We might need to do type checking of other sources someday...
+	    const doc = Graph_1.Immutable.update(odoc, 'graph', 'blocksById', select.id, 'sources', sources);
+	    output.success({ doc });
+	};
+	// sourcesAction [ 'async' ] = true
+
+
+/***/ },
 /* 148 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const copy = __webpack_require__(78);
+	const copy = __webpack_require__(76);
 	exports.tab = [copy('input:/value', 'state:/$blocktab')
 	];
 
@@ -12837,13 +6536,36 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const valuesAction_1 = __webpack_require__(150);
-	exports.values = [valuesAction_1.valuesAction
+	const sourceAction_1 = __webpack_require__(142);
+	const copy = __webpack_require__(76);
+	const Utils_1 = __webpack_require__(127);
+	const unset = __webpack_require__(143);
+	exports.typecheck = [Utils_1.debounce(500) // Wait before we do anything: the user is typing
+	    ,
+	    { accepted: [sourceAction_1.sourceAction,
+	            { success: [unset('state:/$editor.errors')
+	                ],
+	                error: [copy('input:/errors', 'state:/$editor.errors')
+	                ]
+	            }
+	        ],
+	        ignored: []
+	    }
 	];
 
 
 /***/ },
 /* 150 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	const valuesAction_1 = __webpack_require__(151);
+	exports.values = [valuesAction_1.valuesAction
+	];
+
+
+/***/ },
+/* 151 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -12853,14 +6575,14 @@
 
 
 /***/ },
-/* 151 */
+/* 152 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const db_1 = __webpack_require__(152);
-	const dbChanged_1 = __webpack_require__(155);
+	const db_1 = __webpack_require__(153);
+	const dbChanged_1 = __webpack_require__(156);
 	const reload_1 = __webpack_require__(6);
-	const save_1 = __webpack_require__(76);
+	const save_1 = __webpack_require__(74);
 	exports.Data = (options = {}) => {
 	    return (module, controller) => {
 	        // This state is where we read and write to
@@ -12887,38 +6609,38 @@
 
 
 /***/ },
-/* 152 */
+/* 153 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const PouchDB = __webpack_require__(153);
-	const PouchDBAuthentication = __webpack_require__(154);
+	const PouchDB = __webpack_require__(154);
+	const PouchDBAuthentication = __webpack_require__(155);
 	// https://github.com/nolanlawson/pouchdb-authentication
 	PouchDB.plugin(PouchDBAuthentication);
 	exports.db = new PouchDB('lucidity');
 
 
 /***/ },
-/* 153 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = (__webpack_require__(15))(114);
-
-/***/ },
 /* 154 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = (__webpack_require__(15))(129);
+	module.exports = (__webpack_require__(15))(75);
 
 /***/ },
 /* 155 */
 /***/ function(module, exports, __webpack_require__) {
 
+	module.exports = (__webpack_require__(15))(90);
+
+/***/ },
+/* 156 */
+/***/ function(module, exports, __webpack_require__) {
+
 	"use strict";
-	const update_1 = __webpack_require__(147);
-	const saved_1 = __webpack_require__(156);
-	const edit_1 = __webpack_require__(157);
-	const Status_1 = __webpack_require__(53);
+	const update_1 = __webpack_require__(145);
+	const saved_1 = __webpack_require__(157);
+	const edit_1 = __webpack_require__(158);
+	const Status_1 = __webpack_require__(51);
 	exports.dbChanged = [update_1.update,
 	    Status_1.status,
 	    saved_1.saved,
@@ -12927,7 +6649,7 @@
 
 
 /***/ },
-/* 156 */
+/* 157 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -12959,7 +6681,7 @@
 
 
 /***/ },
-/* 157 */
+/* 158 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -12980,17 +6702,17 @@
 
 
 /***/ },
-/* 158 */
+/* 159 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	function __export(m) {
 	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 	}
-	__export(__webpack_require__(159));
-	const drag_1 = __webpack_require__(160);
-	const drop_1 = __webpack_require__(162);
-	const move_1 = __webpack_require__(261);
+	__export(__webpack_require__(160));
+	const drag_1 = __webpack_require__(161);
+	const drop_1 = __webpack_require__(163);
+	const move_1 = __webpack_require__(262);
 	exports.DragDrop = (options = {}) => {
 	    return (module, controller) => {
 	        // $dragdrop:
@@ -13005,7 +6727,7 @@
 
 
 /***/ },
-/* 159 */
+/* 160 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -13100,17 +6822,17 @@
 
 
 /***/ },
-/* 160 */
+/* 161 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const dragAction_1 = __webpack_require__(161);
+	const dragAction_1 = __webpack_require__(162);
 	exports.drag = [dragAction_1.dragAction
 	];
 
 
 /***/ },
-/* 161 */
+/* 162 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -13134,12 +6856,12 @@
 
 
 /***/ },
-/* 162 */
+/* 163 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const dropAction_1 = __webpack_require__(163);
-	const save_1 = __webpack_require__(76);
+	const dropAction_1 = __webpack_require__(164);
+	const save_1 = __webpack_require__(74);
 	exports.drop = [dropAction_1.dropAction,
 	    { success: [...save_1.save]
 	    }
@@ -13147,12 +6869,12 @@
 
 
 /***/ },
-/* 163 */
+/* 164 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	const Graph_1 = __webpack_require__(26);
-	const Library_1 = __webpack_require__(164);
+	const Library_1 = __webpack_require__(165);
 	const dragp = ['$dragdrop', 'drag'];
 	const movep = ['$dragdrop', 'move'];
 	const dropp = ['$dragdrop', 'drop'];
@@ -13213,16 +6935,16 @@
 
 
 /***/ },
-/* 164 */
+/* 165 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	function __export(m) {
 	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 	}
-	__export(__webpack_require__(165));
-	const Model = __webpack_require__(73);
-	const zip_1 = __webpack_require__(167);
+	__export(__webpack_require__(166));
+	const Model = __webpack_require__(71);
+	const zip_1 = __webpack_require__(168);
 	const sortByName = (a, b) => a.name > b.name ? 1 : -1;
 	const LibraryRows = Model.monkey({ cursors: { components: ['data', 'component']
 	    },
@@ -13248,18 +6970,18 @@
 
 
 /***/ },
-/* 165 */
+/* 166 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	function __export(m) {
 	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 	}
-	__export(__webpack_require__(166));
+	__export(__webpack_require__(167));
 
 
 /***/ },
-/* 166 */
+/* 167 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -13280,23 +7002,23 @@
 
 
 /***/ },
-/* 167 */
+/* 168 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const zipAction_1 = __webpack_require__(168);
-	const downloadAction_1 = __webpack_require__(260);
+	const zipAction_1 = __webpack_require__(169);
+	const downloadAction_1 = __webpack_require__(261);
 	exports.zip = [zipAction_1.zipAction,
 	    { success: [downloadAction_1.downloadAction] }
 	];
 
 
 /***/ },
-/* 168 */
+/* 169 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const LibraryHelper_1 = __webpack_require__(169);
+	const LibraryHelper_1 = __webpack_require__(170);
 	exports.zipAction = ({ state, output }) => {
 	    const library = state.get(['data', 'component']);
 	    LibraryHelper_1.LibraryHelper.zip(library, (source) => {
@@ -13307,12 +7029,12 @@
 
 
 /***/ },
-/* 169 */
+/* 170 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	const GraphHelper_1 = __webpack_require__(34);
-	const JSZip = __webpack_require__(170);
+	const JSZip = __webpack_require__(171);
 	/*
 	var zip = new JSZip ()
 	zip.file("Hello.txt", "Hello World\n");
@@ -13350,7 +7072,7 @@
 
 
 /***/ },
-/* 170 */
+/* 171 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -13390,34 +7112,34 @@
 	        return newObj;
 	    };
 	}
-	JSZip.prototype = __webpack_require__(171);
-	JSZip.prototype.loadAsync = __webpack_require__(251);
-	JSZip.support = __webpack_require__(174);
-	JSZip.defaults = __webpack_require__(222);
+	JSZip.prototype = __webpack_require__(172);
+	JSZip.prototype.loadAsync = __webpack_require__(252);
+	JSZip.support = __webpack_require__(175);
+	JSZip.defaults = __webpack_require__(223);
 	
 	JSZip.loadAsync = function (content, options) {
 	    return new JSZip().loadAsync(content, options);
 	};
 	
-	JSZip.external = __webpack_require__(214);
+	JSZip.external = __webpack_require__(215);
 	module.exports = JSZip;
 
 
 /***/ },
-/* 171 */
+/* 172 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var utf8 = __webpack_require__(172);
-	var utils = __webpack_require__(173);
-	var GenericWorker = __webpack_require__(219);
-	var StreamHelper = __webpack_require__(220);
-	var defaults = __webpack_require__(222);
-	var CompressedObject = __webpack_require__(223);
-	var ZipObject = __webpack_require__(228);
-	var generate = __webpack_require__(229);
-	var nodejsUtils = __webpack_require__(211);
-	var NodejsStreamInputAdapter = __webpack_require__(250);
+	var utf8 = __webpack_require__(173);
+	var utils = __webpack_require__(174);
+	var GenericWorker = __webpack_require__(220);
+	var StreamHelper = __webpack_require__(221);
+	var defaults = __webpack_require__(223);
+	var CompressedObject = __webpack_require__(224);
+	var ZipObject = __webpack_require__(229);
+	var generate = __webpack_require__(230);
+	var nodejsUtils = __webpack_require__(212);
+	var NodejsStreamInputAdapter = __webpack_require__(251);
 	
 	
 	/**
@@ -13797,15 +7519,15 @@
 
 
 /***/ },
-/* 172 */
+/* 173 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(173);
-	var support = __webpack_require__(174);
-	var nodejsUtils = __webpack_require__(211);
-	var GenericWorker = __webpack_require__(219);
+	var utils = __webpack_require__(174);
+	var support = __webpack_require__(175);
+	var nodejsUtils = __webpack_require__(212);
+	var GenericWorker = __webpack_require__(220);
 	
 	/**
 	 * The following functions come from pako, from pako/lib/utils/strings
@@ -14078,16 +7800,16 @@
 
 
 /***/ },
-/* 173 */
+/* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var support = __webpack_require__(174);
-	var base64 = __webpack_require__(210);
-	var nodejsUtils = __webpack_require__(211);
-	var asap = __webpack_require__(212);
-	var external = __webpack_require__(214);
+	var support = __webpack_require__(175);
+	var base64 = __webpack_require__(211);
+	var nodejsUtils = __webpack_require__(212);
+	var asap = __webpack_require__(213);
+	var external = __webpack_require__(215);
 	
 	
 	/**
@@ -14549,7 +8271,7 @@
 
 
 /***/ },
-/* 174 */
+/* 175 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Buffer) {'use strict';
@@ -14585,12 +8307,12 @@
 	    }
 	}
 	
-	exports.nodestream = !!__webpack_require__(179).prototype;
+	exports.nodestream = !!__webpack_require__(180).prototype;
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(175).Buffer))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(176).Buffer))
 
 /***/ },
-/* 175 */
+/* 176 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Buffer, global) {/*!
@@ -14603,9 +8325,9 @@
 	
 	'use strict'
 	
-	var base64 = __webpack_require__(176)
-	var ieee754 = __webpack_require__(177)
-	var isArray = __webpack_require__(178)
+	var base64 = __webpack_require__(177)
+	var ieee754 = __webpack_require__(178)
+	var isArray = __webpack_require__(179)
 	
 	exports.Buffer = Buffer
 	exports.SlowBuffer = SlowBuffer
@@ -16142,10 +9864,10 @@
 	  return i
 	}
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(175).Buffer, (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(176).Buffer, (function() { return this; }())))
 
 /***/ },
-/* 176 */
+/* 177 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
@@ -16275,7 +9997,7 @@
 
 
 /***/ },
-/* 177 */
+/* 178 */
 /***/ function(module, exports) {
 
 	exports.read = function (buffer, offset, isLE, mLen, nBytes) {
@@ -16365,7 +10087,7 @@
 
 
 /***/ },
-/* 178 */
+/* 179 */
 /***/ function(module, exports) {
 
 	var toString = {}.toString;
@@ -16376,14 +10098,14 @@
 
 
 /***/ },
-/* 179 */
+/* 180 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var Readable = __webpack_require__(180).Readable;
+	var Readable = __webpack_require__(181).Readable;
 	
-	var util = __webpack_require__(208);
+	var util = __webpack_require__(209);
 	util.inherits(NodejsStreamOutputAdapter, Readable);
 	
 	/**
@@ -16424,25 +10146,25 @@
 
 
 /***/ },
-/* 180 */
+/* 181 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Stream = (function (){
 	  try {
-	    return __webpack_require__(181); // hack to fix a circular dependency issue when used with browserify
+	    return __webpack_require__(182); // hack to fix a circular dependency issue when used with browserify
 	  } catch(_){}
 	}());
-	exports = module.exports = __webpack_require__(199);
+	exports = module.exports = __webpack_require__(200);
 	exports.Stream = Stream || exports;
 	exports.Readable = exports;
-	exports.Writable = __webpack_require__(203);
-	exports.Duplex = __webpack_require__(202);
-	exports.Transform = __webpack_require__(206);
-	exports.PassThrough = __webpack_require__(207);
+	exports.Writable = __webpack_require__(204);
+	exports.Duplex = __webpack_require__(203);
+	exports.Transform = __webpack_require__(207);
+	exports.PassThrough = __webpack_require__(208);
 
 
 /***/ },
-/* 181 */
+/* 182 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -16468,15 +10190,15 @@
 	
 	module.exports = Stream;
 	
-	var EE = __webpack_require__(182).EventEmitter;
-	var inherits = __webpack_require__(183);
+	var EE = __webpack_require__(183).EventEmitter;
+	var inherits = __webpack_require__(184);
 	
 	inherits(Stream, EE);
-	Stream.Readable = __webpack_require__(184);
-	Stream.Writable = __webpack_require__(195);
-	Stream.Duplex = __webpack_require__(196);
-	Stream.Transform = __webpack_require__(197);
-	Stream.PassThrough = __webpack_require__(198);
+	Stream.Readable = __webpack_require__(185);
+	Stream.Writable = __webpack_require__(196);
+	Stream.Duplex = __webpack_require__(197);
+	Stream.Transform = __webpack_require__(198);
+	Stream.PassThrough = __webpack_require__(199);
 	
 	// Backwards-compat with node 0.4.x
 	Stream.Stream = Stream;
@@ -16575,42 +10297,42 @@
 
 
 /***/ },
-/* 182 */
+/* 183 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = (__webpack_require__(15))(59);
 
 /***/ },
-/* 183 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = (__webpack_require__(15))(119);
-
-/***/ },
 /* 184 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(process) {exports = module.exports = __webpack_require__(186);
-	exports.Stream = __webpack_require__(181);
-	exports.Readable = exports;
-	exports.Writable = __webpack_require__(191);
-	exports.Duplex = __webpack_require__(190);
-	exports.Transform = __webpack_require__(193);
-	exports.PassThrough = __webpack_require__(194);
-	if (!process.browser && process.env.READABLE_STREAM === 'disable') {
-	  module.exports = __webpack_require__(181);
-	}
-	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(185)))
+	module.exports = (__webpack_require__(15))(80);
 
 /***/ },
 /* 185 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = (__webpack_require__(15))(50);
+	/* WEBPACK VAR INJECTION */(function(process) {exports = module.exports = __webpack_require__(187);
+	exports.Stream = __webpack_require__(182);
+	exports.Readable = exports;
+	exports.Writable = __webpack_require__(192);
+	exports.Duplex = __webpack_require__(191);
+	exports.Transform = __webpack_require__(194);
+	exports.PassThrough = __webpack_require__(195);
+	if (!process.browser && process.env.READABLE_STREAM === 'disable') {
+	  module.exports = __webpack_require__(182);
+	}
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(186)))
 
 /***/ },
 /* 186 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = (__webpack_require__(15))(50);
+
+/***/ },
+/* 187 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {// Copyright Joyent, Inc. and other Node contributors.
@@ -16637,17 +10359,17 @@
 	module.exports = Readable;
 	
 	/*<replacement>*/
-	var isArray = __webpack_require__(187);
+	var isArray = __webpack_require__(188);
 	/*</replacement>*/
 	
 	
 	/*<replacement>*/
-	var Buffer = __webpack_require__(175).Buffer;
+	var Buffer = __webpack_require__(176).Buffer;
 	/*</replacement>*/
 	
 	Readable.ReadableState = ReadableState;
 	
-	var EE = __webpack_require__(182).EventEmitter;
+	var EE = __webpack_require__(183).EventEmitter;
 	
 	/*<replacement>*/
 	if (!EE.listenerCount) EE.listenerCount = function(emitter, type) {
@@ -16655,18 +10377,18 @@
 	};
 	/*</replacement>*/
 	
-	var Stream = __webpack_require__(181);
+	var Stream = __webpack_require__(182);
 	
 	/*<replacement>*/
-	var util = __webpack_require__(188);
-	util.inherits = __webpack_require__(183);
+	var util = __webpack_require__(189);
+	util.inherits = __webpack_require__(184);
 	/*</replacement>*/
 	
 	var StringDecoder;
 	
 	
 	/*<replacement>*/
-	var debug = __webpack_require__(189);
+	var debug = __webpack_require__(190);
 	if (debug && debug.debuglog) {
 	  debug = debug.debuglog('stream');
 	} else {
@@ -16678,7 +10400,7 @@
 	util.inherits(Readable, Stream);
 	
 	function ReadableState(options, stream) {
-	  var Duplex = __webpack_require__(190);
+	  var Duplex = __webpack_require__(191);
 	
 	  options = options || {};
 	
@@ -16739,14 +10461,14 @@
 	  this.encoding = null;
 	  if (options.encoding) {
 	    if (!StringDecoder)
-	      StringDecoder = __webpack_require__(192).StringDecoder;
+	      StringDecoder = __webpack_require__(193).StringDecoder;
 	    this.decoder = new StringDecoder(options.encoding);
 	    this.encoding = options.encoding;
 	  }
 	}
 	
 	function Readable(options) {
-	  var Duplex = __webpack_require__(190);
+	  var Duplex = __webpack_require__(191);
 	
 	  if (!(this instanceof Readable))
 	    return new Readable(options);
@@ -16849,7 +10571,7 @@
 	// backwards compatibility.
 	Readable.prototype.setEncoding = function(enc) {
 	  if (!StringDecoder)
-	    StringDecoder = __webpack_require__(192).StringDecoder;
+	    StringDecoder = __webpack_require__(193).StringDecoder;
 	  this._readableState.decoder = new StringDecoder(enc);
 	  this._readableState.encoding = enc;
 	  return this;
@@ -17565,10 +11287,10 @@
 	  return -1;
 	}
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(185)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(186)))
 
 /***/ },
-/* 187 */
+/* 188 */
 /***/ function(module, exports) {
 
 	module.exports = Array.isArray || function (arr) {
@@ -17577,7 +11299,7 @@
 
 
 /***/ },
-/* 188 */
+/* 189 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Buffer) {// Copyright Joyent, Inc. and other Node contributors.
@@ -17688,16 +11410,16 @@
 	  return Object.prototype.toString.call(o);
 	}
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(175).Buffer))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(176).Buffer))
 
 /***/ },
-/* 189 */
+/* 190 */
 /***/ function(module, exports) {
 
 	/* (ignored) */
 
 /***/ },
-/* 190 */
+/* 191 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {// Copyright Joyent, Inc. and other Node contributors.
@@ -17738,12 +11460,12 @@
 	
 	
 	/*<replacement>*/
-	var util = __webpack_require__(188);
-	util.inherits = __webpack_require__(183);
+	var util = __webpack_require__(189);
+	util.inherits = __webpack_require__(184);
 	/*</replacement>*/
 	
-	var Readable = __webpack_require__(186);
-	var Writable = __webpack_require__(191);
+	var Readable = __webpack_require__(187);
+	var Writable = __webpack_require__(192);
 	
 	util.inherits(Duplex, Readable);
 	
@@ -17790,10 +11512,10 @@
 	  }
 	}
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(185)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(186)))
 
 /***/ },
-/* 191 */
+/* 192 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {// Copyright Joyent, Inc. and other Node contributors.
@@ -17824,18 +11546,18 @@
 	module.exports = Writable;
 	
 	/*<replacement>*/
-	var Buffer = __webpack_require__(175).Buffer;
+	var Buffer = __webpack_require__(176).Buffer;
 	/*</replacement>*/
 	
 	Writable.WritableState = WritableState;
 	
 	
 	/*<replacement>*/
-	var util = __webpack_require__(188);
-	util.inherits = __webpack_require__(183);
+	var util = __webpack_require__(189);
+	util.inherits = __webpack_require__(184);
 	/*</replacement>*/
 	
-	var Stream = __webpack_require__(181);
+	var Stream = __webpack_require__(182);
 	
 	util.inherits(Writable, Stream);
 	
@@ -17846,7 +11568,7 @@
 	}
 	
 	function WritableState(options, stream) {
-	  var Duplex = __webpack_require__(190);
+	  var Duplex = __webpack_require__(191);
 	
 	  options = options || {};
 	
@@ -17934,7 +11656,7 @@
 	}
 	
 	function Writable(options) {
-	  var Duplex = __webpack_require__(190);
+	  var Duplex = __webpack_require__(191);
 	
 	  // Writable ctor is applied to Duplexes, though they're not
 	  // instanceof Writable, they're instanceof Readable.
@@ -18274,10 +11996,10 @@
 	  state.ended = true;
 	}
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(185)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(186)))
 
 /***/ },
-/* 192 */
+/* 193 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -18301,7 +12023,7 @@
 	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 	// USE OR OTHER DEALINGS IN THE SOFTWARE.
 	
-	var Buffer = __webpack_require__(175).Buffer;
+	var Buffer = __webpack_require__(176).Buffer;
 	
 	var isBufferEncoding = Buffer.isEncoding
 	  || function(encoding) {
@@ -18504,7 +12226,7 @@
 
 
 /***/ },
-/* 193 */
+/* 194 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -18573,11 +12295,11 @@
 	
 	module.exports = Transform;
 	
-	var Duplex = __webpack_require__(190);
+	var Duplex = __webpack_require__(191);
 	
 	/*<replacement>*/
-	var util = __webpack_require__(188);
-	util.inherits = __webpack_require__(183);
+	var util = __webpack_require__(189);
+	util.inherits = __webpack_require__(184);
 	/*</replacement>*/
 	
 	util.inherits(Transform, Duplex);
@@ -18719,7 +12441,7 @@
 
 
 /***/ },
-/* 194 */
+/* 195 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -18749,11 +12471,11 @@
 	
 	module.exports = PassThrough;
 	
-	var Transform = __webpack_require__(193);
+	var Transform = __webpack_require__(194);
 	
 	/*<replacement>*/
-	var util = __webpack_require__(188);
-	util.inherits = __webpack_require__(183);
+	var util = __webpack_require__(189);
+	util.inherits = __webpack_require__(184);
 	/*</replacement>*/
 	
 	util.inherits(PassThrough, Transform);
@@ -18771,24 +12493,17 @@
 
 
 /***/ },
-/* 195 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__(191)
-
-
-/***/ },
 /* 196 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(190)
+	module.exports = __webpack_require__(192)
 
 
 /***/ },
 /* 197 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(193)
+	module.exports = __webpack_require__(191)
 
 
 /***/ },
@@ -18802,25 +12517,32 @@
 /* 199 */
 /***/ function(module, exports, __webpack_require__) {
 
+	module.exports = __webpack_require__(195)
+
+
+/***/ },
+/* 200 */
+/***/ function(module, exports, __webpack_require__) {
+
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 	
 	module.exports = Readable;
 	
 	/*<replacement>*/
-	var processNextTick = __webpack_require__(200);
+	var processNextTick = __webpack_require__(201);
 	/*</replacement>*/
 	
 	/*<replacement>*/
-	var isArray = __webpack_require__(178);
+	var isArray = __webpack_require__(179);
 	/*</replacement>*/
 	
 	/*<replacement>*/
-	var Buffer = __webpack_require__(175).Buffer;
+	var Buffer = __webpack_require__(176).Buffer;
 	/*</replacement>*/
 	
 	Readable.ReadableState = ReadableState;
 	
-	var EE = __webpack_require__(182);
+	var EE = __webpack_require__(183);
 	
 	/*<replacement>*/
 	var EElistenerCount = function (emitter, type) {
@@ -18832,22 +12554,22 @@
 	var Stream;
 	(function () {
 	  try {
-	    Stream = __webpack_require__(181);
+	    Stream = __webpack_require__(182);
 	  } catch (_) {} finally {
-	    if (!Stream) Stream = __webpack_require__(182).EventEmitter;
+	    if (!Stream) Stream = __webpack_require__(183).EventEmitter;
 	  }
 	})();
 	/*</replacement>*/
 	
-	var Buffer = __webpack_require__(175).Buffer;
+	var Buffer = __webpack_require__(176).Buffer;
 	
 	/*<replacement>*/
-	var util = __webpack_require__(188);
-	util.inherits = __webpack_require__(183);
+	var util = __webpack_require__(189);
+	util.inherits = __webpack_require__(184);
 	/*</replacement>*/
 	
 	/*<replacement>*/
-	var debugUtil = __webpack_require__(201);
+	var debugUtil = __webpack_require__(202);
 	var debug = undefined;
 	if (debugUtil && debugUtil.debuglog) {
 	  debug = debugUtil.debuglog('stream');
@@ -18862,7 +12584,7 @@
 	
 	var Duplex;
 	function ReadableState(options, stream) {
-	  Duplex = Duplex || __webpack_require__(202);
+	  Duplex = Duplex || __webpack_require__(203);
 	
 	  options = options || {};
 	
@@ -18921,7 +12643,7 @@
 	  this.decoder = null;
 	  this.encoding = null;
 	  if (options.encoding) {
-	    if (!StringDecoder) StringDecoder = __webpack_require__(192).StringDecoder;
+	    if (!StringDecoder) StringDecoder = __webpack_require__(193).StringDecoder;
 	    this.decoder = new StringDecoder(options.encoding);
 	    this.encoding = options.encoding;
 	  }
@@ -18929,7 +12651,7 @@
 	
 	var Duplex;
 	function Readable(options) {
-	  Duplex = Duplex || __webpack_require__(202);
+	  Duplex = Duplex || __webpack_require__(203);
 	
 	  if (!(this instanceof Readable)) return new Readable(options);
 	
@@ -19032,7 +12754,7 @@
 	
 	// backwards compatibility.
 	Readable.prototype.setEncoding = function (enc) {
-	  if (!StringDecoder) StringDecoder = __webpack_require__(192).StringDecoder;
+	  if (!StringDecoder) StringDecoder = __webpack_require__(193).StringDecoder;
 	  this._readableState.decoder = new StringDecoder(enc);
 	  this._readableState.encoding = enc;
 	  return this;
@@ -19682,10 +13404,10 @@
 	  }
 	  return -1;
 	}
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(185)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(186)))
 
 /***/ },
-/* 200 */
+/* 201 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -19732,16 +13454,16 @@
 	  }
 	}
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(185)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(186)))
 
 /***/ },
-/* 201 */
+/* 202 */
 /***/ function(module, exports) {
 
 	/* (ignored) */
 
 /***/ },
-/* 202 */
+/* 203 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// a duplex stream is just a stream that is both readable and writable.
@@ -19764,16 +13486,16 @@
 	module.exports = Duplex;
 	
 	/*<replacement>*/
-	var processNextTick = __webpack_require__(200);
+	var processNextTick = __webpack_require__(201);
 	/*</replacement>*/
 	
 	/*<replacement>*/
-	var util = __webpack_require__(188);
-	util.inherits = __webpack_require__(183);
+	var util = __webpack_require__(189);
+	util.inherits = __webpack_require__(184);
 	/*</replacement>*/
 	
-	var Readable = __webpack_require__(199);
-	var Writable = __webpack_require__(203);
+	var Readable = __webpack_require__(200);
+	var Writable = __webpack_require__(204);
 	
 	util.inherits(Duplex, Readable);
 	
@@ -19821,7 +13543,7 @@
 	}
 
 /***/ },
-/* 203 */
+/* 204 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process, setImmediate) {// A bit simpler than readable streams.
@@ -19833,7 +13555,7 @@
 	module.exports = Writable;
 	
 	/*<replacement>*/
-	var processNextTick = __webpack_require__(200);
+	var processNextTick = __webpack_require__(201);
 	/*</replacement>*/
 	
 	/*<replacement>*/
@@ -19841,19 +13563,19 @@
 	/*</replacement>*/
 	
 	/*<replacement>*/
-	var Buffer = __webpack_require__(175).Buffer;
+	var Buffer = __webpack_require__(176).Buffer;
 	/*</replacement>*/
 	
 	Writable.WritableState = WritableState;
 	
 	/*<replacement>*/
-	var util = __webpack_require__(188);
-	util.inherits = __webpack_require__(183);
+	var util = __webpack_require__(189);
+	util.inherits = __webpack_require__(184);
 	/*</replacement>*/
 	
 	/*<replacement>*/
 	var internalUtil = {
-	  deprecate: __webpack_require__(205)
+	  deprecate: __webpack_require__(206)
 	};
 	/*</replacement>*/
 	
@@ -19861,14 +13583,14 @@
 	var Stream;
 	(function () {
 	  try {
-	    Stream = __webpack_require__(181);
+	    Stream = __webpack_require__(182);
 	  } catch (_) {} finally {
-	    if (!Stream) Stream = __webpack_require__(182).EventEmitter;
+	    if (!Stream) Stream = __webpack_require__(183).EventEmitter;
 	  }
 	})();
 	/*</replacement>*/
 	
-	var Buffer = __webpack_require__(175).Buffer;
+	var Buffer = __webpack_require__(176).Buffer;
 	
 	util.inherits(Writable, Stream);
 	
@@ -19883,7 +13605,7 @@
 	
 	var Duplex;
 	function WritableState(options, stream) {
-	  Duplex = Duplex || __webpack_require__(202);
+	  Duplex = Duplex || __webpack_require__(203);
 	
 	  options = options || {};
 	
@@ -20000,7 +13722,7 @@
 	
 	var Duplex;
 	function Writable(options) {
-	  Duplex = Duplex || __webpack_require__(202);
+	  Duplex = Duplex || __webpack_require__(203);
 	
 	  // Writable ctor is applied to Duplexes, though they're not
 	  // instanceof Writable, they're instanceof Readable.
@@ -20340,13 +14062,13 @@
 	    }
 	  };
 	}
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(185), __webpack_require__(204).setImmediate))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(186), __webpack_require__(205).setImmediate))
 
 /***/ },
-/* 204 */
+/* 205 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(setImmediate, clearImmediate) {var nextTick = __webpack_require__(185).nextTick;
+	/* WEBPACK VAR INJECTION */(function(setImmediate, clearImmediate) {var nextTick = __webpack_require__(186).nextTick;
 	var apply = Function.prototype.apply;
 	var slice = Array.prototype.slice;
 	var immediateIds = {};
@@ -20422,10 +14144,10 @@
 	exports.clearImmediate = typeof clearImmediate === "function" ? clearImmediate : function(id) {
 	  delete immediateIds[id];
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(204).setImmediate, __webpack_require__(204).clearImmediate))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(205).setImmediate, __webpack_require__(205).clearImmediate))
 
 /***/ },
-/* 205 */
+/* 206 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -20499,7 +14221,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 206 */
+/* 207 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// a transform stream is a readable/writable stream where you do
@@ -20548,11 +14270,11 @@
 	
 	module.exports = Transform;
 	
-	var Duplex = __webpack_require__(202);
+	var Duplex = __webpack_require__(203);
 	
 	/*<replacement>*/
-	var util = __webpack_require__(188);
-	util.inherits = __webpack_require__(183);
+	var util = __webpack_require__(189);
+	util.inherits = __webpack_require__(184);
 	/*</replacement>*/
 	
 	util.inherits(Transform, Duplex);
@@ -20684,7 +14406,7 @@
 	}
 
 /***/ },
-/* 207 */
+/* 208 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// a passthrough stream.
@@ -20695,11 +14417,11 @@
 	
 	module.exports = PassThrough;
 	
-	var Transform = __webpack_require__(206);
+	var Transform = __webpack_require__(207);
 	
 	/*<replacement>*/
-	var util = __webpack_require__(188);
-	util.inherits = __webpack_require__(183);
+	var util = __webpack_require__(189);
+	util.inherits = __webpack_require__(184);
 	/*</replacement>*/
 	
 	util.inherits(PassThrough, Transform);
@@ -20715,7 +14437,7 @@
 	};
 
 /***/ },
-/* 208 */
+/* 209 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global, process) {// Copyright Joyent, Inc. and other Node contributors.
@@ -21243,7 +14965,7 @@
 	}
 	exports.isPrimitive = isPrimitive;
 	
-	exports.isBuffer = __webpack_require__(209);
+	exports.isBuffer = __webpack_require__(210);
 	
 	function objectToString(o) {
 	  return Object.prototype.toString.call(o);
@@ -21287,7 +15009,7 @@
 	 *     prototype.
 	 * @param {function} superCtor Constructor function to inherit prototype from.
 	 */
-	exports.inherits = __webpack_require__(183);
+	exports.inherits = __webpack_require__(184);
 	
 	exports._extend = function(origin, add) {
 	  // Don't do anything if add isn't an object
@@ -21305,10 +15027,10 @@
 	  return Object.prototype.hasOwnProperty.call(obj, prop);
 	}
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(185)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(186)))
 
 /***/ },
-/* 209 */
+/* 210 */
 /***/ function(module, exports) {
 
 	module.exports = function isBuffer(arg) {
@@ -21319,12 +15041,12 @@
 	}
 
 /***/ },
-/* 210 */
+/* 211 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var utils = __webpack_require__(173);
-	var support = __webpack_require__(174);
+	var utils = __webpack_require__(174);
+	var support = __webpack_require__(175);
 	// private property
 	var _keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 	
@@ -21410,7 +15132,7 @@
 
 
 /***/ },
-/* 211 */
+/* 212 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Buffer) {'use strict';
@@ -21448,16 +15170,16 @@
 	    }
 	};
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(175).Buffer))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(176).Buffer))
 
 /***/ },
-/* 212 */
+/* 213 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
 	// rawAsap provides everything we need except exception management.
-	var rawAsap = __webpack_require__(213);
+	var rawAsap = __webpack_require__(214);
 	// RawTasks are recycled to reduce GC churn.
 	var freeTasks = [];
 	// We queue errors to ensure they are thrown in right order (FIFO).
@@ -21523,7 +15245,7 @@
 
 
 /***/ },
-/* 213 */
+/* 214 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {"use strict";
@@ -21750,12 +15472,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 214 */
+/* 215 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var ES6Promise = __webpack_require__(215).Promise;
+	var ES6Promise = __webpack_require__(216).Promise;
 	
 	/**
 	 * Let the user use/change some implementations.
@@ -21766,7 +15488,7 @@
 
 
 /***/ },
-/* 215 */
+/* 216 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var require;var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
@@ -21900,7 +15622,7 @@
 	    function lib$es6$promise$asap$$attemptVertx() {
 	      try {
 	        var r = require;
-	        var vertx = __webpack_require__(217);
+	        var vertx = __webpack_require__(218);
 	        lib$es6$promise$asap$$vertxNext = vertx.runOnLoop || vertx.runOnContext;
 	        return lib$es6$promise$asap$$useVertxTimer();
 	      } catch(e) {
@@ -22725,7 +16447,7 @@
 	    };
 	
 	    /* global define:true module:true window: true */
-	    if ("function" === 'function' && __webpack_require__(218)['amd']) {
+	    if ("function" === 'function' && __webpack_require__(219)['amd']) {
 	      !(__WEBPACK_AMD_DEFINE_RESULT__ = function() { return lib$es6$promise$umd$$ES6Promise; }.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	    } else if (typeof module !== 'undefined' && module['exports']) {
 	      module['exports'] = lib$es6$promise$umd$$ES6Promise;
@@ -22737,29 +16459,29 @@
 	}).call(this);
 	
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(185), (function() { return this; }()), __webpack_require__(216)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(186), (function() { return this; }()), __webpack_require__(217)(module)))
 
 /***/ },
-/* 216 */
+/* 217 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = (__webpack_require__(15))(33);
 
 /***/ },
-/* 217 */
+/* 218 */
 /***/ function(module, exports) {
 
 	/* (ignored) */
 
 /***/ },
-/* 218 */
+/* 219 */
 /***/ function(module, exports) {
 
 	module.exports = function() { throw new Error("define cannot be used indirect"); };
 
 
 /***/ },
-/* 219 */
+/* 220 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -23028,17 +16750,17 @@
 
 
 /***/ },
-/* 220 */
+/* 221 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Buffer) {'use strict';
 	
-	var utils = __webpack_require__(173);
-	var ConvertWorker = __webpack_require__(221);
-	var GenericWorker = __webpack_require__(219);
-	var base64 = __webpack_require__(210);
-	var NodejsStreamOutputAdapter = __webpack_require__(179);
-	var external = __webpack_require__(214);
+	var utils = __webpack_require__(174);
+	var ConvertWorker = __webpack_require__(222);
+	var GenericWorker = __webpack_require__(220);
+	var base64 = __webpack_require__(211);
+	var NodejsStreamOutputAdapter = __webpack_require__(180);
+	var external = __webpack_require__(215);
 	
 	/**
 	 * Apply the final transformation of the data. If the user wants a Blob for
@@ -23237,16 +16959,16 @@
 	
 	module.exports = StreamHelper;
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(175).Buffer))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(176).Buffer))
 
 /***/ },
-/* 221 */
+/* 222 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var GenericWorker = __webpack_require__(219);
-	var utils = __webpack_require__(173);
+	var GenericWorker = __webpack_require__(220);
+	var utils = __webpack_require__(174);
 	
 	/**
 	 * A worker which convert chunks to a specified type.
@@ -23272,7 +16994,7 @@
 
 
 /***/ },
-/* 222 */
+/* 223 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -23289,16 +17011,16 @@
 
 
 /***/ },
-/* 223 */
+/* 224 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var external = __webpack_require__(214);
-	var DataWorker = __webpack_require__(224);
-	var DataLengthProbe = __webpack_require__(225);
-	var Crc32Probe = __webpack_require__(226);
-	var DataLengthProbe = __webpack_require__(225);
+	var external = __webpack_require__(215);
+	var DataWorker = __webpack_require__(225);
+	var DataLengthProbe = __webpack_require__(226);
+	var Crc32Probe = __webpack_require__(227);
+	var DataLengthProbe = __webpack_require__(226);
 	
 	/**
 	 * Represent a compressed object, with everything needed to decompress it.
@@ -23370,13 +17092,13 @@
 
 
 /***/ },
-/* 224 */
+/* 225 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(173);
-	var GenericWorker = __webpack_require__(219);
+	var utils = __webpack_require__(174);
+	var GenericWorker = __webpack_require__(220);
 	
 	// the size of the generated chunks
 	// TODO expose this as a public variable
@@ -23492,13 +17214,13 @@
 
 
 /***/ },
-/* 225 */
+/* 226 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(173);
-	var GenericWorker = __webpack_require__(219);
+	var utils = __webpack_require__(174);
+	var GenericWorker = __webpack_require__(220);
 	
 	/**
 	 * A worker which calculate the total length of the data flowing through.
@@ -23527,14 +17249,14 @@
 
 
 /***/ },
-/* 226 */
+/* 227 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var GenericWorker = __webpack_require__(219);
-	var crc32 = __webpack_require__(227);
-	var utils = __webpack_require__(173);
+	var GenericWorker = __webpack_require__(220);
+	var crc32 = __webpack_require__(228);
+	var utils = __webpack_require__(174);
 	
 	/**
 	 * A worker which calculate the crc32 of the data flowing through.
@@ -23556,12 +17278,12 @@
 
 
 /***/ },
-/* 227 */
+/* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(173);
+	var utils = __webpack_require__(174);
 	
 	/**
 	 * The following functions come from pako, from pako/lib/zlib/crc32.js
@@ -23640,16 +17362,16 @@
 
 
 /***/ },
-/* 228 */
+/* 229 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var StreamHelper = __webpack_require__(220);
-	var DataWorker = __webpack_require__(224);
-	var utf8 = __webpack_require__(172);
-	var CompressedObject = __webpack_require__(223);
-	var GenericWorker = __webpack_require__(219);
+	var StreamHelper = __webpack_require__(221);
+	var DataWorker = __webpack_require__(225);
+	var utf8 = __webpack_require__(173);
+	var CompressedObject = __webpack_require__(224);
+	var GenericWorker = __webpack_require__(220);
 	
 	/**
 	 * A simple object representing a file in the zip file.
@@ -23770,13 +17492,13 @@
 
 
 /***/ },
-/* 229 */
+/* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var compressions = __webpack_require__(230);
-	var ZipFileWorker = __webpack_require__(248);
+	var compressions = __webpack_require__(231);
+	var ZipFileWorker = __webpack_require__(249);
 	
 	/**
 	 * Find the compression to use.
@@ -23833,12 +17555,12 @@
 
 
 /***/ },
-/* 230 */
+/* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var GenericWorker = __webpack_require__(219);
+	var GenericWorker = __webpack_require__(220);
 	
 	exports.STORE = {
 	    magic: "\x00\x00",
@@ -23849,19 +17571,19 @@
 	        return new GenericWorker("STORE decompression");
 	    }
 	};
-	exports.DEFLATE = __webpack_require__(231);
+	exports.DEFLATE = __webpack_require__(232);
 
 
 /***/ },
-/* 231 */
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	var USE_TYPEDARRAY = (typeof Uint8Array !== 'undefined') && (typeof Uint16Array !== 'undefined') && (typeof Uint32Array !== 'undefined');
 	
-	var pako = __webpack_require__(232);
-	var utils = __webpack_require__(173);
-	var GenericWorker = __webpack_require__(219);
+	var pako = __webpack_require__(233);
+	var utils = __webpack_require__(174);
+	var GenericWorker = __webpack_require__(220);
 	
 	var ARRAY_TYPE = USE_TYPEDARRAY ? "uint8array" : "array";
 	
@@ -23927,17 +17649,17 @@
 
 
 /***/ },
-/* 232 */
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Top level file is just a mixin of submodules & constants
 	'use strict';
 	
-	var assign    = __webpack_require__(233).assign;
+	var assign    = __webpack_require__(234).assign;
 	
-	var deflate   = __webpack_require__(234);
-	var inflate   = __webpack_require__(242);
-	var constants = __webpack_require__(246);
+	var deflate   = __webpack_require__(235);
+	var inflate   = __webpack_require__(243);
+	var constants = __webpack_require__(247);
 	
 	var pako = {};
 	
@@ -23947,7 +17669,7 @@
 
 
 /***/ },
-/* 233 */
+/* 234 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -24055,17 +17777,17 @@
 
 
 /***/ },
-/* 234 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	
-	var zlib_deflate = __webpack_require__(235);
-	var utils        = __webpack_require__(233);
-	var strings      = __webpack_require__(240);
-	var msg          = __webpack_require__(239);
-	var ZStream      = __webpack_require__(241);
+	var zlib_deflate = __webpack_require__(236);
+	var utils        = __webpack_require__(234);
+	var strings      = __webpack_require__(241);
+	var msg          = __webpack_require__(240);
+	var ZStream      = __webpack_require__(242);
 	
 	var toString = Object.prototype.toString;
 	
@@ -24461,16 +18183,16 @@
 
 
 /***/ },
-/* 235 */
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils   = __webpack_require__(233);
-	var trees   = __webpack_require__(236);
-	var adler32 = __webpack_require__(237);
-	var crc32   = __webpack_require__(238);
-	var msg     = __webpack_require__(239);
+	var utils   = __webpack_require__(234);
+	var trees   = __webpack_require__(237);
+	var adler32 = __webpack_require__(238);
+	var crc32   = __webpack_require__(239);
+	var msg     = __webpack_require__(240);
 	
 	/* Public constants ==========================================================*/
 	/* ===========================================================================*/
@@ -26315,13 +20037,13 @@
 
 
 /***/ },
-/* 236 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	
-	var utils = __webpack_require__(233);
+	var utils = __webpack_require__(234);
 	
 	/* Public constants ==========================================================*/
 	/* ===========================================================================*/
@@ -27523,7 +21245,7 @@
 
 
 /***/ },
-/* 237 */
+/* 238 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27561,7 +21283,7 @@
 
 
 /***/ },
-/* 238 */
+/* 239 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27608,7 +21330,7 @@
 
 
 /***/ },
-/* 239 */
+/* 240 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27627,14 +21349,14 @@
 
 
 /***/ },
-/* 240 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// String encode/decode helpers
 	'use strict';
 	
 	
-	var utils = __webpack_require__(233);
+	var utils = __webpack_require__(234);
 	
 	
 	// Quick check if we can use fast array to bin string conversion
@@ -27818,7 +21540,7 @@
 
 
 /***/ },
-/* 241 */
+/* 242 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27853,19 +21575,19 @@
 
 
 /***/ },
-/* 242 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	
-	var zlib_inflate = __webpack_require__(243);
-	var utils        = __webpack_require__(233);
-	var strings      = __webpack_require__(240);
-	var c            = __webpack_require__(246);
-	var msg          = __webpack_require__(239);
-	var ZStream      = __webpack_require__(241);
-	var GZheader     = __webpack_require__(247);
+	var zlib_inflate = __webpack_require__(244);
+	var utils        = __webpack_require__(234);
+	var strings      = __webpack_require__(241);
+	var c            = __webpack_require__(247);
+	var msg          = __webpack_require__(240);
+	var ZStream      = __webpack_require__(242);
+	var GZheader     = __webpack_require__(248);
 	
 	var toString = Object.prototype.toString;
 	
@@ -28277,17 +21999,17 @@
 
 
 /***/ },
-/* 243 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	
-	var utils         = __webpack_require__(233);
-	var adler32       = __webpack_require__(237);
-	var crc32         = __webpack_require__(238);
-	var inflate_fast  = __webpack_require__(244);
-	var inflate_table = __webpack_require__(245);
+	var utils         = __webpack_require__(234);
+	var adler32       = __webpack_require__(238);
+	var crc32         = __webpack_require__(239);
+	var inflate_fast  = __webpack_require__(245);
+	var inflate_table = __webpack_require__(246);
 	
 	var CODES = 0;
 	var LENS = 1;
@@ -29821,7 +23543,7 @@
 
 
 /***/ },
-/* 244 */
+/* 245 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -30153,13 +23875,13 @@
 
 
 /***/ },
-/* 245 */
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	
-	var utils = __webpack_require__(233);
+	var utils = __webpack_require__(234);
 	
 	var MAXBITS = 15;
 	var ENOUGH_LENS = 852;
@@ -30486,7 +24208,7 @@
 
 
 /***/ },
-/* 246 */
+/* 247 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -30542,7 +24264,7 @@
 
 
 /***/ },
-/* 247 */
+/* 248 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -30588,16 +24310,16 @@
 
 
 /***/ },
-/* 248 */
+/* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(173);
-	var GenericWorker = __webpack_require__(219);
-	var utf8 = __webpack_require__(172);
-	var crc32 = __webpack_require__(227);
-	var signature = __webpack_require__(249);
+	var utils = __webpack_require__(174);
+	var GenericWorker = __webpack_require__(220);
+	var utf8 = __webpack_require__(173);
+	var crc32 = __webpack_require__(228);
+	var signature = __webpack_require__(250);
 	
 	/**
 	 * Transform an integer into a string in hexadecimal.
@@ -31128,7 +24850,7 @@
 
 
 /***/ },
-/* 249 */
+/* 250 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31141,13 +24863,13 @@
 
 
 /***/ },
-/* 250 */
+/* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
-	var utils = __webpack_require__(173);
-	var GenericWorker = __webpack_require__(219);
+	var utils = __webpack_require__(174);
+	var GenericWorker = __webpack_require__(220);
 	
 	/**
 	 * A worker that use a nodejs stream as source.
@@ -31221,17 +24943,17 @@
 
 
 /***/ },
-/* 251 */
+/* 252 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var utils = __webpack_require__(173);
-	var external = __webpack_require__(214);
-	var utf8 = __webpack_require__(172);
-	var utils = __webpack_require__(173);
-	var ZipEntries = __webpack_require__(252);
-	var Crc32Probe = __webpack_require__(226);
-	var nodejsUtils = __webpack_require__(211);
+	var utils = __webpack_require__(174);
+	var external = __webpack_require__(215);
+	var utf8 = __webpack_require__(173);
+	var utils = __webpack_require__(174);
+	var ZipEntries = __webpack_require__(253);
+	var Crc32Probe = __webpack_require__(227);
+	var nodejsUtils = __webpack_require__(212);
 	
 	/**
 	 * Check the CRC32 of an entry.
@@ -31309,16 +25031,16 @@
 
 
 /***/ },
-/* 252 */
+/* 253 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var readerFor = __webpack_require__(253);
-	var utils = __webpack_require__(173);
-	var sig = __webpack_require__(249);
-	var ZipEntry = __webpack_require__(259);
-	var utf8 = __webpack_require__(172);
-	var support = __webpack_require__(174);
+	var readerFor = __webpack_require__(254);
+	var utils = __webpack_require__(174);
+	var sig = __webpack_require__(250);
+	var ZipEntry = __webpack_require__(260);
+	var utf8 = __webpack_require__(173);
+	var support = __webpack_require__(175);
 	//  class ZipEntries {{{
 	/**
 	 * All the entries in the zip file.
@@ -31577,17 +25299,17 @@
 
 
 /***/ },
-/* 253 */
+/* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(173);
-	var support = __webpack_require__(174);
-	var ArrayReader = __webpack_require__(254);
-	var StringReader = __webpack_require__(256);
-	var NodeBufferReader = __webpack_require__(257);
-	var Uint8ArrayReader = __webpack_require__(258);
+	var utils = __webpack_require__(174);
+	var support = __webpack_require__(175);
+	var ArrayReader = __webpack_require__(255);
+	var StringReader = __webpack_require__(257);
+	var NodeBufferReader = __webpack_require__(258);
+	var Uint8ArrayReader = __webpack_require__(259);
 	
 	/**
 	 * Create a reader adapted to the data.
@@ -31613,12 +25335,12 @@
 
 
 /***/ },
-/* 254 */
+/* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var DataReader = __webpack_require__(255);
-	var utils = __webpack_require__(173);
+	var DataReader = __webpack_require__(256);
+	var utils = __webpack_require__(174);
 	
 	function ArrayReader(data) {
 	    DataReader.call(this, data);
@@ -31676,11 +25398,11 @@
 
 
 /***/ },
-/* 255 */
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var utils = __webpack_require__(173);
+	var utils = __webpack_require__(174);
 	
 	function DataReader(data) {
 	    this.data = data; // type : see implementation
@@ -31798,12 +25520,12 @@
 
 
 /***/ },
-/* 256 */
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var DataReader = __webpack_require__(255);
-	var utils = __webpack_require__(173);
+	var DataReader = __webpack_require__(256);
+	var utils = __webpack_require__(174);
 	
 	function StringReader(data) {
 	    DataReader.call(this, data);
@@ -31842,12 +25564,12 @@
 
 
 /***/ },
-/* 257 */
+/* 258 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var Uint8ArrayReader = __webpack_require__(258);
-	var utils = __webpack_require__(173);
+	var Uint8ArrayReader = __webpack_require__(259);
+	var utils = __webpack_require__(174);
 	
 	function NodeBufferReader(data) {
 	    Uint8ArrayReader.call(this, data);
@@ -31867,12 +25589,12 @@
 
 
 /***/ },
-/* 258 */
+/* 259 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var ArrayReader = __webpack_require__(254);
-	var utils = __webpack_require__(173);
+	var ArrayReader = __webpack_require__(255);
+	var utils = __webpack_require__(174);
 	
 	function Uint8ArrayReader(data) {
 	    ArrayReader.call(this, data);
@@ -31895,17 +25617,17 @@
 
 
 /***/ },
-/* 259 */
+/* 260 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var readerFor = __webpack_require__(253);
-	var utils = __webpack_require__(173);
-	var CompressedObject = __webpack_require__(223);
-	var crc32fn = __webpack_require__(227);
-	var utf8 = __webpack_require__(172);
-	var compressions = __webpack_require__(230);
-	var support = __webpack_require__(174);
+	var readerFor = __webpack_require__(254);
+	var utils = __webpack_require__(174);
+	var CompressedObject = __webpack_require__(224);
+	var crc32fn = __webpack_require__(228);
+	var utf8 = __webpack_require__(173);
+	var compressions = __webpack_require__(231);
+	var support = __webpack_require__(175);
 	
 	var MADE_BY_DOS = 0x00;
 	var MADE_BY_UNIX = 0x03;
@@ -32193,7 +25915,7 @@
 
 
 /***/ },
-/* 260 */
+/* 261 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -32218,17 +25940,17 @@
 
 
 /***/ },
-/* 261 */
+/* 262 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const moveAction_1 = __webpack_require__(262);
+	const moveAction_1 = __webpack_require__(263);
 	exports.move = [moveAction_1.moveAction // no need to throttle ( 10, [ moveAction ] )
 	];
 
 
 /***/ },
-/* 262 */
+/* 263 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -32309,18 +26031,18 @@
 	                    copy
 	                };
 	        }
+	        state.set(dropp, drop);
 	    }
-	    else {
+	    else if (drop) {
 	        // no target = abort
-	        drop = null;
+	        state.unset(dropp);
 	    }
-	    state.set(dropp, drop);
 	    state.set(movep, move);
 	};
 
 
 /***/ },
-/* 263 */
+/* 264 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -32334,15 +26056,15 @@
 
 
 /***/ },
-/* 264 */
+/* 265 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const Model = __webpack_require__(73);
-	const githubLibraryGet_1 = __webpack_require__(265);
-	const libraryGithubPath_1 = __webpack_require__(267);
-	const libraryGithubToken_1 = __webpack_require__(268);
-	const name_1 = __webpack_require__(269);
+	const Model = __webpack_require__(71);
+	const githubLibraryGet_1 = __webpack_require__(266);
+	const libraryGithubPath_1 = __webpack_require__(268);
+	const libraryGithubToken_1 = __webpack_require__(269);
+	const name_1 = __webpack_require__(270);
 	const defaultUser = { _id: 'gaspard' //makeId ()
 	    ,
 	    type: 'user',
@@ -32374,13 +26096,13 @@
 
 
 /***/ },
-/* 265 */
+/* 266 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const githubLibraryGetAction_1 = __webpack_require__(266);
-	const Status_1 = __webpack_require__(53);
-	const copy = __webpack_require__(78);
+	const githubLibraryGetAction_1 = __webpack_require__(267);
+	const Status_1 = __webpack_require__(51);
+	const copy = __webpack_require__(76);
 	exports.githubLibraryGet = [githubLibraryGetAction_1.githubLibraryGetAction,
 	    { success: [copy('input:/', 'state:/github')],
 	        error: [Status_1.status]
@@ -32389,11 +26111,11 @@
 
 
 /***/ },
-/* 266 */
+/* 267 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const LibraryHelper_1 = __webpack_require__(169);
+	const LibraryHelper_1 = __webpack_require__(170);
 	const download = (filename, type, source) => {
 	    const el = document.createElement('a');
 	    el.setAttribute('href', `data:${type};charset=utf-8;base64,` + source);
@@ -32418,27 +26140,14 @@
 
 
 /***/ },
-/* 267 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	const saveDoc_1 = __webpack_require__(83);
-	const set = __webpack_require__(56);
-	exports.libraryGithubPath = [set('output:/type', 'user'),
-	    set('output:/key', 'libraryGithubPath'),
-	    ...saveDoc_1.saveDoc
-	];
-
-
-/***/ },
 /* 268 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const saveDoc_1 = __webpack_require__(83);
-	const set = __webpack_require__(56);
-	exports.libraryGithubToken = [set('output:/type', 'user'),
-	    set('output:/key', 'libraryGithubToken'),
+	const saveDoc_1 = __webpack_require__(81);
+	const set = __webpack_require__(54);
+	exports.libraryGithubPath = [set('output:/type', 'user'),
+	    set('output:/key', 'libraryGithubPath'),
 	    ...saveDoc_1.saveDoc
 	];
 
@@ -32448,10 +26157,10 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const saveDoc_1 = __webpack_require__(83);
-	const set = __webpack_require__(56);
-	exports.name = [set('output:/type', 'user'),
-	    set('output:/key', 'name'),
+	const saveDoc_1 = __webpack_require__(81);
+	const set = __webpack_require__(54);
+	exports.libraryGithubToken = [set('output:/type', 'user'),
+	    set('output:/key', 'libraryGithubToken'),
 	    ...saveDoc_1.saveDoc
 	];
 
@@ -32461,12 +26170,25 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
+	const saveDoc_1 = __webpack_require__(81);
+	const set = __webpack_require__(54);
+	exports.name = [set('output:/type', 'user'),
+	    set('output:/key', 'name'),
+	    ...saveDoc_1.saveDoc
+	];
+
+
+/***/ },
+/* 271 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
 	function __export(m) {
 	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 	}
-	__export(__webpack_require__(271));
 	__export(__webpack_require__(272));
-	const changed_1 = __webpack_require__(273);
+	__export(__webpack_require__(273));
+	const changed_1 = __webpack_require__(274);
 	exports.Sync = (options = {}) => {
 	    return (module, controller) => {
 	        module.addState({ status: 'offline'
@@ -32480,7 +26202,7 @@
 
 
 /***/ },
-/* 271 */
+/* 272 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -32488,7 +26210,7 @@
 
 
 /***/ },
-/* 272 */
+/* 273 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -32496,11 +26218,11 @@
 
 
 /***/ },
-/* 273 */
+/* 274 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	const changedAction_1 = __webpack_require__(274);
+	const changedAction_1 = __webpack_require__(275);
 	const status_1 = __webpack_require__(3);
 	exports.changed = [changedAction_1.changedAction,
 	    { success: [], error: [status_1.status] }
@@ -32508,7 +26230,7 @@
 
 
 /***/ },
-/* 274 */
+/* 275 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -32528,17 +26250,17 @@
 
 
 /***/ },
-/* 275 */
+/* 276 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var MODULE = 'cerebral-module-router'
-	var isObject = __webpack_require__(276)
-	var get = __webpack_require__(277)
+	var isObject = __webpack_require__(277)
+	var get = __webpack_require__(278)
 	
-	var Mapper = __webpack_require__(280)
+	var Mapper = __webpack_require__(281)
 	var addressbar
 	try {
-	  addressbar = __webpack_require__(286)
+	  addressbar = __webpack_require__(287)
 	} catch (e) {
 	  addressbar = {
 	    pathname: '/',
@@ -32778,7 +26500,7 @@
 
 
 /***/ },
-/* 276 */
+/* 277 */
 /***/ function(module, exports) {
 
 	/**
@@ -32821,7 +26543,7 @@
 
 
 /***/ },
-/* 277 */
+/* 278 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -32832,7 +26554,7 @@
 	 * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
 	 * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 */
-	var stringToPath = __webpack_require__(278);
+	var stringToPath = __webpack_require__(279);
 	
 	/** Used as references for various `Number` constants. */
 	var INFINITY = 1 / 0;
@@ -33033,7 +26755,7 @@
 
 
 /***/ },
-/* 278 */
+/* 279 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module, global) {/**
@@ -33044,7 +26766,7 @@
 	 * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
 	 * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 */
-	var baseToString = __webpack_require__(279);
+	var baseToString = __webpack_require__(280);
 	
 	/** Used as the `TypeError` message for "Functions" methods. */
 	var FUNC_ERROR_TEXT = 'Expected a function';
@@ -33779,10 +27501,10 @@
 	
 	module.exports = stringToPath;
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(216)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(217)(module), (function() { return this; }())))
 
 /***/ },
-/* 279 */
+/* 280 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module, global) {/**
@@ -33939,15 +27661,15 @@
 	
 	module.exports = baseToString;
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(216)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(217)(module), (function() { return this; }())))
 
 /***/ },
-/* 280 */
+/* 281 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict'
-	var mapper = __webpack_require__(281)
-	var compileRoute = __webpack_require__(282)
+	var mapper = __webpack_require__(282)
+	var compileRoute = __webpack_require__(283)
 	
 	module.exports = function urlMapper (options) {
 	  return mapper(compileRoute, options)
@@ -33955,7 +27677,7 @@
 
 
 /***/ },
-/* 281 */
+/* 282 */
 /***/ function(module, exports) {
 
 	module.exports = function mapper (compileFn, options) {
@@ -34008,12 +27730,12 @@
 
 
 /***/ },
-/* 282 */
+/* 283 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict'
-	var URLON = __webpack_require__(283)
-	var pathToRegexp = __webpack_require__(284)
+	var URLON = __webpack_require__(284)
+	var pathToRegexp = __webpack_require__(285)
 	
 	function compileRoute (route, options) {
 	  var re
@@ -34099,7 +27821,7 @@
 
 
 /***/ },
-/* 283 */
+/* 284 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var URLON = {
@@ -34228,10 +27950,10 @@
 
 
 /***/ },
-/* 284 */
+/* 285 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isarray = __webpack_require__(285)
+	var isarray = __webpack_require__(286)
 	
 	/**
 	 * Expose `pathToRegexp`.
@@ -34660,7 +28382,7 @@
 
 
 /***/ },
-/* 285 */
+/* 286 */
 /***/ function(module, exports) {
 
 	module.exports = Array.isArray || function (arr) {
@@ -34669,13 +28391,13 @@
 
 
 /***/ },
-/* 286 */
+/* 287 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/* global history */
 	
-	var URL = __webpack_require__(287)
-	var EventEmitter = __webpack_require__(182).EventEmitter
+	var URL = __webpack_require__(288)
+	var EventEmitter = __webpack_require__(183).EventEmitter
 	var instance = null
 	
 	// Check if IE history polyfill is added
@@ -34896,14 +28618,14 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 287 */
+/* 288 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var required = __webpack_require__(288)
-	  , lolcation = __webpack_require__(289)
-	  , qs = __webpack_require__(290)
+	var required = __webpack_require__(289)
+	  , lolcation = __webpack_require__(290)
+	  , qs = __webpack_require__(291)
 	  , relativere = /^\/(?!\/)/
 	  , protocolre = /^([a-z0-9.+-]+:)?(\/\/)?(.*)$/i; // actual protocol is first match
 	
@@ -35171,7 +28893,7 @@
 
 
 /***/ },
-/* 288 */
+/* 289 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -35215,7 +28937,7 @@
 
 
 /***/ },
-/* 289 */
+/* 290 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
@@ -35247,7 +28969,7 @@
 	 */
 	module.exports = function lolcation(loc) {
 	  loc = loc || global.location || {};
-	  URL = URL || __webpack_require__(287);
+	  URL = URL || __webpack_require__(288);
 	
 	  var finaldestination = {}
 	    , type = typeof loc
@@ -35275,7 +28997,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 290 */
+/* 291 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -35342,31 +29064,31 @@
 
 
 /***/ },
-/* 291 */
+/* 292 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = (__webpack_require__(15))(61);
 
 /***/ },
-/* 292 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = (__webpack_require__(15))(74);
-
-/***/ },
 /* 293 */
 /***/ function(module, exports, __webpack_require__) {
 
+	module.exports = (__webpack_require__(15))(102);
+
+/***/ },
+/* 294 */
+/***/ function(module, exports, __webpack_require__) {
+
 	"use strict";
-	__webpack_require__(294);
-	__webpack_require__(298);
+	__webpack_require__(295);
+	__webpack_require__(299);
 	const Component_1 = __webpack_require__(13);
-	const Editor_1 = __webpack_require__(300);
-	const Login_1 = __webpack_require__(345);
-	const ProjectChooser_1 = __webpack_require__(348);
-	const StatusBar_1 = __webpack_require__(351);
-	const StatusDetail_1 = __webpack_require__(363);
-	const User_1 = __webpack_require__(366);
+	const Editor_1 = __webpack_require__(301);
+	const Login_1 = __webpack_require__(346);
+	const ProjectChooser_1 = __webpack_require__(349);
+	const StatusBar_1 = __webpack_require__(352);
+	const StatusDetail_1 = __webpack_require__(364);
+	const User_1 = __webpack_require__(367);
 	const route = (r) => {
 	    switch (r) {
 	        case 'login': return Component_1.Component.createElement(Login_1.Login, {key: 'Login'});
@@ -35389,16 +29111,16 @@
 
 
 /***/ },
-/* 294 */
+/* 295 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(295);
+	var content = __webpack_require__(296);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(297)(content, {});
+	var update = __webpack_require__(298)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -35415,21 +29137,21 @@
 	}
 
 /***/ },
-/* 295 */
+/* 296 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(296)();
+	exports = module.exports = __webpack_require__(297)();
 	// imports
 	
 	
 	// module
-	exports.push([module.id, "@keyframes blinker {\n  50% {\n    opacity: 0.0; } }\n\n@keyframes pulse {\n  from {\n    stroke: black;\n    fill: white;\n    transform: translateY(0px); }\n  to {\n    stroke: white;\n    fill: transparent;\n    transform: translateY(-3px); } }\n\n@keyframes detached {\n  0% {\n    stroke: black; }\n  50% {\n    stroke: black; }\n  100% {\n    stroke: #c80000; } }\n\n@keyframes ghost {\n  to {\n    stroke-dashoffset: 10; } }\n\n.blink {\n  animation: blinker 1s linear infinite; }\n\n.pulse {\n  animation: pulse 0.4s infinite alternate; }\n\n._detachedFx {\n  animation: detached 0.8s infinite alternate; }\n\nh1, h2, h3, p, .name, .fa {\n  font-size: 1em;\n  font-weight: normal;\n  line-height: 1.2em;\n  padding: 4px;\n  margin: 4px 0; }\n\n.fa {\n  margin: 0;\n  padding-right: 8px;\n  color: #333333;\n  transition: background-color 0.3s;\n  border-radius: 4px;\n  cursor: pointer; }\n  .fa:hover {\n    background: #151414; }\n\np {\n  margin: 0; }\n\n.EditableText {\n  min-width: 4em;\n  cursor: text;\n  background-color: transparent;\n  border-bottom: 1px dashed #fff;\n  border-bottom-color: rgba(204, 204, 204, 0);\n  transition: border-bottom-color 0.8s, background-color 0.3s, color 0.3s; }\n  .EditableText input.fld {\n    border: none;\n    padding: 4px;\n    font: inherit;\n    background-color: transparent;\n    border-radius: 0;\n    width: 100%;\n    outline: none; }\n  .EditableText.active {\n    padding: 0;\n    background-color: #bd9368; }\n  .EditableText.saving {\n    color: white; }\n  .EditableText:hover {\n    border-bottom-color: rgba(26, 26, 26, 0.4); }\n\n._info {\n  background: rgba(35, 32, 32, 0.95);\n  border: 1px solid #353131;\n  border-top-right-radius: 4px;\n  color: #999999;\n  min-width: 180px;\n  max-width: 380px;\n  min-height: 100px;\n  position: fixed;\n  bottom: 37px;\n  left: 0; }\n  ._info .wrap {\n    padding: 8px; }\n  ._info .bar {\n    border-top-right-radius: 4px; }\n  ._info .wrap {\n    max-height: 300px;\n    overflow: auto; }\n\n._list, .console {\n  background: #3d3838;\n  height: 200px;\n  border: 1px solid #353131;\n  margin-top: -1px;\n  overflow-x: hidden; }\n  ._list p, .console p {\n    background: #4b4444;\n    border: 1px solid #353131;\n    padding: 8px 4px;\n    margin: -1px; }\n\n._noselect, .li {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.bar {\n  background: #302c2c;\n  padding-left: 4px; }\n  .bar div {\n    display: inline-block; }\n  .bar .fa {\n    color: #5a534b; }\n  .bar .fa.active, .bar .active > .fa {\n    color: #f1d2b3; }\n  .bar.tabs {\n    display: flex;\n    justify-content: flex-end;\n    align-items: flex-end; }\n    .bar.tabs .stretch {\n      flex-grow: 1; }\n  .bar .tab {\n    border-left: 1px solid #232020;\n    color: #868686;\n    padding: 4px 8px; }\n    .bar .tab.sel {\n      background: #28211c; }\n\n._pane {\n  z-index: 5;\n  position: fixed;\n  top: 4px;\n  box-shadow: 0 0 10px #151414;\n  background: rgba(75, 68, 68, 0.95);\n  width: 160px; }\n  ._pane .wrap {\n    overflow: visible; }\n  ._pane .bar {\n    display: flex;\n    align-items: center;\n    flex-direction: row-reverse;\n    cursor: pointer;\n    padding: 0;\n    height: 32px; }\n    ._pane .bar .rarrow {\n      border-left-color: #282525; }\n    ._pane .bar .larrow {\n      border-right-color: #282525; }\n    ._pane .bar.fbar {\n      flex-direction: row;\n      background: none;\n      position: fixed;\n      height: 32px;\n      top: 4px; }\n      ._pane .bar.fbar .rarrow {\n        border-left-color: #302c2c; }\n      ._pane .bar.fbar .larrow {\n        border-right-color: #302c2c; }\n    ._pane .bar .fa, ._pane .bar .name {\n      padding: 8px;\n      border-radius: 0;\n      background: #302c2c; }\n    ._pane .bar .name {\n      color: #868686; }\n      ._pane .bar .name:hover {\n        color: #9f9f9f; }\n    ._pane .bar .spacer {\n      width: 16px;\n      height: 100%;\n      background-color: #282525; }\n  ._pane .larrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-left: none; }\n  ._pane .rarrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-right: none; }\n\n.Modal {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  background-color: rgba(20, 20, 20, 0);\n  z-index: -9;\n  opacity: 0;\n  justify-content: center;\n  align-items: center; }\n  .Modal.active {\n    background-color: rgba(20, 20, 20, 0.5);\n    opacity: 1;\n    z-index: 9; }\n  .Modal .wrap {\n    background: #918787;\n    padding: 8px;\n    border: 1px solid #353131;\n    border-radius: 4px;\n    min-width: 160px; }\n  .Modal .message {\n    margin: 4px 0; }\n  .Modal .bwrap {\n    margin-top: 32px;\n    display: flex;\n    flex-direction: row;\n    align-items: flex-end; }\n\n.button {\n  padding: 2px 4px;\n  border-radius: 4px;\n  border: 2px solid #332e2e;\n  border-top-color: #383333;\n  border-right-color: #383333;\n  margin: 8px;\n  cursor: pointer;\n  background: linear-gradient(#b1aaaa, #7d7373); }\n  .button:active {\n    position: relative;\n    top: 1px; }\n  .button:active {\n    background: linear-gradient(#7d7373, #b1aaaa); }\n  .button.delete {\n    background: linear-gradient(#a97e7e, #815656); }\n  .button.continue {\n    background: linear-gradient(#b0906f, #8b6c4d);\n    align-self: flex-end; }\n\n.Pane .op {\n  cursor: pointer;\n  padding: 4px;\n  background: #232020;\n  color: #4d4d4d;\n  text-align: right; }\n  .Pane .op:hover {\n    color: #999999; }\n\nhtml,\nbody,\nul,\nol {\n  margin: 0;\n  padding: 0;\n  list-style-type: none; }\n\nle-test div {\n  border: 1px solid grey;\n  padding: 4px;\n  background: #999;\n  margin: 4px; }\n\nle-test .container div {\n  background: #944; }\n\nhtml, body, #app {\n  margin: 0;\n  height: 100%;\n  overflow: hidden; }\n\n#app *::-webkit-scrollbar {\n  width: 0px;\n  /* remove scrollbar space */\n  background: transparent;\n  /* optional: just make scrollbar invisible */ }\n\n.App {\n  display: flex;\n  flex-direction: column; }\n  .App > .wrap {\n    flex-grow: 1;\n    display: flex;\n    flex-direction: column; }\n  .App.mixed .Workbench > .stretch {\n    opacity: 0.8; }\n  .App.mixed .Workbench .Playback {\n    height: 0; }\n  .App.mixed #screen {\n    position: fixed;\n    top: 0;\n    left: 0; }\n  .App.fullscreen .Workbench > .stretch,\n  .App.fullscreen .Library,\n  .App.fullscreen .ProjectPane,\n  .App.fullscreen .Drag,\n  .App.fullscreen .StatusBar,\n  .App.fullscreen .StatusDetail {\n    display: none; }\n  .App.fullscreen #screen {\n    position: fixed;\n    top: 0;\n    left: 0; }\n\na {\n  text-decoration: none;\n  color: inherit;\n  display: block; }\n\nbody {\n  font-family: \"Avenir Next\", \"Segoe ui\", \"Muli\", Helvetica, sans-serif;\n  font-size: 10pt;\n  background: #3d3838;\n  color: #000;\n  cursor: default; }\n\n.fld {\n  background: #807575;\n  border: none;\n  border-radius: 4px;\n  padding: 4px;\n  font: inherit; }\n\n._search, .search {\n  background: #4b4444;\n  padding: 4px;\n  border: 1px solid #353131;\n  position: relative; }\n  ._search p input, .search p input {\n    position: absolute;\n    top: 4px;\n    left: 4px;\n    width: 132px; }\n\n._saved, .search .saved {\n  padding: 4px; }\n  ._saved li, .search .saved li {\n    background: #585151;\n    display: inline-block;\n    border-radius: 4px;\n    border: 1px solid #353131;\n    margin: 2px;\n    text-align: center;\n    width: 1.4em; }\n    ._saved li.sel, .search .saved li.sel {\n      background: #71583e;\n      color: #000; }\n\n.li {\n  cursor: pointer;\n  color: #141414;\n  padding: 4px;\n  background: #585151;\n  border-bottom: 1px solid #353131; }\n  .li.drag {\n    padding: 0; }\n    .li.drag span {\n      padding: 4px; }\n      .li.drag span:before {\n        color: #222;\n        content: \":: \"; }\n  .li span {\n    display: block; }\n  .li.sel {\n    background: #71583e;\n    color: #000; }\n  .li.add {\n    background: none;\n    color: #585151;\n    border-bottom: none;\n    text-align: center;\n    font-weight: bold;\n    transition: background 0.5s, color 0.5s; }\n    .li.add:hover {\n      background: #585151;\n      color: #000; }\n\n._button, .refresh {\n  cursor: pointer; }\n\n.dragged {\n  opacity: 0.8;\n  border-width: 2px;\n  border-radius: 4px; }\n\n._drop .drag-enter {\n  background: #71583e;\n  color: #000;\n  cursor: copy; }\n\n.search {\n  border-right: 0; }\n\n.console {\n  border-right: 0;\n  position: relative; }\n  .console p input {\n    position: absolute;\n    top: 4px;\n    right: 4px;\n    width: 50%; }\n", ""]);
+	exports.push([module.id, "@keyframes blinker {\n  50% {\n    opacity: 0.0; } }\n\n@keyframes pulse {\n  from {\n    stroke: black;\n    fill: white;\n    transform: translateY(0px); }\n  to {\n    stroke: white;\n    fill: transparent;\n    transform: translateY(-3px); } }\n\n@keyframes detached {\n  0% {\n    stroke: black; }\n  50% {\n    stroke: black; }\n  100% {\n    stroke: #c80000; } }\n\n@keyframes ghost {\n  to {\n    stroke-dashoffset: 10; } }\n\n.blink {\n  animation: blinker 1s linear infinite; }\n\n.pulse {\n  animation: pulse 0.4s infinite alternate; }\n\n._detachedFx {\n  animation: detached 0.8s infinite alternate; }\n\nh1, h2, h3, p, .name, .fa {\n  font-size: 1em;\n  font-weight: normal;\n  line-height: 1.2em;\n  padding: 4px;\n  margin: 4px 0; }\n\n.fa {\n  margin: 0;\n  padding-right: 8px;\n  color: #333333;\n  transition: background-color 0.3s;\n  border-radius: 4px;\n  cursor: pointer; }\n  .fa:hover {\n    background: #151414; }\n\np {\n  margin: 0; }\n\n.EditableText {\n  min-width: 4em;\n  cursor: text;\n  background-color: transparent;\n  border-bottom: 1px dashed #fff;\n  border-bottom-color: rgba(204, 204, 204, 0);\n  transition: border-bottom-color 0.8s, background-color 0.3s, color 0.3s; }\n  .EditableText input.fld {\n    border: none;\n    padding: 4px;\n    font: inherit;\n    background-color: transparent;\n    border-radius: 0;\n    width: 100%;\n    outline: none; }\n  .EditableText.active {\n    padding: 0;\n    background-color: #bd9368; }\n  .EditableText.saving {\n    color: white; }\n  .EditableText:hover {\n    border-bottom-color: rgba(26, 26, 26, 0.4); }\n\n._info {\n  background: rgba(35, 32, 32, 0.95);\n  border: 1px solid #353131;\n  border-top-right-radius: 4px;\n  color: #999999;\n  min-width: 180px;\n  max-width: 380px;\n  min-height: 100px;\n  position: fixed;\n  bottom: 37px;\n  left: 0; }\n  ._info .wrap {\n    padding: 8px; }\n  ._info .bar {\n    border-top-right-radius: 4px; }\n  ._info .wrap {\n    max-height: 300px;\n    overflow: auto; }\n\n._list, .console {\n  background: #3d3838;\n  height: 200px;\n  border: 1px solid #353131;\n  margin-top: -1px;\n  overflow-x: hidden; }\n  ._list p, .console p {\n    background: #4b4444;\n    border: 1px solid #353131;\n    padding: 8px 4px;\n    margin: -1px; }\n\n._noselect, .li {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.bar {\n  background: #302c2c;\n  padding-left: 4px; }\n  .bar div {\n    display: inline-block; }\n  .bar .fa {\n    color: #5a534b; }\n  .bar .fa.active, .bar .active > .fa {\n    color: #f1d2b3; }\n  .bar.tabs {\n    display: flex;\n    justify-content: flex-end;\n    align-items: flex-end; }\n    .bar.tabs .stretch {\n      flex-grow: 1; }\n  .bar .tab {\n    cursor: pointer;\n    border-left: 1px solid #232020;\n    color: #868686;\n    padding: 4px 8px; }\n    .bar .tab.sel {\n      background: #28211c; }\n\n._pane {\n  z-index: 5;\n  position: fixed;\n  top: 4px;\n  box-shadow: 0 0 10px #151414;\n  background: rgba(75, 68, 68, 0.95);\n  width: 160px; }\n  ._pane .wrap {\n    overflow: visible; }\n  ._pane .bar {\n    display: flex;\n    align-items: center;\n    flex-direction: row-reverse;\n    cursor: pointer;\n    padding: 0;\n    height: 32px; }\n    ._pane .bar .rarrow {\n      border-left-color: #282525; }\n    ._pane .bar .larrow {\n      border-right-color: #282525; }\n    ._pane .bar.fbar {\n      flex-direction: row;\n      background: none;\n      position: fixed;\n      height: 32px;\n      top: 4px; }\n      ._pane .bar.fbar .rarrow {\n        border-left-color: #302c2c; }\n      ._pane .bar.fbar .larrow {\n        border-right-color: #302c2c; }\n    ._pane .bar .fa, ._pane .bar .name {\n      padding: 8px;\n      border-radius: 0;\n      background: #302c2c; }\n    ._pane .bar .name {\n      color: #868686; }\n      ._pane .bar .name:hover {\n        color: #9f9f9f; }\n    ._pane .bar .spacer {\n      width: 16px;\n      height: 100%;\n      background-color: #282525; }\n  ._pane .larrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-left: none; }\n  ._pane .rarrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-right: none; }\n\n.Modal {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  background-color: rgba(20, 20, 20, 0);\n  z-index: -9;\n  opacity: 0;\n  justify-content: center;\n  align-items: center; }\n  .Modal.active {\n    background-color: rgba(20, 20, 20, 0.5);\n    opacity: 1;\n    z-index: 9; }\n  .Modal .wrap {\n    background: #918787;\n    padding: 8px;\n    border: 1px solid #353131;\n    border-radius: 4px;\n    min-width: 160px; }\n  .Modal .message {\n    margin: 4px 0; }\n  .Modal .bwrap {\n    margin-top: 32px;\n    display: flex;\n    flex-direction: row;\n    align-items: flex-end; }\n\n.button {\n  padding: 2px 4px;\n  border-radius: 4px;\n  border: 2px solid #332e2e;\n  border-top-color: #383333;\n  border-right-color: #383333;\n  margin: 8px;\n  cursor: pointer;\n  background: linear-gradient(#b1aaaa, #7d7373); }\n  .button:active {\n    position: relative;\n    top: 1px; }\n  .button:active {\n    background: linear-gradient(#7d7373, #b1aaaa); }\n  .button.delete {\n    background: linear-gradient(#a97e7e, #815656); }\n  .button.continue {\n    background: linear-gradient(#b0906f, #8b6c4d);\n    align-self: flex-end; }\n\n.Pane .op {\n  cursor: pointer;\n  padding: 4px;\n  background: #232020;\n  color: #4d4d4d;\n  text-align: right; }\n  .Pane .op:hover {\n    color: #999999; }\n\nhtml,\nbody,\nul,\nol {\n  margin: 0;\n  padding: 0;\n  list-style-type: none; }\n\nle-test div {\n  border: 1px solid grey;\n  padding: 4px;\n  background: #999;\n  margin: 4px; }\n\nle-test .container div {\n  background: #944; }\n\nhtml, body, #app {\n  margin: 0;\n  height: 100%;\n  overflow: hidden; }\n\n#app *::-webkit-scrollbar {\n  width: 0px;\n  /* remove scrollbar space */\n  background: transparent;\n  /* optional: just make scrollbar invisible */ }\n\n.App {\n  display: flex;\n  flex-direction: column; }\n  .App > .wrap {\n    flex-grow: 1;\n    display: flex;\n    flex-direction: column; }\n  .App.mixed .Workbench > .stretch {\n    opacity: 0.8; }\n  .App.mixed .Workbench .Playback {\n    height: 0; }\n  .App.mixed #screen {\n    position: fixed;\n    top: 0;\n    left: 0; }\n  .App.fullscreen .Workbench > .stretch,\n  .App.fullscreen .Library,\n  .App.fullscreen .ProjectPane,\n  .App.fullscreen .Drag,\n  .App.fullscreen .StatusBar,\n  .App.fullscreen .StatusDetail {\n    display: none; }\n  .App.fullscreen #screen {\n    position: fixed;\n    top: 0;\n    left: 0; }\n\na {\n  text-decoration: none;\n  color: inherit;\n  display: block; }\n\nbody {\n  font-family: \"Avenir Next\", \"Segoe ui\", \"Muli\", Helvetica, sans-serif;\n  font-size: 10pt;\n  background: #3d3838;\n  color: #000;\n  cursor: default; }\n\n.fld {\n  background: #807575;\n  border: none;\n  border-radius: 4px;\n  padding: 4px;\n  font: inherit; }\n\n._search, .search {\n  background: #4b4444;\n  padding: 4px;\n  border: 1px solid #353131;\n  position: relative; }\n  ._search p input, .search p input {\n    position: absolute;\n    top: 4px;\n    left: 4px;\n    width: 132px; }\n\n._saved, .search .saved {\n  padding: 4px; }\n  ._saved li, .search .saved li {\n    background: #585151;\n    display: inline-block;\n    border-radius: 4px;\n    border: 1px solid #353131;\n    margin: 2px;\n    text-align: center;\n    width: 1.4em; }\n    ._saved li.sel, .search .saved li.sel {\n      background: #71583e;\n      color: #000; }\n\n.li {\n  cursor: pointer;\n  color: #141414;\n  padding: 4px;\n  background: #585151;\n  border-bottom: 1px solid #353131; }\n  .li.drag {\n    padding: 0; }\n    .li.drag span {\n      padding: 4px; }\n      .li.drag span:before {\n        color: #222;\n        content: \":: \"; }\n  .li span {\n    display: block; }\n  .li.sel {\n    background: #71583e;\n    color: #000; }\n  .li.add {\n    background: none;\n    color: #585151;\n    border-bottom: none;\n    text-align: center;\n    font-weight: bold;\n    transition: background 0.5s, color 0.5s; }\n    .li.add:hover {\n      background: #585151;\n      color: #000; }\n\n._button, .refresh {\n  cursor: pointer; }\n\n.dragged {\n  opacity: 0.8;\n  border-width: 2px;\n  border-radius: 4px; }\n\n._drop .drag-enter {\n  background: #71583e;\n  color: #000;\n  cursor: copy; }\n\n.search {\n  border-right: 0; }\n\n.console {\n  border-right: 0;\n  position: relative; }\n  .console p input {\n    position: absolute;\n    top: 4px;\n    right: 4px;\n    width: 50%; }\n", ""]);
 	
 	// exports
 
 
 /***/ },
-/* 296 */
+/* 297 */
 /***/ function(module, exports) {
 
 	/*
@@ -35485,7 +29207,7 @@
 
 
 /***/ },
-/* 297 */
+/* 298 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -35737,16 +29459,16 @@
 
 
 /***/ },
-/* 298 */
+/* 299 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(299);
+	var content = __webpack_require__(300);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(297)(content, {});
+	var update = __webpack_require__(298)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -35763,34 +29485,34 @@
 	}
 
 /***/ },
-/* 299 */
+/* 300 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(296)();
+	exports = module.exports = __webpack_require__(297)();
 	// imports
 	
 	
 	// module
-	exports.push([module.id, "._info {\n  background: rgba(35, 32, 32, 0.95);\n  border: 1px solid #353131;\n  border-top-right-radius: 4px;\n  color: #999999;\n  min-width: 180px;\n  max-width: 380px;\n  min-height: 100px;\n  position: fixed;\n  bottom: 37px;\n  left: 0; }\n  ._info .wrap {\n    padding: 8px; }\n  ._info .bar {\n    border-top-right-radius: 4px; }\n  ._info .wrap {\n    max-height: 300px;\n    overflow: auto; }\n\n._list {\n  background: #3d3838;\n  height: 200px;\n  border: 1px solid #353131;\n  margin-top: -1px;\n  overflow-x: hidden; }\n  ._list p {\n    background: #4b4444;\n    border: 1px solid #353131;\n    padding: 8px 4px;\n    margin: -1px; }\n\n._noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.bar {\n  background: #302c2c;\n  padding-left: 4px; }\n  .bar div {\n    display: inline-block; }\n  .bar .fa {\n    color: #5a534b; }\n  .bar .fa.active, .bar .active > .fa {\n    color: #f1d2b3; }\n  .bar.tabs {\n    display: flex;\n    justify-content: flex-end;\n    align-items: flex-end; }\n    .bar.tabs .stretch {\n      flex-grow: 1; }\n  .bar .tab {\n    border-left: 1px solid #232020;\n    color: #868686;\n    padding: 4px 8px; }\n    .bar .tab.sel {\n      background: #28211c; }\n\n._pane {\n  z-index: 5;\n  position: fixed;\n  top: 4px;\n  box-shadow: 0 0 10px #151414;\n  background: rgba(75, 68, 68, 0.95);\n  width: 160px; }\n  ._pane .wrap {\n    overflow: visible; }\n  ._pane .bar {\n    display: flex;\n    align-items: center;\n    flex-direction: row-reverse;\n    cursor: pointer;\n    padding: 0;\n    height: 32px; }\n    ._pane .bar .rarrow {\n      border-left-color: #282525; }\n    ._pane .bar .larrow {\n      border-right-color: #282525; }\n    ._pane .bar.fbar {\n      flex-direction: row;\n      background: none;\n      position: fixed;\n      height: 32px;\n      top: 4px; }\n      ._pane .bar.fbar .rarrow {\n        border-left-color: #302c2c; }\n      ._pane .bar.fbar .larrow {\n        border-right-color: #302c2c; }\n    ._pane .bar .fa, ._pane .bar .name {\n      padding: 8px;\n      border-radius: 0;\n      background: #302c2c; }\n    ._pane .bar .name {\n      color: #868686; }\n      ._pane .bar .name:hover {\n        color: #9f9f9f; }\n    ._pane .bar .spacer {\n      width: 16px;\n      height: 100%;\n      background-color: #282525; }\n  ._pane .larrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-left: none; }\n  ._pane .rarrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-right: none; }\n\n.Modal {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  background-color: rgba(20, 20, 20, 0);\n  z-index: -9;\n  opacity: 0;\n  justify-content: center;\n  align-items: center; }\n  .Modal.active {\n    background-color: rgba(20, 20, 20, 0.5);\n    opacity: 1;\n    z-index: 9; }\n  .Modal .wrap {\n    background: #918787;\n    padding: 8px;\n    border: 1px solid #353131;\n    border-radius: 4px;\n    min-width: 160px; }\n  .Modal .message {\n    margin: 4px 0; }\n  .Modal .bwrap {\n    margin-top: 32px;\n    display: flex;\n    flex-direction: row;\n    align-items: flex-end; }\n\n.button {\n  padding: 2px 4px;\n  border-radius: 4px;\n  border: 2px solid #332e2e;\n  border-top-color: #383333;\n  border-right-color: #383333;\n  margin: 8px;\n  cursor: pointer;\n  background: linear-gradient(#b1aaaa, #7d7373); }\n  .button:active {\n    position: relative;\n    top: 1px; }\n  .button:active {\n    background: linear-gradient(#7d7373, #b1aaaa); }\n  .button.delete {\n    background: linear-gradient(#a97e7e, #815656); }\n  .button.continue {\n    background: linear-gradient(#b0906f, #8b6c4d);\n    align-self: flex-end; }\n\n.Pane .op {\n  cursor: pointer;\n  padding: 4px;\n  background: #232020;\n  color: #4d4d4d;\n  text-align: right; }\n  .Pane .op:hover {\n    color: #999999; }\n\n.Workbench {\n  background: #3d3838;\n  flex-grow: 1;\n  display: flex;\n  flex-direction: column; }\n  .Workbench > .stretch {\n    flex-grow: 1;\n    width: 100%;\n    display: flex;\n    position: relative; }\n  .Workbench .Pane {\n    overflow: hidden;\n    position: absolute;\n    left: 0;\n    margin-left: -1px;\n    width: 0px;\n    transition: width 0.1s;\n    border-bottom-right-radius: 4px; }\n    .Workbench .Pane.active {\n      width: 140px; }\n    .Workbench .Pane .wrap {\n      background: #383333;\n      box-shadow: inset 0 0 10px #232020;\n      padding: 4px; }\n", ""]);
+	exports.push([module.id, "._info {\n  background: rgba(35, 32, 32, 0.95);\n  border: 1px solid #353131;\n  border-top-right-radius: 4px;\n  color: #999999;\n  min-width: 180px;\n  max-width: 380px;\n  min-height: 100px;\n  position: fixed;\n  bottom: 37px;\n  left: 0; }\n  ._info .wrap {\n    padding: 8px; }\n  ._info .bar {\n    border-top-right-radius: 4px; }\n  ._info .wrap {\n    max-height: 300px;\n    overflow: auto; }\n\n._list {\n  background: #3d3838;\n  height: 200px;\n  border: 1px solid #353131;\n  margin-top: -1px;\n  overflow-x: hidden; }\n  ._list p {\n    background: #4b4444;\n    border: 1px solid #353131;\n    padding: 8px 4px;\n    margin: -1px; }\n\n._noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.bar {\n  background: #302c2c;\n  padding-left: 4px; }\n  .bar div {\n    display: inline-block; }\n  .bar .fa {\n    color: #5a534b; }\n  .bar .fa.active, .bar .active > .fa {\n    color: #f1d2b3; }\n  .bar.tabs {\n    display: flex;\n    justify-content: flex-end;\n    align-items: flex-end; }\n    .bar.tabs .stretch {\n      flex-grow: 1; }\n  .bar .tab {\n    cursor: pointer;\n    border-left: 1px solid #232020;\n    color: #868686;\n    padding: 4px 8px; }\n    .bar .tab.sel {\n      background: #28211c; }\n\n._pane {\n  z-index: 5;\n  position: fixed;\n  top: 4px;\n  box-shadow: 0 0 10px #151414;\n  background: rgba(75, 68, 68, 0.95);\n  width: 160px; }\n  ._pane .wrap {\n    overflow: visible; }\n  ._pane .bar {\n    display: flex;\n    align-items: center;\n    flex-direction: row-reverse;\n    cursor: pointer;\n    padding: 0;\n    height: 32px; }\n    ._pane .bar .rarrow {\n      border-left-color: #282525; }\n    ._pane .bar .larrow {\n      border-right-color: #282525; }\n    ._pane .bar.fbar {\n      flex-direction: row;\n      background: none;\n      position: fixed;\n      height: 32px;\n      top: 4px; }\n      ._pane .bar.fbar .rarrow {\n        border-left-color: #302c2c; }\n      ._pane .bar.fbar .larrow {\n        border-right-color: #302c2c; }\n    ._pane .bar .fa, ._pane .bar .name {\n      padding: 8px;\n      border-radius: 0;\n      background: #302c2c; }\n    ._pane .bar .name {\n      color: #868686; }\n      ._pane .bar .name:hover {\n        color: #9f9f9f; }\n    ._pane .bar .spacer {\n      width: 16px;\n      height: 100%;\n      background-color: #282525; }\n  ._pane .larrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-left: none; }\n  ._pane .rarrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-right: none; }\n\n.Modal {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  background-color: rgba(20, 20, 20, 0);\n  z-index: -9;\n  opacity: 0;\n  justify-content: center;\n  align-items: center; }\n  .Modal.active {\n    background-color: rgba(20, 20, 20, 0.5);\n    opacity: 1;\n    z-index: 9; }\n  .Modal .wrap {\n    background: #918787;\n    padding: 8px;\n    border: 1px solid #353131;\n    border-radius: 4px;\n    min-width: 160px; }\n  .Modal .message {\n    margin: 4px 0; }\n  .Modal .bwrap {\n    margin-top: 32px;\n    display: flex;\n    flex-direction: row;\n    align-items: flex-end; }\n\n.button {\n  padding: 2px 4px;\n  border-radius: 4px;\n  border: 2px solid #332e2e;\n  border-top-color: #383333;\n  border-right-color: #383333;\n  margin: 8px;\n  cursor: pointer;\n  background: linear-gradient(#b1aaaa, #7d7373); }\n  .button:active {\n    position: relative;\n    top: 1px; }\n  .button:active {\n    background: linear-gradient(#7d7373, #b1aaaa); }\n  .button.delete {\n    background: linear-gradient(#a97e7e, #815656); }\n  .button.continue {\n    background: linear-gradient(#b0906f, #8b6c4d);\n    align-self: flex-end; }\n\n.Pane .op {\n  cursor: pointer;\n  padding: 4px;\n  background: #232020;\n  color: #4d4d4d;\n  text-align: right; }\n  .Pane .op:hover {\n    color: #999999; }\n\n.Workbench {\n  background: #3d3838;\n  flex-grow: 1;\n  display: flex;\n  flex-direction: column; }\n  .Workbench > .stretch {\n    flex-grow: 1;\n    width: 100%;\n    display: flex;\n    position: relative; }\n  .Workbench .Pane {\n    overflow: hidden;\n    position: absolute;\n    left: 0;\n    margin-left: -1px;\n    width: 0px;\n    transition: width 0.1s;\n    border-bottom-right-radius: 4px; }\n    .Workbench .Pane.active {\n      width: 140px; }\n    .Workbench .Pane .wrap {\n      background: #383333;\n      box-shadow: inset 0 0 10px #232020;\n      padding: 4px; }\n", ""]);
 	
 	// exports
 
 
 /***/ },
-/* 300 */
+/* 301 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	__webpack_require__(301);
-	const Block_1 = __webpack_require__(303);
+	__webpack_require__(302);
+	const Block_1 = __webpack_require__(304);
 	const Component_1 = __webpack_require__(13);
-	const Drag_1 = __webpack_require__(320);
-	const Library_1 = __webpack_require__(329);
+	const Drag_1 = __webpack_require__(321);
+	const Library_1 = __webpack_require__(330);
 	const Factory_1 = __webpack_require__(11);
-	const Playback_1 = __webpack_require__(332);
-	const Project_1 = __webpack_require__(336);
-	const ProjectPane_1 = __webpack_require__(339);
-	const Scene_1 = __webpack_require__(342);
+	const Playback_1 = __webpack_require__(333);
+	const Project_1 = __webpack_require__(337);
+	const ProjectPane_1 = __webpack_require__(340);
+	const Scene_1 = __webpack_require__(343);
 	// import { ToolsPane } from './ToolsPane'
 	exports.Editor = Component_1.Component({}, () => (Component_1.Component.createElement("div", {class: 'Editor'}, 
 	    Component_1.Component.createElement(Factory_1.Modal, {key: 'Modal'}), 
@@ -35806,16 +29528,16 @@
 
 
 /***/ },
-/* 301 */
+/* 302 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(302);
+	var content = __webpack_require__(303);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(297)(content, {});
+	var update = __webpack_require__(298)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -35832,10 +29554,10 @@
 	}
 
 /***/ },
-/* 302 */
+/* 303 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(296)();
+	exports = module.exports = __webpack_require__(297)();
 	// imports
 	
 	
@@ -35846,25 +29568,45 @@
 
 
 /***/ },
-/* 303 */
+/* 304 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	__webpack_require__(304);
+	__webpack_require__(305);
 	const Component_1 = __webpack_require__(13);
-	const CodeEditor_1 = __webpack_require__(306);
-	const Controls_1 = __webpack_require__(317);
+	const CodeEditor_1 = __webpack_require__(307);
+	const Controls_1 = __webpack_require__(318);
 	const Factory_1 = __webpack_require__(11);
 	// import { Graph } from '../Graph'
 	const BlockName = Factory_1.editable(['block', 'name']);
+	const ExtraSourcesTab = (block, tab, usetab) => {
+	    const sources = block.sources;
+	    if (sources) {
+	        return Object.keys(sources).sort().map(name => (Component_1.Component.createElement("div", {class: { tab: true, sel: tab === name }, "on-click": () => usetab(name)}, 
+	            Component_1.Component.createElement("div", {class: 'fa fa-file-text'}), 
+	            name)));
+	    }
+	    return '';
+	};
+	const ControlsTab = (controls, tab, usetab) => {
+	    if (controls) {
+	        return Component_1.Component.createElement("div", {class: { tab: true, sel: tab === 'controls' }, "on-click": () => usetab('controls')}, 
+	            Component_1.Component.createElement("div", {class: 'fa fa-sliders'}), 
+	            "Control");
+	    }
+	    else {
+	        return '';
+	    }
+	};
 	exports.Block = Component_1.Component({ tab: ['$blocktab'],
 	    controls: ['$controls'],
 	    block: ['block'],
 	    editing: BlockName.path
 	}, ({ state, signals }) => {
 	    const klass = { Block: true, hidden: !state.block };
-	    const tab = state.tab || 'code';
-	    const codetab = { visibility: tab === 'code' ? 'inherit' : 'hidden' };
+	    const block = state.block || {};
+	    const tab = state.tab || 'main.ts';
+	    const codetab = { visibility: tab !== 'controls' ? 'inherit' : 'hidden' };
 	    const controlstab = { visibility: tab === 'controls' ? 'inherit' : 'hidden' };
 	    const usetab = (v) => {
 	        signals.block.tab({ value: v });
@@ -35872,33 +29614,29 @@
 	    return Component_1.Component.createElement("div", {class: klass}, 
 	        Component_1.Component.createElement("div", {class: 'bar tabs'}, 
 	            Component_1.Component.createElement("div", {class: 'stretch'}, 
-	                Component_1.Component.createElement("div", {class: 'fa fa-cube', "on-click": () => usetab('code')}), 
+	                Component_1.Component.createElement("div", {class: 'fa fa-cube'}), 
 	                Component_1.Component.createElement(BlockName, {class: 'name'})), 
-	            Component_1.Component.createElement("div", {class: { tab: true, sel: tab === 'code' }}, 
+	            Component_1.Component.createElement("div", {class: { tab: true, sel: tab === 'main.ts' }, "on-click": () => usetab('main.ts')}, 
 	                Component_1.Component.createElement("div", {class: 'fa fa-file-text'}), 
-	                "index.js"), 
-	            Component_1.Component.createElement("div", {class: { tab: true, sel: tab === 'code' }}, 
-	                Component_1.Component.createElement("div", {class: 'fa fa-file-text'}), 
-	                "frag.glsl"), 
-	            Component_1.Component.createElement("div", {class: { tab: true, sel: tab === 'code' }}, 
-	                Component_1.Component.createElement("div", {class: 'fa fa-sliders', "on-click": () => usetab('controls')}), 
-	                "Control")), 
-	        Component_1.Component.createElement(CodeEditor_1.CodeEditor, {key: 'CodeEditor', style: codetab}), 
+	                "main.ts"), 
+	            ExtraSourcesTab(block, tab, usetab), 
+	            ControlsTab(state.controls, tab, usetab)), 
+	        Component_1.Component.createElement(CodeEditor_1.CodeEditor, {key: 'CodeEditor', style: codetab, tab: tab}), 
 	        Component_1.Component.createElement(Controls_1.Controls, {key: 'Controls', style: controlstab}));
 	});
 
 
 /***/ },
-/* 304 */
+/* 305 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(305);
+	var content = __webpack_require__(306);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(297)(content, {});
+	var update = __webpack_require__(298)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -35915,35 +29653,34 @@
 	}
 
 /***/ },
-/* 305 */
+/* 306 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(296)();
+	exports = module.exports = __webpack_require__(297)();
 	// imports
 	
 	
 	// module
-	exports.push([module.id, "._info {\n  background: rgba(35, 32, 32, 0.95);\n  border: 1px solid #353131;\n  border-top-right-radius: 4px;\n  color: #999999;\n  min-width: 180px;\n  max-width: 380px;\n  min-height: 100px;\n  position: fixed;\n  bottom: 37px;\n  left: 0; }\n  ._info .wrap {\n    padding: 8px; }\n  ._info .bar {\n    border-top-right-radius: 4px; }\n  ._info .wrap {\n    max-height: 300px;\n    overflow: auto; }\n\n._list {\n  background: #3d3838;\n  height: 200px;\n  border: 1px solid #353131;\n  margin-top: -1px;\n  overflow-x: hidden; }\n  ._list p {\n    background: #4b4444;\n    border: 1px solid #353131;\n    padding: 8px 4px;\n    margin: -1px; }\n\n._noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.bar {\n  background: #302c2c;\n  padding-left: 4px; }\n  .bar div {\n    display: inline-block; }\n  .bar .fa {\n    color: #5a534b; }\n  .bar .fa.active, .bar .active > .fa {\n    color: #f1d2b3; }\n  .bar.tabs {\n    display: flex;\n    justify-content: flex-end;\n    align-items: flex-end; }\n    .bar.tabs .stretch {\n      flex-grow: 1; }\n  .bar .tab {\n    border-left: 1px solid #232020;\n    color: #868686;\n    padding: 4px 8px; }\n    .bar .tab.sel {\n      background: #28211c; }\n\n._pane {\n  z-index: 5;\n  position: fixed;\n  top: 4px;\n  box-shadow: 0 0 10px #151414;\n  background: rgba(75, 68, 68, 0.95);\n  width: 160px; }\n  ._pane .wrap {\n    overflow: visible; }\n  ._pane .bar {\n    display: flex;\n    align-items: center;\n    flex-direction: row-reverse;\n    cursor: pointer;\n    padding: 0;\n    height: 32px; }\n    ._pane .bar .rarrow {\n      border-left-color: #282525; }\n    ._pane .bar .larrow {\n      border-right-color: #282525; }\n    ._pane .bar.fbar {\n      flex-direction: row;\n      background: none;\n      position: fixed;\n      height: 32px;\n      top: 4px; }\n      ._pane .bar.fbar .rarrow {\n        border-left-color: #302c2c; }\n      ._pane .bar.fbar .larrow {\n        border-right-color: #302c2c; }\n    ._pane .bar .fa, ._pane .bar .name {\n      padding: 8px;\n      border-radius: 0;\n      background: #302c2c; }\n    ._pane .bar .name {\n      color: #868686; }\n      ._pane .bar .name:hover {\n        color: #9f9f9f; }\n    ._pane .bar .spacer {\n      width: 16px;\n      height: 100%;\n      background-color: #282525; }\n  ._pane .larrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-left: none; }\n  ._pane .rarrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-right: none; }\n\n.Modal {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  background-color: rgba(20, 20, 20, 0);\n  z-index: -9;\n  opacity: 0;\n  justify-content: center;\n  align-items: center; }\n  .Modal.active {\n    background-color: rgba(20, 20, 20, 0.5);\n    opacity: 1;\n    z-index: 9; }\n  .Modal .wrap {\n    background: #918787;\n    padding: 8px;\n    border: 1px solid #353131;\n    border-radius: 4px;\n    min-width: 160px; }\n  .Modal .message {\n    margin: 4px 0; }\n  .Modal .bwrap {\n    margin-top: 32px;\n    display: flex;\n    flex-direction: row;\n    align-items: flex-end; }\n\n.button {\n  padding: 2px 4px;\n  border-radius: 4px;\n  border: 2px solid #332e2e;\n  border-top-color: #383333;\n  border-right-color: #383333;\n  margin: 8px;\n  cursor: pointer;\n  background: linear-gradient(#b1aaaa, #7d7373); }\n  .button:active {\n    position: relative;\n    top: 1px; }\n  .button:active {\n    background: linear-gradient(#7d7373, #b1aaaa); }\n  .button.delete {\n    background: linear-gradient(#a97e7e, #815656); }\n  .button.continue {\n    background: linear-gradient(#b0906f, #8b6c4d);\n    align-self: flex-end; }\n\n.Pane .op {\n  cursor: pointer;\n  padding: 4px;\n  background: #232020;\n  color: #4d4d4d;\n  text-align: right; }\n  .Pane .op:hover {\n    color: #999999; }\n\n.Block {\n  position: absolute;\n  bottom: 0;\n  right: 0;\n  width: 460px;\n  background: #232020;\n  border-top-left-radius: 4px; }\n  .Block .bar {\n    border-top-left-radius: 4px; }\n  .Block .CodeMirror {\n    height: 306px; }\n  .Block.hidden {\n    visibility: hidden; }\n", ""]);
+	exports.push([module.id, "._info {\n  background: rgba(35, 32, 32, 0.95);\n  border: 1px solid #353131;\n  border-top-right-radius: 4px;\n  color: #999999;\n  min-width: 180px;\n  max-width: 380px;\n  min-height: 100px;\n  position: fixed;\n  bottom: 37px;\n  left: 0; }\n  ._info .wrap {\n    padding: 8px; }\n  ._info .bar {\n    border-top-right-radius: 4px; }\n  ._info .wrap {\n    max-height: 300px;\n    overflow: auto; }\n\n._list {\n  background: #3d3838;\n  height: 200px;\n  border: 1px solid #353131;\n  margin-top: -1px;\n  overflow-x: hidden; }\n  ._list p {\n    background: #4b4444;\n    border: 1px solid #353131;\n    padding: 8px 4px;\n    margin: -1px; }\n\n._noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.bar {\n  background: #302c2c;\n  padding-left: 4px; }\n  .bar div {\n    display: inline-block; }\n  .bar .fa {\n    color: #5a534b; }\n  .bar .fa.active, .bar .active > .fa {\n    color: #f1d2b3; }\n  .bar.tabs {\n    display: flex;\n    justify-content: flex-end;\n    align-items: flex-end; }\n    .bar.tabs .stretch {\n      flex-grow: 1; }\n  .bar .tab {\n    cursor: pointer;\n    border-left: 1px solid #232020;\n    color: #868686;\n    padding: 4px 8px; }\n    .bar .tab.sel {\n      background: #28211c; }\n\n._pane {\n  z-index: 5;\n  position: fixed;\n  top: 4px;\n  box-shadow: 0 0 10px #151414;\n  background: rgba(75, 68, 68, 0.95);\n  width: 160px; }\n  ._pane .wrap {\n    overflow: visible; }\n  ._pane .bar {\n    display: flex;\n    align-items: center;\n    flex-direction: row-reverse;\n    cursor: pointer;\n    padding: 0;\n    height: 32px; }\n    ._pane .bar .rarrow {\n      border-left-color: #282525; }\n    ._pane .bar .larrow {\n      border-right-color: #282525; }\n    ._pane .bar.fbar {\n      flex-direction: row;\n      background: none;\n      position: fixed;\n      height: 32px;\n      top: 4px; }\n      ._pane .bar.fbar .rarrow {\n        border-left-color: #302c2c; }\n      ._pane .bar.fbar .larrow {\n        border-right-color: #302c2c; }\n    ._pane .bar .fa, ._pane .bar .name {\n      padding: 8px;\n      border-radius: 0;\n      background: #302c2c; }\n    ._pane .bar .name {\n      color: #868686; }\n      ._pane .bar .name:hover {\n        color: #9f9f9f; }\n    ._pane .bar .spacer {\n      width: 16px;\n      height: 100%;\n      background-color: #282525; }\n  ._pane .larrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-left: none; }\n  ._pane .rarrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-right: none; }\n\n.Modal {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  background-color: rgba(20, 20, 20, 0);\n  z-index: -9;\n  opacity: 0;\n  justify-content: center;\n  align-items: center; }\n  .Modal.active {\n    background-color: rgba(20, 20, 20, 0.5);\n    opacity: 1;\n    z-index: 9; }\n  .Modal .wrap {\n    background: #918787;\n    padding: 8px;\n    border: 1px solid #353131;\n    border-radius: 4px;\n    min-width: 160px; }\n  .Modal .message {\n    margin: 4px 0; }\n  .Modal .bwrap {\n    margin-top: 32px;\n    display: flex;\n    flex-direction: row;\n    align-items: flex-end; }\n\n.button {\n  padding: 2px 4px;\n  border-radius: 4px;\n  border: 2px solid #332e2e;\n  border-top-color: #383333;\n  border-right-color: #383333;\n  margin: 8px;\n  cursor: pointer;\n  background: linear-gradient(#b1aaaa, #7d7373); }\n  .button:active {\n    position: relative;\n    top: 1px; }\n  .button:active {\n    background: linear-gradient(#7d7373, #b1aaaa); }\n  .button.delete {\n    background: linear-gradient(#a97e7e, #815656); }\n  .button.continue {\n    background: linear-gradient(#b0906f, #8b6c4d);\n    align-self: flex-end; }\n\n.Pane .op {\n  cursor: pointer;\n  padding: 4px;\n  background: #232020;\n  color: #4d4d4d;\n  text-align: right; }\n  .Pane .op:hover {\n    color: #999999; }\n\n.Block {\n  position: absolute;\n  bottom: 0;\n  right: 0;\n  width: 460px;\n  background: #232020;\n  border-top-left-radius: 4px; }\n  .Block .bar {\n    border-top-left-radius: 4px; }\n  .Block .CodeMirror {\n    height: 306px; }\n  .Block.hidden {\n    visibility: hidden; }\n", ""]);
 	
 	// exports
 
 
 /***/ },
-/* 306 */
+/* 307 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	__webpack_require__(307);
+	__webpack_require__(308);
 	const Component_1 = __webpack_require__(13);
 	const CodeHelper_1 = __webpack_require__(36);
 	// CodeMirror CSS
-	__webpack_require__(309);
-	__webpack_require__(311);
-	__webpack_require__(313);
-	__webpack_require__(315);
-	const Utils_1 = __webpack_require__(129);
+	__webpack_require__(310);
+	__webpack_require__(312);
+	__webpack_require__(314);
+	__webpack_require__(316);
+	const Utils_1 = __webpack_require__(127);
 	let cm = null;
-	let source;
 	const ederror = [];
 	let serrors;
 	const debounceErrors = Utils_1.debounce(1000);
@@ -35954,7 +29691,7 @@
 	            const msg = document.createElement('div');
 	            msg.textContent = v.message;
 	            msg.className = 'error';
-	            ederror.push(doc.addLineWidget(v.loc.line, msg, { coverGutter: false, noHScroll: true }));
+	            ederror.push(doc.addLineWidget(v.line, msg, { coverGutter: false, noHScroll: true }));
 	        }
 	        serrors = null;
 	    }
@@ -35962,16 +29699,38 @@
 	const showErrors = (errors) => {
 	    serrors = errors;
 	    // debounce
-	    debounceErrors({ output: doShowErrors });
+	    debounceErrors({ output: { accepted: doShowErrors, ignored() { } } });
 	};
+	let block = null;
 	exports.CodeEditor = Component_1.Component({ block: ['block'],
 	    select: ['$block'],
 	    errors: ['$editor', 'errors']
 	}, ({ props, state, signals }) => {
-	    const block = state.block || {};
-	    const save = () => {
-	        source = cm.getValue();
-	        signals.block.source({ value: source });
+	    block = state.block || {};
+	    const tab = props.tab;
+	    const save = (filename, source) => {
+	        if (filename === 'main.ts') {
+	            signals.block.source({ source });
+	        }
+	        else {
+	            if (block && block.sources) {
+	                const src = block.sources[filename];
+	                if (typeof src === 'string') {
+	                    const sources = Object.assign({}, block.sources);
+	                    sources[filename] = source;
+	                    signals.block.sources({ sources });
+	                }
+	                else {
+	                    console.log(`Invalid filename '${filename}'. Cannot save.`);
+	                }
+	            }
+	            else {
+	                console.log(`No extra sources. Cannot save.`);
+	            }
+	        }
+	    };
+	    const typecheck = (filename, source) => {
+	        signals.block.typecheck({ source });
 	    };
 	    if (cm) {
 	        const errors = state.errors;
@@ -35988,13 +29747,17 @@
 	        if (cm === null) {
 	            cm = false;
 	            setTimeout(() => {
-	                cm = CodeHelper_1.makeEditor(elm, block.source || '', save);
+	                cm = CodeHelper_1.makeEditor(elm, block.source || '', save, typecheck);
 	            }, 100);
 	        }
 	    };
-	    if (source !== block.source && cm) {
-	        source = block.source;
-	        CodeHelper_1.sourceChanged(cm, block);
+	    let source = block.source;
+	    if (tab !== 'main.ts' && tab !== 'controls') {
+	        const sources = block.sources || {};
+	        source = sources[tab];
+	    }
+	    if (cm && tab !== 'controls') {
+	        CodeHelper_1.sourceChanged(cm, tab, source, block);
 	    }
 	    return Component_1.Component.createElement("div", {class: 'CodeEditor', style: props.style}, 
 	        Component_1.Component.createElement("div", {class: 'codeholder', "hook-create": create})
@@ -36003,16 +29766,16 @@
 
 
 /***/ },
-/* 307 */
+/* 308 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(308);
+	var content = __webpack_require__(309);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(297)(content, {});
+	var update = __webpack_require__(298)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -36029,30 +29792,30 @@
 	}
 
 /***/ },
-/* 308 */
+/* 309 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(296)();
+	exports = module.exports = __webpack_require__(297)();
 	// imports
 	
 	
 	// module
-	exports.push([module.id, "._info {\n  background: rgba(35, 32, 32, 0.95);\n  border: 1px solid #353131;\n  border-top-right-radius: 4px;\n  color: #999999;\n  min-width: 180px;\n  max-width: 380px;\n  min-height: 100px;\n  position: fixed;\n  bottom: 37px;\n  left: 0; }\n  ._info .wrap {\n    padding: 8px; }\n  ._info .bar {\n    border-top-right-radius: 4px; }\n  ._info .wrap {\n    max-height: 300px;\n    overflow: auto; }\n\n._list {\n  background: #3d3838;\n  height: 200px;\n  border: 1px solid #353131;\n  margin-top: -1px;\n  overflow-x: hidden; }\n  ._list p {\n    background: #4b4444;\n    border: 1px solid #353131;\n    padding: 8px 4px;\n    margin: -1px; }\n\n._noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.bar {\n  background: #302c2c;\n  padding-left: 4px; }\n  .bar div {\n    display: inline-block; }\n  .bar .fa {\n    color: #5a534b; }\n  .bar .fa.active, .bar .active > .fa {\n    color: #f1d2b3; }\n  .bar.tabs {\n    display: flex;\n    justify-content: flex-end;\n    align-items: flex-end; }\n    .bar.tabs .stretch {\n      flex-grow: 1; }\n  .bar .tab {\n    border-left: 1px solid #232020;\n    color: #868686;\n    padding: 4px 8px; }\n    .bar .tab.sel {\n      background: #28211c; }\n\n._pane {\n  z-index: 5;\n  position: fixed;\n  top: 4px;\n  box-shadow: 0 0 10px #151414;\n  background: rgba(75, 68, 68, 0.95);\n  width: 160px; }\n  ._pane .wrap {\n    overflow: visible; }\n  ._pane .bar {\n    display: flex;\n    align-items: center;\n    flex-direction: row-reverse;\n    cursor: pointer;\n    padding: 0;\n    height: 32px; }\n    ._pane .bar .rarrow {\n      border-left-color: #282525; }\n    ._pane .bar .larrow {\n      border-right-color: #282525; }\n    ._pane .bar.fbar {\n      flex-direction: row;\n      background: none;\n      position: fixed;\n      height: 32px;\n      top: 4px; }\n      ._pane .bar.fbar .rarrow {\n        border-left-color: #302c2c; }\n      ._pane .bar.fbar .larrow {\n        border-right-color: #302c2c; }\n    ._pane .bar .fa, ._pane .bar .name {\n      padding: 8px;\n      border-radius: 0;\n      background: #302c2c; }\n    ._pane .bar .name {\n      color: #868686; }\n      ._pane .bar .name:hover {\n        color: #9f9f9f; }\n    ._pane .bar .spacer {\n      width: 16px;\n      height: 100%;\n      background-color: #282525; }\n  ._pane .larrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-left: none; }\n  ._pane .rarrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-right: none; }\n\n.Modal {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  background-color: rgba(20, 20, 20, 0);\n  z-index: -9;\n  opacity: 0;\n  justify-content: center;\n  align-items: center; }\n  .Modal.active {\n    background-color: rgba(20, 20, 20, 0.5);\n    opacity: 1;\n    z-index: 9; }\n  .Modal .wrap {\n    background: #918787;\n    padding: 8px;\n    border: 1px solid #353131;\n    border-radius: 4px;\n    min-width: 160px; }\n  .Modal .message {\n    margin: 4px 0; }\n  .Modal .bwrap {\n    margin-top: 32px;\n    display: flex;\n    flex-direction: row;\n    align-items: flex-end; }\n\n.button {\n  padding: 2px 4px;\n  border-radius: 4px;\n  border: 2px solid #332e2e;\n  border-top-color: #383333;\n  border-right-color: #383333;\n  margin: 8px;\n  cursor: pointer;\n  background: linear-gradient(#b1aaaa, #7d7373); }\n  .button:active {\n    position: relative;\n    top: 1px; }\n  .button:active {\n    background: linear-gradient(#7d7373, #b1aaaa); }\n  .button.delete {\n    background: linear-gradient(#a97e7e, #815656); }\n  .button.continue {\n    background: linear-gradient(#b0906f, #8b6c4d);\n    align-self: flex-end; }\n\n.Pane .op {\n  cursor: pointer;\n  padding: 4px;\n  background: #232020;\n  color: #4d4d4d;\n  text-align: right; }\n  .Pane .op:hover {\n    color: #999999; }\n\n#app .CodeEditor .scrubbing {\n  background: yellow; }\n\n#app .CodeEditor .cm-number {\n  border: 1px dashed transparent; }\n  #app .CodeEditor .cm-number.scrub {\n    cursor: move;\n    border: 1px dashed #585151;\n    border-radius: 4px; }\n\n#app .CodeEditor .CodeMirror-overlayscroll-horizontal div,\n#app .CodeEditor .CodeMirror-overlayscroll-vertical div {\n  background: #3d3838; }\n\n#app .CodeEditor .CodeMirror {\n  padding: 4px 0 8px 4px; }\n\n#app .CodeEditor .CodeMirror-linewidget {\n  margin-top: 4px;\n  left: -1px;\n  padding-left: 0px;\n  width: 460px;\n  background: #353030;\n  color: #959663;\n  padding: 4px;\n  border-top: 1px dashed #899266; }\n", ""]);
+	exports.push([module.id, "._info {\n  background: rgba(35, 32, 32, 0.95);\n  border: 1px solid #353131;\n  border-top-right-radius: 4px;\n  color: #999999;\n  min-width: 180px;\n  max-width: 380px;\n  min-height: 100px;\n  position: fixed;\n  bottom: 37px;\n  left: 0; }\n  ._info .wrap {\n    padding: 8px; }\n  ._info .bar {\n    border-top-right-radius: 4px; }\n  ._info .wrap {\n    max-height: 300px;\n    overflow: auto; }\n\n._list {\n  background: #3d3838;\n  height: 200px;\n  border: 1px solid #353131;\n  margin-top: -1px;\n  overflow-x: hidden; }\n  ._list p {\n    background: #4b4444;\n    border: 1px solid #353131;\n    padding: 8px 4px;\n    margin: -1px; }\n\n._noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.bar {\n  background: #302c2c;\n  padding-left: 4px; }\n  .bar div {\n    display: inline-block; }\n  .bar .fa {\n    color: #5a534b; }\n  .bar .fa.active, .bar .active > .fa {\n    color: #f1d2b3; }\n  .bar.tabs {\n    display: flex;\n    justify-content: flex-end;\n    align-items: flex-end; }\n    .bar.tabs .stretch {\n      flex-grow: 1; }\n  .bar .tab {\n    cursor: pointer;\n    border-left: 1px solid #232020;\n    color: #868686;\n    padding: 4px 8px; }\n    .bar .tab.sel {\n      background: #28211c; }\n\n._pane {\n  z-index: 5;\n  position: fixed;\n  top: 4px;\n  box-shadow: 0 0 10px #151414;\n  background: rgba(75, 68, 68, 0.95);\n  width: 160px; }\n  ._pane .wrap {\n    overflow: visible; }\n  ._pane .bar {\n    display: flex;\n    align-items: center;\n    flex-direction: row-reverse;\n    cursor: pointer;\n    padding: 0;\n    height: 32px; }\n    ._pane .bar .rarrow {\n      border-left-color: #282525; }\n    ._pane .bar .larrow {\n      border-right-color: #282525; }\n    ._pane .bar.fbar {\n      flex-direction: row;\n      background: none;\n      position: fixed;\n      height: 32px;\n      top: 4px; }\n      ._pane .bar.fbar .rarrow {\n        border-left-color: #302c2c; }\n      ._pane .bar.fbar .larrow {\n        border-right-color: #302c2c; }\n    ._pane .bar .fa, ._pane .bar .name {\n      padding: 8px;\n      border-radius: 0;\n      background: #302c2c; }\n    ._pane .bar .name {\n      color: #868686; }\n      ._pane .bar .name:hover {\n        color: #9f9f9f; }\n    ._pane .bar .spacer {\n      width: 16px;\n      height: 100%;\n      background-color: #282525; }\n  ._pane .larrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-left: none; }\n  ._pane .rarrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-right: none; }\n\n.Modal {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  background-color: rgba(20, 20, 20, 0);\n  z-index: -9;\n  opacity: 0;\n  justify-content: center;\n  align-items: center; }\n  .Modal.active {\n    background-color: rgba(20, 20, 20, 0.5);\n    opacity: 1;\n    z-index: 9; }\n  .Modal .wrap {\n    background: #918787;\n    padding: 8px;\n    border: 1px solid #353131;\n    border-radius: 4px;\n    min-width: 160px; }\n  .Modal .message {\n    margin: 4px 0; }\n  .Modal .bwrap {\n    margin-top: 32px;\n    display: flex;\n    flex-direction: row;\n    align-items: flex-end; }\n\n.button {\n  padding: 2px 4px;\n  border-radius: 4px;\n  border: 2px solid #332e2e;\n  border-top-color: #383333;\n  border-right-color: #383333;\n  margin: 8px;\n  cursor: pointer;\n  background: linear-gradient(#b1aaaa, #7d7373); }\n  .button:active {\n    position: relative;\n    top: 1px; }\n  .button:active {\n    background: linear-gradient(#7d7373, #b1aaaa); }\n  .button.delete {\n    background: linear-gradient(#a97e7e, #815656); }\n  .button.continue {\n    background: linear-gradient(#b0906f, #8b6c4d);\n    align-self: flex-end; }\n\n.Pane .op {\n  cursor: pointer;\n  padding: 4px;\n  background: #232020;\n  color: #4d4d4d;\n  text-align: right; }\n  .Pane .op:hover {\n    color: #999999; }\n\n#app .CodeEditor .scrubbing {\n  background: yellow; }\n\n#app .CodeEditor .cm-number {\n  border: 1px dashed transparent; }\n  #app .CodeEditor .cm-number.scrub {\n    cursor: move;\n    border: 1px dashed #585151;\n    border-radius: 4px; }\n\n#app .CodeEditor .CodeMirror-overlayscroll-horizontal div,\n#app .CodeEditor .CodeMirror-overlayscroll-vertical div {\n  background: #3d3838; }\n\n#app .CodeEditor .CodeMirror {\n  padding: 4px 0 8px 4px; }\n\n#app .CodeEditor .CodeMirror-linewidget {\n  margin-top: 4px;\n  left: -1px;\n  padding-left: 0px;\n  width: 460px;\n  background: #353030;\n  color: #959663;\n  padding: 4px;\n  border-top: 1px dashed #899266; }\n", ""]);
 	
 	// exports
 
 
 /***/ },
-/* 309 */
+/* 310 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(310);
+	var content = __webpack_require__(311);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(297)(content, {});
+	var update = __webpack_require__(298)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -36069,10 +29832,10 @@
 	}
 
 /***/ },
-/* 310 */
+/* 311 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(296)();
+	exports = module.exports = __webpack_require__(297)();
 	// imports
 	
 	
@@ -36083,16 +29846,16 @@
 
 
 /***/ },
-/* 311 */
+/* 312 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(312);
+	var content = __webpack_require__(313);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(297)(content, {});
+	var update = __webpack_require__(298)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -36109,10 +29872,10 @@
 	}
 
 /***/ },
-/* 312 */
+/* 313 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(296)();
+	exports = module.exports = __webpack_require__(297)();
 	// imports
 	
 	
@@ -36123,16 +29886,16 @@
 
 
 /***/ },
-/* 313 */
+/* 314 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(314);
+	var content = __webpack_require__(315);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(297)(content, {});
+	var update = __webpack_require__(298)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -36149,10 +29912,10 @@
 	}
 
 /***/ },
-/* 314 */
+/* 315 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(296)();
+	exports = module.exports = __webpack_require__(297)();
 	// imports
 	
 	
@@ -36163,16 +29926,16 @@
 
 
 /***/ },
-/* 315 */
+/* 316 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(316);
+	var content = __webpack_require__(317);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(297)(content, {});
+	var update = __webpack_require__(298)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -36189,10 +29952,10 @@
 	}
 
 /***/ },
-/* 316 */
+/* 317 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(296)();
+	exports = module.exports = __webpack_require__(297)();
 	// imports
 	
 	
@@ -36203,11 +29966,11 @@
 
 
 /***/ },
-/* 317 */
+/* 318 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	__webpack_require__(318);
+	__webpack_require__(319);
 	const Component_1 = __webpack_require__(13);
 	const makeControl = (ctrl, idx, matrix, clbk) => {
 	    if (ctrl.type === 'Slider') {
@@ -36252,16 +30015,16 @@
 
 
 /***/ },
-/* 318 */
+/* 319 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(319);
+	var content = __webpack_require__(320);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(297)(content, {});
+	var update = __webpack_require__(298)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -36278,10 +30041,10 @@
 	}
 
 /***/ },
-/* 319 */
+/* 320 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(296)();
+	exports = module.exports = __webpack_require__(297)();
 	// imports
 	
 	
@@ -36292,13 +30055,13 @@
 
 
 /***/ },
-/* 320 */
+/* 321 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	__webpack_require__(321);
+	__webpack_require__(322);
 	const Component_1 = __webpack_require__(13);
-	const Graph_1 = __webpack_require__(323);
+	const Graph_1 = __webpack_require__(324);
 	exports.Drag = Component_1.Component({ drag: ['$dragdrop', 'drag'],
 	    move: ['$dragdrop', 'move'],
 	    drop: ['$dragdrop', 'drop']
@@ -36321,16 +30084,16 @@
 
 
 /***/ },
-/* 321 */
+/* 322 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(322);
+	var content = __webpack_require__(323);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(297)(content, {});
+	var update = __webpack_require__(298)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -36347,10 +30110,10 @@
 	}
 
 /***/ },
-/* 322 */
+/* 323 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(296)();
+	exports = module.exports = __webpack_require__(297)();
 	// imports
 	
 	
@@ -36361,14 +30124,14 @@
 
 
 /***/ },
-/* 323 */
+/* 324 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	__webpack_require__(324);
+	__webpack_require__(325);
 	const Component_1 = __webpack_require__(13);
 	const Graph_1 = __webpack_require__(26);
-	const Node_1 = __webpack_require__(326);
+	const Node_1 = __webpack_require__(327);
 	const mapUINodes = (graph, uigraph, ownerType, blockId) => {
 	    const nodesById = graph.nodesById;
 	    const nodes = uigraph.nodes;
@@ -36433,16 +30196,16 @@
 
 
 /***/ },
-/* 324 */
+/* 325 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(325);
+	var content = __webpack_require__(326);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(297)(content, {});
+	var update = __webpack_require__(298)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -36459,27 +30222,27 @@
 	}
 
 /***/ },
-/* 325 */
+/* 326 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(296)();
+	exports = module.exports = __webpack_require__(297)();
 	// imports
 	
 	
 	// module
-	exports.push([module.id, "._info {\n  background: rgba(35, 32, 32, 0.95);\n  border: 1px solid #353131;\n  border-top-right-radius: 4px;\n  color: #999999;\n  min-width: 180px;\n  max-width: 380px;\n  min-height: 100px;\n  position: fixed;\n  bottom: 37px;\n  left: 0; }\n  ._info .wrap {\n    padding: 8px; }\n  ._info .bar {\n    border-top-right-radius: 4px; }\n  ._info .wrap {\n    max-height: 300px;\n    overflow: auto; }\n\n._list {\n  background: #3d3838;\n  height: 200px;\n  border: 1px solid #353131;\n  margin-top: -1px;\n  overflow-x: hidden; }\n  ._list p {\n    background: #4b4444;\n    border: 1px solid #353131;\n    padding: 8px 4px;\n    margin: -1px; }\n\n._noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.bar {\n  background: #302c2c;\n  padding-left: 4px; }\n  .bar div {\n    display: inline-block; }\n  .bar .fa {\n    color: #5a534b; }\n  .bar .fa.active, .bar .active > .fa {\n    color: #f1d2b3; }\n  .bar.tabs {\n    display: flex;\n    justify-content: flex-end;\n    align-items: flex-end; }\n    .bar.tabs .stretch {\n      flex-grow: 1; }\n  .bar .tab {\n    border-left: 1px solid #232020;\n    color: #868686;\n    padding: 4px 8px; }\n    .bar .tab.sel {\n      background: #28211c; }\n\n._pane {\n  z-index: 5;\n  position: fixed;\n  top: 4px;\n  box-shadow: 0 0 10px #151414;\n  background: rgba(75, 68, 68, 0.95);\n  width: 160px; }\n  ._pane .wrap {\n    overflow: visible; }\n  ._pane .bar {\n    display: flex;\n    align-items: center;\n    flex-direction: row-reverse;\n    cursor: pointer;\n    padding: 0;\n    height: 32px; }\n    ._pane .bar .rarrow {\n      border-left-color: #282525; }\n    ._pane .bar .larrow {\n      border-right-color: #282525; }\n    ._pane .bar.fbar {\n      flex-direction: row;\n      background: none;\n      position: fixed;\n      height: 32px;\n      top: 4px; }\n      ._pane .bar.fbar .rarrow {\n        border-left-color: #302c2c; }\n      ._pane .bar.fbar .larrow {\n        border-right-color: #302c2c; }\n    ._pane .bar .fa, ._pane .bar .name {\n      padding: 8px;\n      border-radius: 0;\n      background: #302c2c; }\n    ._pane .bar .name {\n      color: #868686; }\n      ._pane .bar .name:hover {\n        color: #9f9f9f; }\n    ._pane .bar .spacer {\n      width: 16px;\n      height: 100%;\n      background-color: #282525; }\n  ._pane .larrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-left: none; }\n  ._pane .rarrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-right: none; }\n\n.Modal {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  background-color: rgba(20, 20, 20, 0);\n  z-index: -9;\n  opacity: 0;\n  justify-content: center;\n  align-items: center; }\n  .Modal.active {\n    background-color: rgba(20, 20, 20, 0.5);\n    opacity: 1;\n    z-index: 9; }\n  .Modal .wrap {\n    background: #918787;\n    padding: 8px;\n    border: 1px solid #353131;\n    border-radius: 4px;\n    min-width: 160px; }\n  .Modal .message {\n    margin: 4px 0; }\n  .Modal .bwrap {\n    margin-top: 32px;\n    display: flex;\n    flex-direction: row;\n    align-items: flex-end; }\n\n.button {\n  padding: 2px 4px;\n  border-radius: 4px;\n  border: 2px solid #332e2e;\n  border-top-color: #383333;\n  border-right-color: #383333;\n  margin: 8px;\n  cursor: pointer;\n  background: linear-gradient(#b1aaaa, #7d7373); }\n  .button:active {\n    position: relative;\n    top: 1px; }\n  .button:active {\n    background: linear-gradient(#7d7373, #b1aaaa); }\n  .button.delete {\n    background: linear-gradient(#a97e7e, #815656); }\n  .button.continue {\n    background: linear-gradient(#b0906f, #8b6c4d);\n    align-self: flex-end; }\n\n.Pane .op {\n  cursor: pointer;\n  padding: 4px;\n  background: #232020;\n  color: #4d4d4d;\n  text-align: right; }\n  .Pane .op:hover {\n    color: #999999; }\n\n.Graph {\n  padding: 0 16px;\n  height: 100%;\n  overflow: auto; }\n", ""]);
+	exports.push([module.id, "._info {\n  background: rgba(35, 32, 32, 0.95);\n  border: 1px solid #353131;\n  border-top-right-radius: 4px;\n  color: #999999;\n  min-width: 180px;\n  max-width: 380px;\n  min-height: 100px;\n  position: fixed;\n  bottom: 37px;\n  left: 0; }\n  ._info .wrap {\n    padding: 8px; }\n  ._info .bar {\n    border-top-right-radius: 4px; }\n  ._info .wrap {\n    max-height: 300px;\n    overflow: auto; }\n\n._list {\n  background: #3d3838;\n  height: 200px;\n  border: 1px solid #353131;\n  margin-top: -1px;\n  overflow-x: hidden; }\n  ._list p {\n    background: #4b4444;\n    border: 1px solid #353131;\n    padding: 8px 4px;\n    margin: -1px; }\n\n._noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.bar {\n  background: #302c2c;\n  padding-left: 4px; }\n  .bar div {\n    display: inline-block; }\n  .bar .fa {\n    color: #5a534b; }\n  .bar .fa.active, .bar .active > .fa {\n    color: #f1d2b3; }\n  .bar.tabs {\n    display: flex;\n    justify-content: flex-end;\n    align-items: flex-end; }\n    .bar.tabs .stretch {\n      flex-grow: 1; }\n  .bar .tab {\n    cursor: pointer;\n    border-left: 1px solid #232020;\n    color: #868686;\n    padding: 4px 8px; }\n    .bar .tab.sel {\n      background: #28211c; }\n\n._pane {\n  z-index: 5;\n  position: fixed;\n  top: 4px;\n  box-shadow: 0 0 10px #151414;\n  background: rgba(75, 68, 68, 0.95);\n  width: 160px; }\n  ._pane .wrap {\n    overflow: visible; }\n  ._pane .bar {\n    display: flex;\n    align-items: center;\n    flex-direction: row-reverse;\n    cursor: pointer;\n    padding: 0;\n    height: 32px; }\n    ._pane .bar .rarrow {\n      border-left-color: #282525; }\n    ._pane .bar .larrow {\n      border-right-color: #282525; }\n    ._pane .bar.fbar {\n      flex-direction: row;\n      background: none;\n      position: fixed;\n      height: 32px;\n      top: 4px; }\n      ._pane .bar.fbar .rarrow {\n        border-left-color: #302c2c; }\n      ._pane .bar.fbar .larrow {\n        border-right-color: #302c2c; }\n    ._pane .bar .fa, ._pane .bar .name {\n      padding: 8px;\n      border-radius: 0;\n      background: #302c2c; }\n    ._pane .bar .name {\n      color: #868686; }\n      ._pane .bar .name:hover {\n        color: #9f9f9f; }\n    ._pane .bar .spacer {\n      width: 16px;\n      height: 100%;\n      background-color: #282525; }\n  ._pane .larrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-left: none; }\n  ._pane .rarrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-right: none; }\n\n.Modal {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  background-color: rgba(20, 20, 20, 0);\n  z-index: -9;\n  opacity: 0;\n  justify-content: center;\n  align-items: center; }\n  .Modal.active {\n    background-color: rgba(20, 20, 20, 0.5);\n    opacity: 1;\n    z-index: 9; }\n  .Modal .wrap {\n    background: #918787;\n    padding: 8px;\n    border: 1px solid #353131;\n    border-radius: 4px;\n    min-width: 160px; }\n  .Modal .message {\n    margin: 4px 0; }\n  .Modal .bwrap {\n    margin-top: 32px;\n    display: flex;\n    flex-direction: row;\n    align-items: flex-end; }\n\n.button {\n  padding: 2px 4px;\n  border-radius: 4px;\n  border: 2px solid #332e2e;\n  border-top-color: #383333;\n  border-right-color: #383333;\n  margin: 8px;\n  cursor: pointer;\n  background: linear-gradient(#b1aaaa, #7d7373); }\n  .button:active {\n    position: relative;\n    top: 1px; }\n  .button:active {\n    background: linear-gradient(#7d7373, #b1aaaa); }\n  .button.delete {\n    background: linear-gradient(#a97e7e, #815656); }\n  .button.continue {\n    background: linear-gradient(#b0906f, #8b6c4d);\n    align-self: flex-end; }\n\n.Pane .op {\n  cursor: pointer;\n  padding: 4px;\n  background: #232020;\n  color: #4d4d4d;\n  text-align: right; }\n  .Pane .op:hover {\n    color: #999999; }\n\n.Graph {\n  padding: 0 16px;\n  height: 100%;\n  overflow: auto; }\n", ""]);
 	
 	// exports
 
 
 /***/ },
-/* 326 */
+/* 327 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	__webpack_require__(327);
+	__webpack_require__(328);
 	const Component_1 = __webpack_require__(13);
-	const DragDrop_1 = __webpack_require__(158);
+	const DragDrop_1 = __webpack_require__(159);
 	const makeSlot = (slot, datainfo, clbk) => {
 	    const flags = slot.flags;
 	    const { x, y } = slot.pos;
@@ -36561,16 +30324,16 @@
 
 
 /***/ },
-/* 327 */
+/* 328 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(328);
+	var content = __webpack_require__(329);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(297)(content, {});
+	var update = __webpack_require__(298)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -36587,27 +30350,27 @@
 	}
 
 /***/ },
-/* 328 */
+/* 329 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(296)();
+	exports = module.exports = __webpack_require__(297)();
 	// imports
 	
 	
 	// module
-	exports.push([module.id, "@keyframes blinker {\n  50% {\n    opacity: 0.0; } }\n\n@keyframes pulse {\n  from {\n    stroke: black;\n    fill: white;\n    transform: translateY(0px); }\n  to {\n    stroke: white;\n    fill: transparent;\n    transform: translateY(-3px); } }\n\n@keyframes detached {\n  0% {\n    stroke: black; }\n  50% {\n    stroke: black; }\n  100% {\n    stroke: #c80000; } }\n\n@keyframes ghost {\n  to {\n    stroke-dashoffset: 10; } }\n\n.blink {\n  animation: blinker 1s linear infinite; }\n\n.pulse {\n  animation: pulse 0.4s infinite alternate; }\n\n._detachedFx {\n  animation: detached 0.8s infinite alternate; }\n\n._info {\n  background: rgba(35, 32, 32, 0.95);\n  border: 1px solid #353131;\n  border-top-right-radius: 4px;\n  color: #999999;\n  min-width: 180px;\n  max-width: 380px;\n  min-height: 100px;\n  position: fixed;\n  bottom: 37px;\n  left: 0; }\n  ._info .wrap {\n    padding: 8px; }\n  ._info .bar {\n    border-top-right-radius: 4px; }\n  ._info .wrap {\n    max-height: 300px;\n    overflow: auto; }\n\n._list {\n  background: #3d3838;\n  height: 200px;\n  border: 1px solid #353131;\n  margin-top: -1px;\n  overflow-x: hidden; }\n  ._list p {\n    background: #4b4444;\n    border: 1px solid #353131;\n    padding: 8px 4px;\n    margin: -1px; }\n\n._noselect, svg * {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.bar {\n  background: #302c2c;\n  padding-left: 4px; }\n  .bar div {\n    display: inline-block; }\n  .bar .fa {\n    color: #5a534b; }\n  .bar .fa.active, .bar .active > .fa {\n    color: #f1d2b3; }\n  .bar.tabs {\n    display: flex;\n    justify-content: flex-end;\n    align-items: flex-end; }\n    .bar.tabs .stretch {\n      flex-grow: 1; }\n  .bar .tab {\n    border-left: 1px solid #232020;\n    color: #868686;\n    padding: 4px 8px; }\n    .bar .tab.sel {\n      background: #28211c; }\n\n._pane {\n  z-index: 5;\n  position: fixed;\n  top: 4px;\n  box-shadow: 0 0 10px #151414;\n  background: rgba(75, 68, 68, 0.95);\n  width: 160px; }\n  ._pane .wrap {\n    overflow: visible; }\n  ._pane .bar {\n    display: flex;\n    align-items: center;\n    flex-direction: row-reverse;\n    cursor: pointer;\n    padding: 0;\n    height: 32px; }\n    ._pane .bar .rarrow {\n      border-left-color: #282525; }\n    ._pane .bar .larrow {\n      border-right-color: #282525; }\n    ._pane .bar.fbar {\n      flex-direction: row;\n      background: none;\n      position: fixed;\n      height: 32px;\n      top: 4px; }\n      ._pane .bar.fbar .rarrow {\n        border-left-color: #302c2c; }\n      ._pane .bar.fbar .larrow {\n        border-right-color: #302c2c; }\n    ._pane .bar .fa, ._pane .bar .name {\n      padding: 8px;\n      border-radius: 0;\n      background: #302c2c; }\n    ._pane .bar .name {\n      color: #868686; }\n      ._pane .bar .name:hover {\n        color: #9f9f9f; }\n    ._pane .bar .spacer {\n      width: 16px;\n      height: 100%;\n      background-color: #282525; }\n  ._pane .larrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-left: none; }\n  ._pane .rarrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-right: none; }\n\n.Modal {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  background-color: rgba(20, 20, 20, 0);\n  z-index: -9;\n  opacity: 0;\n  justify-content: center;\n  align-items: center; }\n  .Modal.active {\n    background-color: rgba(20, 20, 20, 0.5);\n    opacity: 1;\n    z-index: 9; }\n  .Modal .wrap {\n    background: #918787;\n    padding: 8px;\n    border: 1px solid #353131;\n    border-radius: 4px;\n    min-width: 160px; }\n  .Modal .message {\n    margin: 4px 0; }\n  .Modal .bwrap {\n    margin-top: 32px;\n    display: flex;\n    flex-direction: row;\n    align-items: flex-end; }\n\n.button {\n  padding: 2px 4px;\n  border-radius: 4px;\n  border: 2px solid #332e2e;\n  border-top-color: #383333;\n  border-right-color: #383333;\n  margin: 8px;\n  cursor: pointer;\n  background: linear-gradient(#b1aaaa, #7d7373); }\n  .button:active {\n    position: relative;\n    top: 1px; }\n  .button:active {\n    background: linear-gradient(#7d7373, #b1aaaa); }\n  .button.delete {\n    background: linear-gradient(#a97e7e, #815656); }\n  .button.continue {\n    background: linear-gradient(#b0906f, #8b6c4d);\n    align-self: flex-end; }\n\n.Pane .op {\n  cursor: pointer;\n  padding: 4px;\n  background: #232020;\n  color: #4d4d4d;\n  text-align: right; }\n  .Pane .op:hover {\n    color: #999999; }\n\nsvg path.box1 {\n  fill: #738f56; }\n  svg path.box1:hover {\n    fill: #87a569; }\n  svg path.box1.dark {\n    fill: #333630; }\n  svg path.box1.sel {\n    fill: #db8b3a; }\n\n.li.box1 {\n  background: #80ac53; }\n\nsvg path.box2 {\n  fill: #568f56; }\n  svg path.box2:hover {\n    fill: #69a569; }\n  svg path.box2.dark {\n    fill: #303630; }\n  svg path.box2.sel {\n    fill: #db8b3a; }\n\n.li.box2 {\n  background: #53ac53; }\n\nsvg path.box3 {\n  fill: #568f73; }\n  svg path.box3:hover {\n    fill: #69a587; }\n  svg path.box3.dark {\n    fill: #303633; }\n  svg path.box3.sel {\n    fill: #db8b3a; }\n\n.li.box3 {\n  background: #53ac80; }\n\nsvg path.box4 {\n  fill: #568f8f; }\n  svg path.box4:hover {\n    fill: #69a5a5; }\n  svg path.box4.dark {\n    fill: #303636; }\n  svg path.box4.sel {\n    fill: #db8b3a; }\n\n.li.box4 {\n  background: #53acac; }\n\nsvg path.box5 {\n  fill: #56738f; }\n  svg path.box5:hover {\n    fill: #6987a5; }\n  svg path.box5.dark {\n    fill: #303336; }\n  svg path.box5.sel {\n    fill: #db8b3a; }\n\n.li.box5 {\n  background: #5380ac; }\n\nsvg path.box6 {\n  fill: #56568f; }\n  svg path.box6:hover {\n    fill: #6969a5; }\n  svg path.box6.dark {\n    fill: #303036; }\n  svg path.box6.sel {\n    fill: #db8b3a; }\n\n.li.box6 {\n  background: #5353ac; }\n\nsvg path.box7 {\n  fill: #73568f; }\n  svg path.box7:hover {\n    fill: #8769a5; }\n  svg path.box7.dark {\n    fill: #333036; }\n  svg path.box7.sel {\n    fill: #db8b3a; }\n\n.li.box7 {\n  background: #8053ac; }\n\nsvg path.box8 {\n  fill: #8f568f; }\n  svg path.box8:hover {\n    fill: #a569a5; }\n  svg path.box8.dark {\n    fill: #363036; }\n  svg path.box8.sel {\n    fill: #db8b3a; }\n\n.li.box8 {\n  background: #ac53ac; }\n\nsvg path.box9 {\n  fill: #8f5673; }\n  svg path.box9:hover {\n    fill: #a56987; }\n  svg path.box9.dark {\n    fill: #363033; }\n  svg path.box9.sel {\n    fill: #db8b3a; }\n\n.li.box9 {\n  background: #ac5380; }\n\nsvg path.box10 {\n  fill: #8f5656; }\n  svg path.box10:hover {\n    fill: #a56969; }\n  svg path.box10.dark {\n    fill: #363030; }\n  svg path.box10.sel {\n    fill: #db8b3a; }\n\n.li.box10 {\n  background: #ac5353; }\n\nsvg path.box11 {\n  fill: #8f7356; }\n  svg path.box11:hover {\n    fill: #a58769; }\n  svg path.box11.dark {\n    fill: #363330; }\n  svg path.box11.sel {\n    fill: #db8b3a; }\n\n.li.box11 {\n  background: #ac8053; }\n\nsvg path.box12 {\n  fill: #8f8f56; }\n  svg path.box12:hover {\n    fill: #a5a569; }\n  svg path.box12.dark {\n    fill: #363630; }\n  svg path.box12.sel {\n    fill: #db8b3a; }\n\n.li.box12 {\n  background: #acac53; }\n\nsvg .slot {\n  fill: none;\n  stroke: black;\n  stroke-width: 1px; }\n  svg .slot.detached, svg .slot.incompatible {\n    stroke-width: 3px;\n    stroke: red;\n    transform: translateY(-1px); }\n  svg .slot.incompatible {\n    stroke-width: 2px;\n    transform: translateY(-2px) rotate(45deg); }\n\nsvg .plus {\n  fill: none;\n  stroke: #302c2c;\n  stroke-width: 1px;\n  cursor: pointer; }\n\nsvg .click {\n  fill: transparent;\n  transition: fill 0.8s;\n  stroke: none;\n  cursor: pointer; }\n  svg .click:hover, svg .click.active {\n    fill: rgba(0, 0, 0, 0.3); }\n\nsvg .arrow {\n  fill: none;\n  stroke-width: 2px;\n  stroke: rgba(0, 0, 0, 0.5); }\n\nsvg .arrowclick {\n  stroke: none;\n  cursor: pointer;\n  fill: transparent; }\n\nsvg text {\n  pointer-events: none;\n  font-size: getfont(size);\n  fill: #000; }\n  svg text.main {\n    fill: #d98632; }\n\nsvg path {\n  cursor: pointer;\n  stroke-width: 1px;\n  stroke: black; }\n  svg path.main {\n    cursor: pointer;\n    fill: #3d3838; }\n    svg path.main:hover {\n      fill: #4b4444; }\n    svg path.main.sel {\n      fill: #db8b3a; }\n\npath.ghost, .Drag path.node {\n  stroke: white;\n  stroke-dasharray: 5;\n  stroke-dashoffset: 0;\n  animation: ghost 1.2s linear infinite; }\n\npath.invalid {\n  mask: url(#mask-stripe); }\n\nsvg#files {\n  border: 2px dashed transparent; }\n  svg#files.drag-over {\n    border-color: #71583e; }\n\nsvg#scratch {\n  position: fixed;\n  top: 0;\n  left: 0;\n  z-index: -999;\n  opacity: 0; }\n", ""]);
+	exports.push([module.id, "@keyframes blinker {\n  50% {\n    opacity: 0.0; } }\n\n@keyframes pulse {\n  from {\n    stroke: black;\n    fill: white;\n    transform: translateY(0px); }\n  to {\n    stroke: white;\n    fill: transparent;\n    transform: translateY(-3px); } }\n\n@keyframes detached {\n  0% {\n    stroke: black; }\n  50% {\n    stroke: black; }\n  100% {\n    stroke: #c80000; } }\n\n@keyframes ghost {\n  to {\n    stroke-dashoffset: 10; } }\n\n.blink {\n  animation: blinker 1s linear infinite; }\n\n.pulse {\n  animation: pulse 0.4s infinite alternate; }\n\n._detachedFx {\n  animation: detached 0.8s infinite alternate; }\n\n._info {\n  background: rgba(35, 32, 32, 0.95);\n  border: 1px solid #353131;\n  border-top-right-radius: 4px;\n  color: #999999;\n  min-width: 180px;\n  max-width: 380px;\n  min-height: 100px;\n  position: fixed;\n  bottom: 37px;\n  left: 0; }\n  ._info .wrap {\n    padding: 8px; }\n  ._info .bar {\n    border-top-right-radius: 4px; }\n  ._info .wrap {\n    max-height: 300px;\n    overflow: auto; }\n\n._list {\n  background: #3d3838;\n  height: 200px;\n  border: 1px solid #353131;\n  margin-top: -1px;\n  overflow-x: hidden; }\n  ._list p {\n    background: #4b4444;\n    border: 1px solid #353131;\n    padding: 8px 4px;\n    margin: -1px; }\n\n._noselect, svg * {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.bar {\n  background: #302c2c;\n  padding-left: 4px; }\n  .bar div {\n    display: inline-block; }\n  .bar .fa {\n    color: #5a534b; }\n  .bar .fa.active, .bar .active > .fa {\n    color: #f1d2b3; }\n  .bar.tabs {\n    display: flex;\n    justify-content: flex-end;\n    align-items: flex-end; }\n    .bar.tabs .stretch {\n      flex-grow: 1; }\n  .bar .tab {\n    cursor: pointer;\n    border-left: 1px solid #232020;\n    color: #868686;\n    padding: 4px 8px; }\n    .bar .tab.sel {\n      background: #28211c; }\n\n._pane {\n  z-index: 5;\n  position: fixed;\n  top: 4px;\n  box-shadow: 0 0 10px #151414;\n  background: rgba(75, 68, 68, 0.95);\n  width: 160px; }\n  ._pane .wrap {\n    overflow: visible; }\n  ._pane .bar {\n    display: flex;\n    align-items: center;\n    flex-direction: row-reverse;\n    cursor: pointer;\n    padding: 0;\n    height: 32px; }\n    ._pane .bar .rarrow {\n      border-left-color: #282525; }\n    ._pane .bar .larrow {\n      border-right-color: #282525; }\n    ._pane .bar.fbar {\n      flex-direction: row;\n      background: none;\n      position: fixed;\n      height: 32px;\n      top: 4px; }\n      ._pane .bar.fbar .rarrow {\n        border-left-color: #302c2c; }\n      ._pane .bar.fbar .larrow {\n        border-right-color: #302c2c; }\n    ._pane .bar .fa, ._pane .bar .name {\n      padding: 8px;\n      border-radius: 0;\n      background: #302c2c; }\n    ._pane .bar .name {\n      color: #868686; }\n      ._pane .bar .name:hover {\n        color: #9f9f9f; }\n    ._pane .bar .spacer {\n      width: 16px;\n      height: 100%;\n      background-color: #282525; }\n  ._pane .larrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-left: none; }\n  ._pane .rarrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-right: none; }\n\n.Modal {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  background-color: rgba(20, 20, 20, 0);\n  z-index: -9;\n  opacity: 0;\n  justify-content: center;\n  align-items: center; }\n  .Modal.active {\n    background-color: rgba(20, 20, 20, 0.5);\n    opacity: 1;\n    z-index: 9; }\n  .Modal .wrap {\n    background: #918787;\n    padding: 8px;\n    border: 1px solid #353131;\n    border-radius: 4px;\n    min-width: 160px; }\n  .Modal .message {\n    margin: 4px 0; }\n  .Modal .bwrap {\n    margin-top: 32px;\n    display: flex;\n    flex-direction: row;\n    align-items: flex-end; }\n\n.button {\n  padding: 2px 4px;\n  border-radius: 4px;\n  border: 2px solid #332e2e;\n  border-top-color: #383333;\n  border-right-color: #383333;\n  margin: 8px;\n  cursor: pointer;\n  background: linear-gradient(#b1aaaa, #7d7373); }\n  .button:active {\n    position: relative;\n    top: 1px; }\n  .button:active {\n    background: linear-gradient(#7d7373, #b1aaaa); }\n  .button.delete {\n    background: linear-gradient(#a97e7e, #815656); }\n  .button.continue {\n    background: linear-gradient(#b0906f, #8b6c4d);\n    align-self: flex-end; }\n\n.Pane .op {\n  cursor: pointer;\n  padding: 4px;\n  background: #232020;\n  color: #4d4d4d;\n  text-align: right; }\n  .Pane .op:hover {\n    color: #999999; }\n\nsvg path.box1 {\n  fill: #738f56; }\n  svg path.box1:hover {\n    fill: #87a569; }\n  svg path.box1.dark {\n    fill: #333630; }\n  svg path.box1.sel {\n    fill: #db8b3a; }\n\n.li.box1 {\n  background: #80ac53; }\n\nsvg path.box2 {\n  fill: #568f56; }\n  svg path.box2:hover {\n    fill: #69a569; }\n  svg path.box2.dark {\n    fill: #303630; }\n  svg path.box2.sel {\n    fill: #db8b3a; }\n\n.li.box2 {\n  background: #53ac53; }\n\nsvg path.box3 {\n  fill: #568f73; }\n  svg path.box3:hover {\n    fill: #69a587; }\n  svg path.box3.dark {\n    fill: #303633; }\n  svg path.box3.sel {\n    fill: #db8b3a; }\n\n.li.box3 {\n  background: #53ac80; }\n\nsvg path.box4 {\n  fill: #568f8f; }\n  svg path.box4:hover {\n    fill: #69a5a5; }\n  svg path.box4.dark {\n    fill: #303636; }\n  svg path.box4.sel {\n    fill: #db8b3a; }\n\n.li.box4 {\n  background: #53acac; }\n\nsvg path.box5 {\n  fill: #56738f; }\n  svg path.box5:hover {\n    fill: #6987a5; }\n  svg path.box5.dark {\n    fill: #303336; }\n  svg path.box5.sel {\n    fill: #db8b3a; }\n\n.li.box5 {\n  background: #5380ac; }\n\nsvg path.box6 {\n  fill: #56568f; }\n  svg path.box6:hover {\n    fill: #6969a5; }\n  svg path.box6.dark {\n    fill: #303036; }\n  svg path.box6.sel {\n    fill: #db8b3a; }\n\n.li.box6 {\n  background: #5353ac; }\n\nsvg path.box7 {\n  fill: #73568f; }\n  svg path.box7:hover {\n    fill: #8769a5; }\n  svg path.box7.dark {\n    fill: #333036; }\n  svg path.box7.sel {\n    fill: #db8b3a; }\n\n.li.box7 {\n  background: #8053ac; }\n\nsvg path.box8 {\n  fill: #8f568f; }\n  svg path.box8:hover {\n    fill: #a569a5; }\n  svg path.box8.dark {\n    fill: #363036; }\n  svg path.box8.sel {\n    fill: #db8b3a; }\n\n.li.box8 {\n  background: #ac53ac; }\n\nsvg path.box9 {\n  fill: #8f5673; }\n  svg path.box9:hover {\n    fill: #a56987; }\n  svg path.box9.dark {\n    fill: #363033; }\n  svg path.box9.sel {\n    fill: #db8b3a; }\n\n.li.box9 {\n  background: #ac5380; }\n\nsvg path.box10 {\n  fill: #8f5656; }\n  svg path.box10:hover {\n    fill: #a56969; }\n  svg path.box10.dark {\n    fill: #363030; }\n  svg path.box10.sel {\n    fill: #db8b3a; }\n\n.li.box10 {\n  background: #ac5353; }\n\nsvg path.box11 {\n  fill: #8f7356; }\n  svg path.box11:hover {\n    fill: #a58769; }\n  svg path.box11.dark {\n    fill: #363330; }\n  svg path.box11.sel {\n    fill: #db8b3a; }\n\n.li.box11 {\n  background: #ac8053; }\n\nsvg path.box12 {\n  fill: #8f8f56; }\n  svg path.box12:hover {\n    fill: #a5a569; }\n  svg path.box12.dark {\n    fill: #363630; }\n  svg path.box12.sel {\n    fill: #db8b3a; }\n\n.li.box12 {\n  background: #acac53; }\n\nsvg .slot {\n  fill: none;\n  stroke: black;\n  stroke-width: 1px; }\n  svg .slot.detached, svg .slot.incompatible {\n    stroke-width: 3px;\n    stroke: red;\n    transform: translateY(-1px); }\n  svg .slot.incompatible {\n    stroke-width: 2px;\n    transform: translateY(-2px) rotate(45deg); }\n\nsvg .plus {\n  fill: none;\n  stroke: #302c2c;\n  stroke-width: 1px;\n  cursor: pointer; }\n\nsvg .click {\n  fill: transparent;\n  transition: fill 0.8s;\n  stroke: none;\n  cursor: pointer; }\n  svg .click:hover, svg .click.active {\n    fill: rgba(0, 0, 0, 0.3); }\n\nsvg .arrow {\n  fill: none;\n  stroke-width: 2px;\n  stroke: rgba(0, 0, 0, 0.5); }\n\nsvg .arrowclick {\n  stroke: none;\n  cursor: pointer;\n  fill: transparent; }\n\nsvg text {\n  pointer-events: none;\n  font-size: getfont(size);\n  fill: #000; }\n  svg text.main {\n    fill: #d98632; }\n\nsvg path {\n  cursor: pointer;\n  stroke-width: 1px;\n  stroke: black; }\n  svg path.main {\n    cursor: pointer;\n    fill: #3d3838; }\n    svg path.main:hover {\n      fill: #4b4444; }\n    svg path.main.sel {\n      fill: #db8b3a; }\n\npath.ghost, .Drag path.node {\n  stroke: white;\n  stroke-dasharray: 5;\n  stroke-dashoffset: 0;\n  animation: ghost 1.2s linear infinite; }\n\npath.invalid {\n  mask: url(#mask-stripe); }\n\nsvg#files {\n  border: 2px dashed transparent; }\n  svg#files.drag-over {\n    border-color: #71583e; }\n\nsvg#scratch {\n  position: fixed;\n  top: 0;\n  left: 0;\n  z-index: -999;\n  opacity: 0; }\n", ""]);
 	
 	// exports
 
 
 /***/ },
-/* 329 */
+/* 330 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	__webpack_require__(330);
+	__webpack_require__(331);
 	const Component_1 = __webpack_require__(13);
-	const DragDrop_1 = __webpack_require__(158);
+	const DragDrop_1 = __webpack_require__(159);
 	const Factory_1 = __webpack_require__(11);
 	const renderLibrary = (component, signals) => {
 	    // const uinode =
@@ -36652,16 +30415,16 @@
 
 
 /***/ },
-/* 330 */
+/* 331 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(331);
+	var content = __webpack_require__(332);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(297)(content, {});
+	var update = __webpack_require__(298)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -36678,33 +30441,33 @@
 	}
 
 /***/ },
-/* 331 */
+/* 332 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(296)();
+	exports = module.exports = __webpack_require__(297)();
 	// imports
 	
 	
 	// module
-	exports.push([module.id, "._info {\n  background: rgba(35, 32, 32, 0.95);\n  border: 1px solid #353131;\n  border-top-right-radius: 4px;\n  color: #999999;\n  min-width: 180px;\n  max-width: 380px;\n  min-height: 100px;\n  position: fixed;\n  bottom: 37px;\n  left: 0; }\n  ._info .wrap {\n    padding: 8px; }\n  ._info .bar {\n    border-top-right-radius: 4px; }\n  ._info .wrap {\n    max-height: 300px;\n    overflow: auto; }\n\n._list {\n  background: #3d3838;\n  height: 200px;\n  border: 1px solid #353131;\n  margin-top: -1px;\n  overflow-x: hidden; }\n  ._list p {\n    background: #4b4444;\n    border: 1px solid #353131;\n    padding: 8px 4px;\n    margin: -1px; }\n\n._noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.bar {\n  background: #302c2c;\n  padding-left: 4px; }\n  .bar div {\n    display: inline-block; }\n  .bar .fa {\n    color: #5a534b; }\n  .bar .fa.active, .bar .active > .fa {\n    color: #f1d2b3; }\n  .bar.tabs {\n    display: flex;\n    justify-content: flex-end;\n    align-items: flex-end; }\n    .bar.tabs .stretch {\n      flex-grow: 1; }\n  .bar .tab {\n    border-left: 1px solid #232020;\n    color: #868686;\n    padding: 4px 8px; }\n    .bar .tab.sel {\n      background: #28211c; }\n\n._pane, .Library {\n  z-index: 5;\n  position: fixed;\n  top: 4px;\n  box-shadow: 0 0 10px #151414;\n  background: rgba(75, 68, 68, 0.95);\n  width: 160px; }\n  ._pane .wrap, .Library .wrap {\n    overflow: visible; }\n  ._pane .bar, .Library .bar {\n    display: flex;\n    align-items: center;\n    flex-direction: row-reverse;\n    cursor: pointer;\n    padding: 0;\n    height: 32px; }\n    ._pane .bar .rarrow, .Library .bar .rarrow {\n      border-left-color: #282525; }\n    ._pane .bar .larrow, .Library .bar .larrow {\n      border-right-color: #282525; }\n    ._pane .bar.fbar, .Library .bar.fbar {\n      flex-direction: row;\n      background: none;\n      position: fixed;\n      height: 32px;\n      top: 4px; }\n      ._pane .bar.fbar .rarrow, .Library .bar.fbar .rarrow {\n        border-left-color: #302c2c; }\n      ._pane .bar.fbar .larrow, .Library .bar.fbar .larrow {\n        border-right-color: #302c2c; }\n    ._pane .bar .fa, .Library .bar .fa, ._pane .bar .name, .Library .bar .name {\n      padding: 8px;\n      border-radius: 0;\n      background: #302c2c; }\n    ._pane .bar .name, .Library .bar .name {\n      color: #868686; }\n      ._pane .bar .name:hover, .Library .bar .name:hover {\n        color: #9f9f9f; }\n    ._pane .bar .spacer, .Library .bar .spacer {\n      width: 16px;\n      height: 100%;\n      background-color: #282525; }\n  ._pane .larrow, .Library .larrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-left: none; }\n  ._pane .rarrow, .Library .rarrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-right: none; }\n\n.Modal {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  background-color: rgba(20, 20, 20, 0);\n  z-index: -9;\n  opacity: 0;\n  justify-content: center;\n  align-items: center; }\n  .Modal.active {\n    background-color: rgba(20, 20, 20, 0.5);\n    opacity: 1;\n    z-index: 9; }\n  .Modal .wrap {\n    background: #918787;\n    padding: 8px;\n    border: 1px solid #353131;\n    border-radius: 4px;\n    min-width: 160px; }\n  .Modal .message {\n    margin: 4px 0; }\n  .Modal .bwrap {\n    margin-top: 32px;\n    display: flex;\n    flex-direction: row;\n    align-items: flex-end; }\n\n.button {\n  padding: 2px 4px;\n  border-radius: 4px;\n  border: 2px solid #332e2e;\n  border-top-color: #383333;\n  border-right-color: #383333;\n  margin: 8px;\n  cursor: pointer;\n  background: linear-gradient(#b1aaaa, #7d7373); }\n  .button:active {\n    position: relative;\n    top: 1px; }\n  .button:active {\n    background: linear-gradient(#7d7373, #b1aaaa); }\n  .button.delete {\n    background: linear-gradient(#a97e7e, #815656); }\n  .button.continue {\n    background: linear-gradient(#b0906f, #8b6c4d);\n    align-self: flex-end; }\n\n.Pane .op {\n  cursor: pointer;\n  padding: 4px;\n  background: #232020;\n  color: #4d4d4d;\n  text-align: right; }\n  .Pane .op:hover {\n    color: #999999; }\n\n.Library {\n  left: -168px;\n  transition: left 0.2s;\n  border-bottom-right-radius: 4px;\n  padding-bottom: 4px; }\n  .Library .bar {\n    flex-direction: row-reverse; }\n    .Library .bar.fbar {\n      flex-direction: row;\n      left: 0; }\n  .Library.active {\n    left: 0; }\n  .Library .results {\n    min-height: 200px;\n    max-height: 400px; }\n    .Library .results .li {\n      padding-left: 12px; }\n    .Library .results.drop {\n      border: 2px solid #D76D01; }\n", ""]);
+	exports.push([module.id, "._info {\n  background: rgba(35, 32, 32, 0.95);\n  border: 1px solid #353131;\n  border-top-right-radius: 4px;\n  color: #999999;\n  min-width: 180px;\n  max-width: 380px;\n  min-height: 100px;\n  position: fixed;\n  bottom: 37px;\n  left: 0; }\n  ._info .wrap {\n    padding: 8px; }\n  ._info .bar {\n    border-top-right-radius: 4px; }\n  ._info .wrap {\n    max-height: 300px;\n    overflow: auto; }\n\n._list {\n  background: #3d3838;\n  height: 200px;\n  border: 1px solid #353131;\n  margin-top: -1px;\n  overflow-x: hidden; }\n  ._list p {\n    background: #4b4444;\n    border: 1px solid #353131;\n    padding: 8px 4px;\n    margin: -1px; }\n\n._noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.bar {\n  background: #302c2c;\n  padding-left: 4px; }\n  .bar div {\n    display: inline-block; }\n  .bar .fa {\n    color: #5a534b; }\n  .bar .fa.active, .bar .active > .fa {\n    color: #f1d2b3; }\n  .bar.tabs {\n    display: flex;\n    justify-content: flex-end;\n    align-items: flex-end; }\n    .bar.tabs .stretch {\n      flex-grow: 1; }\n  .bar .tab {\n    cursor: pointer;\n    border-left: 1px solid #232020;\n    color: #868686;\n    padding: 4px 8px; }\n    .bar .tab.sel {\n      background: #28211c; }\n\n._pane, .Library {\n  z-index: 5;\n  position: fixed;\n  top: 4px;\n  box-shadow: 0 0 10px #151414;\n  background: rgba(75, 68, 68, 0.95);\n  width: 160px; }\n  ._pane .wrap, .Library .wrap {\n    overflow: visible; }\n  ._pane .bar, .Library .bar {\n    display: flex;\n    align-items: center;\n    flex-direction: row-reverse;\n    cursor: pointer;\n    padding: 0;\n    height: 32px; }\n    ._pane .bar .rarrow, .Library .bar .rarrow {\n      border-left-color: #282525; }\n    ._pane .bar .larrow, .Library .bar .larrow {\n      border-right-color: #282525; }\n    ._pane .bar.fbar, .Library .bar.fbar {\n      flex-direction: row;\n      background: none;\n      position: fixed;\n      height: 32px;\n      top: 4px; }\n      ._pane .bar.fbar .rarrow, .Library .bar.fbar .rarrow {\n        border-left-color: #302c2c; }\n      ._pane .bar.fbar .larrow, .Library .bar.fbar .larrow {\n        border-right-color: #302c2c; }\n    ._pane .bar .fa, .Library .bar .fa, ._pane .bar .name, .Library .bar .name {\n      padding: 8px;\n      border-radius: 0;\n      background: #302c2c; }\n    ._pane .bar .name, .Library .bar .name {\n      color: #868686; }\n      ._pane .bar .name:hover, .Library .bar .name:hover {\n        color: #9f9f9f; }\n    ._pane .bar .spacer, .Library .bar .spacer {\n      width: 16px;\n      height: 100%;\n      background-color: #282525; }\n  ._pane .larrow, .Library .larrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-left: none; }\n  ._pane .rarrow, .Library .rarrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-right: none; }\n\n.Modal {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  background-color: rgba(20, 20, 20, 0);\n  z-index: -9;\n  opacity: 0;\n  justify-content: center;\n  align-items: center; }\n  .Modal.active {\n    background-color: rgba(20, 20, 20, 0.5);\n    opacity: 1;\n    z-index: 9; }\n  .Modal .wrap {\n    background: #918787;\n    padding: 8px;\n    border: 1px solid #353131;\n    border-radius: 4px;\n    min-width: 160px; }\n  .Modal .message {\n    margin: 4px 0; }\n  .Modal .bwrap {\n    margin-top: 32px;\n    display: flex;\n    flex-direction: row;\n    align-items: flex-end; }\n\n.button {\n  padding: 2px 4px;\n  border-radius: 4px;\n  border: 2px solid #332e2e;\n  border-top-color: #383333;\n  border-right-color: #383333;\n  margin: 8px;\n  cursor: pointer;\n  background: linear-gradient(#b1aaaa, #7d7373); }\n  .button:active {\n    position: relative;\n    top: 1px; }\n  .button:active {\n    background: linear-gradient(#7d7373, #b1aaaa); }\n  .button.delete {\n    background: linear-gradient(#a97e7e, #815656); }\n  .button.continue {\n    background: linear-gradient(#b0906f, #8b6c4d);\n    align-self: flex-end; }\n\n.Pane .op {\n  cursor: pointer;\n  padding: 4px;\n  background: #232020;\n  color: #4d4d4d;\n  text-align: right; }\n  .Pane .op:hover {\n    color: #999999; }\n\n.Library {\n  left: -168px;\n  transition: left 0.2s;\n  border-bottom-right-radius: 4px;\n  padding-bottom: 4px; }\n  .Library .bar {\n    flex-direction: row-reverse; }\n    .Library .bar.fbar {\n      flex-direction: row;\n      left: 0; }\n  .Library.active {\n    left: 0; }\n  .Library .results {\n    min-height: 200px;\n    max-height: 400px; }\n    .Library .results .li {\n      padding-left: 12px; }\n    .Library .results.drop {\n      border: 2px solid #D76D01; }\n", ""]);
 	
 	// exports
 
 
 /***/ },
-/* 332 */
+/* 333 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	__webpack_require__(333);
+	__webpack_require__(334);
 	const Component_1 = __webpack_require__(13);
-	const PlaybackHelper_1 = __webpack_require__(48);
+	const PlaybackHelper_1 = __webpack_require__(46);
 	const CodeHelper_1 = __webpack_require__(36);
 	const cache = { nodecache: {} };
 	const context = PlaybackHelper_1.mainContext();
 	let uicontrols = null;
 	/* ====== PLAYBACK LIBS ======= */
-	const THREE = __webpack_require__(335);
+	const THREE = __webpack_require__(336);
 	const PRELOADED = { THREE };
 	/* ====== PLAYBACK LIBS ======= */
 	const helpers = { require: (name) => PRELOADED[name]
@@ -36736,7 +30499,7 @@
 	        editor = CodeHelper_1.getEditor();
 	        if (editor) {
 	            // Share scrubber with editor.
-	            cache.scrubber = editor.options.scrubber;
+	            cache.scrubber = editor.options.lucidity.scrubber;
 	        }
 	    }
 	    const select = state.select;
@@ -36762,13 +30525,29 @@
 	                else {
 	                    cache.scrub = null;
 	                }
-	                PlaybackHelper_1.runGraph(graph, context, cache, helpers);
+	                let g = PlaybackHelper_1.runGraph(graph, context, cache, helpers);
 	                if (lastsize !== state.size || lastmode !== state.mode) {
 	                    // force resize
 	                    lastsize = state.size;
 	                    lastmode = state.mode;
 	                    PlaybackHelper_1.initGraph(graph, context, cache, helpers);
 	                    PlaybackHelper_1.callGraph(cache, context);
+	                }
+	                if (g !== graph) {
+	                    if (!select) {
+	                        // How could this change ?
+	                        console.log(g);
+	                    }
+	                    else {
+	                        // Currently only the selected block could change on runtime
+	                        const ob = graph.blocksById[select.id];
+	                        const nb = g.blocksById[select.id];
+	                        if (nb && nb !== ob) {
+	                            console.log(ob, nb);
+	                            // This is the only thing that can change for now.
+	                            signals.block.sources({ sources: nb.sources });
+	                        }
+	                    }
 	                }
 	                // New scrubber is ready: update editor
 	                if (editor) {
@@ -36817,16 +30596,16 @@
 
 
 /***/ },
-/* 333 */
+/* 334 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(334);
+	var content = __webpack_require__(335);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(297)(content, {});
+	var update = __webpack_require__(298)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -36843,34 +30622,34 @@
 	}
 
 /***/ },
-/* 334 */
+/* 335 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(296)();
+	exports = module.exports = __webpack_require__(297)();
 	// imports
 	
 	
 	// module
-	exports.push([module.id, "._info {\n  background: rgba(35, 32, 32, 0.95);\n  border: 1px solid #353131;\n  border-top-right-radius: 4px;\n  color: #999999;\n  min-width: 180px;\n  max-width: 380px;\n  min-height: 100px;\n  position: fixed;\n  bottom: 37px;\n  left: 0; }\n  ._info .wrap {\n    padding: 8px; }\n  ._info .bar {\n    border-top-right-radius: 4px; }\n  ._info .wrap {\n    max-height: 300px;\n    overflow: auto; }\n\n._list {\n  background: #3d3838;\n  height: 200px;\n  border: 1px solid #353131;\n  margin-top: -1px;\n  overflow-x: hidden; }\n  ._list p {\n    background: #4b4444;\n    border: 1px solid #353131;\n    padding: 8px 4px;\n    margin: -1px; }\n\n._noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.bar {\n  background: #302c2c;\n  padding-left: 4px; }\n  .bar div {\n    display: inline-block; }\n  .bar .fa {\n    color: #5a534b; }\n  .bar .fa.active, .bar .active > .fa {\n    color: #f1d2b3; }\n  .bar.tabs {\n    display: flex;\n    justify-content: flex-end;\n    align-items: flex-end; }\n    .bar.tabs .stretch {\n      flex-grow: 1; }\n  .bar .tab {\n    border-left: 1px solid #232020;\n    color: #868686;\n    padding: 4px 8px; }\n    .bar .tab.sel {\n      background: #28211c; }\n\n._pane {\n  z-index: 5;\n  position: fixed;\n  top: 4px;\n  box-shadow: 0 0 10px #151414;\n  background: rgba(75, 68, 68, 0.95);\n  width: 160px; }\n  ._pane .wrap {\n    overflow: visible; }\n  ._pane .bar {\n    display: flex;\n    align-items: center;\n    flex-direction: row-reverse;\n    cursor: pointer;\n    padding: 0;\n    height: 32px; }\n    ._pane .bar .rarrow {\n      border-left-color: #282525; }\n    ._pane .bar .larrow {\n      border-right-color: #282525; }\n    ._pane .bar.fbar {\n      flex-direction: row;\n      background: none;\n      position: fixed;\n      height: 32px;\n      top: 4px; }\n      ._pane .bar.fbar .rarrow {\n        border-left-color: #302c2c; }\n      ._pane .bar.fbar .larrow {\n        border-right-color: #302c2c; }\n    ._pane .bar .fa, ._pane .bar .name {\n      padding: 8px;\n      border-radius: 0;\n      background: #302c2c; }\n    ._pane .bar .name {\n      color: #868686; }\n      ._pane .bar .name:hover {\n        color: #9f9f9f; }\n    ._pane .bar .spacer {\n      width: 16px;\n      height: 100%;\n      background-color: #282525; }\n  ._pane .larrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-left: none; }\n  ._pane .rarrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-right: none; }\n\n.Modal {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  background-color: rgba(20, 20, 20, 0);\n  z-index: -9;\n  opacity: 0;\n  justify-content: center;\n  align-items: center; }\n  .Modal.active {\n    background-color: rgba(20, 20, 20, 0.5);\n    opacity: 1;\n    z-index: 9; }\n  .Modal .wrap {\n    background: #918787;\n    padding: 8px;\n    border: 1px solid #353131;\n    border-radius: 4px;\n    min-width: 160px; }\n  .Modal .message {\n    margin: 4px 0; }\n  .Modal .bwrap {\n    margin-top: 32px;\n    display: flex;\n    flex-direction: row;\n    align-items: flex-end; }\n\n.button {\n  padding: 2px 4px;\n  border-radius: 4px;\n  border: 2px solid #332e2e;\n  border-top-color: #383333;\n  border-right-color: #383333;\n  margin: 8px;\n  cursor: pointer;\n  background: linear-gradient(#b1aaaa, #7d7373); }\n  .button:active {\n    position: relative;\n    top: 1px; }\n  .button:active {\n    background: linear-gradient(#7d7373, #b1aaaa); }\n  .button.delete {\n    background: linear-gradient(#a97e7e, #815656); }\n  .button.continue {\n    background: linear-gradient(#b0906f, #8b6c4d);\n    align-self: flex-end; }\n\n.Pane .op {\n  cursor: pointer;\n  padding: 4px;\n  background: #232020;\n  color: #4d4d4d;\n  text-align: right; }\n  .Pane .op:hover {\n    color: #999999; }\n\n.Playback {\n  background: #232020;\n  color: #999999;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  width: 100%; }\n  .Playback .wrap {\n    position: relative; }\n  .Playback .Screen {\n    position: absolute; }\n    .Playback .Screen #screen {\n      background: black;\n      width: 100%;\n      height: 100%; }\n    .Playback .Screen svg {\n      position: absolute;\n      top: 0;\n      left: 0; }\n  .Playback .tv rect {\n    stroke: #333333;\n    stroke-width: 1px;\n    fill: none; }\n", ""]);
+	exports.push([module.id, "._info {\n  background: rgba(35, 32, 32, 0.95);\n  border: 1px solid #353131;\n  border-top-right-radius: 4px;\n  color: #999999;\n  min-width: 180px;\n  max-width: 380px;\n  min-height: 100px;\n  position: fixed;\n  bottom: 37px;\n  left: 0; }\n  ._info .wrap {\n    padding: 8px; }\n  ._info .bar {\n    border-top-right-radius: 4px; }\n  ._info .wrap {\n    max-height: 300px;\n    overflow: auto; }\n\n._list {\n  background: #3d3838;\n  height: 200px;\n  border: 1px solid #353131;\n  margin-top: -1px;\n  overflow-x: hidden; }\n  ._list p {\n    background: #4b4444;\n    border: 1px solid #353131;\n    padding: 8px 4px;\n    margin: -1px; }\n\n._noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.bar {\n  background: #302c2c;\n  padding-left: 4px; }\n  .bar div {\n    display: inline-block; }\n  .bar .fa {\n    color: #5a534b; }\n  .bar .fa.active, .bar .active > .fa {\n    color: #f1d2b3; }\n  .bar.tabs {\n    display: flex;\n    justify-content: flex-end;\n    align-items: flex-end; }\n    .bar.tabs .stretch {\n      flex-grow: 1; }\n  .bar .tab {\n    cursor: pointer;\n    border-left: 1px solid #232020;\n    color: #868686;\n    padding: 4px 8px; }\n    .bar .tab.sel {\n      background: #28211c; }\n\n._pane {\n  z-index: 5;\n  position: fixed;\n  top: 4px;\n  box-shadow: 0 0 10px #151414;\n  background: rgba(75, 68, 68, 0.95);\n  width: 160px; }\n  ._pane .wrap {\n    overflow: visible; }\n  ._pane .bar {\n    display: flex;\n    align-items: center;\n    flex-direction: row-reverse;\n    cursor: pointer;\n    padding: 0;\n    height: 32px; }\n    ._pane .bar .rarrow {\n      border-left-color: #282525; }\n    ._pane .bar .larrow {\n      border-right-color: #282525; }\n    ._pane .bar.fbar {\n      flex-direction: row;\n      background: none;\n      position: fixed;\n      height: 32px;\n      top: 4px; }\n      ._pane .bar.fbar .rarrow {\n        border-left-color: #302c2c; }\n      ._pane .bar.fbar .larrow {\n        border-right-color: #302c2c; }\n    ._pane .bar .fa, ._pane .bar .name {\n      padding: 8px;\n      border-radius: 0;\n      background: #302c2c; }\n    ._pane .bar .name {\n      color: #868686; }\n      ._pane .bar .name:hover {\n        color: #9f9f9f; }\n    ._pane .bar .spacer {\n      width: 16px;\n      height: 100%;\n      background-color: #282525; }\n  ._pane .larrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-left: none; }\n  ._pane .rarrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-right: none; }\n\n.Modal {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  background-color: rgba(20, 20, 20, 0);\n  z-index: -9;\n  opacity: 0;\n  justify-content: center;\n  align-items: center; }\n  .Modal.active {\n    background-color: rgba(20, 20, 20, 0.5);\n    opacity: 1;\n    z-index: 9; }\n  .Modal .wrap {\n    background: #918787;\n    padding: 8px;\n    border: 1px solid #353131;\n    border-radius: 4px;\n    min-width: 160px; }\n  .Modal .message {\n    margin: 4px 0; }\n  .Modal .bwrap {\n    margin-top: 32px;\n    display: flex;\n    flex-direction: row;\n    align-items: flex-end; }\n\n.button {\n  padding: 2px 4px;\n  border-radius: 4px;\n  border: 2px solid #332e2e;\n  border-top-color: #383333;\n  border-right-color: #383333;\n  margin: 8px;\n  cursor: pointer;\n  background: linear-gradient(#b1aaaa, #7d7373); }\n  .button:active {\n    position: relative;\n    top: 1px; }\n  .button:active {\n    background: linear-gradient(#7d7373, #b1aaaa); }\n  .button.delete {\n    background: linear-gradient(#a97e7e, #815656); }\n  .button.continue {\n    background: linear-gradient(#b0906f, #8b6c4d);\n    align-self: flex-end; }\n\n.Pane .op {\n  cursor: pointer;\n  padding: 4px;\n  background: #232020;\n  color: #4d4d4d;\n  text-align: right; }\n  .Pane .op:hover {\n    color: #999999; }\n\n.Playback {\n  background: #232020;\n  color: #999999;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  width: 100%; }\n  .Playback .wrap {\n    position: relative; }\n  .Playback .Screen {\n    position: absolute; }\n    .Playback .Screen #screen {\n      background: black;\n      width: 100%;\n      height: 100%; }\n    .Playback .Screen svg {\n      position: absolute;\n      top: 0;\n      left: 0; }\n  .Playback .tv rect {\n    stroke: #333333;\n    stroke-width: 1px;\n    fill: none; }\n", ""]);
 	
 	// exports
 
 
 /***/ },
-/* 335 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = (__webpack_require__(15))(73);
-
-/***/ },
 /* 336 */
 /***/ function(module, exports, __webpack_require__) {
 
+	module.exports = (__webpack_require__(15))(101);
+
+/***/ },
+/* 337 */
+/***/ function(module, exports, __webpack_require__) {
+
 	"use strict";
-	__webpack_require__(337);
+	__webpack_require__(338);
 	const Component_1 = __webpack_require__(13);
 	const Factory_1 = __webpack_require__(11);
-	const Graph_1 = __webpack_require__(323);
+	const Graph_1 = __webpack_require__(324);
 	const ProjectName = Factory_1.editable(['project', 'name']);
 	const ProjectOptions = Factory_1.pane('project-opts');
 	exports.Project = Component_1.Component({ graph: ['project', 'graph'],
@@ -36894,16 +30673,16 @@
 
 
 /***/ },
-/* 337 */
+/* 338 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(338);
+	var content = __webpack_require__(339);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(297)(content, {});
+	var update = __webpack_require__(298)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -36920,25 +30699,25 @@
 	}
 
 /***/ },
-/* 338 */
+/* 339 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(296)();
+	exports = module.exports = __webpack_require__(297)();
 	// imports
 	
 	
 	// module
-	exports.push([module.id, "._info {\n  background: rgba(35, 32, 32, 0.95);\n  border: 1px solid #353131;\n  border-top-right-radius: 4px;\n  color: #999999;\n  min-width: 180px;\n  max-width: 380px;\n  min-height: 100px;\n  position: fixed;\n  bottom: 37px;\n  left: 0; }\n  ._info .wrap {\n    padding: 8px; }\n  ._info .bar {\n    border-top-right-radius: 4px; }\n  ._info .wrap {\n    max-height: 300px;\n    overflow: auto; }\n\n._list {\n  background: #3d3838;\n  height: 200px;\n  border: 1px solid #353131;\n  margin-top: -1px;\n  overflow-x: hidden; }\n  ._list p {\n    background: #4b4444;\n    border: 1px solid #353131;\n    padding: 8px 4px;\n    margin: -1px; }\n\n._noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.bar {\n  background: #302c2c;\n  padding-left: 4px; }\n  .bar div {\n    display: inline-block; }\n  .bar .fa {\n    color: #5a534b; }\n  .bar .fa.active, .bar .active > .fa {\n    color: #f1d2b3; }\n  .bar.tabs {\n    display: flex;\n    justify-content: flex-end;\n    align-items: flex-end; }\n    .bar.tabs .stretch {\n      flex-grow: 1; }\n  .bar .tab {\n    border-left: 1px solid #232020;\n    color: #868686;\n    padding: 4px 8px; }\n    .bar .tab.sel {\n      background: #28211c; }\n\n._pane {\n  z-index: 5;\n  position: fixed;\n  top: 4px;\n  box-shadow: 0 0 10px #151414;\n  background: rgba(75, 68, 68, 0.95);\n  width: 160px; }\n  ._pane .wrap {\n    overflow: visible; }\n  ._pane .bar {\n    display: flex;\n    align-items: center;\n    flex-direction: row-reverse;\n    cursor: pointer;\n    padding: 0;\n    height: 32px; }\n    ._pane .bar .rarrow {\n      border-left-color: #282525; }\n    ._pane .bar .larrow {\n      border-right-color: #282525; }\n    ._pane .bar.fbar {\n      flex-direction: row;\n      background: none;\n      position: fixed;\n      height: 32px;\n      top: 4px; }\n      ._pane .bar.fbar .rarrow {\n        border-left-color: #302c2c; }\n      ._pane .bar.fbar .larrow {\n        border-right-color: #302c2c; }\n    ._pane .bar .fa, ._pane .bar .name {\n      padding: 8px;\n      border-radius: 0;\n      background: #302c2c; }\n    ._pane .bar .name {\n      color: #868686; }\n      ._pane .bar .name:hover {\n        color: #9f9f9f; }\n    ._pane .bar .spacer {\n      width: 16px;\n      height: 100%;\n      background-color: #282525; }\n  ._pane .larrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-left: none; }\n  ._pane .rarrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-right: none; }\n\n.Modal {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  background-color: rgba(20, 20, 20, 0);\n  z-index: -9;\n  opacity: 0;\n  justify-content: center;\n  align-items: center; }\n  .Modal.active {\n    background-color: rgba(20, 20, 20, 0.5);\n    opacity: 1;\n    z-index: 9; }\n  .Modal .wrap {\n    background: #918787;\n    padding: 8px;\n    border: 1px solid #353131;\n    border-radius: 4px;\n    min-width: 160px; }\n  .Modal .message {\n    margin: 4px 0; }\n  .Modal .bwrap {\n    margin-top: 32px;\n    display: flex;\n    flex-direction: row;\n    align-items: flex-end; }\n\n.button {\n  padding: 2px 4px;\n  border-radius: 4px;\n  border: 2px solid #332e2e;\n  border-top-color: #383333;\n  border-right-color: #383333;\n  margin: 8px;\n  cursor: pointer;\n  background: linear-gradient(#b1aaaa, #7d7373); }\n  .button:active {\n    position: relative;\n    top: 1px; }\n  .button:active {\n    background: linear-gradient(#7d7373, #b1aaaa); }\n  .button.delete {\n    background: linear-gradient(#a97e7e, #815656); }\n  .button.continue {\n    background: linear-gradient(#b0906f, #8b6c4d);\n    align-self: flex-end; }\n\n.Pane .op {\n  cursor: pointer;\n  padding: 4px;\n  background: #232020;\n  color: #4d4d4d;\n  text-align: right; }\n  .Pane .op:hover {\n    color: #999999; }\n\n.Project {\n  width: 34%;\n  border: 1px solid #353131;\n  border-width: 1px 0 0 0;\n  display: flex;\n  flex-direction: column; }\n  .Project .name {\n    color: #d98632; }\n", ""]);
+	exports.push([module.id, "._info {\n  background: rgba(35, 32, 32, 0.95);\n  border: 1px solid #353131;\n  border-top-right-radius: 4px;\n  color: #999999;\n  min-width: 180px;\n  max-width: 380px;\n  min-height: 100px;\n  position: fixed;\n  bottom: 37px;\n  left: 0; }\n  ._info .wrap {\n    padding: 8px; }\n  ._info .bar {\n    border-top-right-radius: 4px; }\n  ._info .wrap {\n    max-height: 300px;\n    overflow: auto; }\n\n._list {\n  background: #3d3838;\n  height: 200px;\n  border: 1px solid #353131;\n  margin-top: -1px;\n  overflow-x: hidden; }\n  ._list p {\n    background: #4b4444;\n    border: 1px solid #353131;\n    padding: 8px 4px;\n    margin: -1px; }\n\n._noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.bar {\n  background: #302c2c;\n  padding-left: 4px; }\n  .bar div {\n    display: inline-block; }\n  .bar .fa {\n    color: #5a534b; }\n  .bar .fa.active, .bar .active > .fa {\n    color: #f1d2b3; }\n  .bar.tabs {\n    display: flex;\n    justify-content: flex-end;\n    align-items: flex-end; }\n    .bar.tabs .stretch {\n      flex-grow: 1; }\n  .bar .tab {\n    cursor: pointer;\n    border-left: 1px solid #232020;\n    color: #868686;\n    padding: 4px 8px; }\n    .bar .tab.sel {\n      background: #28211c; }\n\n._pane {\n  z-index: 5;\n  position: fixed;\n  top: 4px;\n  box-shadow: 0 0 10px #151414;\n  background: rgba(75, 68, 68, 0.95);\n  width: 160px; }\n  ._pane .wrap {\n    overflow: visible; }\n  ._pane .bar {\n    display: flex;\n    align-items: center;\n    flex-direction: row-reverse;\n    cursor: pointer;\n    padding: 0;\n    height: 32px; }\n    ._pane .bar .rarrow {\n      border-left-color: #282525; }\n    ._pane .bar .larrow {\n      border-right-color: #282525; }\n    ._pane .bar.fbar {\n      flex-direction: row;\n      background: none;\n      position: fixed;\n      height: 32px;\n      top: 4px; }\n      ._pane .bar.fbar .rarrow {\n        border-left-color: #302c2c; }\n      ._pane .bar.fbar .larrow {\n        border-right-color: #302c2c; }\n    ._pane .bar .fa, ._pane .bar .name {\n      padding: 8px;\n      border-radius: 0;\n      background: #302c2c; }\n    ._pane .bar .name {\n      color: #868686; }\n      ._pane .bar .name:hover {\n        color: #9f9f9f; }\n    ._pane .bar .spacer {\n      width: 16px;\n      height: 100%;\n      background-color: #282525; }\n  ._pane .larrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-left: none; }\n  ._pane .rarrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-right: none; }\n\n.Modal {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  background-color: rgba(20, 20, 20, 0);\n  z-index: -9;\n  opacity: 0;\n  justify-content: center;\n  align-items: center; }\n  .Modal.active {\n    background-color: rgba(20, 20, 20, 0.5);\n    opacity: 1;\n    z-index: 9; }\n  .Modal .wrap {\n    background: #918787;\n    padding: 8px;\n    border: 1px solid #353131;\n    border-radius: 4px;\n    min-width: 160px; }\n  .Modal .message {\n    margin: 4px 0; }\n  .Modal .bwrap {\n    margin-top: 32px;\n    display: flex;\n    flex-direction: row;\n    align-items: flex-end; }\n\n.button {\n  padding: 2px 4px;\n  border-radius: 4px;\n  border: 2px solid #332e2e;\n  border-top-color: #383333;\n  border-right-color: #383333;\n  margin: 8px;\n  cursor: pointer;\n  background: linear-gradient(#b1aaaa, #7d7373); }\n  .button:active {\n    position: relative;\n    top: 1px; }\n  .button:active {\n    background: linear-gradient(#7d7373, #b1aaaa); }\n  .button.delete {\n    background: linear-gradient(#a97e7e, #815656); }\n  .button.continue {\n    background: linear-gradient(#b0906f, #8b6c4d);\n    align-self: flex-end; }\n\n.Pane .op {\n  cursor: pointer;\n  padding: 4px;\n  background: #232020;\n  color: #4d4d4d;\n  text-align: right; }\n  .Pane .op:hover {\n    color: #999999; }\n\n.Project {\n  width: 34%;\n  border: 1px solid #353131;\n  border-width: 1px 0 0 0;\n  display: flex;\n  flex-direction: column; }\n  .Project .name {\n    color: #d98632; }\n", ""]);
 	
 	// exports
 
 
 /***/ },
-/* 339 */
+/* 340 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	__webpack_require__(340);
+	__webpack_require__(341);
 	const Component_1 = __webpack_require__(13);
 	const Factory_1 = __webpack_require__(11);
 	const sortByName = (a, b) => a.name > b.name ? 1 : -1;
@@ -37014,16 +30793,16 @@
 
 
 /***/ },
-/* 340 */
+/* 341 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(341);
+	var content = __webpack_require__(342);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(297)(content, {});
+	var update = __webpack_require__(298)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -37040,28 +30819,28 @@
 	}
 
 /***/ },
-/* 341 */
+/* 342 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(296)();
+	exports = module.exports = __webpack_require__(297)();
 	// imports
 	
 	
 	// module
-	exports.push([module.id, "._info {\n  background: rgba(35, 32, 32, 0.95);\n  border: 1px solid #353131;\n  border-top-right-radius: 4px;\n  color: #999999;\n  min-width: 180px;\n  max-width: 380px;\n  min-height: 100px;\n  position: fixed;\n  bottom: 37px;\n  left: 0; }\n  ._info .wrap {\n    padding: 8px; }\n  ._info .bar {\n    border-top-right-radius: 4px; }\n  ._info .wrap {\n    max-height: 300px;\n    overflow: auto; }\n\n._list {\n  background: #3d3838;\n  height: 200px;\n  border: 1px solid #353131;\n  margin-top: -1px;\n  overflow-x: hidden; }\n  ._list p {\n    background: #4b4444;\n    border: 1px solid #353131;\n    padding: 8px 4px;\n    margin: -1px; }\n\n._noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.bar {\n  background: #302c2c;\n  padding-left: 4px; }\n  .bar div {\n    display: inline-block; }\n  .bar .fa {\n    color: #5a534b; }\n  .bar .fa.active, .bar .active > .fa {\n    color: #f1d2b3; }\n  .bar.tabs {\n    display: flex;\n    justify-content: flex-end;\n    align-items: flex-end; }\n    .bar.tabs .stretch {\n      flex-grow: 1; }\n  .bar .tab {\n    border-left: 1px solid #232020;\n    color: #868686;\n    padding: 4px 8px; }\n    .bar .tab.sel {\n      background: #28211c; }\n\n._pane, .ProjectPane {\n  z-index: 5;\n  position: fixed;\n  top: 4px;\n  box-shadow: 0 0 10px #151414;\n  background: rgba(75, 68, 68, 0.95);\n  width: 160px; }\n  ._pane .wrap, .ProjectPane .wrap {\n    overflow: visible; }\n  ._pane .bar, .ProjectPane .bar {\n    display: flex;\n    align-items: center;\n    flex-direction: row-reverse;\n    cursor: pointer;\n    padding: 0;\n    height: 32px; }\n    ._pane .bar .rarrow, .ProjectPane .bar .rarrow {\n      border-left-color: #282525; }\n    ._pane .bar .larrow, .ProjectPane .bar .larrow {\n      border-right-color: #282525; }\n    ._pane .bar.fbar, .ProjectPane .bar.fbar {\n      flex-direction: row;\n      background: none;\n      position: fixed;\n      height: 32px;\n      top: 4px; }\n      ._pane .bar.fbar .rarrow, .ProjectPane .bar.fbar .rarrow {\n        border-left-color: #302c2c; }\n      ._pane .bar.fbar .larrow, .ProjectPane .bar.fbar .larrow {\n        border-right-color: #302c2c; }\n    ._pane .bar .fa, .ProjectPane .bar .fa, ._pane .bar .name, .ProjectPane .bar .name {\n      padding: 8px;\n      border-radius: 0;\n      background: #302c2c; }\n    ._pane .bar .name, .ProjectPane .bar .name {\n      color: #868686; }\n      ._pane .bar .name:hover, .ProjectPane .bar .name:hover {\n        color: #9f9f9f; }\n    ._pane .bar .spacer, .ProjectPane .bar .spacer {\n      width: 16px;\n      height: 100%;\n      background-color: #282525; }\n  ._pane .larrow, .ProjectPane .larrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-left: none; }\n  ._pane .rarrow, .ProjectPane .rarrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-right: none; }\n\n.Modal {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  background-color: rgba(20, 20, 20, 0);\n  z-index: -9;\n  opacity: 0;\n  justify-content: center;\n  align-items: center; }\n  .Modal.active {\n    background-color: rgba(20, 20, 20, 0.5);\n    opacity: 1;\n    z-index: 9; }\n  .Modal .wrap {\n    background: #918787;\n    padding: 8px;\n    border: 1px solid #353131;\n    border-radius: 4px;\n    min-width: 160px; }\n  .Modal .message {\n    margin: 4px 0; }\n  .Modal .bwrap {\n    margin-top: 32px;\n    display: flex;\n    flex-direction: row;\n    align-items: flex-end; }\n\n.button {\n  padding: 2px 4px;\n  border-radius: 4px;\n  border: 2px solid #332e2e;\n  border-top-color: #383333;\n  border-right-color: #383333;\n  margin: 8px;\n  cursor: pointer;\n  background: linear-gradient(#b1aaaa, #7d7373); }\n  .button:active {\n    position: relative;\n    top: 1px; }\n  .button:active {\n    background: linear-gradient(#7d7373, #b1aaaa); }\n  .button.delete {\n    background: linear-gradient(#a97e7e, #815656); }\n  .button.continue {\n    background: linear-gradient(#b0906f, #8b6c4d);\n    align-self: flex-end; }\n\n.Pane .op {\n  cursor: pointer;\n  padding: 4px;\n  background: #232020;\n  color: #4d4d4d;\n  text-align: right; }\n  .Pane .op:hover {\n    color: #999999; }\n\n.ProjectPane {\n  right: -168px;\n  transition: right 0.2s;\n  border-bottom-left-radius: 4px;\n  padding-bottom: 4px; }\n  .ProjectPane .bar {\n    flex-direction: row; }\n    .ProjectPane .bar.fbar {\n      flex-direction: row-reverse;\n      right: 0; }\n  .ProjectPane.active {\n    right: 0; }\n", ""]);
+	exports.push([module.id, "._info {\n  background: rgba(35, 32, 32, 0.95);\n  border: 1px solid #353131;\n  border-top-right-radius: 4px;\n  color: #999999;\n  min-width: 180px;\n  max-width: 380px;\n  min-height: 100px;\n  position: fixed;\n  bottom: 37px;\n  left: 0; }\n  ._info .wrap {\n    padding: 8px; }\n  ._info .bar {\n    border-top-right-radius: 4px; }\n  ._info .wrap {\n    max-height: 300px;\n    overflow: auto; }\n\n._list {\n  background: #3d3838;\n  height: 200px;\n  border: 1px solid #353131;\n  margin-top: -1px;\n  overflow-x: hidden; }\n  ._list p {\n    background: #4b4444;\n    border: 1px solid #353131;\n    padding: 8px 4px;\n    margin: -1px; }\n\n._noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.bar {\n  background: #302c2c;\n  padding-left: 4px; }\n  .bar div {\n    display: inline-block; }\n  .bar .fa {\n    color: #5a534b; }\n  .bar .fa.active, .bar .active > .fa {\n    color: #f1d2b3; }\n  .bar.tabs {\n    display: flex;\n    justify-content: flex-end;\n    align-items: flex-end; }\n    .bar.tabs .stretch {\n      flex-grow: 1; }\n  .bar .tab {\n    cursor: pointer;\n    border-left: 1px solid #232020;\n    color: #868686;\n    padding: 4px 8px; }\n    .bar .tab.sel {\n      background: #28211c; }\n\n._pane, .ProjectPane {\n  z-index: 5;\n  position: fixed;\n  top: 4px;\n  box-shadow: 0 0 10px #151414;\n  background: rgba(75, 68, 68, 0.95);\n  width: 160px; }\n  ._pane .wrap, .ProjectPane .wrap {\n    overflow: visible; }\n  ._pane .bar, .ProjectPane .bar {\n    display: flex;\n    align-items: center;\n    flex-direction: row-reverse;\n    cursor: pointer;\n    padding: 0;\n    height: 32px; }\n    ._pane .bar .rarrow, .ProjectPane .bar .rarrow {\n      border-left-color: #282525; }\n    ._pane .bar .larrow, .ProjectPane .bar .larrow {\n      border-right-color: #282525; }\n    ._pane .bar.fbar, .ProjectPane .bar.fbar {\n      flex-direction: row;\n      background: none;\n      position: fixed;\n      height: 32px;\n      top: 4px; }\n      ._pane .bar.fbar .rarrow, .ProjectPane .bar.fbar .rarrow {\n        border-left-color: #302c2c; }\n      ._pane .bar.fbar .larrow, .ProjectPane .bar.fbar .larrow {\n        border-right-color: #302c2c; }\n    ._pane .bar .fa, .ProjectPane .bar .fa, ._pane .bar .name, .ProjectPane .bar .name {\n      padding: 8px;\n      border-radius: 0;\n      background: #302c2c; }\n    ._pane .bar .name, .ProjectPane .bar .name {\n      color: #868686; }\n      ._pane .bar .name:hover, .ProjectPane .bar .name:hover {\n        color: #9f9f9f; }\n    ._pane .bar .spacer, .ProjectPane .bar .spacer {\n      width: 16px;\n      height: 100%;\n      background-color: #282525; }\n  ._pane .larrow, .ProjectPane .larrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-left: none; }\n  ._pane .rarrow, .ProjectPane .rarrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-right: none; }\n\n.Modal {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  background-color: rgba(20, 20, 20, 0);\n  z-index: -9;\n  opacity: 0;\n  justify-content: center;\n  align-items: center; }\n  .Modal.active {\n    background-color: rgba(20, 20, 20, 0.5);\n    opacity: 1;\n    z-index: 9; }\n  .Modal .wrap {\n    background: #918787;\n    padding: 8px;\n    border: 1px solid #353131;\n    border-radius: 4px;\n    min-width: 160px; }\n  .Modal .message {\n    margin: 4px 0; }\n  .Modal .bwrap {\n    margin-top: 32px;\n    display: flex;\n    flex-direction: row;\n    align-items: flex-end; }\n\n.button {\n  padding: 2px 4px;\n  border-radius: 4px;\n  border: 2px solid #332e2e;\n  border-top-color: #383333;\n  border-right-color: #383333;\n  margin: 8px;\n  cursor: pointer;\n  background: linear-gradient(#b1aaaa, #7d7373); }\n  .button:active {\n    position: relative;\n    top: 1px; }\n  .button:active {\n    background: linear-gradient(#7d7373, #b1aaaa); }\n  .button.delete {\n    background: linear-gradient(#a97e7e, #815656); }\n  .button.continue {\n    background: linear-gradient(#b0906f, #8b6c4d);\n    align-self: flex-end; }\n\n.Pane .op {\n  cursor: pointer;\n  padding: 4px;\n  background: #232020;\n  color: #4d4d4d;\n  text-align: right; }\n  .Pane .op:hover {\n    color: #999999; }\n\n.ProjectPane {\n  right: -168px;\n  transition: right 0.2s;\n  border-bottom-left-radius: 4px;\n  padding-bottom: 4px; }\n  .ProjectPane .bar {\n    flex-direction: row; }\n    .ProjectPane .bar.fbar {\n      flex-direction: row-reverse;\n      right: 0; }\n  .ProjectPane.active {\n    right: 0; }\n", ""]);
 	
 	// exports
 
 
 /***/ },
-/* 342 */
+/* 343 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	__webpack_require__(343);
+	__webpack_require__(344);
 	const Component_1 = __webpack_require__(13);
 	const Factory_1 = __webpack_require__(11);
-	const Graph_1 = __webpack_require__(323);
+	const Graph_1 = __webpack_require__(324);
 	const SceneName = Factory_1.editable(['scene', 'name']);
 	const SceneOptions = Factory_1.pane('scene');
 	exports.Scene = Component_1.Component({ scene: ['scene'],
@@ -37094,16 +30873,16 @@
 
 
 /***/ },
-/* 343 */
+/* 344 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(344);
+	var content = __webpack_require__(345);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(297)(content, {});
+	var update = __webpack_require__(298)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -37120,25 +30899,25 @@
 	}
 
 /***/ },
-/* 344 */
+/* 345 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(296)();
+	exports = module.exports = __webpack_require__(297)();
 	// imports
 	
 	
 	// module
-	exports.push([module.id, "._info {\n  background: rgba(35, 32, 32, 0.95);\n  border: 1px solid #353131;\n  border-top-right-radius: 4px;\n  color: #999999;\n  min-width: 180px;\n  max-width: 380px;\n  min-height: 100px;\n  position: fixed;\n  bottom: 37px;\n  left: 0; }\n  ._info .wrap {\n    padding: 8px; }\n  ._info .bar {\n    border-top-right-radius: 4px; }\n  ._info .wrap {\n    max-height: 300px;\n    overflow: auto; }\n\n._list {\n  background: #3d3838;\n  height: 200px;\n  border: 1px solid #353131;\n  margin-top: -1px;\n  overflow-x: hidden; }\n  ._list p {\n    background: #4b4444;\n    border: 1px solid #353131;\n    padding: 8px 4px;\n    margin: -1px; }\n\n._noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.bar {\n  background: #302c2c;\n  padding-left: 4px; }\n  .bar div {\n    display: inline-block; }\n  .bar .fa {\n    color: #5a534b; }\n  .bar .fa.active, .bar .active > .fa {\n    color: #f1d2b3; }\n  .bar.tabs {\n    display: flex;\n    justify-content: flex-end;\n    align-items: flex-end; }\n    .bar.tabs .stretch {\n      flex-grow: 1; }\n  .bar .tab {\n    border-left: 1px solid #232020;\n    color: #868686;\n    padding: 4px 8px; }\n    .bar .tab.sel {\n      background: #28211c; }\n\n._pane {\n  z-index: 5;\n  position: fixed;\n  top: 4px;\n  box-shadow: 0 0 10px #151414;\n  background: rgba(75, 68, 68, 0.95);\n  width: 160px; }\n  ._pane .wrap {\n    overflow: visible; }\n  ._pane .bar {\n    display: flex;\n    align-items: center;\n    flex-direction: row-reverse;\n    cursor: pointer;\n    padding: 0;\n    height: 32px; }\n    ._pane .bar .rarrow {\n      border-left-color: #282525; }\n    ._pane .bar .larrow {\n      border-right-color: #282525; }\n    ._pane .bar.fbar {\n      flex-direction: row;\n      background: none;\n      position: fixed;\n      height: 32px;\n      top: 4px; }\n      ._pane .bar.fbar .rarrow {\n        border-left-color: #302c2c; }\n      ._pane .bar.fbar .larrow {\n        border-right-color: #302c2c; }\n    ._pane .bar .fa, ._pane .bar .name {\n      padding: 8px;\n      border-radius: 0;\n      background: #302c2c; }\n    ._pane .bar .name {\n      color: #868686; }\n      ._pane .bar .name:hover {\n        color: #9f9f9f; }\n    ._pane .bar .spacer {\n      width: 16px;\n      height: 100%;\n      background-color: #282525; }\n  ._pane .larrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-left: none; }\n  ._pane .rarrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-right: none; }\n\n.Modal {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  background-color: rgba(20, 20, 20, 0);\n  z-index: -9;\n  opacity: 0;\n  justify-content: center;\n  align-items: center; }\n  .Modal.active {\n    background-color: rgba(20, 20, 20, 0.5);\n    opacity: 1;\n    z-index: 9; }\n  .Modal .wrap {\n    background: #918787;\n    padding: 8px;\n    border: 1px solid #353131;\n    border-radius: 4px;\n    min-width: 160px; }\n  .Modal .message {\n    margin: 4px 0; }\n  .Modal .bwrap {\n    margin-top: 32px;\n    display: flex;\n    flex-direction: row;\n    align-items: flex-end; }\n\n.button {\n  padding: 2px 4px;\n  border-radius: 4px;\n  border: 2px solid #332e2e;\n  border-top-color: #383333;\n  border-right-color: #383333;\n  margin: 8px;\n  cursor: pointer;\n  background: linear-gradient(#b1aaaa, #7d7373); }\n  .button:active {\n    position: relative;\n    top: 1px; }\n  .button:active {\n    background: linear-gradient(#7d7373, #b1aaaa); }\n  .button.delete {\n    background: linear-gradient(#a97e7e, #815656); }\n  .button.continue {\n    background: linear-gradient(#b0906f, #8b6c4d);\n    align-self: flex-end; }\n\n.Pane .op {\n  cursor: pointer;\n  padding: 4px;\n  background: #232020;\n  color: #4d4d4d;\n  text-align: right; }\n  .Pane .op:hover {\n    color: #999999; }\n\n.Scene {\n  position: relative;\n  width: 66%;\n  border: 1px solid #353131;\n  border-width: 1px 0 0 1px;\n  display: flex;\n  flex-direction: column; }\n  .Scene .name {\n    color: #d98632; }\n", ""]);
+	exports.push([module.id, "._info {\n  background: rgba(35, 32, 32, 0.95);\n  border: 1px solid #353131;\n  border-top-right-radius: 4px;\n  color: #999999;\n  min-width: 180px;\n  max-width: 380px;\n  min-height: 100px;\n  position: fixed;\n  bottom: 37px;\n  left: 0; }\n  ._info .wrap {\n    padding: 8px; }\n  ._info .bar {\n    border-top-right-radius: 4px; }\n  ._info .wrap {\n    max-height: 300px;\n    overflow: auto; }\n\n._list {\n  background: #3d3838;\n  height: 200px;\n  border: 1px solid #353131;\n  margin-top: -1px;\n  overflow-x: hidden; }\n  ._list p {\n    background: #4b4444;\n    border: 1px solid #353131;\n    padding: 8px 4px;\n    margin: -1px; }\n\n._noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.bar {\n  background: #302c2c;\n  padding-left: 4px; }\n  .bar div {\n    display: inline-block; }\n  .bar .fa {\n    color: #5a534b; }\n  .bar .fa.active, .bar .active > .fa {\n    color: #f1d2b3; }\n  .bar.tabs {\n    display: flex;\n    justify-content: flex-end;\n    align-items: flex-end; }\n    .bar.tabs .stretch {\n      flex-grow: 1; }\n  .bar .tab {\n    cursor: pointer;\n    border-left: 1px solid #232020;\n    color: #868686;\n    padding: 4px 8px; }\n    .bar .tab.sel {\n      background: #28211c; }\n\n._pane {\n  z-index: 5;\n  position: fixed;\n  top: 4px;\n  box-shadow: 0 0 10px #151414;\n  background: rgba(75, 68, 68, 0.95);\n  width: 160px; }\n  ._pane .wrap {\n    overflow: visible; }\n  ._pane .bar {\n    display: flex;\n    align-items: center;\n    flex-direction: row-reverse;\n    cursor: pointer;\n    padding: 0;\n    height: 32px; }\n    ._pane .bar .rarrow {\n      border-left-color: #282525; }\n    ._pane .bar .larrow {\n      border-right-color: #282525; }\n    ._pane .bar.fbar {\n      flex-direction: row;\n      background: none;\n      position: fixed;\n      height: 32px;\n      top: 4px; }\n      ._pane .bar.fbar .rarrow {\n        border-left-color: #302c2c; }\n      ._pane .bar.fbar .larrow {\n        border-right-color: #302c2c; }\n    ._pane .bar .fa, ._pane .bar .name {\n      padding: 8px;\n      border-radius: 0;\n      background: #302c2c; }\n    ._pane .bar .name {\n      color: #868686; }\n      ._pane .bar .name:hover {\n        color: #9f9f9f; }\n    ._pane .bar .spacer {\n      width: 16px;\n      height: 100%;\n      background-color: #282525; }\n  ._pane .larrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-left: none; }\n  ._pane .rarrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-right: none; }\n\n.Modal {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  background-color: rgba(20, 20, 20, 0);\n  z-index: -9;\n  opacity: 0;\n  justify-content: center;\n  align-items: center; }\n  .Modal.active {\n    background-color: rgba(20, 20, 20, 0.5);\n    opacity: 1;\n    z-index: 9; }\n  .Modal .wrap {\n    background: #918787;\n    padding: 8px;\n    border: 1px solid #353131;\n    border-radius: 4px;\n    min-width: 160px; }\n  .Modal .message {\n    margin: 4px 0; }\n  .Modal .bwrap {\n    margin-top: 32px;\n    display: flex;\n    flex-direction: row;\n    align-items: flex-end; }\n\n.button {\n  padding: 2px 4px;\n  border-radius: 4px;\n  border: 2px solid #332e2e;\n  border-top-color: #383333;\n  border-right-color: #383333;\n  margin: 8px;\n  cursor: pointer;\n  background: linear-gradient(#b1aaaa, #7d7373); }\n  .button:active {\n    position: relative;\n    top: 1px; }\n  .button:active {\n    background: linear-gradient(#7d7373, #b1aaaa); }\n  .button.delete {\n    background: linear-gradient(#a97e7e, #815656); }\n  .button.continue {\n    background: linear-gradient(#b0906f, #8b6c4d);\n    align-self: flex-end; }\n\n.Pane .op {\n  cursor: pointer;\n  padding: 4px;\n  background: #232020;\n  color: #4d4d4d;\n  text-align: right; }\n  .Pane .op:hover {\n    color: #999999; }\n\n.Scene {\n  position: relative;\n  width: 66%;\n  border: 1px solid #353131;\n  border-width: 1px 0 0 1px;\n  display: flex;\n  flex-direction: column; }\n  .Scene .name {\n    color: #d98632; }\n", ""]);
 	
 	// exports
 
 
 /***/ },
-/* 345 */
+/* 346 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	__webpack_require__(346);
+	__webpack_require__(347);
 	const Component_1 = __webpack_require__(13);
 	exports.Login = Component_1.Component({}, ({ signals }) => (Component_1.Component.createElement("div", {class: 'Login'}, 
 	    Component_1.Component.createElement("div", {class: 'wrap'}, 
@@ -37148,16 +30927,16 @@
 
 
 /***/ },
-/* 346 */
+/* 347 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(347);
+	var content = __webpack_require__(348);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(297)(content, {});
+	var update = __webpack_require__(298)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -37174,10 +30953,10 @@
 	}
 
 /***/ },
-/* 347 */
+/* 348 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(296)();
+	exports = module.exports = __webpack_require__(297)();
 	// imports
 	
 	
@@ -37188,11 +30967,11 @@
 
 
 /***/ },
-/* 348 */
+/* 349 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	__webpack_require__(349);
+	__webpack_require__(350);
 	const Component_1 = __webpack_require__(13);
 	const selectProject = (signals, _id) => {
 	    signals.project.select({ _id });
@@ -37222,16 +31001,16 @@
 
 
 /***/ },
-/* 349 */
+/* 350 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(350);
+	var content = __webpack_require__(351);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(297)(content, {});
+	var update = __webpack_require__(298)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -37248,29 +31027,29 @@
 	}
 
 /***/ },
-/* 350 */
+/* 351 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(296)();
+	exports = module.exports = __webpack_require__(297)();
 	// imports
 	
 	
 	// module
-	exports.push([module.id, "._info {\n  background: rgba(35, 32, 32, 0.95);\n  border: 1px solid #353131;\n  border-top-right-radius: 4px;\n  color: #999999;\n  min-width: 180px;\n  max-width: 380px;\n  min-height: 100px;\n  position: fixed;\n  bottom: 37px;\n  left: 0; }\n  ._info .wrap {\n    padding: 8px; }\n  ._info .bar {\n    border-top-right-radius: 4px; }\n  ._info .wrap {\n    max-height: 300px;\n    overflow: auto; }\n\n._list {\n  background: #3d3838;\n  height: 200px;\n  border: 1px solid #353131;\n  margin-top: -1px;\n  overflow-x: hidden; }\n  ._list p {\n    background: #4b4444;\n    border: 1px solid #353131;\n    padding: 8px 4px;\n    margin: -1px; }\n\n._noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.bar {\n  background: #302c2c;\n  padding-left: 4px; }\n  .bar div {\n    display: inline-block; }\n  .bar .fa {\n    color: #5a534b; }\n  .bar .fa.active, .bar .active > .fa {\n    color: #f1d2b3; }\n  .bar.tabs {\n    display: flex;\n    justify-content: flex-end;\n    align-items: flex-end; }\n    .bar.tabs .stretch {\n      flex-grow: 1; }\n  .bar .tab {\n    border-left: 1px solid #232020;\n    color: #868686;\n    padding: 4px 8px; }\n    .bar .tab.sel {\n      background: #28211c; }\n\n._pane {\n  z-index: 5;\n  position: fixed;\n  top: 4px;\n  box-shadow: 0 0 10px #151414;\n  background: rgba(75, 68, 68, 0.95);\n  width: 160px; }\n  ._pane .wrap {\n    overflow: visible; }\n  ._pane .bar {\n    display: flex;\n    align-items: center;\n    flex-direction: row-reverse;\n    cursor: pointer;\n    padding: 0;\n    height: 32px; }\n    ._pane .bar .rarrow {\n      border-left-color: #282525; }\n    ._pane .bar .larrow {\n      border-right-color: #282525; }\n    ._pane .bar.fbar {\n      flex-direction: row;\n      background: none;\n      position: fixed;\n      height: 32px;\n      top: 4px; }\n      ._pane .bar.fbar .rarrow {\n        border-left-color: #302c2c; }\n      ._pane .bar.fbar .larrow {\n        border-right-color: #302c2c; }\n    ._pane .bar .fa, ._pane .bar .name {\n      padding: 8px;\n      border-radius: 0;\n      background: #302c2c; }\n    ._pane .bar .name {\n      color: #868686; }\n      ._pane .bar .name:hover {\n        color: #9f9f9f; }\n    ._pane .bar .spacer {\n      width: 16px;\n      height: 100%;\n      background-color: #282525; }\n  ._pane .larrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-left: none; }\n  ._pane .rarrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-right: none; }\n\n.Modal {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  background-color: rgba(20, 20, 20, 0);\n  z-index: -9;\n  opacity: 0;\n  justify-content: center;\n  align-items: center; }\n  .Modal.active {\n    background-color: rgba(20, 20, 20, 0.5);\n    opacity: 1;\n    z-index: 9; }\n  .Modal .wrap {\n    background: #918787;\n    padding: 8px;\n    border: 1px solid #353131;\n    border-radius: 4px;\n    min-width: 160px; }\n  .Modal .message {\n    margin: 4px 0; }\n  .Modal .bwrap {\n    margin-top: 32px;\n    display: flex;\n    flex-direction: row;\n    align-items: flex-end; }\n\n.button {\n  padding: 2px 4px;\n  border-radius: 4px;\n  border: 2px solid #332e2e;\n  border-top-color: #383333;\n  border-right-color: #383333;\n  margin: 8px;\n  cursor: pointer;\n  background: linear-gradient(#b1aaaa, #7d7373); }\n  .button:active {\n    position: relative;\n    top: 1px; }\n  .button:active {\n    background: linear-gradient(#7d7373, #b1aaaa); }\n  .button.delete {\n    background: linear-gradient(#a97e7e, #815656); }\n  .button.continue {\n    background: linear-gradient(#b0906f, #8b6c4d);\n    align-self: flex-end; }\n\n.Pane .op {\n  cursor: pointer;\n  padding: 4px;\n  background: #232020;\n  color: #4d4d4d;\n  text-align: right; }\n  .Pane .op:hover {\n    color: #999999; }\n\n.ProjectChooser .wrap {\n  width: 300px; }\n", ""]);
+	exports.push([module.id, "._info {\n  background: rgba(35, 32, 32, 0.95);\n  border: 1px solid #353131;\n  border-top-right-radius: 4px;\n  color: #999999;\n  min-width: 180px;\n  max-width: 380px;\n  min-height: 100px;\n  position: fixed;\n  bottom: 37px;\n  left: 0; }\n  ._info .wrap {\n    padding: 8px; }\n  ._info .bar {\n    border-top-right-radius: 4px; }\n  ._info .wrap {\n    max-height: 300px;\n    overflow: auto; }\n\n._list {\n  background: #3d3838;\n  height: 200px;\n  border: 1px solid #353131;\n  margin-top: -1px;\n  overflow-x: hidden; }\n  ._list p {\n    background: #4b4444;\n    border: 1px solid #353131;\n    padding: 8px 4px;\n    margin: -1px; }\n\n._noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.bar {\n  background: #302c2c;\n  padding-left: 4px; }\n  .bar div {\n    display: inline-block; }\n  .bar .fa {\n    color: #5a534b; }\n  .bar .fa.active, .bar .active > .fa {\n    color: #f1d2b3; }\n  .bar.tabs {\n    display: flex;\n    justify-content: flex-end;\n    align-items: flex-end; }\n    .bar.tabs .stretch {\n      flex-grow: 1; }\n  .bar .tab {\n    cursor: pointer;\n    border-left: 1px solid #232020;\n    color: #868686;\n    padding: 4px 8px; }\n    .bar .tab.sel {\n      background: #28211c; }\n\n._pane {\n  z-index: 5;\n  position: fixed;\n  top: 4px;\n  box-shadow: 0 0 10px #151414;\n  background: rgba(75, 68, 68, 0.95);\n  width: 160px; }\n  ._pane .wrap {\n    overflow: visible; }\n  ._pane .bar {\n    display: flex;\n    align-items: center;\n    flex-direction: row-reverse;\n    cursor: pointer;\n    padding: 0;\n    height: 32px; }\n    ._pane .bar .rarrow {\n      border-left-color: #282525; }\n    ._pane .bar .larrow {\n      border-right-color: #282525; }\n    ._pane .bar.fbar {\n      flex-direction: row;\n      background: none;\n      position: fixed;\n      height: 32px;\n      top: 4px; }\n      ._pane .bar.fbar .rarrow {\n        border-left-color: #302c2c; }\n      ._pane .bar.fbar .larrow {\n        border-right-color: #302c2c; }\n    ._pane .bar .fa, ._pane .bar .name {\n      padding: 8px;\n      border-radius: 0;\n      background: #302c2c; }\n    ._pane .bar .name {\n      color: #868686; }\n      ._pane .bar .name:hover {\n        color: #9f9f9f; }\n    ._pane .bar .spacer {\n      width: 16px;\n      height: 100%;\n      background-color: #282525; }\n  ._pane .larrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-left: none; }\n  ._pane .rarrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-right: none; }\n\n.Modal {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  background-color: rgba(20, 20, 20, 0);\n  z-index: -9;\n  opacity: 0;\n  justify-content: center;\n  align-items: center; }\n  .Modal.active {\n    background-color: rgba(20, 20, 20, 0.5);\n    opacity: 1;\n    z-index: 9; }\n  .Modal .wrap {\n    background: #918787;\n    padding: 8px;\n    border: 1px solid #353131;\n    border-radius: 4px;\n    min-width: 160px; }\n  .Modal .message {\n    margin: 4px 0; }\n  .Modal .bwrap {\n    margin-top: 32px;\n    display: flex;\n    flex-direction: row;\n    align-items: flex-end; }\n\n.button {\n  padding: 2px 4px;\n  border-radius: 4px;\n  border: 2px solid #332e2e;\n  border-top-color: #383333;\n  border-right-color: #383333;\n  margin: 8px;\n  cursor: pointer;\n  background: linear-gradient(#b1aaaa, #7d7373); }\n  .button:active {\n    position: relative;\n    top: 1px; }\n  .button:active {\n    background: linear-gradient(#7d7373, #b1aaaa); }\n  .button.delete {\n    background: linear-gradient(#a97e7e, #815656); }\n  .button.continue {\n    background: linear-gradient(#b0906f, #8b6c4d);\n    align-self: flex-end; }\n\n.Pane .op {\n  cursor: pointer;\n  padding: 4px;\n  background: #232020;\n  color: #4d4d4d;\n  text-align: right; }\n  .Pane .op:hover {\n    color: #999999; }\n\n.ProjectChooser .wrap {\n  width: 300px; }\n", ""]);
 	
 	// exports
 
 
 /***/ },
-/* 351 */
+/* 352 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	__webpack_require__(352);
+	__webpack_require__(353);
 	const Component_1 = __webpack_require__(13);
-	const MidiStatus_1 = __webpack_require__(354);
-	const Status_1 = __webpack_require__(357);
-	const Sync_1 = __webpack_require__(360);
+	const MidiStatus_1 = __webpack_require__(355);
+	const Status_1 = __webpack_require__(358);
+	const Sync_1 = __webpack_require__(361);
 	exports.StatusBar = Component_1.Component({ status: ['$status', 'list']
 	}, ({ state, signals }) => {
 	    const l = state.status || [];
@@ -37283,16 +31062,16 @@
 
 
 /***/ },
-/* 352 */
+/* 353 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(353);
+	var content = __webpack_require__(354);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(297)(content, {});
+	var update = __webpack_require__(298)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -37309,25 +31088,25 @@
 	}
 
 /***/ },
-/* 353 */
+/* 354 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(296)();
+	exports = module.exports = __webpack_require__(297)();
 	// imports
 	
 	
 	// module
-	exports.push([module.id, "._info {\n  background: rgba(35, 32, 32, 0.95);\n  border: 1px solid #353131;\n  border-top-right-radius: 4px;\n  color: #999999;\n  min-width: 180px;\n  max-width: 380px;\n  min-height: 100px;\n  position: fixed;\n  bottom: 37px;\n  left: 0; }\n  ._info .wrap {\n    padding: 8px; }\n  ._info .bar {\n    border-top-right-radius: 4px; }\n  ._info .wrap {\n    max-height: 300px;\n    overflow: auto; }\n\n._list {\n  background: #3d3838;\n  height: 200px;\n  border: 1px solid #353131;\n  margin-top: -1px;\n  overflow-x: hidden; }\n  ._list p {\n    background: #4b4444;\n    border: 1px solid #353131;\n    padding: 8px 4px;\n    margin: -1px; }\n\n._noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.bar {\n  background: #302c2c;\n  padding-left: 4px; }\n  .bar div {\n    display: inline-block; }\n  .bar .fa {\n    color: #5a534b; }\n  .bar .fa.active, .bar .active > .fa {\n    color: #f1d2b3; }\n  .bar.tabs {\n    display: flex;\n    justify-content: flex-end;\n    align-items: flex-end; }\n    .bar.tabs .stretch {\n      flex-grow: 1; }\n  .bar .tab {\n    border-left: 1px solid #232020;\n    color: #868686;\n    padding: 4px 8px; }\n    .bar .tab.sel {\n      background: #28211c; }\n\n._pane {\n  z-index: 5;\n  position: fixed;\n  top: 4px;\n  box-shadow: 0 0 10px #151414;\n  background: rgba(75, 68, 68, 0.95);\n  width: 160px; }\n  ._pane .wrap {\n    overflow: visible; }\n  ._pane .bar {\n    display: flex;\n    align-items: center;\n    flex-direction: row-reverse;\n    cursor: pointer;\n    padding: 0;\n    height: 32px; }\n    ._pane .bar .rarrow {\n      border-left-color: #282525; }\n    ._pane .bar .larrow {\n      border-right-color: #282525; }\n    ._pane .bar.fbar {\n      flex-direction: row;\n      background: none;\n      position: fixed;\n      height: 32px;\n      top: 4px; }\n      ._pane .bar.fbar .rarrow {\n        border-left-color: #302c2c; }\n      ._pane .bar.fbar .larrow {\n        border-right-color: #302c2c; }\n    ._pane .bar .fa, ._pane .bar .name {\n      padding: 8px;\n      border-radius: 0;\n      background: #302c2c; }\n    ._pane .bar .name {\n      color: #868686; }\n      ._pane .bar .name:hover {\n        color: #9f9f9f; }\n    ._pane .bar .spacer {\n      width: 16px;\n      height: 100%;\n      background-color: #282525; }\n  ._pane .larrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-left: none; }\n  ._pane .rarrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-right: none; }\n\n.Modal {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  background-color: rgba(20, 20, 20, 0);\n  z-index: -9;\n  opacity: 0;\n  justify-content: center;\n  align-items: center; }\n  .Modal.active {\n    background-color: rgba(20, 20, 20, 0.5);\n    opacity: 1;\n    z-index: 9; }\n  .Modal .wrap {\n    background: #918787;\n    padding: 8px;\n    border: 1px solid #353131;\n    border-radius: 4px;\n    min-width: 160px; }\n  .Modal .message {\n    margin: 4px 0; }\n  .Modal .bwrap {\n    margin-top: 32px;\n    display: flex;\n    flex-direction: row;\n    align-items: flex-end; }\n\n.button {\n  padding: 2px 4px;\n  border-radius: 4px;\n  border: 2px solid #332e2e;\n  border-top-color: #383333;\n  border-right-color: #383333;\n  margin: 8px;\n  cursor: pointer;\n  background: linear-gradient(#b1aaaa, #7d7373); }\n  .button:active {\n    position: relative;\n    top: 1px; }\n  .button:active {\n    background: linear-gradient(#7d7373, #b1aaaa); }\n  .button.delete {\n    background: linear-gradient(#a97e7e, #815656); }\n  .button.continue {\n    background: linear-gradient(#b0906f, #8b6c4d);\n    align-self: flex-end; }\n\n.Pane .op {\n  cursor: pointer;\n  padding: 4px;\n  background: #232020;\n  color: #4d4d4d;\n  text-align: right; }\n  .Pane .op:hover {\n    color: #999999; }\n\n.StatusBar {\n  height: 20px;\n  width: 100%;\n  background: #3d3838;\n  border: 1px solid #353131;\n  padding: 8px;\n  color: #999999;\n  z-index: 4;\n  display: flex;\n  justify-content: flex-start; }\n  .StatusBar .Status {\n    flex-grow: 1; }\n", ""]);
+	exports.push([module.id, "._info {\n  background: rgba(35, 32, 32, 0.95);\n  border: 1px solid #353131;\n  border-top-right-radius: 4px;\n  color: #999999;\n  min-width: 180px;\n  max-width: 380px;\n  min-height: 100px;\n  position: fixed;\n  bottom: 37px;\n  left: 0; }\n  ._info .wrap {\n    padding: 8px; }\n  ._info .bar {\n    border-top-right-radius: 4px; }\n  ._info .wrap {\n    max-height: 300px;\n    overflow: auto; }\n\n._list {\n  background: #3d3838;\n  height: 200px;\n  border: 1px solid #353131;\n  margin-top: -1px;\n  overflow-x: hidden; }\n  ._list p {\n    background: #4b4444;\n    border: 1px solid #353131;\n    padding: 8px 4px;\n    margin: -1px; }\n\n._noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.bar {\n  background: #302c2c;\n  padding-left: 4px; }\n  .bar div {\n    display: inline-block; }\n  .bar .fa {\n    color: #5a534b; }\n  .bar .fa.active, .bar .active > .fa {\n    color: #f1d2b3; }\n  .bar.tabs {\n    display: flex;\n    justify-content: flex-end;\n    align-items: flex-end; }\n    .bar.tabs .stretch {\n      flex-grow: 1; }\n  .bar .tab {\n    cursor: pointer;\n    border-left: 1px solid #232020;\n    color: #868686;\n    padding: 4px 8px; }\n    .bar .tab.sel {\n      background: #28211c; }\n\n._pane {\n  z-index: 5;\n  position: fixed;\n  top: 4px;\n  box-shadow: 0 0 10px #151414;\n  background: rgba(75, 68, 68, 0.95);\n  width: 160px; }\n  ._pane .wrap {\n    overflow: visible; }\n  ._pane .bar {\n    display: flex;\n    align-items: center;\n    flex-direction: row-reverse;\n    cursor: pointer;\n    padding: 0;\n    height: 32px; }\n    ._pane .bar .rarrow {\n      border-left-color: #282525; }\n    ._pane .bar .larrow {\n      border-right-color: #282525; }\n    ._pane .bar.fbar {\n      flex-direction: row;\n      background: none;\n      position: fixed;\n      height: 32px;\n      top: 4px; }\n      ._pane .bar.fbar .rarrow {\n        border-left-color: #302c2c; }\n      ._pane .bar.fbar .larrow {\n        border-right-color: #302c2c; }\n    ._pane .bar .fa, ._pane .bar .name {\n      padding: 8px;\n      border-radius: 0;\n      background: #302c2c; }\n    ._pane .bar .name {\n      color: #868686; }\n      ._pane .bar .name:hover {\n        color: #9f9f9f; }\n    ._pane .bar .spacer {\n      width: 16px;\n      height: 100%;\n      background-color: #282525; }\n  ._pane .larrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-left: none; }\n  ._pane .rarrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-right: none; }\n\n.Modal {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  background-color: rgba(20, 20, 20, 0);\n  z-index: -9;\n  opacity: 0;\n  justify-content: center;\n  align-items: center; }\n  .Modal.active {\n    background-color: rgba(20, 20, 20, 0.5);\n    opacity: 1;\n    z-index: 9; }\n  .Modal .wrap {\n    background: #918787;\n    padding: 8px;\n    border: 1px solid #353131;\n    border-radius: 4px;\n    min-width: 160px; }\n  .Modal .message {\n    margin: 4px 0; }\n  .Modal .bwrap {\n    margin-top: 32px;\n    display: flex;\n    flex-direction: row;\n    align-items: flex-end; }\n\n.button {\n  padding: 2px 4px;\n  border-radius: 4px;\n  border: 2px solid #332e2e;\n  border-top-color: #383333;\n  border-right-color: #383333;\n  margin: 8px;\n  cursor: pointer;\n  background: linear-gradient(#b1aaaa, #7d7373); }\n  .button:active {\n    position: relative;\n    top: 1px; }\n  .button:active {\n    background: linear-gradient(#7d7373, #b1aaaa); }\n  .button.delete {\n    background: linear-gradient(#a97e7e, #815656); }\n  .button.continue {\n    background: linear-gradient(#b0906f, #8b6c4d);\n    align-self: flex-end; }\n\n.Pane .op {\n  cursor: pointer;\n  padding: 4px;\n  background: #232020;\n  color: #4d4d4d;\n  text-align: right; }\n  .Pane .op:hover {\n    color: #999999; }\n\n.StatusBar {\n  height: 20px;\n  width: 100%;\n  background: #3d3838;\n  border: 1px solid #353131;\n  padding: 8px;\n  color: #999999;\n  z-index: 4;\n  display: flex;\n  justify-content: flex-start; }\n  .StatusBar .Status {\n    flex-grow: 1; }\n", ""]);
 	
 	// exports
 
 
 /***/ },
-/* 354 */
+/* 355 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	__webpack_require__(355);
+	__webpack_require__(356);
 	const Component_1 = __webpack_require__(13);
 	const ICON = 'fa-plug';
 	const BASE = { MidiStatus: true, fa: true, [ICON]: true };
@@ -37344,16 +31123,16 @@
 
 
 /***/ },
-/* 355 */
+/* 356 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(356);
+	var content = __webpack_require__(357);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(297)(content, {});
+	var update = __webpack_require__(298)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -37370,25 +31149,25 @@
 	}
 
 /***/ },
-/* 356 */
+/* 357 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(296)();
+	exports = module.exports = __webpack_require__(297)();
 	// imports
 	
 	
 	// module
-	exports.push([module.id, "._info {\n  background: rgba(35, 32, 32, 0.95);\n  border: 1px solid #353131;\n  border-top-right-radius: 4px;\n  color: #999999;\n  min-width: 180px;\n  max-width: 380px;\n  min-height: 100px;\n  position: fixed;\n  bottom: 37px;\n  left: 0; }\n  ._info .wrap {\n    padding: 8px; }\n  ._info .bar {\n    border-top-right-radius: 4px; }\n  ._info .wrap {\n    max-height: 300px;\n    overflow: auto; }\n\n._list {\n  background: #3d3838;\n  height: 200px;\n  border: 1px solid #353131;\n  margin-top: -1px;\n  overflow-x: hidden; }\n  ._list p {\n    background: #4b4444;\n    border: 1px solid #353131;\n    padding: 8px 4px;\n    margin: -1px; }\n\n._noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.bar {\n  background: #302c2c;\n  padding-left: 4px; }\n  .bar div {\n    display: inline-block; }\n  .bar .fa {\n    color: #5a534b; }\n  .bar .fa.active, .bar .active > .fa {\n    color: #f1d2b3; }\n  .bar.tabs {\n    display: flex;\n    justify-content: flex-end;\n    align-items: flex-end; }\n    .bar.tabs .stretch {\n      flex-grow: 1; }\n  .bar .tab {\n    border-left: 1px solid #232020;\n    color: #868686;\n    padding: 4px 8px; }\n    .bar .tab.sel {\n      background: #28211c; }\n\n._pane {\n  z-index: 5;\n  position: fixed;\n  top: 4px;\n  box-shadow: 0 0 10px #151414;\n  background: rgba(75, 68, 68, 0.95);\n  width: 160px; }\n  ._pane .wrap {\n    overflow: visible; }\n  ._pane .bar {\n    display: flex;\n    align-items: center;\n    flex-direction: row-reverse;\n    cursor: pointer;\n    padding: 0;\n    height: 32px; }\n    ._pane .bar .rarrow {\n      border-left-color: #282525; }\n    ._pane .bar .larrow {\n      border-right-color: #282525; }\n    ._pane .bar.fbar {\n      flex-direction: row;\n      background: none;\n      position: fixed;\n      height: 32px;\n      top: 4px; }\n      ._pane .bar.fbar .rarrow {\n        border-left-color: #302c2c; }\n      ._pane .bar.fbar .larrow {\n        border-right-color: #302c2c; }\n    ._pane .bar .fa, ._pane .bar .name {\n      padding: 8px;\n      border-radius: 0;\n      background: #302c2c; }\n    ._pane .bar .name {\n      color: #868686; }\n      ._pane .bar .name:hover {\n        color: #9f9f9f; }\n    ._pane .bar .spacer {\n      width: 16px;\n      height: 100%;\n      background-color: #282525; }\n  ._pane .larrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-left: none; }\n  ._pane .rarrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-right: none; }\n\n.Modal {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  background-color: rgba(20, 20, 20, 0);\n  z-index: -9;\n  opacity: 0;\n  justify-content: center;\n  align-items: center; }\n  .Modal.active {\n    background-color: rgba(20, 20, 20, 0.5);\n    opacity: 1;\n    z-index: 9; }\n  .Modal .wrap {\n    background: #918787;\n    padding: 8px;\n    border: 1px solid #353131;\n    border-radius: 4px;\n    min-width: 160px; }\n  .Modal .message {\n    margin: 4px 0; }\n  .Modal .bwrap {\n    margin-top: 32px;\n    display: flex;\n    flex-direction: row;\n    align-items: flex-end; }\n\n.button {\n  padding: 2px 4px;\n  border-radius: 4px;\n  border: 2px solid #332e2e;\n  border-top-color: #383333;\n  border-right-color: #383333;\n  margin: 8px;\n  cursor: pointer;\n  background: linear-gradient(#b1aaaa, #7d7373); }\n  .button:active {\n    position: relative;\n    top: 1px; }\n  .button:active {\n    background: linear-gradient(#7d7373, #b1aaaa); }\n  .button.delete {\n    background: linear-gradient(#a97e7e, #815656); }\n  .button.continue {\n    background: linear-gradient(#b0906f, #8b6c4d);\n    align-self: flex-end; }\n\n.Pane .op {\n  cursor: pointer;\n  padding: 4px;\n  background: #232020;\n  color: #4d4d4d;\n  text-align: right; }\n  .Pane .op:hover {\n    color: #999999; }\n", ""]);
+	exports.push([module.id, "._info {\n  background: rgba(35, 32, 32, 0.95);\n  border: 1px solid #353131;\n  border-top-right-radius: 4px;\n  color: #999999;\n  min-width: 180px;\n  max-width: 380px;\n  min-height: 100px;\n  position: fixed;\n  bottom: 37px;\n  left: 0; }\n  ._info .wrap {\n    padding: 8px; }\n  ._info .bar {\n    border-top-right-radius: 4px; }\n  ._info .wrap {\n    max-height: 300px;\n    overflow: auto; }\n\n._list {\n  background: #3d3838;\n  height: 200px;\n  border: 1px solid #353131;\n  margin-top: -1px;\n  overflow-x: hidden; }\n  ._list p {\n    background: #4b4444;\n    border: 1px solid #353131;\n    padding: 8px 4px;\n    margin: -1px; }\n\n._noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.bar {\n  background: #302c2c;\n  padding-left: 4px; }\n  .bar div {\n    display: inline-block; }\n  .bar .fa {\n    color: #5a534b; }\n  .bar .fa.active, .bar .active > .fa {\n    color: #f1d2b3; }\n  .bar.tabs {\n    display: flex;\n    justify-content: flex-end;\n    align-items: flex-end; }\n    .bar.tabs .stretch {\n      flex-grow: 1; }\n  .bar .tab {\n    cursor: pointer;\n    border-left: 1px solid #232020;\n    color: #868686;\n    padding: 4px 8px; }\n    .bar .tab.sel {\n      background: #28211c; }\n\n._pane {\n  z-index: 5;\n  position: fixed;\n  top: 4px;\n  box-shadow: 0 0 10px #151414;\n  background: rgba(75, 68, 68, 0.95);\n  width: 160px; }\n  ._pane .wrap {\n    overflow: visible; }\n  ._pane .bar {\n    display: flex;\n    align-items: center;\n    flex-direction: row-reverse;\n    cursor: pointer;\n    padding: 0;\n    height: 32px; }\n    ._pane .bar .rarrow {\n      border-left-color: #282525; }\n    ._pane .bar .larrow {\n      border-right-color: #282525; }\n    ._pane .bar.fbar {\n      flex-direction: row;\n      background: none;\n      position: fixed;\n      height: 32px;\n      top: 4px; }\n      ._pane .bar.fbar .rarrow {\n        border-left-color: #302c2c; }\n      ._pane .bar.fbar .larrow {\n        border-right-color: #302c2c; }\n    ._pane .bar .fa, ._pane .bar .name {\n      padding: 8px;\n      border-radius: 0;\n      background: #302c2c; }\n    ._pane .bar .name {\n      color: #868686; }\n      ._pane .bar .name:hover {\n        color: #9f9f9f; }\n    ._pane .bar .spacer {\n      width: 16px;\n      height: 100%;\n      background-color: #282525; }\n  ._pane .larrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-left: none; }\n  ._pane .rarrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-right: none; }\n\n.Modal {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  background-color: rgba(20, 20, 20, 0);\n  z-index: -9;\n  opacity: 0;\n  justify-content: center;\n  align-items: center; }\n  .Modal.active {\n    background-color: rgba(20, 20, 20, 0.5);\n    opacity: 1;\n    z-index: 9; }\n  .Modal .wrap {\n    background: #918787;\n    padding: 8px;\n    border: 1px solid #353131;\n    border-radius: 4px;\n    min-width: 160px; }\n  .Modal .message {\n    margin: 4px 0; }\n  .Modal .bwrap {\n    margin-top: 32px;\n    display: flex;\n    flex-direction: row;\n    align-items: flex-end; }\n\n.button {\n  padding: 2px 4px;\n  border-radius: 4px;\n  border: 2px solid #332e2e;\n  border-top-color: #383333;\n  border-right-color: #383333;\n  margin: 8px;\n  cursor: pointer;\n  background: linear-gradient(#b1aaaa, #7d7373); }\n  .button:active {\n    position: relative;\n    top: 1px; }\n  .button:active {\n    background: linear-gradient(#7d7373, #b1aaaa); }\n  .button.delete {\n    background: linear-gradient(#a97e7e, #815656); }\n  .button.continue {\n    background: linear-gradient(#b0906f, #8b6c4d);\n    align-self: flex-end; }\n\n.Pane .op {\n  cursor: pointer;\n  padding: 4px;\n  background: #232020;\n  color: #4d4d4d;\n  text-align: right; }\n  .Pane .op:hover {\n    color: #999999; }\n", ""]);
 	
 	// exports
 
 
 /***/ },
-/* 357 */
+/* 358 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	__webpack_require__(358);
+	__webpack_require__(359);
 	const Component_1 = __webpack_require__(13);
 	exports.Status = Component_1.Component({}, ({ props, signals }) => {
 	    const status = props.status;
@@ -37407,16 +31186,16 @@
 
 
 /***/ },
-/* 358 */
+/* 359 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(359);
+	var content = __webpack_require__(360);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(297)(content, {});
+	var update = __webpack_require__(298)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -37433,25 +31212,25 @@
 	}
 
 /***/ },
-/* 359 */
+/* 360 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(296)();
+	exports = module.exports = __webpack_require__(297)();
 	// imports
 	
 	
 	// module
-	exports.push([module.id, "._info {\n  background: rgba(35, 32, 32, 0.95);\n  border: 1px solid #353131;\n  border-top-right-radius: 4px;\n  color: #999999;\n  min-width: 180px;\n  max-width: 380px;\n  min-height: 100px;\n  position: fixed;\n  bottom: 37px;\n  left: 0; }\n  ._info .wrap {\n    padding: 8px; }\n  ._info .bar {\n    border-top-right-radius: 4px; }\n  ._info .wrap {\n    max-height: 300px;\n    overflow: auto; }\n\n._list {\n  background: #3d3838;\n  height: 200px;\n  border: 1px solid #353131;\n  margin-top: -1px;\n  overflow-x: hidden; }\n  ._list p {\n    background: #4b4444;\n    border: 1px solid #353131;\n    padding: 8px 4px;\n    margin: -1px; }\n\n._noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.bar {\n  background: #302c2c;\n  padding-left: 4px; }\n  .bar div {\n    display: inline-block; }\n  .bar .fa {\n    color: #5a534b; }\n  .bar .fa.active, .bar .active > .fa {\n    color: #f1d2b3; }\n  .bar.tabs {\n    display: flex;\n    justify-content: flex-end;\n    align-items: flex-end; }\n    .bar.tabs .stretch {\n      flex-grow: 1; }\n  .bar .tab {\n    border-left: 1px solid #232020;\n    color: #868686;\n    padding: 4px 8px; }\n    .bar .tab.sel {\n      background: #28211c; }\n\n._pane {\n  z-index: 5;\n  position: fixed;\n  top: 4px;\n  box-shadow: 0 0 10px #151414;\n  background: rgba(75, 68, 68, 0.95);\n  width: 160px; }\n  ._pane .wrap {\n    overflow: visible; }\n  ._pane .bar {\n    display: flex;\n    align-items: center;\n    flex-direction: row-reverse;\n    cursor: pointer;\n    padding: 0;\n    height: 32px; }\n    ._pane .bar .rarrow {\n      border-left-color: #282525; }\n    ._pane .bar .larrow {\n      border-right-color: #282525; }\n    ._pane .bar.fbar {\n      flex-direction: row;\n      background: none;\n      position: fixed;\n      height: 32px;\n      top: 4px; }\n      ._pane .bar.fbar .rarrow {\n        border-left-color: #302c2c; }\n      ._pane .bar.fbar .larrow {\n        border-right-color: #302c2c; }\n    ._pane .bar .fa, ._pane .bar .name {\n      padding: 8px;\n      border-radius: 0;\n      background: #302c2c; }\n    ._pane .bar .name {\n      color: #868686; }\n      ._pane .bar .name:hover {\n        color: #9f9f9f; }\n    ._pane .bar .spacer {\n      width: 16px;\n      height: 100%;\n      background-color: #282525; }\n  ._pane .larrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-left: none; }\n  ._pane .rarrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-right: none; }\n\n.Modal {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  background-color: rgba(20, 20, 20, 0);\n  z-index: -9;\n  opacity: 0;\n  justify-content: center;\n  align-items: center; }\n  .Modal.active {\n    background-color: rgba(20, 20, 20, 0.5);\n    opacity: 1;\n    z-index: 9; }\n  .Modal .wrap {\n    background: #918787;\n    padding: 8px;\n    border: 1px solid #353131;\n    border-radius: 4px;\n    min-width: 160px; }\n  .Modal .message {\n    margin: 4px 0; }\n  .Modal .bwrap {\n    margin-top: 32px;\n    display: flex;\n    flex-direction: row;\n    align-items: flex-end; }\n\n.button {\n  padding: 2px 4px;\n  border-radius: 4px;\n  border: 2px solid #332e2e;\n  border-top-color: #383333;\n  border-right-color: #383333;\n  margin: 8px;\n  cursor: pointer;\n  background: linear-gradient(#b1aaaa, #7d7373); }\n  .button:active {\n    position: relative;\n    top: 1px; }\n  .button:active {\n    background: linear-gradient(#7d7373, #b1aaaa); }\n  .button.delete {\n    background: linear-gradient(#a97e7e, #815656); }\n  .button.continue {\n    background: linear-gradient(#b0906f, #8b6c4d);\n    align-self: flex-end; }\n\n.Pane .op {\n  cursor: pointer;\n  padding: 4px;\n  background: #232020;\n  color: #4d4d4d;\n  text-align: right; }\n  .Pane .op:hover {\n    color: #999999; }\n\n@keyframes fadea {\n  0% {\n    opacity: 1.0; }\n  100% {\n    opacity: 0.1; } }\n\n@keyframes fadeb {\n  0% {\n    opacity: 1.0; }\n  100% {\n    opacity: 0.1; } }\n\n.Status {\n  cursor: pointer; }\n  .Status.info {\n    color: #777; }\n    .Status.info .outer {\n      stroke: #666; }\n    .Status.info .inner {\n      fill: #666;\n      animation: fadea 2s 1 both; }\n  .Status.error {\n    color: #a77; }\n    .Status.error .outer {\n      stroke: #b22; }\n    .Status.error .inner {\n      fill: #f00;\n      animation: fadea 2s 1 both; }\n  .Status.warn {\n    color: #997; }\n    .Status.warn .outer {\n      stroke: #bb0; }\n    .Status.warn .inner {\n      fill: #ff0;\n      animation: fadeb 2s 1 both; }\n  .Status.success {\n    color: #686; }\n    .Status.success .outer {\n      stroke: #0b0; }\n    .Status.success .inner {\n      fill: #0f0;\n      animation: fadeb 2s 1 both; }\n  .Status .outer {\n    stroke-width: 1px;\n    stroke: #000;\n    fill: none; }\n  .Status .inner {\n    stroke: none;\n    fill: #000; }\n", ""]);
+	exports.push([module.id, "._info {\n  background: rgba(35, 32, 32, 0.95);\n  border: 1px solid #353131;\n  border-top-right-radius: 4px;\n  color: #999999;\n  min-width: 180px;\n  max-width: 380px;\n  min-height: 100px;\n  position: fixed;\n  bottom: 37px;\n  left: 0; }\n  ._info .wrap {\n    padding: 8px; }\n  ._info .bar {\n    border-top-right-radius: 4px; }\n  ._info .wrap {\n    max-height: 300px;\n    overflow: auto; }\n\n._list {\n  background: #3d3838;\n  height: 200px;\n  border: 1px solid #353131;\n  margin-top: -1px;\n  overflow-x: hidden; }\n  ._list p {\n    background: #4b4444;\n    border: 1px solid #353131;\n    padding: 8px 4px;\n    margin: -1px; }\n\n._noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.bar {\n  background: #302c2c;\n  padding-left: 4px; }\n  .bar div {\n    display: inline-block; }\n  .bar .fa {\n    color: #5a534b; }\n  .bar .fa.active, .bar .active > .fa {\n    color: #f1d2b3; }\n  .bar.tabs {\n    display: flex;\n    justify-content: flex-end;\n    align-items: flex-end; }\n    .bar.tabs .stretch {\n      flex-grow: 1; }\n  .bar .tab {\n    cursor: pointer;\n    border-left: 1px solid #232020;\n    color: #868686;\n    padding: 4px 8px; }\n    .bar .tab.sel {\n      background: #28211c; }\n\n._pane {\n  z-index: 5;\n  position: fixed;\n  top: 4px;\n  box-shadow: 0 0 10px #151414;\n  background: rgba(75, 68, 68, 0.95);\n  width: 160px; }\n  ._pane .wrap {\n    overflow: visible; }\n  ._pane .bar {\n    display: flex;\n    align-items: center;\n    flex-direction: row-reverse;\n    cursor: pointer;\n    padding: 0;\n    height: 32px; }\n    ._pane .bar .rarrow {\n      border-left-color: #282525; }\n    ._pane .bar .larrow {\n      border-right-color: #282525; }\n    ._pane .bar.fbar {\n      flex-direction: row;\n      background: none;\n      position: fixed;\n      height: 32px;\n      top: 4px; }\n      ._pane .bar.fbar .rarrow {\n        border-left-color: #302c2c; }\n      ._pane .bar.fbar .larrow {\n        border-right-color: #302c2c; }\n    ._pane .bar .fa, ._pane .bar .name {\n      padding: 8px;\n      border-radius: 0;\n      background: #302c2c; }\n    ._pane .bar .name {\n      color: #868686; }\n      ._pane .bar .name:hover {\n        color: #9f9f9f; }\n    ._pane .bar .spacer {\n      width: 16px;\n      height: 100%;\n      background-color: #282525; }\n  ._pane .larrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-left: none; }\n  ._pane .rarrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-right: none; }\n\n.Modal {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  background-color: rgba(20, 20, 20, 0);\n  z-index: -9;\n  opacity: 0;\n  justify-content: center;\n  align-items: center; }\n  .Modal.active {\n    background-color: rgba(20, 20, 20, 0.5);\n    opacity: 1;\n    z-index: 9; }\n  .Modal .wrap {\n    background: #918787;\n    padding: 8px;\n    border: 1px solid #353131;\n    border-radius: 4px;\n    min-width: 160px; }\n  .Modal .message {\n    margin: 4px 0; }\n  .Modal .bwrap {\n    margin-top: 32px;\n    display: flex;\n    flex-direction: row;\n    align-items: flex-end; }\n\n.button {\n  padding: 2px 4px;\n  border-radius: 4px;\n  border: 2px solid #332e2e;\n  border-top-color: #383333;\n  border-right-color: #383333;\n  margin: 8px;\n  cursor: pointer;\n  background: linear-gradient(#b1aaaa, #7d7373); }\n  .button:active {\n    position: relative;\n    top: 1px; }\n  .button:active {\n    background: linear-gradient(#7d7373, #b1aaaa); }\n  .button.delete {\n    background: linear-gradient(#a97e7e, #815656); }\n  .button.continue {\n    background: linear-gradient(#b0906f, #8b6c4d);\n    align-self: flex-end; }\n\n.Pane .op {\n  cursor: pointer;\n  padding: 4px;\n  background: #232020;\n  color: #4d4d4d;\n  text-align: right; }\n  .Pane .op:hover {\n    color: #999999; }\n\n@keyframes fadea {\n  0% {\n    opacity: 1.0; }\n  100% {\n    opacity: 0.1; } }\n\n@keyframes fadeb {\n  0% {\n    opacity: 1.0; }\n  100% {\n    opacity: 0.1; } }\n\n.Status {\n  cursor: pointer; }\n  .Status.info {\n    color: #777; }\n    .Status.info .outer {\n      stroke: #666; }\n    .Status.info .inner {\n      fill: #666;\n      animation: fadea 2s 1 both; }\n  .Status.error {\n    color: #a77; }\n    .Status.error .outer {\n      stroke: #b22; }\n    .Status.error .inner {\n      fill: #f00;\n      animation: fadea 2s 1 both; }\n  .Status.warn {\n    color: #997; }\n    .Status.warn .outer {\n      stroke: #bb0; }\n    .Status.warn .inner {\n      fill: #ff0;\n      animation: fadeb 2s 1 both; }\n  .Status.success {\n    color: #686; }\n    .Status.success .outer {\n      stroke: #0b0; }\n    .Status.success .inner {\n      fill: #0f0;\n      animation: fadeb 2s 1 both; }\n  .Status .outer {\n    stroke-width: 1px;\n    stroke: #000;\n    fill: none; }\n  .Status .inner {\n    stroke: none;\n    fill: #000; }\n", ""]);
 	
 	// exports
 
 
 /***/ },
-/* 360 */
+/* 361 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	__webpack_require__(361);
+	__webpack_require__(362);
 	const Component_1 = __webpack_require__(13);
 	const ICON = 'fa-exchange';
 	const BASE = { Sync: true, fa: true, [ICON]: true };
@@ -37466,16 +31245,16 @@
 
 
 /***/ },
-/* 361 */
+/* 362 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(362);
+	var content = __webpack_require__(363);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(297)(content, {});
+	var update = __webpack_require__(298)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -37492,27 +31271,27 @@
 	}
 
 /***/ },
-/* 362 */
+/* 363 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(296)();
+	exports = module.exports = __webpack_require__(297)();
 	// imports
 	
 	
 	// module
-	exports.push([module.id, "._info {\n  background: rgba(35, 32, 32, 0.95);\n  border: 1px solid #353131;\n  border-top-right-radius: 4px;\n  color: #999999;\n  min-width: 180px;\n  max-width: 380px;\n  min-height: 100px;\n  position: fixed;\n  bottom: 37px;\n  left: 0; }\n  ._info .wrap {\n    padding: 8px; }\n  ._info .bar {\n    border-top-right-radius: 4px; }\n  ._info .wrap {\n    max-height: 300px;\n    overflow: auto; }\n\n._list {\n  background: #3d3838;\n  height: 200px;\n  border: 1px solid #353131;\n  margin-top: -1px;\n  overflow-x: hidden; }\n  ._list p {\n    background: #4b4444;\n    border: 1px solid #353131;\n    padding: 8px 4px;\n    margin: -1px; }\n\n._noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.bar {\n  background: #302c2c;\n  padding-left: 4px; }\n  .bar div {\n    display: inline-block; }\n  .bar .fa {\n    color: #5a534b; }\n  .bar .fa.active, .bar .active > .fa {\n    color: #f1d2b3; }\n  .bar.tabs {\n    display: flex;\n    justify-content: flex-end;\n    align-items: flex-end; }\n    .bar.tabs .stretch {\n      flex-grow: 1; }\n  .bar .tab {\n    border-left: 1px solid #232020;\n    color: #868686;\n    padding: 4px 8px; }\n    .bar .tab.sel {\n      background: #28211c; }\n\n._pane {\n  z-index: 5;\n  position: fixed;\n  top: 4px;\n  box-shadow: 0 0 10px #151414;\n  background: rgba(75, 68, 68, 0.95);\n  width: 160px; }\n  ._pane .wrap {\n    overflow: visible; }\n  ._pane .bar {\n    display: flex;\n    align-items: center;\n    flex-direction: row-reverse;\n    cursor: pointer;\n    padding: 0;\n    height: 32px; }\n    ._pane .bar .rarrow {\n      border-left-color: #282525; }\n    ._pane .bar .larrow {\n      border-right-color: #282525; }\n    ._pane .bar.fbar {\n      flex-direction: row;\n      background: none;\n      position: fixed;\n      height: 32px;\n      top: 4px; }\n      ._pane .bar.fbar .rarrow {\n        border-left-color: #302c2c; }\n      ._pane .bar.fbar .larrow {\n        border-right-color: #302c2c; }\n    ._pane .bar .fa, ._pane .bar .name {\n      padding: 8px;\n      border-radius: 0;\n      background: #302c2c; }\n    ._pane .bar .name {\n      color: #868686; }\n      ._pane .bar .name:hover {\n        color: #9f9f9f; }\n    ._pane .bar .spacer {\n      width: 16px;\n      height: 100%;\n      background-color: #282525; }\n  ._pane .larrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-left: none; }\n  ._pane .rarrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-right: none; }\n\n.Modal {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  background-color: rgba(20, 20, 20, 0);\n  z-index: -9;\n  opacity: 0;\n  justify-content: center;\n  align-items: center; }\n  .Modal.active {\n    background-color: rgba(20, 20, 20, 0.5);\n    opacity: 1;\n    z-index: 9; }\n  .Modal .wrap {\n    background: #918787;\n    padding: 8px;\n    border: 1px solid #353131;\n    border-radius: 4px;\n    min-width: 160px; }\n  .Modal .message {\n    margin: 4px 0; }\n  .Modal .bwrap {\n    margin-top: 32px;\n    display: flex;\n    flex-direction: row;\n    align-items: flex-end; }\n\n.button {\n  padding: 2px 4px;\n  border-radius: 4px;\n  border: 2px solid #332e2e;\n  border-top-color: #383333;\n  border-right-color: #383333;\n  margin: 8px;\n  cursor: pointer;\n  background: linear-gradient(#b1aaaa, #7d7373); }\n  .button:active {\n    position: relative;\n    top: 1px; }\n  .button:active {\n    background: linear-gradient(#7d7373, #b1aaaa); }\n  .button.delete {\n    background: linear-gradient(#a97e7e, #815656); }\n  .button.continue {\n    background: linear-gradient(#b0906f, #8b6c4d);\n    align-self: flex-end; }\n\n.Pane .op {\n  cursor: pointer;\n  padding: 4px;\n  background: #232020;\n  color: #4d4d4d;\n  text-align: right; }\n  .Pane .op:hover {\n    color: #999999; }\n\n.Sync, .MidiStatus {\n  width: 1em;\n  height: 1em;\n  color: #686;\n  flex-grow: 0;\n  align-content: flex-end; }\n  .Sync.paused, .MidiStatus.paused {\n    color: #686; }\n  .Sync.active, .MidiStatus.active {\n    color: #fe9327; }\n  .Sync.offline, .MidiStatus.offline {\n    color: #a77; }\n  .Sync.error, .MidiStatus.error {\n    color: #a77; }\n\n.Sync {\n  margin-right: 8px; }\n", ""]);
+	exports.push([module.id, "._info {\n  background: rgba(35, 32, 32, 0.95);\n  border: 1px solid #353131;\n  border-top-right-radius: 4px;\n  color: #999999;\n  min-width: 180px;\n  max-width: 380px;\n  min-height: 100px;\n  position: fixed;\n  bottom: 37px;\n  left: 0; }\n  ._info .wrap {\n    padding: 8px; }\n  ._info .bar {\n    border-top-right-radius: 4px; }\n  ._info .wrap {\n    max-height: 300px;\n    overflow: auto; }\n\n._list {\n  background: #3d3838;\n  height: 200px;\n  border: 1px solid #353131;\n  margin-top: -1px;\n  overflow-x: hidden; }\n  ._list p {\n    background: #4b4444;\n    border: 1px solid #353131;\n    padding: 8px 4px;\n    margin: -1px; }\n\n._noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.bar {\n  background: #302c2c;\n  padding-left: 4px; }\n  .bar div {\n    display: inline-block; }\n  .bar .fa {\n    color: #5a534b; }\n  .bar .fa.active, .bar .active > .fa {\n    color: #f1d2b3; }\n  .bar.tabs {\n    display: flex;\n    justify-content: flex-end;\n    align-items: flex-end; }\n    .bar.tabs .stretch {\n      flex-grow: 1; }\n  .bar .tab {\n    cursor: pointer;\n    border-left: 1px solid #232020;\n    color: #868686;\n    padding: 4px 8px; }\n    .bar .tab.sel {\n      background: #28211c; }\n\n._pane {\n  z-index: 5;\n  position: fixed;\n  top: 4px;\n  box-shadow: 0 0 10px #151414;\n  background: rgba(75, 68, 68, 0.95);\n  width: 160px; }\n  ._pane .wrap {\n    overflow: visible; }\n  ._pane .bar {\n    display: flex;\n    align-items: center;\n    flex-direction: row-reverse;\n    cursor: pointer;\n    padding: 0;\n    height: 32px; }\n    ._pane .bar .rarrow {\n      border-left-color: #282525; }\n    ._pane .bar .larrow {\n      border-right-color: #282525; }\n    ._pane .bar.fbar {\n      flex-direction: row;\n      background: none;\n      position: fixed;\n      height: 32px;\n      top: 4px; }\n      ._pane .bar.fbar .rarrow {\n        border-left-color: #302c2c; }\n      ._pane .bar.fbar .larrow {\n        border-right-color: #302c2c; }\n    ._pane .bar .fa, ._pane .bar .name {\n      padding: 8px;\n      border-radius: 0;\n      background: #302c2c; }\n    ._pane .bar .name {\n      color: #868686; }\n      ._pane .bar .name:hover {\n        color: #9f9f9f; }\n    ._pane .bar .spacer {\n      width: 16px;\n      height: 100%;\n      background-color: #282525; }\n  ._pane .larrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-left: none; }\n  ._pane .rarrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-right: none; }\n\n.Modal {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  background-color: rgba(20, 20, 20, 0);\n  z-index: -9;\n  opacity: 0;\n  justify-content: center;\n  align-items: center; }\n  .Modal.active {\n    background-color: rgba(20, 20, 20, 0.5);\n    opacity: 1;\n    z-index: 9; }\n  .Modal .wrap {\n    background: #918787;\n    padding: 8px;\n    border: 1px solid #353131;\n    border-radius: 4px;\n    min-width: 160px; }\n  .Modal .message {\n    margin: 4px 0; }\n  .Modal .bwrap {\n    margin-top: 32px;\n    display: flex;\n    flex-direction: row;\n    align-items: flex-end; }\n\n.button {\n  padding: 2px 4px;\n  border-radius: 4px;\n  border: 2px solid #332e2e;\n  border-top-color: #383333;\n  border-right-color: #383333;\n  margin: 8px;\n  cursor: pointer;\n  background: linear-gradient(#b1aaaa, #7d7373); }\n  .button:active {\n    position: relative;\n    top: 1px; }\n  .button:active {\n    background: linear-gradient(#7d7373, #b1aaaa); }\n  .button.delete {\n    background: linear-gradient(#a97e7e, #815656); }\n  .button.continue {\n    background: linear-gradient(#b0906f, #8b6c4d);\n    align-self: flex-end; }\n\n.Pane .op {\n  cursor: pointer;\n  padding: 4px;\n  background: #232020;\n  color: #4d4d4d;\n  text-align: right; }\n  .Pane .op:hover {\n    color: #999999; }\n\n.Sync, .MidiStatus {\n  width: 1em;\n  height: 1em;\n  color: #686;\n  flex-grow: 0;\n  align-content: flex-end; }\n  .Sync.paused, .MidiStatus.paused {\n    color: #686; }\n  .Sync.active, .MidiStatus.active {\n    color: #fe9327; }\n  .Sync.offline, .MidiStatus.offline {\n    color: #a77; }\n  .Sync.error, .MidiStatus.error {\n    color: #a77; }\n\n.Sync {\n  margin-right: 8px; }\n", ""]);
 	
 	// exports
 
 
 /***/ },
-/* 363 */
+/* 364 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	__webpack_require__(364);
+	__webpack_require__(365);
 	const Component_1 = __webpack_require__(13);
-	const Status_1 = __webpack_require__(357);
+	const Status_1 = __webpack_require__(358);
 	exports.StatusDetail = Component_1.Component({ detail: ['$status', 'detail'],
 	    visible: ['$status', 'showDetail']
 	}, ({ state, signals }) => {
@@ -37526,16 +31305,16 @@
 
 
 /***/ },
-/* 364 */
+/* 365 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(365);
+	var content = __webpack_require__(366);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(297)(content, {});
+	var update = __webpack_require__(298)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -37552,25 +31331,25 @@
 	}
 
 /***/ },
-/* 365 */
+/* 366 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(296)();
+	exports = module.exports = __webpack_require__(297)();
 	// imports
 	
 	
 	// module
-	exports.push([module.id, "._info, .StatusDetail {\n  background: rgba(35, 32, 32, 0.95);\n  border: 1px solid #353131;\n  border-top-right-radius: 4px;\n  color: #999999;\n  min-width: 180px;\n  max-width: 380px;\n  min-height: 100px;\n  position: fixed;\n  bottom: 37px;\n  left: 0; }\n  ._info .wrap, .StatusDetail .wrap {\n    padding: 8px; }\n  ._info .bar, .StatusDetail .bar {\n    border-top-right-radius: 4px; }\n  ._info .wrap, .StatusDetail .wrap {\n    max-height: 300px;\n    overflow: auto; }\n\n._list {\n  background: #3d3838;\n  height: 200px;\n  border: 1px solid #353131;\n  margin-top: -1px;\n  overflow-x: hidden; }\n  ._list p {\n    background: #4b4444;\n    border: 1px solid #353131;\n    padding: 8px 4px;\n    margin: -1px; }\n\n._noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.bar {\n  background: #302c2c;\n  padding-left: 4px; }\n  .bar div {\n    display: inline-block; }\n  .bar .fa {\n    color: #5a534b; }\n  .bar .fa.active, .bar .active > .fa {\n    color: #f1d2b3; }\n  .bar.tabs {\n    display: flex;\n    justify-content: flex-end;\n    align-items: flex-end; }\n    .bar.tabs .stretch {\n      flex-grow: 1; }\n  .bar .tab {\n    border-left: 1px solid #232020;\n    color: #868686;\n    padding: 4px 8px; }\n    .bar .tab.sel {\n      background: #28211c; }\n\n._pane {\n  z-index: 5;\n  position: fixed;\n  top: 4px;\n  box-shadow: 0 0 10px #151414;\n  background: rgba(75, 68, 68, 0.95);\n  width: 160px; }\n  ._pane .wrap {\n    overflow: visible; }\n  ._pane .bar {\n    display: flex;\n    align-items: center;\n    flex-direction: row-reverse;\n    cursor: pointer;\n    padding: 0;\n    height: 32px; }\n    ._pane .bar .rarrow {\n      border-left-color: #282525; }\n    ._pane .bar .larrow {\n      border-right-color: #282525; }\n    ._pane .bar.fbar {\n      flex-direction: row;\n      background: none;\n      position: fixed;\n      height: 32px;\n      top: 4px; }\n      ._pane .bar.fbar .rarrow {\n        border-left-color: #302c2c; }\n      ._pane .bar.fbar .larrow {\n        border-right-color: #302c2c; }\n    ._pane .bar .fa, ._pane .bar .name {\n      padding: 8px;\n      border-radius: 0;\n      background: #302c2c; }\n    ._pane .bar .name {\n      color: #868686; }\n      ._pane .bar .name:hover {\n        color: #9f9f9f; }\n    ._pane .bar .spacer {\n      width: 16px;\n      height: 100%;\n      background-color: #282525; }\n  ._pane .larrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-left: none; }\n  ._pane .rarrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-right: none; }\n\n.Modal {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  background-color: rgba(20, 20, 20, 0);\n  z-index: -9;\n  opacity: 0;\n  justify-content: center;\n  align-items: center; }\n  .Modal.active {\n    background-color: rgba(20, 20, 20, 0.5);\n    opacity: 1;\n    z-index: 9; }\n  .Modal .wrap {\n    background: #918787;\n    padding: 8px;\n    border: 1px solid #353131;\n    border-radius: 4px;\n    min-width: 160px; }\n  .Modal .message {\n    margin: 4px 0; }\n  .Modal .bwrap {\n    margin-top: 32px;\n    display: flex;\n    flex-direction: row;\n    align-items: flex-end; }\n\n.button {\n  padding: 2px 4px;\n  border-radius: 4px;\n  border: 2px solid #332e2e;\n  border-top-color: #383333;\n  border-right-color: #383333;\n  margin: 8px;\n  cursor: pointer;\n  background: linear-gradient(#b1aaaa, #7d7373); }\n  .button:active {\n    position: relative;\n    top: 1px; }\n  .button:active {\n    background: linear-gradient(#7d7373, #b1aaaa); }\n  .button.delete {\n    background: linear-gradient(#a97e7e, #815656); }\n  .button.continue {\n    background: linear-gradient(#b0906f, #8b6c4d);\n    align-self: flex-end; }\n\n.Pane .op {\n  cursor: pointer;\n  padding: 4px;\n  background: #232020;\n  color: #4d4d4d;\n  text-align: right; }\n  .Pane .op:hover {\n    color: #999999; }\n\n.StatusDetail {\n  visibility: hidden;\n  opacity: 0;\n  transition: visibility 0.3s, opacity 0.3s;\n  z-index: 4; }\n  .StatusDetail.active {\n    opacity: 1;\n    visibility: visible; }\n  .StatusDetail .entry {\n    border-top: 1px solid rgba(88, 81, 81, 0.95);\n    padding: 4px 0;\n    white-space: pre-wrap; }\n    .StatusDetail .entry:first-child {\n      border: 0; }\n", ""]);
+	exports.push([module.id, "._info, .StatusDetail {\n  background: rgba(35, 32, 32, 0.95);\n  border: 1px solid #353131;\n  border-top-right-radius: 4px;\n  color: #999999;\n  min-width: 180px;\n  max-width: 380px;\n  min-height: 100px;\n  position: fixed;\n  bottom: 37px;\n  left: 0; }\n  ._info .wrap, .StatusDetail .wrap {\n    padding: 8px; }\n  ._info .bar, .StatusDetail .bar {\n    border-top-right-radius: 4px; }\n  ._info .wrap, .StatusDetail .wrap {\n    max-height: 300px;\n    overflow: auto; }\n\n._list {\n  background: #3d3838;\n  height: 200px;\n  border: 1px solid #353131;\n  margin-top: -1px;\n  overflow-x: hidden; }\n  ._list p {\n    background: #4b4444;\n    border: 1px solid #353131;\n    padding: 8px 4px;\n    margin: -1px; }\n\n._noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.bar {\n  background: #302c2c;\n  padding-left: 4px; }\n  .bar div {\n    display: inline-block; }\n  .bar .fa {\n    color: #5a534b; }\n  .bar .fa.active, .bar .active > .fa {\n    color: #f1d2b3; }\n  .bar.tabs {\n    display: flex;\n    justify-content: flex-end;\n    align-items: flex-end; }\n    .bar.tabs .stretch {\n      flex-grow: 1; }\n  .bar .tab {\n    cursor: pointer;\n    border-left: 1px solid #232020;\n    color: #868686;\n    padding: 4px 8px; }\n    .bar .tab.sel {\n      background: #28211c; }\n\n._pane {\n  z-index: 5;\n  position: fixed;\n  top: 4px;\n  box-shadow: 0 0 10px #151414;\n  background: rgba(75, 68, 68, 0.95);\n  width: 160px; }\n  ._pane .wrap {\n    overflow: visible; }\n  ._pane .bar {\n    display: flex;\n    align-items: center;\n    flex-direction: row-reverse;\n    cursor: pointer;\n    padding: 0;\n    height: 32px; }\n    ._pane .bar .rarrow {\n      border-left-color: #282525; }\n    ._pane .bar .larrow {\n      border-right-color: #282525; }\n    ._pane .bar.fbar {\n      flex-direction: row;\n      background: none;\n      position: fixed;\n      height: 32px;\n      top: 4px; }\n      ._pane .bar.fbar .rarrow {\n        border-left-color: #302c2c; }\n      ._pane .bar.fbar .larrow {\n        border-right-color: #302c2c; }\n    ._pane .bar .fa, ._pane .bar .name {\n      padding: 8px;\n      border-radius: 0;\n      background: #302c2c; }\n    ._pane .bar .name {\n      color: #868686; }\n      ._pane .bar .name:hover {\n        color: #9f9f9f; }\n    ._pane .bar .spacer {\n      width: 16px;\n      height: 100%;\n      background-color: #282525; }\n  ._pane .larrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-left: none; }\n  ._pane .rarrow {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    border: 16px solid transparent;\n    border-right: none; }\n\n.Modal {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  background-color: rgba(20, 20, 20, 0);\n  z-index: -9;\n  opacity: 0;\n  justify-content: center;\n  align-items: center; }\n  .Modal.active {\n    background-color: rgba(20, 20, 20, 0.5);\n    opacity: 1;\n    z-index: 9; }\n  .Modal .wrap {\n    background: #918787;\n    padding: 8px;\n    border: 1px solid #353131;\n    border-radius: 4px;\n    min-width: 160px; }\n  .Modal .message {\n    margin: 4px 0; }\n  .Modal .bwrap {\n    margin-top: 32px;\n    display: flex;\n    flex-direction: row;\n    align-items: flex-end; }\n\n.button {\n  padding: 2px 4px;\n  border-radius: 4px;\n  border: 2px solid #332e2e;\n  border-top-color: #383333;\n  border-right-color: #383333;\n  margin: 8px;\n  cursor: pointer;\n  background: linear-gradient(#b1aaaa, #7d7373); }\n  .button:active {\n    position: relative;\n    top: 1px; }\n  .button:active {\n    background: linear-gradient(#7d7373, #b1aaaa); }\n  .button.delete {\n    background: linear-gradient(#a97e7e, #815656); }\n  .button.continue {\n    background: linear-gradient(#b0906f, #8b6c4d);\n    align-self: flex-end; }\n\n.Pane .op {\n  cursor: pointer;\n  padding: 4px;\n  background: #232020;\n  color: #4d4d4d;\n  text-align: right; }\n  .Pane .op:hover {\n    color: #999999; }\n\n.StatusDetail {\n  visibility: hidden;\n  opacity: 0;\n  transition: visibility 0.3s, opacity 0.3s;\n  z-index: 4; }\n  .StatusDetail.active {\n    opacity: 1;\n    visibility: visible; }\n  .StatusDetail .entry {\n    border-top: 1px solid rgba(88, 81, 81, 0.95);\n    padding: 4px 0;\n    white-space: pre-wrap; }\n    .StatusDetail .entry:first-child {\n      border: 0; }\n", ""]);
 	
 	// exports
 
 
 /***/ },
-/* 366 */
+/* 367 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	__webpack_require__(367);
+	__webpack_require__(368);
 	const Component_1 = __webpack_require__(13);
 	const Factory_1 = __webpack_require__(11);
 	const GithubToken = Factory_1.editable(['user', 'libraryGithubToken']);
@@ -37600,16 +31379,16 @@
 
 
 /***/ },
-/* 367 */
+/* 368 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(368);
+	var content = __webpack_require__(369);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(297)(content, {});
+	var update = __webpack_require__(298)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -37626,10 +31405,10 @@
 	}
 
 /***/ },
-/* 368 */
+/* 369 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(296)();
+	exports = module.exports = __webpack_require__(297)();
 	// imports
 	
 	

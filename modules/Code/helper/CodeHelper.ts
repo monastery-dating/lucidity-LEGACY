@@ -1,4 +1,5 @@
 import { BlockType } from '../../Block'
+import { setGlobalKey } from '../../App/helper/WindowEvents'
 
 import { CodeMirror } from './CodeMirror'
 
@@ -45,7 +46,6 @@ let runWork =
 }
 
 const ready: any = () => {
-  console.log ( 'WORKER READY' )
   runWork =
   ( source, callback ) => {
     ++opid
@@ -135,8 +135,8 @@ const scrubdown = ( e: MouseEvent, i: number, cm: CMEditor ) => {
     if ( isfloat ) {
       // FLOAT
       // get dim as approx 10^2 .... 10^-2 .... 10^2
-      const dimx = Math.pow ( 10, Math.abs ( 6 * dx ) - 2 )
-      const dimy = Math.pow ( 10, Math.abs ( 6 * dy ) - 2 )
+      const dimx = Math.pow ( 10, Math.abs ( 6 * dx ) - 3 )
+      const dimy = Math.pow ( 10, Math.abs ( 6 * dy ) - 3 )
       const dist = ( dx > 0 ? 1 : -1 ) * dimx
                  + ( dy > 0 ? 1 : -1 ) * dimy
       v = (sv + dist).toFixed ( 4 )
@@ -177,6 +177,7 @@ const scrubdown = ( e: MouseEvent, i: number, cm: CMEditor ) => {
       ledit.lock = null
     }
     doc.replaceRange ( nline, f, t )
+    saveSource ( cm )
   }
 
   document.body.style.cursor = 'move'
@@ -278,10 +279,10 @@ export const sourceChanged =
 ( cm: CMEditor
 , filename: string
 , source: string
-, blockId: string
+, block: BlockType
 ) => {
   const ledit = cm.options.lucidity
-  if ( ledit.lock && ledit.blockId === blockId && ledit.filename === filename ) {
+  if ( ledit.lock && ledit.blockId === block.id && ledit.filename === filename ) {
     return
   }
   else if ( source === ledit.source && filename === ledit.filename ) {
@@ -295,20 +296,13 @@ export const sourceChanged =
       if ( filename !== ledit.filename ) {
         ledit.filename = filename
         const mode = getMode ( filename )
-        console.log ( filename, mode )
         if ( ledit.mode !== mode ) {
           ledit.mode = mode
           cm.setOption ( 'mode', mode )
         }
       }
-      ledit.blockId = blockId
+      ledit.blockId = block.id
       cm.setValue ( source || '' )
-      // clear marks until we get updated ones
-      const doc = cm.getDoc ()
-      const marks = doc.getAllMarks ()
-      for ( const m of marks ) {
-        m.clear ()
-      }
     ledit.nosave = false
   }
 }
@@ -319,7 +313,7 @@ export const getEditor =
   return defaultEditor
 }
 
-const NoScrubToggle =
+const noScrubToggle =
 ( cm: CMEditor ) => {
   const ledit = cm.options.lucidity
   ledit.noscrub = ! ledit.noscrub
@@ -336,7 +330,7 @@ const NoScrubToggle =
   }
 }
 
-const SaveSource =
+export const saveSource =
 ( cm: CMEditor ) => {
   const ledit = cm.options.lucidity
   const save = ledit.save
@@ -351,6 +345,7 @@ const SaveSource =
     }
   }
 }
+
 const isLiteral = /[0-9\.]/
 
 interface SaveCallback {
@@ -382,8 +377,9 @@ export const makeEditor =
   , extraKeys:
     { Tab: 'indentMore'
     , [ 'Shift-Tab' ]: 'indentLess'
-    , [ 'Alt-S' ]: NoScrubToggle
-    , [ 'Cmd-S' ]: SaveSource
+    , [ 'Alt-S' ]: noScrubToggle
+    , [ 'Cmd-S' ]: saveSource
+    , [ 'Ctrl-S' ]: saveSource
     }
   , smartIndent: false
   }
@@ -392,7 +388,7 @@ export const makeEditor =
   opts [ 'scrollbarStyle' ] = 'overlay'
   opts [ 'lucidity' ] = ledit
 
-  const cm = CodeMirror ( elm, opts )
+  const cm = <CMEditor>CodeMirror ( elm, opts )
   defaultEditor = cm
 
   cm.on ( 'focus', () => {
@@ -401,7 +397,7 @@ export const makeEditor =
 
   cm.on ( 'blur', () => {
     ledit.lock = null
-    SaveSource ( <CMEditor>cm )
+    saveSource ( cm )
   })
 
   cm.on ( 'cursorActivity', () => {
@@ -411,13 +407,12 @@ export const makeEditor =
       const loc = doc.getCursor ()
       const before = doc.getRange ( { line: loc.line, ch: loc.ch - 1 }, loc )
       const after = doc.getRange ( loc, { line: loc.line, ch: loc.ch + 1 } )
-      console.log ( `before '${before}' after '${after}'`)
       if ( isLiteral.test ( before ) || isLiteral.test ( after ) ) {
         // ignore
       }
       else {
         // mark back
-        scrubMark ( <CMEditor>cm )
+        scrubMark ( cm )
       }
     }
   })
@@ -431,6 +426,14 @@ export const makeEditor =
     }
 
   })
+
+  setGlobalKey
+  ( { Escape ( e ) {
+        saveSource ( cm )
+        // no preventDefault, let it propagate
+      }
+    }
+  )
 
   return cm
 }

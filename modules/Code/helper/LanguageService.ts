@@ -2,7 +2,7 @@ import * as ts from 'typescript'
 import { CompilerError, LiteralScrub, SCRUBBER_VAR } from './types'
 import { CodeMirror } from './CodeMirror'
 
-const UNARY_AFTER = [ '=', '(', '?', ':', '[' ]
+const UNARY_AFTER = [ '=', '(', '?', ':', '[', '*', '/', '+' ]
 const SCRUB_PREFIX = `declare var ${SCRUBBER_VAR}: number[]\n`
 
 interface SourceMap {

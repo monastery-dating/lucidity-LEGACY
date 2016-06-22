@@ -1,6 +1,6 @@
 // modules
 import { App } from '../modules/App'
-import { setKeySignals } from '../modules/App/actions/bindkeys'
+import { setupScreenEvents } from '../modules/App/helper/WindowEvents'
 import { Block } from '../modules/Block'
 import { Code } from '../modules/Code'
 import { Data } from '../modules/Data'
@@ -69,16 +69,6 @@ render
 , controller
 )
 
-const warn = console.warn
-console.warn = ( msg ) => {
-  console.trace ()
-  warn.call ( console, msg )
-}
-
-setKeySignals
-( { mode: controller.getSignals ().app.mode
-  , resized: controller.getSignals ().app.resized
-  }
-)
+setupScreenEvents ( controller )
 
 controller.getSignals().app.mounted ()

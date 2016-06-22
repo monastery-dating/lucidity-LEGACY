@@ -56,6 +56,7 @@ export interface NodeCache {
   cache?: Object
   // to check function cache.
   js: string
+  scrubjs?: string
   // Live value update link
   scrubber?: Scrubber
   // We save the init context so that we can use it when detaching
@@ -117,15 +118,17 @@ const updateCache =
 
 
     let js = block.js
-    let changed = n.js !== js
+    let changed = js !== n.js
 
     if ( node.blockId === scrub && block.scrub ) {
       // Use special 'scrubbing' js.
       js = block.scrub.js
-      if ( changed ) {
+      if ( changed || n.scrubjs !== js ) {
         // Update scrubber
         n.scrubber.values = [ ...block.scrub.values ]
         n.scrubber.literals = block.scrub.literals
+        n.scrubjs = js
+        changed = true
       }
       Object.assign ( cache.scrubber, n.scrubber )
     }

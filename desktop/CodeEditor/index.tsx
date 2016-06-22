@@ -2,7 +2,7 @@ import './style.scss'
 import { BlockType } from '../../modules/Block'
 import { Component } from '../Component'
 import { ContextType } from '../../modules/context.type'
-import { sourceChanged, makeEditor } from '../../modules/Code/helper/CodeHelper'
+import { sourceChanged, makeEditor, saveSource } from '../../modules/Code/helper/CodeHelper'
 import { CompilerError } from '../../modules/Code/helper/types'
 
 // CodeMirror CSS
@@ -16,7 +16,7 @@ const ederror = []
 
 let serrors: CompilerError[]
 
-const debounceErrors = debounce ( 1000 )
+const debounceErrors = debounce ( 700 )
 const doShowErrors = () => {
   if ( serrors ) {
     const doc = cm.getDoc ()
@@ -36,7 +36,8 @@ const doShowErrors = () => {
 const showErrors = ( errors ) => {
   serrors = errors
   // debounce
-  debounceErrors ( { output: doShowErrors } )
+  debounceErrors
+  ( { output: { accepted: doShowErrors, ignored () {} } } )
 }
 
 let block: BlockType = null
@@ -117,7 +118,7 @@ export const CodeEditor = Component
     }
 
     if ( cm && tab !== 'controls' ) {
-      sourceChanged ( cm, tab, source, block.id )
+      sourceChanged ( cm, tab, source, block )
     }
 
     return <div class='CodeEditor' style={ props.style }>
