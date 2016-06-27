@@ -1,4 +1,4 @@
-import { Component } from '../../../desktop/Component'
+import { Component } from '../../../app/Component'
 import { ContextType, SignalsType } from '../../context.type'
 import { EditableText } from './EditableText'
 

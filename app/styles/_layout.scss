@@ -1,0 +1,288 @@
+@import './misc';
+
+$layout:
+( panew: 160px  // pane width
+, paneh: 100%   // pane height
+, blockw: 460px // block editor width
+, blockh: 306px // block editor height
+, infow: 180px // overlay message info
+, infowmax: 380px // overlay message info
+, infoh: 100px // overlay message info
+, infohmax: 300px // overlay message info
+, fbarh: 32px   // fixed bar height (should == name in bar height)
+, optw: 140px   // options pane width
+, playbackh: 220px // playback height ( width is 16/9 * h )
+, statush: 20px // status bar
+, listh: 200px  // list height
+, scenew: 500px // project files in workbench
+, filesw: 200px // project files in workbench
+, resultsh: 400px // library results height
+);
+
+@function layout( $key ) {
+  @return map-get( $layout, $key );
+}
+
+._info {
+  background: color( infob );
+
+  .wrap {
+    padding: $ppad;
+  }
+
+  border: $lbox solid color( boxl );
+  border-top-right-radius: $brad;
+
+  .bar {
+    border-top-right-radius: $brad;
+  }
+
+  color: lighten( $text_color, 60% );
+  min-width: layout( infow );
+  max-width: layout( infowmax );
+  min-height: layout( infoh );
+  position: fixed;
+  bottom: layout( statush ) + 2*$ppad + $lbox;
+  left: 0;
+
+  .wrap {
+    max-height: layout( infohmax );
+    overflow: auto;
+  }
+}
+
+._list {
+  background: color( listb );
+  height: layout( listh );
+  border: $lbox solid color( boxl );
+  margin-top: -$lbox;
+  overflow-x: hidden;
+
+  p {
+    background: color( lheab );
+    border: $lbox solid color( boxl );
+    padding: 2*$pad $pad;
+    margin: -$lbox;
+  }
+}
+._noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select:none;
+}
+
+.bar {
+
+  background: darken( color( workb ), 5% );
+  div { display: inline-block }
+  padding-left: $pad;
+
+  .fa {
+    color: darken( desaturate( color( maint ), 60% ), 20% );
+  }
+  .fa.active, .active>.fa {
+    color: lighten( color( maint ), 30% );
+  }
+
+  &.tabs {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+
+    .stretch {
+      flex-grow: 1;
+    }
+  }
+
+  .tab {
+    cursor: pointer;
+    border-left: 1px solid darken( color( workb ), 10% );
+    color: desaturate( color( maint ), 100% );
+    padding: $pad 2*$pad;
+
+    &.sel {
+      background: #28211c; // CodeMirror bespin
+    }
+  }
+}
+
+
+// hideable pane
+._pane {
+  z-index: 5; // CodeMirror = 3, StatusBar = 4
+  position: fixed;
+  top:$pad;
+  box-shadow: 0 0 10px darken( color( workb ), 15% );
+  background: rgba( lighten( color( workb ), 5% ), 0.95);
+
+  width: layout( panew );
+
+  .wrap {
+    overflow: visible;
+  }
+
+  .bar {
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    cursor: pointer;
+    padding: 0;
+
+    .rarrow {
+      border-left-color: darken( color( workb ), 8% );
+    }
+    .larrow {
+      border-right-color: darken( color( workb ), 8% );
+    }
+
+    &.fbar {
+      flex-direction: row;
+      background: none;
+      position: fixed;
+      height: layout( fbarh );
+      top: $pad;
+
+      .rarrow {
+        border-left-color: darken( color( workb ), 5% );
+      }
+      .larrow {
+        border-right-color: darken( color( workb ), 5% );
+      }
+    }
+
+    .fa, .name {
+      padding: 2*$pad;
+      border-radius: 0;
+      background: darken( color( workb ), 5% );
+    }
+    .name {
+      color: desaturate( color( maint ), 100% );
+      &:hover {
+        color: lighten( desaturate( color( maint ), 100% ), 10%);
+      }
+    }
+
+    height: layout( fbarh );
+    .spacer {
+      width: 4*$pad;
+      height: 100%;
+      background-color: darken( color( workb ), 8% );
+    }
+  }
+
+  .larrow {
+    margin:0;padding:0;
+    width: 0;
+    height: 0;
+    border: layout( fbarh )/2 solid transparent;
+    border-left: none;
+  }
+
+  .rarrow {
+    margin:0;padding:0;
+    width: 0;
+    height: 0;
+    border: layout( fbarh )/2 solid transparent;
+    border-right: none;
+  }
+
+}
+
+.Modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  background-color: rgba(20,20,20,0);
+  //transition: background-color 0.8s, opacity 0.3s;
+  z-index: -9;
+  opacity: 0;
+  &.active {
+    background-color: rgba(20,20,20,0.5);
+    opacity: 1;
+    z-index: 9;
+  }
+  justify-content: center;
+  align-items: center;
+
+  .wrap {
+    background: lighten( color( paneb ), 20%);
+    padding: 2 * $pad;
+    border: 1px solid color( boxl );
+    border-radius: $brad;
+    min-width: layout( panew );
+  }
+
+  .message {
+    margin: $pad 0;
+  }
+
+  .bwrap {
+    margin-top: 8 * $pad;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+  }
+}
+
+.button {
+  padding: $pad/2 $pad;
+  border-radius: $brad;
+  border: 2px solid darken( color( boxl ), 1%);
+  border-top-color: lighten( color( boxl ), 1%);
+  border-right-color: lighten( color( boxl ), 1%);
+  margin: 2*$pad;
+  cursor: pointer;
+  &:active {
+    position: relative;
+    top: 1px;
+  }
+
+  background: linear-gradient(
+    lighten( color( workb ), 45%),
+    lighten( color( workb ), 24%)
+    );
+
+  &:active {
+  background: linear-gradient(
+    lighten( color( workb ), 24%),
+    lighten( color( workb ), 45%)
+    );
+  }
+
+  &.delete {
+    background: linear-gradient(
+      lighten( #966, 8%),
+      darken( #966, 8%)
+      );
+  }
+
+  &.continue {
+    background: linear-gradient(
+      lighten( color( sboxb ), 22%),
+      lighten(  color( sboxb ),8%)
+      );
+    align-self: flex-end;
+  }
+
+}
+
+.Pane {
+  .op {
+    cursor: pointer;
+    padding: $pad;
+    background: darken( color( paneb ), 22% );
+    color: lighten( $text_color, 30% );
+
+    &:hover {
+      color: lighten( $text_color, 60% );
+    }
+
+    text-align: right;
+  }
+}

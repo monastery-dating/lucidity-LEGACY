@@ -1,0 +1,9 @@
+@import '../styles/colors';
+@import '../styles/layout';
+@import '../styles/misc';
+
+.Graph {
+  padding: 0 2 * $ppad;
+  height: 100%;
+  overflow: auto;
+}

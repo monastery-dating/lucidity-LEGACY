@@ -1,0 +1,40 @@
+@import '../styles/colors';
+@import '../styles/layout';
+@import '../styles/misc';
+
+.CodeEditor {
+}
+
+#app .CodeEditor {
+  .scrubbing {
+    background: yellow;
+  }
+  .cm-number {
+    border: 1px dashed rgba(0,0,0,0);
+    &.scrub {
+      cursor: move;
+      border: 1px dashed lighten( color( workb ), 10% );
+      border-radius: 4px;
+    }
+  }
+}
+
+#app .CodeEditor {
+  .CodeMirror-overlayscroll-horizontal div,
+  .CodeMirror-overlayscroll-vertical div {
+    background: color( workb )
+  }
+  .CodeMirror {
+    padding: $pad 0 2*$pad $pad;
+  }
+  .CodeMirror-linewidget {
+    margin-top: 4px;
+    left: -1px;
+    padding-left: 0px;
+    width: 460px;
+    background: #353030;
+    color: #959663;
+    padding: 4px;
+    border-top: 1px dashed #899266;
+  }
+}

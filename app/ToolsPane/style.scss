@@ -1,0 +1,25 @@
+@import '../styles/colors';
+@import '../styles/layout';
+@import '../styles/misc';
+
+#library li.drag-match {
+  cursor:copy;
+  color:red;
+}
+
+#library {
+  @extend ._pane;
+  .bar {
+    .fa { position: fixed; left: $pad; top: $pad }
+    .name {
+      color: desaturate( color( maint ), 100% );
+    }
+  }
+}
+.Library.Pane .wrap {
+  padding:0;
+}
+
+.console .li {
+  background: darken( color( boxb ), 12% );
+}

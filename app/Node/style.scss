@@ -1,0 +1,142 @@
+@import '../styles/palette';
+@import '../styles/effects';
+@import '../styles/colors';
+@import '../styles/layout';
+@import '../styles/misc';
+
+@for $i from 1 through $pcount {
+  svg path.box#{$i} {
+    fill: darken( desaturate( pfill( $i ), 10%), 5%);
+    &:hover {
+      fill: lighten( desaturate( pfill( $i ), 10%), 3%);
+    }
+
+    &.dark {
+      fill: darken( desaturate( pfill( $i ), 30%), 30%);
+    }
+
+    &.sel {
+      fill: lighten( saturate( color( sboxb ), 40% ), 20%);
+      // fill: lighten( saturate( pfill( $i ), 10%), 10%);
+      stroke: color( sboxl );
+    }
+  }
+
+  .li.box#{$i} {
+    background:  pbox( $i );
+  }
+}
+
+svg * {
+  @extend ._noselect;
+}
+
+svg {
+
+  .slot {
+    fill: none;
+    stroke: color( wboxl );
+    stroke-width: $lsbo;
+
+    &.detached, &.incompatible {
+      // @extend ._detachedFx;
+      stroke-width: 3 * $lsbo;
+      stroke: red;
+      transform: translateY(-1px);
+    }
+    &.incompatible {
+      stroke-width: 2 * $lsbo;
+      transform: translateY(-2px) rotate(45deg);
+    }
+  }
+
+  .plus {
+    fill: none;
+    stroke: darken( color( workb ), 5% );
+    stroke-width: $lsbo;
+    cursor: pointer;
+  }
+
+  .click {
+    fill: rgba( 0, 0, 0, 0 );
+    transition: fill 0.8s;
+    stroke: none;
+    cursor: pointer;
+    &:hover, &.active {
+      fill: rgba( 0, 0, 0, 0.3 );
+    }
+  }
+
+  .arrow {
+    fill: none;
+    stroke-width: 2*$lsbo;
+    stroke: rgba( color( wboxl ), 0.5 );
+
+    &.open {
+    }
+
+    &.closed {
+    }
+  }
+  .arrowclick {
+    stroke: none;
+    cursor: pointer;
+    fill: rgba( 0, 0, 0, 0 );
+  }
+
+  text {
+    pointer-events: none;
+    font-size:   getfont(size);
+    fill: color( wboxt );
+
+    &.main {
+      fill:  color( maint );
+    }
+  }
+
+  path {
+    cursor: pointer;
+    stroke-width: $lsbo;
+    stroke: color( wboxl );
+
+    &.main {
+      cursor: pointer;
+
+      fill:   color( mainb );
+
+      &:hover {
+        fill: lighten( color( mainb ), 5% );
+      }
+      &.sel {
+        fill: lighten( saturate( color( sboxb ), 40% ), 20%);
+      }
+    }
+
+  }
+}
+
+path.ghost, .Drag path.node {
+  stroke: white;
+  stroke-dasharray: 5;
+  stroke-dashoffset: 0;
+  animation: ghost 1.2s linear infinite;
+}
+
+path.invalid {
+  mask: url(#mask-stripe);
+}
+
+svg#files {
+  border: 2px dashed transparent;
+
+  &.drag-over {
+    border-color: color( wfild );
+  }
+}
+
+svg#scratch {
+  position: fixed;
+  top:0; left:0;
+  z-index: -999;
+  opacity: 0;
+}

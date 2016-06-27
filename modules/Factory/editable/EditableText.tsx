@@ -1,4 +1,4 @@
-import { Component } from '../../../desktop/Component'
+import { Component } from '../../../app/Component'
 
 // FIXME: how can I move this to Factory ?
 

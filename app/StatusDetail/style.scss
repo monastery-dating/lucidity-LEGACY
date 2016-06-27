@@ -1,0 +1,23 @@
+@import '../styles/colors';
+@import '../styles/layout';
+@import '../styles/misc';
+
+.StatusDetail {
+  @extend ._info;
+  visibility: hidden;
+  opacity: 0;
+  &.active {
+    opacity: 1;
+    visibility: visible;
+  }
+  transition: visibility 0.3s, opacity 0.3s;
+  .entry {
+    border-top: $lbox solid lighten( color( infob ), 20% );
+    &:first-child {
+      border: 0;
+    }
+    padding: $pad 0;
+    white-space: pre-wrap;
+  }
+  z-index: 4; // code editor is 3
+}

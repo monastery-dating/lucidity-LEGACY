@@ -1,5 +1,6 @@
 declare var require: any
 declare var process: any
+declare var __dirname: any
 
 const { app, BrowserWindow } = require ( 'electron' )
 
@@ -11,10 +12,8 @@ function createWindow() {
   // Create the browser window.
   win = new BrowserWindow({width: 800, height: 600})
 
-  // and load the index.html of the app.
-  // This is what we would do in production:
-  // win.loadURL(`file://${__dirname}/../desktop/production.html`)
-  win.loadURL(`file://${__dirname}/../desktop/electron.dev.html`)
+  // Here __dirname will be app/build/electron.js
+  win.loadURL(`file://${__dirname}/../electron.dev.html`)
 
   // Open the DevTools.
   win.webContents.openDevTools()

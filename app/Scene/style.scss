@@ -1,0 +1,19 @@
+@import '../styles/colors';
+@import '../styles/layout';
+@import '../styles/misc';
+
+.Scene {
+  position: relative;
+  width: 66%;
+  border: 1px solid color( boxl );
+  border-width: 1px 0 0 1px;
+  display: flex;
+  flex-direction: column;
+  .name {
+    color: color( maint );
+  }
+
+  &.drop {
+    // background: lighten( color( workb ), 5% );
+  }
+}

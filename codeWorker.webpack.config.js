@@ -2,10 +2,9 @@ const path = require ( 'path' )
 const webpack = require('webpack')
 
 module.exports =
-{ entry: './modules/Code/helper/codeWorker.ts'
+{ entry: './boot/codeWorker.ts'
 , output:
-  { path: path.resolve ( __dirname, 'desktop', 'build' )
-  , filename: 'vendor.js'
+  { path: path.resolve ( __dirname, 'app', 'build' )
   , filename: 'codeWorker.js'
   }
 , devtool: 'source-map'
@@ -27,14 +26,4 @@ module.exports =
       }
     ]
   }
-
-/* We do not want to load the full vendor stuff in the worker.
-, plugins:
-  [ new webpack.DllReferencePlugin
-    ( { context: '.'
-      , manifest: require('./desktop/build/vendor-manifest.json')
-      }
-    )
-  ]
-*/
 }

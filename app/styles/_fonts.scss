@@ -1,0 +1,68 @@
+@import './misc';
+@import './colors';
+
+// IF CHANGING THIS, update font reference in
+// /modules/Graph/helper/uimap/uilayout (or grep project for Muli)
+// Muli is ugly in svg..
+$fonts:
+( family: ( 'Avenir Next', 'Segoe ui', 'Muli', Helvetica, sans-serif )
+, size: 10pt
+);
+
+@function getfont( $key ) {
+  @return map-get( $fonts, $key );
+}
+
+h1, h2, h3, p, .name, .fa {
+  font-size: 1em;
+  font-weight: normal;
+  line-height: 1.2em;
+  padding: $pad;
+  margin: $pad 0;
+}
+
+.fa {
+  margin:0;
+  padding-right: 2*$pad;
+  color: lighten( $text_color, 20% );
+
+  &:hover {
+    background: darken( color( workb ), 15% );
+  }
+  transition: background-color 0.3s;
+  border-radius: $brad;
+  cursor: pointer;
+}
+
+p {
+  margin: 0;
+}
+
+.EditableText {
+  min-width: 4em;
+  input.fld {
+    border: none;
+    padding: $pad;
+    font: inherit;
+    background-color: rgba( 0, 0, 0, 0 );
+    border-radius: 0;
+    width:100%;
+    outline: none;
+  }
+  &.active {
+    padding: 0;
+    background-color: rgba( color( inputa ), 1.0 );
+  }
+  cursor: text;
+  // transparent background
+  background-color: rgba( 0, 0, 0, 0 );
+  border-bottom: 1px dashed #fff;
+  border-bottom-color: rgba( lighten( $text_color, 80% ), 0);
+  transition: border-bottom-color 0.8s, background-color 0.3s, color 0.3s;
+  &.saving {
+    color: lighten( $text_color, 100% );
+  }
+  &:hover {
+    border-bottom-color: rgba( lighten( $text_color, 10% ), 0.4);
+  }
+}

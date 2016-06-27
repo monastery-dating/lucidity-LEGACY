@@ -1,7 +1,7 @@
 // FIXME: move Component to '/lib' ?
 // FIXME: move Factory to '/lib' ?
 // FIXME: should import styles ?
-import { Component } from '../../../desktop/Component'
+import { Component } from '../../../app/Component'
 import { ContextType } from '../../context.type'
 
 

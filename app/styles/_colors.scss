@@ -1,0 +1,46 @@
+$high_front: #D76D01;
+$sel_back: darken( desaturate( $high_front, 70% ), 8% );
+$high_back: lighten( desaturate( $high_front, 60% ), 15% );
+$text_color: #000;
+$back_color: #302c2c; // #ff3030 is kind of fun ;-)
+$box_line:   #333;
+
+$colors:
+( mainb: lighten( $back_color, 5% )
+, maint: lighten( desaturate( $high_front, 30% ), 10% )
+, foldb: lighten( $back_color, 20% )
+, foldt: $high_front
+, workb: lighten( $back_color,  5% )  // workspace background
+, wboxl: darken( $back_color, 25% )    // workspace lines
+, workt: $text_color                  // workspace text
+, wboxt: $text_color                  // workspace svg text
+, wfild: $sel_back                  // workspace files drop
+//  workspace svg high text
+, wboxs: lighten( saturate( $high_back, 50%), 20%)
+
+, sboxb: $sel_back // selected box background
+, sboxt: $text_color // selected box text
+, stext: $sel_back // selected text (not in selected box)
+
+,  boxb: lighten( $back_color, 15% ) // box background
+,  boxt: $text_color                 // box text
+,  boxl: lighten( $back_color, 2% )  // box border (line) color
+, tboxb: lighten( $back_color, 30% ) // name box background
+, tboxt: $text_color                  // name box text
+, listb: lighten( $back_color, 5% ) // list background
+, paneb: lighten( $back_color, 17% ) // side panels background
+, lheab: lighten( $back_color, 10% ) // list head background
+, inputa: $high_back // active input background
+, inputb: lighten( $back_color, 30% ) // input background
+, inputt: darken( $text_color, 30% ) // input text
+
+, infob: rgba( darken( $back_color, 5% ), 0.95)
+
+// font
+, error: #a77   // error message
+, success: #686 // success
+);
+
+@function color( $key ) {
+  @return map-get( $colors, $key );
+}

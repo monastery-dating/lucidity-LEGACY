@@ -1,0 +1,48 @@
+
+@keyframes blinker {
+  50% { opacity: 0.0; }
+}
+
+@keyframes pulse {
+  from {
+    stroke: black;
+    fill: rgba(255,255,255,1);
+    transform: translateY(0px);
+  }
+  to {
+    stroke: white;
+    fill: rgba(0,0,0,0);
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes detached {
+  0% {
+    stroke: rgba(0,0,0,1);
+  }
+  50% {
+    stroke: rgba(0,0,0,1);
+  }
+  100% {
+    stroke: rgba(200,0,0,1);
+  }
+}
+
+// drop element preview
+@keyframes ghost {
+  to {
+    stroke-dashoffset: 10;
+  }
+}
+
+.blink {
+  animation: blinker 1s linear infinite;
+}
+
+.pulse {
+  animation: pulse 0.4s infinite alternate;
+}
+
+._detachedFx {
+  animation: detached 0.8s infinite alternate;
+}

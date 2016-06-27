@@ -4,7 +4,7 @@ const webpack = require('webpack')
 module.exports =
 { entry: './desktop/boot.tsx'
 , output:
-  { path: path.resolve ( __dirname, 'desktop', 'build' )
+  { path: path.resolve ( __dirname, 'app', 'build' )
   , filename: 'vendor.js'
   , library: 'vendor_lib'
   }
@@ -44,7 +44,7 @@ module.exports =
         // modules included in a bundle and the internal IDs
         // within that bundle
       { name: 'vendor_lib'
-      , path: 'desktop/build/vendor-manifest.json'
+      , path: 'app/build/vendor-manifest.json'
       }
     )
   ]

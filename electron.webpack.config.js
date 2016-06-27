@@ -4,12 +4,8 @@ const webpack = require('webpack')
 module.exports =
 { entry: './boot/electron.ts'
 , output:
-    // YES, this path is different so that we can use
-    // webpack-dev-server
-    // WHEN building, the app.js should be moved with other
-    // desktop assets in desktop/build/app.js
-  { path: path.resolve ( __dirname, 'build' )
-  , filename: 'app.js'
+  { path: path.resolve ( __dirname, 'app', 'build' )
+  , filename: 'electron.js'
   , publicPath: '/live-reload/'
   }
 , devtool: 'source-map'
@@ -31,12 +27,4 @@ module.exports =
       }
     ]
   }
-
-, plugins:
-  [ new webpack.DllReferencePlugin
-    ( { context: '.'
-      , manifest: require('./desktop/build/vendor-manifest.json')
-      }
-    )
-  ]
 }

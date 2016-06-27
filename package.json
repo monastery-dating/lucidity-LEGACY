@@ -4,9 +4,9 @@
   "description": "An app for live arts",
   "main": "app/index.js",
   "scripts": {
-    "build": "webpack --config vendor.webpack.config.js && webpack --config codeWorker.webpack.config.js && webpack --config app.webpack.config.js && cp build/app.js desktop/build/app.js",
+    "build": "webpack --config vendor.webpack.config.js && webpack --config codeWorker.webpack.config.js && webpack --config app.webpack.config.js",
     "worker": "webpack --config codeWorker.webpack.config.js",
-    "dev": "webpack-dev-server --config app.webpack.config.js --inline --content-base desktop",
+    "dev": "webpack-dev-server --config app.webpack.config.js --inline --content-base app",
     "electron": "electron .",
     "maketests": "node scripts/maketests.js",
     "test": "echo \"Error: no test specified\" && exit 1",

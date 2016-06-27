@@ -3,6 +3,7 @@ const COMMANDS: Keys = {}
 interface Keys {
   [ key: string ]: ( e: Event ) => void
 }
+
 export const setGlobalKey =
 ( keys: Keys ) => {
   Object.assign ( COMMANDS, keys )
@@ -43,10 +44,10 @@ export const setupScreenEvents = ( controller ) => {
 
   // Read this before choosing shortcuts:
   // https://developer.apple.com/library/mac/documentation/UserExperience/Conceptual/OSXHIGuidelines/Keyboard.html
-  
+
   // Ctrl-Cmd-f == app fullscreen
   // Cmd-f
-  const COMMANDS =
+  const commands =
   { 'Cmd-Shift-f': ( e: Event ) => { hideeditor = !hideeditor; doit ( e ) }
   , 'Cmd-Shift-e': ( e: Event ) => { mixedtype = !mixedtype; doit ( e ) }
   , 'Ctrl-Shift-f': ( e: Event ) => { hideeditor = !hideeditor; doit ( e ) }
@@ -54,7 +55,7 @@ export const setupScreenEvents = ( controller ) => {
   // 'Alt-s' in code editor: toggle scrubber
   }
 
-  setGlobalKey ( COMMANDS )
+  setGlobalKey ( commands )
 
   const resize = ( e: UIEvent ) => {
     resizedSignal
