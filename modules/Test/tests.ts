@@ -1,4 +1,4 @@
-import '../../desktop/Component.spec.tsx'
+import '../../app/Component.spec.tsx'
 import '../Code/helper/CodeHelper.spec.ts'
 import '../Data/actions/save.spec.ts'
 import '../Factory/common/makeDoc.spec.ts'

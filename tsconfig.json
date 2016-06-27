@@ -1,11 +1,9 @@
 { "exclude":
   [ "node_modules"
-  , "desktop/build"
+  , "app/build"
   , ".git"
   , "typings/browser"
   , "typings/browser.d.ts"
-  , "angular"
-  , "app"
   ]
 , "compilerOptions":
   { "outDir": "dist"

@@ -1,9 +1,9 @@
 import { SignalsType } from '../../context.type'
+import { ActionContextType } from '../../context.type'
 
 declare var require: any
 
-let sync
-let remoteFS
+let doProjectChanged = ( doc ) => {}
 
 // This helper runs on the renderer side of the app.
 // FileStorageMain runs on the main process (node.js).
@@ -20,15 +20,30 @@ export const start =
     return
   }
 
-  const { ipc } = require ( 'electron' )
+  const { ipcRenderer } = require ( 'electron' )
 
-  ipc.on ( 'source-changed', ( event, { path, op, source } ) => {
-    signals.$filestorage.source ( { path, op, source } )
+  ipcRenderer.on ( 'file-changed', ( event, { path, op, source } ) => {
+    signals.$filestorage.file ( { path, op, source } )
   })
 
-  ipc.on ( 'library-changed', ( event, { path, op, source } ) => {
+  ipcRenderer.on ( 'library-changed', ( event, { path, op, source } ) => {
     signals.$filestorage.library ( { path, op, source } )
   })
 
+  doProjectChanged = ( doc ) => {
+    ipcRenderer.send ( 'project-changed', doc )
+  }
+
   setTimeout ( () => changedSignal ( { type: 'on' } ), 0 )
 }
+
+// Notify main process when a project changes (not a scene).
+export const projectChanged =
+( { state
+  , input: { doc }
+  , output
+  } : ActionContextType
+) => {
+  doProjectChanged ( doc )
+}
+projectChanged [ 'async' ] = false

@@ -2,7 +2,9 @@ import { ActionContextType } from '../../context.type'
 import { GraphType, Immutable as IM } from '../../Graph'
 import { updateGraphSource } from '../../Graph/helper/GraphHelper'
 
-export const sourceAction =
+/** A file changed in FS
+ */
+export const fileAction =
 ( { state
   , input: { path, op, source }
   , output
@@ -26,4 +28,4 @@ export const sourceAction =
   */
 }
 
-sourceAction [ 'async' ] = true
+fileAction [ 'async' ] = true

@@ -1,12 +1,15 @@
 const path = require ( 'path' )
-const webpack = require('webpack')
+const webpack = require ( 'webpack' )
 
 module.exports =
 { entry: './boot/electron.ts'
+, target: 'electron'
+, node:
+  { __dirname: false
+  }
 , output:
   { path: path.resolve ( __dirname, 'app', 'build' )
   , filename: 'electron.js'
-  , publicPath: '/live-reload/'
   }
 , devtool: 'source-map'
 , resolve:

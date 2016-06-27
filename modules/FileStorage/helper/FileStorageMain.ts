@@ -5,6 +5,7 @@ declare var require: any
 const { ipcMain, dialog } = require ( 'electron' )
 const fs = require ( 'fs' )
 const path = require ( 'path' )
+const sanitize = require ( 'sanitize-filename' )
 
 const FILE_STATUS = {}
 
@@ -18,23 +19,30 @@ let projectPath = '/Users/gaspard/git/lucidity.project'
 let libraryPath = '/Users/gaspard/git/lucidity.library/components'
 
 export const start = () => {
+
   ipcMain.on ( 'open-project', () => {
     // TODO
   })
 
   ipcMain.on ( 'project-changed', ( event, doc ) => {
-    // TODO: save [project name].lucy in folder
-    const name = doc.name
-    fs.writeFile ( `${name}.lucy`, JSON.stringify ( doc, null, 2 ) )
+    const p = path.resolve ( projectPath, `${ sanitize ( doc.name ) }.lucy` )
+
+    fs.writeFile ( p, JSON.stringify ( doc, null, 2 ), 'utf8', ( err ) => {
+      if ( err ) {
+        console.log ( err )
+      }
+    })
+
     if ( project ) {
       if ( project.name !== doc.name ) {
         // remove old file
-        const n = `${project.name}.lucy`
-        const p = path.resolve ( projectPath, n )
+        const p = path.resolve ( projectPath, `${ sanitize ( project.name ) }.lucy` )
         const f = fs.statSync ( p )
         if ( f && f.isFile () ) {
           fs.unlink ( p, ( err ) => {
-            console.log ( err )
+            if ( err ) {
+              console.log ( err )
+            }
           })
         }
       }

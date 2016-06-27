@@ -22,9 +22,6 @@ export const setup =
     if ( doit ) {
       doit ( e )
     }
-    else {
-      console.log ( cmd, e )
-    }
   }
 
   window.addEventListener ( 'keydown', keydown )

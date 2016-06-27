@@ -1,21 +1,51 @@
 # TODO
 
-0. Check detach: seems to not work
+// ======= Tuesday ========== //
+- On graph change, update FS:
+  - Brute force in main process: explode graph and create/delete changed or
+    moved files.
+  - Once for "project/...graph" and once for "scenes/[scene.name]/...graph"
 
-1. Less glitches everywhere... please.
+- On FS change, update graph (only source changes, will fix rename later).
 
-2. If an object becomes invalid: detach.
+- On [electron] project open: (match .lucy filetype)
+  - Save path in recent projects for chooser.
+  - read 'scenes' for list of scenes.
 
-3. Whatch out for 'null' values in children in graph. Should only happen if the node
-is typed.
+- On [electron] library sync:
+  - Read all files in library path and load them in library.
 
-4. Control performance: check after migration to Cerebral state-tree...
+// ======= Wednesday ========== //
 
-5. Show scrollbars on graph views (but style them).
+- Lua bridge for torch7
 
-6. Make changing 0xff0000 numbers like 3 numbers: 0x [ff] [00] [00].
+// ======= Thursday ========== //
 
-7. Remove controls ?
+- Voice recognition
+
+- Draw scene...
+
+// ==== end of time available at home ==== //
+
+- Unique scene name
+
+- Check detach: seems to not work
+
+- Use a target around slot connection (one target moved to closest slot), like
+  in lubyk instead of changing graph shape.
+
+- If an object becomes invalid: detach.
+
+- Whatch out for 'null' values in children in graph. Should only happen if the
+  node is typed.
+
+- Control performance: check after migration to Cerebral state-tree...
+
+- Show scrollbars on graph views (but style them).
+
+- Make changing 0xff0000 numbers like 3 numbers: 0x [ff] [00] [00].
+
+- Remove controls ?
 
 
 # DATA
