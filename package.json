@@ -2,11 +2,12 @@
   "name": "lucidity.editor",
   "version": "0.1.0",
   "description": "An app for live arts",
-  "main": "desktop.js",
+  "main": "app/index.js",
   "scripts": {
     "build": "webpack --config vendor.webpack.config.js && webpack --config codeWorker.webpack.config.js && webpack --config app.webpack.config.js && cp build/app.js desktop/build/app.js",
     "worker": "webpack --config codeWorker.webpack.config.js",
     "dev": "webpack-dev-server --config app.webpack.config.js --inline --content-base desktop",
+    "electron": "electron .",
     "maketests": "node scripts/maketests.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "db": "ssh -L5984:127.0.0.1:5901 root@db.lucidity.io"
@@ -21,6 +22,7 @@
   "devDependencies": {
     "css-loader": "^0.23.1",
     "deep-equal": "^1.0.1",
+    "electron-prebuilt": "^1.2.5",
     "jasmine": "^2.4.1",
     "node-sass": "^3.7.0",
     "raw-loader": "^0.5.1",

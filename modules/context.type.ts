@@ -1,7 +1,9 @@
+import { AppSignalsType } from './App'
 import { BlockSignalsType } from './Block'
 import { DataSignalsType, DataServicesType } from './Data'
 import { DragDropSignalsType } from './DragDrop'
 import { FactorySignalsType } from './Factory'
+import { FileStorageSignalsType } from './FileStorage'
 import { LibrarySignalsType } from './Library'
 import { MidiSignalsType } from './Midi'
 import { PlaybackSignalsType } from './Playback'
@@ -24,10 +26,12 @@ interface RouterServicesType {
 }
 
 export interface SignalsType {
+  app: AppSignalsType
   block: BlockSignalsType
   data: DataSignalsType
   $dragdrop: DragDropSignalsType
   $factory: FactorySignalsType
+  $filestorage: FileStorageSignalsType
   library: LibrarySignalsType
   midi: MidiSignalsType
   $playback: PlaybackSignalsType

@@ -29,15 +29,19 @@ const showProjects =
     list.push ( projectsById [ k ] )
   }
   list.sort ( sortByName )
+  const select = ( e, _id ) => {
+    e.preventDefault ()
+    signals.app.projectUrl ( { _id })
+  }
   return list.map
   ( ( project ) => (
-      <a class={{ li: true
+      <div class={{ li: true
                 , sel: project._id === selectedProjectId
                 }}
-         href= {`/#/project/${project._id}` }>
+         on-click={ ( e ) => select ( e, project._id ) }>
         <div class='fa fa-film'></div>
         { project.name }
-      </a>
+      </div>
     )
   )
 }

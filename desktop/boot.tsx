@@ -6,6 +6,7 @@ import { Code } from '../modules/Code'
 import { Data } from '../modules/Data'
 import { DragDrop } from '../modules/DragDrop'
 import { Factory } from '../modules/Factory'
+import { FileStorage } from '../modules/FileStorage'
 import { Graph } from '../modules/Graph'
 import { Library } from '../modules/Library'
 import { Midi } from '../modules/Midi'
@@ -48,6 +49,7 @@ controller.addModules
   , data: Data ()
   , $dragdrop: DragDrop ()
   , $factory: Factory ()
+  , $filestorage: FileStorage ()
   , graph: Graph ()
   , devtools: Devtools ()
   , http: Http ()

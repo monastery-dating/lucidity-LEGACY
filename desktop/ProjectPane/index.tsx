@@ -68,10 +68,11 @@ export const ProjectPane = Component
         &nbsp;
       </Pane.toggle>
 
-      <a class='op' href='/#/project'>
+      <div class='op'
+        on-click={ ( e ) => signals.app.projectsUrl () }>
         projects
         <div class='fa fa-hand-o-right'></div>
-      </a>
+      </div>
 
       <div class='control'>
         <p>Control</p>

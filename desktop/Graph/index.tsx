@@ -31,7 +31,6 @@ const mapUINodes =
   )
 }
 
-const empty = { select: { id: '', nodeId: '', ownerType: '' } }
 export const Graph = Component
 ( {
     // update graph on drag op
@@ -78,13 +77,19 @@ export const Graph = Component
         style.top  = (pos.y - uigraph.grabpos.y) + 'px'
       }
 
+      const noSelect = ( e ) => {
+        e.preventDefault ()
+        signals.block.select
+        ( { select: { id: '', nodeId: '', ownerType: '' } } )
+      }
+
       return <div class={ klass }
             style={ style }
-            on-click={ () => signals.block.select ( empty ) }>
+            on-click={ noSelect }>
           <svg
             width={ uigraph.size.width }
             height={ uigraph.size.height }
-            on-click={ () => signals.block.select ( empty ) }>
+            on-click={ noSelect }>
             <g transform={ transform }>
             { mapUINodes ( graph, uigraph, ownerType, blockId ) }
             </g>

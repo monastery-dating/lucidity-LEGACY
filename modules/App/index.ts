@@ -6,9 +6,12 @@ import { projectsUrl } from './signals/projectsUrl'
 import { resized } from './signals/resized'
 import { userUrl } from './signals/userUrl'
 
-interface AppSignalsType {
+export interface AppSignalsType {
   homeUrl ()
   mode ( { mode: string } )
+  projectUrl ( { _id: string } )
+  projectsUrl ()
+  userUrl ()
 }
 
 export const App =

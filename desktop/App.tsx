@@ -14,11 +14,11 @@ const route =
 ( r ) => {
   switch ( r ) {
     case 'login': return <Login key='Login'/>
-    case 'home': // continue
-    case 'projects': return <ProjectChooser key='ProjectChooser'/>
     case 'project': return <Editor/>
     case 'user': return <User/>
-    default: return <div></div>
+    case 'home': // continue
+    case 'projects': // continue
+    default: return <ProjectChooser key='ProjectChooser'/>
   }
 }
 
