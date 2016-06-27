@@ -23,8 +23,8 @@ import * as Devtools from 'cerebral-module-devtools'
 import * as Http from 'cerebral-module-http'
 import * as Model from 'cerebral-model-baobab'
 
-import { Component, render } from './Component' // Component for jsx on this page
-import { App as AppView } from './App'
+import { Component, render } from '../desktop/Component' // Component for jsx on this page
+import { App as AppView } from '../desktop/App'
 //import { TestView as AppView } from './TestView'
 
 const model = Model ( {} )

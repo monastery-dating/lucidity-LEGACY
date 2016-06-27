@@ -1,5 +1,7 @@
 import { SignalsType } from '../../context.type'
 
+declare var require: any
+
 let sync
 let remoteFS
 
@@ -10,35 +12,23 @@ export const start =
   console.log ( 'START FS SYNC' )
 
   const signals: SignalsType = controller.getSignals ()
-
   const changedSignal = signals.$filestorage.changed
 
-  if ( sync ) {
-    stop ()
+  if ( !window [ 'process' ] ) {
+    // browser: no FS sync
+    setTimeout ( () => changedSignal ( { type: 'offline' } ), 0 )
+    return
   }
 
-  if ( !remoteFS ) {
-    // This never throws
-  }
+  const { ipc } = require ( 'electron' )
 
-/*
-  remoteFS
-  .on ( 'error', ( err ) => {
-      changedSignal ( { type: 'error', message: err } )
-    }
-  )
-  */
-  setTimeout
-  ( () => changedSignal ( { type: 'on' } )
-  , 0
-  )
+  ipc.on ( 'source-changed', ( event, { path, op, source } ) => {
+    signals.$filestorage.source ( { path, op, source } )
+  })
 
-}
+  ipc.on ( 'library-changed', ( event, { path, op, source } ) => {
+    signals.$filestorage.library ( { path, op, source } )
+  })
 
-export const stop =
-() => {
-  if ( sync ) {
-    sync.cancel ()
-    sync = null
-  }
+  setTimeout ( () => changedSignal ( { type: 'on' } ), 0 )
 }

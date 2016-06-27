@@ -10,8 +10,8 @@ if ( typeof document === 'undefined' ) {
   me [ 'window' ] = {}
 }
 
-import * as LanguageService from './LanguageService'
-import { TranspileCallbackArgs, ScrubCode } from './types'
+import * as LanguageService from '../modules/Code/helper/LanguageService'
+import { TranspileCallbackArgs, ScrubCode } from '../modules/Code/helper/types'
 
 // We export compile in case we want to work without a worker
 export const compile =

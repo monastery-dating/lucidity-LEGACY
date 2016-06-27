@@ -40,6 +40,10 @@ export const setupScreenEvents = ( controller ) => {
     e.preventDefault ()
     modeSignal ( { mode } )
   }
+
+  // Read this before choosing shortcuts:
+  // https://developer.apple.com/library/mac/documentation/UserExperience/Conceptual/OSXHIGuidelines/Keyboard.html
+  
   // Ctrl-Cmd-f == app fullscreen
   // Cmd-f
   const COMMANDS =

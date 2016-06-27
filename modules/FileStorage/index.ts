@@ -2,6 +2,8 @@ export * from './signals/start'
 export * from './signals/stop'
 export interface FileStorageSignalsType {
   changed ( opt: { type: string, message?: string } )
+  source ( opt: { path: string, op: string, source: string } )
+  library ( opt: { path: string, op: string, source: string } )
 }
 
 import { changed } from './signals/changed'
