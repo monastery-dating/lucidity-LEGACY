@@ -4,7 +4,7 @@ export interface LibrarySignalsType {
   zip ()
 }
 
-import { SceneByIdType } from '../Scene'
+import { ComponentByIdType } from '../Graph'
 import * as Model from 'cerebral-model-baobab'
 import { zip } from './signals/zip'
 
@@ -15,7 +15,7 @@ const LibraryRows = Model.monkey
     { components: [ 'data', 'component' ]
     }
   , get ( state ) {
-      const components: SceneByIdType = state.components || {}
+      const components: ComponentByIdType = state.components || {}
       const list = []
       for ( const k in components ) {
         list.push ( components [ k ] )

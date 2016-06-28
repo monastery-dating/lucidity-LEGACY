@@ -3,8 +3,6 @@ import { Component } from '../Component'
 import { ContextType } from '../../modules/context.type'
 import { uimap, GraphType, rootNodeId, UIGraphType } from '../../modules/Graph'
 import { Node } from '../Node'
-import { SceneType } from '../../modules/Scene'
-import { ProjectType } from '../../modules/Project'
 import { DragDropType, DragStartType } from '../../modules/DragDrop'
 
 const mapUINodes =

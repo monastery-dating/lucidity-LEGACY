@@ -1,3 +1,4 @@
+export * from './ComponentType'
 export * from './GetTextSizeType'
 export * from './GraphType'
 export * from './NodeType'

@@ -1,6 +1,5 @@
 import { ActionContextType } from '../../context.type'
 import * as check from 'check-types'
-import { SceneByIdType } from '../../Scene'
 import { LibraryHelper } from '../../Library/helper/LibraryHelper'
 import { GraphType } from '../../Graph'
 

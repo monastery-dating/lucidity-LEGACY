@@ -113,50 +113,34 @@
 	let projectPath = '/Users/gaspard/git/lucidity.project';
 	let libraryPath = '/Users/gaspard/git/lucidity.library/components';
 	exports.start = () => {
-	    ipcMain.on('open-project', () => {
+	    ipcMain.on('select-project', () => {
 	        // TODO
+	        // Must select a ".lucy" file
+	        // and reply with 'selected-directory'
+	        // selectedProjectPath ( path )
+	    });
+	    ipcMain.on('select-directory', () => {
+	        // TODO
+	        // This is used when someone creates a new project
+	        // Must select a folder and reply with 'selected-directory'
+	        // selectedProjectPath ( path )
 	    });
 	    ipcMain.on('project-changed', (event, project) => {
-	        // scenes
-	        const err = updateGraph([projectPath], project, sceneCacheById[project._id]);
-	        if (err) {
-	            event.sender.send('error', err);
-	            return;
+	        // project graph
+	        try {
+	            updateGraph([projectPath], project, sceneCacheById[project._id]);
 	        }
-	        const p = path.resolve(projectPath, `${sanitize(project.name)}.lucy`);
-	        const doc = Object.assign({}, project);
-	        delete doc.graph;
-	        delete doc.scenes;
-	        const json = JSON.stringify(doc, null, 2);
-	        if (json === projectCache.json) {
+	        catch (err) {
+	            event.sender.send('error', err.message);
 	        }
-	        else {
-	            fs.writeFile(p, json, 'utf8', (err) => {
-	                if (err) {
-	                    console.log(err);
-	                }
-	            });
-	            projectCache.json = json;
-	        }
-	        if (projectCache.name !== project.name) {
-	            // remove old file
-	            const p = path.resolve(projectPath, `${sanitize(projectCache.name)}.lucy`);
-	            const f = stat(p);
-	            if (f && f.isFile()) {
-	                fs.unlink(p, (err) => {
-	                    if (err) {
-	                        console.log(err);
-	                    }
-	                });
-	            }
-	        }
-	        projectCache.name = doc.name;
 	    });
 	    ipcMain.on('scene-changed', (event, scene) => {
 	        // scenes
-	        const err = updateGraph([projectPath, 'scenes'], scene, sceneCacheById[scene._id]);
-	        if (err) {
-	            event.sender.send('error', err);
+	        try {
+	            updateGraph([projectPath, 'scenes'], scene, sceneCacheById[scene._id]);
+	        }
+	        catch (err) {
+	            event.sender.send('error', err.message);
 	        }
 	    });
 	    ipcMain.on('save-component', (event, component) => {
@@ -187,11 +171,8 @@
 	        const cache = { scene, files: {} };
 	        readCache = cache.files;
 	        writeCache = cache.files;
-	        const err = createGraph(basepath, scene);
-	        if (!err) {
-	            sceneCacheById[scene._id] = cache;
-	        }
-	        return err;
+	        createGraph(basepath, scene);
+	        sceneCacheById[scene._id] = cache;
 	    }
 	    else {
 	        const oscene = cache.scene;
@@ -218,37 +199,33 @@
 	        }
 	        readCache = cache.files;
 	        writeCache = {};
-	        const err = createGraph(basepath, scene);
-	        if (err) {
-	        }
-	        else {
-	            // we must remove unused files.
-	            // longest paths first
-	            const keys = Object.keys(readCache).sort((a, b) => a < b ? 1 : -1);
-	            for (const p of keys) {
-	                if (!writeCache[p]) {
-	                    // remove old file
-	                    const s = stat(p);
-	                    if (!s) {
-	                    }
-	                    else if (s.isFile()) {
-	                        fs.unlinkSync(p);
-	                        console.log('[remove] ' + p);
-	                    }
-	                    else if (s.isDirectory()) {
-	                        // only remove empty folders that we created
-	                        const files = fs.readdirSync(p);
-	                        if (files.length === 0) {
-	                            fs.rmdirSync(p);
-	                        }
-	                    }
-	                    else {
+	        createGraph(basepath, scene);
+	        // we must remove unused files.
+	        // longest paths first
+	        const keys = Object.keys(readCache).sort((a, b) => a < b ? 1 : -1);
+	        for (const p of keys) {
+	            if (!writeCache[p]) {
+	                // remove old file
+	                const s = stat(p);
+	                if (!s) {
+	                }
+	                else if (s.isFile()) {
+	                    fs.unlinkSync(p);
+	                    console.log('[remove] ' + p);
+	                }
+	                else if (s.isDirectory()) {
+	                    // only remove empty folders that we created
+	                    const files = fs.readdirSync(p);
+	                    if (files.length === 0) {
+	                        fs.rmdirSync(p);
 	                    }
 	                }
+	                else {
+	                }
 	            }
-	            cache.scene = scene;
-	            cache.files = writeCache;
 	        }
+	        cache.scene = scene;
+	        cache.files = writeCache;
 	    }
 	};
 	const saveFile = (base, name, source /*, uuid */) => {
@@ -287,14 +264,14 @@
 	    return p;
 	};
 	const createGraph = (basepath, scene) => {
-	    try {
-	        const base = makeFolder(basepath, scene.name);
-	        GraphParser_1.exportGraph(scene.graph, base, saveFile, makeFolder);
-	        return null;
-	    }
-	    catch (err) {
-	        return err.message;
-	    }
+	    const base = makeFolder(basepath, scene.name);
+	    GraphParser_1.exportDoc(scene, base, saveFile, makeFolder);
+	};
+	const selectedProjectPath = (path) => {
+	    projectPath = path;
+	    // clear cache
+	    // push scenes into db with importDoc ==> doc
+	    // push project content into db
 	};
 
 
@@ -326,6 +303,16 @@
 	exports.exportGraph = (graph, context // this is the context passed for root element
 	    , file, folder) => {
 	    exportOne(graph, context, file, folder, types_1.rootNodeId);
+	};
+	exports.exportDoc = (scene, context, file, folder) => {
+	    exportOne(scene.graph, context, file, folder, types_1.rootNodeId);
+	    saveSettings(scene, context, file, folder);
+	};
+	const saveSettings = (scene, context, file, folder) => {
+	    const doc = Object.assign({}, scene);
+	    delete doc.graph;
+	    const json = JSON.stringify(doc, null, 2);
+	    file(context, 'index.lucy', json);
 	};
 
 

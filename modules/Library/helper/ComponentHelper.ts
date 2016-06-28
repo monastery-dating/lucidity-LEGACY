@@ -1,11 +1,10 @@
 import { makeId } from '../../Factory'
-import { SceneType } from '../../Scene'
-import { GraphType, rootNodeId } from '../../Graph'
+import { ComponentType, GraphType, rootNodeId } from '../../Graph'
 
 export module ComponentHelper {
   export const create =
   ( graph: GraphType
-  ): SceneType => {
+  ): ComponentType => {
     const node = graph.nodesById [ rootNodeId ]
     const block = graph.blocksById [ node.blockId ]
     return { _id: makeId ()

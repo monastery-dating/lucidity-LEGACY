@@ -1,11 +1,6 @@
 # TODO
 
 // ======= Tuesday ========== //
-- On graph change, update FS:
-  - Brute force in main process: explode graph and create/delete changed or
-    moved files.
-  - Once for "project/...graph" and once for "scenes/[scene.name]/...graph"
-
 - On FS change, update graph (only source changes, will fix rename later).
 
 - On [electron] project open: (match .lucy filetype)

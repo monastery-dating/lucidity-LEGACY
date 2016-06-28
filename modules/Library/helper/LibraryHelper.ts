@@ -1,6 +1,5 @@
-import { GraphType } from '../../Graph'
+import { GraphType, ComponentByIdType } from '../../Graph'
 import { exportGraph } from '../../Graph/helper/GraphParser'
-import { SceneByIdType } from '../../Scene'
 import * as JSZip from 'jszip'
 
 
@@ -31,7 +30,7 @@ interface DoneCallback {
 
 export module LibraryHelper {
   export const zip =
-  ( components: SceneByIdType
+  ( components: ComponentByIdType
   , doneClbk?: DoneCallback
   ) => {
     const jszip = new JSZip ()

@@ -1,13 +1,12 @@
 import { BlockType, rootBlockId } from '../../Block'
 import { makeId } from '../../Factory'
-import { GraphType } from '../../Graph'
+import { ComponentType, GraphType } from '../../Graph'
 import { createGraph } from '../../Graph/helper/GraphHelper'
-import { SceneType } from '../../Scene'
 
 export const createScene =
-() : Promise<SceneType> => {
+() : Promise<ComponentType> => {
   const _id = makeId ()
-  const p = new Promise<SceneType>
+  const p = new Promise<ComponentType>
   ( ( resolve, reject ) => {
     createGraph ()
     .then ( ( graph ) => {
@@ -31,7 +30,7 @@ export const createScene =
 export const selectScene =
 ( state
 , user
-, scene : SceneType
+, scene : ComponentType
 ) => {
 
   if ( !scene ) {

@@ -3,8 +3,6 @@ import { Component } from '../Component'
 import { ContextType } from '../../modules/context.type'
 import { NodeType, UINodeType, UISlotType } from '../../modules/Graph/types'
 import { DragDropHelper } from '../../modules/DragDrop'
-import { ProjectType } from '../../modules/Project'
-import { SceneType } from '../../modules/Scene'
 
 const makeSlot = ( slot: UISlotType, datainfo, clbk ) => {
   const flags = slot.flags

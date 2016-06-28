@@ -1,6 +1,6 @@
 import { ActionContextType } from '../../context.type'
-import { ProjectType } from '../../Project'
-import { selectScene, SceneType, SceneByIdType } from '../'
+import { ComponentType, ComponentByIdType } from '../../Graph'
+import { selectScene } from '../'
 
 export const removeAction =
 ( { state
@@ -33,12 +33,12 @@ export const removeAction =
     return
   }
 
-  const sceneById: SceneByIdType = state.get ( [ 'data', 'scene' ] )
+  const sceneById: ComponentByIdType = state.get ( [ 'data', 'scene' ] )
 
   const docs = []
 
   // Remove ref in parent
-  const parent: ProjectType = state.get ( [ 'project' ] )
+  const parent: ComponentType = state.get ( [ 'project' ] )
   // Find current selection in ordered scenes
   const sortedscenes = [...parent.scenes]
   sortedscenes.sort

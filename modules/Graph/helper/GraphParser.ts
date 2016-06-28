@@ -1,4 +1,4 @@
-import { GraphType, rootNodeId } from '../types'
+import { ComponentType, GraphType, rootNodeId } from '../types'
 
 interface FileExport {
   ( folderHelper: any, name: string, source: string ): void
@@ -42,4 +42,27 @@ export const exportGraph =
 , folder: FolderExport
 ) => {
   exportOne ( graph, context, file, folder, rootNodeId )
+}
+
+export const exportDoc =
+( scene: ComponentType
+, context: any
+, file: FileExport
+, folder: FolderExport
+) => {
+  exportOne ( scene.graph, context, file, folder, rootNodeId )
+  saveSettings ( scene, context, file, folder )
+}
+
+const saveSettings =
+( scene: ComponentType
+, context: any
+, file: FileExport
+, folder: FolderExport
+) => {
+  const doc = Object.assign ( {}, scene )
+  delete doc.graph
+  delete doc.scenes
+  const json = JSON.stringify ( doc, null, 2 )
+  file ( context, 'index.lucy', json )
 }

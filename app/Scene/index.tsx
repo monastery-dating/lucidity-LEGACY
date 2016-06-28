@@ -3,7 +3,7 @@ import { Component } from '../Component'
 import { ContextType } from '../../modules/context.type'
 import { editable, openModal, pane } from '../../modules/Factory'
 import { Graph } from '../Graph'
-import { SceneType } from '../../modules/Scene'
+import { ComponentType } from '../../modules/Graph'
 
 const SceneName = editable ( [ 'scene', 'name' ] )
 
@@ -24,7 +24,7 @@ export const Scene = Component
     const dclass = state.drop && state.drop.ownerType === 'scene'
     const klass = { Scene: true, drop: dclass }
 
-    const scene: SceneType = state.scene
+    const scene: ComponentType = state.scene
     if ( !scene ) {
       return ''
     }

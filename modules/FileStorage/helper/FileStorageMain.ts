@@ -1,8 +1,7 @@
 // FileStorageHelper runs on the window process.
 // This helper runs on the main process.
-import { ProjectType } from '../../Project/ProjectType'
-import { SceneType } from '../../Scene/SceneType'
-import { exportGraph } from '../../Graph/helper/GraphParser'
+import { ComponentType } from '../../Graph/types/ComponentType'
+import { exportDoc } from '../../Graph/helper/GraphParser'
 
 declare var require: any
 const { ipcMain, dialog } = require ( 'electron' )
@@ -15,7 +14,7 @@ interface FileCache {
 }
 
 interface SceneCache {
-  scene: SceneType
+  scene: ComponentType
   files: FileCache
 }
 
@@ -37,69 +36,50 @@ let libraryPath = '/Users/gaspard/git/lucidity.library/components'
 
 export const start = () => {
 
-  ipcMain.on ( 'open-project', () => {
+  ipcMain.on ( 'select-project', () => {
     // TODO
+    // Must select a ".lucy" file
+    // and reply with 'selected-directory'
+    // selectedProjectPath ( path )
+  })
+
+  ipcMain.on ( 'select-directory', () => {
+    // TODO
+    // This is used when someone creates a new project
+    // Must select a folder and reply with 'selected-directory'
+    // selectedProjectPath ( path )
   })
 
   ipcMain.on
   ( 'project-changed'
-  , ( event, project: ProjectType ) => {
-      // scenes
-      const err = updateGraph
-      ( [ projectPath ]
-      , project
-      , sceneCacheById [ project._id ]
-      )
-      if ( err ) {
-        event.sender.send ( 'error', err )
-        return
+  , ( event, project: ComponentType ) => {
+      // project graph
+      try {
+        updateGraph
+        ( [ projectPath ]
+        , project
+        , sceneCacheById [ project._id ]
+        )
       }
-
-      const p = path.resolve ( projectPath, `${ sanitize ( project.name ) }.lucy` )
-      const doc = Object.assign ( {}, project )
-      delete doc.graph
-      delete doc.scenes
-      const json = JSON.stringify ( doc, null, 2 )
-
-      if ( json === projectCache.json ) {
-        // no change
+      catch ( err ) {
+        event.sender.send ( 'error', err.message )
       }
-      else {
-        fs.writeFile ( p, json, 'utf8', ( err ) => {
-          if ( err ) {
-            console.log ( err )
-          }
-        })
-        projectCache.json = json
-      }
-
-      if ( projectCache.name !== project.name ) {
-        // remove old file
-        const p = path.resolve ( projectPath, `${ sanitize ( projectCache.name ) }.lucy` )
-        const f = stat ( p )
-        if ( f && f.isFile () ) {
-          fs.unlink ( p, ( err ) => {
-            if ( err ) {
-              console.log ( err )
-            }
-          })
-        }
-      }
-      projectCache.name = doc.name
     }
   )
 
   ipcMain.on
   ( 'scene-changed'
-  , ( event, scene: SceneType ) => {
+  , ( event, scene: ComponentType ) => {
       // scenes
-      const err = updateGraph
-      ( [ projectPath, 'scenes' ]
-      , scene
-      , sceneCacheById [ scene._id ]
-      )
-      if ( err ) {
-        event.sender.send ( 'error', err )
+      try {
+        updateGraph
+        ( [ projectPath, 'scenes' ]
+        , scene
+        , sceneCacheById [ scene._id ]
+        )
+      }
+      catch ( err ) {
+        event.sender.send ( 'error', err.message )
       }
     }
   )
@@ -127,9 +107,9 @@ const stat =
 
 const updateGraph =
 ( paths: string[]
-, scene: SceneType | ProjectType
+, scene: ComponentType
 , cache: SceneCache
-): string => {
+) => {
   // prepare path
   writeCache = {}
   let basepath = paths [ 0 ]
@@ -141,12 +121,8 @@ const updateGraph =
     const cache: SceneCache = { scene, files: {} }
     readCache = cache.files
     writeCache = cache.files
-    const err = createGraph ( basepath, scene )
-    if ( !err ) {
-      sceneCacheById [ scene._id ] = cache
-    }
-
-    return err
+    createGraph ( basepath, scene )
+    sceneCacheById [ scene._id ] = cache
   }
   else {
     const oscene = cache.scene
@@ -174,38 +150,34 @@ const updateGraph =
 
     readCache = cache.files
     writeCache = {}
-    const err = createGraph ( basepath, scene )
-    if ( err ) {
-      // TODO: should we restore files ?
-    }
-    else {
-      // we must remove unused files.
-      // longest paths first
-      const keys = Object.keys ( readCache ).sort ( ( a, b ) => a < b ? 1 : -1 )
-      for ( const p of keys ) {
-        if ( ! writeCache [ p ] ) {
-          // remove old file
-          const s = stat ( p )
-          if ( !s ) {
-            // noop
-          } else if ( s.isFile () ) {
-            fs.unlinkSync ( p )
-            console.log ( '[remove] ' + p )
-          } else if ( s.isDirectory () ) {
-            // only remove empty folders that we created
-            const files = fs.readdirSync ( p )
-            if ( files.length === 0 ) {
-              fs.rmdirSync ( p )
-            }
-          }
-          else {
-            // error. FIXME: ignore ?
+    createGraph ( basepath, scene )
+
+    // we must remove unused files.
+    // longest paths first
+    const keys = Object.keys ( readCache ).sort ( ( a, b ) => a < b ? 1 : -1 )
+    for ( const p of keys ) {
+      if ( ! writeCache [ p ] ) {
+        // remove old file
+        const s = stat ( p )
+        if ( !s ) {
+          // noop
+        } else if ( s.isFile () ) {
+          fs.unlinkSync ( p )
+          console.log ( '[remove] ' + p )
+        } else if ( s.isDirectory () ) {
+          // only remove empty folders that we created
+          const files = fs.readdirSync ( p )
+          if ( files.length === 0 ) {
+            fs.rmdirSync ( p )
           }
         }
+        else {
+          // error. FIXME: ignore ?
+        }
       }
-      cache.scene = scene
-      cache.files = writeCache
     }
+    cache.scene = scene
+    cache.files = writeCache
   }
 }
 
@@ -250,14 +222,16 @@ const makeFolder =
 
 const createGraph =
 ( basepath: string
-, scene: SceneType
-): string => {
-  try {
-    const base = makeFolder ( basepath, scene.name )
-    exportGraph ( scene.graph, base, saveFile, makeFolder )
-    return null
-  }
-  catch ( err ) {
-    return err.message
-  }
+, scene: ComponentType
+) => {
+  const base = makeFolder ( basepath, scene.name )
+  exportDoc ( scene, base, saveFile, makeFolder )
+}
+
+const selectedProjectPath =
+( path: string ) => {
+  projectPath = path
+  // clear cache
+  // push scenes into db with importDoc ==> doc
+  // push project content into db
 }

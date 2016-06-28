@@ -1,14 +1,10 @@
 import './style.scss'
 import { Component } from '../Component'
 import { ContextType, SignalsType } from '../../modules/context.type'
-import { ProjectType } from '../../modules/Project'
-
-interface ProjectsByIdType {
-  [ key: string ]: ProjectType
-}
+import { ComponentByIdType } from '../../modules/Graph'
 
 interface ShowProjectType {
-  projectsById: ProjectsByIdType
+  projectsById: ComponentByIdType
   selectedProjectId: string
 }
 
