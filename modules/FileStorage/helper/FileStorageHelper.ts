@@ -4,6 +4,7 @@ import { ActionContextType } from '../../context.type'
 declare var require: any
 
 let doProjectChanged = ( doc ) => {}
+let doSceneChanged = ( doc ) => {}
 
 // This helper runs on the renderer side of the app.
 // FileStorageMain runs on the main process (node.js).
@@ -22,6 +23,10 @@ export const start =
 
   const { ipcRenderer } = require ( 'electron' )
 
+  ipcRenderer.on ( 'error', ( event, message ) => {
+    signals.$status.changed ( { status: { type: 'error',  message } } )
+  })
+
   ipcRenderer.on ( 'file-changed', ( event, { path, op, source } ) => {
     signals.$filestorage.file ( { path, op, source } )
   })
@@ -34,16 +39,30 @@ export const start =
     ipcRenderer.send ( 'project-changed', doc )
   }
 
+  doSceneChanged = ( doc ) => {
+    ipcRenderer.send ( 'scene-changed', doc )
+  }
+
   setTimeout ( () => changedSignal ( { type: 'on' } ), 0 )
 }
 
 // Notify main process when a project changes (not a scene).
-export const projectChanged =
+export const docChanged =
 ( { state
-  , input: { doc }
+  , input: { docs, doc }
   , output
   } : ActionContextType
 ) => {
-  doProjectChanged ( doc )
+  const list = docs || [ doc ]
+  for ( const d of list ) {
+    if ( d ) {
+      if ( d.type === 'scene' ) {
+        doSceneChanged ( d )
+      }
+      else if ( d.type === 'project' ) {
+        doProjectChanged ( d )
+      }
+    }
+  }
 }
-projectChanged [ 'async' ] = false
+docChanged [ 'async' ] = false

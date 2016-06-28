@@ -1,5 +1,6 @@
 import { SignalType } from '../../context.type'
-import { saveDoc } from '../../Data/signals/saveDoc'
+import { docAction } from '../../Data/actions/docAction'
+import { save } from '../../Data/signals/save'
 import * as set from 'cerebral-addons/set'
 
 export const name: SignalType =
@@ -7,5 +8,6 @@ export const name: SignalType =
 , set ( 'output:/key', 'name' )
 // close editing on data save
 , set ( 'state:/$factory.scene.close', true )
-, ...saveDoc
+, docAction
+, ...save
 ]

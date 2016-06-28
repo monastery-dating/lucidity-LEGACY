@@ -1,6 +1,6 @@
 import { describe } from '../../Test/runner'
-import { NodeType, NodeByIdType } from '../types'
-import { createNode, nextNodeId } from './NodeHelper'
+import { NodeType, NodeByIdType, nextNodeId } from '../types'
+import { createNode } from './NodeHelper'
 
 describe ( 'createNode', ( it ) => {
 

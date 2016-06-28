@@ -1,8 +1,9 @@
 import { SignalType } from '../../context.type'
 import { docAction } from '../../Data/actions/docAction'
 import { save } from '../../Data/signals/save'
+import { checkName } from '../actions/checkName'
+import { status } from '../../Status/actions/status'
 import * as set from 'cerebral-addons/set'
-import { projectChanged } from '../../FileStorage/helper/FileStorageHelper'
 
 export const name: SignalType =
 [ set ( 'output:/type', 'project' )
@@ -10,6 +11,8 @@ export const name: SignalType =
 // close editing on data save
 , set ( 'state:/$factory.project.close', true )
 , docAction
-, projectChanged
-, ...save
+, checkName
+, { success: [ ... save ]
+  , error: [ status ]
+  }
 ]

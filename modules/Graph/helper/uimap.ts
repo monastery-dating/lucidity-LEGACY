@@ -7,9 +7,9 @@ import { GraphType
        , UIArrowType
        , UILayoutType
        , UIPosType
-       , UISlotType } from '../types'
-
-import { nextNodeId, rootNodeId } from './NodeHelper'
+       , UISlotType
+       , nextNodeId
+       , rootNodeId } from '../types'
 
 import { minSize } from './minSize'
 import * as stringhash from 'string-hash'

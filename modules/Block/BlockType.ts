@@ -63,3 +63,15 @@ const typetest = function
 ( a: BlockType ) : BlockTypeChanges {
   return a
 }
+
+export const nextBlockId =
+( blocksById: BlockByIdType
+) : string => {
+  let n : number = 0
+  while ( blocksById [ `b${n}` ] ) {
+    n += 1
+  }
+  return `b${n}`
+}
+
+export const rootBlockId = nextBlockId ( {} )

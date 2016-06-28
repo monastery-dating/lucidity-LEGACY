@@ -3,7 +3,7 @@ import { GraphType } from '../../Graph'
 import { Immutable as IM } from '../../Graph/helper/Immutable'
 // FIXME: why is this 'undefined' if imported from 'Graph' above ?
 import { createGraph, insertGraph } from '../../Graph/helper/GraphHelper'
-import { rootBlockId } from '../../Block/helper/BlockHelper'
+import { rootBlockId } from '../../Block/BlockType'
 import { BlockAddOperationType } from '../'
 import { MAIN_SOURCE } from '../../Block/helper/BlockHelper'
 

@@ -97,50 +97,67 @@
 /* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// FileStorageHelper runs on the window process.
-	// This helper runs on the main process.
 	"use strict";
+	const GraphParser_1 = __webpack_require__(3);
 	const { ipcMain, dialog } = __webpack_require__(1);
-	const fs = __webpack_require__(3);
-	const path = __webpack_require__(4);
-	const sanitize = __webpack_require__(5);
-	const FILE_STATUS = {};
+	const fs = __webpack_require__(6);
+	const path = __webpack_require__(7);
+	const sanitize = __webpack_require__(8);
+	const sceneCacheById = {};
+	let readCache;
+	let writeCache;
 	// Latest project and scene saved to fs
-	let project;
-	let scene;
+	const projectCache = { json: '', name: '' };
 	// User selected project and library paths
 	// FIXME !!! "open project" and "select library" (where is default lib path ?)
 	let projectPath = '/Users/gaspard/git/lucidity.project';
 	let libraryPath = '/Users/gaspard/git/lucidity.library/components';
 	exports.start = () => {
-	    console.log('start FileStorageMain');
 	    ipcMain.on('open-project', () => {
 	        // TODO
 	    });
-	    ipcMain.on('project-changed', (event, doc) => {
-	        const p = path.resolve(projectPath, `${sanitize(doc.name)}.lucy`);
-	        fs.writeFile(p, JSON.stringify(doc, null, 2), 'utf8', (err) => {
-	            if (err) {
-	                console.log(err);
-	            }
-	        });
-	        if (project) {
-	            if (project.name !== doc.name) {
-	                // remove old file
-	                const p = path.resolve(projectPath, `${sanitize(project.name)}.lucy`);
-	                const f = fs.statSync(p);
-	                if (f && f.isFile()) {
-	                    fs.unlink(p, (err) => {
-	                        if (err) {
-	                            console.log(err);
-	                        }
-	                    });
+	    ipcMain.on('project-changed', (event, project) => {
+	        // scenes
+	        const err = updateGraph([projectPath], project, sceneCacheById[project._id]);
+	        if (err) {
+	            event.sender.send('error', err);
+	            return;
+	        }
+	        const p = path.resolve(projectPath, `${sanitize(project.name)}.lucy`);
+	        const doc = Object.assign({}, project);
+	        delete doc.graph;
+	        delete doc.scenes;
+	        const json = JSON.stringify(doc, null, 2);
+	        if (json === projectCache.json) {
+	        }
+	        else {
+	            fs.writeFile(p, json, 'utf8', (err) => {
+	                if (err) {
+	                    console.log(err);
 	                }
+	            });
+	            projectCache.json = json;
+	        }
+	        if (projectCache.name !== project.name) {
+	            // remove old file
+	            const p = path.resolve(projectPath, `${sanitize(projectCache.name)}.lucy`);
+	            const f = stat(p);
+	            if (f && f.isFile()) {
+	                fs.unlink(p, (err) => {
+	                    if (err) {
+	                        console.log(err);
+	                    }
+	                });
 	            }
 	        }
-	        project = doc;
+	        projectCache.name = doc.name;
 	    });
-	    ipcMain.on('scene-changed', (event, doc) => {
+	    ipcMain.on('scene-changed', (event, scene) => {
+	        // scenes
+	        const err = updateGraph([projectPath, 'scenes'], scene, sceneCacheById[scene._id]);
+	        if (err) {
+	            event.sender.send('error', err);
+	        }
 	    });
 	    ipcMain.on('save-component', (event, component) => {
 	        // Save component to library
@@ -151,22 +168,207 @@
 	    })
 	    */
 	};
+	const stat = (path) => {
+	    try {
+	        return fs.statSync(path);
+	    }
+	    catch (err) {
+	        return null;
+	    }
+	};
+	const updateGraph = (paths, scene, cache) => {
+	    // prepare path
+	    writeCache = {};
+	    let basepath = paths[0];
+	    for (let i = 1; i < paths.length; ++i) {
+	        basepath = makeFolder(basepath, paths[i]);
+	    }
+	    if (!cache) {
+	        const cache = { scene, files: {} };
+	        readCache = cache.files;
+	        writeCache = cache.files;
+	        const err = createGraph(basepath, scene);
+	        if (!err) {
+	            sceneCacheById[scene._id] = cache;
+	        }
+	        return err;
+	    }
+	    else {
+	        const oscene = cache.scene;
+	        if (oscene.name !== scene.name) {
+	            // rename: move folder
+	            const from = path.resolve(basepath, sanitize(oscene.name));
+	            const to = path.resolve(basepath, sanitize(scene.name));
+	            const sfrom = stat(from);
+	            const sto = stat(to);
+	            if (sfrom && sfrom.isDirectory() && !sto) {
+	                // move
+	                fs.renameSync(from, to);
+	                console.log('[rename] ' + from + ' --> ' + to);
+	                // update cache
+	                const oldCache = cache.files;
+	                const newCache = {};
+	                const froml = from.length;
+	                for (const p in oldCache) {
+	                    const np = path.resolve(to, p.substr(froml));
+	                    newCache[np] = oldCache[p];
+	                }
+	                cache.files = newCache;
+	            }
+	        }
+	        readCache = cache.files;
+	        writeCache = {};
+	        const err = createGraph(basepath, scene);
+	        if (err) {
+	        }
+	        else {
+	            // we must remove unused files.
+	            // longest paths first
+	            const keys = Object.keys(readCache).sort((a, b) => a < b ? 1 : -1);
+	            for (const p of keys) {
+	                if (!writeCache[p]) {
+	                    // remove old file
+	                    const s = stat(p);
+	                    if (!s) {
+	                    }
+	                    else if (s.isFile()) {
+	                        fs.unlinkSync(p);
+	                        console.log('[remove] ' + p);
+	                    }
+	                    else if (s.isDirectory()) {
+	                        // only remove empty folders that we created
+	                        const files = fs.readdirSync(p);
+	                        if (files.length === 0) {
+	                            fs.rmdirSync(p);
+	                        }
+	                    }
+	                    else {
+	                    }
+	                }
+	            }
+	            cache.scene = scene;
+	            cache.files = writeCache;
+	        }
+	    }
+	};
+	const saveFile = (base, name, source /*, uuid */) => {
+	    const p = path.resolve(base, sanitize(name));
+	    const c = readCache[p];
+	    // TODO: optimize to use small uuid as third argument to detect block change
+	    if (c === source) {
+	        // not changed
+	        writeCache[p] = source;
+	        return;
+	    }
+	    const s = stat(p);
+	    if (!s || s.isFile()) {
+	        // changed file
+	        fs.writeFileSync(p, source, 'utf8');
+	        console.log('[write ] ' + p);
+	    }
+	    else {
+	        // not a file
+	        throw `Cannot save graph source to '${p}' (not a file).`;
+	    }
+	    writeCache[p] = source;
+	};
+	const makeFolder = (base, name) => {
+	    const p = path.resolve(base, sanitize(name));
+	    const s = stat(p);
+	    if (!s) {
+	        fs.mkdirSync(p);
+	        console.log('[mkdir ] ' + p);
+	    }
+	    else if (!s.isDirectory()) {
+	        // error
+	        throw `Cannot save graph to '${p}' (not a folder).`;
+	    }
+	    writeCache[p] = true;
+	    return p;
+	};
+	const createGraph = (basepath, scene) => {
+	    try {
+	        const base = makeFolder(basepath, scene.name);
+	        GraphParser_1.exportGraph(scene.graph, base, saveFile, makeFolder);
+	        return null;
+	    }
+	    catch (err) {
+	        return err.message;
+	    }
+	};
 
 
 /***/ },
 /* 3 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	const types_1 = __webpack_require__(4);
+	const exportOne = (graph, context, file, folder, nodeId, slotref) => {
+	    const node = graph.nodesById[nodeId];
+	    const block = graph.blocksById[node.blockId];
+	    const name = slotref ? `${slotref} ${block.name}` : block.name;
+	    file(context, `${name}.ts`, block.source);
+	    let sub;
+	    const children = node.children;
+	    for (let i = 0; i < children.length; ++i) {
+	        const slotref = i < 10 ? `0${i}` : String(i);
+	        const childId = children[i];
+	        if (childId) {
+	            if (!sub) {
+	                // create folder for children
+	                sub = folder(context, name);
+	            }
+	            exportOne(graph, sub, file, folder, childId, slotref);
+	        }
+	    }
+	};
+	exports.exportGraph = (graph, context // this is the context passed for root element
+	    , file, folder) => {
+	    exportOne(graph, context, file, folder, types_1.rootNodeId);
+	};
+
+
+/***/ },
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	function __export(m) {
+	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+	}
+	__export(__webpack_require__(5));
+
+
+/***/ },
+/* 5 */
+/***/ function(module, exports) {
+
+	"use strict";
+	exports.nextNodeId = (nodesById) => {
+	    let n = 0;
+	    while (nodesById[`n${n}`]) {
+	        n += 1;
+	    }
+	    return `n${n}`;
+	};
+	exports.rootNodeId = exports.nextNodeId({});
+
+
+/***/ },
+/* 6 */
 /***/ function(module, exports) {
 
 	module.exports = require("fs");
 
 /***/ },
-/* 4 */
+/* 7 */
 /***/ function(module, exports) {
 
 	module.exports = require("path");
 
 /***/ },
-/* 5 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*jshint node:true*/
@@ -199,7 +401,7 @@
 	 * @return {String}         Sanitized filename
 	 */
 	
-	var truncate = __webpack_require__(6);
+	var truncate = __webpack_require__(9);
 	
 	var illegalRe = /[\/\?<>\\:\*\|":]/g;
 	var controlRe = /[\x00-\x1f\x80-\x9f]/g;
@@ -228,18 +430,18 @@
 
 
 /***/ },
-/* 6 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var truncate = __webpack_require__(7);
+	var truncate = __webpack_require__(10);
 	var getLength = Buffer.byteLength.bind(Buffer);
 	module.exports = truncate.bind(null, getLength);
 
 
 /***/ },
-/* 7 */
+/* 10 */
 /***/ function(module, exports) {
 
 	'use strict';

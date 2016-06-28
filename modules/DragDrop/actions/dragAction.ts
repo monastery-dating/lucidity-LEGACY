@@ -1,5 +1,4 @@
-import { GraphType } from '../../Graph'
-import { rootNodeId } from '../../Graph/helper/NodeHelper'
+import { GraphType, rootNodeId } from '../../Graph'
 import { cutGraph, dropGraph } from '../../Graph/helper/GraphHelper'
 import { uimap } from '../../Graph/helper/uimap'
 import { DragStartType } from '../types'

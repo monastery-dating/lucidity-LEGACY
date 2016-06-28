@@ -1,11 +1,6 @@
-import { GraphType } from '../Graph'
+import { SceneType } from '../Scene'
 
-export interface ProjectType {
-  _id: string
-  _rev?: string
-  name: string
+export interface ProjectType extends SceneType {
   // scene ids
   scenes: string[]
-  // project graph
-  graph: GraphType
 }

@@ -5,7 +5,7 @@ import { GraphType } from '../Graph'
 export interface SceneType {
   _id: string
   _rev?: string
-  type: string // 'scene' or 'component'
+  type: string // 'scene' or 'component' or 'project'
   name: string
   graph: GraphType
   // selected block in graph

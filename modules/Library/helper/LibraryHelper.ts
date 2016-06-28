@@ -1,5 +1,5 @@
 import { GraphType } from '../../Graph'
-import { exportGraph } from '../../Graph/helper/GraphHelper'
+import { exportGraph } from '../../Graph/helper/GraphParser'
 import { SceneByIdType } from '../../Scene'
 import * as JSZip from 'jszip'
 

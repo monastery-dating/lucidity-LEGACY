@@ -1,5 +1,4 @@
-import { BlockType } from '../../Block'
-import { rootBlockId } from '../../Block/helper/BlockHelper'
+import { BlockType, rootBlockId } from '../../Block'
 import { makeId } from '../../Factory'
 import { GraphType } from '../../Graph'
 import { createGraph } from '../../Graph/helper/GraphHelper'

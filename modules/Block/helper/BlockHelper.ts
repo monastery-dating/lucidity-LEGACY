@@ -1,5 +1,5 @@
 import { BlockType, BlockByIdType, BlockSourceInfo
-       , BlockTypeChanges, PlaybackMetaType } from '../BlockType'
+       , BlockTypeChanges, PlaybackMetaType, rootBlockId } from '../BlockType'
 import { compileCode } from '../../Code/helper/CodeHelper'
 import { CompilerError } from '../../Code'
 import { Immutable as IM } from '../../Graph/helper/Immutable'
@@ -10,18 +10,6 @@ declare var require: any
 const DEFAULT_SOURCE = require ( './default/block.js.txt')
 
 export const MAIN_SOURCE = require ( './default/main.js.txt' )
-
-export const nextBlockId =
-( blocksById: BlockByIdType
-) : string => {
-  let n : number = 0
-  while ( blocksById [ `b${n}` ] ) {
-    n += 1
-  }
-  return `b${n}`
-}
-
-export const rootBlockId = nextBlockId ( {} )
 
 export const mainBlock =
 (): Promise<BlockType> => {

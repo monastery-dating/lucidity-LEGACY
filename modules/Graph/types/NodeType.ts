@@ -26,3 +26,15 @@ export interface NodeType {
   // meta.all set to true
   all?: string[]
 }
+
+export const nextNodeId =
+( nodesById: NodeByIdType
+) : string => {
+  let n : number = 0
+  while ( nodesById [ `n${n}` ] ) {
+    n += 1
+  }
+  return `n${n}`
+}
+
+export const rootNodeId = nextNodeId ( {} )

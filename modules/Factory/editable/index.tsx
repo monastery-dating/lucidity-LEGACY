@@ -62,7 +62,14 @@ export const editable =
 
       const signal = getSignal ( signals, path [ 0 ], path [ 1 ] )
 
-      const save = ( value ) => signal ( { value } )
+      const save = ( value ) => {
+        if ( value.length > 0 ) {
+          signal ( { value } )
+        }
+        else {
+          signal ( { value: state.text } )
+        }
+      }
 
       const isediting = state.editing
 

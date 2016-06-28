@@ -1,8 +1,8 @@
 import { describe } from '../../Test/runner'
-import { GraphType } from '../types'
+import { GraphType, rootNodeId } from '../types'
 import { appendGraph, createGraph, cutGraph, dropGraph, insertGraph, slipGraph } from './GraphHelper'
-import { createNode, rootNodeId } from './NodeHelper'
-import { rootBlockId } from '../../Block/helper/BlockHelper'
+import { createNode } from './NodeHelper'
+import { rootBlockId } from '../../Block/BlockType'
 
 import { Immutable as IM } from './Immutable'
 

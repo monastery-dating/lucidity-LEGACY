@@ -1,6 +1,5 @@
-import { GraphType } from '../../Graph'
+import { GraphType, nextNodeId } from '../../Graph'
 import { insertGraph, slipGraph } from '../../Graph/helper/GraphHelper'
-import { nextNodeId } from '../../Graph/helper/NodeHelper'
 import { DragMoveType, DragDropType, DragStartType } from '../types'
 import { ActionContextType } from '../../context.type'
 
