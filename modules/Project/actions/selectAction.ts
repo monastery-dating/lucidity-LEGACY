@@ -1,4 +1,5 @@
 import { ActionContextType } from '../../context.type'
+import { loadProject, selectProjectPath } from '../../FileStorage/helper/FileStorageHelper'
 import * as check from 'check-types'
 
 export const selectAction =
@@ -17,6 +18,11 @@ export const selectAction =
     return
   }
 
+  selectProjectPath ( project )
+  .then ( path => {
+    loadProject ( project, path )
+  })
+
   const sceneId = state.get ( [ '$sceneId' ] )
   if ( project.scenes.indexOf ( sceneId ) >= 0 ) {
     // do not change
@@ -25,6 +31,8 @@ export const selectAction =
     state.set ( [ '$sceneId' ], project.scenes [ 0 ] )
   }
 }
+
+// selectAction [ 'async' ] = true
 
 selectAction [ 'input' ] =
 { _id: check.string

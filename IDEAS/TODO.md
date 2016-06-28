@@ -1,5 +1,16 @@
 # TODO
 
+- On load: How to sync back ?
+  - What is the equivalent of "git pull" ?
+    ==> **truth is in DB**
+      if revision is higher then filesystem ==> squash changes
+      else ==> load changes
+    ==> **revert**
+      what about reverting changes, isn't the truth then in **fs** ?
+- On FS script errors: We do not save...
+    ==> show errors on node
+    ==> ideally send back errors to editor
+
 // ======= Tuesday ========== //
 - On [electron] project open: (match .lucy filetype)
   - Save path in recent projects for chooser.

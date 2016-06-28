@@ -1,7 +1,7 @@
 // FileStorageHelper runs on the window process.
 // This helper runs on the main process.
 import { ComponentType } from '../../Graph/types/ComponentType'
-import { exportDoc } from '../../Graph/helper/GraphParser'
+import { exportDoc, importProject, importScenes } from '../../Graph/helper/GraphParser'
 import { FileChanged } from './types'
 
 declare var require: any
@@ -39,8 +39,6 @@ let writeCache: SceneCache
 // Latest project and scene saved to fs
 const projectCache = { json: '', name: '' }
 
-// User selected project and library paths
-// FIXME !!! "open project" and "select library" (where is default lib path ?)
 let projectPath: string
 let libraryPath = '/Users/gaspard/git/lucidity.library/components'
 
@@ -50,34 +48,30 @@ export const start = () => {
     // User can choose a project
   })
 
-  ipcMain.on ( 'selected-project', ( event, path ) => {
+  ipcMain.on ( 'load-project', ( event, doc: ComponentType,  path: string ) => {
     // User chose a recent project
-    selectedProject ( path, event.sender )
+    selectProjectPath ( doc, path, event.sender )
   })
 
-  ipcMain.on ( 'select-project', ( event, path ) => {
-    // TODO
-    // Must select a ".lucy" file
-    // and reply with 'selected-directory'
+  ipcMain.on ( 'select-project-path', ( event ) => {
+    // New project or web project open in electron for the first time.
     dialog.showOpenDialog
     ( { properties: [ 'openDirectory', 'createDirectory' ]
-    }, function (files) {
-      if (files) event.sender.send('selected-directory', files)
-    })
-    //selectedProjectPath ( path, event.sender )
-  })
-
-  ipcMain.on ( 'select-directory', () => {
-    // TODO
-    // This is used when someone creates a new project
-    // Must select a folder and reply with 'selected-directory'
-    // selectedProjectPath ( path, event.sender )
+      , title: `Please select a folder for the project.`
+      }
+    , function ( paths ) {
+        event.sender.send ( 'project-path-selected', paths [ 0 ] )
+      }
+    )
   })
 
   ipcMain.on
   ( 'project-changed'
   , ( event, project: ComponentType ) => {
       // project graph
+      if ( !projectPath ) {
+        return
+      }
       try {
         updateGraph
         ( [ projectPath ]
@@ -95,6 +89,9 @@ export const start = () => {
   ( 'scene-changed'
   , ( event, scene: ComponentType ) => {
       // scenes
+      if ( !projectPath ) {
+        return
+      }
       try {
         updateGraph
         ( [ projectPath, 'scenes' ]
@@ -258,21 +255,38 @@ const makeFolder =
 
 let watcher
 
-const selectedProject =
-( projectpath: string
+const selectProjectPath =
+( doc: ComponentType
+, basepath: string
 , sender: any
 ) => {
-  const basepath = path.dirname ( projectpath )
   projectPath = basepath
   // clear cache
   sceneCacheById = {}
-  // TODO: push scenes into db with importDoc ==> doc
-  // TODO: push project content into db
+  // If doc._id matches filename.lucy => _id
+  //   Update DB with scenes and project content ?
+  //   Check for _rev to decide what we update ?
+  //   Merge changes ?
+  //
+  // We
 
   // clear old watcher
   if ( watcher ) {
     watcher.close ()
   }
+  if ( !basepath ) {
+    // stop sync
+    return
+  }
+
+  importProject ( basepath, ( data ) => {
+    sender.send ( 'doc-load', data )
+  })
+
+  importScenes ( basepath, ( data ) => {
+    sender.send ( 'doc-load', data )
+  })
+
   // watch new path
   watcher = fs.watch
   ( basepath
@@ -350,7 +364,7 @@ const selectedProject =
         console.log ( event, 'not known', p )
       }
       // if filename === path, (moved)
-      // we must call selectedProjectPath to
+      // we must call selectProjectPath to
       // recreate watch.
     }
   )

@@ -1,4 +1,5 @@
 import { ComponentType, GraphType, rootNodeId } from '../types'
+import { DocLoad } from '../../FileStorage/helper/types'
 
 interface FileExport {
   ( folderHelper: any, name: string, source: string, id: string ): void
@@ -44,6 +45,19 @@ export const exportGraph =
   exportOne ( graph, context, file, folder, rootNodeId )
 }
 
+const saveSettings =
+( scene: ComponentType
+, context: any
+, file: FileExport
+, folder: FolderExport
+) => {
+  const doc = Object.assign ( {}, scene )
+  delete doc.graph
+  delete doc.scenes
+  const json = JSON.stringify ( doc, null, 2 )
+  file ( context, `${scene.name}.lucy`, json, null )
+}
+
 export const exportDoc =
 ( scene: ComponentType
 , context: any
@@ -56,15 +70,22 @@ export const exportDoc =
   exportOne ( scene.graph, ctx, file, folder, rootNodeId )
 }
 
-const saveSettings =
-( scene: ComponentType
-, context: any
-, file: FileExport
-, folder: FolderExport
+interface DocCallback {
+  ( data: DocLoad ): void
+}
+
+// This should only run in electron main process
+export const importProject =
+( basepath: string
+, docCallback: DocCallback
 ) => {
-  const doc = Object.assign ( {}, scene )
-  delete doc.graph
-  delete doc.scenes
-  const json = JSON.stringify ( doc, null, 2 )
-  file ( context, `${scene.name}.lucy`, json, null )
+  // How to build graph from source ?
+  // What happens if there are code errors ?
+}
+
+export const importScenes =
+( basepath: string
+, docCallback: DocCallback
+) => {
+
 }

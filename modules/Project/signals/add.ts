@@ -12,7 +12,7 @@ export const add: SignalType =
     , ...save
     ]
   , error:
-    [ // what should we do with errors here ?
+    [ // user cancel
     ]
   }
 ]

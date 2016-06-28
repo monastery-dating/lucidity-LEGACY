@@ -7,3 +7,7 @@ export interface FileChanged {
   source?: string
   name?: string
 }
+
+export interface DocLoad {
+  // TODO
+}
