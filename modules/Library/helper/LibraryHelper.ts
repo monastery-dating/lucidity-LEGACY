@@ -15,7 +15,7 @@ zip.generateAsync({type:"blob"})
 });
 */
 const zipfile =
-( zip, name, source ) => {
+( zip, name, source, blockId ) => {
   zip.file ( name, source )
 }
 

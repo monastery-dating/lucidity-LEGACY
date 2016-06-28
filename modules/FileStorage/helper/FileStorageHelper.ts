@@ -27,8 +27,8 @@ export const start =
     signals.$status.changed ( { status: { type: 'error',  message } } )
   })
 
-  ipcRenderer.on ( 'file-changed', ( event, { path, op, source } ) => {
-    signals.$filestorage.file ( { path, op, source } )
+  ipcRenderer.on ( 'file-changed', ( event, msg ) => {
+    signals.$filestorage.file ( msg )
   })
 
   ipcRenderer.on ( 'library-changed', ( event, { path, op, source } ) => {
@@ -42,6 +42,10 @@ export const start =
   doSceneChanged = ( doc ) => {
     ipcRenderer.send ( 'scene-changed', doc )
   }
+
+  // FIXME: HACK
+  ipcRenderer.send
+  ( 'selected-project',  '/Users/gaspard/git/lucidity.project/Girls.lucy' )
 
   setTimeout ( () => changedSignal ( { type: 'on' } ), 0 )
 }

@@ -2,6 +2,7 @@
 // This helper runs on the main process.
 import { ComponentType } from '../../Graph/types/ComponentType'
 import { exportDoc } from '../../Graph/helper/GraphParser'
+import { FileChanged } from './types'
 
 declare var require: any
 const { ipcMain, dialog } = require ( 'electron' )
@@ -13,41 +14,64 @@ interface FileCache {
   [ key: string ]: string | boolean
 }
 
+interface StringMap {
+  [ key: string ]: string
+}
+
 interface SceneCache {
-  scene: ComponentType
+  scene?: ComponentType
+  // path to source
   files: FileCache
+  // ino to path ( detect FS rename )
+  inop: StringMap
+  // block.id to path ( detect editor rename )
+  bidp: StringMap
 }
 
 interface SceneCaches {
   [ key: string ]: SceneCache
 }
 
-const sceneCacheById: SceneCaches = {}
-let readCache: FileCache
-let writeCache: FileCache
+let sceneCacheById: SceneCaches = {}
+let readCache: SceneCache
+let writeCache: SceneCache
 
 // Latest project and scene saved to fs
 const projectCache = { json: '', name: '' }
 
 // User selected project and library paths
 // FIXME !!! "open project" and "select library" (where is default lib path ?)
-let projectPath = '/Users/gaspard/git/lucidity.project'
+let projectPath: string
 let libraryPath = '/Users/gaspard/git/lucidity.library/components'
 
 export const start = () => {
 
-  ipcMain.on ( 'select-project', () => {
+  ipcMain.on ( 'open-project', ( event ) => {
+    // User can choose a project
+  })
+
+  ipcMain.on ( 'selected-project', ( event, path ) => {
+    // User chose a recent project
+    selectedProject ( path, event.sender )
+  })
+
+  ipcMain.on ( 'select-project', ( event, path ) => {
     // TODO
     // Must select a ".lucy" file
     // and reply with 'selected-directory'
-    // selectedProjectPath ( path )
+    dialog.showOpenDialog
+    ( { properties: [ 'openDirectory', 'createDirectory' ]
+    }, function (files) {
+      if (files) event.sender.send('selected-directory', files)
+    })
+    //selectedProjectPath ( path, event.sender )
   })
 
   ipcMain.on ( 'select-directory', () => {
     // TODO
     // This is used when someone creates a new project
     // Must select a folder and reply with 'selected-directory'
-    // selectedProjectPath ( path )
+    // selectedProjectPath ( path, event.sender )
   })
 
   ipcMain.on
@@ -111,16 +135,16 @@ const updateGraph =
 , cache: SceneCache
 ) => {
   // prepare path
-  writeCache = {}
+  writeCache = { files: {}, inop: {}, bidp: {} }
   let basepath = paths [ 0 ]
   for ( let i = 1; i < paths.length; ++i ) {
     basepath = makeFolder ( basepath, paths [ i ] )
   }
 
   if ( !cache ) {
-    const cache: SceneCache = { scene, files: {} }
-    readCache = cache.files
-    writeCache = cache.files
+    const cache: SceneCache = { scene, files: {}, inop: {}, bidp: {} }
+    readCache = cache
+    writeCache = cache
     exportDoc ( scene, basepath, saveFile, makeFolder )
     sceneCacheById [ scene._id ] = cache
   }
@@ -143,15 +167,15 @@ const updateGraph =
       )
     }
 
-    readCache = cache.files
-    writeCache = {}
+    readCache = cache
+    writeCache = Object.assign ( {}, readCache, { files: {} } )
     exportDoc ( scene, basepath, saveFile, makeFolder )
 
     // we must remove unused files.
     // longest paths first
-    const keys = Object.keys ( readCache ).sort ( ( a, b ) => a < b ? 1 : -1 )
+    const keys = Object.keys ( readCache.files ).sort ( ( a, b ) => a < b ? 1 : -1 )
     for ( const p of keys ) {
-      if ( ! writeCache [ p ] ) {
+      if ( ! writeCache.files [ p ] ) {
         // remove old file
         const s = stat ( p )
         if ( !s ) {
@@ -172,31 +196,48 @@ const updateGraph =
       }
     }
     cache.scene = scene
-    cache.files = writeCache
+    cache.files = writeCache.files
   }
 }
 
 const saveFile =
-( base: string, name: string, source: string /*, uuid */ ): void => {
+( base: string, name: string, source: string, blockId: string ): void => {
+  const oldp = readCache.bidp [ blockId ]
   const p = path.resolve ( base, sanitize ( name ) )
-  const c = readCache [ p ]
-  // TODO: optimize to use small uuid as third argument to detect block change
+  const c = readCache.files [ p ]
   if ( c === source ) {
     // not changed
-    writeCache [ p ] = source
+    writeCache.files [ p ] = source
     return
   }
+
   const s = stat ( p )
   if ( !s || s.isFile () ) {
-    // changed file
-    fs.writeFileSync ( p, source, 'utf8' )
-    console.log ( '[write ] ' + p )
+    if ( !c && oldp ) {
+      // move (path not in cache but known previous path)
+      fs.renameSync ( oldp, p )
+      console.log ( '[move  ] ' + oldp + '-->' + p )
+      if ( readCache.files [ oldp ] !== source ) {
+        // source also changed
+        fs.writeFileSync ( p, source, 'utf8' )
+        console.log ( '[write ] ' + p )
+      }
+    }
+    else {
+      // changed file
+      fs.writeFileSync ( p, source, 'utf8' )
+      console.log ( '[write ] ' + p )
+    }
+
+    writeCache.bidp [ blockId ] = p
+    writeCache.files [ p ] = source
+    const s = stat ( p )
+    writeCache.inop [ String ( s.ino ) ] = p
   }
   else {
     // not a file
     throw `Cannot save graph source to '${p}' (not a file).`
   }
-  writeCache [ p ] = source
 }
 
 const makeFolder =
@@ -211,16 +252,108 @@ const makeFolder =
     // error
     throw `Cannot save graph to '${p}' (not a folder).`
   }
-  writeCache [ p ] = true
+  writeCache.files [ p ] = true
   return p
 }
 
-const selectedProjectPath =
-( path: string ) => {
-  projectPath = path
+let watcher
+
+const selectedProject =
+( projectpath: string
+, sender: any
+) => {
+  const basepath = path.dirname ( projectpath )
+  projectPath = basepath
   // clear cache
-  // push scenes into db with importDoc ==> doc
-  // push project content into db
+  sceneCacheById = {}
+  // TODO: push scenes into db with importDoc ==> doc
+  // TODO: push project content into db
+
+  // clear old watcher
+  if ( watcher ) {
+    watcher.close ()
+  }
+  // watch new path
+  watcher = fs.watch
+  ( basepath
+  , { persistent: true
+    , recursive: true // FIXME: not avail on linux. We need to add each file..
+    }
+  , ( event, filename ) => {
+      const p = path.resolve ( basepath, filename )
+      const s = stat ( p )
+      if ( !s || !s.isFile () ) {
+        // ignore
+        return
+      }
+      // Do we know this file ?
+      let cache, source, oldp
+      const ino = String ( s.ino )
+
+      for ( const k in sceneCacheById ) {
+        cache = sceneCacheById [ k ]
+        source = cache.files [ p ]
+        if ( source ) {
+          // found file
+          break
+        }
+        else {
+          oldp = cache.inop [ ino ]
+          if ( oldp ) {
+            break
+          }
+        }
+      }
+      if ( oldp ) {
+        // rename
+        const scene = cache.scene
+        delete cache.files [ oldp ]
+        cache.files [ p ] = source
+        cache.inop [ ino ] = p
+        const bidp = cache.bidp
+        for ( const k in bidp ) {
+          if ( bidp [ k ] === oldp ) {
+            bidp [ k ] = p
+            break
+          }
+        }
+        const names = filename.split ( '/' )
+        const msg: FileChanged =
+        { ownerType: scene.type
+        , _id: scene._id
+        , path: oldp.substr ( basepath.length + 1 )
+        , op: 'rename'
+        , name: filename.split ( '/' ).pop ()
+        }
+        sender.send ( 'file-changed', msg )
+      }
+      else if ( source ) {
+        const src = fs.readFileSync ( p, 'utf8' )
+        if ( source === src ) {
+          // noop
+        }
+        else {
+          // changed
+          const scene = cache.scene
+          cache.files [ p ] = source
+          const msg: FileChanged =
+          { ownerType: scene.type
+          , _id: scene._id
+          , path: filename
+          , op: 'changed'
+          , source: src
+          }
+          sender.send ( 'file-changed', msg )
+        }
+      }
+      else {
+        console.log ( event, 'not known', p )
+      }
+      // if filename === path, (moved)
+      // we must call selectedProjectPath to
+      // recreate watch.
+    }
+  )
 }
 
 const rename =
@@ -244,6 +377,18 @@ const rename =
     for ( const p in oldCache ) {
       const np = path.resolve ( to, p.substr ( froml ) )
       newCache [ np ] = oldCache [ p ]
+    }
+    const bidp = cache.bidp
+    for ( const k in bidp ) {
+      const p = bidp [ k ]
+      const np = path.resolve ( to, p.substr ( froml ) )
+      bidp [ k ] = np
+    }
+    const inop = cache.inop
+    for ( const k in inop ) {
+      const p = inop [ k ]
+      const np = path.resolve ( to, p.substr ( froml ) )
+      inop [ k ] = np
     }
     cache.files = newCache
   }

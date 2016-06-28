@@ -1,7 +1,7 @@
 import { ComponentType, GraphType, rootNodeId } from '../types'
 
 interface FileExport {
-  ( folderHelper: any, name: string, source: string ): void
+  ( folderHelper: any, name: string, source: string, id: string ): void
 }
 
 interface FolderExport {
@@ -19,7 +19,7 @@ const exportOne =
   const node = graph.nodesById [ nodeId ]
   const block = graph.blocksById [ node.blockId ]
   const name = slotref ? `${slotref} ${block.name}` : block.name
-  file ( context, `${name}.ts`, block.source )
+  file ( context, `${name}.ts`, block.source, block.id )
   let sub
   const children = node.children
   for ( let i = 0; i < children.length; ++i ) {
@@ -51,7 +51,7 @@ export const exportDoc =
 , folder: FolderExport
 ) => {
   saveSettings ( scene, context, file, folder )
-  
+
   const ctx = folder ( context, scene.name )
   exportOne ( scene.graph, ctx, file, folder, rootNodeId )
 }
@@ -66,5 +66,5 @@ const saveSettings =
   delete doc.graph
   delete doc.scenes
   const json = JSON.stringify ( doc, null, 2 )
-  file ( context, `${scene.name}.lucy`, json )
+  file ( context, `${scene.name}.lucy`, json, null )
 }

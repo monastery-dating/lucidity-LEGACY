@@ -1,8 +1,6 @@
 # TODO
 
 // ======= Tuesday ========== //
-- On FS change, update graph (only source changes, will fix rename later).
-
 - On [electron] project open: (match .lucy filetype)
   - Save path in recent projects for chooser.
   - read 'scenes' for list of scenes.
@@ -31,7 +29,7 @@
 
 - If an object becomes invalid: detach.
 
-- Whatch out for 'null' values in children in graph. Should only happen if the
+- Watch out for 'null' values in children in graph. Should only happen if the
   node is typed.
 
 - Control performance: check after migration to Cerebral state-tree...
@@ -39,6 +37,8 @@
 - Show scrollbars on graph views (but style them).
 
 - Make changing 0xff0000 numbers like 3 numbers: 0x [ff] [00] [00].
+
+- Do not allow 'main' block name change.
 
 - Remove controls ?
 
