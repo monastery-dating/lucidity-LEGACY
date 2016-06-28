@@ -22,7 +22,7 @@
 
 // ==== end of time available at home ==== //
 
-- Unique scene name
+- Unique scene name, cannot name block starting with two numbers and space.
 
 - Check detach: seems to not work
 

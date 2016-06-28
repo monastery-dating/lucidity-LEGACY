@@ -121,36 +121,31 @@ const updateGraph =
     const cache: SceneCache = { scene, files: {} }
     readCache = cache.files
     writeCache = cache.files
-    createGraph ( basepath, scene )
+    exportDoc ( scene, basepath, saveFile, makeFolder )
     sceneCacheById [ scene._id ] = cache
   }
   else {
     const oscene = cache.scene
     if ( oscene.name !== scene.name ) {
-      // rename: move folder
-      const from = path.resolve ( basepath, sanitize ( oscene.name ) )
-      const to = path.resolve ( basepath, sanitize ( scene.name ) )
-      const sfrom = stat ( from )
-      const sto = stat ( to )
-      if ( sfrom && sfrom.isDirectory () && !sto ) {
-        // move
-        fs.renameSync ( from, to )
-        console.log ( '[rename] ' + from + ' --> ' + to )
-        // update cache
-        const oldCache = cache.files
-        const newCache = {}
-        const froml = from.length
-        for ( const p in oldCache ) {
-          const np = path.resolve ( to, p.substr ( froml ) )
-          newCache [ np ] = oldCache [ p ]
-        }
-        cache.files = newCache
-      }
+      // move file
+      rename
+      ( basepath
+      , `${oscene.name}.lucy`
+      , `${scene.name}.lucy`
+      , cache
+      )
+      // move folder
+      rename
+      ( basepath
+      , oscene.name
+      , scene.name
+      , cache
+      )
     }
 
     readCache = cache.files
     writeCache = {}
-    createGraph ( basepath, scene )
+    exportDoc ( scene, basepath, saveFile, makeFolder )
 
     // we must remove unused files.
     // longest paths first
@@ -220,18 +215,40 @@ const makeFolder =
   return p
 }
 
-const createGraph =
-( basepath: string
-, scene: ComponentType
-) => {
-  const base = makeFolder ( basepath, scene.name )
-  exportDoc ( scene, base, saveFile, makeFolder )
-}
-
 const selectedProjectPath =
 ( path: string ) => {
   projectPath = path
   // clear cache
   // push scenes into db with importDoc ==> doc
   // push project content into db
+}
+
+const rename =
+( basepath: string
+, oldname: string
+, newname: string
+, cache
+) => {
+  const from = path.resolve ( basepath, sanitize ( oldname ) )
+  const to = path.resolve ( basepath, sanitize ( newname ) )
+  const sfrom = stat ( from )
+  const sto = stat ( to )
+  if ( sfrom && sfrom.isDirectory () && !sto ) {
+    // move
+    fs.renameSync ( from, to )
+    console.log ( '[rename] ' + from + ' --> ' + to )
+    // update cache
+    const oldCache = cache.files
+    const newCache = {}
+    const froml = from.length
+    for ( const p in oldCache ) {
+      const np = path.resolve ( to, p.substr ( froml ) )
+      newCache [ np ] = oldCache [ p ]
+    }
+    cache.files = newCache
+  }
+  else if ( sfrom && sfrom.isFile () && !sto ) {
+    fs.renameSync ( from, to )
+    console.log ( '[rename] ' + from + ' --> ' + to )
+  }
 }

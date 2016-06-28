@@ -23,7 +23,7 @@ const exportOne =
   let sub
   const children = node.children
   for ( let i = 0; i < children.length; ++i ) {
-    const slotref = i < 10 ? `0${i}` : String ( i )
+    const slotref = String ( i + 1 ) // i < 10 ? `0${i}` : String ( i )
     const childId = children [ i ]
     if ( childId ) {
       if ( !sub ) {
@@ -50,8 +50,10 @@ export const exportDoc =
 , file: FileExport
 , folder: FolderExport
 ) => {
-  exportOne ( scene.graph, context, file, folder, rootNodeId )
   saveSettings ( scene, context, file, folder )
+  
+  const ctx = folder ( context, scene.name )
+  exportOne ( scene.graph, ctx, file, folder, rootNodeId )
 }
 
 const saveSettings =
@@ -64,5 +66,5 @@ const saveSettings =
   delete doc.graph
   delete doc.scenes
   const json = JSON.stringify ( doc, null, 2 )
-  file ( context, 'index.lucy', json )
+  file ( context, `${scene.name}.lucy`, json )
 }
