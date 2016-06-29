@@ -1,5 +1,5 @@
 import { BlockType, PlaybackMetaType, SlotType, nextBlockId, rootBlockId } from '../../Block'
-import { createBlock, updateBlock } from '../../Block/helper/BlockHelper'
+import { createBlock, mainBlock, updateBlock } from '../../Block/helper/BlockHelper'
 import { CompilerError } from '../../Code'
 import { GraphType, NodeType, NodeByIdType, nextNodeId, rootNodeId } from '../types'
 import { createNode } from './NodeHelper'
@@ -286,9 +286,13 @@ export const createGraph =
 ( name: string = null
 , source: string = null
 ): Promise<GraphType> => {
+  let create = () => createBlock ( name, source )
+  if ( name === null && source === null ) {
+    create = () => mainBlock ()
+  }
   const p = new Promise<GraphType>
   ( ( resolve, reject ) => {
-      createBlock ( name, source )
+      create ()
       .then ( ( block ) => {
         const nid =  rootNodeId
         const g = Object.freeze
