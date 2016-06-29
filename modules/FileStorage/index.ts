@@ -12,6 +12,7 @@ export interface FileStorageSignalsType {
 
 import { changed } from './signals/changed'
 import { file } from './signals/file'
+import { library } from './signals/library'
 import { start } from './helper/FileStorageHelper'
 
 export const FileStorage =
@@ -25,6 +26,7 @@ export const FileStorage =
     module.addSignals
     ( { changed
       , file
+      , library
       }
     )
 

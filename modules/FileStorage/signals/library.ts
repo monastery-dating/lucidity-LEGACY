@@ -5,15 +5,16 @@ import * as copy from 'cerebral-addons/copy'
 import { debounce } from '../../Utils'
 import * as unset from 'cerebral-addons/unset'
 import { update } from '../../Data/actions/update'
+import { status } from '../../Status'
 
-export const source: SignalType =
+export const library: SignalType =
 [ libraryAction
 , { success:
-    [ update // Optimistic write in state. This can trigger a 'sources' update.
+    [ update // Optimistic write in state.
     , ...save
     ]
   , error:
-    [ // FIXME: status
+    [ status
     ]
   }
 ]

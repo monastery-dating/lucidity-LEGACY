@@ -1,12 +1,5 @@
 # TODO
 
-// ======= Tuesday ========== //
-
-- On [electron] library sync:
-  - If not known lib path in prefs: ask for "projectpath"
-    ( id: 'library' )
-  - Read all files in library path and load them in library.
-
 // ======= Wednesday ========== //
 
 - Lua bridge for torch7
@@ -18,6 +11,8 @@
 - Draw scene...
 
 // ==== end of time available at home ==== //
+
+- Move all uses of 'update' to before save (maybe even in save signal).
 
 - On [electron] project open: (match .lucy filetype)
 

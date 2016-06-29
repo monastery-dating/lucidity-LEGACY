@@ -1,4 +1,5 @@
 import { ComponentType, GraphType, rootNodeId } from '../types'
+import { rootBlockId } from '../../Block/BlockType'
 
 interface FileExport {
   ( folderHelper: any, name: string, source: string, id: string ): void
@@ -35,6 +36,7 @@ const exportOne =
   }
 }
 
+// FIXME: Is this used ?
 export const exportGraph =
 ( graph: GraphType
 , context: any // this is the context passed for root element
@@ -45,26 +47,37 @@ export const exportGraph =
 }
 
 const saveSettings =
-( scene: ComponentType
+( comp: ComponentType
 , context: any
 , file: FileExport
 , folder: FolderExport
 ) => {
-  const doc = Object.assign ( {}, scene )
+  const doc = Object.assign ( {}, comp )
   delete doc.graph
   delete doc.scenes
   const json = JSON.stringify ( doc, null, 2 )
-  file ( context, `${scene.name}.lucy`, json, null )
+  file ( context, `${comp.name}.lucy`, json, null )
 }
 
 export const exportDoc =
-( scene: ComponentType
+( comp: ComponentType
 , context: any
 , file: FileExport
 , folder: FolderExport
 ) => {
-  saveSettings ( scene, context, file, folder )
+  const block = comp.graph.blocksById [ rootBlockId ]
+  if ( comp.type === 'component'
+       && Object.keys ( comp.graph.nodesById ).length === 1
+       && block
+       && ( !block.sources || Object.keys ( block.sources ).length === 0 )
+     ) {
+    // single file component: just output ${comp.name}.ts
+    file ( context, `${comp.name}.ts`, block.source, block.id )
+  }
+  else {
+    saveSettings ( comp, context, file, folder )
 
-  const ctx = folder ( context, scene.name )
-  exportOne ( scene.graph, ctx, file, folder, rootNodeId )
+    const ctx = folder ( context, comp.name )
+    exportOne ( comp.graph, ctx, file, folder, rootNodeId )
+  }
 }

@@ -3,10 +3,7 @@ import { ActionContextType } from '../../context.type'
 const getVerb = ( doc ) => (
   doc._deleted ?
   'Deleted'
-  : ( doc._rev.split('-')[0] === '1' ?
-      'New'
-      : 'Updated'
-    )
+  : ( doc._rev ? 'Updated' : 'New' )
 )
 
 // Could be removed: no need for so much operation noise or have something

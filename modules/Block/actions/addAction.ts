@@ -55,7 +55,8 @@ export const addAction =
         doit ( child )
       })
       .catch ( ( errors ) => {
-        output.errors ( { errors } )
+        const message = errors [ 0 ].message
+        output.error ( { status: { type: 'error', message } } )
       })
     }
     else {

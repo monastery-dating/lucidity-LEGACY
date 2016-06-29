@@ -1,6 +1,6 @@
 import { BlockByIdType } from '../../Block'
 import { Immutable as IM, rootNodeId } from '../../Graph'
-import { ComponentHelper } from '../../Library'
+import { createComponent } from '../../Library'
 import { ActionContextType } from '../../context.type'
 import { DragStartType, DragDropType } from '../'
 
@@ -59,7 +59,7 @@ export const dropAction =
 
     if ( !doc ) {
       // new component
-      doc = ComponentHelper.create ( drag.dgraph )
+      doc = createComponent ( drag.dgraph )
     }
 
     state.set ( [ '$factory', doc.type, 'close' ], true )

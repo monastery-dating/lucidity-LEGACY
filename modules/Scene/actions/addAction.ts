@@ -26,7 +26,7 @@ export const addAction =
     )
 
     // we set _id for select operation
-    output ( { docs, _id: scene._id } )
+    output.success ( { docs, _id: scene._id } )
 
   })
   .catch ( ( errors ) => {
@@ -34,3 +34,5 @@ export const addAction =
     output.error ( { errors } )
   })
 }
+
+addAction [ 'async' ] = true

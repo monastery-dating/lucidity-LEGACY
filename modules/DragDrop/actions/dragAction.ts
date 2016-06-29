@@ -18,6 +18,7 @@ export const dragAction =
 
   if ( drag.ownerType === 'library' ) {
     drag.dgraph = state.get ( [ 'data', 'component', drag.componentId, 'graph' ] )
+    console.log ( state.get ( [ 'data', 'component', drag.componentId ] ) )
   }
 
   else {

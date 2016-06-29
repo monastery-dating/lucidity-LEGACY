@@ -1,6 +1,7 @@
-import { ComponentType } from '../../Graph'
+import { ComponentType, ComponentByIdType } from '../../Graph'
 import { SignalsType } from '../../context.type'
 import { ActionContextType } from '../../context.type'
+import { PreferencesType } from './types'
 
 declare var require: any
 
@@ -9,10 +10,17 @@ type PathResolve = string | boolean
 let doProjectChanged = ( doc: ComponentType ) => {}
 let doSceneChanged = ( doc: ComponentType ) => {}
 let doLoadProject = ( project, scenes, path ) => {}
+let doLoadLibrary = ( state, path ) => {}
 let doSelectProjectPath = ( doc?: ComponentType ): Promise<PathResolve> =>
+{ return Promise.resolve ( false ) }
+let savePrefs = ( prefs: PreferencesType ) => {}
+let prefs: PreferencesType
+
+let doSelectLibraryPath = (): Promise<PathResolve> =>
 { return Promise.resolve ( false ) }
 
 let projectPathSelected = ( path: string ) => {}
+let libraryPathSelected = ( path: string ) => {}
 
 // This helper runs on the renderer side of the app.
 // FileStorageMain runs on the main process (node.js).
@@ -30,6 +38,17 @@ export const start =
 
   const { ipcRenderer } = require ( 'electron' )
 
+  // =========== GET PREFERENCES (SYNC)
+  prefs = ipcRenderer.sendSync ( 'preferences' )
+  if ( ! prefs ) {
+    // disable all filesystem stuff
+    return
+  }
+
+  savePrefs = ( prefs ) => {
+    ipcRenderer.send ( 'preferences', prefs )
+  }
+
   // =========== RECEIVE FILE SYSTEM NOTIFICATIONS
 
   ipcRenderer.on ( 'done', ( event ) => {
@@ -46,12 +65,16 @@ export const start =
     signals.$filestorage.file ( msg )
   })
 
-  ipcRenderer.on ( 'library-changed', ( event, { path, op, source } ) => {
-    signals.$filestorage.library ( { path, op, source } )
+  ipcRenderer.on ( 'library-changed', ( event, msg ) => {
+    signals.$filestorage.library ( msg )
   })
 
   ipcRenderer.on ( 'project-path-selected', ( event, path ) => {
     projectPathSelected ( path )
+  })
+
+  ipcRenderer.on ( 'library-path-selected', ( event, path ) => {
+    libraryPathSelected ( path )
   })
 
   // FIXME: HACK
@@ -70,7 +93,7 @@ export const start =
 
   doSelectProjectPath = ( doc?: ComponentType ) => {
     if ( doc ) {
-      const path = getProjectPath ( doc._id )
+      const path = prefs.projectPaths [ doc._id ]
       if ( path ) {
         return Promise.resolve ( path )
       }
@@ -82,10 +105,45 @@ export const start =
     return p
   }
 
+  doSelectLibraryPath = () => {
+    const path = prefs.libraryPath
+    if ( path ) {
+      return Promise.resolve ( path )
+    }
+    const p = new Promise<PathResolve> ( ( resolve, reject ) => {
+      libraryPathSelected = resolve
+      ipcRenderer.send ( 'select-library-path' )
+    })
+    return p
+  }
+
   doLoadProject = ( project, scenes, path ) => {
     // path can be null if the user does not want to sync
     setTimeout ( () => changedSignal ( { type: 'active' } ), 0 )
     ipcRenderer.send ( 'load-project', project, scenes, path )
+  }
+
+  doLoadLibrary = ( state, path ) => {
+    // path can be null if the user does not want to sync
+    setTimeout ( () => changedSignal ( { type: 'active' } ), 0 )
+    // Prepare path
+    ipcRenderer.send ( 'load-library', path )
+    if ( path ) {
+      const components: ComponentByIdType = state.get ( [ 'data', 'component' ] )
+      let list: ComponentType[] = []
+      for ( const k in components ) {
+        list.push ( components [ k ] )
+        if ( list.length === 10 ) {
+          ipcRenderer.send ( 'load-components', list )
+          list = []
+        }
+      }
+      if ( list.length > 0 ) {
+        ipcRenderer.send ( 'load-components', list )
+      }
+      // mark end of compents loading
+      ipcRenderer.send ( 'load-components', null )
+    }
   }
 
   setTimeout ( () => changedSignal ( { type: 'paused' } ), 0 )
@@ -127,21 +185,10 @@ export const selectProjectPath =
   return doSelectProjectPath ( doc )
 }
 
-// FIXME: This should be stored in the user's file system
-// something like .lucidity (a JSON file)
-const prefs: any = { projectPaths: {} }
-
-const setProjectPath =
-( _id: string
-, path: string
-) => {
-  prefs.projectPaths [ _id ] = path
-}
-
-const getProjectPath =
-( _id: string
-): string => {
-  return prefs.projectPaths [ _id ]
+// Async get library path with dialog
+export const selectLibraryPath =
+(): Promise<PathResolve> => {
+  return doSelectLibraryPath ()
 }
 
 export const loadProject =
@@ -149,6 +196,20 @@ export const loadProject =
 , scenes: ComponentType[]
 , path: string | boolean
 ) => {
-  prefs.projectPaths [ project._id ] = path
+  if ( typeof path === 'string' ) {
+    prefs.projectPaths [ project._id ] = path
+    savePrefs ( prefs )
+  }
   doLoadProject ( project, scenes, path )
+}
+
+export const loadLibrary =
+( state
+, path: string | boolean
+) => {
+  if ( typeof path === 'string' ) {
+    prefs.libraryPath = path
+    savePrefs ( prefs )
+  }
+  doLoadLibrary ( state, path )
 }

@@ -27,7 +27,7 @@ function createWindow() {
     win = null
   })
 
-  startFileStorageSync ()
+  startFileStorageSync ( win )
 }
 
 // This method will be called when Electron has finished

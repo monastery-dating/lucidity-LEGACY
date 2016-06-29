@@ -1,5 +1,5 @@
 {
-  "name": "lucidity.editor",
+  "name": "Lucidity",
   "version": "0.1.0",
   "description": "An app for live arts",
   "main": "app/build/electron.js",
