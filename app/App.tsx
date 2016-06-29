@@ -32,8 +32,8 @@ Component
 
     return <div class={ klass }>
         <div class='wrap'>{ route ( state.route ) }</div>
-        <StatusBar key='StatusBar'></StatusBar>
-        <StatusDetail key='StatusDetail'></StatusDetail>
+        <StatusBar/>
+        <StatusDetail key='StatusDetail'/>
       </div>
   }
 )

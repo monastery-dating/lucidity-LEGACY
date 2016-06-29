@@ -15,6 +15,7 @@ export const dropAction =
   } : ActionContextType
 ) => {
   const drag: DragStartType = state.get ( dragp )
+  if ( !drag ) { return }
   const drop: DragDropType  = state.get ( dropp )
   const copy = drag.copy || ( drop && drop.copy )
 

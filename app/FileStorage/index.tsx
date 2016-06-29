@@ -6,7 +6,7 @@ const ICON = 'fa-file-text-o'
 
 const BASE = { FileStorage: true, fa: true, [ ICON ]: true }
 const STATUS =
-{ on: Object.assign ( {}, BASE, { paused: true } )
+{ paused: Object.assign ( {}, BASE, { paused: true } )
 , active: Object.assign ( {}, BASE, { active: true } )
 , offline: Object.assign ( {}, BASE, { offline: true } )
 , error: Object.assign ( {}, BASE, { error: true } )

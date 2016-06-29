@@ -1,16 +1,16 @@
 export * from './signals/start'
 export * from './signals/stop'
-import { FileChanged, DocLoad } from './helper/types'
+import { FileChanged } from './helper/types'
+
+type FsStatus = 'paused' | 'offline' | 'error' | 'active'
 
 export interface FileStorageSignalsType {
-  changed ( opt: { type: string, message?: string } )
+  changed ( opt: { type: FsStatus, message?: string } )
   file ( opt: FileChanged )
-  doc ( opt: DocLoad )
   library ( opt: { path: string, op: string, source: string } )
 }
 
 import { changed } from './signals/changed'
-import { doc } from './signals/doc'
 import { file } from './signals/file'
 import { start } from './helper/FileStorageHelper'
 
@@ -24,7 +24,6 @@ export const FileStorage =
 
     module.addSignals
     ( { changed
-      , doc
       , file
       }
     )

@@ -20,7 +20,15 @@ export const selectAction =
 
   selectProjectPath ( project )
   .then ( path => {
-    loadProject ( project, path )
+    // get scenes
+    const scenes = []
+    project.scenes.map
+    ( id => {
+        const s = state.get ( [ 'data', 'scene', id ] )
+        if ( s ) { scenes.push ( s ) }
+      }
+    )
+    loadProject ( project, scenes, path )
   })
 
   const sceneId = state.get ( [ '$sceneId' ] )

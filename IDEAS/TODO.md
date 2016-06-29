@@ -1,22 +1,10 @@
 # TODO
 
-- On load: How to sync back ?
-  - What is the equivalent of "git pull" ?
-    ==> **truth is in DB**
-      if revision is higher then filesystem ==> squash changes
-      else ==> load changes
-    ==> **revert**
-      what about reverting changes, isn't the truth then in **fs** ?
-- On FS script errors: We do not save...
-    ==> show errors on node
-    ==> ideally send back errors to editor
-
 // ======= Tuesday ========== //
-- On [electron] project open: (match .lucy filetype)
-  - Save path in recent projects for chooser.
-  - read 'scenes' for list of scenes.
 
 - On [electron] library sync:
+  - If not known lib path in prefs: ask for "projectpath"
+    ( id: 'library' )
   - Read all files in library path and load them in library.
 
 // ======= Wednesday ========== //
@@ -31,6 +19,8 @@
 
 // ==== end of time available at home ==== //
 
+- On [electron] project open: (match .lucy filetype)
+
 - Unique scene name, cannot name block starting with two numbers and space.
 
 - Check detach: seems to not work
@@ -39,6 +29,11 @@
   in lubyk instead of changing graph shape.
 
 - If an object becomes invalid: detach.
+
+- On FS script errors: We do not save...
+    ==> show errors on node
+    ==> ideally send back errors to editor
+
 
 - Watch out for 'null' values in children in graph. Should only happen if the
   node is typed.

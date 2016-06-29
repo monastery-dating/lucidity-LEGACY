@@ -14,9 +14,9 @@ export const StatusBar = Component
 
     return <div class='StatusBar'>
         { s ? <Status status={s}/> : '' }
-        <MidiStatus/>
-        <FileStorage/>
-        <Sync/>
+        <MidiStatus key='MidiStatus'/>
+        <FileStorage key='FileStorage'/>
+        <Sync key='Sync'/>
       </div>
   }
 )

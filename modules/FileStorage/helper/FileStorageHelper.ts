@@ -1,7 +1,6 @@
 import { ComponentType } from '../../Graph'
 import { SignalsType } from '../../context.type'
 import { ActionContextType } from '../../context.type'
-import { DocLoad } from './types'
 
 declare var require: any
 
@@ -9,7 +8,7 @@ type PathResolve = string | boolean
 
 let doProjectChanged = ( doc: ComponentType ) => {}
 let doSceneChanged = ( doc: ComponentType ) => {}
-let doLoadProject = ( doc: ComponentType, path: string | boolean ) => {}
+let doLoadProject = ( project, scenes, path ) => {}
 let doSelectProjectPath = ( doc?: ComponentType ): Promise<PathResolve> =>
 { return Promise.resolve ( false ) }
 
@@ -19,7 +18,6 @@ let projectPathSelected = ( path: string ) => {}
 // FileStorageMain runs on the main process (node.js).
 export const start =
 ( { controller } ) => {
-  console.log ( 'START FS SYNC' )
 
   const signals: SignalsType = controller.getSignals ()
   const changedSignal = signals.$filestorage.changed
@@ -34,16 +32,18 @@ export const start =
 
   // =========== RECEIVE FILE SYSTEM NOTIFICATIONS
 
+  ipcRenderer.on ( 'done', ( event ) => {
+    setTimeout ( () => {
+      changedSignal ( { type: 'paused' } )
+    }, 100)
+  })
+
   ipcRenderer.on ( 'error', ( event, message ) => {
-    signals.$status.changed ( { status: { type: 'error',  message } } )
+    changedSignal ( { type: 'error', message } )
   })
 
   ipcRenderer.on ( 'file-changed', ( event, msg ) => {
     signals.$filestorage.file ( msg )
-  })
-
-  ipcRenderer.on ( 'doc-load', ( event, data: DocLoad ) => {
-    signals.$filestorage.doc ( data )
   })
 
   ipcRenderer.on ( 'library-changed', ( event, { path, op, source } ) => {
@@ -72,7 +72,6 @@ export const start =
     if ( doc ) {
       const path = getProjectPath ( doc._id )
       if ( path ) {
-        loadProject ( doc, path )
         return Promise.resolve ( path )
       }
     }
@@ -83,12 +82,13 @@ export const start =
     return p
   }
 
-  doLoadProject = ( doc, path ) => {
+  doLoadProject = ( project, scenes, path ) => {
     // path can be null if the user does not want to sync
-    ipcRenderer.send ( 'load-project', doc, path )
+    setTimeout ( () => changedSignal ( { type: 'active' } ), 0 )
+    ipcRenderer.send ( 'load-project', project, scenes, path )
   }
 
-  setTimeout ( () => changedSignal ( { type: 'on' } ), 0 )
+  setTimeout ( () => changedSignal ( { type: 'paused' } ), 0 )
 }
 
 // Notify main process when a project changes (not a scene).
@@ -99,12 +99,21 @@ export const docChanged =
   } : ActionContextType
 ) => {
   const list = docs || [ doc ]
+  let haschange = false
   for ( const d of list ) {
     if ( d ) {
       if ( d.type === 'scene' ) {
+        if ( !haschange ) {
+          state.set ( [ '$filestorage', 'status' ], 'active' )
+          haschange = true
+        }
         doSceneChanged ( d )
       }
       else if ( d.type === 'project' ) {
+        if ( !haschange ) {
+          state.set ( [ '$filestorage', 'status' ], 'active' )
+          haschange = true
+        }
         doProjectChanged ( d )
       }
     }
@@ -136,9 +145,10 @@ const getProjectPath =
 }
 
 export const loadProject =
-( doc: ComponentType
+( project: ComponentType
+, scenes: ComponentType[]
 , path: string | boolean
 ) => {
-  prefs.projectPaths [ doc._id ] = path
-  doLoadProject ( doc, path )
+  prefs.projectPaths [ project._id ] = path
+  doLoadProject ( project, scenes, path )
 }
