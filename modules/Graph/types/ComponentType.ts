@@ -5,6 +5,7 @@ import { GraphType } from './GraphType'
 export interface ComponentType {
   _id: string
   _rev?: string
+  _deleted?: boolean
   // 'scene' or 'component' or 'project'
   type: string
   name: string

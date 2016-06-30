@@ -1,5 +1,5 @@
 import { GraphType, ComponentByIdType } from '../../Graph'
-import { exportGraph } from '../../Graph/helper/GraphParser'
+import { exportDoc } from '../../Graph/helper/GraphParser'
 import * as JSZip from 'jszip'
 
 
@@ -36,8 +36,8 @@ export module LibraryHelper {
     const jszip = new JSZip ()
     for ( const k in components ) {
       const comp = components [ k ]
-      exportGraph
-      ( comp.graph, jszip, zipfile, zipfolder )
+      exportDoc
+      ( comp, jszip, zipfile, zipfolder )
     }
 
     const p = jszip.generateAsync

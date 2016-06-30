@@ -9,7 +9,7 @@ export const loadAction =
 ) => {
   selectLibraryPath ()
   .then ( path => {
-    loadLibrary ( state, path )
+    loadLibrary ( path, state )
   })
 }
 

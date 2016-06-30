@@ -14,7 +14,7 @@ export const addAction =
     createProject ()
     .then ( ( { project, scene } ) => {
       const docs = [ scene, project ]
-      loadProject ( project, [ scene ], path )
+      loadProject ( path, project, [ scene ] )
 
       // add to user's projects
       const user = state.get ( [ 'user' ] )

@@ -28,7 +28,7 @@ export const selectAction =
         if ( s ) { scenes.push ( s ) }
       }
     )
-    loadProject ( project, scenes, path )
+    loadProject ( path, project, scenes )
   })
 
   const sceneId = state.get ( [ '$sceneId' ] )

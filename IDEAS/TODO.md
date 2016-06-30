@@ -1,4 +1,14 @@
 # TODO
+// ======= FS sync v2
+
+* Parse project folder and create current cache info:
+  * 1. Find "index.lucy" file ==> get _id_
+  * 2. Inside project folder called 'project'
+  * 2.1 Read lucidity.json to get graph structure
+  * 2.2 Parse contents of folder
+  * 2.2.1 Get blockId ==> make cache info: fullpath ==> blockId
+                                           blockId  ==> source
+  * 3. Do the same for each scene
 
 // ======= Wednesday ========== //
 
@@ -42,6 +52,8 @@
 - Do not allow 'main' block name change.
 
 - Remove controls ?
+
+- Optimize fs notification to send blockId directly.
 
 
 # DATA

@@ -9,8 +9,8 @@ type PathResolve = string | boolean
 
 let doProjectChanged = ( doc: ComponentType ) => {}
 let doSceneChanged = ( doc: ComponentType ) => {}
-let doLoadProject = ( project, scenes, path ) => {}
-let doLoadLibrary = ( state, path ) => {}
+let doLoadProject = ( path, project, scenes ) => {}
+let doLoadLibrary = ( path, state ) => {}
 let doSelectProjectPath = ( doc?: ComponentType ): Promise<PathResolve> =>
 { return Promise.resolve ( false ) }
 let savePrefs = ( prefs: PreferencesType ) => {}
@@ -117,13 +117,13 @@ export const start =
     return p
   }
 
-  doLoadProject = ( project, scenes, path ) => {
+  doLoadProject = ( path, project, scenes ) => {
     // path can be null if the user does not want to sync
     setTimeout ( () => changedSignal ( { type: 'active' } ), 0 )
-    ipcRenderer.send ( 'load-project', project, scenes, path )
+    ipcRenderer.send ( 'load-project', path, project, scenes )
   }
 
-  doLoadLibrary = ( state, path ) => {
+  doLoadLibrary = ( path, state ) => {
     // path can be null if the user does not want to sync
     setTimeout ( () => changedSignal ( { type: 'active' } ), 0 )
     // Prepare path
@@ -182,7 +182,8 @@ docChanged [ 'async' ] = false
 // Async get project path with dialog
 export const selectProjectPath =
 ( doc?: ComponentType ): Promise<PathResolve> => {
-  return doSelectProjectPath ( doc )
+  const p = doSelectProjectPath ( doc )
+  return p
 }
 
 // Async get library path with dialog
@@ -192,24 +193,24 @@ export const selectLibraryPath =
 }
 
 export const loadProject =
-( project: ComponentType
+( path: string | boolean
+, project: ComponentType
 , scenes: ComponentType[]
-, path: string | boolean
 ) => {
   if ( typeof path === 'string' ) {
     prefs.projectPaths [ project._id ] = path
     savePrefs ( prefs )
   }
-  doLoadProject ( project, scenes, path )
+  doLoadProject ( path, project, scenes )
 }
 
 export const loadLibrary =
-( state
-, path: string | boolean
+( path: string | boolean
+, state
 ) => {
   if ( typeof path === 'string' ) {
     prefs.libraryPath = path
     savePrefs ( prefs )
   }
-  doLoadLibrary ( state, path )
+  doLoadLibrary ( path, state )
 }

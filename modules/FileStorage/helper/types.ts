@@ -1,9 +1,9 @@
 
 export interface FileChanged {
-  ownerType: string
+  type: string
   _id: string
-  path: string
   op: string
+  blockId?: string
   source?: string
   name?: string
 }
