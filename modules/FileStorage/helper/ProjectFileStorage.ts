@@ -83,8 +83,6 @@ export const sceneChanged =
 , comp: ComponentType
 ) => {
   let cache = sceneCacheById [ comp._id ]
-  console.log ( 'sceneChanged', comp._id )
-  console.log ( 'cache.uuid', cache.uuid )
   if ( !cache ) {
     cache = clearCache ( {} )
     sceneCacheById [ comp._id ] = cache

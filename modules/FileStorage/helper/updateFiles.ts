@@ -1,4 +1,4 @@
-import { CacheType, getName, makeName, stat, resolve, sanitize, unlinkSync, writeFileSync, renameSync } from './FileStorageUtils'
+import { CacheType, getName, makeName, stat, resolve, readFileSync, sanitize, unlinkSync, writeFileSync, renameSync } from './FileStorageUtils'
 import { ComponentType } from '../../Graph/types/ComponentType'
 import { FileChanged } from './types'
 
@@ -81,7 +81,7 @@ export const updateFiles =
 
       if ( source === block.source ) {
         // noop
-        debug ( '[same  ] ' + p )
+        // debug ( '[same  ] ' + p )
       }
 
       else {
@@ -90,7 +90,7 @@ export const updateFiles =
           // update file system
           const name = `${ sanitize ( block.name ) }-${ blockId }.ts`
           const p = idToPath [ blockId ]
-          idToSource [ p ] = block.source
+          idToSource [ blockId ] = block.source
           debug ( '[write ] ' + p )
           writeFileSync ( p, block.source, 'utf8' )
         }
@@ -139,14 +139,18 @@ export const saveLucidityJson =
   delete doc.graph.blocksById
   delete doc.scenes
   delete doc._rev
-  const json = JSON.stringify ( doc, null, 2 )
-  if ( cache.json === json ) {
-    return
-  }
 
   const p = resolve ( path, 'lucidity.json')
   const s = stat ( p )
   if ( !s || s.isFile () ) {
+    const json = JSON.stringify ( doc, null, 2 )
+    if ( !cache.json && s ) {
+      cache.json = readFileSync ( p, 'utf8' )
+    }
+
+    if ( cache.json === json ) {
+      return
+    }
     cache.json = json
     debug ( '[write ] ' + p )
     writeFileSync ( p, json, 'utf8' )

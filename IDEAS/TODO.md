@@ -55,6 +55,8 @@
 
 - Optimize fs notification to send blockId directly.
 
+- How can we have childrenm: null in graph ? Should never happen (this is what triggers lucidity.json writes).
+
 
 # DATA
 

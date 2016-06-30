@@ -145,7 +145,7 @@ const handleEvent =
     const source = readFileSync ( p, 'utf8' )
     if ( csource === source ) {
       // noop
-      debug ( '[same  ] ' + filename )
+      // debug ( '[same  ] ' + filename )
     }
 
     else if ( eventType === 'library-changed' ) {
@@ -163,9 +163,6 @@ const handleEvent =
     }
     else {
       // changed file in project or scene
-      console.log ( 'CHANGED', cache.uuid )
-      console.log ( csource )
-      console.log ( source )
       const msg: FileChanged =
       { type: comp.type
       , _id: comp._id

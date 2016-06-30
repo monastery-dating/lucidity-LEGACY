@@ -21,9 +21,6 @@ interface StringMap {
 }
 
 export interface CacheType {
-  // debug
-  uuid?: string
-
   path: string
   json?: string
   watcher?: any
@@ -39,7 +36,6 @@ export const clearCache =
     c.watcher.close ()
     c.watcher = null
   }
-  c.uuid = makeId ()
   c.path = null
   c.json = null
   c.pathToId = {}

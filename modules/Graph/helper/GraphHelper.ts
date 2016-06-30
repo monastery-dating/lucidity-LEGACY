@@ -69,7 +69,7 @@ const check =
   const nodesById = graph.nodesById
   const blocksById = graph.blocksById
   const serr = []
-  if ( childrenTypes ) {
+  if ( Array.isArray ( childrenTypes ) ) {
     for ( let i = 0; i < childrenTypes.length; ++i ) {
       const e = childrenTypes [ i ]
       const n = nodesById [ children [ i ] ]
