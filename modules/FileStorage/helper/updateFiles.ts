@@ -1,4 +1,4 @@
-import { CacheType, getName, makeName, stat, resolve, readFileSync, sanitize, unlinkSync, writeFileSync, renameSync } from './FileStorageUtils'
+import { CacheType, dirname, getName, makeName, stat, resolve, readFileSync, sanitize, unlinkSync, writeFileSync, renameSync } from './FileStorageUtils'
 import { ComponentType } from '../../Graph/types/ComponentType'
 import { FileChanged } from './types'
 
@@ -44,13 +44,15 @@ export const updateFiles =
 
     else {
       // File exists in FS and app
-      const name = `${ sanitize ( block.name ) }-${ blockId }.ts`
+      const appname = makeName ( block )
       const p = idToPath [ blockId ]
-      const p2 = resolve ( path, name )
-      if ( p2 !== p ) {
+      const fsname = p.split ( '/' ).pop ()
+
+      if ( appname !== fsname ) {
         // rename
         if ( appfirst ) {
-          // p2 is the truth
+          // appname is the truth
+          const p2 = resolve ( dirname ( p ), appname )
           debug ( '[rename] ' + p2 )
           renameSync ( p, p2 )
           idToPath [ blockId ] = p2
@@ -58,7 +60,7 @@ export const updateFiles =
           pathToId [ p2 ] = blockId
         }
         else {
-          // p is the truth
+          // fsname is the truth
           const name = getName ( p )
           if ( name ) {
             const msg: FileChanged =

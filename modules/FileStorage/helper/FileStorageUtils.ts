@@ -3,18 +3,20 @@ declare var require: any
 const fs = require ( 'fs' )
 interface Path {
   resolve ( a: string, b?: string, c?: string ): string
+  dirname ( a: string ): string
 }
 const path: Path = require ( 'path' )
-export const resolve = path.resolve
+export const dirname = path.dirname
 export const mkdirSync = fs.mkdirSync
-export const writeFile = fs.writeFile
-export const writeFileSync = fs.writeFileSync
 export const readdirSync = fs.readdirSync
 export const readFileSync = fs.readFileSync
-export const unlinkSync = fs.unlinkSync
 export const renameSync = fs.renameSync
-export const watch = fs.watch
+export const resolve = path.resolve
 export const sanitize = require ( 'sanitize-filename' )
+export const unlinkSync = fs.unlinkSync
+export const watch = fs.watch
+export const writeFile = fs.writeFile
+export const writeFileSync = fs.writeFileSync
 
 interface StringMap {
   [ key: string ]: string

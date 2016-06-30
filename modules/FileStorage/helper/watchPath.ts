@@ -36,7 +36,6 @@ export const watchPath =
     , recursive: true // FIXME: not avail on linux. We need to add each file..
     }
   , ( event, filename ) => {
-      debug ( '[event ] ' + filename )
       handleEvent ( path, comp, sender, cache, eventType, filename )
     }
   )
@@ -65,6 +64,7 @@ const handleEvent =
     const re = fileRe.exec ( p )
     if ( re ) {
       // file moved
+      debug ( '[move  ] ' + p + ' (' + id + ')' )
       id = re [ 1 ]
       oldp = cache.idToPath [ id ]
       if ( !oldp ) {
@@ -95,7 +95,7 @@ const handleEvent =
         , op: 'rename'
         , name: newname
         }
-        debug ( '[fs.mov] ' + filename )
+        debug ( '[fs.nam] ' + filename )
         sender.send ( eventType, msg )
 
       }
