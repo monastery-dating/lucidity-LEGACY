@@ -1,16 +1,41 @@
 import { ComponentType } from '../../Graph/types/ComponentType'
 import { loadProject, sceneChanged, projectChanged } from './ProjectFileStorage'
 import { loadLibrary, loadComponents, componentChanged } from './LibraryFileStorage'
-import { preferences } from './Preferences'
-declare var require: any
-const fs = require ( 'fs' )
-const { ipcMain, dialog } = require ( 'electron' )
+declare var process: any
 
-export const start = ( win ) => {
+const callbacks: any = {}
 
-  // This communication is not async: we want to block until we get
-  // the preferences.
-  ipcMain.on ( 'preferences', preferences )
+const event =
+{ sender:
+  { send ( ...args ) {
+      process.send ( args )
+    }
+  }
+}
+
+process.on ( 'message', ( args ) => {
+  const type = args.shift ()
+  const clbk = callbacks [ type ]
+  if ( clbk ) {
+    try {
+      clbk ( event, ...args )
+    }
+    catch ( err ) {
+      console.log ( 'fsworker error', err )
+    }
+  }
+  else {
+    console.log ( `Unknown event '${type}'.`)
+  }
+})
+
+const ipcMain =
+{ on ( type, clbk ) {
+    callbacks [ type ] = clbk
+  }
+}
+
+export const start = () => {
 
   ipcMain.on ( 'open-project', ( event ) => {
     // User can choose a project
@@ -23,31 +48,4 @@ export const start = ( win ) => {
   ipcMain.on ( 'component-changed', componentChanged )
   ipcMain.on ( 'project-changed', projectChanged )
   ipcMain.on ( 'scene-changed', sceneChanged )
-
-  ipcMain.on ( 'select-project-path', ( event ) => {
-    // New project or web project open in electron for the first time.
-    dialog.showOpenDialog
-    ( win
-    , { properties: [ 'openDirectory', 'createDirectory' ]
-      , title: `Please select a folder for the project.`
-      }
-    , function ( paths ) {
-        event.sender.send ( 'project-path-selected', paths [ 0 ] )
-      }
-    )
-  })
-
-  ipcMain.on ( 'select-library-path', ( event ) => {
-    // New project or web project open in electron for the first time.
-    dialog.showOpenDialog
-    ( win
-    , { properties: [ 'openDirectory', 'createDirectory' ]
-      , title: `Please select a directory to store the library.`
-      }
-    , function ( paths ) {
-        event.sender.send ( 'library-path-selected', paths [ 0 ] )
-      }
-    )
-  })
-
 }

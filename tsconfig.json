@@ -2,6 +2,7 @@
   [ "node_modules"
   , "app/build"
   , ".git"
+  , "cerebral-devtools"
   , "typings/browser"
   , "typings/browser.d.ts"
   ]

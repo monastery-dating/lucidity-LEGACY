@@ -2,6 +2,9 @@ import { ComponentType, ComponentByIdType } from '../../Graph'
 import { SignalsType } from '../../context.type'
 import { ActionContextType } from '../../context.type'
 import { PreferencesType } from './types'
+import { getDirectory } from './FileDialog'
+import { preferences } from './Preferences'
+
 
 declare var require: any
 
@@ -19,8 +22,7 @@ let prefs: PreferencesType
 let doSelectLibraryPath = (): Promise<PathResolve> =>
 { return Promise.resolve ( false ) }
 
-let projectPathSelected = ( path: string ) => {}
-let libraryPathSelected = ( path: string ) => {}
+let doSelectPath = ( path: string ) => { console.log ( path ) }
 
 // This helper runs on the renderer side of the app.
 // FileStorageMain runs on the main process (node.js).
@@ -36,17 +38,49 @@ export const start =
     return
   }
 
-  const { ipcRenderer } = require ( 'electron' )
+  // ========= REPLACE ALL THIS IPC STUFF WITH MESSAGES TO fsworker ==
+  const callbacks: any = {}
+
+  const fork = require ( 'child_process' ).fork
+  // this is executed in app/build
+  const fsworker = fork ( 'app/build/fsworker.js' )
+
+  fsworker.on ( 'close', ( code ) => {
+    console.log ( `fsworker exited with code ${code}` )
+  })
+
+  fsworker.on ( 'message', ( args ) => {
+    const type = args.shift ()
+    const clbk = callbacks [ type ]
+    if ( clbk ) {
+      clbk ( null, ...args )
+    }
+  })
+
+  const ipcRenderer =
+  { on ( type, clbk ) {
+      callbacks [ type ] = clbk
+    }
+  , send ( ...args ) {
+      fsworker.send ( args )
+    }
+  }
 
   // =========== GET PREFERENCES (SYNC)
-  prefs = ipcRenderer.sendSync ( 'preferences' )
+  try {
+    prefs = preferences ( null )
+  }
+  catch ( err ) {
+    // not sending a signal in a signal
+    setTimeout ( () => changedSignal ( { type: 'error', message: err } ) )
+  }
   if ( ! prefs ) {
     // disable all filesystem stuff
     return
   }
 
   savePrefs = ( prefs ) => {
-    ipcRenderer.send ( 'preferences', prefs )
+    preferences ( prefs )
   }
 
   // =========== RECEIVE FILE SYSTEM NOTIFICATIONS
@@ -69,18 +103,6 @@ export const start =
     signals.$filestorage.library ( msg )
   })
 
-  ipcRenderer.on ( 'project-path-selected', ( event, path ) => {
-    projectPathSelected ( path )
-  })
-
-  ipcRenderer.on ( 'library-path-selected', ( event, path ) => {
-    libraryPathSelected ( path )
-  })
-
-  // FIXME: HACK
-  ipcRenderer.send
-  ( 'selected-project',  '/Users/gaspard/git/lucidity.project/Girls.lucy' )
-
   // =========== NOTIFY FILE SYSTEM
 
   doProjectChanged = ( doc ) => {
@@ -99,8 +121,7 @@ export const start =
       }
     }
     const p = new Promise<PathResolve> ( ( resolve, reject ) => {
-      projectPathSelected = resolve
-      ipcRenderer.send ( 'select-project-path' )
+      getDirectory ( 'Please select project directory.', resolve )
     })
     return p
   }
@@ -111,8 +132,7 @@ export const start =
       return Promise.resolve ( path )
     }
     const p = new Promise<PathResolve> ( ( resolve, reject ) => {
-      libraryPathSelected = resolve
-      ipcRenderer.send ( 'select-library-path' )
+      getDirectory ( 'Please select library directory.', resolve )
     })
     return p
   }

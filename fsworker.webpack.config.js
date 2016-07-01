@@ -2,14 +2,14 @@ const path = require ( 'path' )
 const webpack = require ( 'webpack' )
 
 module.exports =
-{ entry: './boot/electron.ts'
+{ entry: './boot/fsworker.ts'
 , target: 'electron'
 , node:
   { __dirname: false
   }
 , output:
   { path: path.resolve ( __dirname, 'app', 'build' )
-  , filename: 'electron.js'
+  , filename: 'fsworker.js'
   }
 , devtool: 'source-map'
 , resolve:

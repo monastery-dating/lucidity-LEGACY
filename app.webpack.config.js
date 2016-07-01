@@ -34,6 +34,6 @@ module.exports =
       , manifest: require('./app/build/vendor-manifest.json')
       }
     )
-  , new webpack.ExternalsPlugin ( 'commonjs', [ 'electron' ] )
+  , new webpack.ExternalsPlugin ( 'commonjs', [ 'child_process', 'fs', 'path' ] )
   ]
 }

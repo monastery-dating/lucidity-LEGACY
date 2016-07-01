@@ -1,40 +1,61 @@
 import { PreferencesType } from './types'
-import { resolve, stat, readFileSync, writeFile } from './FileStorageUtils'
 declare var require: any
-const { app } = require ( 'electron' )
+declare var nw: any
 
-const PREF_PATH = resolve
-( app.getPath ( 'userData' ), 'Lucidity.json' )
+let PREF_PATH, resolve, stat, readFileSync, writeFile
 
-export const preferences =
-( event
-, prefs: PreferencesType
-) => {
-  const sender = event.sender
-  if ( !prefs ) {
-    const s = stat ( PREF_PATH )
-    if ( !s ) {
-      const prefs: PreferencesType =
-      { projectPaths: {}, libraryPath: null }
-      event.returnValue = prefs
+let doPreferences =
+( prefs: PreferencesType
+): PreferencesType => {
+  // Not needed outside NW.js
+  return null
+}
+
+if ( window [ 'process' ] ) {
+  // in NW.js. Abort
+  const fs = require ( 'fs' )
+  const path = require ( 'path' )
+  readFileSync = fs.readFileSync
+  resolve = path.resolve
+  stat = ( path ) => {
+    try {
+      return fs.statSync ( path )
     }
-    else if ( s.isFile () ) {
-      const source = readFileSync ( PREF_PATH, 'utf8' )
-      try {
-        prefs = JSON.parse ( source )
-        event.returnValue = prefs
+    catch ( err ) {
+      return null
+    }
+  }
+  writeFile = fs.writeFile
+
+  PREF_PATH = resolve
+  ( nw.App.dataPath, '..', 'Lucidity.json' )
+  doPreferences =
+  ( prefs: PreferencesType ) => {
+    if ( !prefs ) {
+      const s = stat ( PREF_PATH )
+      if ( !s ) {
+        const prefs: PreferencesType =
+        { projectPaths: {}, libraryPath: null }
+        return prefs
       }
-      catch ( err ) {
-        console.log ( err )
-        sender.send ( 'error', err )
+      else if ( s.isFile () ) {
+        const source = readFileSync ( PREF_PATH, 'utf8' )
+        return JSON.parse ( source )
+      }
+      else {
+        throw `File preferences '${PREF_PATH}' is not a file.`
       }
     }
     else {
-      sender.send
-      ( 'error', `ERROR: file preferences '${PREF_PATH}' is not a file.` )
+      writeFile ( PREF_PATH, JSON.stringify ( prefs, null, 2 ) )
+      return prefs
     }
   }
-  else {
-    writeFile ( PREF_PATH, JSON.stringify ( prefs, null, 2 ) )
-  }
+}
+
+// This is not called when not in
+export const preferences =
+( prefs: PreferencesType
+): PreferencesType => {
+  return doPreferences ( prefs )
 }
