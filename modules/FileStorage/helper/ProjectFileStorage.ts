@@ -40,6 +40,7 @@ export const loadProject =
     const cache = sceneCacheById [ scene._id ] = clearCache ( {} )
     loadScene ( root, scene, cache, sender )
   }
+  event.sender.send ( 'done' )
 }
 
 const loadScene =
@@ -76,6 +77,7 @@ export const projectChanged =
   // app changes take over FS cache
   updateFiles ( path, cache, comp, event.sender, true )
   saveLucidityJson ( path, cache, comp, event.sender )
+  event.sender.send ( 'done' )
 }
 
 export const sceneChanged =
@@ -92,4 +94,5 @@ export const sceneChanged =
   // app changes take over FS cache
   updateFiles ( path, cache, comp, event.sender, true )
   saveLucidityJson ( path, cache, comp, event.sender )
+  event.sender.send ( 'done' )
 }

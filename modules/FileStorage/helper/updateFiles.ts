@@ -1,10 +1,6 @@
-import { CacheType, dirname, getName, makeName, stat, resolve, readFileSync, sanitize, unlinkSync, writeFileSync, renameSync } from './FileStorageUtils'
+import { CacheType, cacheEntry, cacheRemove, debug, dirname, getName, makeName, stat, resolve, readFileSync, sanitize, unlinkSync, writeFileSync, renameSync } from './FileStorageUtils'
 import { ComponentType } from '../../Graph/types/ComponentType'
 import { FileChanged } from './types'
-
-const debug = ( ...args ) => {
-  console.log ( args.join ("\n") )
-}
 
 // Any file not in cache: create
 // Different source in cache: update app
@@ -34,10 +30,8 @@ export const updateFiles =
         sender.send ( 'error', `Cannot create '${p}' (path exists and is not afile).`)
       }
       else {
-        idToPath [ blockId ] = p
-        pathToId [ p ] = blockId
-        idToSource [ blockId ] = block.source
-        debug ( '[write ] ' + p )
+        debug ( 'write', blockId, p )
+        cacheEntry ( cache, blockId, p, block.source )
         writeFileSync ( p, block.source, 'utf8' )
       }
     }
@@ -53,11 +47,9 @@ export const updateFiles =
         if ( appfirst ) {
           // appname is the truth
           const p2 = resolve ( dirname ( p ), appname )
-          debug ( '[rename] ' + p2 )
+          debug ( 'rename', blockId, p2 )
           renameSync ( p, p2 )
-          idToPath [ blockId ] = p2
-          delete pathToId [ p ]
-          pathToId [ p2 ] = blockId
+          cacheEntry ( cache, blockId, p2  )
         }
         else {
           // fsname is the truth
@@ -70,7 +62,8 @@ export const updateFiles =
             , blockId
             , name
             }
-            debug ( '[fs.nam] ' + p )
+            debug ( 'fs.rename', blockId, p )
+            cacheEntry ( cache, blockId, p )
             sender.send ( 'file-changed', msg )
           }
           else {
@@ -83,7 +76,7 @@ export const updateFiles =
 
       if ( source === block.source ) {
         // noop
-        // debug ( '[same  ] ' + p )
+        // debug ( 'same', blockId, p )
       }
 
       else {
@@ -91,9 +84,8 @@ export const updateFiles =
         if ( appfirst ) {
           // update file system
           const name = `${ sanitize ( block.name ) }-${ blockId }.ts`
-          const p = idToPath [ blockId ]
-          idToSource [ blockId ] = block.source
-          debug ( '[write ] ' + p )
+          debug ( 'write', blockId, p )
+          cacheEntry ( cache, blockId, p, block.source )
           writeFileSync ( p, block.source, 'utf8' )
         }
         else {
@@ -106,7 +98,8 @@ export const updateFiles =
           , source
           }
 
-          debug ( '[fs.nam] ' + p )
+          debug ( 'fs.src', blockId, p )
+          cacheEntry ( cache, blockId, p, source )
           sender.send ( 'file-changed', msg )
         }
       }
@@ -121,11 +114,9 @@ export const updateFiles =
     if ( !block ) {
       // File not in app: remove in FS
       const p = idToPath [ blockId ]
-      debug ( '[remove] ' + p )
+      debug ( 'remove', blockId, p )
+      cacheRemove ( cache, blockId )
       unlinkSync ( p )
-      delete idToSource [ blockId ]
-      delete idToPath [ blockId ]
-      delete pathToId [ p ]
     }
   }
 }
@@ -154,7 +145,8 @@ export const saveLucidityJson =
       return
     }
     cache.json = json
-    debug ( '[write ] ' + p )
+    debug ( 'write', null, p )
+    cacheEntry ( cache, 'lucidity', p, json )
     writeFileSync ( p, json, 'utf8' )
   }
   else {

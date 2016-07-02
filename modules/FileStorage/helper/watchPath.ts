@@ -1,5 +1,5 @@
 import { ComponentType } from '../../Graph/types/ComponentType'
-import { CacheType, fileRe, getName, readFileSync, resolve, stat, watch } from './FileStorageUtils'
+import { CacheType, debug, cacheEntry, cacheRemove, fileRe, getName, readFileSync, resolve, stat, watch } from './FileStorageUtils'
 import { FileChanged } from './types'
 import { makeId } from '../../Factory/makeId'
 import { rootBlockId } from '../../Block/BlockType'
@@ -10,10 +10,6 @@ export interface Watcher {
 
 interface Sender {
   send ( ...any ): void
-}
-
-const debug = ( ...args ) => {
-  console.log ( args.join ("\n") )
 }
 
 export const watchPath =
@@ -28,7 +24,7 @@ export const watchPath =
     watcher.close ()
   }
 
-  debug ( '[watch ] ' + path )
+  debug ( 'watch', null, path )
 
   return watch
   ( path
@@ -36,7 +32,13 @@ export const watchPath =
     , recursive: true // FIXME: not avail on linux. We need to add each file..
     }
   , ( event, filename ) => {
-      handleEvent ( path, comp, sender, cache, eventType, filename )
+      try {
+        handleEvent ( path, comp, sender, cache, eventType, filename )
+      }
+      catch ( err ) {
+        console.log ( 'fsworker error', err )
+        sender.send ( 'error', err )
+      }
     }
   )
 }
@@ -64,8 +66,8 @@ const handleEvent =
     const re = fileRe.exec ( p )
     if ( re ) {
       // file moved
-      debug ( '[move  ] ' + p + ' (' + id + ')' )
       id = re [ 1 ]
+      debug ( 'mole', id, p )
       oldp = cache.idToPath [ id ]
       if ( !oldp ) {
         const msg = `Unknown element '${id}' (not in graph).`
@@ -80,9 +82,7 @@ const handleEvent =
         sender.send ( 'error', msg )
         return
       }
-      delete cache.pathToId [ oldp ]
-      cache.pathToId [ p ] = id
-      cache.idToPath [ id ] = p
+      cacheEntry ( cache, id, p )
 
       const oldname = getName ( oldp )
       const newname = getName ( p )
@@ -95,9 +95,8 @@ const handleEvent =
         , op: 'rename'
         , name: newname
         }
-        debug ( '[fs.nam] ' + filename )
+        debug ( 'fs.rename', id, p )
         sender.send ( eventType, msg )
-
       }
     }
   }
@@ -117,10 +116,8 @@ const handleEvent =
         , name
         , source
         }
-        cache.idToPath [ msg._id ] = p
-        cache.pathToId [ p ] = msg._id
-        cache.idToSource [ msg._id ] = source
-        debug ( '[fs.new] ' + filename )
+        cacheEntry ( cache, msg._id, p, source )
+        debug ( 'fs.new', msg._id, p )
         sender.send ( eventType, msg )
       }
       else {
@@ -132,7 +129,7 @@ const handleEvent =
 
     else {
       // Ignore new files outside of library
-      debug ( '[ignore] ' + filename )
+      debug ( 'ignore', null, filename )
 
       // if filename === path, (moved)
       // we must call selectProjectPath to
@@ -145,7 +142,7 @@ const handleEvent =
     const source = readFileSync ( p, 'utf8' )
     if ( csource === source ) {
       // noop
-      // debug ( '[same  ] ' + filename )
+      // debug ( 'same', id, p )
     }
 
     else if ( eventType === 'library-changed' ) {
@@ -157,8 +154,8 @@ const handleEvent =
       , op: 'changed'
       , source
       }
-      cache.idToSource [ msg._id ] = source
-      debug ( '[fs.mod] ' + filename )
+      debug ( 'fs.src', id, p )
+      cacheEntry ( cache, id, p, source )
       sender.send ( eventType, msg )
     }
     else {
@@ -170,8 +167,8 @@ const handleEvent =
       , op: 'changed'
       , source
       }
-      cache.idToSource [ id ] = source
-      debug ( '[fs.mod] ' + filename )
+      debug ( 'fs.src', id, p )
+      cacheEntry ( cache, id, p, source )
       sender.send ( eventType, msg )
     }
   }

@@ -18,6 +18,21 @@ export const watch = fs.watch
 export const writeFile = fs.writeFile
 export const writeFileSync = fs.writeFileSync
 
+const WHITE = '                   '
+const MSG_LEN = 10
+
+export const debug =
+( msg: string
+, blockId: string
+, path: string
+) => {
+  if ( msg.length < MSG_LEN ) {
+    msg = msg + WHITE.substr ( 0, MSG_LEN - msg.length )
+  }
+  console.log ( `[${msg}] (${blockId}) ${path}` )
+}
+
+
 interface StringMap {
   [ key: string ]: string
 }
@@ -101,9 +116,7 @@ export const buildCache =
     if ( re ) {
       const blockId = re [ 1 ]
       const source = readFileSync ( path, 'utf8' )
-      cache.pathToId [ path ] = blockId
-      cache.idToPath [ blockId ] = path
-      cache.idToSource [ blockId ] = source
+      cacheEntry ( cache, blockId, path, source )
     }
   }
 
@@ -113,5 +126,37 @@ export const buildCache =
       const subp = resolve ( path, child )
       buildCache ( subp, cache )
     }
+  }
+}
+
+export const cacheEntry =
+( cache: CacheType
+, blockId: string
+, path: string
+, source?: string
+) => {
+  const oldp = cache.idToPath [ blockId ]
+  if ( oldp && oldp !== path ) {
+    debug ( 'cache >', blockId, oldp )
+    delete cache.pathToId [ oldp ]
+  }
+  debug ( 'cache +', blockId, path )
+  cache.pathToId [ path ] = blockId
+  cache.idToPath [ blockId ] = path
+  if ( source !== undefined ) {
+    cache.idToSource [ blockId ] = source
+  }
+}
+
+export const cacheRemove =
+( cache: CacheType
+, blockId: string
+) => {
+  const oldp = cache.idToPath [ blockId ]
+  if ( oldp ) {
+    debug ( 'cache -', blockId, oldp )
+    delete cache.pathToId [ oldp ]
+    delete cache.idToPath [ blockId ]
+    delete cache.idToSource [ blockId ]
   }
 }

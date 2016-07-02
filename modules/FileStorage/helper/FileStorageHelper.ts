@@ -45,8 +45,17 @@ export const start =
   // this is executed in app/build
   const fsworker = fork ( 'app/build/fsworker.js' )
 
+  const unload = () => {
+    window.removeEventListener ( 'unload', unload )
+    fsworker.kill ( 'SIGTERM' )
+  }
+
+  window.addEventListener ( 'unload', unload )
+
   fsworker.on ( 'close', ( code ) => {
-    console.log ( `fsworker exited with code ${code}` )
+    const message = `fsworker exited with code ${code}`
+    console.log ( message )
+    changedSignal ( { type: 'error', message } )
   })
 
   fsworker.on ( 'message', ( args ) => {
@@ -86,6 +95,7 @@ export const start =
   // =========== RECEIVE FILE SYSTEM NOTIFICATIONS
 
   ipcRenderer.on ( 'done', ( event ) => {
+    console.log ( 'done' )
     setTimeout ( () => {
       changedSignal ( { type: 'paused' } )
     }, 100)

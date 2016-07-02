@@ -1,5 +1,5 @@
 import { ComponentType } from '../../Graph/types/ComponentType'
-import { buildCache, CacheType, clearCache, getName, makeName, stat, resolve, mkdirSync, writeFileSync, readdirSync, readFileSync, unlinkSync } from './FileStorageUtils'
+import { buildCache, CacheType, cacheEntry, cacheRemove, clearCache, debug, getName, makeName, stat, resolve, mkdirSync, writeFileSync, readdirSync, readFileSync, unlinkSync } from './FileStorageUtils'
 import { watchPath, Watcher } from './watchPath'
 import { updateFiles, saveLucidityJson } from './updateFiles'
 import { rootBlockId } from '../../Block/BlockType'
@@ -7,8 +7,6 @@ import { FileChanged } from './types'
 import { makeId } from '../../Factory/makeId'
 
 const libraryCache = clearCache ( {} )
-
-const tsRe = /\.ts$/
 
 export const loadLibrary =
 ( event
@@ -38,10 +36,8 @@ export const loadComponents =
           const p = resolve ( path, name )
           const s = stat ( p )
           if ( !s ) {
+            cacheEntry ( libraryCache, comp._id, p, block.source )
             writeFileSync ( p, block.source, 'utf8' )
-            libraryCache.idToPath [ comp._id ] = p
-            libraryCache.pathToId [ p ] = comp._id
-            libraryCache.idToSource [ comp._id ] = block.source
           }
           else if ( !s.isFile () ) {
             const msg = `Cannot export component ('${p}' is not a writable).`
@@ -50,9 +46,7 @@ export const loadComponents =
           }
           else {
             // source compare will happen on path traverse
-            libraryCache.idToPath [ comp._id ] = p
-            libraryCache.pathToId [ p ] = comp._id
-            libraryCache.idToSource [ comp._id ] = block.source
+            cacheEntry ( libraryCache, comp._id, p, block.source )
           }
         }
         else {
@@ -68,14 +62,15 @@ export const loadComponents =
     }
   }
   else {
-    // Parse library and update app if new file/source.
+    // Parse library path and update app if new file/source.
     const children = readdirSync ( path )
     for ( const child of children ) {
       const p = resolve ( path, child )
       const s = stat ( p )
       if ( !s ) { continue } // should never happen
       if ( s.isFile () ) {
-        if ( tsRe.test ( p ) ) {
+        const name = getName ( p, true )
+        if ( name ) {
           // found ts file
           let _id = libraryCache.pathToId [ p ]
           const source = readFileSync ( p, 'utf8' )
@@ -88,7 +83,6 @@ export const loadComponents =
             if ( !_id ) {
               _id = makeId ()
             }
-            const name = getName ( path )
             const msg: FileChanged =
             { type: 'component'
             , _id
@@ -97,9 +91,7 @@ export const loadComponents =
             , name
             }
             // update cache
-            libraryCache.pathToId [ p ] = _id
-            libraryCache.idToPath [ _id ] = path
-            libraryCache.idToSource [ _id ] = source
+            cacheEntry ( libraryCache, _id, p, source )
             sender.send ( 'library-changed', msg )
           }
         }
@@ -136,9 +128,7 @@ export const componentChanged =
   if ( comp._deleted ) {
     if ( s && s.isFile () ) {
       unlinkSync ( p )
-      delete libraryCache.idToPath [ comp._id ]
-      delete libraryCache.pathToId [ p ]
-      delete libraryCache.idToSource [ comp._id ]
+      cacheRemove ( libraryCache, comp._id )
     }
     else {
       const msg = `Could not remove '${comp.name}' (not a file).`
@@ -154,10 +144,8 @@ export const componentChanged =
          && ( !block.sources || Object.keys ( block.sources ).length === 0 ) ) {
       // single file component
       if ( !s || s.isFile () ) {
+        cacheEntry ( libraryCache, comp._id, p, block.source )
         writeFileSync ( p, block.source, 'utf8' )
-        libraryCache.idToPath [ comp._id ] = p
-        libraryCache.pathToId [ p ] = comp._id
-        libraryCache.idToSource [ comp._id ] = block.source
       }
       else {
         const msg = `Cannot export component ('${p}' is not a writable).`
@@ -171,4 +159,5 @@ export const componentChanged =
       event.sender ( 'error', msg )
     }
   }
+  event.sender.send ( 'done' )
 }
