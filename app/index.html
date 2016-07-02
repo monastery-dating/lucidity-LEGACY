@@ -24,6 +24,14 @@
         </defs>
       </svg>
     </div>
+    <script type='text/javascript'>
+      if ( window [ 'nw' ] ) {
+        // Reset menu as fast as possible to avoid blink
+        const menu = new nw.Menu ( { type: 'menubar' } )
+        menu.createMacBuiltin ( 'Lucidity', { hideEdit: true, hideWindow: true } )
+        nw.Window.get ().menu = menu
+      }
+    </script>
     <script type='text/javascript' src='build/vendor.js'></script>
     <script type='text/javascript' src='live-reload/app.js'></script>
   </body>

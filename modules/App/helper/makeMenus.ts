@@ -52,12 +52,6 @@ export const nwMakeMenus =
   nwAddOne ( appdef [ 1 ], appmenu, 1 ) // Preferences
   nwAddOne ( appdef [ 2 ], appmenu, 2 ) // separator
   nwAddOne ( appdef [ 3 ], appmenu, 3 ) // Preferences
-  for ( let i = 0; i < appmenu.items.length; ++i ) {
-    const item = appmenu.items [ i ]
-    if ( item.label === 'Quit Lucidity' ) {
-      item.label = 'Quit'
-    }
-  }
   return menu
 }
 

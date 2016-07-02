@@ -65,12 +65,13 @@ controller.addModules
   }
 )
 
+setupScreenEvents ( controller )
+
 render
 ( () => <AppView/>
 , document.getElementById ( 'app' )
 , controller
 )
 
-setupScreenEvents ( controller )
 
 controller.getSignals().app.mounted ()
