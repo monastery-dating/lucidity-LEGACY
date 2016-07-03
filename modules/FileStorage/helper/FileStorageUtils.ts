@@ -3,15 +3,17 @@ declare var require: any
 const fs = require ( 'fs' )
 interface Path {
   resolve ( a: string, b?: string, c?: string ): string
+  join ( a: string, b?: string, c?: string ): string
   dirname ( a: string ): string
 }
-const path: Path = require ( 'path' )
-export const dirname = path.dirname
+const pathlib: Path = require ( 'path' )
+export const dirname = pathlib.dirname
 export const mkdirSync = fs.mkdirSync
 export const readdirSync = fs.readdirSync
 export const readFileSync = fs.readFileSync
 export const renameSync = fs.renameSync
-export const resolve = path.resolve
+export const resolve = pathlib.resolve
+export const join = pathlib.join
 export const sanitize = require ( 'sanitize-filename' )
 export const unlinkSync = fs.unlinkSync
 export const watch = fs.watch
@@ -41,6 +43,7 @@ export interface CacheType {
   path: string
   json?: string
   watcher?: any
+  compName: string
   pathToId: StringMap
   idToPath: StringMap
   idToSource: StringMap
@@ -104,30 +107,33 @@ export const getName =
 
 // Just grab all files with a blockId and store info.
 export const buildCache =
-( path: string
-, cache: CacheType
+( cache: CacheType
+, filename: string = ''
 ) => {
-  const s = stat ( path )
+  const filepath = resolve ( cache.path, filename )
+  const s = stat ( filepath )
 
   if ( !s ) { return }
 
   if ( s.isFile () ) {
-    const re = fileRe.exec ( path )
+    const re = fileRe.exec ( filename )
     if ( re ) {
       const blockId = re [ 1 ]
-      const source = readFileSync ( path, 'utf8' )
-      cacheEntry ( cache, blockId, path, source )
+      const source = readFileSync ( filepath, 'utf8' )
+      cacheEntry ( cache, blockId, filename, source )
     }
   }
 
   else if ( s.isDirectory () ) {
-    const children = readdirSync ( path )
+    const children = readdirSync ( filepath )
     for ( const child of children ) {
-      const subp = resolve ( path, child )
-      buildCache ( subp, cache )
+      const subfilename = join ( filename, child )
+      buildCache ( cache, subfilename )
     }
   }
 }
+
+const absRe = /^\//
 
 export const cacheEntry =
 ( cache: CacheType
@@ -135,12 +141,15 @@ export const cacheEntry =
 , path: string
 , source?: string
 ) => {
+  if ( absRe.test ( path ) ) {
+    throw `FULLPATH ${path}`
+  }
   const oldp = cache.idToPath [ blockId ]
   if ( oldp && oldp !== path ) {
-    debug ( 'cache >', blockId, oldp )
+    // debug ( 'cache >', blockId, oldp )
     delete cache.pathToId [ oldp ]
   }
-  debug ( 'cache +', blockId, path )
+  // debug ( 'cache +', blockId, path )
   cache.pathToId [ path ] = blockId
   cache.idToPath [ blockId ] = path
   if ( source !== undefined ) {
@@ -154,7 +163,7 @@ export const cacheRemove =
 ) => {
   const oldp = cache.idToPath [ blockId ]
   if ( oldp ) {
-    debug ( 'cache -', blockId, oldp )
+    // debug ( 'cache -', blockId, oldp )
     delete cache.pathToId [ oldp ]
     delete cache.idToPath [ blockId ]
     delete cache.idToSource [ blockId ]

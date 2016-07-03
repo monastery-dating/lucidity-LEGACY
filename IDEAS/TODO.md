@@ -1,6 +1,6 @@
 # TODO
 
-- IMPORTANT: DO NOT CHANGE blockId on graph modifications.
+- REMOVE 'blockId' in GraphType...
 
 // ======= Wednesday ========== //
 

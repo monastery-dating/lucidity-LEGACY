@@ -1,5 +1,5 @@
 import { ComponentType } from '../../Graph/types/ComponentType'
-import { buildCache, CacheType, clearCache, stat, resolve, mkdirSync, sanitize } from './FileStorageUtils'
+import { debug, buildCache, CacheType, clearCache, stat, resolve, renameSync, mkdirSync, sanitize } from './FileStorageUtils'
 import { watchPath, Watcher } from './watchPath'
 import { updateFiles, saveLucidityJson } from './updateFiles'
 
@@ -49,15 +49,17 @@ const loadScene =
 , cache: CacheType
 , sender
 ) => {
+  debug ( 'load s', null, comp.name )
   const s = stat ( path )
   if ( !s ) {
     mkdirSync ( path )
   }
   clearCache ( cache )
   cache.path = path
-  buildCache ( path, cache )
-  updateFiles ( path, cache, comp, sender )
-  saveLucidityJson ( path, cache, comp, sender )
+  cache.compName = comp.name
+  buildCache ( cache )
+  updateFiles ( cache, comp, sender )
+  saveLucidityJson ( cache, comp, sender )
   cache.watcher = watchPath
   ( path
   , comp
@@ -73,10 +75,9 @@ export const projectChanged =
 , comp: ComponentType
 ) => {
   const cache = projectCache
-  const path = projectCache.path
   // app changes take over FS cache
-  updateFiles ( path, cache, comp, event.sender, true )
-  saveLucidityJson ( path, cache, comp, event.sender )
+  updateFiles ( cache, comp, event.sender, true )
+  saveLucidityJson ( cache, comp, event.sender )
   event.sender.send ( 'done' )
 }
 
@@ -89,10 +90,41 @@ export const sceneChanged =
     cache = clearCache ( {} )
     sceneCacheById [ comp._id ] = cache
     cache.path = resolve ( projectPath, 'scenes', sanitize ( comp.name ) )
+    cache.compName = comp.name
   }
+  else if ( comp.name !== cache.compName ) {
+    debug ( 'scenemv', null, comp.name )
+    // move
+    const newPath = resolve ( projectPath, 'scenes', sanitize ( comp.name ) )
+    const s = stat ( newPath )
+    if ( !s || s.isDirectory () ) {
+      if ( !s ) {
+        renameSync ( cache.path, newPath )
+      }
+      const sender = event.sender
+      cache.watcher = watchPath
+      ( newPath
+      , comp
+      , cache
+      , 'file-changed'
+      , sender
+      , cache.watcher
+      )
+      cache.path = newPath
+      cache.compName = comp.name
+    }
+
+    else {
+      const msg = `Could not rename scene (path exists '${newPath}')`
+      console.log ( msg )
+      event.sender.send ( 'error', msg )
+      return
+    }
+  }
+
   const path = cache.path
   // app changes take over FS cache
-  updateFiles ( path, cache, comp, event.sender, true )
-  saveLucidityJson ( path, cache, comp, event.sender )
+  updateFiles ( cache, comp, event.sender, true )
+  saveLucidityJson ( cache, comp, event.sender )
   event.sender.send ( 'done' )
 }

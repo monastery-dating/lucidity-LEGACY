@@ -51,41 +51,41 @@ const handleEvent =
 , eventType: 'file-changed' | 'library-changed'
 , filename: string
 ) => {
-  const p = resolve ( basepath, filename )
-  const s = stat ( p )
+  const filepath = resolve ( basepath, filename )
+  const s = stat ( filepath )
   if ( !s || !s.isFile () ) {
     // ignore
     return
   }
 
   // Do we know this file ?
-  let id = cache.pathToId [ p ]
-  let oldp
+  let id = cache.pathToId [ filename ]
+  let oldfilename
   if ( !id && eventType !== 'library-changed' ) {
     // try to grab from regexp
-    const re = fileRe.exec ( p )
+    const re = fileRe.exec ( filename )
     if ( re ) {
       // file moved
       id = re [ 1 ]
-      debug ( 'mole', id, p )
-      oldp = cache.idToPath [ id ]
-      if ( !oldp ) {
+      debug ( 'move', id, filename )
+      oldfilename = cache.idToPath [ id ]
+      if ( !oldfilename ) {
         const msg = `Unknown element '${id}' (not in graph).`
         console.log ( msg )
         sender.send ( 'error', msg )
         return
       }
-      const s = stat ( oldp )
+      const s = stat ( resolve ( basepath, oldfilename ) )
       if ( s ) {
-        const msg = `Duplicate block id '${id}' (${p} and ${oldp}).`
+        const msg = `Duplicate block id '${id}' (${filename} and ${oldfilename}).`
         console.log ( msg )
         sender.send ( 'error', msg )
         return
       }
-      cacheEntry ( cache, id, p )
+      cacheEntry ( cache, id, filename )
 
-      const oldname = getName ( oldp )
-      const newname = getName ( p )
+      const oldname = getName ( oldfilename )
+      const newname = getName ( filename )
       if ( oldname != newname ) {
         // rename
         const msg: FileChanged =
@@ -95,7 +95,7 @@ const handleEvent =
         , op: 'rename'
         , name: newname
         }
-        debug ( 'fs.rename', id, p )
+        debug ( 'fs.rename', id, filename )
         sender.send ( eventType, msg )
       }
     }
@@ -106,8 +106,8 @@ const handleEvent =
 
     if ( eventType === 'library-changed' ) {
       // New component
-      const source = readFileSync ( p, 'utf8' )
-      const name = getName ( p, true )
+      const source = readFileSync ( filepath, 'utf8' )
+      const name = getName ( filename, true )
       if ( name ) {
         const msg: FileChanged =
         { type: 'component'
@@ -116,12 +116,12 @@ const handleEvent =
         , name
         , source
         }
-        cacheEntry ( cache, msg._id, p, source )
-        debug ( 'fs.new', msg._id, p )
+        cacheEntry ( cache, msg._id, filename, source )
+        debug ( 'fs.new', msg._id, filename )
         sender.send ( eventType, msg )
       }
       else {
-        const msg = `Cannot rename (invalid filename '${p}').`
+        const msg = `Cannot rename (invalid filename '${filename}').`
         console.log ( msg )
         sender.send ( 'error', msg )
       }
@@ -139,7 +139,7 @@ const handleEvent =
 
   else {
     const csource = cache.idToSource [ id ]
-    const source = readFileSync ( p, 'utf8' )
+    const source = readFileSync ( filepath, 'utf8' )
     if ( csource === source ) {
       // noop
       // debug ( 'same', id, p )
@@ -154,8 +154,8 @@ const handleEvent =
       , op: 'changed'
       , source
       }
-      debug ( 'fs.src', id, p )
-      cacheEntry ( cache, id, p, source )
+      debug ( 'fs.src', id, filename )
+      cacheEntry ( cache, id, filename, source )
       sender.send ( eventType, msg )
     }
     else {
@@ -167,8 +167,8 @@ const handleEvent =
       , op: 'changed'
       , source
       }
-      debug ( 'fs.src', id, p )
-      cacheEntry ( cache, id, p, source )
+      debug ( 'fs.src', id, filename )
+      cacheEntry ( cache, id, filename, source )
       sender.send ( eventType, msg )
     }
   }

@@ -33,20 +33,20 @@ export const loadComponents =
              && ( !block.sources || Object.keys ( block.sources ).length === 0 ) ) {
           const name = makeName ( comp, true )
           // single file component
-          const p = resolve ( path, name )
-          const s = stat ( p )
+          const filepath = resolve ( path, name )
+          const s = stat ( filepath )
           if ( !s ) {
-            cacheEntry ( libraryCache, comp._id, p, block.source )
-            writeFileSync ( p, block.source, 'utf8' )
+            cacheEntry ( libraryCache, comp._id, name, block.source )
+            writeFileSync ( filepath, block.source, 'utf8' )
           }
           else if ( !s.isFile () ) {
-            const msg = `Cannot export component ('${p}' is not a writable).`
+            const msg = `Cannot export component ('${filepath}' is not a writable).`
             console.log ( msg )
             sender.send ( 'error', msg )
           }
           else {
             // source compare will happen on path traverse
-            cacheEntry ( libraryCache, comp._id, p, block.source )
+            cacheEntry ( libraryCache, comp._id, name, block.source )
           }
         }
         else {
@@ -65,15 +65,15 @@ export const loadComponents =
     // Parse library path and update app if new file/source.
     const children = readdirSync ( path )
     for ( const child of children ) {
-      const p = resolve ( path, child )
-      const s = stat ( p )
+      const filepath = resolve ( path, child )
+      const s = stat ( filepath )
       if ( !s ) { continue } // should never happen
       if ( s.isFile () ) {
-        const name = getName ( p, true )
+        const name = getName ( child, true )
         if ( name ) {
           // found ts file
-          let _id = libraryCache.pathToId [ p ]
-          const source = readFileSync ( p, 'utf8' )
+          let _id = libraryCache.pathToId [ child ]
+          const source = readFileSync ( filepath, 'utf8' )
           const csource = libraryCache.idToSource [ _id ]
           if ( source === csource ) {
             // noop: same
@@ -91,7 +91,7 @@ export const loadComponents =
             , name
             }
             // update cache
-            cacheEntry ( libraryCache, _id, p, source )
+            cacheEntry ( libraryCache, _id, child, source )
             sender.send ( 'library-changed', msg )
           }
         }
@@ -122,12 +122,12 @@ export const componentChanged =
 ) => {
   const path = libraryCache.path
   const name = makeName ( comp, true )
-  const p = resolve ( path, name )
-  const s = stat ( p )
+  const filepath = resolve ( path, name )
+  const s = stat ( filepath )
 
   if ( comp._deleted ) {
     if ( s && s.isFile () ) {
-      unlinkSync ( p )
+      unlinkSync ( filepath )
       cacheRemove ( libraryCache, comp._id )
     }
     else {
@@ -144,11 +144,11 @@ export const componentChanged =
          && ( !block.sources || Object.keys ( block.sources ).length === 0 ) ) {
       // single file component
       if ( !s || s.isFile () ) {
-        cacheEntry ( libraryCache, comp._id, p, block.source )
-        writeFileSync ( p, block.source, 'utf8' )
+        cacheEntry ( libraryCache, comp._id, name, block.source )
+        writeFileSync ( filepath, block.source, 'utf8' )
       }
       else {
-        const msg = `Cannot export component ('${p}' is not a writable).`
+        const msg = `Cannot export component ('${filepath}' is not a writable).`
         console.log ( msg )
         event.sender ( 'error', msg )
       }

@@ -10,7 +10,5 @@ export const name: SignalType =
 // close editing on data save
 , set ( 'state:/$factory.project.close', true )
 , docAction
-, { success: [ ... save ]
-  , error: [ status ]
-  }
+, ... save
 ]

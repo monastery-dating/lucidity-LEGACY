@@ -179,6 +179,7 @@ describe ( 'insertGraph', ( it, setupDone ) => {
     }
   )
 
+  // FIXME: What is this used for ?
   it ( 'should select block', ( assert ) => {
       assert.equal
       ( graph.blockId
@@ -186,7 +187,6 @@ describe ( 'insertGraph', ( it, setupDone ) => {
       )
     }
   )
-
 
   it ( 'should insert null', ( assert ) => {
       let g = insertGraph ( main, rootNodeId, 1, g1 )
@@ -236,6 +236,7 @@ describe ( 'GraphHelper.slip', ( it, setupDone ) => {
   let bong: GraphType
   let bar: GraphType
   let main: GraphType
+  let mainfoo: GraphType
   let foo: GraphType
   const nid: any = {}
 
@@ -257,6 +258,7 @@ describe ( 'GraphHelper.slip', ( it, setupDone ) => {
     bar = insertGraph ( bar, rootNodeId, 1, bong )
 
     main = insertGraph ( main, rootNodeId, 0, foo )
+    mainfoo = main
     main = slipGraph ( main, rootNodeId, 0, bar )
 
     for ( const k in main.nodesById ) {
@@ -295,6 +297,15 @@ describe ( 'GraphHelper.slip', ( it, setupDone ) => {
       , '   n1:b1:foo'
       , '  n4:b4:bong'
       ]
+    )
+  })
+
+  it ( 'should not change blockId', ( assert ) => {
+    const fooId = mainfoo.nodesById [ 'n1' ].blockId
+    assert.equal ( 'foo', mainfoo.blocksById [ fooId ].name )
+    assert.equal
+    ( main.nodesById [ nid.foo ].blockId
+    , fooId
     )
   })
 
@@ -365,8 +376,8 @@ describe ( 'GraphHelper.cut', ( it, setupDone ) => {
 
     assert.equal
     ( traverse ( main )
-    , [ 'n0:b0:g1'
-      , ' n1:b1:g2'
+    , [ 'n0:b1:g1'
+      , ' n1:b2:g2'
       ]
     )
   })
@@ -381,31 +392,31 @@ describe ( 'GraphHelper.cut', ( it, setupDone ) => {
 
 describe ( 'dropGraph', ( it, setupDone ) => {
   let main: GraphType
-  let g1: GraphType
-  let g2: GraphType
+  let foo: GraphType
+  let bar: GraphType
 
   Promise.all
   ( [ createGraph ()
       .then ( ( g ) => { main = g } )
     , createGraph ( 'foo', SOURCE_A )
-      .then ( ( g ) => { g1 = g } )
+      .then ( ( g ) => { foo = g } )
     , createGraph ( 'bar', SOURCE_A )
-      .then ( ( g ) => { g2 = g } )
+      .then ( ( g ) => { bar = g } )
     ]
   )
   .then ( () => {
-    g1 = insertGraph ( g1, rootNodeId, 0, g2 )
-    main = insertGraph ( main, rootNodeId, 1, g1 )
+    main = insertGraph ( main, rootNodeId, 1, foo )
+    main = insertGraph ( main, rootNodeId, 2, bar )
     // [ graph ] 'n0'
-    //   null  [ foo ] 'n1'
-    //         [ bar ] 'n2'
+    //   null  [ foo ] 'n1' [ bar ] 'n2'
     main = dropGraph ( main, 'n1' )
     // [ graph ] 'n0'
+    //   null  null [ bar ] 'n2'
     setupDone ()
   })
 
-  it ( 'create smaller graph', ( assert ) => {
-    assert.equal ( traverse ( main ), [ 'n0:b0:main' ] )
+  it ( 'create smaller graph keeping blockId', ( assert ) => {
+    assert.equal ( traverse ( main ), [ 'n0:b0:main', ' null', ' null', ' n1:b2:bar' ] )
   })
 
   it ( 'should select block', ( assert ) => {

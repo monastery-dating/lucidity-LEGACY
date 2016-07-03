@@ -214,7 +214,10 @@ const insertInGraph =
   let block = oldgraph.blocksById [ oldnode.blockId ]
 
   if ( !block [ '_copyblock' ] ) {
-    const bid = nextBlockId ( newgraph.blocksById )
+    let bid = block.id
+    if ( newgraph.blocksById [ bid ] ) {
+      bid = nextBlockId ( newgraph.blocksById )
+    }
     block = Object.assign ( {}, block, { id: bid } )
     newgraph.blocksById [ bid ] = Object.freeze ( block )
 
