@@ -3,6 +3,9 @@ const webpack = require('webpack')
 
 module.exports =
 { entry: './boot/app.tsx'
+, node:
+  { __dirname: false
+  }
 , output:
   { path: path.resolve ( __dirname, 'app', 'build' )
   , filename: 'app.js'
