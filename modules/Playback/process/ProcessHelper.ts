@@ -3,11 +3,15 @@ declare var require:any
 export interface ProcessType {
   send ( ...any )
   receive ( ...any )
+  setSource ( source: string )
   halt (): void
+
+  source?: string
+  ready?: boolean
 }
 
 interface MakeProcessType {
-  ( source: string ): ProcessType
+  (): ProcessType
 }
 
 interface ProcessMakers {
@@ -32,7 +36,6 @@ if ( window [ 'process' ] ) {
 
 export const start =
 ( lang: string
-, source: string
 , oldprocess?: ProcessType
 ): ProcessType => {
   if ( oldprocess ) {
@@ -40,7 +43,7 @@ export const start =
   }
   const maker = PROCESS_MAKERS [ lang ]
   if ( maker ) {
-    return maker ( source )
+    return maker ()
   }
   throw `Invalid language '${lang}' (not process maker).`
 }

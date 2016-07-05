@@ -20,8 +20,7 @@ if ( window [ 'process' ] ) {
 
 
   const makeLua =
-  ( source: string
-  ): ProcessType => {
+  (): ProcessType => {
 
     const lua = spawn
     ( LUA_BIN
@@ -29,26 +28,11 @@ if ( window [ 'process' ] ) {
     , { stdio: [ 'pipe', 'pipe', 'inherit' ] }
     )
 
-    const luaprocess: ProcessType = {
-      halt () {
-        kill ( lua )
-      }
-    , send ( ...data ) {}
-    , receive ( ...data ) {}
+    const halt = () => {
+      kill ( lua )
     }
 
-    lua.stdout.setEncoding ( 'utf-8' )
-    lua.stdout.on ( 'data', ( alldata ) => {
-      // TODO: optimize this to avoid split !
-      alldata.split ( '\n' ).forEach ( ( data ) => {
-        console.log ( 'RECEIVE', data )
-        if ( data === '' ) { return }
-        const msg = JSON.parse ( data )
-        luaprocess.receive ( ...msg )
-      })
-    })
-
-/*
+    /*
     lua.stderr.setEncoding ( 'utf-8' )
     lua.stderr.on ( 'data', ( data ) => {
       // TODO: optimize this to avoid split !
@@ -58,9 +42,8 @@ if ( window [ 'process' ] ) {
     */
 
     lua.stdin.setEncoding ( 'utf-8' )
-    luaprocess.send = ( ...data ) => {
+    const send = ( ...data ) => {
       const msg = JSON.stringify ( data )
-      console.log ( 'JS: send ' + msg )
       lua.stdin.write ( msg + "\n" )
     }
 
@@ -68,7 +51,36 @@ if ( window [ 'process' ] ) {
       console.log ( 'LUA EXITED', code )
     })
 
-    luaprocess.send ( 'source', source )
+    const luaprocess: ProcessType = {
+      halt, setSource ( s ) {}, send, receive ( ...data ) {}
+    }
+
+    luaprocess.setSource = ( source: string ) => {
+      if ( luaprocess.ready && source !== luaprocess.source ) {
+        luaprocess.send ( 'source', source )
+        luaprocess.source = source
+      }
+      else {
+        luaprocess.source = source
+      }
+    }
+
+    lua.stdout.setEncoding ( 'utf-8' )
+    lua.stdout.on ( 'data', ( alldata ) => {
+      // TODO: optimize this to avoid split !
+      alldata.split ( '\n' ).forEach ( ( data ) => {
+        if ( data === '' ) { return }
+        const msg = JSON.parse ( data )
+        if ( msg [ 0 ] === 'ready' ) {
+          if ( !luaprocess.ready && luaprocess.source ) {
+            luaprocess.send ( 'source', luaprocess.source )
+            luaprocess.ready = true
+            return
+          }
+        }
+        luaprocess.receive ( ...msg )
+      })
+    })
 
     return luaprocess
   }

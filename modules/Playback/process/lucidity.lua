@@ -1,6 +1,9 @@
 local json = require 'rapidjson'
 local lib = {}
 
+-- Global
+lucidity = lib
+
 function lib.send ( ... )
   local msg = json.encode ( { ... } )
   io.stdout:write ( msg .. '\n' )
@@ -11,6 +14,30 @@ end
 function lib.receive ( data )
 end
 
+-- This is called during the boot process
+function lib.boot ()
+  local line = io.read ( '*line' )
+  local msg = json.decode ( line )
+  local op = msg [ 1 ]
+  local src = msg [ 2 ]
+  assert ( op == 'source', 'Invalid message "' .. op .. '"')
+end
+
+function lib.setSource ( source )
+  io.stderr:write ( 'SET SOURCE\n' )
+  local func, err = loadstring ( source, 'main.lua' )
+  if not func then
+    io.stderr:write ( err .. '\n' )
+  else
+    local ret, err = pcall ( func )
+    if ret then
+      lib.send ( 'ready' )
+    else
+      io.stderr:write ( err .. '\n' )
+    end
+  end
+end
+
 function lib.listen ()
   lib.send ( 'ready' )
   while ( true ) do
@@ -19,28 +46,13 @@ function lib.listen ()
       local msg = json.decode ( line )
       local op = msg [ 1 ]
       local data = msg [ 2 ]
-      lib.receive ( unpack ( msg ) )
+      if op == 'source' then
+        lib.setSource ( data )
+      else
+        lib.receive ( unpack ( msg ) )
+      end
     end
   end
 end
 
--- This is called during the boot process
-function lib.boot ()
-  local line = io.read ( '*line' )
-  local msg = json.decode ( line )
-  local op = msg [ 1 ]
-  local src = msg [ 2 ]
-  assert ( op == 'source', 'Invalid message "' .. op .. '"')
-  local func, err = loadstring ( src, 'main.lua' )
-  if not func then
-    io.stderr:write ( err .. '\n' )
-  else
-    io.stderr:write ( 'start func \n' )
-    local ret, err = pcall ( func )
-    if not ret then
-      io.stderr:write ( err .. '\n' )
-    end
-  end
-end
-
-return lib
+lib.listen ()

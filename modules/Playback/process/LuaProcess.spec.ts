@@ -4,25 +4,35 @@ import './LuaProcess'
 
 const LUA_CODE =
 `
-local process = require 'lucidity'
+local send = lucidity.send
 
-local send = process.send
-
-function process.receive ( op, data )
+function lucidity.receive ( op, data )
   if op == 'add' then
     send ( 'value', data + 1 )
   elseif op == 'sub' then
     send ( 'value', data - 1 )
   end
 end
+`
 
-process.listen ()
+const LUA_CODE2 =
+`
+local send = lucidity.send
+
+function lucidity.receive ( op, data )
+  if op == 'add' then
+    send ( 'value', data + 10 )
+  elseif op == 'sub' then
+    send ( 'value', data - 10 )
+  end
+end
 `
 
 describe ( 'LuaProcess' , ( it ) => {
 
   it ( 'should start lua process', ( assert, done ) => {
-    const lua = start ( 'lua', LUA_CODE )
+    const lua = start ( 'lua' )
+    lua.setSource ( LUA_CODE )
     let opi = 0
     const operations =
     [ { msg: [ 'add', 4 ], value: 5 }
@@ -51,6 +61,55 @@ describe ( 'LuaProcess' , ( it ) => {
       else {
         assert.equal ( type, 'value' )
         let op = operations [ opi ]
+        assert.equal ( value, op.value )
+        ++opi
+        doit ()
+      }
+    }
+
+  })
+
+  it ( 'should parse new source', ( assert, done ) => {
+    const lua = start ( 'lua' )
+    lua.setSource ( LUA_CODE )
+    let opi = 0
+    const operations =
+    [ { msg: [ 'add', 4  ], value: 5 }
+    , { msg: [ 'sub', 8  ], value: 7 }
+    , { msg: 'source', value: null }
+    , { msg: [ 'add', 4  ], value: 14 }
+    , { msg: [ 'sub', 53 ], value: 43 }
+    ]
+
+    const doit = () => {
+      const op = operations [ opi ]
+      if ( op ) {
+        if ( op.msg === 'source' ) {
+          lua.setSource ( LUA_CODE2 )
+        }
+        else {
+          lua.send ( ...op.msg )
+        }
+      }
+      else {
+        lua.halt ()
+        done ()
+      }
+    }
+
+    lua.receive = ( type, value ) => {
+      if ( type === 'error' ) {
+        assert.equal ( '', value )
+        done ()
+      }
+      else if ( type === 'ready' ) {
+        ++opi
+        doit ()
+      }
+      else {
+        assert.equal ( type, 'value' )
+        let op = operations [ opi ]
+        console.log ( JSON.stringify ( value ), JSON.stringify ( op.value ) )
         assert.equal ( value, op.value )
         ++opi
         doit ()

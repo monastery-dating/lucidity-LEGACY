@@ -1,4 +1,4 @@
-// Lua component example to use as reference. Should be removed when everything is implemented and moved into lib. 
+// Lua component example to use as reference. Should be removed when everything is implemented and moved into lib.
 import { Init, Update, Meta } from 'lucidity'
 let lua, luadata, value
 
@@ -11,12 +11,18 @@ export const init: Init =
     luadata = cache.luadata = { data: null }
 
     lua.receive = ( op, data ) => {
-      console.log ( 'receive from lua', data )
-      luadata.data = data
+      if ( op === 'value' ) {
+        console.log ( 'receive from lua', data )
+        luadata.data = data
+      }
     }
   }
 
   lua = cache.lua
+
+  asset.source ( 'main.lua', ( src ) => {
+    lua.setSource ( src )
+  })
 
   if ( detached ) {
     lua.halt ()
@@ -37,6 +43,6 @@ export const meta: Meta =
 , author: 'Gaspard Bucher <gaspard@lucidity.io>'
 , origin: 'lucidity.io/lua.Process'
 , version: '1.0'
-, provide: { lua: 'lua.Process', luadata: 'lua.Data' }
+, provide: { luadata: 'lua.Data' }
 , children: [ '(): number' ]
 }
