@@ -1,4 +1,4 @@
-import { BlockByIdType } from '../../Block'
+import { extraSourceRe, BlockByIdType } from '../../Block'
 import { Scrubber } from '../../Code/helper/CodeHelper'
 import { GraphType, rootNodeId } from '../../Graph'
 import { MidiHelper } from '../../Midi'
@@ -266,6 +266,10 @@ const initDo =
     }
     helpers.asset = {
       source ( name, callback ) {
+        if ( !extraSourceRe.exec ( name ) ) {
+          // FIXME: Can we throw an error that is shown in editor ?
+          throw `Invalid source name '${name}'`
+        }
         const content = sources [ name ]
         if ( content ) {
           nsources [ name ] = content

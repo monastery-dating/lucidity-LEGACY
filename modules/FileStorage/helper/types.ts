@@ -3,6 +3,8 @@ export interface FileChanged {
   type: string
   _id: string
   op: string
+  // extra sources file name
+  sourceName?: string
   blockId?: string
   source?: string
   name?: string

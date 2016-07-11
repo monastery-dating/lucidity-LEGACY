@@ -12,7 +12,7 @@ type PathResolve = string | boolean
 
 let doProjectChanged = ( doc: ComponentType ) => {}
 let doSceneChanged = ( doc: ComponentType ) => {}
-let doLoadProject = ( path, project, scenes ) => {}
+let doLoadProject = ( path, project, scenes, doneClbk? ) => {}
 let doLoadLibrary = ( path, state ) => {}
 let doSelectProjectPath = ( doc?: ComponentType ): Promise<PathResolve> =>
 { return Promise.resolve ( false ) }
@@ -93,9 +93,13 @@ export const start =
   }
 
   // =========== RECEIVE FILE SYSTEM NOTIFICATIONS
+  let done
 
   ipcRenderer.on ( 'done', ( event ) => {
-    console.log ( 'done' )
+    if ( done ) {
+      done ()
+      done = null
+    }
     setTimeout ( () => {
       changedSignal ( { type: 'paused' } )
     }, 100)
@@ -147,8 +151,12 @@ export const start =
     return p
   }
 
-  doLoadProject = ( path, project, scenes ) => {
+  doLoadProject = ( path, project, scenes, doneClbk? ) => {
     // path can be null if the user does not want to sync
+    if ( doneClbk ) {
+      done = doneClbk
+    }
+
     setTimeout ( () => changedSignal ( { type: 'active' } ), 0 )
     ipcRenderer.send ( 'load-project', path, project, scenes )
   }
@@ -179,7 +187,7 @@ export const start =
   setTimeout ( () => changedSignal ( { type: 'paused' } ), 0 )
 }
 
-// Notify main process when a project changes (not a scene).
+// Notify main process when a document changes (project or scene).
 export const docChanged =
 ( { state
   , input: { docs, doc }
@@ -226,12 +234,13 @@ export const loadProject =
 ( path: string | boolean
 , project: ComponentType
 , scenes: ComponentType[]
+, doneClbk? // used for testing
 ) => {
   if ( typeof path === 'string' ) {
     prefs.projectPaths [ project._id ] = path
     savePrefs ( prefs )
   }
-  doLoadProject ( path, project, scenes )
+  doLoadProject ( path, project, scenes, doneClbk )
 }
 
 export const loadLibrary =

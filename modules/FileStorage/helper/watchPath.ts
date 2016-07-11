@@ -1,5 +1,5 @@
 import { ComponentType } from '../../Graph/types/ComponentType'
-import { CacheType, debug, cacheEntry, cacheRemove, fileRe, getName, readFileSync, resolve, stat, watch } from './FileStorageUtils'
+import { CacheType, debug, cacheEntry, cacheRemove, fileRe, makeCacheId, getName, readFileSync, resolve, stat, unCacheId, watch } from './FileStorageUtils'
 import { FileChanged } from './types'
 import { makeId } from '../../Factory/makeId'
 import { rootBlockId } from '../../Block/BlockType'
@@ -59,49 +59,51 @@ const handleEvent =
   }
 
   // Do we know this file ?
-  let id = cache.pathToId [ filename ]
+  let cacheId = cache.pathToId [ filename ]
   let oldfilename
-  if ( !id && eventType !== 'library-changed' ) {
+  if ( !cacheId && eventType !== 'library-changed' ) {
     // try to grab from regexp
     const re = fileRe.exec ( filename )
     if ( re ) {
       // file moved
-      id = re [ 1 ]
-      debug ( 'move', id, filename )
-      oldfilename = cache.idToPath [ id ]
+      cacheId = makeCacheId ( re [ 1 ], re [ 2 ], re [ 3 ] )
+      debug ( 'move', cacheId, filename )
+      oldfilename = cache.idToPath [ cacheId ]
       if ( !oldfilename ) {
-        const msg = `Unknown element '${id}' (not in graph).`
-        console.log ( msg )
-        sender.send ( 'error', msg )
+        const err = `Unknown element '${cacheId}' (not in graph).`
+        console.log ( err )
+        sender.send ( 'error', err )
         return
       }
       const s = stat ( resolve ( basepath, oldfilename ) )
       if ( s ) {
-        const msg = `Duplicate block id '${id}' (${filename} and ${oldfilename}).`
-        console.log ( msg )
-        sender.send ( 'error', msg )
+        const err = `Duplicate block cacheId '${cacheId}' (${filename} and ${oldfilename}).`
+        console.log ( err )
+        sender.send ( 'error', err )
         return
       }
-      cacheEntry ( cache, id, filename )
+      cacheEntry ( cache, cacheId, filename )
+
+      const ext = re [ 3 ]
 
       const oldname = getName ( oldfilename )
-      const newname = getName ( filename )
-      if ( oldname != newname ) {
+      const newname = re [ 2 ]
+      if ( oldname != newname && ext === 'ts' ) {
         // rename
         const msg: FileChanged =
         { type: comp.type
         , _id: comp._id
-        , blockId: id
+        , blockId: cacheId
         , op: 'rename'
         , name: newname
         }
-        debug ( 'fs.rename', id, filename )
+        debug ( 'fs.rename', cacheId, filename )
         sender.send ( eventType, msg )
       }
     }
   }
 
-  if ( !id ) {
+  if ( !cacheId ) {
     // Not known in app
 
     if ( eventType === 'library-changed' ) {
@@ -121,9 +123,9 @@ const handleEvent =
         sender.send ( eventType, msg )
       }
       else {
-        const msg = `Cannot rename (invalid filename '${filename}').`
-        console.log ( msg )
-        sender.send ( 'error', msg )
+        const err = `Cannot rename (invalid filename '${filename}').`
+        console.log ( err )
+        sender.send ( 'error', err )
       }
     }
 
@@ -138,37 +140,55 @@ const handleEvent =
   }
 
   else {
-    const csource = cache.idToSource [ id ]
+    const csource = cache.idToSource [ cacheId ]
     const source = readFileSync ( filepath, 'utf8' )
     if ( csource === source ) {
       // noop
-      // debug ( 'same', id, p )
+      // debug ( 'same', cacheId, p )
     }
 
     else if ( eventType === 'library-changed' ) {
       // changed source in library
       const msg: FileChanged =
       { type: 'component'
-      , _id: id
+      , _id: cacheId
       , blockId: rootBlockId
       , op: 'changed'
       , source
       }
-      debug ( 'fs.src', id, filename )
-      cacheEntry ( cache, id, filename, source )
+      debug ( 'fs.src', cacheId, filename )
+      cacheEntry ( cache, cacheId, filename, source )
       sender.send ( eventType, msg )
     }
     else {
       // changed file in project or scene
-      const msg: FileChanged =
-      { type: comp.type
-      , _id: comp._id
-      , blockId: id
-      , op: 'changed'
-      , source
+      const extraSource = unCacheId ( cacheId )
+      let msg: FileChanged
+
+      if ( extraSource ) {
+        msg =
+        { type: comp.type
+        , _id: comp._id
+        , blockId: extraSource.blockId
+        , sourceName: extraSource.filename
+        , op: 'changed'
+        , source
+        }
+
       }
-      debug ( 'fs.src', id, filename )
-      cacheEntry ( cache, id, filename, source )
+
+      else {
+        msg =
+        { type: comp.type
+        , _id: comp._id
+        , blockId: cacheId
+        , op: 'changed'
+        , source
+        }
+      }
+
+      debug ( 'fs.src', cacheId, filename )
+      cacheEntry ( cache, cacheId, filename, source )
       sender.send ( eventType, msg )
     }
   }

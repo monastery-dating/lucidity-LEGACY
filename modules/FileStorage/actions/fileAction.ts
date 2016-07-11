@@ -35,6 +35,12 @@ export const fileAction =
     output.success ( { doc } )
   }
 
+  else if ( msg.sourceName ) {
+    const doc = IM.update
+    ( odoc, 'graph', 'blocksById', msg.blockId, 'sources', msg.sourceName, msg.source )
+    output.success ( { doc } )
+  }
+
   else {
     // source changed
     updateGraphSource ( ograph, msg.blockId, msg.source, ( errors, graph ) => {

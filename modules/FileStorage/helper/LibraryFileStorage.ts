@@ -1,5 +1,5 @@
 import { ComponentType } from '../../Graph/types/ComponentType'
-import { buildCache, CacheType, cacheEntry, cacheRemove, clearCache, debug, getName, makeName, stat, resolve, mkdirSync, writeFileSync, readdirSync, readFileSync, unlinkSync } from './FileStorageUtils'
+import { buildCache, CacheType, cacheEntry, cacheRemove, clearCache, debug, getName, compName, stat, resolve, mkdirSync, writeFileSync, readdirSync, readFileSync, unlinkSync } from './FileStorageUtils'
 import { watchPath, Watcher } from './watchPath'
 import { updateFiles, saveLucidityJson } from './updateFiles'
 import { rootBlockId } from '../../Block/BlockType'
@@ -31,7 +31,7 @@ export const loadComponents =
         if ( Object.keys ( comp.graph.blocksById ).length === 1
              && block
              && ( !block.sources || Object.keys ( block.sources ).length === 0 ) ) {
-          const name = makeName ( comp, true )
+          const name = compName ( comp.name )
           // single file component
           const filepath = resolve ( path, name )
           const s = stat ( filepath )
@@ -121,7 +121,7 @@ export const componentChanged =
 , comp: ComponentType
 ) => {
   const path = libraryCache.path
-  const name = makeName ( comp, true )
+  const name = compName ( comp.name )
   const filepath = resolve ( path, name )
   const s = stat ( filepath )
 

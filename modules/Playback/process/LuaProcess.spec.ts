@@ -39,7 +39,7 @@ if ( !window [ 'process' ] ) {
 }
 
 else {
-  
+
   describe ( 'LuaProcess' , ( it ) => {
 
     it ( 'should start lua process', ( assert, done ) => {
@@ -121,7 +121,6 @@ else {
         else {
           assert.equal ( type, 'value' )
           let op = operations [ opi ]
-          console.log ( JSON.stringify ( value ), JSON.stringify ( op.value ) )
           assert.equal ( value, op.value )
           ++opi
           doit ()

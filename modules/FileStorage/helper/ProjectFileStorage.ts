@@ -1,7 +1,7 @@
 import { ComponentType } from '../../Graph/types/ComponentType'
 import { debug, buildCache, CacheType, clearCache, stat, resolve, renameSync, mkdirSync, sanitize } from './FileStorageUtils'
 import { watchPath, Watcher } from './watchPath'
-import { updateFiles, saveLucidityJson } from './updateFiles'
+import { updateFiles, saveLucidityJson, saveProjectSettings } from './updateFiles'
 
 const projectCache = clearCache ( {} )
 let projectPath
@@ -57,9 +57,15 @@ const loadScene =
   clearCache ( cache )
   cache.path = path
   cache.compName = comp.name
+
   buildCache ( cache )
   updateFiles ( cache, comp, sender )
   saveLucidityJson ( cache, comp, sender )
+
+  if ( comp.type === 'project' ) {
+    saveProjectSettings ( cache, comp, sender )
+  }
+
   cache.watcher = watchPath
   ( path
   , comp
@@ -78,6 +84,7 @@ export const projectChanged =
   // app changes take over FS cache
   updateFiles ( cache, comp, event.sender, true )
   saveLucidityJson ( cache, comp, event.sender )
+  saveProjectSettings ( cache, comp, event.sender )
   event.sender.send ( 'done' )
 }
 

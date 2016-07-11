@@ -48,7 +48,7 @@ if ( window [ 'process' ] ) {
     }
 
     lua.on ( 'close', ( code ) => {
-      console.log ( 'LUA EXITED', code )
+      // console.log ( 'LUA EXITED', code )
     })
 
     const luaprocess: ProcessType = {

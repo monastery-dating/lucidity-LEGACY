@@ -31,7 +31,7 @@ export const debug =
   if ( msg.length < MSG_LEN ) {
     msg = msg + WHITE.substr ( 0, MSG_LEN - msg.length )
   }
-  console.log ( `[${msg}] (${blockId}) ${path}` )
+  console.log ( `[${ msg }] (${ blockId || '--' }) ${ path }` )
 }
 
 
@@ -41,7 +41,6 @@ interface StringMap {
 
 export interface CacheType {
   path: string
-  json?: string
   watcher?: any
   compName: string
   pathToId: StringMap
@@ -57,7 +56,6 @@ export const clearCache =
     c.watcher = null
   }
   c.path = null
-  c.json = null
   c.pathToId = {}
   c.idToPath = {}
   c.idToSource = {}
@@ -75,30 +73,57 @@ export const stat =
 }
 
 
-export const fileRe = /-(b\d+)\.ts$/
-export const nameRe = /^(.+)-b\d+\.ts$/
-export const compRe = /^(.+)\.ts$/
+export const fileRe = /([^\/]+)-(b\d+)\.([^\.]+)$/
+export const compRe = /([^\/]+)\.ts$/
+export const unCacheRe = /^([^\-]+)-(.+)$/
+export const makeCacheId =
+( name: string
+, blockId: string
+, ext: string
+): string => {
+  if ( ext === 'ts' ) {
+    return blockId
+  }
+  else {
+    return `${ blockId }-${ name }.${ ext }`
+  }
+}
 
-interface NamedType {
-  name: string
-  id?: string
+export const unCacheId =
+( cacheId: string
+): { blockId: string, filename: string } => {
+  const re = unCacheRe.exec ( cacheId )
+  if ( re ) {
+    return { blockId: re [ 1 ], filename: re [ 2 ] }
+  }
+  else {
+    // cacheId === blockId
+    return null
+  }
+}
+
+// FIXME: What about components with multiple sources ?
+
+export const compName =
+( name: string
+): string => {
+  return `${ sanitize ( name ) }.ts`
 }
 
 export const makeName =
-( elem: NamedType
+( name: string
+, blockId: string
+, ext: string
 , iscomp?: boolean
 ): string => {
-  const name = sanitize ( elem.name )
-  return iscomp ? `${ name }.ts` : `${ name }-${ elem.id }.ts`
+  return `${ sanitize ( name ) }-${ blockId }.${ext}`
 }
 
 export const getName =
 ( path: string
 , iscomp?: boolean
 ): string => {
-  const paths = path.split ( '/' )
-  const last = paths [ paths.length - 1 ]
-  const re = iscomp ? compRe.exec ( last ) : nameRe.exec ( last )
+  const re = iscomp ? compRe.exec ( path ) : fileRe.exec ( path )
   if ( re ) {
     return re [ 1 ]
   }
@@ -118,9 +143,9 @@ export const buildCache =
   if ( s.isFile () ) {
     const re = fileRe.exec ( filename )
     if ( re ) {
-      const blockId = re [ 1 ]
+      const cacheId = makeCacheId ( re [ 1 ], re [ 2 ], re [ 3 ] )
       const source = readFileSync ( filepath, 'utf8' )
-      cacheEntry ( cache, blockId, filename, source )
+      cacheEntry ( cache, cacheId, filename, source )
     }
   }
 
@@ -133,27 +158,22 @@ export const buildCache =
   }
 }
 
-const absRe = /^\//
-
 export const cacheEntry =
 ( cache: CacheType
-, blockId: string
+, cacheId: string
 , path: string
 , source?: string
 ) => {
-  if ( absRe.test ( path ) ) {
-    throw `FULLPATH ${path}`
-  }
-  const oldp = cache.idToPath [ blockId ]
+  const oldp = cache.idToPath [ cacheId ]
   if ( oldp && oldp !== path ) {
-    // debug ( 'cache >', blockId, oldp )
+    // debug ( 'cache >', cacheId, oldp )
     delete cache.pathToId [ oldp ]
   }
-  // debug ( 'cache +', blockId, path )
-  cache.pathToId [ path ] = blockId
-  cache.idToPath [ blockId ] = path
+  // debug ( 'cache +', cacheId, path )
+  cache.pathToId [ path ] = cacheId
+  cache.idToPath [ cacheId ] = path
   if ( source !== undefined ) {
-    cache.idToSource [ blockId ] = source
+    cache.idToSource [ cacheId ] = source
   }
 }
 

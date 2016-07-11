@@ -1,6 +1,17 @@
-import { CacheType, cacheEntry, cacheRemove, debug, dirname, getName, makeName, stat, join, resolve, readFileSync, sanitize, unlinkSync, writeFileSync, renameSync } from './FileStorageUtils'
+import { CacheType, cacheEntry, cacheRemove, debug, dirname, getName, makeName, makeCacheId, stat, join, resolve, readFileSync, sanitize, unlinkSync, unCacheId, writeFileSync, renameSync } from './FileStorageUtils'
+import { extraSourceRe } from '../../Block/BlockType'
 import { ComponentType } from '../../Graph/types/ComponentType'
 import { FileChanged } from './types'
+
+interface SourceInfoType {
+  appname: string
+  source: string
+  blockId: string
+}
+
+interface SourceInfoTypeMap {
+  [ cacheId: string ]: SourceInfoType
+}
 
 // Any file not in cache: create
 // Different source in cache: update app
@@ -16,31 +27,64 @@ export const updateFiles =
   const idToPath = cache.idToPath
   const pathToId = cache.pathToId
   const basepath = cache.path
-  for ( const blockId in blocksById ) {
-    // Here cache is in sync with FS
-    const block = blocksById [ blockId ]
-    const source = idToSource [ blockId ]
+  const sources: SourceInfoType[] = []
 
-    if ( !source ) {
+  for ( const blockId in blocksById ) {
+    const block = blocksById [ blockId ]
+    if ( !block.name ) {
+      continue
+    }
+    const cacheId = makeCacheId ( block.name, block.id, 'ts' )
+    sources [ cacheId ] =
+    { appname: makeName ( block.name, block.id, 'ts' )
+    , source: block.source
+    , blockId: block.id
+    }
+    const extrasources = block.sources
+    if ( extrasources ) {
+      for ( const key in extrasources ) {
+        const re = extraSourceRe.exec ( key )
+        if ( re ) {
+          const cacheId = makeCacheId ( re [ 1 ], block.id, re [ 2 ] )
+          sources [ cacheId ] =
+          { appname: makeName ( re [ 1 ], block.id, re [ 2 ] )
+          , source: extrasources [ key ]
+          , blockId: block.id
+          }
+        }
+      }
+    }
+  }
+
+  for ( const cacheId in sources ) {
+    // Here cache is in sync with FS
+    const sourceInfo = sources [ cacheId ]
+    const appname = sourceInfo.appname
+    const appsource = sourceInfo.source
+    const fssource = idToSource [ cacheId ]
+    const blockId = sourceInfo.blockId
+
+
+    ///// =========== TODO
+
+    if ( !fssource ) {
       // New file in app
-      const name = makeName ( block )
-      const filepath = resolve ( basepath, name )
+      const filepath = resolve ( basepath, appname )
       const s = stat ( filepath )
       if ( s && !s.isFile () ) {
         // Very unlikely to have a folder name 'some.name-bid.ts'
         sender.send ( 'error', `Cannot create '${filepath}' (path exists and is not afile).`)
       }
       else {
-        debug ( 'write', blockId, name )
-        cacheEntry ( cache, blockId, name, block.source )
-        writeFileSync ( filepath, block.source, 'utf8' )
+        debug ( 'write', cacheId, appname )
+        cacheEntry ( cache, cacheId, appname, appsource )
+        writeFileSync ( filepath, appsource, 'utf8' )
       }
     }
 
     else {
       // File exists in FS and app
-      const appname = makeName ( block )
-      const filename = idToPath [ blockId ]
+      const filename = idToPath [ cacheId ]
       const fsname = filename.split ( '/' ).pop ()
 
       if ( appname !== fsname ) {
@@ -48,9 +92,9 @@ export const updateFiles =
         if ( appfirst ) {
           // appname is the truth
           const subp2 = join ( dirname ( filename ), appname )
-          debug ( 'rename', blockId, subp2 )
+          debug ( 'rename', cacheId, subp2 )
           renameSync ( resolve ( basepath, filename ), resolve ( basepath, subp2 ) )
-          cacheEntry ( cache, blockId, subp2  )
+          cacheEntry ( cache, cacheId, subp2  )
         }
         else {
           // fsname is the truth
@@ -63,19 +107,19 @@ export const updateFiles =
             , blockId
             , name
             }
-            debug ( 'fs.rename', blockId, filename )
-            cacheEntry ( cache, blockId, filename )
+            debug ( 'fs.rename', cacheId, filename )
+            cacheEntry ( cache, cacheId, filename )
             sender.send ( 'file-changed', msg )
           }
           else {
-            const msg = `Cannot rename (invalid filename '${filename}').`
-            console.log ( msg )
-            sender.send ( 'error', msg )
+            const err = `Cannot rename (invalid filename '${filename}').`
+            console.log ( err )
+            sender.send ( 'error', err )
           }
         }
       }
 
-      if ( source === block.source ) {
+      if ( fssource === appsource ) {
         // noop
         // debug ( 'same', blockId, p )
       }
@@ -84,22 +128,40 @@ export const updateFiles =
         // FS source is different from app
         if ( appfirst ) {
           // update file system
-          debug ( 'write', blockId, filename )
-          cacheEntry ( cache, blockId, filename, block.source )
-          writeFileSync ( resolve ( basepath, filename ), block.source, 'utf8' )
+          debug ( 'write', cacheId, filename )
+          cacheEntry ( cache, cacheId, filename, appsource )
+          writeFileSync ( resolve ( basepath, filename ), appsource, 'utf8' )
         }
         else {
           // update app
-          const msg: FileChanged =
-          { type: comp.type
-          , _id: comp._id
-          , op: 'changed'
-          , blockId
-          , source
+
+          const extraSource = unCacheId ( cacheId )
+          let msg: FileChanged
+
+          if ( extraSource ) {
+            msg =
+            { type: comp.type
+            , _id: comp._id
+            , op: 'changed'
+            , blockId
+            , sourceName: extraSource.filename
+            , source: fssource
+            }
           }
 
-          debug ( 'fs.src', blockId, filename )
-          cacheEntry ( cache, blockId, filename, source )
+          else {
+            msg =
+            { type: comp.type
+            , _id: comp._id
+            , op: 'changed'
+            , blockId
+            , source: fssource
+            }
+          }
+
+
+          debug ( 'fs.src', cacheId, filename )
+          cacheEntry ( cache, cacheId, filename, fssource )
           sender.send ( 'file-changed', msg )
         }
       }
@@ -108,15 +170,15 @@ export const updateFiles =
 
   }
 
-  for ( const blockId in idToPath ) {
-    if ( blockId === 'lucidity' ) { continue }
-    const block = blocksById [ blockId ]
+  for ( const cacheId in idToPath ) {
+    if ( cacheId.substr ( 0, 1 ) === '/' ) { continue }
+    const info = sources [ cacheId ]
 
-    if ( !block ) {
+    if ( !info ) {
       // File not in app: remove in FS
-      const filename = idToPath [ blockId ]
-      debug ( 'remove', blockId, filename )
-      cacheRemove ( cache, blockId )
+      const filename = idToPath [ cacheId ]
+      debug ( 'remove', cacheId, filename )
+      cacheRemove ( cache, cacheId )
       unlinkSync ( resolve ( basepath, filename ) )
     }
   }
@@ -134,23 +196,55 @@ export const saveLucidityJson =
   delete doc._rev
 
   const name = 'lucidity.json'
+  const cacheId = `/${name}`
   const filepath = resolve ( cache.path, name )
+
+  const source = JSON.stringify ( doc, null, 2 )
+
   const s = stat ( filepath )
   if ( !s || s.isFile () ) {
-    const json = JSON.stringify ( doc, null, 2 )
-    if ( !cache.json && s ) {
-      cache.json = readFileSync ( filepath, 'utf8' )
-    }
+    const oldsrc = cache.idToSource [ cacheId ]
 
-    if ( cache.json === json ) {
+    if ( oldsrc === source ) {
       return
     }
-    cache.json = json
-    debug ( 'write', null, name )
-    cacheEntry ( cache, 'lucidity', name, json )
-    writeFileSync ( filepath, json, 'utf8' )
+    debug ( 'write', cacheId, name )
+    cacheEntry ( cache, cacheId, name, source )
+    writeFileSync ( filepath, source, 'utf8' )
   }
   else {
     sender.send ( 'error', `Could not save graph structure ('${filepath}' is not a file).` )
   }
+}
+
+export const saveProjectSettings =
+( cache: CacheType
+, comp: ComponentType
+, sender
+) => {
+  // create [Project Name].lucy
+  const name = `${ sanitize ( comp.name ) }.lucy`
+  const oname = `${ sanitize ( cache.compName ) }.lucy`
+
+  const filepath = resolve ( cache.path, '..', name )
+  const ofilepath = resolve ( cache.path, '..', oname )
+  const ofilepathStat = stat ( ofilepath )
+  const filepathStat = stat ( filepath )
+  if ( filepathStat && ! filepathStat.isFile () ) {
+    // error
+    const err = `Cannot create project file '${filepath}' (exists and is not a file).`
+    console.log ( err )
+    sender.send ( 'error', err )
+  }
+  else {
+    if ( ofilepathStat && ofilepathStat.isFile () ) {
+      debug ( 'rename', null, `../${oname}`)
+      renameSync ( ofilepath, filepath )
+    }
+    else if ( !filepathStat ) {
+      debug ( 'write', null, `../${name}`)
+      writeFileSync ( filepath, '{}', 'utf8' )
+    }
+  }
+  cache.compName = comp.name
 }

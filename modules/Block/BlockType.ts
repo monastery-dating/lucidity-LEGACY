@@ -8,6 +8,9 @@ export interface BlockTypeChanges {
   source?: string
 }
 
+// extra file name
+export const extraSourceRe = /^(.+)\.([^\.]+)$/
+
 
 export interface PlaybackMetaType {
   // context changes
