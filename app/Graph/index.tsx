@@ -92,6 +92,11 @@ export const Graph = Component
             { mapUINodes ( graph, uigraph, ownerType, blockId ) }
             </g>
           </svg>
+          <svg width='40' height='40' class='dropTarget'>
+           <circle class='center' r='6' cx='19.5' cy='19.5'/>
+           <circle class='ring1' r='18' cx='19.5' cy='19.5'/>
+           <circle class='ring2' r='18' cx='19.5' cy='19.5'/>
+          </svg>
         </div>
     }
     else {

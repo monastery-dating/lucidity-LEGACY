@@ -46,3 +46,54 @@
 ._detachedFx {
   animation: detached 0.8s infinite alternate;
 }
+
+// drop target
+@keyframes centerAnim {
+  0% {
+    transform: scale( 0.1 );
+    fill: red;
+    opacity: 0.0;
+  }
+  5% {
+    opacity: 1.0;
+  }
+  10% {
+    transform: scale( 1.0 );
+    opacity: 1.0;
+  }
+  40% {
+    transform: scale( 0.0 );
+  }
+  80% {
+    fill: orange;
+    opacity: 1.0;
+  }
+  90% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale( 0.0 );
+    opacity: 0.5;
+  }
+}
+
+@keyframes ringAnim {
+  0% {
+    transform: scale( 0.3 );
+    stroke: red;
+  }
+  30% {
+    opacity: 1.0;
+  }
+  60% {
+    stroke: orange;
+    opacity: 1.0;
+  }
+  90% {
+    opacity: 0.0;
+  }
+  100% {
+    transform: scale( 1.0 );
+    opacity: 0.0;
+  }
+}

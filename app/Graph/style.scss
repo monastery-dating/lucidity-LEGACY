@@ -7,3 +7,23 @@
   height: 100%;
   overflow: auto;
 }
+
+.dropTarget {
+  .center {
+    animation: centerAnim 2s ease infinite;
+    transform-origin: 50% 50%;
+    fill: orange;
+  }
+
+  .ring1, .ring2 {
+    animation: ringAnim 2s ease infinite;
+    transform-origin: 50% 50%;
+    stroke: orange;
+    stroke-width: 2px;
+    fill: transparent;
+  }
+
+  .ring2 {
+    animation-delay: 0.4s;
+  }
+}

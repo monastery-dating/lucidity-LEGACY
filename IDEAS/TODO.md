@@ -2,17 +2,13 @@
 
 - REMOVE 'blockId' in GraphType...
 
-// ======= Wednesday ========== //
+**Graph**
 
-- Lua bridge for torch7
+- Use target animation for slot connection.
+- Extra empty slot is shown, active but without extra space.
+- Plus sign on extra slot goes above the slot.
 
-// ======= Thursday ========== //
-
-- Voice recognition
-
-- Draw scene...
-
-// ==== end of time available at home ==== //
+**Other**
 
 - Move all uses of 'update' to before save (maybe even in save signal).
 
