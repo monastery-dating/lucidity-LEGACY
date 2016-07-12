@@ -14,7 +14,8 @@ export interface UINodeSize {
   ty: number // and y
   wd: number
   wu: number
-  ds: number
+  ds: number // number of down slots
+  hasExtra: boolean // extra slot on right of node
   us: number
   wde: number
 }

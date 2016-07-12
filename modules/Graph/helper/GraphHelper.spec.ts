@@ -392,6 +392,8 @@ describe ( 'GraphHelper.cut', ( it, setupDone ) => {
 
 describe ( 'dropGraph', ( it, setupDone ) => {
   let main: GraphType
+  let main2: GraphType
+  let main3: GraphType
   let foo: GraphType
   let bar: GraphType
 
@@ -406,17 +408,28 @@ describe ( 'dropGraph', ( it, setupDone ) => {
   )
   .then ( () => {
     main = insertGraph ( main, rootNodeId, 1, foo )
-    main = insertGraph ( main, rootNodeId, 2, bar )
+    const base = insertGraph ( main, rootNodeId, 2, bar )
     // [ graph ] 'n0'
     //   null  [ foo ] 'n1' [ bar ] 'n2'
-    main = dropGraph ( main, 'n1' )
+    main = dropGraph ( base, 'n1' )
     // [ graph ] 'n0'
-    //   null  null [ bar ] 'n2'
+    //   null  null [ bar ] 'n1'
+    main2 = dropGraph ( main, 'n1' )
+    // [ graph ] 'n0'
+    // ( no null )
+    main3 = dropGraph ( base, 'n2' )
+    // [ graph ] 'n0'
+    //   null  [ foo ] 'n1'
     setupDone ()
   })
 
   it ( 'create smaller graph keeping blockId', ( assert ) => {
     assert.equal ( traverse ( main ), [ 'n0:b0:main', ' null', ' null', ' n1:b2:bar' ] )
+  })
+
+  it ( 'remove null', ( assert ) => {
+    assert.equal ( traverse ( main2 ), [ 'n0:b0:main' ] )
+    assert.equal ( traverse ( main3 ), [ 'n0:b0:main', ' null', ' n1:b1:foo' ] )
   })
 
   it ( 'should select block', ( assert ) => {

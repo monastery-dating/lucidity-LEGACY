@@ -246,24 +246,34 @@ const insertInGraph =
 
   // map our children with new nodes and ids
   let nochild = true
-  node.children = oldnode.children.map
-  ( ( oid ) => {
-      if ( oid === null || oid === dropId ) {
-        return null
+  const children = []
+  const ochildren = oldnode.children
+  const len = ochildren.length
+  for ( let i = 0; i < len; ++i ) {
+    const oid = ochildren [ i ]
+    if ( oid === null || oid === dropId ) {
+      if ( i === len - 1 ) {
+        // ignore
       }
       else {
-        nochild = false
-        return insertInGraph
-        ( newgraph
-        , oldgraph
-        , oid
-        , nid
-        , tail
-        , dropId
-        )
+        children.push ( null )
       }
     }
-  )
+    else {
+      nochild = false
+      children.push
+      ( insertInGraph
+        ( newgraph
+          , oldgraph
+          , oid
+          , nid
+          , tail
+          , dropId
+        )
+      )
+    }
+  }
+  node.children = children
 
   if ( nochild ) {
     node.children = []

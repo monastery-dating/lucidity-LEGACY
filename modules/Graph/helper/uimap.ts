@@ -53,7 +53,18 @@ const path =
 
   res.push ( `a${r} ${r} 0 0 1 ${-r} ${ r}` )
 
-  const rpadd = w - wd - wde + ( sextra [ ds ] || 0 )
+  let extraSlotw = 0
+  /*
+  if ( boxdef.size.hasExtra ) {
+    extraSlotw = layout.SCLICKW / 2
+    // draw extra slot
+    res.push ( `h${ - layout.SCLICKW / 2 + 2 * layout.SLOT }`)
+    res.push ( `l${ -layout.SLOT } ${ -layout.SLOT }` )
+    res.push ( `l${ -layout.SLOT } ${  layout.SLOT }` )
+  }
+  */
+
+  const rpadd = w - wd - wde + ( sextra [ ds ] || 0 ) - extraSlotw
   if ( rpadd > 0 ) {
     res.push ( `h${ -rpadd - layout.SPAD }` )
   }
@@ -191,30 +202,15 @@ const uimapOne =
                        // second has spacing dependent on first child, etc
   const ds = size.ds
 
-  if ( ds > 0 ) {
+  if ( ds > 0 || size.hasExtra ) {
     let   x = layout.RADIUS + layout.SPAD
     const y = layout.HEIGHT
 
 
-    // Compute sizes for all children
-    const sline = `M${-sl} ${0} h${2 * sl}`
-    const spath = `M${-sl} ${0} l${sl} ${-sl} l${sl} ${sl}`
-    const plus = `M${-sl} ${2*sl} h${2*sl} M${0} ${sl} v${2*sl}`
-    const r = layout.RADIUS
-    const cw = layout.SCLICKW
-    const ch = layout.SCLICKH
-    // start top left below rounded corner
-    const clickp = [ `M${-cw/2} ${-sl + r}` ]
-    clickp.push ( `a${r} ${r} 0 0 1 ${ r} ${-r}` )
-    clickp.push ( `h${cw-2*r}` )
-    clickp.push ( `a${r} ${r} 0 0 1 ${ r} ${ r}` )
-    clickp.push ( `v${ch-2*r}` )
-    clickp.push ( `a${r} ${r} 0 0 1 ${-r} ${ r}` )
-    clickp.push ( `h${-cw+2*r}` )
-    clickp.push ( `a${r} ${r} 0 0 1 ${-r} ${-r}` )
-    clickp.push ( `v${-ch+2*r} z` )
-
-    const click = clickp.join ('')
+    const sline = layout.sline
+    const spath = layout.spath
+    const plus = layout.plus
+    const click = layout.click
 
     const slotpad = layout.SPAD + 2 * layout.SLOT
 
@@ -305,6 +301,24 @@ const uimapOne =
     // sextra.pop ()
 
     size.w = Math.max ( size.w, size.wd + size.wde )
+
+    if ( size.hasExtra ) {
+      // extra slot
+      const x = size.w - layout.SCLICKW + layout.SCLICKW / 2
+      const y = layout.SLOT +
+                ( layout.HEIGHT - layout.SCLICKH ) / 2
+
+      slots.push
+      ( { path: spath
+        , idx: ds
+        , pos: { x, y }
+        , plus
+        , click
+        , flags: { free: true }
+        }
+      )
+    }
+
   }
 
   uibox.sextra = sextra

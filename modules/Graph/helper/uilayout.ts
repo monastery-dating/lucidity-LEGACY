@@ -42,12 +42,36 @@ const arrow =
   }
 }
 
+const computeSlotPaths =
+( layout: UILayoutType
+) => {
+  const sl = layout.SLOT
+  layout.sline = `M${-sl} ${0} h${2 * sl}`
+  layout.spath = `M${-sl} ${0} l${sl} ${-sl} l${sl} ${sl}`
+  layout.plus = `M${-sl} ${2*sl} h${2*sl} M${0} ${sl} v${2*sl}`
+  const r = layout.RADIUS
+  const cw = layout.SCLICKW
+  const ch = layout.SCLICKH
+  // start top left below rounded corner
+  const clickp = [ `M${-cw/2} ${-sl + r}` ]
+  clickp.push ( `a${r} ${r} 0 0 1 ${ r} ${-r}` )
+  clickp.push ( `h${cw-2*r}` )
+  clickp.push ( `a${r} ${r} 0 0 1 ${ r} ${ r}` )
+  clickp.push ( `v${ch-2*r}` )
+  clickp.push ( `a${r} ${r} 0 0 1 ${-r} ${ r}` )
+  clickp.push ( `h${-cw+2*r}` )
+  clickp.push ( `a${r} ${r} 0 0 1 ${-r} ${-r}` )
+  clickp.push ( `v${-ch+2*r} z` )
+
+  layout.click = clickp.join ('')
+}
+
 export const UILayout =
 ( o?: Object ) : UILayoutType => {
   const res = Object.assign ( {}, DEFAULT_LAYOUT, o || {} )
   res.SUBPADX = 2 * res.GRIDH
   res.SCLICKW = res.SPAD + 2 * res.SLOT
-  res.SCLICKH = 1.2 * res.HEIGHT
+  res.SCLICKH = 1.0 * res.HEIGHT // should not be greater then HEIGHT
   const click = `M0 0 h${6*res.ARROW} v${res.HEIGHT} h${-6*res.ARROW} v${-res.HEIGHT}`
   res.ARROW_OPEN.path = arrow ( <UILayoutType>res, true )
   res.ARROW_OPEN.click = click
@@ -56,6 +80,7 @@ export const UILayout =
   if ( ! res.tsizer ) {
     res.tsizer = getTextSizeCanvas ( '10pt Avenir Next' )
   }
+  computeSlotPaths ( res )
   return res
 }
 

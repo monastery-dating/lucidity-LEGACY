@@ -52,7 +52,7 @@ svg {
 
   .plus {
     fill: none;
-    stroke: darken( color( workb ), 5% );
+    stroke: rgba( darken( color( workb ), 5% ), 0.3 );
     stroke-width: $lsbo;
     cursor: pointer;
   }

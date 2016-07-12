@@ -8,6 +8,8 @@ export const minSize =
 , node: NodeType
 , layout: UILayoutType
 ) : UINodeSize => {
+  const needExtraSlot = !block.meta.children
+  let hasExtra = false
   let ds
   if ( node.closed ) {
     // done
@@ -15,18 +17,23 @@ export const minSize =
   }
   else if ( block.meta.children ) {
    // exact children length (and cope for extra detached)
-   ds = Math.max ( block.meta.children.length, node.children.length )
+   ds = Math.max
+   ( block.meta.children.length, node.children.length )
   }
   else {
-   // always keep a free slot for untyped children
-   ds = node.children.length + 1
+    // always keep a free slot for untyped children
+    hasExtra = true
+    ds = node.children.length
   }
   const us = 1 // alwasy show up slot.
   // has update = block.meta.isvoid || block.meta.update ? 1 : 0
 
   const tb = layout.tsizer ( block.name )
 
-  let w : number = 6 * layout.ARROW + tb.width + layout.TPAD
+  let w : number = 6 * layout.ARROW
+                   + tb.width
+                   + layout.TPAD
+                   + ( hasExtra ? layout.SCLICKW : 0 )
 
   // width down (taken by inlets)
   const wd = layout.RADIUS +
@@ -49,6 +56,7 @@ export const minSize =
          , wd
          , wu
          , ds
+         , hasExtra
          , us
          , wde: 0
          }
