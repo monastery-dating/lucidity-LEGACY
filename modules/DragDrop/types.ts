@@ -45,9 +45,9 @@ export interface DragDropType {
   ownerType: string
   // new graph. Not needed on library drop
   graph?: GraphType
-  // Start considering as ghost from this node id
-  ghostId?: string
-  // End of ghost
+  // Target nodeId
   nodeId?: string
+  // Target slot index
+  slotIdx?: number
   copy?: boolean
 }

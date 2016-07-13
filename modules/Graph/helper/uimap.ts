@@ -338,6 +338,7 @@ const uimapOne =
  */
 export const uimap =
 ( graph: GraphType
+  // FIXME: REMOVE GHOSTID CODE (not used anymore)
 , ghostId?: string // start considering as ghost from here
 , nodeId?: string  // stop considering as ghost from here
 , alayout?: UILayoutType

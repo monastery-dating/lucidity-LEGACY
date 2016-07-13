@@ -23,11 +23,7 @@ export const moveAction =
   if ( target && target !== '' ) {
     let [ ownerType, nodeId, apos ] = target.split ( '-' )
 
-    if ( ( drop && target === drop.target ) || nodeId === 'drop' ) {
-      // do not change
-    }
-
-    else if ( ownerType === 'library' ) {
+    if ( ownerType === 'library' ) {
       if ( drag.ownerType === 'library' ) {
         // abort
         drop = null
@@ -56,44 +52,45 @@ export const moveAction =
         graph = state.get ( [ ownerType, 'graph' ] )
       }
 
-      let newId = nextNodeId ( graph.nodesById )
-      let pos: number = parseInt ( apos )
+      let slotIdx: number = parseInt ( apos )
       let parentId: string
       const child = drag.dgraph
 
       if ( apos ) {
-        // should have a way to set nodeId to 'drop' here or mark as ghost...
+        // Drop on slot
+
+        // We compute graph used to preview operation in Playback
         graph = insertGraph
-        ( graph, nodeId, pos, child )
-        nodeId = null
+        ( graph, nodeId, slotIdx, child )
       }
       else {
-        // find node in graph
+        // Drop on node (slip)
+
+        // Find node in graph
         const node = graph.nodesById [ nodeId ]
         if ( !node ) {
-          // drag move happens before proper ui update
+          // Drag move happens before proper ui update ?
           return
         }
         parentId = node.parent
         if ( parentId ) {
           const parent = graph.nodesById [ parentId ]
-          pos = parent.children.indexOf ( nodeId )
+          slotIdx = parent.children.indexOf ( nodeId )
+          nodeId = parentId
+          // Compute new playback graph (for preview).
           graph = slipGraph
-          ( graph, parent.id, pos, child )
+          ( graph, nodeId, slotIdx, child )
         }
         else {
-          // do not change graph
+          // Do not change graph
         }
       }
-
-      // TODO: we could save the operation so that we have live preview
-      // of the operation.
 
       // eventual drop operation
       drop =
       { target
-      , ghostId: newId
       , nodeId
+      , slotIdx
       , graph
       , ownerType
       , copy

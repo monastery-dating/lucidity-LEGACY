@@ -5,6 +5,6 @@ import { NodeByIdType } from './NodeType'
 export interface GraphType {
   blocksById: BlockByIdType
   nodesById: NodeByIdType
-  // last changed blockId (used to help select block)
+  // Last changed blockId (used to help select block and edit name).
   blockId?: string
 }

@@ -4,9 +4,12 @@
 
 **Graph**
 
-- Use target animation for slot connection.
-- Extra empty slot is shown, active but without extra space.
-- Plus sign on extra slot goes above the slot.
+  DragDrop/actions/moveAction
+  
+  1. On drag operation
+  2. Move dropTarget on closest slot in hover graph
+  3. Use this information to update eval drop action
+
 
 **Other**
 

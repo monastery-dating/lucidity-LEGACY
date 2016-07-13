@@ -21,9 +21,15 @@ export const minSize =
    ( block.meta.children.length, node.children.length )
   }
   else {
-    // always keep a free slot for untyped children
-    hasExtra = true
-    ds = node.children.length
+    // Always keep a free slot for untyped children
+    if ( node.children.length > 0 ) {
+      hasExtra = true
+      ds = node.children.length
+    }
+    else {
+      hasExtra = false
+      ds = node.children.length + 1
+    }
   }
   const us = 1 // alwasy show up slot.
   // has update = block.meta.isvoid || block.meta.update ? 1 : 0

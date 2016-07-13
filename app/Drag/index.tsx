@@ -24,7 +24,7 @@ export const Drag = Component
 
     if ( state.drop && state.drop.ownerType !== 'library' ) {
       // hide drag element
-      klass [ 'hide' ] = true
+      // klass [ 'hide' ] = true
     }
 
     const x = move.clientPos.x

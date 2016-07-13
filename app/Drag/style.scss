@@ -18,16 +18,18 @@
     cursor: copy;
   }
 
-  // Used to hide the element while
-  // looking for element under pointer.
-  &.drag-hide {
-    display: none;
-  }
-
   // this is set when there is a drop on graph
   &.hide {
     display: none;
   }
 
   .plus, .click { display: none }
+}
+
+// Used to hide the element while
+// looking for element under pointer.
+.drag-hide {
+  .Drag {
+    display: none;
+  }
 }

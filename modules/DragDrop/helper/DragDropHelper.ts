@@ -18,28 +18,15 @@ const MIN_DRAG_DIST = 4 // manhattan distance to trigger a drag
 
 const startDrag = ( signals: SignalsType ) => {
   const doc = document.documentElement
-  const dragel = document.getElementById ( 'drag' )
+  const body = document.getElementsByTagName ( 'body' ) [ 0 ]
+  console.log ( body )
 
-  let getElementUnderMouse
-
-  if ( dragel.tagName === 'svg' ) {
-    getElementUnderMouse = ( e ) => {
-      const baseclass = dragel.getAttribute ( 'class' )
-      dragel.setAttribute ( 'class', baseclass + ' drag-hide' )
-      const el = document.elementFromPoint ( e.clientX, e.clientY )
-      dragel.setAttribute ( 'class', baseclass )
-      return el
-    }
-  }
-
-  else {
-    getElementUnderMouse = ( e ) => {
-      const baseclass = dragel.className
-      dragel.className = baseclass + ' drag-hide'
-      const el = document.elementFromPoint ( e.clientX, e.clientY )
-      dragel.className = baseclass
-      return el
-    }
+  const getElementUnderMouse = ( e ) => {
+    const baseclass = body.className
+    body.className = baseclass + ' drag-hide'
+    const el = document.elementFromPoint ( e.clientX, e.clientY )
+    body.className = baseclass
+    return el
   }
 
   // mouse move detected document wide
