@@ -15,27 +15,53 @@ interface DragCallback {
 }
 
 const MIN_DRAG_DIST = 4 // manhattan distance to trigger a drag
+const MIN_SLOT_DIST = Math.pow ( 140, 2 )
+
+interface SlotInfo {
+  // client position
+  x: number
+  y: number
+  // info for drag op
+  target: string
+}
 
 const startDrag = ( signals: SignalsType ) => {
   const doc = document.documentElement
-  const body = document.getElementsByTagName ( 'body' ) [ 0 ]
-  console.log ( body )
+  const slots: SlotInfo[] = []
+  const list = document.getElementsByClassName ( 'sclick' )
 
-  const getElementUnderMouse = ( e ) => {
-    const baseclass = body.className
-    body.className = baseclass + ' drag-hide'
-    const el = document.elementFromPoint ( e.clientX, e.clientY )
-    body.className = baseclass
-    return el
+  for ( let i = 0; i < list.length; ++i ) {
+    const s = list [ i ]
+    const r = s.getBoundingClientRect ()
+    const target = s.getAttribute ( 'data-drop' )
+    slots.push
+    ( { x: r.left
+      , y: r.top
+      , target
+      }
+    )
   }
 
   // mouse move detected document wide
   const mousemove = ( e : MouseEvent ) => {
     e.preventDefault ()
-    const el = getElementUnderMouse ( e )
-
-    const target = el.getAttribute ( 'data-drop' )
-    const clientPos = { x: e.clientX, y: e.clientY }
+    const x = e.clientX
+    const y = e.clientY
+    const clientPos = { x, y }
+    // Find closest slot.
+    let d: number = MIN_SLOT_DIST
+    let target: string
+    let m: SlotInfo
+    for ( const s of slots ) {
+      const dx = s.x - x
+      const dy = s.y - y
+      const ds = dx * dx + dy * dy
+      if ( ds < d ) {
+        m = s
+        d = ds
+        target = s.target
+      }
+    }
 
     signals.$dragdrop.move
     ( { move: { target, clientPos, copy: e.altKey } } )
@@ -105,7 +131,13 @@ export module DragDropHelper {
 
         dragclbk ( nodePos, e.altKey )
 
-        startDrag ( signals )
+        // FIXME: How can we wait for after DOM update ?
+        setTimeout
+        ( () => {
+            startDrag ( signals )
+          }
+        , 80
+        )
       }
     }
 

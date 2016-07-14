@@ -296,7 +296,6 @@ const uimapOne =
     if ( sextra.length > 0 ) {
       size.wde = sextra.reduce ( ( sum, e ) => sum + e )
     }
-    // sextra.pop ()
 
     size.w = Math.max ( size.w, size.wd + size.wde )
 
@@ -366,7 +365,7 @@ export const uimap =
   layout.SCLICKH +
   layout.SLOT + 1
   const width = uigraph.uiNodeById [ rootNodeId ].size.w + 1
-  uigraph.size = { width, height }
+  uigraph.size = { width, height: height + 20 } // 20 = droptarget FIXME
 
   return uigraph
 }

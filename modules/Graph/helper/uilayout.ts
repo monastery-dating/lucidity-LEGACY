@@ -16,7 +16,7 @@ const DEFAULT_LAYOUT =
 , ARROW_CLOSED: { path: '', click: '', class: { closed: true, arrow: true } }
 , ARROW_CLICK: ''
 , SPAD:   16 // slot pad
-, SCLICKW:  0 // (computed from SLOT and SPAD ) slot click rect width
+, SCLICKW:  22
 , SCLICKH:  0 // (computed from HEIGHT) slot click rect height
 , TPAD:   8
 , BPAD:   0  // pad between siblings
@@ -70,8 +70,7 @@ export const UILayout =
 ( o?: Object ) : UILayoutType => {
   const res = Object.assign ( {}, DEFAULT_LAYOUT, o || {} )
   res.SUBPADX = 2 * res.GRIDH
-  res.SCLICKW = res.SPAD + 2 * res.SLOT
-  res.SCLICKH = 1.0 * res.HEIGHT // should not be greater then HEIGHT
+  res.SCLICKH = Math.min ( res.SCLICKW, res.HEIGHT )
   const click = `M0 0 h${6*res.ARROW} v${res.HEIGHT} h${-6*res.ARROW} v${-res.HEIGHT}`
   res.ARROW_OPEN.path = arrow ( <UILayoutType>res, true )
   res.ARROW_OPEN.click = click
