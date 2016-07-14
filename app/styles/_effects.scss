@@ -61,15 +61,10 @@
     transform: scale( 1.0 );
     opacity: 1.0;
   }
-  40% {
+  90% {
     transform: scale( 0.0 );
-  }
-  80% {
     fill: orange;
     opacity: 1.0;
-  }
-  90% {
-    opacity: 0.3;
   }
   100% {
     transform: scale( 0.0 );

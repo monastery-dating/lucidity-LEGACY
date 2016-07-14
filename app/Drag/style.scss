@@ -2,7 +2,7 @@
 .Drag {
   position: fixed;
   display: block;
-  opacity: 0.8;
+  opacity: 0.5;
   z-index: 6; // above library = 5
   &.Graph { margin: 0; padding: 0 }
 

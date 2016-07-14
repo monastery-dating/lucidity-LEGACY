@@ -39,7 +39,7 @@ export const minSize =
   let w : number = 6 * layout.ARROW
                    + tb.width
                    + layout.TPAD
-                   + ( hasExtra ? layout.SCLICKW : 0 )
+                   + ( hasExtra ? layout.SPAD + 2 * layout.SLOT : 0 )
 
   // width down (taken by inlets)
   const wd = layout.RADIUS +

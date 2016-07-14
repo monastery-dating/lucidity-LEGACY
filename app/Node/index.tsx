@@ -11,10 +11,10 @@ const makeSlot = ( slot: UISlotType, datainfo, clbk ) => {
   const slotinfo = `${datainfo}-${slot.idx}`
   const transform = `translate(${x}, ${y})`
   if ( flags.free ) {
-    return <g transform={ transform }>
-        <path d={ slot.plus } class='plus'/>
+    return <g class='sclick' transform={ transform }>
         <path d={ slot.click } data-drop={ slotinfo }
           on-click={ ( e ) => clbk ( e, slot.idx ) } class='click' />
+        <path d={ slot.plus } class='plus'/>
       </g>
   }
   else if ( flags.detached || flags.incompatible ){

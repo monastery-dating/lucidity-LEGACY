@@ -50,21 +50,24 @@ svg {
     }
   }
 
-  .plus {
-    fill: none;
-    stroke: rgba( darken( color( workb ), 5% ), 0.8 );
-    stroke-width: $lsbo;
+  .sclick {
+    transition: opacity 0.8s;
+    opacity: 0.0;
     cursor: pointer;
+
+    &:hover, &.active {
+      opacity: 0.7;
+    }
   }
 
   .click {
-    fill: rgba( 0, 0, 0, 0 );
-    transition: fill 0.8s;
     stroke: none;
-    cursor: pointer;
-    &:hover, &.active {
-      fill: rgba( 0, 0, 0, 0.3 );
-    }
+    fill: #000;
+  }
+
+  .plus {
+    fill: none;
+    stroke: $high_front;
   }
 
   .arrow {

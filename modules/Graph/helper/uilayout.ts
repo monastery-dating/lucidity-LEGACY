@@ -48,12 +48,12 @@ const computeSlotPaths =
   const sl = layout.SLOT
   layout.sline = `M${-sl} ${0} h${2 * sl}`
   layout.spath = `M${-sl} ${0} l${sl} ${-sl} l${sl} ${sl}`
-  layout.plus = `M${-sl} ${2*sl} h${2*sl} M${0} ${sl} v${2*sl}`
+  layout.plus = `M${-sl} ${0} h${2*sl} M${0} ${-sl} v${2*sl}`
   const r = layout.RADIUS
   const cw = layout.SCLICKW
   const ch = layout.SCLICKH
   // start top left below rounded corner
-  const clickp = [ `M${-cw/2} ${-sl + r}` ]
+  const clickp = [ `M${-cw/2} ${-ch/2 + r}` ]
   clickp.push ( `a${r} ${r} 0 0 1 ${ r} ${-r}` )
   clickp.push ( `h${cw-2*r}` )
   clickp.push ( `a${r} ${r} 0 0 1 ${ r} ${ r}` )

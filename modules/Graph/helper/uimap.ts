@@ -54,15 +54,13 @@ const path =
   res.push ( `a${r} ${r} 0 0 1 ${-r} ${ r}` )
 
   let extraSlotw = 0
-  /*
   if ( boxdef.size.hasExtra ) {
-    extraSlotw = layout.SCLICKW / 2
+    extraSlotw = layout.SPAD + 2 * layout.SLOT
     // draw extra slot
-    res.push ( `h${ - layout.SCLICKW / 2 + 2 * layout.SLOT }`)
+    res.push ( `h${ -layout.SPAD }`)
     res.push ( `l${ -layout.SLOT } ${ -layout.SLOT }` )
     res.push ( `l${ -layout.SLOT } ${  layout.SLOT }` )
   }
-  */
 
   const rpadd = w - wd - wde + ( sextra [ ds ] || 0 ) - extraSlotw
   if ( rpadd > 0 ) {
@@ -304,9 +302,9 @@ const uimapOne =
 
     if ( size.hasExtra ) {
       // extra slot
-      const x = size.w - layout.SCLICKW + layout.SCLICKW / 2
-      const y = layout.SLOT +
-                ( layout.HEIGHT - layout.SCLICKH ) / 2
+      const x = size.w - layout.SPAD - 2 * layout.SLOT
+      const y = layout.HEIGHT
+                // ( layout.HEIGHT - layout.SCLICKH ) / 2
 
       slots.push
       ( { path: spath
