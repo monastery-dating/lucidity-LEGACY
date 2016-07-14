@@ -67,6 +67,7 @@ svg {
 
   .plus {
     fill: none;
+    pointer-events: none;
     stroke: $high_front;
   }
 

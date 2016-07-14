@@ -22,14 +22,8 @@ export const minSize =
   }
   else {
     // Always keep a free slot for untyped children
-    if ( node.children.length > 0 ) {
-      hasExtra = true
-      ds = node.children.length
-    }
-    else {
-      hasExtra = false
-      ds = node.children.length + 1
-    }
+    ds = node.children.length + 1
+    hasExtra = true
   }
   const us = 1 // alwasy show up slot.
   // has update = block.meta.isvoid || block.meta.update ? 1 : 0
@@ -39,7 +33,6 @@ export const minSize =
   let w : number = 6 * layout.ARROW
                    + tb.width
                    + layout.TPAD
-                   + ( hasExtra ? layout.SPAD + 2 * layout.SLOT : 0 )
 
   // width down (taken by inlets)
   const wd = layout.RADIUS +

@@ -53,20 +53,12 @@ const path =
 
   res.push ( `a${r} ${r} 0 0 1 ${-r} ${ r}` )
 
-  let extraSlotw = 0
-  if ( boxdef.size.hasExtra ) {
-    extraSlotw = layout.SPAD + 2 * layout.SLOT
-    // draw extra slot
-    res.push ( `h${ -layout.SPAD }`)
-    res.push ( `l${ -layout.SLOT } ${ -layout.SLOT }` )
-    res.push ( `l${ -layout.SLOT } ${  layout.SLOT }` )
-  }
-
-  const rpadd = w - wd - wde + ( sextra [ ds ] || 0 ) - extraSlotw
+  const rpadd = w - wd - wde + ( sextra [ ds ] || 0 )
   if ( rpadd > 0 ) {
     res.push ( `h${ -rpadd - layout.SPAD }` )
   }
   else {
+    console.log ( 'ERROR', w )
     res.push ( `h${ -layout.SPAD }` )
   }
 
@@ -80,9 +72,6 @@ const path =
 
   res.push ( `v${ -h + 2 * r }`    )
   res.push ( `a${r} ${r} 0 0 1 ${ r} ${-r}` )
-
-  // res.push ( `a50 50 0 0 1 50 50` )
-  // res.push ( `l50 50` )
 
   return res.join ( ' ' )
 }
@@ -125,9 +114,9 @@ const boxPosition =
     // do nothing
   }
   else {
-    for ( let i = 0; i < ds + 1; i += 1 ) {
+    for ( let i = 0; i < ds; ++i ) {
       const childId = node.children [ i ]
-      const wtonext = ( sextra [ i ] || 0 ) + layout.SPAD + 2 * layout.SLOT
+      const wtonext = sextra [ i ] + layout.SPAD + 2 * layout.SLOT
 
       if ( childId ) {
         const h = boxPosition
@@ -138,8 +127,8 @@ const boxPosition =
         x += layout.BPAD + uigraph.uiNodeById [ childId ].size.w
       }
       else if ( childId === null ) {
-        // empty slot, add padding and click width
-        x += layout.SCLICKW/2 + layout.SPAD + 2 * layout.SLOT
+        // empty slot, add slot padding
+        x += layout.SPAD + 2 * layout.SLOT
       }
     }
   }
@@ -200,7 +189,7 @@ const uimapOne =
                        // second has spacing dependent on first child, etc
   const ds = size.ds
 
-  if ( ds > 0 || size.hasExtra ) {
+  if ( ds > 0 ) {
     let   x = layout.RADIUS + layout.SPAD
     const y = layout.HEIGHT
 
@@ -256,37 +245,46 @@ const uimapOne =
       }
 
 
-      if ( childId ) {
-        if ( node.closed ) {
-          // should not draw slot
-        }
-        else {
+      if ( node.closed ) {
+        // should not draw slot
+      }
+      else {
+        if ( childId ) {
           const nodes = uigraph.nodes
 
           // We push in sextra the delta for slot i
-          const w  = uimapOne ( graph, childId, ghostId, nodeId, layout, uigraph )
+          let w = uimapOne ( graph, childId, ghostId, nodeId, layout, uigraph )
+          // w contains slotpad
 
-          if ( i === ds - 1 ) {
-            // last
-            sextra.push ( w + layout.BPAD - 2 * slotpad )
+          if ( size.hasExtra && i === ds - 2 ) {
+
+            if ( x + w + slotpad < size.w ) {
+              // Do not change w: we have enough space
+              // OK
+            }
+            else if ( size.w > w && x + 2 * slotpad < size.w ) {
+              w = size.w - 2 * slotpad
+            }
+            else {
+              // computing space for last element
+              // 1. No need for padding before.
+              // 2. Move back on element below.
+              w += - 2 * slotpad
+            }
           }
-          else {
-            sextra.push ( w + layout.BPAD - slotpad )
+          else if ( i === ds - 1 ) {
+            // No extra space for after last element
+            w += - slotpad
           }
+
+          w = Math.max ( slotpad, w )
+          sextra.push ( w - slotpad )
           x += w
         }
-      }
-      else {
-        // empty slot
-
-        if ( i === ds - 1 ) {
-          sextra.push ( 0 )
-        }
         else {
-          // empty slot adds extra padding for click
-          const w = layout.SCLICKW/2 + slotpad
-          x += w // layout.SPAD + 2 * layout.SLOT
-          sextra.push ( w + layout.BPAD - slotpad )
+          // empty slot
+          sextra.push ( 0 )
+          x += slotpad
         }
       }
     }
@@ -298,23 +296,6 @@ const uimapOne =
     }
 
     size.w = Math.max ( size.w, size.wd + size.wde )
-
-    if ( size.hasExtra ) {
-      // extra slot
-      const x = size.w - layout.SPAD - 2 * layout.SLOT
-      const y = layout.HEIGHT
-                // ( layout.HEIGHT - layout.SCLICKH ) / 2
-
-      slots.push
-      ( { path: spath
-        , idx: ds
-        , pos: { x, y }
-        , plus
-        , click
-        , flags: { free: true }
-        }
-      )
-    }
 
   }
 

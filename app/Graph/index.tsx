@@ -15,12 +15,11 @@ const mapUINodes =
   const nodesById = graph.nodesById
   const nodes = uigraph.nodes
   const uiNodeById = uigraph.uiNodeById
-  const key = `Node-${ownerType}-`
 
   return nodes.map ( ( n ) => {
       const uinode = uiNodeById [ n ]
       const node = nodesById [ n ]
-      return <Node key={ key + uinode.id }
+      return <Node
         blockId={ blockId }
         uinode={ uinode }
         node={ node }
@@ -42,6 +41,7 @@ export const Graph = Component
     const dropUINode = props.dropUINode
     const ownerType = props.ownerType
     const blockId = props.selectedBlockId
+    
     // TODO: never compute uigraph here.
     const uigraph: UIGraphType = props.uigraph || uimap ( graph )
 

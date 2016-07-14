@@ -56,34 +56,22 @@ export const moveAction =
       let parentId: string
       const child = drag.dgraph
 
-      if ( apos ) {
-        // Drop on slot
+      // Find node in graph
+      const node = graph.nodesById [ nodeId ]
+      if ( !node ) {
+        // Drag move happens before proper ui update ?
+        return
+      }
 
-        // We compute graph used to preview operation in Playback
-        graph = insertGraph
+      if ( node.children [ slotIdx ] ) {
+        // Slip
+        graph = slipGraph
         ( graph, nodeId, slotIdx, child )
       }
       else {
-        // Drop on node (slip)
-
-        // Find node in graph
-        const node = graph.nodesById [ nodeId ]
-        if ( !node ) {
-          // Drag move happens before proper ui update ?
-          return
-        }
-        parentId = node.parent
-        if ( parentId ) {
-          const parent = graph.nodesById [ parentId ]
-          slotIdx = parent.children.indexOf ( nodeId )
-          nodeId = parentId
-          // Compute new playback graph (for preview).
-          graph = slipGraph
-          ( graph, nodeId, slotIdx, child )
-        }
-        else {
-          // Do not change graph
-        }
+        // We compute graph used to preview operation in Playback
+        graph = insertGraph
+        ( graph, nodeId, slotIdx, child )
       }
 
       // eventual drop operation

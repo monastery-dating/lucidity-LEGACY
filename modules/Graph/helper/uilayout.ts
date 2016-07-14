@@ -16,7 +16,7 @@ const DEFAULT_LAYOUT =
 , ARROW_CLOSED: { path: '', click: '', class: { closed: true, arrow: true } }
 , ARROW_CLICK: ''
 , SPAD:   16 // slot pad
-, SCLICKW:  22
+, SCLICKW:  20
 , SCLICKH:  0 // (computed from HEIGHT) slot click rect height
 , TPAD:   8
 , BPAD:   0  // pad between siblings

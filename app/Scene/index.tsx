@@ -14,31 +14,32 @@ const SceneOptions = pane ( 'scene' )
 let lastGraph, lastUIgraph
 
 export const Scene = Component
-( { scene: [ 'scene' ]
+( { comp: [ 'scene' ]
     // update ui on scene name edit
   , editing: SceneName.path
     // ensure that we redraw on pane changes
   , pane: SceneOptions.path
     // update graph ui
-  , block: [ 'block' ]
+  , blockSelection: [ '$block' ]
     // update graph on drag op
   , drop: [ '$dragdrop', 'drop' ]
   , drag: [ '$dragdrop', 'drag' ]
   }
 , ( { state, signals }: ContextType ) => {
-    const ownerType = 'scene'
-    const dclass = state.drop && state.drop.ownerType === ownerType
-    const klass = { Scene: true, drop: dclass }
-
-    const scene: ComponentType = state.scene
-    if ( !scene ) {
+    const comp: ComponentType = state.comp
+    if ( !comp ) {
       return ''
     }
+
+    const ownerType = 'scene'
+    // TODO: cleanup CSS related to drop operations
+    const dclass = state.drop && state.drop.ownerType === ownerType
+    const klass = { Scene: true, drop: dclass }
 
     const deleteModal = openModal
     ( { message: 'Delete scene ?'
       , type: 'scene'
-      , _id: scene._id
+      , _id: comp._id
       , operation: 'remove'
       , confirm: 'Delete'
       }
@@ -46,10 +47,11 @@ export const Scene = Component
     )
 
     // Prepare graph for display
-    const select = state.select || {}
-    const blockId = select.ownerType === ownerType ? select.id : null
+    // Prepare graph for display
+    const selection = state.blockSelection || {}
+    const blockId = selection.ownerType === ownerType ? selection.id : null
 
-    let graph: GraphType = scene.graph
+    let graph: GraphType = comp.graph
     const drop: DragDropType = state.drop
     const drag: DragStartType = state.drag
     let dropSlotIdx: number
@@ -68,6 +70,8 @@ export const Scene = Component
       }
 
       if ( drop && drop.ownerType === ownerType ) {
+        // Find closest slot
+        const slots =
         dropSlotIdx = drop.slotIdx
         dropUINode = uigraph.uiNodeById [ drop.nodeId ]
       }
@@ -88,7 +92,7 @@ export const Scene = Component
         </SceneOptions>
       <Graph key='scene.graph'
         selectedBlockId={ blockId }
-        ownerType={ 'scene' }
+        ownerType={ ownerType }
         graph={ graph }
         uigraph={ uigraph }
         dropSlotIdx= { dropSlotIdx }

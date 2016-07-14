@@ -4,7 +4,7 @@ import { ContextType } from '../../modules/context.type'
 import { NodeType, UINodeType, UISlotType } from '../../modules/Graph/types'
 import { DragDropHelper } from '../../modules/DragDrop'
 
-const makeSlot = ( slot: UISlotType, datainfo, clbk ) => {
+const makeSlot = ( slot: UISlotType, datainfo, sclick ) => {
   const flags = slot.flags
   const { x, y } = slot.pos
   const klass = Object.assign ( {}, flags, { slot: true })
@@ -18,8 +18,9 @@ const makeSlot = ( slot: UISlotType, datainfo, clbk ) => {
       { spath }
       <g class='sclick' data-drop={ slotinfo }>
         <path d={ slot.click }
-          on-click={ ( e ) => clbk ( e, slot.idx ) } class='click' />
-        <path d={ slot.plus } class='plus'/>
+          on-click={ ( e ) => sclick ( e, slot.idx ) } class='click' />
+        <path d={ slot.plus }
+          class='plus'/>
       </g>
     </g>
 }
