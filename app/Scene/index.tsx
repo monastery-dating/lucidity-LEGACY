@@ -3,7 +3,7 @@ import { Component } from '../Component'
 import { ContextType } from '../../modules/context.type'
 import { editable, openModal, pane } from '../../modules/Factory'
 import { Graph } from '../Graph'
-import { uimap, GraphType, rootNodeId, UIGraphType } from '../../modules/Graph'
+import { uimap, GraphType, NodeByIdType, rootNodeId, UIGraphType } from '../../modules/Graph'
 import { DragDropType, DragStartType } from '../../modules/DragDrop'
 import { ComponentType } from '../../modules/Graph'
 
@@ -11,7 +11,7 @@ const SceneName = editable ( [ 'scene', 'name' ] )
 
 const SceneOptions = pane ( 'scene' )
 
-let lastGraph, lastUIgraph
+let lastGraph, lastUIgraph, lastflags
 
 export const Scene = Component
 ( { comp: [ 'scene' ]
@@ -56,22 +56,29 @@ export const Scene = Component
     const drag: DragStartType = state.drag
     let dropSlotIdx: number
     let dropUINode
+    let flags: NodeByIdType = null
     let uigraph: UIGraphType
     if ( graph ) {
+
+      if ( drop && drop.ownerType === ownerType ) {
+        // FIXME: we should use drop graph flags but with
+        // node structure from drag.rgraph / graph.
+        flags = drop.graph.nodesById
+      }
 
       if ( drag && drag.ownerType === ownerType && ! drag.copy ) {
         graph = drag.rgraph
       }
 
       uigraph = lastUIgraph
-      if ( lastGraph !== graph ) {
+      if ( lastGraph !== graph || lastflags !== flags ) {
         lastGraph = graph
-        uigraph = lastUIgraph = uimap ( lastGraph )
+        lastflags = flags
+        uigraph = lastUIgraph = uimap ( lastGraph, flags )
       }
 
       if ( drop && drop.ownerType === ownerType ) {
         // Find closest slot
-        const slots =
         dropSlotIdx = drop.slotIdx
         dropUINode = uigraph.uiNodeById [ drop.nodeId ]
       }

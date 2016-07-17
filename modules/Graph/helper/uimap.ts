@@ -2,6 +2,7 @@ import { defaultUILayout } from './uilayout'
 import { BlockType, BlockByIdType } from '../../Block'
 import { GraphType
        , NodeType
+       , NodeByIdType
        , UINodeType, UINodeByIdType
        , UIGraphType
        , UIArrowType
@@ -90,21 +91,22 @@ const className =
  */
 const boxPosition =
 ( graph: GraphType
-, id: string
+, nodeId: string
+, flags: NodeByIdType
 , layout: UILayoutType
 , uigraph: UIGraphType
 , ctx: UIPosType
 ): number => {
-  const node = graph.nodesById [ id ]
+  const node = graph.nodesById [ nodeId ]
   const block  = graph.blocksById [ node.blockId ]
 
   // store our position given by ctx
-  uigraph.uiNodeById [ id ].pos = ctx
+  uigraph.uiNodeById [ nodeId ].pos = ctx
   const dy = layout.HEIGHT + layout.VPAD
 
   let x  = ctx.x
 
-  const uinode = uigraph.uiNodeById [ id ]
+  const uinode = uigraph.uiNodeById [ nodeId ]
   const ds = uinode.size.ds
 
   const sextra = uinode.sextra
@@ -121,7 +123,7 @@ const boxPosition =
 
       if ( childId ) {
         const h = boxPosition
-        ( graph, childId, layout, uigraph
+        ( graph, childId, flags, layout, uigraph
         , { x, y: ctx.y + dy }
         )
         cheight = Math.max ( cheight, h )
@@ -140,35 +142,20 @@ const boxPosition =
 
 const uimapOne =
 ( graph: GraphType
-, id: string
-, ghostId: string
 , nodeId: string
+, flags: NodeByIdType
 , layout: UILayoutType
 , uigraph: UIGraphType
 , slotIdx: number
 ) => {
-  uigraph.uiNodeById [ id ] = <UINodeType> { id, slotIdx }
+  uigraph.uiNodeById [ nodeId ] = <UINodeType> { id: nodeId, slotIdx }
 
-  const uibox = uigraph.uiNodeById [ id ]
+  const uibox = uigraph.uiNodeById [ nodeId ]
 
-  const node = graph.nodesById [ id ]
+  const node = graph.nodesById [ nodeId ]
   const block  = graph.blocksById [ node.blockId ]
 
   uibox.name = block.name
-
-  if ( ghostId === id ) {
-    uibox.isghost = ghostId
-    ghostId = 'ghost'
-  }
-  else if ( nodeId === id ) {
-    ghostId = null
-  }
-  else if ( ghostId === 'ghost' ) {
-    // for children of starting ghost, we set nodeId so that
-    // hovering with mouse during drag operation triggers a new
-    // drop preview.
-    uibox.isghost = ghostId
-  }
 
   if ( block.name === 'main' ) {
     uibox.className = 'main'
@@ -191,6 +178,8 @@ const uimapOne =
                        // second has spacing dependent on first child, etc
   const ds = size.ds
 
+  const flagnode = flags ? flags [ nodeId ] : node
+
   if ( ds > 0 ) {
     let   x = layout.RADIUS + layout.SPAD
     const y = layout.HEIGHT
@@ -203,7 +192,7 @@ const uimapOne =
 
     const slotpad = layout.SPAD + 2 * layout.SLOT
 
-    const serr = node.serr
+    const serr = flagnode.serr
     for ( let i = 0; i < ds; i += 1 ) {
       const childId = node.children [ i ]
       const pos = { x: x + sl, y }
@@ -256,7 +245,7 @@ const uimapOne =
 
           // We push in sextra the delta for slot i
           let w = uimapOne
-          ( graph, childId, ghostId, nodeId, layout, uigraph, i )
+          ( graph, childId, flags, layout, uigraph, i )
           // w contains slotpad
 
           if ( size.hasExtra && i === ds - 2 ) {
@@ -302,6 +291,7 @@ const uimapOne =
 
   }
 
+  uibox.invalid = flagnode.invalid
   uibox.sextra = sextra
 
   uibox.size = size
@@ -311,7 +301,7 @@ const uimapOne =
   uibox.slots = slots
 
   // draw nodes from child to parent
-  uigraph.nodes.push ( id )
+  uigraph.nodes.push ( nodeId )
   return uibox.size.w
 }
 
@@ -319,9 +309,8 @@ const uimapOne =
  */
 export const uimap =
 ( graph: GraphType
-  // FIXME: REMOVE GHOSTID CODE (not used anymore)
-, ghostId?: string // start considering as ghost from here
-, nodeId?: string  // stop considering as ghost from here
+// validity flags (drop preview)
+, flags?: NodeByIdType
 , alayout?: UILayoutType
 ) : UIGraphType => {
   const layout = alayout || defaultUILayout
@@ -342,10 +331,10 @@ export const uimap =
   }
 
   uimapOne
-  ( graph, rootNodeId, ghostId, nodeId, layout, uigraph, 0 )
+  ( graph, rootNodeId, flags, layout, uigraph, 0 )
 
   const height = boxPosition
-  ( graph, rootNodeId, layout, uigraph, startpos ) +
+  ( graph, rootNodeId, flags, layout, uigraph, startpos ) +
   layout.SCLICKH +
   layout.SLOT + 1
   const width = uigraph.uiNodeById [ rootNodeId ].size.w + 1

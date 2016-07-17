@@ -38,22 +38,11 @@ export const Node = Component
     const x = uinode.pos.x
     const y = uinode.pos.y
     const transform = `translate(${x},${y})`
-    let datainfo = `${ownerType}-${uinode.id}`
-    if ( uinode.isghost ) {
-      if ( uinode.isghost === node.id ) {
-        // hovering on main element: do nothing
-        datainfo = `${ownerType}-drop`
-      }
-      else {
-        // force change of drop layout
-        datainfo = ``
-      }
-    }
+    const datainfo = `${ownerType}-${uinode.id}`
 
     const klass = { sel: node.blockId === props.blockId
                   , [ uinode.className ]: true
-                  , ghost: uinode.isghost
-                  , invalid: node.invalid
+                  , invalid: uinode.invalid
                   , node: true
                   }
 

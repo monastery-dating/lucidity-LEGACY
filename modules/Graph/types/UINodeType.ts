@@ -59,14 +59,13 @@ export interface UINodeType {
 
   // can contain more then one class ( for ghost element )
   className: string
+  invalid?: boolean
   // draw path
   path: string
   // slot paths
   slots: UISlotType[]
   // position in parent
   slotIdx: number
-  // true if the element is part of the eventual drop
-  isghost?: string
   arrow: UIArrowType
 }
 

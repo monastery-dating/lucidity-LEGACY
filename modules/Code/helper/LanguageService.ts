@@ -125,13 +125,11 @@ const addLiteral =
 , ch: number
 , text: string
 ) => {
-  const value = parseFloat ( text )
-  if ( value ) {
-    return literals.push ( { text, line, ch, value } ) - 1
-  }
-  else {
+  if ( text.substr ( 0, 2 ) === '0x' ) {
     return null
   }
+  const value = parseFloat ( text )
+  return literals.push ( { text, line, ch, value } ) - 1
 }
 
 export const scrubParse =

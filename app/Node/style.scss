@@ -119,7 +119,7 @@ svg {
   }
 }
 
-path.ghost, .Drag path.node {
+.Drag path.node {
   stroke: white;
   stroke-dasharray: 5;
   stroke-dashoffset: 0;
