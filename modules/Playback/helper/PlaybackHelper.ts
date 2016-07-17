@@ -112,7 +112,7 @@ const updateCache =
 
     if ( node.invalid ) {
       // ignore
-      n.exported = { update: DUMMY_UPDATE }
+      // n.exported = { update: DUMMY_UPDATE }
       continue
     }
 
@@ -162,7 +162,6 @@ const detach =
 ( cache: PlaybackCache
 , oldgraph: GraphType
 , newgraph: GraphType
-, helpers: HelpersContext
 , nodeId: string
 , parentDisconnected: boolean
 ) => {
@@ -175,28 +174,34 @@ const detach =
   // Parse children
   for ( const childId of onode.children ) {
     if ( childId ) {
-      detach ( cache, oldgraph, newgraph, helpers, childId, detached )
+      detach ( cache, oldgraph, newgraph, childId, detached )
     }
   }
 
   // detach after children (depth-first)
   if ( detached ) {
+    console.log ( 'detached ' + nodeId )
     const nc = cache.nodecache [ nodeId ]
+    if ( !nc ) {
+      // FIXME: why does this happen ?
+      return
+    }
     const init = nc.exported.init
+    const h = Object.assign
+    ( {}, nc.helpers, { detached } )
+
     if ( init ) {
       // clear previous controls
       nc.controls = []
       try {
-        init ( nc.helpers )
+        init ( h )
       }
       catch (err) {
         // FIXME: proper error handling
         console.log ( 'detach error:', err )
       }
-      // clear cache
-      nc.cache = {}
-      // clear controls
-      nc.controls = []
+      // clear
+      delete cache.nodecache [ nodeId ]
     }
   }
 }
@@ -220,6 +225,8 @@ const initDo =
 
   let subctx: Context = context
   if ( init ) {
+    // FIXME: only compute helpers when they change
+    //        or just change children...
     const helpers = Object.assign ( {}, ohelpers )
     if ( !nc.cache ) {
       // cache passed in init call
@@ -334,7 +341,7 @@ const initDo =
       }
     }
   }
-  else if ( !node.invalid ){
+  else if ( !node.invalid ) {
     // Only clear if node is valid = user wants to remove init
 
     // No init function = clear cached context and init cache
@@ -371,16 +378,13 @@ export const detachCheck =
 ( graph : GraphType
 , cache: PlaybackCache
 , context: Object // extra elements for update context
-, helpers: HelpersContext
 ) => {
   // 1. detach if needed
   if ( cache.graph && cache.graph !== graph ) {
-    const h = Object.assign ( {}, helpers, { detached: true, children: [] })
     detach
     ( cache
-    , cache.graph
     , graph
-    , h
+    , cache.graph
     , rootNodeId
     , false
    )
@@ -448,7 +452,7 @@ export const runGraph =
     }
   }
   // 1. detach if needed
-  detachCheck ( graph, cache, context, helpers )
+  detachCheck ( graph, cache, context )
   // 2. compile
   compileGraph ( graph, cache )
   // 3. init

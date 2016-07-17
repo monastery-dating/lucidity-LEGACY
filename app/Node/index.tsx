@@ -102,7 +102,7 @@ export const Node = Component
           on-click={ click }
           ></path>
         <text x={ uinode.size.tx } y={ uinode.size.ty }>
-          { uinode.name }
+          { uinode.id }
         </text>
         <path d={ arrow.path } class={ arrow.class }></path>
         <path d={ arrow.click }

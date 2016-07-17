@@ -14,11 +14,19 @@ export const moveAction =
   } : ActionContextType
 ) => {
   const move: DragMoveType = input.move
+  state.set ( movep, move )
+
   const drag: DragStartType = state.get ( dragp )
   const { target, clientPos } = move
   const copy = drag.copy || move.copy
+  
   // If target is not set = no drop operation
   let drop: DragDropType = state.get ( dropp )
+
+  if ( drop && drop.target === target ) {
+    // ignore
+    return
+  }
 
   if ( target && target !== '' ) {
     let [ ownerType, nodeId, apos ] = target.split ( '-' )
@@ -94,5 +102,4 @@ export const moveAction =
     state.unset ( dropp )
   }
 
-  state.set ( movep, move )
 }

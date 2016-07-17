@@ -58,7 +58,8 @@ const path =
     res.push ( `h${ -rpadd - layout.SPAD }` )
   }
   else {
-    console.log ( 'ERROR', w )
+    // ??
+    // console.log ( 'ERROR', w )
     res.push ( `h${ -layout.SPAD }` )
   }
 
