@@ -145,8 +145,9 @@ const uimapOne =
 , nodeId: string
 , layout: UILayoutType
 , uigraph: UIGraphType
+, slotIdx: number
 ) => {
-  uigraph.uiNodeById [ id ] = <UINodeType> { id }
+  uigraph.uiNodeById [ id ] = <UINodeType> { id, slotIdx }
 
   const uibox = uigraph.uiNodeById [ id ]
 
@@ -254,7 +255,8 @@ const uimapOne =
           const nodes = uigraph.nodes
 
           // We push in sextra the delta for slot i
-          let w = uimapOne ( graph, childId, ghostId, nodeId, layout, uigraph )
+          let w = uimapOne
+          ( graph, childId, ghostId, nodeId, layout, uigraph, i )
           // w contains slotpad
 
           if ( size.hasExtra && i === ds - 2 ) {
@@ -340,7 +342,7 @@ export const uimap =
   }
 
   uimapOne
-  ( graph, rootNodeId, ghostId, nodeId, layout, uigraph )
+  ( graph, rootNodeId, ghostId, nodeId, layout, uigraph, 0 )
 
   const height = boxPosition
   ( graph, rootNodeId, layout, uigraph, startpos ) +

@@ -11,7 +11,7 @@ interface Position {
 }
 
 interface DragCallback {
-  ( pos: Position, copy: boolean ): void
+  ( pos: Position, copy: boolean ): string
 }
 
 const MIN_DRAG_DIST = 4 // manhattan distance to trigger a drag
@@ -25,10 +25,15 @@ interface SlotInfo {
   target: string
 }
 
-const startDrag = ( signals: SignalsType ) => {
+const startDrag =
+( signals: SignalsType
+, initTarget: string
+) => {
+  const start = Date.now ()
   const doc = document.documentElement
   const slots: SlotInfo[] = []
   const list = document.getElementsByClassName ( 'sclick' )
+  let skipTarget = initTarget
 
   for ( let i = 0; i < list.length; ++i ) {
     const s = list [ i ]
@@ -61,6 +66,13 @@ const startDrag = ( signals: SignalsType ) => {
         d = ds
         target = s.target
       }
+    }
+    if ( target === skipTarget && Date.now () < start + 800 ) {
+      // ignore
+      target = null
+    }
+    else {
+      skipTarget = null
     }
 
     signals.$dragdrop.move
@@ -129,12 +141,12 @@ export module DragDropHelper {
         }
         evstate = 'dragging'
 
-        dragclbk ( nodePos, e.altKey )
+        const initTarget = dragclbk ( nodePos, e.altKey )
 
         // FIXME: How can we wait for after DOM update ?
         setTimeout
         ( () => {
-            startDrag ( signals )
+            startDrag ( signals, initTarget )
           }
         , 80
         )

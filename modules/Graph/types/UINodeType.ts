@@ -63,6 +63,8 @@ export interface UINodeType {
   path: string
   // slot paths
   slots: UISlotType[]
+  // position in parent
+  slotIdx: number
   // true if the element is part of the eventual drop
   isghost?: string
   arrow: UIArrowType

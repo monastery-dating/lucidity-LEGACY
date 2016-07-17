@@ -33,6 +33,8 @@ export const Node = Component
     const uinode: UINodeType = props.uinode
     const node: NodeType = props.node
     const ownerType = props.ownerType
+    // Position in parent
+    const slotIdx = props.slotIdx
     const x = uinode.pos.x
     const y = uinode.pos.y
     const transform = `translate(${x},${y})`
@@ -67,6 +69,8 @@ export const Node = Component
             , copy
             }
           } )
+          // initial target
+          return `${ownerType}-${node.parent}-${uinode.slotIdx}`
       }
     , ( e ) => {
         // normal click
@@ -102,7 +106,7 @@ export const Node = Component
           on-click={ click }
           ></path>
         <text x={ uinode.size.tx } y={ uinode.size.ty }>
-          { uinode.id }
+          { uinode.name }
         </text>
         <path d={ arrow.path } class={ arrow.class }></path>
         <path d={ arrow.click }

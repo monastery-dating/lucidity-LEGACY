@@ -119,6 +119,21 @@ interface CompileReturn {
   errors?: CompilerError[]
 }
 
+const addLiteral =
+( literals: LiteralScrub[]
+, line: number
+, ch: number
+, text: string
+) => {
+  const value = parseFloat ( text )
+  if ( value ) {
+    return literals.push ( { text, line, ch, value } ) - 1
+  }
+  else {
+    return null
+  }
+}
+
 export const scrubParse =
 ( source: string
 , literals: LiteralScrub[]
@@ -137,58 +152,65 @@ export const scrubParse =
     else {
       if ( klass === 'number' ) {
         // const foo = 4 - 5
-        const idx = literals.push ( { text, line, ch, value: parseFloat ( text ) } ) - 1
-        let p = output.length - 1
-        let uch = ''
-        let unarypos = null
-        let getMinus = true
+        const idx = addLiteral
+        ( literals, line, ch, text )
+        if ( idx === null ) {
+          // Not a value we can handle
+          output.push ( text )
+        }
+        else {
+          let p = output.length - 1
+          let uch = ''
+          let unarypos = null
+          let getMinus = true
 
-        while ( true ) {
-          const op = output [ p ]
-          if ( op[ 0 ] === ' ' ) {
-            // whitespace
-            if ( getMinus ) {
-              uch = op + uch
-            }
+          while ( true ) {
+            const op = output [ p ]
+            if ( op[ 0 ] === ' ' ) {
+              // whitespace
+              if ( getMinus ) {
+                uch = op + uch
+              }
 
-            --p
-          }
-          else if ( getMinus ) {
-            if ( op === '-' ) {
-              getMinus = false
-              unarypos = p
-              uch = op + uch
               --p
             }
+            else if ( getMinus ) {
+              if ( op === '-' ) {
+                getMinus = false
+                unarypos = p
+                uch = op + uch
+                --p
+              }
+              else {
+                // not unary minus
+                break
+              }
+            }
+            else if ( UNARY_AFTER.indexOf ( op ) >= 0 ) {
+              break
+            }
             else {
-              // not unary minus
+              unarypos = null
               break
             }
           }
-          else if ( UNARY_AFTER.indexOf ( op ) >= 0 ) {
-            break
+
+          const s = `${SCRUBBER_VAR}[${idx}]`
+          if ( unarypos ) {
+            // unary minus
+            while ( output.length > unarypos ) {
+              output.pop ()
+            }
+            output.push ( s )
+            // make unary
+            const l = literals [ idx ]
+            l.value = - l.value
+            l.text = uch + l.text
+            l.ch -= uch.length
           }
           else {
-            unarypos = null
-            break
+            output.push ( s )
           }
-        }
-
-        const s = `${SCRUBBER_VAR}[${idx}]`
-        if ( unarypos ) {
-          // unary minus
-          while ( output.length > unarypos ) {
-            output.pop ()
-          }
-          output.push ( s )
-          // make unary
-          const l = literals [ idx ]
-          l.value = - l.value
-          l.text = uch + l.text
-          l.ch -= uch.length
-        }
-        else {
-          output.push ( s )
         }
       }
       else {

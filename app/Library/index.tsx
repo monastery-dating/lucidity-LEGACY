@@ -14,6 +14,7 @@ const renderLibrary = ( component, signals: SignalsType ) => {
     ( { drag: { componentId: component._id, ownerType: 'library', nodePos }
       }
     )
+    return `library-${component._id}-0`
   }
     // click
   , ( e ) => {}
