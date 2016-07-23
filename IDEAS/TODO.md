@@ -5,7 +5,7 @@
 **Graph**
 
   DragDrop/actions/moveAction
-  
+
   1. On drag operation
   2. Move dropTarget on closest slot in hover graph
   3. Use this information to update eval drop action
@@ -300,3 +300,16 @@ Ask user on adding a script to the library for:
 
 - name
 - validation button = [ cancel ] [ major ] [ minor ] [ patch ] if the script has a meta field. The buttons then update the semver version number in the script before saving it.
+
+# SPHERE TRACING
+
+http://mercury.sexy/hg_sdf/
+
+1. Build some system to #include glsl files in each other.
+   Include this one at the very start. Or just paste everywhere.
+2. Build a sphere tracer. See those papers:
+   * "Sphere Tracing" http://graphics.cs.illinois.edu/sites/default/files/zeno.pdf
+   * "Enhanced Sphere Tracing" http://lgdv.cs.fau.de/get/2234
+   The Raymnarching Toolbox Thread on pouet can be helpful as well
+   http://www.pouet.net/topic.php?which=7931&page=1
+   and contains links to many more resources.

@@ -11,5 +11,5 @@ export const mounted =
 , bindkeys
 , [ ...reload ]   // async
 , [ ...initMidi ] // async
-, ...runtests     // sync
+// , ...runtests     // sync
 ]
