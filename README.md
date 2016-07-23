@@ -1,16 +1,32 @@
-# Lucidity Editor
+# Welcome to Lucidity !!
 
-> An app for live arts.
+This is an application to ease the creation of digital and live art.
+
+http://lucidity.io
+
+This project is in **early alpha**. Development news on
+[twitter](http://twitter.com/lucidityio).
+
+Please do not use issues for questions, use [stack
+overflow](http://stackoverflow.com/) with tag #lucidity.
 
 ## Install dependencies
 
     npm install
 
-## Run the jspm live-reload server
+## Run the live-reload server (needed for NW.js app)
 
 Start server and head to http://localhost:8080.
 
     npm run dev
+
+## Start app (requires npm run dev)
+
+This runs the NW.js standalone app with access to filesystem live-coding.
+
+    (npm run build)
+    npm run dev ## in another terminal: needs to continue running
+    npm run app
 
 ## Run the tests
 
