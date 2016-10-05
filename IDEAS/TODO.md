@@ -1,3 +1,18 @@
+## Lucidity 1.0
+
+1. Create new repo for Components (react storybook)
+2. If components work, use React
+3. Build provider (?) to wrap state changes to data (with Pouchdb/FS sync ?)
+4. Testing should go out of app
+5. Clarify main modules and interfaces, find a way to test each one separately.
+  Playback, Compilation, Editor, Controls, Graph composition, Graph display
+  MIDI, etc
+  ==> We need some common API (provider ?) to modify a project/scene/block
+  ==> And another API to change runtime values, trigger events (ADSR) through MIDI, OSC, etc
+  ==> What is the relation between tweaking (runtime) and a patch (saved to file) ? 
+6. Refactor using Cerebral 2.x
+
+=============
 # TODO
 
 - REMOVE 'blockId' in GraphType...
