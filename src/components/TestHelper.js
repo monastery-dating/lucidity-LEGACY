@@ -1,9 +1,9 @@
 import React from 'react'
 import {StateContainer} from 'cerebral/react'
 import {mount} from 'enzyme'
-import {mountToJson} from 'enzyme-to-json'
+export {mountToJson as snapshot} from 'enzyme-to-json'
 
-export function snapshot (block, state) {
+export function render (block, state) {
   const wrapper = mount(
    <StateContainer state={state}>
       <div id='testhelper'>
@@ -11,6 +11,5 @@ export function snapshot (block, state) {
      </div>
    </StateContainer>
  )
-
-  return mountToJson(wrapper.find('#testhelper').children())
+  return wrapper.find('#testhelper').children()
 }

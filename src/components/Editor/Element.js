@@ -21,8 +21,14 @@ export default connect(
     }
 
     switch (type) {
-      case 'p':
-        return <p data-ref={element.ref} onKeyPress={onKeyPress} onInput={onInput} contentEditable dangerouslySetInnerHTML={{__html: element.text}} />
+      case 'P':
+        return <p data-ref={element.ref}
+            onKeyPress={onKeyPress}
+            onInput={onInput}
+            contentEditable
+            suppressContentEditableWarning>
+            {element.text}
+          </p>
       default:
         return null
     }

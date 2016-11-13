@@ -1,6 +1,6 @@
 /* global it expect describe */
 import React from 'react'
-import {snapshot} from '../TestHelper'
+import {snapshot, render} from '../TestHelper'
 import Editor from './'
 
 const editorState = {
@@ -27,7 +27,7 @@ const editorState = {
       },
       three: {
         ref: 'three',
-        position: 3.0,
+        position: 1.0,
         type: 'P',
         text: 'This is the third **message**. Hello blah bomgolo frabilou elma tec.'
       }
@@ -36,8 +36,18 @@ const editorState = {
 }
 
 describe('editor', () => {
+  it('renders without crashing', () => {
+    render(<Editor />, {editor: editorState})
+  })
+
   it('renders paragraphs in order', () => {
-    const tree = snapshot(<Editor />, {editor: editorState})
-    expect(tree).toMatchSnapshot()
+    const tree = render(<Editor />, {editor: editorState})
+    expect(tree.find('Element').map(e => e.prop('elementRef'))).toEqual(['one', 'three', 'two'])
+  })
+
+  it('sets ref', () => {
+    const tree = render(<Editor />, {editor: editorState})
+    .find('[data-ref="one"]')
+    expect(snapshot(tree)).toMatchSnapshot()
   })
 })
