@@ -1,0 +1,9 @@
+.Editor {
+  padding: 20px;
+  background: #ddd;
+  border: 1px solid #aaa;
+}
+
+.Editor *:focus {
+  outline: none;
+}

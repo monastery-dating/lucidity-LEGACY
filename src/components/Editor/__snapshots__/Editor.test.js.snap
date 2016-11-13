@@ -1,0 +1,62 @@
+exports[`editor renders paragrpahs in order 1`] = `
+<CerebralWrapping_Editor>
+  <Editor
+    paragraphRefList={
+      Array [
+        "one",
+        "two",
+        "three",
+      ]
+    }>
+    <div
+      className="Editor">
+      <CerebralWrapping_Element
+        elementRef="one">
+        <Element
+          element={
+            Object {
+              "markup": Object {
+                "iahyx": Object {
+                  "end": 25,
+                  "start": 18,
+                  "type": "STRONG",
+                },
+              },
+              "position": 0,
+              "ref": "one",
+              "text": "This is the first message. Hello blah bomgolo frabilou elma tec.",
+              "type": "P",
+            }
+          }
+          elementRef="one" />
+      </CerebralWrapping_Element>
+      <CerebralWrapping_Element
+        elementRef="two">
+        <Element
+          element={
+            Object {
+              "position": 2,
+              "ref": "two",
+              "text": "This is the second <b>message</b>. Hello blah bomgolo frabilou elma tec.",
+              "type": "P",
+            }
+          }
+          elementRef="two" />
+      </CerebralWrapping_Element>
+      <CerebralWrapping_Element
+        elementRef="three">
+        <Element
+          element={
+            Object {
+              "position": 3,
+              "ref": "three",
+              "text": "This is the third **message**. Hello blah bomgolo frabilou elma tec.",
+              "type": "P",
+            }
+          }
+          elementRef="three" />
+      </CerebralWrapping_Element>
+    </div>
+  </Editor>
+</CerebralWrapping_Editor>
+`;

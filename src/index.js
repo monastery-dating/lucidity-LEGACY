@@ -1,9 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import './index.css';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import {Container} from 'cerebral/react'
+import App from './components/App'
+import controller from './controller'
+import './index.css'
 
 ReactDOM.render(
-  <App />,
+  <Container controller={controller}>
+    <App />
+  </Container>,
   document.getElementById('root')
-);
+)

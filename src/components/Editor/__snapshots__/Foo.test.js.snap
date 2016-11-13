@@ -1,0 +1,10 @@
+exports[`Foo renders foo name 1`] = `
+<CerebralWrapping_Foo>
+  <Foo
+    name="baz">
+    <div>
+      baz
+    </div>
+  </Foo>
+</CerebralWrapping_Foo>
+`;
