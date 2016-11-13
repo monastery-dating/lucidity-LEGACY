@@ -1,20 +1,27 @@
 /* global Node */
 import React from 'react'
 import {connect} from 'cerebral/react'
-import paragraphRefList from '../../computed/paragraphRefList'
-
-import Element from './Element'
+import expandInner from './lib/expandInner'
+import getPath from './lib/getPath'
 
 import './style.css'
 
 export default connect(
   {
-    paragraphRefList
+    composition: 'editor.composition.*'
   },
-  function Editor ({paragraphRefList}) {
+  {
+    contentChange: 'editor.contentChanged'
+  },
+  function Editor ({composition, contentChange}) {
     const onInput = e => {
       const selection = window.getSelection()
       const {anchorNode} = selection
+      const path = getPath(anchorNode)
+      const value = anchorNode.textContent
+      console.log(selection)
+      console.log(path, value)
+      contentChange({path: `${path}.i`, value})
 
       if (anchorNode.nodeType !== Node.TEXT_NODE) {
         // Not an edit
@@ -39,8 +46,9 @@ export default connect(
         onInput={onInput}
         onKeyPress={onKeyPress}
         contentEditable
-        suppressContentEditableWarning>
-        {paragraphRefList.map(ref => <Element key={ref} elementRef={ref} />)}
+        suppressContentEditableWarning
+        >
+        {expandInner('editor.composition', composition.i)}
       </div>
   }
 )

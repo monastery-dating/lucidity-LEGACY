@@ -1,5 +1,5 @@
 import {Controller} from 'cerebral'
-// import Devtools from 'cerebral/devtools'
+import Devtools from 'cerebral/devtools'
 import editor from './modules/editor'
 
 export default Controller({
@@ -8,8 +8,6 @@ export default Controller({
   },
   modules: {
     editor
-  }
-  /*,
+  },
   devtools: process.NODE_ENV === 'production' ? null : Devtools()
-  */
 })

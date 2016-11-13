@@ -7,3 +7,11 @@
 .Editor *:focus {
   outline: none;
 }
+
+.Editor .em {
+  font-style: italic;
+}
+
+.Editor .strong {
+  font-weight: bold;
+}
