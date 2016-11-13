@@ -13,6 +13,7 @@ const editorState = {
         text: 'This is the first message. Hello blah bomgolo frabilou elma tec.',
         markup: {
           iahyx: {
+            ref: 'iahyx',
             start: 18,
             end: 25,
             type: 'STRONG'

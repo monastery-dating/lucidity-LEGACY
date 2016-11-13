@@ -5,6 +5,14 @@ exports[`editor sets ref 1`] = `
   onInput={[Function]}
   onKeyPress={[Function]}
   suppressContentEditableWarning={true}>
-  This is the first <strong>message</strong>. Hello blah bomgolo frabilou elma tec.
+  <span>
+    This is the first 
+  </span>
+  <strong>
+    message
+  </strong>
+  <span>
+    . Hello blah bomgolo frabilou elma tec.
+  </span>
 </p>
 `;
