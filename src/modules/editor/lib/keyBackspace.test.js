@@ -19,6 +19,10 @@ describe('keyBackspace', () => {
       {
         op: 'update', path: ['zhaog', 'oaiue'],
         value: {p: 1, t: 'S', i: 'mssage'}
+      },
+      {
+        op: 'select', path: ['zhaog', 'oaiue'],
+        offset: 1
       }
     ])
   })
@@ -37,6 +41,10 @@ describe('keyBackspace', () => {
       {
         op: 'update', path: ['zhaog', 'oaiue'],
         value: {p: 1, t: 'S', i: 'mage'}
+      },
+      {
+        op: 'select', path: ['zhaog', 'oaiue'],
+        offset: 1
       }
     ])
   })
@@ -56,10 +64,14 @@ describe('keyBackspace', () => {
         op: 'update', path: ['mcneu', 'jnaid', 'zzvgp'],
         value: {p: 1, t: 'S+E', i: 'li'}
       },
-      { op: 'remove', path: ['mcneu', 'mznao'] },
-      { op: 'remove', path: ['mcneu', 'mnahl'] },
-      { op: 'remove', path: ['mcneu', 'ncgow'] },
-      { op: 'remove', path: ['zhaog'] },
+      {
+        op: 'select', path: ['mcneu', 'jnaid', 'zzvgp'],
+        offset: 2
+      },
+      { op: 'delete', path: ['mcneu', 'mznao'] },
+      { op: 'delete', path: ['mcneu', 'mnahl'] },
+      { op: 'delete', path: ['mcneu', 'ncgow'] },
+      { op: 'delete', path: ['zhaog'] },
       {
         op: 'update', path: ['zaahg'],
         value: {p: 2, t: 'P', i: 'ragraph. Hello blah bomgolo frabilou elma tec.'}

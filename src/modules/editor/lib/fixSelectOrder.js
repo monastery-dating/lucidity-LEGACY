@@ -22,9 +22,7 @@ export default function fixSelectOrder (composition, selection) {
   } else {
     const anchorPosition = getPosition(composition, anchorPath).concat([-1, -1])
     const focusPosition = getPosition(composition, focusPath).concat([Infinity, Infinity])
-    if (aBeforeB(anchorPosition, focusPosition)) {
-      reverse = true
-    }
+    reverse = !aBeforeB(anchorPosition, focusPosition)
   }
 
   if (reverse) {

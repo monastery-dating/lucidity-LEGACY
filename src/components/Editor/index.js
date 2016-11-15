@@ -39,7 +39,6 @@ export default connect(
     }
 
     const onKeyDown = e => {
-      console.log('PRESS', e.key)
       switch (e.key) {
         case 'Enter':
           e.preventDefault()

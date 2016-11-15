@@ -46,7 +46,11 @@ export default function keyBackspace (composition, aselection, isbackspace = tru
       } else if (offset === 0) {
         return {op: 'delete', path}
       } else if (offset >= elem.i.length) {
-        // no op
+        ops.push({
+          op: 'select',
+          path,
+          offset: offset
+        })
       } else {
         // remove part
         const text = elem.i.substr(0, offset)
@@ -54,6 +58,12 @@ export default function keyBackspace (composition, aselection, isbackspace = tru
           op: 'update',
           path,
           value: Object.assign({}, elem, {i: text})
+        })
+
+        ops.push({
+          op: 'select',
+          path,
+          offset: offset
         })
       }
     } else if (idx === touchedElements.length - 1) {

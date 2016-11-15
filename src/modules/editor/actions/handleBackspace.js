@@ -1,4 +1,5 @@
 import keyBackspace from '../lib/keyBackspace'
+
 const BASE_PATH = 'editor.composition.i'
 
 export default function handleBackspace ({state, input}) {

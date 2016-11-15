@@ -1,6 +1,7 @@
 exports[`editor sets ref 1`] = `
 <CerebralWrapping_Editor>
   <Editor
+    backspacePress={[Function]}
     composition={
       Object {
         "i": Object {
@@ -82,7 +83,7 @@ exports[`editor sets ref 1`] = `
       className="Editor"
       contentEditable={true}
       onInput={[Function]}
-      onKeyPress={[Function]}
+      onKeyDown={[Function]}
       onSelect={[Function]}
       suppressContentEditableWarning={true}>
       <CerebralWrapping_Element
