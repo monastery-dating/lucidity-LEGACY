@@ -4,20 +4,22 @@ import inSelection from './inSelection'
 
 const composition = mockComposition()
 const selection = {
-  anchorPath: 'mcneu.i.jnaid.i.zzvgp',
+  anchorPath: ['mcneu', 'jnaid', 'zzvgp'],
   anchorOffset: 2,
-  focusPath: 'zaahg',
+  focusPath: ['zaahg'],
   focusOffset: 20
 }
 
 describe('inSelection', () => {
   it('extracts selected elements', () => {
-    expect(inSelection(composition, selection).map(e => e.path))
+    expect(
+      inSelection(composition, selection).map(e => e.path.join('.'))
+    )
     .toEqual([
-      'mcneu.i.jnaid.i.zzvgp',
-      'mcneu.i.mznao',
-      'mcneu.i.mnahl',
-      'mcneu.i.ncgow',
+      'mcneu.jnaid.zzvgp',
+      'mcneu.mznao',
+      'mcneu.mnahl',
+      'mcneu.ncgow',
       'zhaog',
       'zaahg'
     ])

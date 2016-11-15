@@ -14,10 +14,12 @@ export default connect(
   },
   {
     contentChange: 'editor.contentChanged',
+    backspacePress: 'editor.backspacePressed',
     enterPress: 'editor.enterPressed'
   },
-  function Editor ({composition, enterPress, contentChange}) {
+  function Editor ({composition, backspacePress, enterPress, contentChange}) {
     const onInput = e => {
+      console.log('INPUT', e.key)
       const selection = window.getSelection()
       const {anchorNode} = selection
       const path = getPath(anchorNode)
@@ -36,11 +38,16 @@ export default connect(
       // update for this element...
     }
 
-    const onKeyPress = e => {
+    const onKeyDown = e => {
+      console.log('PRESS', e.key)
       switch (e.key) {
         case 'Enter':
           e.preventDefault()
           enterPress({selection: getSelection()})
+          return
+        case 'Backspace':
+          e.preventDefault()
+          backspacePress({selection: getSelection()})
           return
         default:
           // do nothing
@@ -61,7 +68,7 @@ export default connect(
     return <div className='Editor'
         onInput={onInput}
         onSelect={onSelect}
-        onKeyPress={onKeyPress}
+        onKeyDown={onKeyDown}
         contentEditable
         suppressContentEditableWarning
         >

@@ -3,9 +3,12 @@ import {connect} from 'cerebral/react'
 import expandInner from './expandInner'
 import getElementTag from './getElementTag'
 import getElementClassName from './getElementClassName'
+import setSelection from './setSelection'
 
 export default connect(
-  ({path}) => ({elem: `${path}.*`}),
+  ({path}) => ({
+    elem: `${path}.*`
+  }),
   function Element ({path, elemRef, elem}) {
     const type = elem.t
     const inner = elem.i
@@ -15,6 +18,7 @@ export default connect(
     return <Tag
       data-ref={elemRef}
       className={className}
+      ref={n => setSelection(n, path)}
       >
         { typeof inner === 'string'
         ? inner

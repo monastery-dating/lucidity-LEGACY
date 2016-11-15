@@ -18,28 +18,31 @@ export default function inSelection (composition, selection) {
     // Any missing level is "end is bigger"
     focusPosition.concat([Infinity, Infinity])
     , 0
-    , ''
+    , []
     , result
   )
   return result
 }
 
-const extractPaths = (elements, startPosition, endPosition, level, path, result) => {
+// Given positions as array for each level [1, 0, 3], return elements
+// in given range.
+const extractPaths = (elements, startPosition, endPosition, level, parentPath, result) => {
   const start = startPosition[level]
   const end = endPosition[level]
   Object.keys(elements)
   .sort((a, b) => elements[a].p > elements[b].p ? 1 : -1)
   .forEach(ref => {
     const elem = elements[ref]
+    const path = parentPath.concat(ref)
     if (elem.p < start || elem.p > end) {
       // ignore
     } else if (elem.p > start && elem.p < end) {
       // completely inside selection
-      result.push({path: path + ref, elem})
+      result.push({path, elem})
     } else if (typeof elem.i === 'string') {
-      result.push({path: path + ref, elem})
+      result.push({path, elem})
     } else {
-      extractPaths(elem.i, startPosition, endPosition, level + 1, path + ref + '.i.', result)
+      extractPaths(elem.i, startPosition, endPosition, level + 1, path, result)
     }
   })
 }
