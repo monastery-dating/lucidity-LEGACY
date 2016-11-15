@@ -1,0 +1,71 @@
+.ToolBox-wrapper {
+  position: relative;
+}
+
+.ToolBox {
+  position: absolute;
+  background: #f0f0f0;
+  border: 1px solid #c0c0c0;
+  box-shadow: 1px 2px 8px rgba(0,0,0,0.2);
+  border-radius: 3px;
+  display: flex;
+}
+
+.ToolBox-menu {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 160px;
+}
+
+.ToolBox:before, .ToolBox-menu:before {
+  position: absolute;
+  left: 16px;
+  display: block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-color: transparent;
+  content: "";
+}
+
+.ToolBox-menu:before {
+  /* arrow up */
+  top: -9px;
+  border-bottom-color: #f0f0f0;
+  border-width: 0 9px 9px;
+  margin-left: -9px;
+}
+
+.ToolBox:before {
+  /* arrow up */
+  top: -10px;
+  border-bottom-color: #c0c0c0;
+  border-width: 0 10px 10px;
+  margin-left: -10px;
+}
+
+.ToolBox-item {
+  padding: 6px 8px;
+  border-radius: 2px;
+  cursor: pointer;
+  /*
+  width: 32px;
+  height: 32px;
+  */
+}
+
+.ToolBox-item:hover {
+  background: #ddd;
+}
+
+.ToolBox-item i {
+  font-style: normal;
+}
+
+.ToolBox-item .heading {
+  font-weight: bold;
+}
+
+.ToolBox-item .para {
+  font-size: 90%;
+}
