@@ -2,28 +2,6 @@ const MOCK1 = JSON.stringify(
   {
     i: {
       // Block = PARAGRAPH / MEDIA LEVEL
-      zhaog: {
-        p: 1.0, // position
-        t: 'P', // type <p>
-        i: {
-          // Markup = bold, italic, etc
-          oiafg: {
-            p: 0.0,
-            t: 'T', // <span>
-            i: 'This is the first '
-          },
-          oaiue: {
-            p: 1.0,
-            t: 'S', // <span class='s'>
-            i: 'message'
-          },
-          haiou: {
-            p: 2.0,
-            t: 'T', // <span>
-            i: '. Hello blah bomgolo frabilou elma tec.'
-          }
-        }
-      },
       mcneu: {
         p: 0.0, // position
         t: 'P', // type <p>
@@ -68,10 +46,32 @@ const MOCK1 = JSON.stringify(
           }
         }
       },
+      zhaog: {
+        p: 1.0, // position
+        t: 'P', // type <p>
+        i: {
+          // Markup = bold, italic, etc
+          oiafg: {
+            p: 0.0,
+            t: 'T', // <span>
+            i: 'This is the first '
+          },
+          oaiue: {
+            p: 1.0,
+            t: 'S', // <span class='s'>
+            i: 'message'
+          },
+          haiou: {
+            p: 2.0,
+            t: 'T', // <span>
+            i: '. Hello blah bomgolo frabilou elma tec.'
+          }
+        }
+      },
       zaahg: {
         p: 2.0,
         t: 'P',
-        i: 'This is the third paragraph. Hello blah bomgolo frabilou elma tec.'
+        i: 'This is the third paragraph. My tailor types fast.'
       }
     }
   }

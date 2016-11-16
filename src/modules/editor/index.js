@@ -1,6 +1,7 @@
-import {input, set, state} from 'cerebral/operators'
 import createBlock from './signals/createBlock'
+import deleteSelection from './signals/deleteSelection'
 import handleBackspace from './signals/handleBackspace'
+import handleInput from './signals/handleInput'
 
 import mockComposition from './mockComposition.js'
 
@@ -11,8 +12,7 @@ export default {
   signals: {
     backspacePressed: handleBackspace,
     enterPressed: createBlock,
-    contentChanged: [
-      set(state`editor.composition.i.${input`path`}`, input`value`)
-    ]
+    inputChanged: handleInput,
+    typeOnSelection: deleteSelection
   }
 }

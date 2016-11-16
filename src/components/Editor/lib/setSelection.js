@@ -1,10 +1,10 @@
 export default function setSelection (node, stringPath) {
   const selection = global.selection
-  if (node && selection && stringPath === selection.path) {
+  if (node && selection && stringPath === selection.anchorPath) {
     const textNode = node.childNodes[0]
     const range = document.createRange()
-    range.setStart(textNode, selection.offset)
-    range.setEnd(textNode, selection.offset)
+    range.setStart(textNode, selection.anchorOffset)
+    range.setEnd(textNode, selection.focusOffset)
 
     const sel = window.getSelection()
     sel.removeAllRanges()

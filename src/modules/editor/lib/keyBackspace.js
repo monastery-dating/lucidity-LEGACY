@@ -39,10 +39,11 @@ const moveInPara = (composition, targetName, source, ref, lastPosition, ops) => 
     lastPosition = 0
   }
 
+  const t = source.t === 'P' ? 'T' : source.t
   ops.push({
     op: 'update',
     path: targetPath.concat([ref]),
-    value: Object.assign({}, source, {p: ++lastPosition})
+    value: Object.assign({}, source, {p: ++lastPosition, t})
   })
   return lastPosition
 }
@@ -119,11 +120,13 @@ const mergeTwoPara = (composition, start, end, ops) => {
   let lastPosition = start.elem.p
   const endParaPath = end.path.slice(0, 1)
   const children = composition.i[endParaPath[0]].i
+  let skip = true
+  const endRef = end.path[1]
   Object.keys(children)
   .sort((a, b) => children[a].p > children[b].p ? 1 : -1)
   .forEach((ref, idx) => {
     let elem = children[ref]
-    if (idx === 0) {
+    if (ref === endRef) {
       if (canFuse(start, end)) {
         ops.shift()
         ops.push({
@@ -141,6 +144,11 @@ const mergeTwoPara = (composition, start, end, ops) => {
           {[end.path[end.path.length - 1]]: end.elem}
         )})
       }
+      // Stop skipping
+      skip = false
+    } else if (skip) {
+      // deleted, ignore
+      return
     }
     lastPosition = moveInPara(
       composition, start.path[0], elem, ref, lastPosition, ops)

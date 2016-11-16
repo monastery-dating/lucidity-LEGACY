@@ -13,29 +13,21 @@ export default connect(
     compositionInner: 'editor.composition.i.*'
   },
   {
-    contentChange: 'editor.contentChanged',
+    inputChange: 'editor.inputChanged',
     backspacePress: 'editor.backspacePressed',
     enterPress: 'editor.enterPressed'
   },
-  function Editor ({compositionInner, backspacePress, enterPress, contentChange}) {
+  function Editor ({compositionInner, backspacePress, enterPress, inputChange}) {
     const onInput = e => {
-      console.log('INPUT', e.key)
-      const selection = window.getSelection()
-      const {anchorNode} = selection
+      const {anchorNode} = window.getSelection()
       const path = getPath(anchorNode)
       const value = anchorNode.textContent
-      console.log(selection)
-      console.log(path, value)
-      contentChange({path: `${path}.i`, value})
+      inputChange({path, value})
 
       if (anchorNode.nodeType !== Node.TEXT_NODE) {
         // Not an edit
         return
       }
-
-      console.log(anchorNode.parentElement.getAttribute('data-ref'))
-      // Now we should compare with previous strings and send an
-      // update for this element...
     }
 
     const onKeyDown = e => {
@@ -50,6 +42,12 @@ export default connect(
           return
         default:
           // do nothing
+      }
+
+      const selection = getSelection()
+      if (selection.hasSelection) {
+        backspacePress({selection})
+        // then continue with edit ?
       }
     }
 

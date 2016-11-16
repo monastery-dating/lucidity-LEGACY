@@ -41,4 +41,40 @@ describe('inSelection', () => {
       'zhaog.haiou'
     ])
   })
+
+  it('extracts selected elements three levels deep', () => {
+    const selection = {
+      anchorPath: ['mcneu', 'jnaid', 'zzvgp'],
+      anchorOffset: 2,
+      focusPath: ['zhaog', 'haiou'],
+      focusOffset: 35
+    }
+    expect(
+      inSelection(composition, selection).map(e => e.path.join('.'))
+    )
+    .toEqual([
+      'mcneu.jnaid.zzvgp',
+      'mcneu.mznao',
+      'mcneu.mnahl',
+      'mcneu.ncgow',
+      'zhaog.oiafg',
+      'zhaog.oaiue',
+      'zhaog.haiou'
+    ])
+  })
+
+  it('returns single element', () => {
+    const selection = {
+      anchorPath: ['mcneu', 'jnaid', 'zzvgp'],
+      anchorOffset: 2,
+      focusPath: ['mcneu', 'jnaid', 'zzvgp'],
+      focusOffset: 2
+    }
+    expect(
+      inSelection(composition, selection).map(e => e.path.join('.'))
+    )
+    .toEqual([
+      'mcneu.jnaid.zzvgp'
+    ])
+  })
 })

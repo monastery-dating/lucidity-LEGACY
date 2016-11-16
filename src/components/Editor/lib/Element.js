@@ -7,7 +7,7 @@ import setSelection from './setSelection'
 
 export default connect(
   ({path}) => ({
-    elem: `${path}.*`
+    elem: `${path}.**`
   }),
   function Element ({path, elemRef, elem}) {
     if (!elem) {

@@ -48,7 +48,7 @@ exports[`editor sets ref 1`] = `
           "t": "P",
         },
         "zaahg": Object {
-          "i": "This is the third paragraph. Hello blah bomgolo frabilou elma tec.",
+          "i": "This is the third paragraph. My tailor types fast.",
           "p": 2,
           "t": "P",
         },
@@ -393,7 +393,7 @@ exports[`editor sets ref 1`] = `
         <Element
           elem={
             Object {
-              "i": "This is the third paragraph. Hello blah bomgolo frabilou elma tec.",
+              "i": "This is the third paragraph. My tailor types fast.",
               "p": 2,
               "t": "P",
             }
@@ -403,7 +403,7 @@ exports[`editor sets ref 1`] = `
           <p
             className={null}
             data-ref="zaahg">
-            This is the third paragraph. Hello blah bomgolo frabilou elma tec.
+            This is the third paragraph. My tailor types fast.
           </p>
         </Element>
       </CerebralWrapping_Element>
