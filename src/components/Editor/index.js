@@ -10,14 +10,14 @@ import ToolBox from './ToolBox'
 
 export default connect(
   {
-    composition: 'editor.composition.*'
+    compositionInner: 'editor.composition.i.*'
   },
   {
     contentChange: 'editor.contentChanged',
     backspacePress: 'editor.backspacePressed',
     enterPress: 'editor.enterPressed'
   },
-  function Editor ({composition, backspacePress, enterPress, contentChange}) {
+  function Editor ({compositionInner, backspacePress, enterPress, contentChange}) {
     const onInput = e => {
       console.log('INPUT', e.key)
       const selection = window.getSelection()
@@ -71,7 +71,7 @@ export default connect(
         contentEditable
         suppressContentEditableWarning
         >
-        {expandInner('editor.composition', composition.i)}
+        {expandInner('editor.composition', compositionInner)}
         <ToolBox />
       </div>
   }

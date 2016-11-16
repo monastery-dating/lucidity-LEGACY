@@ -10,6 +10,10 @@ export default connect(
     elem: `${path}.*`
   }),
   function Element ({path, elemRef, elem}) {
+    if (!elem) {
+      // Do not know why we need this. parseInner should remove.
+      return null
+    }
     const type = elem.t
     const inner = elem.i
     const Tag = getElementTag(type)

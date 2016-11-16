@@ -49,7 +49,7 @@ describe('keyBackspace', () => {
     ])
   })
 
-  it('removes selected elements in wide selection', () => {
+  it('merge elements in wide selection without fuse', () => {
     const selection = {
       anchorPath: ['mcneu', 'jnaid', 'zzvgp'],
       anchorOffset: 2,
@@ -73,9 +73,36 @@ describe('keyBackspace', () => {
       { op: 'delete', path: ['mcneu', 'ncgow'] },
       { op: 'delete', path: ['zhaog'] },
       {
-        op: 'update', path: ['zaahg'],
+        op: 'update', path: ['mcneu', 'zaahg'],
         value: {p: 2, t: 'P', i: 'ragraph. Hello blah bomgolo frabilou elma tec.'}
-      }
+      },
+      { op: 'delete', path: ['zaahg'] }
+    ])
+  })
+
+  it('merge elements in wide selection with fuse', () => {
+    const selection = {
+      anchorPath: ['mcneu', 'mznao'],
+      anchorOffset: 8,
+      focusPath: ['zaahg'],
+      focusOffset: 8
+    }
+    expect(
+      keyBackspace(composition, selection)
+    )
+    .toEqual([
+      {
+        op: 'select', path: ['mcneu', 'mznao'],
+        offset: 8
+      },
+      { op: 'delete', path: ['mcneu', 'mnahl'] },
+      { op: 'delete', path: ['mcneu', 'ncgow'] },
+      { op: 'delete', path: ['zhaog'] },
+      {
+        op: 'update', path: ['mcneu', 'mznao'],
+        value: {p: 2, t: 'T', i: 'to view the third paragraph. Hello blah bomgolo frabilou elma tec.'}
+      },
+      { op: 'delete', path: ['zaahg'] }
     ])
   })
 })
