@@ -105,4 +105,26 @@ describe('keyBackspace', () => {
       { op: 'delete', path: ['zaahg'] }
     ])
   })
+
+  it('merge elements in local selection accross markup with fuse', () => {
+    const selection = {
+      anchorPath: ['zhaog', 'oiafg'],
+      anchorOffset: 12,
+      focusPath: ['zhaog', 'haiou'],
+      focusOffset: 13
+    }
+    expect(
+      keyBackspace(composition, selection)
+    )
+    .toEqual([
+      {
+        op: 'select', path: ['zhaog'],
+        offset: 12
+      },
+      {
+        op: 'update', path: ['zhaog'],
+        value: {p: 1, t: 'P', i: 'This is the bomgolo frabilou elma tec.'}
+      }
+    ])
+  })
 })

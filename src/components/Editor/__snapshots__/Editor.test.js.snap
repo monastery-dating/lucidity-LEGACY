@@ -2,78 +2,76 @@ exports[`editor sets ref 1`] = `
 <CerebralWrapping_Editor>
   <Editor
     backspacePress={[Function]}
-    composition={
+    compositionInner={
       Object {
-        "i": Object {
-          "mcneu": Object {
-            "i": Object {
-              "jnaid": Object {
-                "href": "http://example.com",
-                "i": Object {
-                  "mnzjq": Object {
-                    "i": "this ",
-                    "p": 0,
-                    "t": "T",
-                  },
-                  "zzvgp": Object {
-                    "i": "link ",
-                    "p": 1,
-                    "t": "S+E",
-                  },
+        "mcneu": Object {
+          "i": Object {
+            "jnaid": Object {
+              "href": "http://example.com",
+              "i": Object {
+                "mnzjq": Object {
+                  "i": "this ",
+                  "p": 0,
+                  "t": "T",
                 },
-                "p": 1,
-                "t": "A",
+                "zzvgp": Object {
+                  "i": "link ",
+                  "p": 1,
+                  "t": "S+E",
+                },
               },
-              "mnahl": Object {
-                "i": "page",
-                "p": 3,
-                "t": "E",
-              },
-              "mznao": Object {
-                "i": "to view the next ",
-                "p": 2,
-                "t": "T",
-              },
-              "ncgow": Object {
-                "i": ".",
-                "p": 4,
-                "t": "T",
-              },
-              "uasuf": Object {
-                "i": "You can click ",
-                "p": 0,
-                "t": "T",
-              },
+              "p": 1,
+              "t": "A",
             },
-            "p": 0,
-            "t": "P",
-          },
-          "zaahg": Object {
-            "i": "This is the third paragraph. Hello blah bomgolo frabilou elma tec.",
-            "p": 2,
-            "t": "P",
-          },
-          "zhaog": Object {
-            "i": Object {
-              "haiou": Object {
-                "i": ". Hello blah bomgolo frabilou elma tec.",
-                "p": 2,
-                "t": "T",
-              },
-              "oaiue": Object {
-                "i": "message",
-                "p": 1,
-                "t": "S",
-              },
-              "oiafg": Object {
-                "i": "This is the first ",
-                "p": 0,
-                "t": "T",
-              },
+            "mnahl": Object {
+              "i": "page",
+              "p": 3,
+              "t": "E",
             },
-            "p": 1,
-            "t": "P",
+            "mznao": Object {
+              "i": "to view the next ",
+              "p": 2,
+              "t": "T",
+            },
+            "ncgow": Object {
+              "i": ".",
+              "p": 4,
+              "t": "T",
+            },
+            "uasuf": Object {
+              "i": "You can click ",
+              "p": 0,
+              "t": "T",
+            },
           },
+          "p": 0,
+          "t": "P",
+        },
+        "zaahg": Object {
+          "i": "This is the third paragraph. Hello blah bomgolo frabilou elma tec.",
+          "p": 2,
+          "t": "P",
+        },
+        "zhaog": Object {
+          "i": Object {
+            "haiou": Object {
+              "i": ". Hello blah bomgolo frabilou elma tec.",
+              "p": 2,
+              "t": "T",
+            },
+            "oaiue": Object {
+              "i": "message",
+              "p": 1,
+              "t": "S",
+            },
+            "oiafg": Object {
+              "i": "This is the first ",
+              "p": 0,
+              "t": "T",
+            },
+          },
+          "p": 1,
+          "t": "P",
         },
       }
     }
