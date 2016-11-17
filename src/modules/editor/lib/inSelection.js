@@ -1,11 +1,11 @@
 import getPosition from './getPosition'
 
-const SMALLEST_PATH = [-1, -1, -1]
-const BIGGEST_PATH = Infinity
+export const SMALLEST_PATH = [-1, -1, -1]
+export const BIGGEST_PATH = [Infinity, Infinity, Infinity]
 
 // Given positions as array for each level [1, 0, 3], return elements
 // in given range.
-const extractPaths = (elements, startPosition, endPosition, level, parentPath, result) => {
+export function extractPaths (elements, startPosition, endPosition, level, parentPath, result) {
   const start = startPosition[level]
   const end = endPosition[level]
   Object.keys(elements)

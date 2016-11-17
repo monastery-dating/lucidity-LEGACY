@@ -1,4 +1,4 @@
-import createBlock from './signals/createBlock'
+import handleEnter from './signals/handleEnter'
 import deleteSelection from './signals/deleteSelection'
 import handleBackspace from './signals/handleBackspace'
 import handleInput from './signals/handleInput'
@@ -11,7 +11,7 @@ export default {
   },
   signals: {
     backspacePressed: handleBackspace,
-    enterPressed: createBlock,
+    enterPressed: handleEnter,
     inputChanged: handleInput,
     typeOnSelection: deleteSelection
   }

@@ -75,8 +75,8 @@ exports[`editor sets ref 1`] = `
         },
       }
     }
-    contentChange={[Function]}
-    enterPress={[Function]}>
+    enterPress={[Function]}
+    inputChange={[Function]}>
     <div
       className="Editor"
       contentEditable={true}

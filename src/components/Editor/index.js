@@ -4,6 +4,8 @@ import {connect} from 'cerebral/react'
 import expandInner from './lib/expandInner'
 import getPath from './lib/getPath'
 import getSelection from './lib/getSelection'
+import getCommand from './lib/getCommand'
+import isArrows from './lib/isArrows'
 import './style.css'
 
 import ToolBox from './ToolBox'
@@ -45,7 +47,11 @@ export default connect(
       }
 
       const selection = getSelection()
-      if (selection.hasSelection) {
+      const command = getCommand(e)
+      if (command) {
+        // handle copy/paste/bold, etc
+        console.log(command)
+      } else if (selection.hasSelection && !isArrows(e)) {
         backspacePress({selection})
         // then continue with edit ?
       }

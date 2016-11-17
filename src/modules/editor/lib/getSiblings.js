@@ -12,6 +12,30 @@ const SortDescending = (children) => (
   )
 )
 
+const getChild = (obj, sorter) => {
+  const children = obj.elem.i
+  if (typeof children === 'string') {
+    return obj
+  }
+  const sortedRefs = sorter(children)
+  const ref = sortedRefs[0]
+  const path = obj.path + '.i.' + ref
+  const elem = children[ref]
+  if (typeof elem.i !== 'string') {
+    // go further down
+    return getChild({path, elem}, sorter)
+  }
+  return {path, elem}
+}
+
+const getFirstChild = (obj) => {
+  return getChild(obj, SortAscending)
+}
+
+const getLastChild = (obj) => {
+  return getChild(obj, SortDescending)
+}
+
 /* Return two siblings (if found). [previous, next]
  */
 export default function getSiblings (composition, path) {
@@ -54,28 +78,4 @@ export default function getSiblings (composition, path) {
     }
   }
   return [prevSibling, nextSibling]
-}
-
-const getFirstChild = (obj) => {
-  return getChild(obj, SortAscending)
-}
-
-const getLastChild = (obj) => {
-  return getChild(obj, SortDescending)
-}
-
-const getChild = (obj, sorter) => {
-  const children = obj.elem.i
-  if (typeof children === 'string') {
-    return obj
-  }
-  const sortedRefs = sorter(children)
-  const ref = sortedRefs[0]
-  const path = obj.path + '.i.' + ref
-  const elem = children[ref]
-  if (typeof elem.i !== 'string') {
-    // go further down
-    return getChild({path, elem}, sorter)
-  }
-  return {path, elem}
 }
