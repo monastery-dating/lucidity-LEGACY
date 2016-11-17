@@ -85,7 +85,7 @@ describe('keyEnter', () => {
       },
       {
         op: 'update', path: ['refe1'],
-        value: {p: 3, t: 'P', i: ' third paragraph. My tailor types fast.'}
+        value: {p: 3, t: 'P', i: 'third paragraph. My tailor types fast.'}
       },
       {
         op: 'select', path: ['refe1'],

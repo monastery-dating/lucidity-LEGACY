@@ -70,7 +70,16 @@ const mergeFlatEnd = (composition, start, end, ops) => {
       })
     }
   } else {
-    moveInPara(composition, start.path[0], end.elem, end.path[end.path.length - 1], start.elem.p, ops)
+    const parentRef = start.path[0]
+    const ref = end.path[end.path.length - 1]
+    moveInPara(composition, parentRef, end.elem, ref, start.elem.p, ops)
+    if (!hasDelete) {
+      ops.push({
+        op: 'select',
+        path: [parentRef, ref],
+        offset: 0
+      })
+    }
   }
   ops.push({op: 'delete', path: end.path})
 }

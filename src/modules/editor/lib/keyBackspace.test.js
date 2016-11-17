@@ -40,7 +40,6 @@ describe('keyBackspace', () => {
     .toEqual([
       {
         op: 'update', path: ['mcneu', 'ncgow'],
-        // TODO: should join paragraphs with space ?
         value: {p: 4, t: 'T', i: '.This is the first '}
       },
       {
@@ -59,7 +58,7 @@ describe('keyBackspace', () => {
     ])
   })
 
-  it('merges with previous complex paragraph at start of line', () => {
+  it('merges and fuse with previous complex paragraph at start of line', () => {
     const selection = {
       anchorPath: ['zaahg'],
       anchorOffset: 0,
@@ -72,12 +71,36 @@ describe('keyBackspace', () => {
     .toEqual([
       {
         op: 'update', path: ['zhaog', 'haiou'],
-        // TODO: should join paragraphs with space ?
         value: {p: 2, t: 'T', i: '. Hello blah bomgolo frabilou elma tec.This is the third paragraph. My tailor types fast.'}
       },
       {
         op: 'select', path: ['zhaog', 'haiou'],
         offset: 39
+      },
+      {op: 'delete', path: ['zaahg']}
+    ])
+  })
+
+  it('merges with previous complex paragraph at start of line', () => {
+    const selection = {
+      anchorPath: ['zaahg'],
+      anchorOffset: 0,
+      focusPath: ['zaahg'],
+      focusOffset: 0
+    }
+    const composition = mockComposition()
+    composition.i.zhaog.i.haiou.t = 'S+E'
+    expect(
+      keyBackspace(composition, selection)
+    )
+    .toEqual([
+      {
+        op: 'update', path: ['zhaog', 'zaahg'],
+        value: {p: 3, t: 'T', i: 'This is the third paragraph. My tailor types fast.'}
+      },
+      {
+        op: 'select', path: ['zhaog', 'zaahg'],
+        offset: 0
       },
       {op: 'delete', path: ['zaahg']}
     ])
