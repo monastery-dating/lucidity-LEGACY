@@ -7,9 +7,9 @@ export default function getSelection () {
   const focusPath = focusNode === anchorNode ? anchorPath : getPath(focusNode)
   const anchorValue = anchorNode.textContent
   const focusValue = focusNode.textContent
-  const hasSelection = anchorNode !== focusNode || anchorOffset !== focusOffset
+  const noSelection = anchorNode === focusNode && anchorOffset === focusOffset
   return {
     anchorOffset, focusOffset, anchorPath, focusPath,
-    anchorValue, focusValue, hasSelection
+    anchorValue, focusValue, noSelection
   }
 }

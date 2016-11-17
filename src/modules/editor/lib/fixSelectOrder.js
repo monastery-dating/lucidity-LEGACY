@@ -13,10 +13,15 @@ const aBeforeB = (elemA, elemB, level = 0) => {
 }
 
 export default function fixSelectOrder (composition, selection) {
+  if (selection.fixed || selection.noSelection) {
+    return selection
+  }
   const {anchorPath, focusPath} = selection
   let reverse = false
-  if (anchorPath === focusPath) {
-    if (selection.anchorOffset > selection.focusOffset) {
+  if (anchorPath.join('.') === focusPath.join('.')) {
+    if (selection.anchorOffset === selection.focusOffset) {
+      return Object.assign({}, selection, {noSelection: true})
+    } else if (selection.anchorOffset > selection.focusOffset) {
       reverse = true
     }
   } else {
@@ -30,9 +35,10 @@ export default function fixSelectOrder (composition, selection) {
       anchorPath: focusPath,
       anchorOffset: selection.focusOffset,
       focusPath: anchorPath,
-      focusOffset: selection.anchorOffset
+      focusOffset: selection.anchorOffset,
+      fixed: true
     }
   } else {
-    return selection
+    return Object.assign({}, selection, {fixed: true})
   }
 }

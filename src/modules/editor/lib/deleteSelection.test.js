@@ -96,12 +96,12 @@ describe('deleteSelection', () => {
     )
     .toEqual([
       {
-        op: 'select', path: ['zhaog'],
-        offset: 12
-      },
-      {
         op: 'update', path: ['zhaog'],
         value: {p: 1, t: 'P', i: 'This is the bomgolo frabilou elma tec.'}
+      },
+      {
+        op: 'select', path: ['zhaog'],
+        offset: 12
       }
     ])
   })

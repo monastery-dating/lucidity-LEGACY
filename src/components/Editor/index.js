@@ -50,8 +50,8 @@ export default connect(
       const command = getCommand(e)
       if (command) {
         // handle copy/paste/bold, etc
-        console.log(command)
-      } else if (selection.hasSelection && !isArrows(e)) {
+        // console.log(command)
+      } else if (!selection.noSelection && !isArrows(e)) {
         backspacePress({selection})
         // then continue with edit ?
       }
@@ -61,9 +61,9 @@ export default connect(
       const selection = getSelection()
       if (selection.anchorOffset === 0) {
         if (selection.anchorValue === '') {
-          console.log('PARA.NEW', selection)
+          // console.log('PARA.NEW', selection)
         } else {
-          console.log('PARA.START', selection)
+          // console.log('PARA.START', selection)
         }
       }
     }

@@ -7,6 +7,6 @@ const TEXT_BLOCKS = {
 
 /** Return true if the current element is a text block.
 */
-export default function isTextBlock ({t}) {
-  return TEXT_BLOCKS[t] || false
+export default function isTextBlock ({t, i}) {
+  return (TEXT_BLOCKS[t] || false) && (typeof i === 'string')
 }

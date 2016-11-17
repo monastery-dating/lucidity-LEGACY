@@ -19,7 +19,7 @@ const getChild = (obj, sorter) => {
   }
   const sortedRefs = sorter(children)
   const ref = sortedRefs[0]
-  const path = obj.path + '.i.' + ref
+  const path = obj.path.concat([ref])
   const elem = children[ref]
   if (typeof elem.i !== 'string') {
     // go further down
@@ -36,9 +36,9 @@ const getLastChild = (obj) => {
   return getChild(obj, SortDescending)
 }
 
-/* Return two siblings (if found). [previous, next]
+/* Return two closest DOM neighbours (if found). [previous, next]
  */
-export default function getSiblings (composition, path) {
+export default function getNeighbours (composition, path, onlySibling = false) {
   if (path.length === 0) {
     // This is root, no siblings
     return [null, null]
@@ -57,6 +57,9 @@ export default function getSiblings (composition, path) {
       path: parentPath.concat([prevSiblingRef]),
       elem: children[prevSiblingRef]
     }
+    if (!onlySibling) {
+      prevSibling = getLastChild(prevSibling)
+    }
   }
 
   const nextSiblingRef = sortedRefs[idx + 1]
@@ -65,11 +68,14 @@ export default function getSiblings (composition, path) {
       path: parentPath.concat([nextSiblingRef]),
       elem: children[nextSiblingRef]
     }
+    if (!onlySibling) {
+      nextSibling = getFirstChild(nextSibling)
+    }
   }
 
   if (!prevSibling || !nextSibling) {
     // get uncles
-    const uncles = getSiblings(composition, parentPath)
+    const uncles = getNeighbours(composition, parentPath)
     if (!prevSibling && uncles[0]) {
       prevSibling = getLastChild(uncles[0])
     }
@@ -78,4 +84,8 @@ export default function getSiblings (composition, path) {
     }
   }
   return [prevSibling, nextSibling]
+}
+
+export function getSiblings (composition, path) {
+  return getNeighbours(composition, path, true)
 }

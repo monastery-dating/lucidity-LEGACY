@@ -44,7 +44,7 @@ describe('keyEnter', () => {
     ])
   })
 
-  it('creates new paragraph at end', () => {
+  it('creates new paragraph when selection at end', () => {
     counter = 0
     const selection = {
       anchorPath: ['zhaog', 'haiou'],
@@ -59,6 +59,33 @@ describe('keyEnter', () => {
       {
         op: 'update', path: ['refe1'],
         value: {p: 1.5, t: 'P', i: ''}
+      },
+      {
+        op: 'select', path: ['refe1'],
+        offset: 0
+      }
+    ])
+  })
+
+  it('splits flat paragraph', () => {
+    counter = 0
+    const selection = {
+      anchorPath: ['zaahg'],
+      anchorOffset: 11,
+      focusPath: ['zaahg'],
+      focusOffset: 11
+    }
+    expect(
+      keyEnter(composition, selection)
+    )
+    .toEqual([
+      {
+        op: 'update', path: ['zaahg'],
+        value: {p: 2, t: 'P', i: 'This is the'}
+      },
+      {
+        op: 'update', path: ['refe1'],
+        value: {p: 3, t: 'P', i: ' third paragraph. My tailor types fast.'}
       },
       {
         op: 'select', path: ['refe1'],
