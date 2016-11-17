@@ -11,6 +11,7 @@ jest.mock('./makeRef', () => {
 
 describe('keyEnter', () => {
   it('splits to make new paragraph', () => {
+    counter = 0
     const selection = {
       anchorPath: ['mcneu', 'jnaid', 'zzvgp'],
       anchorOffset: 2,
@@ -35,6 +36,29 @@ describe('keyEnter', () => {
           mnahl: {p: 1, t: 'E', i: 'page'},
           ncgow: {p: 2, t: 'T', i: '.'}
         }}
+      },
+      {
+        op: 'select', path: ['refe1'],
+        offset: 0
+      }
+    ])
+  })
+
+  it('creates new paragraph at end', () => {
+    counter = 0
+    const selection = {
+      anchorPath: ['zhaog', 'haiou'],
+      anchorOffset: 39,
+      focusPath: ['zhaog', 'haiou'],
+      focusOffset: 39
+    }
+    expect(
+      keyEnter(composition, selection)
+    )
+    .toEqual([
+      {
+        op: 'update', path: ['refe1'],
+        value: {p: 1.5, t: 'P', i: ''}
       },
       {
         op: 'select', path: ['refe1'],

@@ -2,10 +2,10 @@
 import React from 'react'
 import {connect} from 'cerebral/react'
 import expandInner from './lib/expandInner'
-import getPath from './lib/getPath'
-import getSelection from './lib/getSelection'
 import getCommand from './lib/getCommand'
+import getSelection from './lib/getSelection'
 import isArrows from './lib/isArrows'
+
 import './style.css'
 
 import ToolBox from './ToolBox'
@@ -21,10 +21,10 @@ export default connect(
   },
   function Editor ({compositionInner, backspacePress, enterPress, inputChange}) {
     const onInput = e => {
+      const selection = getSelection()
       const {anchorNode} = window.getSelection()
-      const path = getPath(anchorNode)
       const value = anchorNode.textContent
-      inputChange({path, value})
+      inputChange({value, selection})
 
       if (anchorNode.nodeType !== Node.TEXT_NODE) {
         // Not an edit

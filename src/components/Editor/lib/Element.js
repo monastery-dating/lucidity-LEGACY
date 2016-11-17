@@ -25,7 +25,7 @@ export default connect(
       ref={n => setSelection(n, path)}
       >
         { typeof inner === 'string'
-        ? inner
+        ? (inner === '' ? '\u200B' : inner)
         : expandInner(path, inner)
         }
       </Tag>
