@@ -1,13 +1,13 @@
-import deleteSelection from './deleteSelection'
-import fixSelectOrder from './fixSelectOrder'
-import getNeighbours from './getNeighbours'
-import mergeElements from './mergeElements'
-import getAtPath from './getAtPath'
+import deleteSelection from './utils/deleteSelection'
+import fixSelectOrder from './utils/fixSelectOrder'
+import getNeighbours from './utils/getNeighbours'
+import mergeElements from './utils/mergeElements'
+import getAtPath from './utils/getAtPath'
 
 /** Returns the list of operations to remove selected text.
  *
  */
-export default function keyBackspace (composition, aselection) {
+export default function doBackspace (composition, aselection) {
   const selection = fixSelectOrder(composition, aselection)
   const {noSelection, anchorPath, anchorOffset} = selection
   if (noSelection) {

@@ -76,9 +76,10 @@ exports[`editor sets ref 1`] = `
       }
     }
     enterPress={[Function]}
-    inputChange={[Function]}>
+    inputChange={[Function]}
+    selectChange={[Function]}>
     <div
-      className="Editor"
+      className="Composition"
       contentEditable={true}
       onInput={[Function]}
       onKeyDown={[Function]}
@@ -407,48 +408,6 @@ exports[`editor sets ref 1`] = `
           </p>
         </Element>
       </CerebralWrapping_Element>
-      <CerebralWrapping_ToolBox>
-        <ToolBox>
-          <div
-            className="ToolBox-wrapper"
-            contentEditable={false}>
-            <div
-              className="ToolBox">
-              <div
-                className="ToolBox-menu">
-                <div
-                  className="ToolBox-item">
-                  <i
-                    className="heading">
-                    H1
-                  </i>
-                </div>
-                <div
-                  className="ToolBox-item">
-                  <i
-                    className="heading">
-                    H2
-                  </i>
-                </div>
-                <div
-                  className="ToolBox-item">
-                  <i
-                    className="heading">
-                    H3
-                  </i>
-                </div>
-                <div
-                  className="ToolBox-item">
-                  <i
-                    className="para">
-                    P
-                  </i>
-                </div>
-              </div>
-            </div>
-          </div>
-        </ToolBox>
-      </CerebralWrapping_ToolBox>
     </div>
   </Editor>
 </CerebralWrapping_Editor>

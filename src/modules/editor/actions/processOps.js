@@ -1,5 +1,6 @@
 
 const BASE_PATH = 'editor.composition.i'
+const TOOLBOX_PATH = 'editor.$toolbox'
 
 export default function processOps ({state, input}) {
   const {ops} = input
@@ -9,7 +10,7 @@ export default function processOps ({state, input}) {
   let newselection
 
   ops.forEach(op => {
-    const path = `${BASE_PATH}.${op.path.join('.i.')}`
+    const path = op.path && `${BASE_PATH}.${op.path.join('.i.')}`
     switch (op.op) {
       case 'update':
         state.set(path, op.value)
@@ -24,6 +25,9 @@ export default function processOps ({state, input}) {
           focusPath: path,
           focusOffset: op.offset
         }
+        break
+      case 'toolbox':
+        state.set(TOOLBOX_PATH, op.value)
         break
       default:
         throw new Error(`Unkown operation '${op.op}'`)

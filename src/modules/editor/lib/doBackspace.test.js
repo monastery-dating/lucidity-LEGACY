@@ -1,10 +1,10 @@
 /* global it expect describe */
 import mockComposition from '../mockComposition'
-import keyBackspace from './keyBackspace'
+import doBackspace from './doBackspace'
 
 const composition = mockComposition()
 
-describe('keyBackspace', () => {
+describe('doBackspace', () => {
   it('removes last character', () => {
     const selection = {
       anchorPath: ['zhaog', 'oaiue'],
@@ -13,7 +13,7 @@ describe('keyBackspace', () => {
       focusOffset: 2
     }
     expect(
-      keyBackspace(composition, selection)
+      doBackspace(composition, selection)
     )
     .toEqual([
       {
@@ -35,7 +35,7 @@ describe('keyBackspace', () => {
       focusOffset: 0
     }
     expect(
-      keyBackspace(composition, selection)
+      doBackspace(composition, selection)
     )
     .toEqual([
       {
@@ -66,7 +66,7 @@ describe('keyBackspace', () => {
       focusOffset: 0
     }
     expect(
-      keyBackspace(composition, selection)
+      doBackspace(composition, selection)
     )
     .toEqual([
       {
@@ -91,7 +91,7 @@ describe('keyBackspace', () => {
     const composition = mockComposition()
     composition.i.zhaog.i.haiou.t = 'S+E'
     expect(
-      keyBackspace(composition, selection)
+      doBackspace(composition, selection)
     )
     .toEqual([
       {

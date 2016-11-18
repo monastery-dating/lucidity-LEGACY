@@ -1,26 +1,13 @@
 import React from 'react'
 import {connect} from 'cerebral/react'
-import './style.css'
-
-import ParaToolbox from './ParaToolbox'
-import NewParaToolbox from './NewParaToolbox'
 
 export default connect(
   {
     toolbox: 'editor.$toolbox'
   },
-  function ToolBox ({toolbox}) {
+  function ParaToolbox ({toolbox}) {
     if (!toolbox) {
       return null
-    }
-    const {type} = toolbox
-    switch (type) {
-      case 'para':
-        return <ParaToolbox />
-      case 'para.empty':
-        return <NewParaToolbox />
-      default:
-        throw new Error(`Unknown toolbox type '${type}'`)
     }
     return (
       <div className='ToolBox-wrapper'

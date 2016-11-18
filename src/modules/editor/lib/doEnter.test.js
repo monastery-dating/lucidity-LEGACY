@@ -1,15 +1,15 @@
 /* global it expect describe jest */
 import mockComposition from '../mockComposition'
-import keyEnter from './keyEnter'
+import doEnter from './doEnter'
 
 const composition = mockComposition()
 
 let counter = 0
-jest.mock('./makeRef', () => {
+jest.mock('./utils/makeRef', () => {
   return jest.fn(() => `refe${++counter}`)
 })
 
-describe('keyEnter', () => {
+describe('doEnter', () => {
   it('splits to make new paragraph', () => {
     counter = 0
     const selection = {
@@ -19,7 +19,7 @@ describe('keyEnter', () => {
       focusOffset: 2
     }
     expect(
-      keyEnter(composition, selection)
+      doEnter(composition, selection)
     )
     .toEqual([
       {
@@ -53,7 +53,7 @@ describe('keyEnter', () => {
       focusOffset: 39
     }
     expect(
-      keyEnter(composition, selection)
+      doEnter(composition, selection)
     )
     .toEqual([
       {
@@ -76,7 +76,7 @@ describe('keyEnter', () => {
       focusOffset: 11
     }
     expect(
-      keyEnter(composition, selection)
+      doEnter(composition, selection)
     )
     .toEqual([
       {

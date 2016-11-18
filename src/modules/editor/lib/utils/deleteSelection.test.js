@@ -1,6 +1,6 @@
 /* global it expect describe */
-import mockComposition from '../mockComposition'
-import keyBackspace from './keyBackspace'
+import mockComposition from '../../mockComposition'
+import deleteSelection from './deleteSelection'
 
 const composition = mockComposition()
 
@@ -13,7 +13,7 @@ describe('deleteSelection', () => {
       focusOffset: 4
     }
     expect(
-      keyBackspace(composition, selection)
+      deleteSelection(composition, selection)
     )
     .toEqual([
       {
@@ -35,7 +35,7 @@ describe('deleteSelection', () => {
       focusOffset: 20
     }
     expect(
-      keyBackspace(composition, selection)
+      deleteSelection(composition, selection)
     )
     .toEqual([
       {
@@ -66,7 +66,7 @@ describe('deleteSelection', () => {
       focusOffset: 8
     }
     expect(
-      keyBackspace(composition, selection)
+      deleteSelection(composition, selection)
     )
     .toEqual([
       {
@@ -92,7 +92,7 @@ describe('deleteSelection', () => {
       focusOffset: 13
     }
     expect(
-      keyBackspace(composition, selection)
+      deleteSelection(composition, selection)
     )
     .toEqual([
       {
@@ -114,7 +114,7 @@ describe('deleteSelection', () => {
       focusOffset: 32
     }
     expect(
-      keyBackspace(composition, selection)
+      deleteSelection(composition, selection)
     )
     .toEqual([
       {
@@ -142,7 +142,7 @@ describe('deleteSelection', () => {
       focusOffset: 35
     }
     expect(
-      keyBackspace(composition, selection)
+      deleteSelection(composition, selection)
     )
     .toEqual([
       {

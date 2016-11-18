@@ -1,16 +1,16 @@
-import deleteSelection from './deleteSelection'
-import fixSelectOrder from './fixSelectOrder'
-import {extractPaths, BIGGEST_PATH, SMALLEST_PATH} from './inSelection'
-import getPosition from './getPosition'
-import isTextBlock from './isTextBlock'
-import makeRef from './makeRef'
-import newParagraph from './newParagraph'
-import splitText from './splitText'
+import deleteSelection from './utils/deleteSelection'
+import fixSelectOrder from './utils/fixSelectOrder'
+import {extractPaths, BIGGEST_PATH, SMALLEST_PATH} from './utils/inSelection'
+import getPosition from './utils/getPosition'
+import isTextBlock from './utils/isTextBlock'
+import makeRef from './utils/makeRef'
+import newParagraph from './utils/newParagraph'
+import splitText from './utils/splitText'
 
 /** Returns the list of operations after enter pressed.
  *
  */
-export default function keyEnter (composition, aselection) {
+export default function doEnter (composition, aselection) {
   const selection = fixSelectOrder(composition, aselection)
   let ops = deleteSelection(composition, selection)
 

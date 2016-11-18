@@ -1,15 +1,15 @@
-.Editor {
+.Composition {
   padding: 20px;
 }
 
-.Editor *:focus, .Editor:focus {
+.Composition *:focus, .Composition:focus {
   outline: none;
 }
 
-.Editor .em {
+.Composition .em {
   font-style: italic;
 }
 
-.Editor .strong {
+.Composition .strong {
   font-weight: bold;
 }
