@@ -91,7 +91,7 @@ const handleEnd = (ops, path, elem, selection, backkey) => {
 */
 export default function deleteSelection (composition, aselection, backkey) {
   const selection = fixSelectOrder(composition, aselection)
-  if (!backkey && selection.noSelection) {
+  if (!backkey && selection.type === 'Caret') {
     // no selection and no key, nothing to do here
     return null
   }

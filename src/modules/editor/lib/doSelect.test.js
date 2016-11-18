@@ -1,4 +1,4 @@
-/* global it expect describe jest */
+/* global it expect describe */
 import mockComposition from '../mockComposition'
 import doSelect from './doSelect'
 
@@ -10,7 +10,8 @@ describe('doSelect', () => {
       anchorPath: ['zaahg'],
       anchorOffset: 0,
       focusPath: ['zaahg'],
-      focusOffset: 0
+      focusOffset: 0,
+      type: 'Range'
     }
     expect(
       doSelect(composition, selection)
@@ -18,7 +19,7 @@ describe('doSelect', () => {
     .toEqual([
       {
         op: 'toolbox',
-        value: {type: 'para'}
+        value: {type: 'Paragraph'}
       }
     ])
   })

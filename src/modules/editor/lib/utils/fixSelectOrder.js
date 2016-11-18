@@ -13,14 +13,14 @@ const aBeforeB = (elemA, elemB, level = 0) => {
 }
 
 export default function fixSelectOrder (composition, selection) {
-  if (selection.fixed || selection.noSelection) {
+  if (selection.fixed || selection.type === 'Caret') {
     return selection
   }
   const {anchorPath, focusPath} = selection
   let reverse = false
   if (anchorPath.join('.') === focusPath.join('.')) {
     if (selection.anchorOffset === selection.focusOffset) {
-      return Object.assign({}, selection, {noSelection: true})
+      return Object.assign({}, selection, {type: 'Caret'})
     } else if (selection.anchorOffset > selection.focusOffset) {
       reverse = true
     }
@@ -36,6 +36,7 @@ export default function fixSelectOrder (composition, selection) {
       anchorOffset: selection.focusOffset,
       focusPath: anchorPath,
       focusOffset: selection.anchorOffset,
+      type: 'Range',
       fixed: true
     }
   } else {

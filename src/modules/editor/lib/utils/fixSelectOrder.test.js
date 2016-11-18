@@ -10,7 +10,8 @@ describe('fixSelectOrder', () => {
       anchorPath: ['zhaog', 'oaiue'],
       anchorOffset: 3,
       focusPath: ['zhaog', 'haiou'],
-      focusOffset: 10
+      focusOffset: 10,
+      type: 'Range'
     }
     expect(
       fixSelectOrder(composition, selection)
@@ -20,6 +21,7 @@ describe('fixSelectOrder', () => {
       anchorOffset: 3,
       focusPath: ['zhaog', 'haiou'],
       focusOffset: 10,
+      type: 'Range',
       fixed: true
     })
   })
@@ -29,7 +31,8 @@ describe('fixSelectOrder', () => {
       anchorPath: ['zhaog', 'haiou'],
       anchorOffset: 10,
       focusPath: ['zhaog', 'oaiue'],
-      focusOffset: 3
+      focusOffset: 3,
+      type: 'Range'
     }
     expect(
       fixSelectOrder(composition, selection)
@@ -39,6 +42,7 @@ describe('fixSelectOrder', () => {
       anchorOffset: 3,
       focusPath: ['zhaog', 'haiou'],
       focusOffset: 10,
+      type: 'Range',
       fixed: true
     })
   })
@@ -55,7 +59,7 @@ describe('fixSelectOrder', () => {
 
   it('returns empty selection', () => {
     const selection = {
-      noSelection: true
+      type: 'Caret'
     }
     expect(
       fixSelectOrder(null, selection)

@@ -8,23 +8,23 @@ export default function doSelect (composition, aselection, ops = []) {
     if (selection.anchorValue === '\u200B') {
       ops.push({
         op: 'toolbox',
-        value: {type: 'para.empty'}
+        value: {type: 'ParagraphEmpty'}
       })
     } else {
       ops.push({
         op: 'toolbox',
-        value: {type: 'para'}
+        value: {type: 'Paragraph'}
       })
     }
-  } else if (selection.noSelection) {
+  } else if (selection.type === 'Range') {
     ops.push({
       op: 'toolbox',
-      value: null
+      value: {type: 'Select'}
     })
   } else {
     ops.push({
       op: 'toolbox',
-      value: {type: 'select'}
+      value: null
     })
   }
   return ops

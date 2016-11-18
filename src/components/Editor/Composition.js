@@ -50,7 +50,7 @@ export default connect(
       if (command) {
         // handle copy/paste/bold, etc
         // console.log(command)
-      } else if (!selection.noSelection && !isArrows(e)) {
+      } else if (selection.type === 'Range' && !isArrows(e)) {
         backspacePress({selection})
         // then continue with edit ?
       }

@@ -9,8 +9,8 @@ import getAtPath from './utils/getAtPath'
  */
 export default function doBackspace (composition, aselection) {
   const selection = fixSelectOrder(composition, aselection)
-  const {noSelection, anchorPath, anchorOffset} = selection
-  if (noSelection) {
+  const {type, anchorPath, anchorOffset} = selection
+  if (type === 'Caret') {
     if (anchorOffset === 0) {
       // merge with previous
       const prev = getNeighbours(composition, anchorPath)[0]
