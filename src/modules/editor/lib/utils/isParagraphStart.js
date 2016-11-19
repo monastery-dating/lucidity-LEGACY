@@ -1,6 +1,9 @@
 import getPosition from './getPosition'
 
-export default function isParagraphStart (composition, path, offset) {
+export default function isParagraphStart (composition, path, offset, anchorValue) {
+  if (anchorValue === '\u200B') {
+    return true
+  }
   if (offset > 0) {
     return false
   }

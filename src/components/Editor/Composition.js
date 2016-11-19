@@ -29,11 +29,6 @@ export default connect(
         lastselection = null
       }
       inputChange({value, selection})
-
-      if (anchorNode.nodeType !== Node.TEXT_NODE) {
-        // Not an edit
-        return
-      }
     }
 
     const onKeyDown = e => {

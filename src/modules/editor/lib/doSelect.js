@@ -5,7 +5,7 @@ import isParagraphStart from './utils/isParagraphStart'
 export default function doSelect (composition, selection, ops = []) {
   const {type, anchorPath, anchorOffset, anchorValue, end} = selection
 
-  if (type === 'Caret' && isParagraphStart(composition, anchorPath, anchorOffset)) {
+  if (type === 'Caret' && isParagraphStart(composition, anchorPath, anchorOffset, anchorValue)) {
     if (anchorValue === '\u200B') {
       ops.push({
         op: 'toolbox',
