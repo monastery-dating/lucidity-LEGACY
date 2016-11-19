@@ -1,25 +1,26 @@
-import fixSelectOrder from './utils/fixSelectOrder'
+import isParagraphStart from './utils/isParagraphStart'
 
 /** Return toolbox operations related to selection change
 */
-export default function doSelect (composition, aselection, ops = []) {
-  const selection = fixSelectOrder(composition, aselection)
-  if (selection.anchorOffset === 0) {
-    if (selection.anchorValue === '\u200B') {
+export default function doSelect (composition, selection, ops = []) {
+  const {type, anchorPath, anchorOffset, anchorValue, end} = selection
+
+  if (type === 'Caret' && isParagraphStart(composition, anchorPath, anchorOffset)) {
+    if (anchorValue === '\u200B') {
       ops.push({
         op: 'toolbox',
-        value: {type: 'ParagraphEmpty'}
+        value: {type: 'ParagraphEmpty', position: end}
       })
     } else {
       ops.push({
         op: 'toolbox',
-        value: {type: 'Paragraph'}
+        value: {type: 'Paragraph', position: end}
       })
     }
-  } else if (selection.type === 'Range') {
+  } else if (type === 'Range') {
     ops.push({
       op: 'toolbox',
-      value: {type: 'Select'}
+      value: {type: 'Select', position: end}
     })
   } else {
     ops.push({

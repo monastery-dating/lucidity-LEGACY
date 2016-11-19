@@ -1,5 +1,15 @@
-.Composition {
+.Editor {
   padding: 20px;
+}
+
+.Editor-wrapper {
+  position: relative;
+}
+
+/** Do not use padding or margin inside .Composition or selection calculations
+ are wrong. */
+.Composition {
+  margin: 0; padding: 0;
 }
 
 .Composition *:focus, .Composition:focus {

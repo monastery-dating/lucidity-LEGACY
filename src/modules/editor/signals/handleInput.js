@@ -1,6 +1,5 @@
 import {input, when} from 'cerebral/operators'
 import changeText from '../actions/changeText'
-import handleSelect from './handleSelect'
 import processOps from '../actions/processOps'
 
 export default [
@@ -8,6 +7,5 @@ export default [
   when(input`ops`), {
     true: [processOps],
     false: []
-  },
-  ...handleSelect
+  }
 ]

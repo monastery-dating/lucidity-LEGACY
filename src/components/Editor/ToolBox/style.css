@@ -1,12 +1,8 @@
-.ToolBox-wrapper {
-  position: relative;
-}
-
 .ToolBox {
   position: absolute;
   background: #f0f0f0;
-  border: 1px solid #c0c0c0;
-  box-shadow: 1px 2px 8px rgba(0,0,0,0.2);
+  border: 1px solid #a0a0a0;
+  box-shadow: 1px 4px 10px rgba(0,0,0,0.2);
   border-radius: 3px;
   display: flex;
 }
@@ -28,6 +24,12 @@
   content: "";
 }
 
+/*
+.ToolBox.Select:before, .ToolBox.Select .ToolBox-menu:before {
+  left: 50%;
+}
+*/
+
 .ToolBox-menu:before {
   /* arrow up */
   top: -9px;
@@ -39,7 +41,7 @@
 .ToolBox:before {
   /* arrow up */
   top: -10px;
-  border-bottom-color: #c0c0c0;
+  border-bottom-color: #999;
   border-width: 0 10px 10px;
   margin-left: -10px;
 }
@@ -68,4 +70,11 @@
 
 .ToolBox-item .para {
   font-size: 90%;
+}
+
+.Foo {
+  position: absolute;
+  padding: 0;
+  margin: 0;
+  border: 1px solid red;
 }

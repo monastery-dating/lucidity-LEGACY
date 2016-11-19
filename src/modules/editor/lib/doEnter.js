@@ -1,5 +1,4 @@
 import deleteSelection from './utils/deleteSelection'
-import fixSelectOrder from './utils/fixSelectOrder'
 import {extractPaths, BIGGEST_PATH, SMALLEST_PATH} from './utils/inSelection'
 import getPosition from './utils/getPosition'
 import isTextBlock from './utils/isTextBlock'
@@ -10,8 +9,7 @@ import splitText from './utils/splitText'
 /** Returns the list of operations after enter pressed.
  *
  */
-export default function doEnter (composition, aselection) {
-  const selection = fixSelectOrder(composition, aselection)
+export default function doEnter (composition, selection) {
   let ops = deleteSelection(composition, selection)
 
   let {anchorPath, anchorOffset} = selection

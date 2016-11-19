@@ -1,4 +1,3 @@
-import fixSelectOrder from './fixSelectOrder'
 import inSelection from './inSelection'
 import mergeElements from './mergeElements'
 
@@ -89,8 +88,7 @@ const handleEnd = (ops, path, elem, selection, backkey) => {
 /** Returns the list of operations to remove selected text.
  *
 */
-export default function deleteSelection (composition, aselection, backkey) {
-  const selection = fixSelectOrder(composition, aselection)
+export default function deleteSelection (composition, selection, backkey) {
   if (!backkey && selection.type === 'Caret') {
     // no selection and no key, nothing to do here
     return null

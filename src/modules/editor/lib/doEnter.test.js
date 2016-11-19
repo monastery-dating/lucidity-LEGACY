@@ -9,15 +9,18 @@ jest.mock('./utils/makeRef', () => {
   return jest.fn(() => `refe${++counter}`)
 })
 
+const caretSelection = (path, offset) => ({
+  anchorPath: path,
+  focusPath: path,
+  anchorOffset: offset,
+  focusOffset: offset,
+  type: 'Caret'
+})
+
 describe('doEnter', () => {
   it('splits to make new paragraph', () => {
     counter = 0
-    const selection = {
-      anchorPath: ['mcneu', 'jnaid', 'zzvgp'],
-      anchorOffset: 2,
-      focusPath: ['mcneu', 'jnaid', 'zzvgp'],
-      focusOffset: 2
-    }
+    const selection = caretSelection(['mcneu', 'jnaid', 'zzvgp'], 2)
     expect(
       doEnter(composition, selection)
     )
@@ -46,12 +49,7 @@ describe('doEnter', () => {
 
   it('creates new paragraph when selection at end', () => {
     counter = 0
-    const selection = {
-      anchorPath: ['zhaog', 'haiou'],
-      anchorOffset: 39,
-      focusPath: ['zhaog', 'haiou'],
-      focusOffset: 39
-    }
+    const selection = caretSelection(['zhaog', 'haiou'], 39)
     expect(
       doEnter(composition, selection)
     )
@@ -69,12 +67,7 @@ describe('doEnter', () => {
 
   it('splits flat paragraph', () => {
     counter = 0
-    const selection = {
-      anchorPath: ['zaahg'],
-      anchorOffset: 11,
-      focusPath: ['zaahg'],
-      focusOffset: 11
-    }
+    const selection = caretSelection(['zaahg'], 11)
     expect(
       doEnter(composition, selection)
     )

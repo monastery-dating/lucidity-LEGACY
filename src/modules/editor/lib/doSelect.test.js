@@ -11,7 +11,8 @@ describe('doSelect', () => {
       anchorOffset: 0,
       focusPath: ['zaahg'],
       focusOffset: 0,
-      type: 'Range'
+      type: 'Caret',
+      end: {}
     }
     expect(
       doSelect(composition, selection)
@@ -19,7 +20,27 @@ describe('doSelect', () => {
     .toEqual([
       {
         op: 'toolbox',
-        value: {type: 'Paragraph'}
+        value: {type: 'Paragraph', position: {}}
+      }
+    ])
+  })
+
+  it('shows select toolbox', () => {
+    const selection = {
+      anchorPath: ['mcneu', 'jnaid', 'zzvgp'],
+      anchorOffset: 0,
+      focusPath: ['mcneu', 'jnaid', 'zzvgp'],
+      focusOffset: 4,
+      type: 'Range',
+      position: {}
+    }
+    expect(
+      doSelect(composition, selection)
+    )
+    .toEqual([
+      {
+        op: 'toolbox',
+        value: {type: 'Select'}
       }
     ])
   })

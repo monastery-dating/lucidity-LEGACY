@@ -1,5 +1,4 @@
 import deleteSelection from './utils/deleteSelection'
-import fixSelectOrder from './utils/fixSelectOrder'
 import getNeighbours from './utils/getNeighbours'
 import mergeElements from './utils/mergeElements'
 import getAtPath from './utils/getAtPath'
@@ -7,8 +6,7 @@ import getAtPath from './utils/getAtPath'
 /** Returns the list of operations to remove selected text.
  *
  */
-export default function doBackspace (composition, aselection) {
-  const selection = fixSelectOrder(composition, aselection)
+export default function doBackspace (composition, selection) {
   const {type, anchorPath, anchorOffset} = selection
   if (type === 'Caret') {
     if (anchorOffset === 0) {

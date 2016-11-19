@@ -4,7 +4,6 @@ import {connect} from 'cerebral/react'
 import expandInner from './lib/expandInner'
 import getCommand from './lib/getCommand'
 import getSelection from './lib/getSelection'
-import isArrows from './lib/isArrows'
 
 import './style.css'
 
@@ -19,10 +18,16 @@ export default connect(
     selectChange: 'editor.selectChanged'
   },
   function Editor ({compositionInner, backspacePress, enterPress, inputChange, selectChange}) {
+    let lastselection
+
     const onInput = e => {
       const selection = getSelection()
       const {anchorNode} = window.getSelection()
       const value = anchorNode.textContent
+      if (lastselection) {
+        backspacePress({selection: lastselection})
+        lastselection = null
+      }
       inputChange({value, selection})
 
       if (anchorNode.nodeType !== Node.TEXT_NODE) {
@@ -50,8 +55,9 @@ export default connect(
       if (command) {
         // handle copy/paste/bold, etc
         // console.log(command)
-      } else if (selection.type === 'Range' && !isArrows(e)) {
-        backspacePress({selection})
+      } else if (selection.type === 'Range') {
+        lastselection = selection
+        // backspacePress({selection})
         // then continue with edit ?
       }
     }

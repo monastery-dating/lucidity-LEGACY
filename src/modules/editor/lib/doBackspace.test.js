@@ -4,14 +4,17 @@ import doBackspace from './doBackspace'
 
 const composition = mockComposition()
 
+const caretSelection = (path, offset) => ({
+  anchorPath: path,
+  focusPath: path,
+  anchorOffset: offset,
+  focusOffset: offset,
+  type: 'Caret'
+})
+
 describe('doBackspace', () => {
   it('removes last character', () => {
-    const selection = {
-      anchorPath: ['zhaog', 'oaiue'],
-      anchorOffset: 2,
-      focusPath: ['zhaog', 'oaiue'],
-      focusOffset: 2
-    }
+    const selection = caretSelection(['zhaog', 'oaiue'], 2)
     expect(
       doBackspace(composition, selection)
     )
@@ -28,12 +31,7 @@ describe('doBackspace', () => {
   })
 
   it('merges with previous paragraph at start of line', () => {
-    const selection = {
-      anchorPath: ['zhaog', 'oiafg'],
-      anchorOffset: 0,
-      focusPath: ['zhaog', 'oiafg'],
-      focusOffset: 0
-    }
+    const selection = caretSelection(['zhaog', 'oiafg'], 0)
     expect(
       doBackspace(composition, selection)
     )
@@ -59,12 +57,7 @@ describe('doBackspace', () => {
   })
 
   it('merges and fuse with previous complex paragraph at start of line', () => {
-    const selection = {
-      anchorPath: ['zaahg'],
-      anchorOffset: 0,
-      focusPath: ['zaahg'],
-      focusOffset: 0
-    }
+    const selection = caretSelection(['zaahg'], 0)
     expect(
       doBackspace(composition, selection)
     )
@@ -82,12 +75,7 @@ describe('doBackspace', () => {
   })
 
   it('merges with previous complex paragraph at start of line', () => {
-    const selection = {
-      anchorPath: ['zaahg'],
-      anchorOffset: 0,
-      focusPath: ['zaahg'],
-      focusOffset: 0
-    }
+    const selection = caretSelection(['zaahg'], 0)
     const composition = mockComposition()
     composition.i.zhaog.i.haiou.t = 'S+E'
     expect(
