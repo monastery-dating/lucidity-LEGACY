@@ -13,7 +13,7 @@ describe('doBackspace', () => {
     .toEqual([
       {
         op: 'update', path: ['zhaog', 'oaiue'],
-        value: {p: 1, t: 'S', i: 'mssage'}
+        value: {p: 1, t: 'B', i: 'mssage'}
       },
       {
         op: 'select', path: ['zhaog', 'oaiue'],
@@ -38,7 +38,7 @@ describe('doBackspace', () => {
       },
       {
         op: 'update', path: ['mcneu', 'oaiue'],
-        value: {p: 5, t: 'S', i: 'message'}
+        value: {p: 5, t: 'B', i: 'message'}
       },
       {
         op: 'update', path: ['mcneu', 'haiou'],
@@ -69,7 +69,7 @@ describe('doBackspace', () => {
   it('merges with previous complex paragraph at start of line', () => {
     const selection = caretSelection(['zaahg'], 0)
     const composition = mockComposition()
-    composition.i.zhaog.i.haiou.t = 'S+E'
+    composition.i.zhaog.i.haiou.t = 'B+I'
     expect(
       doBackspace(composition, selection)
     )

@@ -2,7 +2,7 @@
 import React from 'react'
 import {snapshot, render} from '../TestHelper'
 import Composition from './Composition'
-import mockComposition from '../../modules/editor/mockComposition'
+import {mockComposition} from '../../modules/editor/lib/utils/testUtils'
 
 const editorState = {
   composition: mockComposition()

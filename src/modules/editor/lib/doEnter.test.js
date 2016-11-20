@@ -19,7 +19,7 @@ describe('doEnter', () => {
     .toEqual([
       {
         op: 'update', path: ['mcneu', 'jnaid', 'zzvgp'],
-        value: {p: 1, t: 'S+E', i: 'li'}
+        value: {p: 1, t: 'B+I', i: 'li'}
       },
       {op: 'delete', path: ['mcneu', 'mznao']},
       {op: 'delete', path: ['mcneu', 'mnahl']},
@@ -28,7 +28,7 @@ describe('doEnter', () => {
         op: 'update', path: ['refe1'],
         value: {p: 0.5, t: 'P', i: {
           refe2: {p: 0, t: 'T', i: 'nk to view the next '},
-          mnahl: {p: 1, t: 'E', i: 'page'},
+          mnahl: {p: 1, t: 'I', i: 'page'},
           ncgow: {p: 2, t: 'T', i: '.'}
         }}
       },

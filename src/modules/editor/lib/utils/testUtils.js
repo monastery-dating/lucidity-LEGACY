@@ -25,7 +25,7 @@ const MOCK1 = JSON.stringify(
               },
               zzvgp: {
                 p: 1,
-                t: 'S+E', // <span class='s e'>
+                t: 'B+I', // <span class='s e'>
                 i: 'link '
               }
             }
@@ -37,7 +37,7 @@ const MOCK1 = JSON.stringify(
           },
           mnahl: {
             p: 3,
-            t: 'E',
+            t: 'I',
             i: 'page'
           },
           ncgow: {
@@ -59,7 +59,7 @@ const MOCK1 = JSON.stringify(
           },
           oaiue: {
             p: 1,
-            t: 'S', // <span class='s'>
+            t: 'B', // <span class='B'>
             i: 'message'
           },
           haiou: {

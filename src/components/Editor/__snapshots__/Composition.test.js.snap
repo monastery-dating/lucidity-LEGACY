@@ -17,7 +17,7 @@ exports[`editor sets ref 1`] = `
                 "zzvgp": Object {
                   "i": "link ",
                   "p": 1,
-                  "t": "S+E",
+                  "t": "B+I",
                 },
               },
               "p": 1,
@@ -26,7 +26,7 @@ exports[`editor sets ref 1`] = `
             "mnahl": Object {
               "i": "page",
               "p": 3,
-              "t": "E",
+              "t": "I",
             },
             "mznao": Object {
               "i": "to view the next ",
@@ -62,7 +62,7 @@ exports[`editor sets ref 1`] = `
             "oaiue": Object {
               "i": "message",
               "p": 1,
-              "t": "S",
+              "t": "B",
             },
             "oiafg": Object {
               "i": "This is the first ",
@@ -103,7 +103,7 @@ exports[`editor sets ref 1`] = `
                     "zzvgp": Object {
                       "i": "link ",
                       "p": 1,
-                      "t": "S+E",
+                      "t": "B+I",
                     },
                   },
                   "p": 1,
@@ -112,7 +112,7 @@ exports[`editor sets ref 1`] = `
                 "mnahl": Object {
                   "i": "page",
                   "p": 3,
-                  "t": "E",
+                  "t": "I",
                 },
                 "mznao": Object {
                   "i": "to view the next ",
@@ -175,7 +175,7 @@ exports[`editor sets ref 1`] = `
                       "zzvgp": Object {
                         "i": "link ",
                         "p": 1,
-                        "t": "S+E",
+                        "t": "B+I",
                       },
                     },
                     "p": 1,
@@ -215,7 +215,7 @@ exports[`editor sets ref 1`] = `
                         Object {
                           "i": "link ",
                           "p": 1,
-                          "t": "S+E",
+                          "t": "B+I",
                         }
                       }
                       elemRef="zzvgp"
@@ -258,7 +258,7 @@ exports[`editor sets ref 1`] = `
                   Object {
                     "i": "page",
                     "p": 3,
-                    "t": "E",
+                    "t": "I",
                   }
                 }
                 elemRef="mnahl"
@@ -308,7 +308,7 @@ exports[`editor sets ref 1`] = `
                 "oaiue": Object {
                   "i": "message",
                   "p": 1,
-                  "t": "S",
+                  "t": "B",
                 },
                 "oiafg": Object {
                   "i": "This is the first ",
@@ -353,7 +353,7 @@ exports[`editor sets ref 1`] = `
                   Object {
                     "i": "message",
                     "p": 1,
-                    "t": "S",
+                    "t": "B",
                   }
                 }
                 elemRef="oaiue"

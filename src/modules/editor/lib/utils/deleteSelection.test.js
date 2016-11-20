@@ -1,5 +1,5 @@
 /* global it expect describe */
-import mockComposition from '../../mockComposition'
+import {mockComposition} from './testUtils'
 import deleteSelection from './deleteSelection'
 
 const composition = mockComposition()
@@ -18,7 +18,7 @@ describe('deleteSelection', () => {
     .toEqual([
       {
         op: 'update', path: ['zhaog', 'oaiue'],
-        value: {p: 1, t: 'S', i: 'mage'}
+        value: {p: 1, t: 'B', i: 'mage'}
       },
       {
         op: 'select', path: ['zhaog', 'oaiue'],
@@ -40,7 +40,7 @@ describe('deleteSelection', () => {
     .toEqual([
       {
         op: 'update', path: ['mcneu', 'jnaid', 'zzvgp'],
-        value: {p: 1, t: 'S+E', i: 'li'}
+        value: {p: 1, t: 'B+I', i: 'li'}
       },
       {
         op: 'select', path: ['mcneu', 'jnaid', 'zzvgp'],
@@ -119,7 +119,7 @@ describe('deleteSelection', () => {
     .toEqual([
       {
         op: 'update', path: ['zhaog', 'oaiue'],
-        value: {p: 1, t: 'S', i: 'mes'}
+        value: {p: 1, t: 'B', i: 'mes'}
       },
       { // Could be select in zhaog.zaahg (check what is expected)
         op: 'select', path: ['zhaog', 'oaiue'],
@@ -147,7 +147,7 @@ describe('deleteSelection', () => {
     .toEqual([
       {
         op: 'update', path: ['mcneu', 'jnaid', 'zzvgp'],
-        value: {p: 1, t: 'S+E', i: 'li'}
+        value: {p: 1, t: 'B+I', i: 'li'}
       },
       {
         op: 'select', path: ['mcneu', 'jnaid', 'zzvgp'],

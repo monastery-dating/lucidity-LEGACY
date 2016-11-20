@@ -1,5 +1,5 @@
 /* global it expect describe */
-import mockComposition from '../mockComposition'
+import {mockComposition} from './utils/testUtils'
 import doSelect from './doSelect'
 
 const composition = mockComposition()
