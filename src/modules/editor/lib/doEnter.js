@@ -35,9 +35,9 @@ export default function doEnter (composition, selection) {
       ops.push({
         op: 'update',
         path: parentPath,
-        value: Object.assign({}, parent, {i: before})
+        value: Object.assign({}, parent, {i: before.trimRight()})
       })
-      newelem.i = after
+      newelem.i = after.trimLeft()
     }
     // No child to move.
   } else {
@@ -63,9 +63,9 @@ export default function doEnter (composition, selection) {
           ops.push({
             op: 'update',
             path,
-            value: Object.assign({}, elem, {i: before})
+            value: Object.assign({}, elem, {i: before.trimRight()})
           })
-          newelem.i = after
+          newelem.i = after.trimLeft()
         }
       } else if (idx === 1 && isTextBlock(elem)) {
         // fuse with newelem

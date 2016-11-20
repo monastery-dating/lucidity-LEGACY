@@ -1,16 +1,8 @@
 /* global it expect describe */
-import mockComposition from '../mockComposition'
+import {caretSelection, mockComposition} from './utils/testUtils.js'
 import doBackspace from './doBackspace'
 
 const composition = mockComposition()
-
-const caretSelection = (path, offset) => ({
-  anchorPath: path,
-  focusPath: path,
-  anchorOffset: offset,
-  focusOffset: offset,
-  type: 'Caret'
-})
 
 describe('doBackspace', () => {
   it('removes last character', () => {

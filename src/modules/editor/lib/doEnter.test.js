@@ -1,5 +1,5 @@
 /* global it expect describe jest */
-import mockComposition from '../mockComposition'
+import {caretSelection, mockComposition, mockRef} from './utils/testUtils.js'
 import doEnter from './doEnter'
 
 const composition = mockComposition()
@@ -7,14 +7,6 @@ const composition = mockComposition()
 let counter = 0
 jest.mock('./utils/makeRef', () => {
   return jest.fn(() => `refe${++counter}`)
-})
-
-const caretSelection = (path, offset) => ({
-  anchorPath: path,
-  focusPath: path,
-  anchorOffset: offset,
-  focusOffset: offset,
-  type: 'Caret'
 })
 
 describe('doEnter', () => {
