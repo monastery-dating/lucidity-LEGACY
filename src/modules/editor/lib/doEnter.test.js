@@ -1,5 +1,5 @@
 /* global it expect describe jest */
-import {caretSelection, mockComposition, mockRef} from './utils/testUtils.js'
+import {caretSelection, mockComposition} from './utils/testUtils.js'
 import doEnter from './doEnter'
 
 const composition = mockComposition()

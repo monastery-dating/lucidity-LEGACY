@@ -8,22 +8,25 @@ export default connect(
     applyOp: 'editor.applyOpTriggered'
   },
   function Select ({applyOp}) {
-    const click = (t) => {
+    const click = (e, t) => {
       const selection = getSelection()
       applyOp({op: t, selection})
+      e.preventDefault()
     }
+    const onMouseDown = e => e.preventDefault()
     return (
       <div className='ToolBox-menu'>
         <div className='ToolBox-item'
-          onClick={() => click('B')}>
+          onClick={e => click(e, 'B')}
+          onMouseDown={onMouseDown}>
           <i className='strong'>B</i>
         </div>
         <div className='ToolBox-item'
-          onClick={() => click('I')}>
+          onClick={e => click(e, 'I')}>
           <i className='em'>I</i>
         </div>
         <div className='ToolBox-item'
-          onClick={() => click('A')}>
+          onClick={e => click(e, 'A')}>
           <i className='em'>link</i>
         </div>
       </div>

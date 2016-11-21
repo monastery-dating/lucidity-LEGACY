@@ -1,4 +1,4 @@
-import {getSiblings} from './getNeighbours'
+import getSiblings from './getSiblings'
 import makeRef from './makeRef'
 
 const positionBetween = (a, b) => {

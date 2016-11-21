@@ -1,13 +1,26 @@
-import applyB from './utils/applyB'
+import extractSelection from './utils/extractSelection'
 
-const APPLY_OP = {
-  B: applyB
+const makeOps = (extracted) => {
+  const ops = []
+  extracted.updated.forEach(({path, elem}) => {
+    ops.push({
+      op: 'update',
+      path,
+      value: elem
+    })
+  })
+  return ops
+}
+
+const SIMPLE_OP = {
+  B: true,
+  I: true
 }
 
 export default function doOperation (op, composition, selection) {
-  const apply = APPLY_OP[op]
-  if (apply) {
-    return apply(composition, selection)
+  if (SIMPLE_OP[op]) {
+    const extracted = extractSelection(composition, selection, op)
+    return makeOps(extracted)
   }
   return null
 }

@@ -1,15 +1,7 @@
-import isTextBlock from './isTextBlock'
 import joinText from './joinText'
 import makeRef from './makeRef'
-
-const canFuse = (a, b) => (
-  isTextBlock(a.elem) && isTextBlock(b.elem) &&
-  a.path.length < 3 && b.path.length < 3
-)
-
-const fuse = (a, b, c) => Object.assign(
-  {}, c || a, { i: joinText(a.i, b.i) }
-)
+import canFuse from './canFuse'
+import fuse from './fuse'
 
 const addDepth = (a) => Object.assign(
   {}, a,

@@ -73,7 +73,7 @@ export default function getNeighbours (composition, path, onlySibling = false) {
     }
   }
 
-  if (!prevSibling || !nextSibling) {
+  if (!onlySibling && (!prevSibling || !nextSibling)) {
     // get uncles
     const uncles = getNeighbours(composition, parentPath)
     if (!prevSibling && uncles[0]) {
@@ -84,8 +84,4 @@ export default function getNeighbours (composition, path, onlySibling = false) {
     }
   }
   return [prevSibling, nextSibling]
-}
-
-export function getSiblings (composition, path) {
-  return getNeighbours(composition, path, true)
 }
