@@ -14,10 +14,9 @@ export default connect(
       // Do not know why we need this. parseInner should remove.
       return null
     }
-    const type = elem.t
     const inner = elem.i
-    const Tag = getElementTag(type)
-    const className = getElementClassName(type)
+    const Tag = getElementTag(elem)
+    const className = getElementClassName(elem)
 
     return <Tag
       data-ref={elemRef}

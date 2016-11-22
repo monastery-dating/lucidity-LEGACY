@@ -1,5 +1,6 @@
 import extractSelection from './utils/extractSelection'
 import rangeSelection from './utils/rangeSelection'
+import changeParagraph from './utils/changeParagraph'
 
 const makeOps = ({updated, selected}) => {
   const ops = []
@@ -26,8 +27,10 @@ const SIMPLE_OP = {
   I: true
 }
 
-export default function doOperation (composition, selection, op) {
-  if (SIMPLE_OP[op]) {
+export default function doOperation (composition, selection, op, opts) {
+  if (op === 'P') {
+    return changeParagraph(composition, selection, opts)
+  } else if (SIMPLE_OP[op]) {
     const extracted = extractSelection(composition, selection, op)
     return makeOps(extracted)
   }

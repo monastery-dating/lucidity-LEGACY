@@ -1,21 +1,31 @@
 import React from 'react'
 import {connect} from 'cerebral/react'
+import getSelection from '../lib/getSelection'
 
 export default connect(
   null,
-  function Paragraph () {
+  {
+    applyOp: 'editor.applyOpTriggered'
+  },
+  function Paragraph ({applyOp}) {
+    const click = (e, op, opts) => {
+      const selection = getSelection()
+      applyOp({op, selection, opts})
+      e.preventDefault()
+    }
+    const onMouseDown = e => e.preventDefault()
     return (
       <div className='ToolBox-menu'>
-        <div className='ToolBox-item'>
-          <i className='heading'>H1</i>
-        </div>
-        <div className='ToolBox-item'>
-          <i className='heading'>H2</i>
-        </div>
-        <div className='ToolBox-item'>
-          <i className='heading'>H3</i>
-        </div>
-        <div className='ToolBox-item'>
+        {[1, 2, 3].map(h => (
+          <div key={h} className='ToolBox-item'
+            onClick={e => click(e, 'P', {h})}
+            onMouseDown={onMouseDown}>
+            <i className='heading'>H{h}</i>
+          </div>
+        ))}
+        <div className='ToolBox-item'
+          onClick={e => click(e, 'P', null)}
+          onMouseDown={onMouseDown}>
           <i className='para'>P</i>
         </div>
       </div>

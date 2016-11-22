@@ -8,9 +8,9 @@ export default connect(
     applyOp: 'editor.applyOpTriggered'
   },
   function Select ({applyOp}) {
-    const click = (e, t) => {
+    const click = (e, op) => {
       const selection = getSelection()
-      applyOp({op: t, selection})
+      applyOp({op, selection})
       e.preventDefault()
     }
     const onMouseDown = e => e.preventDefault()

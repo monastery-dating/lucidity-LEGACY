@@ -17,8 +17,8 @@ export default function doEnter (composition, selection) {
   if (ops) {
     const selectOp = ops.find(op => op.op === 'select')
     if (selectOp) {
-      anchorPath = selectOp.path
-      anchorOffset = selectOp.offset
+      anchorPath = selectOp.anchorPath
+      anchorOffset = selectOp.anchorOffset
     }
   } else {
     ops = []

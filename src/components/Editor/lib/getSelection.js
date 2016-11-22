@@ -21,13 +21,31 @@ export default function getSelection () {
     }
   }
   let first = rects[0]
+  if (!first) {
+    // no selection
+    return {type: 'None'}
+  }
+
+  let end
   if (first.top > last.top ||
       (first.top === last.top &&
-        (first.left > last.left ||
-          (anchorNode === focusNode && anchorOffset > focusOffset)
-        )
+        (first.left > last.left)
       )
      ) {
+    end = {
+      top: first.top,
+      left: first.left + first.width
+    }
+  } else {
+    end = {
+      top: last.top,
+      left: last.left + last.width
+    }
+  }
+
+  const atop = anchorNode.parentElement.getBoundingClientRect().top
+  const ftop = focusNode.parentElement.getBoundingClientRect().top
+  if (atop > ftop || (anchorNode === focusNode && anchorOffset > focusOffset)) {
     // reverse
     console.log('REVERSE')
     return {
@@ -37,18 +55,13 @@ export default function getSelection () {
       focusPath: anchorPath,
       anchorValue: focusValue,
       focusValue: anchorValue,
-      type, end: {
-        top: first.top,
-        left: first.left + first.width
-      }
+      type, end
     }
   } else {
+    console.log('NOT REVERSE')
     return {
       anchorOffset, focusOffset, anchorPath, focusPath,
-      anchorValue, focusValue, type, end: {
-        top: last.top,
-        left: last.left + last.width
-      }
+      anchorValue, focusValue, type, end
     }
   }
 }

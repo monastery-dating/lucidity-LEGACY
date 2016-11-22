@@ -10,8 +10,7 @@ export default function changeText ({state, input}) {
   if (selection) {
     return {ops: [{
       op: 'select',
-      path: selection.anchorPath,
-      offset: selection.anchorOffset
+      value: selection
     }]}
   }
 }

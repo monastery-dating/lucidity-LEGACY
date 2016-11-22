@@ -34,10 +34,12 @@ export default connect(
       switch (e.key) {
         case 'Enter':
           e.preventDefault()
+          lastselection = null
           enterPress({selection: getSelection()})
           return
         case 'Backspace':
           e.preventDefault()
+          lastselection = null
           backspacePress({selection: getSelection()})
           return
         default:
