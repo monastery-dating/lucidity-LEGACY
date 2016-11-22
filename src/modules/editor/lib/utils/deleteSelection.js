@@ -1,12 +1,14 @@
 import inSelection from './inSelection'
 import mergeElements from './mergeElements'
+import caretSelection from './caretSelection'
 
 const handleStart = (ops, path, elem, selection, islast, backkey) => {
   const offset = selection.anchorOffset
   if (islast) {
     // Edit in same element
     let offsetA = offset
-    let offsetB = selection.focusOffset
+    let offsetB = selection.type === 'Range'
+      ? selection.focusOffset : offset
     if (offsetA === offsetB) {
       if (backkey === 'Backspace') {
         offsetA -= 1
@@ -32,17 +34,14 @@ const handleStart = (ops, path, elem, selection, islast, backkey) => {
 
     ops.push({
       op: 'select',
-      path,
-      offset: offsetA
+      value: caretSelection(path, offsetA)
     })
   } else if (offset === 0) {
     ops.push({op: 'delete', path})
   } else if (offset >= elem.i.length) {
-    // FIXME: ?
     ops.push({
       op: 'select',
-      path,
-      offset: offset
+      value: caretSelection(path, offset)
     })
   } else {
     // remove part
@@ -56,8 +55,7 @@ const handleStart = (ops, path, elem, selection, islast, backkey) => {
 
     ops.push({
       op: 'select',
-      path,
-      offset: offset
+      value: caretSelection(path, offset)
     })
     return {path, elem: value}
   }
@@ -65,7 +63,8 @@ const handleStart = (ops, path, elem, selection, islast, backkey) => {
 }
 
 const handleEnd = (ops, path, elem, selection, backkey) => {
-  const offset = selection.focusOffset
+  const offset = selection.type === 'Range'
+      ? selection.focusOffset : selection.anchorOffset
   if (offset === 0) {
     // no op
   } else if (offset === elem.i.length) {

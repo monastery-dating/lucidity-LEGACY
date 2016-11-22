@@ -1,5 +1,6 @@
 import deleteSelection from './utils/deleteSelection'
 import {extractPaths, BIGGEST_PATH, SMALLEST_PATH} from './utils/inSelection'
+import caretSelection from './utils/caretSelection'
 import getPosition from './utils/getPosition'
 import isTextBlock from './utils/isTextBlock'
 import makeRef from './utils/makeRef'
@@ -103,8 +104,7 @@ export default function doEnter (composition, selection) {
   })
   ops.push({
     op: 'select',
-    path: newpara.path,
-    offset: 0
+    value: caretSelection(newpara.path, 0)
   })
   return ops
 }

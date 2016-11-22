@@ -1,17 +1,17 @@
 /* global it expect describe */
 import {mockComposition} from './testUtils'
+import caretSelection from './caretSelection'
+import rangeSelection from './rangeSelection'
 import deleteSelection from './deleteSelection'
 
 const composition = mockComposition()
 
 describe('deleteSelection', () => {
   it('removes selected text in simple selection', () => {
-    const selection = {
-      anchorPath: ['zhaog', 'oaiue'],
-      anchorOffset: 1,
-      focusPath: ['zhaog', 'oaiue'],
-      focusOffset: 4
-    }
+    const selection = rangeSelection(
+      ['zhaog', 'oaiue'], 1,
+      ['zhaog', 'oaiue'], 4
+    )
     expect(
       deleteSelection(composition, selection)
     )
@@ -21,19 +21,17 @@ describe('deleteSelection', () => {
         value: {p: 1, t: 'B', i: 'mage'}
       },
       {
-        op: 'select', path: ['zhaog', 'oaiue'],
-        offset: 1
+        op: 'select',
+        value: caretSelection(['zhaog', 'oaiue'], 1)
       }
     ])
   })
 
   it('merge elements in wide selection without fuse', () => {
-    const selection = {
-      anchorPath: ['mcneu', 'jnaid', 'zzvgp'],
-      anchorOffset: 2,
-      focusPath: ['zaahg'],
-      focusOffset: 20
-    }
+    const selection = rangeSelection(
+      ['mcneu', 'jnaid', 'zzvgp'], 2,
+      ['zaahg'], 20
+    )
     expect(
       deleteSelection(composition, selection)
     )
@@ -43,8 +41,8 @@ describe('deleteSelection', () => {
         value: {p: 1, t: 'B+I', i: 'li'}
       },
       {
-        op: 'select', path: ['mcneu', 'jnaid', 'zzvgp'],
-        offset: 2
+        op: 'select',
+        value: caretSelection(['mcneu', 'jnaid', 'zzvgp'], 2)
       },
       { op: 'delete', path: ['mcneu', 'mznao'] },
       { op: 'delete', path: ['mcneu', 'mnahl'] },
@@ -59,19 +57,17 @@ describe('deleteSelection', () => {
   })
 
   it('merge elements in wide selection with fuse', () => {
-    const selection = {
-      anchorPath: ['mcneu', 'mznao'],
-      anchorOffset: 8,
-      focusPath: ['zaahg'],
-      focusOffset: 8
-    }
+    const selection = rangeSelection(
+      ['mcneu', 'mznao'], 8,
+      ['zaahg'], 8
+    )
     expect(
       deleteSelection(composition, selection)
     )
     .toEqual([
       {
-        op: 'select', path: ['mcneu', 'mznao'],
-        offset: 8
+        op: 'select',
+        value: caretSelection(['mcneu', 'mznao'], 8)
       },
       { op: 'delete', path: ['mcneu', 'mnahl'] },
       { op: 'delete', path: ['mcneu', 'ncgow'] },
@@ -85,12 +81,10 @@ describe('deleteSelection', () => {
   })
 
   it('merge elements in local selection accross markup with fuse', () => {
-    const selection = {
-      anchorPath: ['zhaog', 'oiafg'],
-      anchorOffset: 12,
-      focusPath: ['zhaog', 'haiou'],
-      focusOffset: 13
-    }
+    const selection = rangeSelection(
+      ['zhaog', 'oiafg'], 12,
+      ['zhaog', 'haiou'], 13
+    )
     expect(
       deleteSelection(composition, selection)
     )
@@ -100,19 +94,17 @@ describe('deleteSelection', () => {
         value: {p: 1, t: 'P', i: 'This is the bomgolo frabilou elma tec.'}
       },
       {
-        op: 'select', path: ['zhaog'],
-        offset: 12
+        op: 'select',
+        value: caretSelection(['zhaog'], 12)
       }
     ])
   })
 
   it('wide selection two levels deep without fuse', () => {
-    const selection = {
-      anchorPath: ['zhaog', 'oaiue'],
-      anchorOffset: 3,
-      focusPath: ['zaahg'],
-      focusOffset: 32
-    }
+    const selection = rangeSelection(
+      ['zhaog', 'oaiue'], 3,
+      ['zaahg'], 32
+    )
     expect(
       deleteSelection(composition, selection)
     )
@@ -122,8 +114,8 @@ describe('deleteSelection', () => {
         value: {p: 1, t: 'B', i: 'mes'}
       },
       { // Could be select in zhaog.zaahg (check what is expected)
-        op: 'select', path: ['zhaog', 'oaiue'],
-        offset: 3
+        op: 'select',
+        value: caretSelection(['zhaog', 'oaiue'], 3)
       },
       { op: 'delete', path: ['zhaog', 'haiou'] },
       {
@@ -135,12 +127,10 @@ describe('deleteSelection', () => {
   })
 
   it('wide selection three levels deep without fuse', () => {
-    const selection = {
-      anchorPath: ['mcneu', 'jnaid', 'zzvgp'],
-      anchorOffset: 2,
-      focusPath: ['zhaog', 'haiou'],
-      focusOffset: 35
-    }
+    const selection = rangeSelection(
+      ['mcneu', 'jnaid', 'zzvgp'], 2,
+      ['zhaog', 'haiou'], 35
+    )
     expect(
       deleteSelection(composition, selection)
     )
@@ -150,8 +140,8 @@ describe('deleteSelection', () => {
         value: {p: 1, t: 'B+I', i: 'li'}
       },
       {
-        op: 'select', path: ['mcneu', 'jnaid', 'zzvgp'],
-        offset: 2
+        op: 'select',
+        value: caretSelection(['mcneu', 'jnaid', 'zzvgp'], 2)
       },
       { op: 'delete', path: ['mcneu', 'mznao'] },
       { op: 'delete', path: ['mcneu', 'mnahl'] },

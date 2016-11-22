@@ -1,5 +1,6 @@
 /* global it expect describe */
-import {caretSelection, mockComposition} from './utils/testUtils.js'
+import {mockComposition} from './utils/testUtils.js'
+import caretSelection from './utils/caretSelection'
 import doBackspace from './doBackspace'
 
 const composition = mockComposition()
@@ -16,8 +17,8 @@ describe('doBackspace', () => {
         value: {p: 1, t: 'B', i: 'mssage'}
       },
       {
-        op: 'select', path: ['zhaog', 'oaiue'],
-        offset: 1
+        op: 'select',
+        value: caretSelection(['zhaog', 'oaiue'], 1)
       }
     ])
   })
@@ -33,8 +34,8 @@ describe('doBackspace', () => {
         value: {p: 4, t: 'T', i: '.This is the first '}
       },
       {
-        op: 'select', path: ['mcneu', 'ncgow'],
-        offset: 1
+        op: 'select',
+        value: caretSelection(['mcneu', 'ncgow'], 1)
       },
       {
         op: 'update', path: ['mcneu', 'oaiue'],
@@ -59,8 +60,8 @@ describe('doBackspace', () => {
         value: {p: 2, t: 'T', i: '. Hello blah bomgolo frabilou elma tec.This is the third paragraph. My tailor types fast.'}
       },
       {
-        op: 'select', path: ['zhaog', 'haiou'],
-        offset: 39
+        op: 'select',
+        value: caretSelection(['zhaog', 'haiou'], 39)
       },
       {op: 'delete', path: ['zaahg']}
     ])
@@ -79,8 +80,8 @@ describe('doBackspace', () => {
         value: {p: 3, t: 'T', i: 'This is the third paragraph. My tailor types fast.'}
       },
       {
-        op: 'select', path: ['zhaog', 'zaahg'],
-        offset: 0
+        op: 'select',
+        value: caretSelection(['zhaog', 'zaahg'], 0)
       },
       {op: 'delete', path: ['zaahg']}
     ])

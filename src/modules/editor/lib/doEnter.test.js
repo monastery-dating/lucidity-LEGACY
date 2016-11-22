@@ -1,5 +1,6 @@
 /* global it expect describe jest */
-import {caretSelection, mockComposition} from './utils/testUtils.js'
+import {mockComposition} from './utils/testUtils.js'
+import caretSelection from './utils/caretSelection'
 import doEnter from './doEnter'
 
 const composition = mockComposition()
@@ -33,8 +34,8 @@ describe('doEnter', () => {
         }}
       },
       {
-        op: 'select', path: ['refe1'],
-        offset: 0
+        op: 'select',
+        value: caretSelection(['refe1'], 0)
       }
     ])
   })
@@ -51,8 +52,8 @@ describe('doEnter', () => {
         value: {p: 1.5, t: 'P', i: ''}
       },
       {
-        op: 'select', path: ['refe1'],
-        offset: 0
+        op: 'select',
+        value: caretSelection(['refe1'], 0)
       }
     ])
   })
@@ -73,8 +74,8 @@ describe('doEnter', () => {
         value: {p: 3, t: 'P', i: 'third paragraph. My tailor types fast.'}
       },
       {
-        op: 'select', path: ['refe1'],
-        offset: 0
+        op: 'select',
+        value: caretSelection(['refe1'], 0)
       }
     ])
   })

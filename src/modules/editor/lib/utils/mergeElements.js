@@ -1,4 +1,4 @@
-import joinText from './joinText'
+import caretSelection from './caretSelection'
 import makeRef from './makeRef'
 import canFuse from './canFuse'
 import fuse from './fuse'
@@ -57,8 +57,7 @@ const mergeFlatEnd = (composition, start, end, ops) => {
     } else {
       ops.push({
         op: 'select',
-        path: start.path,
-        offset: start.elem.i.length
+        value: caretSelection(start.path, start.elem.i.length)
       })
     }
   } else {
@@ -68,8 +67,7 @@ const mergeFlatEnd = (composition, start, end, ops) => {
     if (!hasDelete) {
       ops.push({
         op: 'select',
-        path: [parentRef, ref],
-        offset: 0
+        value: caretSelection([parentRef, ref], 0)
       })
     }
   }
@@ -112,8 +110,7 @@ const mergeSamePara = (composition, start, end, ops) => {
       })
       ops.push({
         op: 'select',
-        path,
-        offset: start.elem.i.length
+        value: caretSelection(path, start.elem.i.length)
       })
     } else {
       // fuse in start
@@ -154,11 +151,9 @@ const mergeTwoPara = (composition, start, end, ops) => {
           // Remove start update
           ops.shift()
         } else {
-          // Add select
           ops.push({
             op: 'select',
-            path: start.path,
-            offset: start.elem.i.length
+            value: caretSelection(start.path, start.elem.i.length)
           })
         }
         skip = false

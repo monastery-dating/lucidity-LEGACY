@@ -19,12 +19,7 @@ export default function processOps ({state, input}) {
         state.unset(path)
         break
       case 'select':
-        newselection = {
-          anchorPath: path,
-          anchorOffset: op.offset,
-          focusPath: path,
-          focusOffset: op.offset
-        }
+        newselection = op.value
         break
       case 'toolbox':
         state.set(TOOLBOX_PATH, op.value)

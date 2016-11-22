@@ -79,19 +79,3 @@ const MOCK1 = JSON.stringify(
 )
 
 export const mockComposition = () => JSON.parse(MOCK1)
-
-export const caretSelection = (path, offset) => ({
-  anchorPath: path,
-  focusPath: path,
-  anchorOffset: offset,
-  focusOffset: offset,
-  type: 'Caret'
-})
-
-export const rangeSelection = (anchorPath, anchorOffset, focusPath, focusOffset) => ({
-  anchorPath,
-  focusPath,
-  anchorOffset,
-  focusOffset,
-  type: 'Caret'
-})

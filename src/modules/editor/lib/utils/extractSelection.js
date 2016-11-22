@@ -44,18 +44,27 @@ const applyOp = (list, type) => {
   return newlist
 }
 
-const splitElement = (elem, ref, startOffset, endOffset, startP, afterP) => {
+const splitElement = (elem, aref, startOffset, endOffset, startP, afterP) => {
   const splitParts = splitText(elem.i, startOffset || 0, endOffset || elem.i.length)
   const result = {}
 
   let position = startP
   const increment = afterP ? (afterP - position) / 4 : 1
+  let usedRef = false
 
   PARTS.forEach(key => {
     const text = splitParts[key]
     if (text.length > 0) {
+      let ref = aref
+      if (aref && key !== 'inside' && !usedRef) {
+        ref = aref
+        // Only use ref once
+        usedRef = true
+      } else {
+        ref = makeRef()
+      }
       result[key] = [{
-        ref: (!ref || key === 'inside') ? makeRef() : ref,
+        ref,
         elem: {p: position, t: 'T', i: text}
       }]
       position += increment
@@ -125,13 +134,21 @@ const processSingleParent = (composition, {anchorOffset, focusOffset}, touched, 
   })
 
   children = resetPosition(children)
+  // TODO: we could optimize rendering: filter unchanged elements
+  // by comparing them with original children.
+  const updated = Object.keys(children).map(ref => ({
+    path: changedPath.concat([ref]),
+    elem: children[ref]
+  }))
 
-  const changes = {
-    updated: [{
+  if (typeof changedElem.i === 'string') {
+    updated.unshift({
       path: changedPath,
-      elem: Object.assign({}, changedElem, {i: children})
-    }]
+      elem: Object.assign({}, changedElem, {i: {}})
+    })
   }
+
+  const changes = {updated}
 
   const inside = parts.inside
   if (inside) {

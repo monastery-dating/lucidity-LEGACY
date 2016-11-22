@@ -42,7 +42,9 @@ export default function inSelection (composition, selection) {
   const {anchorPath, focusPath} = selection
 
   const anchorPosition = getPosition(composition, anchorPath)
-  const focusPosition = getPosition(composition, focusPath)
+  const focusPosition = selection.type === 'Range'
+    ? getPosition(composition, focusPath)
+    : anchorPosition
 
   const result = []
   extractPaths(
