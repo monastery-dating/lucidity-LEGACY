@@ -79,7 +79,13 @@ const processSingleParent = (composition, {anchorOffset, focusOffset}, touched, 
   let parts
   let children = {}
   const {path, elem} = touched[0]
-  if (touched.length === 1 && path.length === 1) {
+  if (touched.length === 1 && anchorOffset === 0 && focusOffset === elem.i.length) {
+    // full selection of a single element
+    return {
+      selected: [{elem, path}],
+      updated: [{elem, path}]
+    }
+  } else if (touched.length === 1 && path.length === 1) {
     // Raw paragraph
     changedPath = path
     changedElem = elem

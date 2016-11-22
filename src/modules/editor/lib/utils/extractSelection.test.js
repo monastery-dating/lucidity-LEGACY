@@ -56,4 +56,19 @@ describe('extractSelection', () => {
       ]
     })
   })
+
+  it('extracts single element fully selected', () => {
+    counter = 0
+    const selection = rangeSelection(
+      ['zhaog', 'oaiue'], 0,
+      ['zhaog', 'oaiue'], 7
+    )
+    expect(pathTypes(
+      extractSelection(composition, selection)
+    ))
+    .toEqual({
+      selected: ['zhaog.oaiue-B'],
+      updated: ['zhaog.oaiue-B']
+    })
+  })
 })
