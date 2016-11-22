@@ -20,6 +20,7 @@ export default function processOps ({state, input}) {
         break
       case 'select':
         newselection = op.value
+        newselection.stringPath = `${BASE_PATH}.${newselection.anchorPath.join('.i.')}`
         break
       case 'toolbox':
         state.set(TOOLBOX_PATH, op.value)

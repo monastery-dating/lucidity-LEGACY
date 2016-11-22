@@ -9,8 +9,18 @@ export default function getSelection () {
   const focusValue = focusNode.textContent
   const rects = selection.getRangeAt(0).getClientRects()
 
-  let first = rects[0]
   let last = rects[rects.length - 1]
+  if (type === 'Caret') {
+    return {
+      anchorPath, anchorOffset, type,
+      anchorValue,
+      end: {
+        top: last.top,
+        left: last.left + last.width
+      }
+    }
+  }
+  let first = rects[0]
   if (first.top > last.top ||
       (first.top === last.top &&
         (first.left > last.left ||

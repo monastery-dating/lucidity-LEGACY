@@ -1,4 +1,3 @@
-/* global Node */
 import React from 'react'
 import {connect} from 'cerebral/react'
 import expandInner from './lib/expandInner'
