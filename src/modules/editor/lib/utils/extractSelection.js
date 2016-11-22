@@ -3,6 +3,7 @@ import getAtPath from './getAtPath'
 import getSiblings from './getSiblings'
 import inSelection from './inSelection'
 import makeRef from './makeRef'
+import resetPosition from './resetPosition'
 import splitText from './splitText'
 
 const PARTS = ['before', 'inside', 'after']
@@ -10,8 +11,6 @@ const PARTS = ['before', 'inside', 'after']
 const applyOp = (list, type) => {
   const newlist = []
   list.forEach(({elem, ref}, idx) => {
-    // At this state all elements in list have already been copied
-    // we can change in place.
     let t
     if (elem.t !== 'T' && elem.t !== type) {
       t = [elem.t, type].sort((a, b) => a > b ? 1 : -1).join('+')
@@ -37,8 +36,10 @@ const applyOp = (list, type) => {
         return
       }
     }
-    elem.t = t
-    newlist.push({ref, elem})
+    newlist.push({
+      ref,
+      elem: Object.assign({}, elem, {t})
+    })
   })
   return newlist
 }
@@ -72,14 +73,14 @@ const processSingleParent = (composition, {anchorOffset, focusOffset}, touched, 
   if (touched.length === 1 && path.length === 1) {
     // Raw paragraph
     changedPath = path
-    changedElem = Object.assign({}, elem, {i: children})
+    changedElem = elem
     parts = splitElement(elem, null, anchorOffset, focusOffset, 0)
   } else {
     // Parent is changed
     changedPath = path.slice(0, -1)
     const parent = getAtPath(composition, changedPath)
     children = Object.assign({}, parent.i)
-    changedElem = Object.assign({}, parent, {i: children})
+    changedElem = parent
     if (touched.length === 1) {
       const siblings = getSiblings(composition, path)
       const afterP = siblings[1] ? siblings[1].elem.p : null
@@ -104,10 +105,9 @@ const processSingleParent = (composition, {anchorOffset, focusOffset}, touched, 
           parts.after = endParts.after
           parts.inside = parts.inside.concat(endParts.inside)
         } else {
-          // element is not split => inside
           parts.inside.push({
             ref,
-            elem: Object.assign({}, elem)
+            elem
           })
         }
       })
@@ -118,27 +118,26 @@ const processSingleParent = (composition, {anchorOffset, focusOffset}, touched, 
     parts.inside = applyOp(parts.inside, op)
   }
 
-  // reset p
-  let p = -1
   Object.keys(parts).forEach(key => {
     parts[key].forEach(({elem, ref}) => {
-      // We can write in place here as objects are all copies
-      elem.p = ++p
       children[ref] = elem
     })
   })
+
+  children = resetPosition(children)
+
   const changes = {
     updated: [{
       path: changedPath,
-      elem: changedElem
+      elem: Object.assign({}, changedElem, {i: children})
     }]
   }
 
   const inside = parts.inside
   if (inside) {
-    changes.selected = parts.inside.map(({elem, ref}) => ({
+    changes.selected = parts.inside.map(({ref}) => ({
       path: changedPath.concat([ref]),
-      elem
+      elem: children[ref]
     }))
   }
   return changes

@@ -17,7 +17,7 @@ describe('doOperation.B', () => {
       ['zaahg'], 17
     )
     expect(
-      doOperation('B', composition, selection)
+      doOperation(composition, selection, 'B')
     )
     .toEqual([
       {
@@ -32,14 +32,14 @@ describe('doOperation.B', () => {
     ])
   })
 
-  it('renders larger bold selection', () => {
+  it('XX renders larger bold selection', () => {
     counter = 0
     const selection = rangeSelection(
       ['zhaog', 'oiafg'], 5,
       ['zhaog', 'haiou'], 7
     )
     expect(
-      doOperation('B', composition, selection)
+      doOperation(composition, selection, 'B')
     )
     .toEqual([
       {

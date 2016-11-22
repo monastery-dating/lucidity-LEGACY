@@ -17,7 +17,7 @@ const SIMPLE_OP = {
   I: true
 }
 
-export default function doOperation (op, composition, selection) {
+export default function doOperation (composition, selection, op) {
   if (SIMPLE_OP[op]) {
     const extracted = extractSelection(composition, selection, op)
     return makeOps(extracted)
