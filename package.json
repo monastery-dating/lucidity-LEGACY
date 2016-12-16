@@ -2,22 +2,62 @@
   "name": "splendid33",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://lucidogen.github.io/splendid33",
   "devDependencies": {
+    "@types/enzyme": "^2.5.39",
+    "@types/jest": "^16.0.1",
+    "@types/react": "^0.14.55",
+    "@types/react-dom": "^0.14.19",
+    "css-loader": "0.23.1",
+    "dotenv": "^2.0.0",
     "enzyme": "^2.6.0",
     "enzyme-to-json": "^1.3.0",
+    "file-loader": "^0.9.0",
+    "html-webpack-plugin": "1.6.1",
+    "jest": "^17.0.3",
+    "node-sass": "^3.13.0",
     "react-addons-test-utils": "^15.3.2",
-    "react-scripts": "0.7.0"
+    "sass-loader": "3.1.2",
+    "style-loader": "0.13.0",
+    "ts-jest": "^17.0.3",
+    "ts-loader": "0.8.1",
+    "typescript": "^2.1.4",
+    "url-loader": "^0.5.7",
+    "webpack": "1.12.13",
+    "webpack-dev-server": "1.14.1"
   },
   "dependencies": {
-    "cerebral": "^1.1.0",
-    "react": "^15.3.2",
-    "react-dom": "^15.3.2",
+    "cerebral": "^2.0.0-alpha.4",
+    "font-awesome": "^4.7.0",
+    "react": "^15.4.1",
+    "react-dom": "^15.4.1",
     "uuid": "^2.0.3"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "start": "webpack-dev-server --inline --content-base app",
+    "build": "webpack --config app.webpack.config.js",
+    "test": "node scripts/test.js --env=jsdom"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "moduleNameMapper": {
+      "^.+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/config/jest/FileStub.js",
+      "^.+\\.css$": "<rootDir>/config/jest/CSSStub.js"
+    },
+    "setupFiles": [
+      "<rootDir>/config/polyfills.js"
+    ],
+    "testPathIgnorePatterns": [
+      "<rootDir>/(node_modules|app/build)/"
+    ],
+    "testEnvironment": "node",
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx)$"
   }
 }
