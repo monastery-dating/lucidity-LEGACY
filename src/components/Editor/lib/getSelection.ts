@@ -1,67 +1,71 @@
 import getPath from './getPath'
 
 export default function getSelection () {
-  const selection = global.getSelection()
-  const {anchorNode, anchorOffset, focusNode, focusOffset, type} = selection
+  const selection = global.getSelection ()
+  const { anchorNode, anchorOffset, focusNode, focusOffset, type } = selection
   const anchorPath = getPath(anchorNode)
-  const focusPath = focusNode === anchorNode ? anchorPath : getPath(focusNode)
+  const focusPath = focusNode === anchorNode ? anchorPath : getPath ( focusNode )
   const anchorValue = anchorNode.textContent
   const focusValue = focusNode.textContent
-  const rects = selection.getRangeAt(0).getClientRects()
+  const rects = selection.getRangeAt ( 0 ).getClientRects ()
 
-  let last = rects[rects.length - 1]
-  if (type === 'Caret') {
-    return {
-      anchorPath, anchorOffset, type,
-      anchorValue,
-      end: {
-        top: last.top,
-        left: last.left + last.width
+  let last = rects [ rects.length - 1 ]
+  if ( type === 'Caret' ) {
+    return (
+      { anchorPath
+      , anchorOffset
+      , type
+      , anchorValue
+      , end:
+        { top: last.top
+        , left: last.left + last.width
+        }
       }
-    }
+    )
   }
-  let first = rects[0]
-  if (!first) {
+
+  let first = rects [ 0 ]
+  if ( ! first ) {
     // no selection
-    return {type: 'None'}
+    return { type: 'None' }
   }
 
   let end
-  if (first.top > last.top ||
-      (first.top === last.top &&
-        (first.left > last.left)
+  if ( first.top > last.top ||
+      ( first.top === last.top &&
+        ( first.left > last.left )
       )
      ) {
-    end = {
-      top: first.top,
-      left: first.left + first.width
+    end =
+    { top: first.top
+    , left: first.left + first.width
     }
   } else {
-    end = {
-      top: last.top,
-      left: last.left + last.width
+    end =
+    { top: last.top
+    , left: last.left + last.width
     }
   }
 
-  const atop = anchorNode.parentElement.getBoundingClientRect().top
-  const ftop = focusNode.parentElement.getBoundingClientRect().top
-  if (atop > ftop || (anchorNode === focusNode && anchorOffset > focusOffset)) {
+  const atop = anchorNode.parentElement.getBoundingClientRect ().top
+  const ftop = focusNode.parentElement.getBoundingClientRect ().top
+  if ( atop > ftop || ( anchorNode === focusNode && anchorOffset > focusOffset ) ) {
     // reverse
-    console.log('REVERSE')
-    return {
-      anchorOffset: focusOffset,
-      focusOffset: anchorOffset,
-      anchorPath: focusPath,
-      focusPath: anchorPath,
-      anchorValue: focusValue,
-      focusValue: anchorValue,
-      type, end
-    }
+    return (
+      { anchorOffset: focusOffset
+      , focusOffset: anchorOffset
+      , anchorPath: focusPath
+      , focusPath: anchorPath
+      , anchorValue: focusValue
+      , focusValue: anchorValue
+      , type, end
+      }
+    )
   } else {
-    console.log('NOT REVERSE')
-    return {
-      anchorOffset, focusOffset, anchorPath, focusPath,
-      anchorValue, focusValue, type, end
-    }
+    return (
+      { anchorOffset, focusOffset, anchorPath, focusPath
+      , anchorValue, focusValue, type, end
+      }
+    )
   }
 }

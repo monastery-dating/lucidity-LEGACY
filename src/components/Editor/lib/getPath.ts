@@ -1,14 +1,16 @@
 
-export default function getPath (anchor) {
-  const path = []
-  let elem = anchor.parentElement
+export default function getPath
+( anchor: HTMLAnchorElement
+) : string [] {
+  const path : string [] = []
+  let elem = <HTMLElement> anchor.parentElement
   while (true) {
-    const ref = elem.getAttribute('data-ref')
-    if (!ref) {
+    const ref = elem.getAttribute ( 'data-ref' )
+    if ( ! ref ) {
       break
     }
-    path.unshift(ref)
-    elem = elem.parentElement
+    path.unshift ( ref )
+    elem = <HTMLElement> elem.parentElement
   }
   return path
 }
