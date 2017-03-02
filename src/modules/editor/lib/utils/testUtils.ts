@@ -1,4 +1,5 @@
-/* global jest */
+import { CompositionType } from './types'
+
 const MOCK1 = JSON.stringify(
   {
     i: {
@@ -78,4 +79,7 @@ const MOCK1 = JSON.stringify(
   }
 )
 
-export const mockComposition = () => JSON.parse(MOCK1)
+export function mockComposition
+() : CompositionType {
+  return JSON.parse ( MOCK1 )
+}

@@ -1,4 +1,5 @@
 import { JSX, connect } from '../Component'
+import { state, signal } from 'cerebral/tags'
 import expandInner from './lib/expandInner'
 import getCommand from './lib/getCommand'
 import getSelection from './lib/getSelection'
@@ -6,12 +7,11 @@ import getSelection from './lib/getSelection'
 import './style.css'
 
 export default connect
-( { compositionInner: 'editor.composition.i.*'
-  }
-, { inputChange: 'editor.inputChanged'
-  , backspacePress: 'editor.backspacePressed'
-  , enterPress: 'editor.enterPressed'
-  , selectChange: 'editor.selectChanged'
+( { compositionInner: state`editor.composition.i`
+  , inputChange: signal`editor.inputChanged`
+  , backspacePress: signal`editor.backspacePressed`
+  , enterPress: signal`editor.enterPressed`
+  , selectChange: signal`editor.selectChanged`
   }
 , function Editor ( { compositionInner, backspacePress, enterPress, inputChange, selectChange } ) {
     let lastselection

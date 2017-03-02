@@ -1,7 +1,8 @@
-import isTextBlock from './isTextBlock'
+import { isTextBlock } from './isTextBlock'
+import { ElementRefType, StringElementRefType } from './types'
 
-const canFuse = (a, b) => (
-  isTextBlock(a.elem) && isTextBlock(b.elem) &&
-  a.path.length < 3 && b.path.length < 3
-)
-export default canFuse
+export function canFuse
+( a: ElementRefType
+): a is StringElementRefType {
+  return isTextBlock ( a.elem ) && a.path.length < 3
+}

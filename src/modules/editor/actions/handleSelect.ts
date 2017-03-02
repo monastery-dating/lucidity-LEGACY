@@ -1,7 +1,8 @@
-import doSelect from '../lib/doSelect'
+import { doSelect } from '../lib/doSelect'
 
-export default function handleSelect ({input, state}) {
-  const composition = state.get('editor.composition')
-  const {selection} = input
-  return {ops: doSelect(composition, selection)}
+export function handleSelect
+( { props, state } ) {
+  const composition = state.get ( 'editor.composition' )
+  const { selection } = props 
+  return { ops: doSelect ( composition, selection ) }
 }

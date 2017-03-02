@@ -1,5 +1,9 @@
-import getNeighbours from './getNeighbours'
+import { getNeighbours } from './getNeighbours'
+import { CompositionType, ElementRefType, ElementsType, PathType } from './types'
 
-export default function getSiblings (composition, path) {
-  return getNeighbours(composition, path, true)
+export function getSiblings
+( composition: CompositionType
+, path: PathType
+): [ ElementRefType | undefined, ElementRefType | undefined ] {
+  return getNeighbours ( composition, path, true )
 }

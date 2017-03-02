@@ -1,3 +1,6 @@
+// FIXME: replace this with an import
+declare var global: any
+
 export default function setSelection ( node, stringPath: string ) {
   const selection = global.selection
   if ( node && selection && stringPath === selection.stringPath ) {

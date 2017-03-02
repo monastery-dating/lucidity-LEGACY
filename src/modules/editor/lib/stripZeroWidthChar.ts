@@ -1,5 +1,8 @@
 
-export default function stripZeroWidthChar (avalue, aselection) {
+export default function stripZeroWidthChar
+( avalue
+, aselection
+) : { value: string, selection?: any } {
   let value = avalue
   const idx = value.indexOf('\u200B')
   if (idx >= 0) {

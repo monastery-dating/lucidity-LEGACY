@@ -3,9 +3,12 @@ import { v4 } from 'uuid'
 import Composition from './Composition'
 import ToolBox from './ToolBox'
 
+/*
 export default connect
 ( null
-, function Editor () {
+, 
+*/
+export default function Editor () {
     // This editorRef should be unique for each <Editor /> tag.
     const ref = v4 ().substr ( 0, 5 )
     return (
@@ -17,4 +20,6 @@ export default connect
       </div>
     )
   }
+  /*
 )
+*/

@@ -1,3 +1,6 @@
-export default function joinText (before, after) {
+export function joinText
+( before: string
+, after: string
+) {
   return before + after
 }

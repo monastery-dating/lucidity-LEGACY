@@ -1,13 +1,13 @@
 import { JSX, connect } from '../../Component'
+import { props, state } from 'cerebral/tags'
 import expandInner from './expandInner'
 import getElementTag from './getElementTag'
 import getElementClassName from './getElementClassName'
 import setSelection from './setSelection'
 
 export default connect
-( ( { path } ) => (
-    { elem: `${path}.**` }
-  )
+( { elem: state`${ props`path` }`
+  }
 , function Element ( { elem, elemRef, path } ) {
     if ( ! elem ) {
       // Do not know why we need this. parseInner should remove.

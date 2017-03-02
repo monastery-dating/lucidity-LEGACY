@@ -1,6 +1,10 @@
 import getPath from './getPath'
+import { SelectionType } from '../../../modules/editor/lib/utils/types'
 
-export default function getSelection () {
+declare var global: any
+
+export default function getSelection
+() : SelectionType {
   const selection = global.getSelection ()
   const { anchorNode, anchorOffset, focusNode, focusOffset, type } = selection
   const anchorPath = getPath(anchorNode)
@@ -16,7 +20,7 @@ export default function getSelection () {
       , anchorOffset
       , type
       , anchorValue
-      , end:
+      , position:
         { top: last.top
         , left: last.left + last.width
         }
@@ -27,7 +31,7 @@ export default function getSelection () {
   let first = rects [ 0 ]
   if ( ! first ) {
     // no selection
-    return { type: 'None' }
+    throw new Error ( `Cannot get selection.` )
   }
 
   let end
@@ -52,19 +56,21 @@ export default function getSelection () {
   if ( atop > ftop || ( anchorNode === focusNode && anchorOffset > focusOffset ) ) {
     // reverse
     return (
-      { anchorOffset: focusOffset
+      { type
+      , anchorOffset: focusOffset
       , focusOffset: anchorOffset
       , anchorPath: focusPath
       , focusPath: anchorPath
       , anchorValue: focusValue
-      , focusValue: anchorValue
-      , type, end
+      , position: end
       }
     )
   } else {
     return (
-      { anchorOffset, focusOffset, anchorPath, focusPath
-      , anchorValue, focusValue, type, end
+      { type
+      , anchorOffset, focusOffset, anchorPath, focusPath
+      , anchorValue
+      , position: end
       }
     )
   }

@@ -1,22 +1,22 @@
-import handleOp from './signals/handleOp'
-import handleEnter from './signals/handleEnter'
-import deleteSelection from './signals/deleteSelection'
-import handleBackspace from './signals/handleBackspace'
-import handleInput from './signals/handleInput'
-import handleSelect from './signals/handleSelect'
+import { handleOpSignal } from './signals/handleOp'
+import { handleEnterSignal } from './signals/handleEnter'
+import { deleteSelectionSignal } from './signals/deleteSelection'
+import { handleBackspaceSignal } from './signals/handleBackspace'
+import { handleInputSignal } from './signals/handleInput'
+import { handleSelectSignal } from './signals/handleSelect'
 
-import {mockComposition} from './lib/utils/testUtils.js'
+import { mockComposition } from './lib/utils/testUtils'
 
-export default {
-  state: {
-    composition: mockComposition()
-  },
-  signals: {
-    applyOpTriggered: handleOp,
-    backspacePressed: handleBackspace,
-    enterPressed: handleEnter,
-    inputChanged: handleInput,
-    selectChanged: handleSelect,
-    typeOnSelection: deleteSelection
+export const editor =
+{ state:
+  { composition: mockComposition ()
+  }
+, signals:
+  { applyOpTriggered: handleOpSignal
+  , backspacePressed: handleBackspaceSignal
+  , enterPressed: handleEnterSignal
+  , inputChanged: handleInputSignal
+  , selectChanged: handleSelectSignal
+  , typeOnSelection: deleteSelectionSignal
   }
 }

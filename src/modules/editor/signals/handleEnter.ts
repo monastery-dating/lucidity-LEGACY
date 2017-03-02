@@ -1,7 +1,7 @@
-import handleEnter from '../actions/handleEnter'
-import processOps from '../actions/processOps'
+import { handleEnter } from '../actions/handleEnter'
+import { processOps } from '../actions/processOps'
 
-export default [
-  handleEnter,
-  processOps
+export const handleEnterSignal =
+[ handleEnter
+, processOps
 ]

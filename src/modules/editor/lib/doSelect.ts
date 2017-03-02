@@ -1,32 +1,43 @@
-import isParagraphStart from './utils/isParagraphStart'
+import { isParagraphStart } from './utils/isParagraphStart'
+import { CompositionType, SelectionType, OperationType } from './utils/types'
 
 /** Return toolbox operations related to selection change
 */
-export default function doSelect (composition, selection, ops = []) {
-  const {type, anchorPath, anchorOffset, anchorValue, end} = selection
+export function doSelect
+( composition: CompositionType
+, selection: SelectionType
+, ops: OperationType [] = []
+) {
+  const { type, anchorPath, anchorOffset, anchorValue, position } = selection
 
-  if (type === 'Caret' && isParagraphStart(composition, anchorPath, anchorOffset, anchorValue)) {
-    if (anchorValue === '\u200B') {
-      ops.push({
-        op: 'toolbox',
-        value: {type: 'ParagraphEmpty', position: end}
-      })
+  if ( type === 'Caret' ) {
+    if ( isParagraphStart ( composition, anchorPath, anchorOffset, anchorValue ) ) {
+      if ( anchorValue === '\u200B' ) {
+        ops.push
+        ( { op: 'toolbox'
+          , value: { type: 'ParagraphEmpty', position }
+          }
+        )
+      } else {
+        ops.push
+        ( { op: 'toolbox'
+          , value: { type: 'Paragraph', position }
+          }
+        )
+      }
     } else {
-      ops.push({
-        op: 'toolbox',
-        value: {type: 'Paragraph', position: end}
-      })
+      ops.push
+      ( { op: 'toolbox'
+        , value: { type: 'None' }
+        }
+      )
     }
-  } else if (type === 'Range') {
-    ops.push({
-      op: 'toolbox',
-      value: {type: 'Select', position: end}
-    })
-  } else {
-    ops.push({
-      op: 'toolbox',
-      value: null
-    })
+  } else if ( type === 'Range' ) {
+    ops.push
+    ( { op: 'toolbox'
+      , value: { type: 'Select', position }
+      }
+    )
   }
   return ops
 }

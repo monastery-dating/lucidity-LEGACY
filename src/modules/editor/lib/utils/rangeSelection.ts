@@ -1,9 +1,18 @@
-export default function rangeSelection (anchorPath, anchorOffset, focusPath, focusOffset) {
-  return {
-    anchorPath,
-    anchorOffset,
-    focusPath,
-    focusOffset,
-    type: 'Range'
-  }
+import { PathType, SelectionPositionType, RangeSelectionType } from './types'
+export function rangeSelection
+( anchorPath: PathType
+, anchorOffset: number
+, focusPath: PathType
+, focusOffset: number
+, position: SelectionPositionType
+): RangeSelectionType {
+  return (
+    { type: 'Range'
+    , anchorPath
+    , anchorOffset
+    , focusPath
+    , focusOffset
+    , position
+    }
+  )
 }
