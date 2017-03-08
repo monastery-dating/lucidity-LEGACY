@@ -1,7 +1,7 @@
-import deleteSelection from '../actions/deleteSelection'
-import processOps from '../actions/processOps'
+import { deleteSelectionSignal } from './deleteSelection'
+import { processOps } from '../actions/processOps'
 
-export default [
-  deleteSelection,
-  processOps
+export const handleBackspaceSignal = 
+[ ...deleteSelectionSignal
+, processOps
 ]

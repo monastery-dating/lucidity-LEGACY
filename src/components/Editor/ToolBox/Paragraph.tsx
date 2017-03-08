@@ -1,19 +1,17 @@
-import React from 'react'
-import {connect} from 'cerebral/react'
+import { JSX, connect } from '../../Component'
+import { signal } from 'cerebral/tags'
 import getSelection from '../lib/getSelection'
 
-export default connect(
-  null,
-  {
-    applyOp: 'editor.applyOpTriggered'
-  },
-  function Paragraph ({applyOp}) {
-    const click = (e, op, opts) => {
-      const selection = getSelection()
-      applyOp({op, selection, opts})
-      e.preventDefault()
+export default connect
+( { applyOp: signal`editor.applyOpTriggered`
+  }
+, function Paragraph ( { applyOp } ) {
+    const click = ( e, op, opts ) => {
+      const selection = getSelection ()
+      applyOp ( { op, selection, opts } )
+      e.preventDefault ()
     }
-    const onMouseDown = e => e.preventDefault()
+    const onMouseDown = e => e.preventDefault ()
     return (
       <div className='ToolBox-menu'>
         {[1, 2, 3].map(h => (

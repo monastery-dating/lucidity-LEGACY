@@ -1,3 +1,4 @@
+import { ElementType, StringElementType } from './types'
 // Function not used. Could be removed I think.
 const TEXT_BLOCKS = {
   P: true,
@@ -7,6 +8,9 @@ const TEXT_BLOCKS = {
 
 /** Return true if the current element is a text block.
 */
-export default function isTextBlock ({t, i}) {
-  return (TEXT_BLOCKS[t] || false) && (typeof i === 'string')
+export function isTextBlock
+( elem: ElementType
+): elem is StringElementType {
+  const { t, i } = elem
+  return TEXT_BLOCKS [ t ] && ( typeof i === 'string' )
 }

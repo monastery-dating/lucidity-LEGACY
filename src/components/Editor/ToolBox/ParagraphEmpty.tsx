@@ -1,8 +1,10 @@
-import React from 'react'
-import {connect} from 'cerebral/react'
+import { JSX, connect } from '../../Component'
 
-export default connect(
-  null,
+/*
+export default connect
+( null,
+      */
+export default
   function ParaToolbox () {
     return (
       <div className='ToolBox-menu'>
@@ -27,4 +29,6 @@ export default connect(
       </div>
     )
   }
+/*
 )
+*/

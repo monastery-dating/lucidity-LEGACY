@@ -1,7 +1,7 @@
-import handleOp from '../actions/handleOp'
-import processOps from '../actions/processOps'
+import { handleOp } from '../actions/handleOp'
+import { processOps } from '../actions/processOps'
 
-export default [
-  handleOp,
-  processOps
+export const handleOpSignal =
+[ handleOp
+, processOps
 ]

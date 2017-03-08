@@ -1,8 +1,8 @@
 /* global it expect describe */
-import React from 'react'
-import {snapshot, render} from '../TestHelper'
+import { JSX, connect } from '../Component'
+import { snapshot, render } from '../TestHelper'
 import Composition from './Composition'
-import {mockComposition} from '../../modules/editor/lib/utils/testUtils'
+import { mockComposition } from '../../modules/editor/lib/utils/testUtils'
 
 const editorState = {
   composition: mockComposition()

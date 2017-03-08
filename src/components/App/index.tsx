@@ -3,9 +3,13 @@ import { connect, JSX } from '../Component'
 import Editor from '../Editor'
 import './style.css'
 
+/*
 export default connect
-( null
-, function App () {
+( {}
+, 
+      */
+export default
+function App () {
     return (
       <div className='App'>
         <div className='App-header'>
@@ -15,4 +19,6 @@ export default connect
       </div>
     )
   }
+      /*
 )
+*/

@@ -1,6 +1,6 @@
 /* global it expect describe */
-import {mockComposition} from './testUtils'
-import getPosition from './getPosition'
+import { mockComposition } from './testUtils'
+import { getPosition } from './getPosition'
 
 const composition = mockComposition()
 

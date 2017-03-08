@@ -1,5 +1,5 @@
-import deleteSelection from '../actions/deleteSelection'
+import { deleteSelection } from '../actions/deleteSelection'
 
-export default [
-  deleteSelection
+export const deleteSelectionSignal = 
+[ deleteSelection
 ]

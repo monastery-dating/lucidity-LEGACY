@@ -1,35 +1,35 @@
 /* global it expect describe */
-import {mockComposition} from './testUtils'
-import isParagraphStart from './isParagraphStart'
+import { mockComposition } from './testUtils'
+import { isParagraphStart } from './isParagraphStart'
 
-const composition = mockComposition()
+const composition = mockComposition ()
 
-describe('isParagraphStart', () => {
-  it('returns true for simple para start', () => {
+describe ( 'isParagraphStart', () => {
+  it ( 'returns true for simple para start', () => {
     expect(
-      isParagraphStart(composition, ['zaahg'], 0)
+      isParagraphStart ( composition, [ 'zaahg' ], 0 )
     )
     .toBe(true)
   })
 
-  it('returns true for complex para start', () => {
-    expect(
-      isParagraphStart(composition, ['mcneu', 'uasuf'], 0)
+  it ( 'returns true for complex para start', () => {
+    expect (
+      isParagraphStart ( composition, [ 'mcneu', 'uasuf' ], 0 )
     )
-    .toBe(true)
+    .toBe ( true )
   })
 
-  it('returns false for offset greater then zero', () => {
-    expect(
-      isParagraphStart(composition, null, 1)
+  it ( 'returns false for offset greater then zero', () => {
+    expect (
+      isParagraphStart ( composition, [], 1 )
     )
-    .toBe(false)
+    .toBe ( false )
   })
 
-  it('returns false for complex para start', () => {
-    expect(
-      isParagraphStart(composition, ['mcneu', 'jnaid', 'mnzjq'], 0)
+  it ( 'returns false for complex para start', () => {
+    expect (
+      isParagraphStart ( composition, [ 'mcneu', 'jnaid', 'mnzjq' ], 0 )
     )
-    .toBe(false)
+    .toBe ( false )
   })
 })

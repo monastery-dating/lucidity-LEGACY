@@ -9,7 +9,7 @@ module.exports =
 , output:
   { path: path.resolve ( __dirname, 'app', 'build' )
   , filename: 'app.js'
-  , publicPath: '/live-reload/'
+  , publicPath: '/build/'
   }
 , devtool: 'source-map'
 , resolve:
@@ -52,11 +52,6 @@ module.exports =
   }
 
 , plugins:
-  [ new webpack.DllReferencePlugin
-    ( { context: '.'
-      , manifest: require('./app/build/vendor-manifest.json')
-      }
-    )
-  , new webpack.ExternalsPlugin ( 'commonjs', [ 'child_process', 'fs', 'path' ] )
+  [ new webpack.ExternalsPlugin ( 'commonjs', [ 'child_process', 'fs', 'path' ] )
   ]
 }

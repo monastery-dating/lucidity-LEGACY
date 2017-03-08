@@ -1,11 +1,12 @@
-import {input, when} from 'cerebral/operators'
-import handleSelect from '../actions/handleSelect'
-import processOps from '../actions/processOps'
+import { when } from 'cerebral/operators'
+import { props } from 'cerebral/tags'
+import { handleSelect } from '../actions/handleSelect'
+import { processOps } from '../actions/processOps'
 
-export default [
-  handleSelect,
-  when(input`ops`), {
-    true: [processOps],
-    false: []
+export const handleSelectSignal =
+[ handleSelect
+, when ( props`ops` )
+, { true: [ processOps ]
+  , false: []
   }
 ]

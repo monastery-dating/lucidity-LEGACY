@@ -1,6 +1,14 @@
-import joinText from './joinText'
+import { joinText } from './joinText'
+import { ElementType, GroupElementType, StringElementType } from './types'
 
-const fuse = (a, b, c) => Object.assign(
-  {}, c || a, { i: joinText(a.i, b.i) }
-)
-export default fuse
+export function fuse
+( a: StringElementType
+, b: StringElementType
+, c?: ElementType
+): GroupElementType {
+  return Object.assign
+  ( {}
+  , <GroupElementType> ( c || a ) // TS cannot figure out that 'i' will be replaced
+  , { i: joinText ( a.i, b.i ) }
+  )
+}

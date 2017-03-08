@@ -1,14 +1,20 @@
-import getPosition from './getPosition'
+import { getPosition } from './getPosition'
+import { CompositionType } from './types'
 
-export default function isParagraphStart (composition, path, offset, anchorValue) {
-  if (anchorValue === '\u200B') {
+export function isParagraphStart
+( composition: CompositionType
+, path: string []
+, offset: number
+, anchorValue?: string
+) : Boolean {
+  if ( anchorValue === '\u200B' ) {
     return true
   }
-  if (offset > 0) {
+  if ( offset > 0 ) {
     return false
   }
-  if (path.length === 1) {
+  if ( path.length === 1 ) {
     return true
   }
-  return getPosition(composition, path).slice(1).reduce((sum, p) => sum + p, 0) === 0
+  return getPosition ( composition, path ).slice ( 1 ).reduce ( ( sum, p ) => sum + p, 0 ) === 0
 }
