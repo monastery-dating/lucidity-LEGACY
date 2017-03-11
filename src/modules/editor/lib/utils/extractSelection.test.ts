@@ -1,15 +1,10 @@
 /* global jest it expect describe */
-import {mockComposition} from './testUtils'
+import { mockComposition, mockRef } from './testUtils'
 import { rangeSelection } from './rangeSelection'
 import { extractSelection } from './extractSelection'
 
 const composition = mockComposition ()
 const position = { top: 0, left: 0 }
-
-let counter = 0
-jest.mock('./makeRef', () => {
-  return jest.fn(() => `refe${++counter}`)
-})
 
 function pathTypes
 ( { selected, updated } ) {
@@ -24,7 +19,7 @@ function pathTypes
 
 describe('extractSelection', () => {
   it('extracts simple selection in plain paragraph', () => {
-    counter = 0
+    mockRef ()
     const selection = rangeSelection
     ( ['zaahg'], 12
     , ['zaahg'], 17
@@ -47,7 +42,7 @@ describe('extractSelection', () => {
   })
 
   it('extracts selection accross markup', () => {
-    counter = 0
+    mockRef ()
     const selection = rangeSelection
     ( [ 'zhaog', 'oiafg' ], 5
     , [ 'zhaog', 'haiou' ], 7
@@ -69,7 +64,7 @@ describe('extractSelection', () => {
   })
 
   it('extracts single element fully selected', () => {
-    counter = 0
+    mockRef ()
     const selection = rangeSelection
     ( [ 'zhaog', 'oaiue' ], 0
     , [ 'zhaog', 'oaiue' ], 7

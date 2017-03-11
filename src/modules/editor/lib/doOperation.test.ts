@@ -1,19 +1,14 @@
 /* global jest it expect describe */
-import { mockComposition } from './utils/testUtils.js'
+import { mockComposition, mockRef } from './utils/testUtils'
 import { rangeSelection } from './utils/rangeSelection'
 import { doOperation } from './doOperation'
 
 const composition = mockComposition ()
 const position = { top: 0, left: 0 }
 
-let counter = 0
-jest.mock('./utils/makeRef', () => {
-  return jest.fn(() => `refe${++counter}`)
-})
-
 describe('doOperation.B', () => {
   it('renders bold selection', () => {
-    counter = 0
+    mockRef ()
     const selection = rangeSelection
     ( [ 'zaahg' ], 12
     , [ 'zaahg' ], 17
@@ -50,7 +45,7 @@ describe('doOperation.B', () => {
   })
 
   it('renders larger bold selection', () => {
-    counter = 0
+    mockRef ()
     const selection = rangeSelection
     ( [ 'zhaog', 'oiafg' ], 5
     , [ 'zhaog', 'haiou' ], 7
@@ -84,7 +79,7 @@ describe('doOperation.B', () => {
   })
 
   it('renders bold selection after other markup', () => {
-    counter = 0
+    mockRef ()
     const selection = rangeSelection
     ( [ 'zhaog', 'haiou' ], 13
     , [ 'zhaog', 'haiou' ], 20

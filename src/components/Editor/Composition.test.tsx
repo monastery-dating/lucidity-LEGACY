@@ -5,7 +5,7 @@ import Composition from './Composition'
 import { mockComposition } from '../../modules/editor/lib/utils/testUtils'
 
 const editorState = {
-  composition: mockComposition()
+  composition: mockComposition ()
 }
 
 describe('editor', () => {

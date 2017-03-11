@@ -83,3 +83,15 @@ export function mockComposition
 () : CompositionType {
   return JSON.parse ( MOCK1 )
 }
+
+let mod
+declare var require: any
+
+export function mockRef
+(): void {
+  if ( !mod ) {
+    mod = require ( './makeRef' )
+  }
+  let counter = 0
+  mod.makeRef = () => `refe${ ++counter }`
+}

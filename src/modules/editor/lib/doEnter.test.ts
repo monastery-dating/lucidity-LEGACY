@@ -1,20 +1,14 @@
 /* global it expect describe jest */
-import { mockComposition } from './utils/testUtils.js'
+import { mockComposition, mockRef } from './utils/testUtils'
 import { caretSelection } from './utils/caretSelection'
 import { doEnter } from './doEnter'
 
 const composition = mockComposition ()
 const position = { top: 0, left: 0 }
 
-let counter = 0
-jest.mock
-( './utils/makeRef', () => {
-  return jest.fn ( () => `refe${++counter}` )
-})
-
 describe ( 'doEnter', () => {
   it ( 'splits to make new paragraph', () => {
-    counter = 0
+    mockRef ()
     const selection = caretSelection
     ( [ 'mcneu', 'jnaid', 'zzvgp' ], 2, position )
     expect
@@ -47,7 +41,7 @@ describe ( 'doEnter', () => {
   })
 
   it ( 'creates new paragraph when selection at end', () => {
-    counter = 0
+    mockRef ()
     const selection =
     caretSelection ( [ 'zhaog', 'haiou' ], 39, position )
     expect
@@ -64,7 +58,7 @@ describe ( 'doEnter', () => {
   })
 
   it ( 'splits flat paragraph', () => {
-    counter = 0
+    mockRef ()
     const selection = caretSelection ( [ 'zaahg' ], 11, position )
     expect
     ( doEnter ( composition, selection ) )

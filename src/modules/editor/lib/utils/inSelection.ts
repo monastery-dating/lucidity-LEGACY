@@ -51,9 +51,6 @@ export function inSelection
 ( composition: CompositionType
 , selection: SelectionType
 ) : ElementRefType [] {
-  if ( selection.type !== 'Range' ) {
-    throw new Error ( 'Selection should be a Range' )
-  }
   const { anchorPath, focusPath } = selection
 
   const anchorPosition = getPosition ( composition, anchorPath )

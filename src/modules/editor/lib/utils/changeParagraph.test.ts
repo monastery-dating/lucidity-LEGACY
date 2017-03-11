@@ -1,5 +1,5 @@
 /* global it expect describe */
-import { mockComposition } from './testUtils.js'
+import { mockComposition } from './testUtils'
 import { caretSelection } from './caretSelection'
 import { changeParagraph } from './changeParagraph'
 

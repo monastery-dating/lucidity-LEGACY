@@ -12,5 +12,5 @@ export function isTextBlock
 ( elem: ElementType
 ): elem is StringElementType {
   const { t, i } = elem
-  return TEXT_BLOCKS [ t ] && ( typeof i === 'string' )
+  return ( TEXT_BLOCKS [ t ] && ( typeof i === 'string' ) ) || false
 }

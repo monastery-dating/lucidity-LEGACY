@@ -4,20 +4,21 @@ import { doSelect } from './doSelect'
 import { CaretSelectionType, RangeSelectionType } from './utils/types'
 
 const composition = mockComposition ()
+const position = { top: 0, left: 0 }
 
 describe ( 'doSelect', () => {
   it ( 'shows start of line toolbox', () => {
     const selection: CaretSelectionType = 
     { anchorPath: [ 'zaahg' ]
     , anchorOffset: 0
-    , position: { top: 0, left: 0 }
+    , position
     , type: 'Caret'
     }
     expect
     ( doSelect ( composition, selection ) )
     .toEqual
     ( [ { op: 'toolbox'
-        , value: { type: 'Paragraph', position: {} }
+        , value: { type: 'Paragraph', position }
         }
       ]
     )
@@ -27,7 +28,7 @@ describe ( 'doSelect', () => {
     const selection: RangeSelectionType =
     { anchorPath: ['mcneu', 'jnaid', 'zzvgp']
     , anchorOffset: 0
-    , position: { top: 0, left: 0 }
+    , position
     , focusPath: ['mcneu', 'jnaid', 'zzvgp']
     , focusOffset: 4
     , type: 'Range'
@@ -36,7 +37,7 @@ describe ( 'doSelect', () => {
     ( doSelect ( composition, selection ) )
     .toEqual
     ( [ { op: 'toolbox'
-        , value: { type: 'Select' }
+        , value: { type: 'Select', position }
         }
       ]
     )

@@ -21,6 +21,9 @@ export function doBackspace
       } else {
         return []
       }
+    } else {
+      // remove prev char
+      return deleteSelection ( composition, selection, 'Backspace' )
     }
   }
   return deleteSelection ( composition, selection, 'Backspace' )
