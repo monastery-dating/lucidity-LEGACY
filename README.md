@@ -1,4 +1,4 @@
-# Welcome to Lucidity !!
+# [Lucidity](https://github.com/luciditeam/lucidity/wiki/Lucidity)
 
 This is an application to ease the creation of digital and live art.
 
