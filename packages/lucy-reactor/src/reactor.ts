@@ -10,7 +10,6 @@ export interface WhenType {
 
 export interface RegisterReturnType {
   when : WhenType
-  runHooks : () => void
 }
 
 export interface RegisterType {
@@ -20,6 +19,7 @@ export interface RegisterType {
 export interface ReactorType {
   register : RegisterType
   state : StateType 
+  runHooks : () => void
 }
 
 export interface HookType {
@@ -48,7 +48,7 @@ export interface StateValueFunc {
   ( value : any ) : StateValueType
 }
 
-export function resolvePath
+function resolvePath
 ( strings : TemplateStringsArray
 , ... values : any []
 ) : string {
@@ -63,7 +63,7 @@ export function resolvePath
   )
 }
 
-export function makeState 
+function makeState 
 ( store : StorageType
 ) : StateType {
   return function
@@ -164,7 +164,7 @@ function makeSetOp
   }
 }
 
-export function makeWhen
+function makeWhen
 ( store : StorageType
 , name : string
 ) : WhenType {
@@ -177,36 +177,42 @@ export function makeWhen
   }
 }
 
-export function makeRegister
+function makeRegister
 ( store : StorageType
 ) : RegisterType {
   return function
   ( name: string
   ) : RegisterReturnType {
     const when = makeWhen ( store, name )
-    const runHooks = function runHooks () {
-      if ( store.changed.length === 0 ) {
-        return
-      }
-      const { changed, hooks } = store
-      // In case the operations trigger new hooks
-      store.changed = []
-      const seen = {}
-      changed.forEach
-      ( path => {
-          if ( ! seen [ path ] ) {
-            seen [ path ] = true
-            const funList = hooks [ path ]
-            if ( funList ) {
-              funList.forEach ( f => f () )
-            }
+    return { when }
+  }
+}
+
+function makeRunHooks
+( store: StorageType
+) : () => void {
+  function runHooks () {
+    if ( store.changed.length === 0 ) {
+      return
+    }
+    const { changed, hooks } = store
+    // In case the operations trigger new hooks
+    store.changed = []
+    const seen = {}
+    changed.forEach
+    ( path => {
+        if ( ! seen [ path ] ) {
+          seen [ path ] = true
+          const funList = hooks [ path ]
+          if ( funList ) {
+            funList.forEach ( f => f () )
           }
         }
-      )
-      runHooks ()
-    }
-    return { when, runHooks }
+      }
+    )
+    runHooks ()
   }
+  return runHooks
 }
 
 export function reactor
@@ -215,5 +221,6 @@ export function reactor
   const store = { root: {}, changed : [], hooks : {} }
   const state = makeState ( store )
   const register = makeRegister ( store )
-  return { register, state }
+  const runHooks = makeRunHooks ( store )
+  return { register, state, runHooks }
 }

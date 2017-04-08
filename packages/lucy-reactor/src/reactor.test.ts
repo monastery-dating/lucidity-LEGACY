@@ -3,8 +3,8 @@ import { get, reactor, set } from './reactor'
 
 describe ( 'when', () => {
   it ( 'should trigger hook on value change', () => {
-    const { register, state } = reactor ()
-    const { runHooks, when } = register ( 'foo' )
+    const { register, runHooks, state } = reactor ()
+    const { when } = register ( 'foo' )
     when ( state`midi.note.64` )
     .set ( value => state`foo.${ value > 0 ? 'start' : 'release' }`, state`time` )
 
