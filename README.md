@@ -17,6 +17,17 @@ This project is going through a major rewrite to:
 3. better support large processing trees
 4. create reusable modules (text editor, graph editor, compiler)
 
+
+
+
+
+
+
+
+
+
+======================= LEGACY README ===================
+
 ## Install dependencies
 
     npm install
