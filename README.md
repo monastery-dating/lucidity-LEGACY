@@ -2,7 +2,9 @@
 
 This is an application to ease the creation of digital and live art.
 
-http://lucidity.io
+![live coding](http://i65.tinypic.com/wk011w.png)
+
+https://github.com/luciditeam/lucidity/wiki/Lucidity
 
 Development news on [twitter](http://twitter.com/lucidityio).
 
