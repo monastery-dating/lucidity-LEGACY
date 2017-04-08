@@ -4,11 +4,16 @@ This is an application to ease the creation of digital and live art.
 
 http://lucidity.io
 
-This project is in **early alpha**. Development news on
-[twitter](http://twitter.com/lucidityio).
+Development news on [twitter](http://twitter.com/lucidityio).
 
-Please do not use issues for questions, use [stack
-overflow](http://stackoverflow.com/) with tag #lucidity.
+# Project status
+
+This project is going through a major rewrite to:
+
+1. support literate programming
+2. better support event based (reactive) programming
+3. better support large processing trees
+4. create reusable modules (text editor, graph editor, compiler)
 
 ## Install dependencies
 
