@@ -24,6 +24,7 @@ export interface ReactorType {
 
 export interface HookType {
   () : void
+  scope : string
 }
 
 export interface HookMapType {
@@ -89,10 +90,15 @@ export interface SetOperationType {
 export function get
 ( op : StateValueType
 ) : any {
+  const last = op.path.length - 1
   return op.path.reduce
-  ( ( current, key ) => {
+  ( ( current, key, idx ) => {
       const value = current [ key ]
-      return value === undefined ? {} : value
+      if ( idx === last ) {
+        return value
+      } else {
+        return value === undefined ? {} : value
+      }
     }
   , op.store.root
   ) 
@@ -138,7 +144,7 @@ export function set
 
 function makeSetOp
 ( store : StorageType
-, name : string
+, scope : string
 , cond : StateValueType
 , ops : OperationsType
 ) : SetOperationType {
@@ -151,14 +157,17 @@ function makeSetOp
   , value : SetValueType
   ) : OperationsType {
     hooks.push
-    ( () => {
-        const v = get ( cond )
-        const state : StateValueType =
-          typeof stateArg === 'function'
-          ? stateArg ( get ( cond ) )
-          : stateArg
-        set ( state, value ) 
-      }
+    ( Object.assign
+      ( () => {
+          const v = get ( cond )
+          const state : StateValueType =
+            typeof stateArg === 'function'
+            ? stateArg ( get ( cond ) )
+            : stateArg
+          set ( state, value ) 
+        }
+      , { scope }
+      )
     )
     return ops
   }
@@ -177,12 +186,33 @@ function makeWhen
   }
 }
 
+function clearHooks
+( store : StorageType
+, scope : string
+) : void {
+  // Naive implementation: we simply parse through all defined
+  // hooks and find the ones we own.
+  Object.keys ( store.hooks ).forEach
+  ( rawpath => {
+      const list = store.hooks [ rawpath ]
+      const newlist = list.filter
+      ( l => l.scope !== scope )
+      if ( list.length === 0 ) {
+        delete store.hooks [ rawpath ]
+      } else {
+        store.hooks [ rawpath ] = newlist
+      }
+    }
+  )
+}
+
 function makeRegister
 ( store : StorageType
 ) : RegisterType {
   return function
   ( name: string
   ) : RegisterReturnType {
+    clearHooks ( store, name )
     const when = makeWhen ( store, name )
     return { when }
   }
