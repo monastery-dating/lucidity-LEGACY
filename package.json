@@ -1,0 +1,17 @@
+{
+  "name": "@lucidity/monorepo",
+  "private": true,
+  "version": "0.0.1",
+  "license": "MIT",
+  "scripts": {
+    "test": "CI=true lerna run test"
+  },
+  "dependencies": {
+    "lerna": "2.0.0-beta.34",
+    "dotenv": "^4.0.0",
+    "jest": "^19.0.2",
+    "ts-jest": "^19.0.8",
+    "ts-loader": "^2.0.3",
+    "typescript": "^2.2.2"
+  }
+}
