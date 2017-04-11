@@ -1,4 +1,4 @@
-# [Lucidity](https://github.com/luciditeam/lucidity/wiki/Lucidity)
+# [Lucidity](https://github.com/luciditeam/lucidity/wiki/Lucidity) [![Build Status](https://travis-ci.org/luciditeam/lucidity.png)](https://travis-ci.org/luciditeam/lucidity)
 
 This is an application to ease the creation of digital and live art.
 
