@@ -4,14 +4,20 @@
   "version": "0.0.1",
   "license": "MIT",
   "scripts": {
-    "test": "CI=true lerna run test"
+    "test": "CI=true lerna run test",
+    "start": "lerna --scope lucy-editor run start",
+    "deploy": "lerna --scope lucy-editor run deploy",
+    "predeploy": "lerna bootstrap"
   },
   "dependencies": {
-    "lerna": "2.0.0-beta.34",
     "dotenv": "^4.0.0",
     "jest": "^19.0.2",
+    "lerna": "2.0.0-beta.34",
     "ts-jest": "^19.0.8",
     "ts-loader": "^2.0.3",
     "typescript": "^2.2.2"
+  },
+  "devDependencies": {
+    "gh-pages": "^0.12.0"
   }
 }

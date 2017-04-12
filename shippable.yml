@@ -1,0 +1,35 @@
+sudo: false
+language: node_js
+node_js: '6'
+# exclude
+branches:
+  except:
+    - gh-pages
+env:
+  global:
+    - TEST_REPORT_PATH=shippable/testresults
+build:
+  cache: true
+  on_success:
+    - git config --global user.email build@lucidity.io
+    - git config --global user.name lucidity-build
+    - git config --global push.default matching
+    - if [ "$BRANCH" == "master" ]; then npm run deploy; fi
+integrations:
+  notifications:
+    - integrationName: slack-luciditeam
+      type: slack
+      recipients:
+        - "#code"
+      on_success: always
+      on_failure: always
+      on_pull_request: never
+      on_start: never
+    - integrationName: slack-luciditeam
+      type: slack
+      recipients:
+        - "@gaspard"
+      on_success: never
+      on_failure: always
+      on_pull_request: never
+      on_start: never

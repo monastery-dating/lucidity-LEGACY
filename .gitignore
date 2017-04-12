@@ -1,7 +1,3 @@
 .DS_Store
 node_modules
-dist
-npm-debug.log
-cerebral-devtools
-tmp
-/legacy/app/build
+yarn.lock
