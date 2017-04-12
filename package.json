@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.1",
   "license": "MIT",
+  "repository": "git@github.com:luciditeam/lucidity.git",
   "scripts": {
     "test": "CI=true lerna run test",
     "start": "lerna --scope lucy-editor run start",

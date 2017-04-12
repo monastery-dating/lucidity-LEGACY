@@ -2,7 +2,8 @@
   "name": "lucy-editor",
   "version": "0.1.0",
   "license": "MIT",
-  "homepage": "http://lucidity.io",
+  "homepage": "http://test.lucidity.io",
+  "repository": "git@github.com:luciditeam/lucidity.git",
   "devDependencies": {
     "@types/enzyme": "^2.7.8",
     "@types/jest": "^19.2.2",
@@ -13,6 +14,7 @@
     "enzyme": "^2.6.0",
     "enzyme-to-json": "^1.3.0",
     "file-loader": "^0.9.0",
+    "gh-pages": "^0.12.0",
     "html-webpack-plugin": "1.6.1",
     "jest": "^17.0.3",
     "node-sass": "^3.13.0",
@@ -36,7 +38,9 @@
   "scripts": {
     "start": "webpack-dev-server --inline --content-base app",
     "build": "webpack --config webpack.config.js",
-    "test": "node scripts/test.js --env=jsdom"
+    "test": "node scripts/test.js --env=jsdom",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d app"
   },
   "jest": {
     "transform": {
