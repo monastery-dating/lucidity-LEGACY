@@ -1,3 +1,5 @@
 .DS_Store
 node_modules
 yarn.lock
+lerna-debug.log
+npm-debug.log
