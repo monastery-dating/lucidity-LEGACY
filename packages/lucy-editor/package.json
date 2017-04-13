@@ -40,7 +40,7 @@
     "build": "webpack --config webpack.config.js",
     "test": "node scripts/test.js --env=jsdom",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d app"
+    "deploy": "gh-pages -d app -r git@github.com:luciditeam/lucidity.git"
   },
   "jest": {
     "transform": {
