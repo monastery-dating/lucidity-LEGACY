@@ -16,6 +16,9 @@ build:
     - git config --global push.default matching
     - if [ "$BRANCH" == "master" ]; then npm run deploy; fi
 integrations:
+  key:
+    - integrationName: build-lucidity-ssh
+      type: ssh-key
   notifications:
     - integrationName: slack-luciditeam
       type: slack
