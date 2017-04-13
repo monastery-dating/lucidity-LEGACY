@@ -56,6 +56,12 @@ export interface StringElementRefType {
   elem: StringElementType
 }
 
+export interface ElementNamedType {
+  ref: string
+  elem: ElementType
+}
+
+
 
 export interface CompositionType {
   i: ElementsType

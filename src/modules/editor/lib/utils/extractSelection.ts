@@ -5,45 +5,57 @@ import { inSelection } from './inSelection'
 import { makeRef } from './makeRef'
 import { resetPosition } from './resetPosition'
 import { splitText } from './splitText'
-import { DoOperationType } from './types'
+import { ElementRefType
+       , ElementNamedType
+       , isStringElement
+       , StringElementRefType
+       , DoOperationType } from './types'
 
 const PARTS = ['before', 'inside', 'after']
 
-function applyOp
-( list
-, type
+export function applyOp
+( list: ElementNamedType []
+, type: string
 ) {
   const newlist: any [] = []
+  // If a single element does not contain op, make all op
+  const forceOp = list.find
+  ( ( { elem } ) => elem.t.indexOf ( type ) < 0 ) && true || false
+
   list.forEach
   ( ( { elem, ref }, idx ) => {
       let t
-      if (elem.t !== 'T' && elem.t !== type) {
-        t = [elem.t, type].sort((a, b) => a > b ? 1 : -1).join('+')
+      if ( forceOp ) {
+        t = type
+      } else if ( elem.t !== 'T' && elem.t !== type ) {
+        t = [ elem.t, type ].sort ().join ( '+' )
+      } else if ( elem.t === type ) {
+        t = 'T'
       } else {
         t = type
       }
-      const nextobj = list[idx + 1]
-      if (nextobj) {
-        if (elem.t === t && nextobj.elem.t === 'T') {
+      const nextobj = list [ idx + 1 ]
+      if ( isStringElement ( elem ) && nextobj && isStringElement ( nextobj.elem ) ) {
+        if ( elem.t === t && nextobj.elem.t === 'T' ) {
           // Fuse nextobj with elem
-          list[idx + 1] = {
-            ref,
+          list [ idx + 1 ] =
+          { ref
             // Fuse elem + next
-            elem: fuse(elem, nextobj.elem)
+          , elem: fuse ( elem, nextobj.elem )
           }
           return
-        } else if (elem.t === 'T' && nextobj.elem.t === t) {
-          list[idx + 1] = {
-            ref: nextobj.ref,
+        } else if ( elem.t === 'T' && nextobj.elem.t === t ) {
+          list [ idx + 1 ] =
+          { ref: nextobj.ref
             // Fuse elem + next as next
-            elem: fuse(elem, nextobj.elem, nextobj.elem)
+          , elem: fuse ( elem, nextobj.elem, nextobj.elem )
           }
           return
         }
       }
       newlist.push
       ( { ref
-        , elem: Object.assign({}, elem, {t})
+        , elem: Object.assign ( {}, elem, { t } )
         }
       )
     }
@@ -97,12 +109,17 @@ function splitElement
   return result
 }
 
+interface ExtractedType {
+  updated: ElementRefType []
+  selected: StringElementRefType []
+}
+
 function processSingleParent
 ( composition
 , { anchorOffset, focusOffset }
 , touched
 , op?: string
-) {
+): ExtractedType {
   let changedPath
   let changedElem
   let parts
@@ -231,11 +248,12 @@ export function extractSelection
 ( composition
 , selection
 , op?: string
-) {
+): ExtractedType {
   const touched = inSelection ( composition, selection )
   if ( touched.length === 1 || hasSameParent ( touched ) ) {
     return processSingleParent ( composition, selection, touched, op )
   } else {
     // Start and end have different parent.
+    throw new Error ( `Not implemented yet` )
   }
 }

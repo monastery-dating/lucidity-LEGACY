@@ -6,12 +6,20 @@ import { editor } from './modules/editor'
 import App from './components/App'
 import './index.css'
 
+declare var process: any
+
 const controller = Controller
 ( { state: {}
   , modules:
     { editor
     }
-  , devtools: Devtools ()
+  , devtools: 
+    process.env.NODE_ENV === 'production'
+    ? undefined
+    : Devtools
+      ( { remoteDebugger: 'localhost:8585'
+        }
+      )
   }
 )
 

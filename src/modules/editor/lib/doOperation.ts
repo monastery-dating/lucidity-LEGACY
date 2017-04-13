@@ -1,13 +1,21 @@
 import { extractSelection } from './utils/extractSelection'
 import { rangeSelection } from './utils/rangeSelection'
 import { changeParagraph } from './utils/changeParagraph'
-import { CompositionType, OperationType, SelectionType } from './utils/types'
+import { CompositionType
+       , ElementRefType
+       , OperationType
+       , SelectionType
+       , StringElementRefType
+       , StringElementType
+       } from './utils/types'
 
 function makeOps
-( { updated, selected }
+( updated: ElementRefType []
+, selected: StringElementRefType []
 , selection: SelectionType
 ): OperationType [] {
-  const ops: OperationType[] = []
+  const ops: OperationType [] = []
+
   updated.forEach
   ( ( { path, elem } ) => {
       ops.push
@@ -45,13 +53,13 @@ export function doOperation
 , selection: SelectionType
 , op: string
 , opts?: any
-) {
+): OperationType [] | undefined {
   if ( op === 'P' ) {
     return changeParagraph ( composition, selection, opts )
   } else if ( SIMPLE_OP [ op ] ) {
-    const extracted = extractSelection
+    const { updated, selected } = extractSelection
     ( composition, selection, op )
-    return makeOps ( extracted, selection )
+    return makeOps ( updated, selected, selection )
   }
   return undefined
 }

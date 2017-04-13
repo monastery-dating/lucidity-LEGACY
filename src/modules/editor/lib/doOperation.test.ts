@@ -44,6 +44,37 @@ describe('doOperation.B', () => {
     )
   })
 
+  it('removes bold selection', () => {
+    mockRef ()
+    const selection = rangeSelection
+    ( [ 'zhaog', 'oaiue' ], 0
+    , [ 'zhaog', 'oaiue' ], 7
+    , position
+    )
+    expect
+    ( doOperation ( composition, selection, 'B', { foo: 'bar' } ) )
+    .toEqual
+    ( [ { op: 'update'
+        , path: [ 'zhaog' ]
+        , value:
+          { t: 'P', p: 2
+          , i:
+            { oaifg:
+              { t: 'T', p: 0, i: 'This is the first message. Hello blah bomgolo frabilou elma tec.' }
+            }
+          }
+        }
+      , { op: 'select'
+        , value: rangeSelection
+          ( [ 'zhaog', 'oaifg' ], 18
+          , [ 'zaahg', 'oaifg' ], 25
+          , position
+          )
+        }
+      ]
+    )
+  })
+
   it('renders larger bold selection', () => {
     mockRef ()
     const selection = rangeSelection

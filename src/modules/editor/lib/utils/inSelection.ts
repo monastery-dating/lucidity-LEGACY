@@ -51,11 +51,10 @@ export function inSelection
 ( composition: CompositionType
 , selection: SelectionType
 ) : ElementRefType [] {
-  const { anchorPath, focusPath } = selection
+  const anchorPosition = getPosition ( composition, selection.anchorPath )
 
-  const anchorPosition = getPosition ( composition, anchorPath )
   const focusPosition = selection.type === 'Range'
-    ? getPosition ( composition, focusPath )
+    ? getPosition ( composition, selection.focusPath )
     : anchorPosition
 
   const result : ElementRefType [] = []

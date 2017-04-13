@@ -26,8 +26,11 @@ declare module 'cerebral/react' {
 }
 
 declare module 'cerebral/devtools' {
+  interface DevOptions {
+    remoteDebugger: string
+  }
   interface DevTools {
-    default(): any
+    default ( DevOptions ): any
   }
   const module: DevTools
   export = module
