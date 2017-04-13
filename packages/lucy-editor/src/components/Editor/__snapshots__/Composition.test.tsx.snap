@@ -1,0 +1,414 @@
+exports[`editor sets ref 1`] = `
+<CerebralWrapping_Editor>
+  <Editor
+    backspacePress={[Function]}
+    compositionInner={
+      Object {
+        "mcneu": Object {
+          "i": Object {
+            "jnaid": Object {
+              "href": "http://example.com",
+              "i": Object {
+                "mnzjq": Object {
+                  "i": "this ",
+                  "p": 0,
+                  "t": "T",
+                },
+                "zzvgp": Object {
+                  "i": "link ",
+                  "p": 1,
+                  "t": "B+I",
+                },
+              },
+              "p": 1,
+              "t": "A",
+            },
+            "mnahl": Object {
+              "i": "page",
+              "p": 3,
+              "t": "I",
+            },
+            "mznao": Object {
+              "i": "to view the next ",
+              "p": 2,
+              "t": "T",
+            },
+            "ncgow": Object {
+              "i": ".",
+              "p": 4,
+              "t": "T",
+            },
+            "uasuf": Object {
+              "i": "You can click ",
+              "p": 0,
+              "t": "T",
+            },
+          },
+          "p": 0,
+          "t": "P",
+        },
+        "zaahg": Object {
+          "i": "This is the third paragraph. My tailor types fast.",
+          "p": 2,
+          "t": "P",
+        },
+        "zhaog": Object {
+          "i": Object {
+            "haiou": Object {
+              "i": ". Hello blah bomgolo frabilou elma tec.",
+              "p": 2,
+              "t": "T",
+            },
+            "oaiue": Object {
+              "i": "message",
+              "p": 1,
+              "t": "B",
+            },
+            "oiafg": Object {
+              "i": "This is the first ",
+              "p": 0,
+              "t": "T",
+            },
+          },
+          "p": 1,
+          "t": "P",
+        },
+      }
+    }
+    enterPress={[Function]}
+    inputChange={[Function]}
+    selectChange={[Function]}>
+    <div
+      className="Composition"
+      contentEditable={true}
+      onInput={[Function]}
+      onKeyDown={[Function]}
+      onSelect={[Function]}
+      suppressContentEditableWarning={true}>
+      <CerebralWrapping_Element
+        elemRef="mcneu"
+        path="editor.composition.i.mcneu">
+        <Element
+          elem={
+            Object {
+              "i": Object {
+                "jnaid": Object {
+                  "href": "http://example.com",
+                  "i": Object {
+                    "mnzjq": Object {
+                      "i": "this ",
+                      "p": 0,
+                      "t": "T",
+                    },
+                    "zzvgp": Object {
+                      "i": "link ",
+                      "p": 1,
+                      "t": "B+I",
+                    },
+                  },
+                  "p": 1,
+                  "t": "A",
+                },
+                "mnahl": Object {
+                  "i": "page",
+                  "p": 3,
+                  "t": "I",
+                },
+                "mznao": Object {
+                  "i": "to view the next ",
+                  "p": 2,
+                  "t": "T",
+                },
+                "ncgow": Object {
+                  "i": ".",
+                  "p": 4,
+                  "t": "T",
+                },
+                "uasuf": Object {
+                  "i": "You can click ",
+                  "p": 0,
+                  "t": "T",
+                },
+              },
+              "p": 0,
+              "t": "P",
+            }
+          }
+          elemRef="mcneu"
+          path="editor.composition.i.mcneu">
+          <p
+            className={null}
+            data-ref="mcneu">
+            <CerebralWrapping_Element
+              elemRef="uasuf"
+              path="editor.composition.i.mcneu.i.uasuf">
+              <Element
+                elem={
+                  Object {
+                    "i": "You can click ",
+                    "p": 0,
+                    "t": "T",
+                  }
+                }
+                elemRef="uasuf"
+                path="editor.composition.i.mcneu.i.uasuf">
+                <span
+                  className={null}
+                  data-ref="uasuf">
+                  You can click 
+                </span>
+              </Element>
+            </CerebralWrapping_Element>
+            <CerebralWrapping_Element
+              elemRef="jnaid"
+              path="editor.composition.i.mcneu.i.jnaid">
+              <Element
+                elem={
+                  Object {
+                    "href": "http://example.com",
+                    "i": Object {
+                      "mnzjq": Object {
+                        "i": "this ",
+                        "p": 0,
+                        "t": "T",
+                      },
+                      "zzvgp": Object {
+                        "i": "link ",
+                        "p": 1,
+                        "t": "B+I",
+                      },
+                    },
+                    "p": 1,
+                    "t": "A",
+                  }
+                }
+                elemRef="jnaid"
+                path="editor.composition.i.mcneu.i.jnaid">
+                <a
+                  className={null}
+                  data-ref="jnaid">
+                  <CerebralWrapping_Element
+                    elemRef="mnzjq"
+                    path="editor.composition.i.mcneu.i.jnaid.i.mnzjq">
+                    <Element
+                      elem={
+                        Object {
+                          "i": "this ",
+                          "p": 0,
+                          "t": "T",
+                        }
+                      }
+                      elemRef="mnzjq"
+                      path="editor.composition.i.mcneu.i.jnaid.i.mnzjq">
+                      <span
+                        className={null}
+                        data-ref="mnzjq">
+                        this 
+                      </span>
+                    </Element>
+                  </CerebralWrapping_Element>
+                  <CerebralWrapping_Element
+                    elemRef="zzvgp"
+                    path="editor.composition.i.mcneu.i.jnaid.i.zzvgp">
+                    <Element
+                      elem={
+                        Object {
+                          "i": "link ",
+                          "p": 1,
+                          "t": "B+I",
+                        }
+                      }
+                      elemRef="zzvgp"
+                      path="editor.composition.i.mcneu.i.jnaid.i.zzvgp">
+                      <span
+                        className="strong em"
+                        data-ref="zzvgp">
+                        link 
+                      </span>
+                    </Element>
+                  </CerebralWrapping_Element>
+                </a>
+              </Element>
+            </CerebralWrapping_Element>
+            <CerebralWrapping_Element
+              elemRef="mznao"
+              path="editor.composition.i.mcneu.i.mznao">
+              <Element
+                elem={
+                  Object {
+                    "i": "to view the next ",
+                    "p": 2,
+                    "t": "T",
+                  }
+                }
+                elemRef="mznao"
+                path="editor.composition.i.mcneu.i.mznao">
+                <span
+                  className={null}
+                  data-ref="mznao">
+                  to view the next 
+                </span>
+              </Element>
+            </CerebralWrapping_Element>
+            <CerebralWrapping_Element
+              elemRef="mnahl"
+              path="editor.composition.i.mcneu.i.mnahl">
+              <Element
+                elem={
+                  Object {
+                    "i": "page",
+                    "p": 3,
+                    "t": "I",
+                  }
+                }
+                elemRef="mnahl"
+                path="editor.composition.i.mcneu.i.mnahl">
+                <span
+                  className="em"
+                  data-ref="mnahl">
+                  page
+                </span>
+              </Element>
+            </CerebralWrapping_Element>
+            <CerebralWrapping_Element
+              elemRef="ncgow"
+              path="editor.composition.i.mcneu.i.ncgow">
+              <Element
+                elem={
+                  Object {
+                    "i": ".",
+                    "p": 4,
+                    "t": "T",
+                  }
+                }
+                elemRef="ncgow"
+                path="editor.composition.i.mcneu.i.ncgow">
+                <span
+                  className={null}
+                  data-ref="ncgow">
+                  .
+                </span>
+              </Element>
+            </CerebralWrapping_Element>
+          </p>
+        </Element>
+      </CerebralWrapping_Element>
+      <CerebralWrapping_Element
+        elemRef="zhaog"
+        path="editor.composition.i.zhaog">
+        <Element
+          elem={
+            Object {
+              "i": Object {
+                "haiou": Object {
+                  "i": ". Hello blah bomgolo frabilou elma tec.",
+                  "p": 2,
+                  "t": "T",
+                },
+                "oaiue": Object {
+                  "i": "message",
+                  "p": 1,
+                  "t": "B",
+                },
+                "oiafg": Object {
+                  "i": "This is the first ",
+                  "p": 0,
+                  "t": "T",
+                },
+              },
+              "p": 1,
+              "t": "P",
+            }
+          }
+          elemRef="zhaog"
+          path="editor.composition.i.zhaog">
+          <p
+            className={null}
+            data-ref="zhaog">
+            <CerebralWrapping_Element
+              elemRef="oiafg"
+              path="editor.composition.i.zhaog.i.oiafg">
+              <Element
+                elem={
+                  Object {
+                    "i": "This is the first ",
+                    "p": 0,
+                    "t": "T",
+                  }
+                }
+                elemRef="oiafg"
+                path="editor.composition.i.zhaog.i.oiafg">
+                <span
+                  className={null}
+                  data-ref="oiafg">
+                  This is the first 
+                </span>
+              </Element>
+            </CerebralWrapping_Element>
+            <CerebralWrapping_Element
+              elemRef="oaiue"
+              path="editor.composition.i.zhaog.i.oaiue">
+              <Element
+                elem={
+                  Object {
+                    "i": "message",
+                    "p": 1,
+                    "t": "B",
+                  }
+                }
+                elemRef="oaiue"
+                path="editor.composition.i.zhaog.i.oaiue">
+                <span
+                  className="strong"
+                  data-ref="oaiue">
+                  message
+                </span>
+              </Element>
+            </CerebralWrapping_Element>
+            <CerebralWrapping_Element
+              elemRef="haiou"
+              path="editor.composition.i.zhaog.i.haiou">
+              <Element
+                elem={
+                  Object {
+                    "i": ". Hello blah bomgolo frabilou elma tec.",
+                    "p": 2,
+                    "t": "T",
+                  }
+                }
+                elemRef="haiou"
+                path="editor.composition.i.zhaog.i.haiou">
+                <span
+                  className={null}
+                  data-ref="haiou">
+                  . Hello blah bomgolo frabilou elma tec.
+                </span>
+              </Element>
+            </CerebralWrapping_Element>
+          </p>
+        </Element>
+      </CerebralWrapping_Element>
+      <CerebralWrapping_Element
+        elemRef="zaahg"
+        path="editor.composition.i.zaahg">
+        <Element
+          elem={
+            Object {
+              "i": "This is the third paragraph. My tailor types fast.",
+              "p": 2,
+              "t": "P",
+            }
+          }
+          elemRef="zaahg"
+          path="editor.composition.i.zaahg">
+          <p
+            className={null}
+            data-ref="zaahg">
+            This is the third paragraph. My tailor types fast.
+          </p>
+        </Element>
+      </CerebralWrapping_Element>
+    </div>
+  </Editor>
+</CerebralWrapping_Editor>
+`;
