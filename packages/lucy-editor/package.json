@@ -1,8 +1,8 @@
 {
-  "name": "splendid33",
+  "name": "lucy-editor",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://lucidogen.github.io/splendid33",
+  "homepage": "http://lucidity.io",
   "devDependencies": {
     "@types/enzyme": "^2.5.39",
     "@types/jest": "^16.0.1",

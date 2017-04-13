@@ -1,7 +1,7 @@
 {
-  "name": "lucy-reactor",
+  "name": "lucy-compiler",
   "version": "0.0.1",
-  "description": "React to changes in a state tree",
+  "description": "Compile a Lucidity project into a program",
   "main": "index.js",
   "scripts": {
     "test": "node scripts/test.js"
