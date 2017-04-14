@@ -1,15 +1,15 @@
 /* global it expect describe */
-import { resetPosition } from './resetPosition'
+import { simplifyChildren } from './resetPosition'
 
 describe ( 'resetPosition', () => {
   it ( 'resets positions', () => {
     const children =
-    { foo: { p: 1 }
-    , bar: { p: 1.25 }
-    , baz: { p: 3 }
+    { foo: { p: 1, t: 'T', i: '' }
+    , bar: { p: 1.25, t: 'T', i: '' }
+    , baz: { p: 3, t: 'T', i: '' }
     }
     expect
-    ( resetPosition ( children ) )
+    ( simplifyChildren ( children ) )
     .toEqual
     ( { foo: { p: 0 }
       , bar: { p: 1 }

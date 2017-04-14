@@ -51,6 +51,7 @@ describe('doOperation.B', () => {
     , [ 'zhaog', 'oaiue' ], 7
     , position
     )
+    console.log ( '===============' )
     expect
     ( doOperation ( composition, selection, 'B', { foo: 'bar' } ) )
     .toEqual

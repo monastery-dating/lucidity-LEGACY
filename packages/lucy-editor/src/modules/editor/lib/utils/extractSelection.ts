@@ -3,7 +3,7 @@ import { getAtPath } from './getAtPath'
 import { getSiblings } from './getSiblings'
 import { inSelection } from './inSelection'
 import { makeRef } from './makeRef'
-import { resetPosition } from './resetPosition'
+import { simplifyChildren } from './resetPosition'
 import { splitText } from './splitText'
 import { ElementRefType
        , ElementNamedType
@@ -114,6 +114,9 @@ interface ExtractedType {
   selected: StringElementRefType []
 }
 
+/** FIXME: This function is a complete mess. Needs better
+ * handling of each case, maybe in different functions.
+ */
 function processSingleParent
 ( composition
 , { anchorOffset, focusOffset }
@@ -124,16 +127,23 @@ function processSingleParent
   let changedElem
   let parts
   let children = {}
-  const {path, elem} = touched[0]
+  const { path, elem } = touched [ 0 ]
   if ( touched.length === 1
        && anchorOffset === 0 
        && focusOffset === elem.i.length ) {
     // full selection of a single element
-    return (
-      { selected: [ { elem, path } ]
-      , updated: [ { elem, path } ]
-      }
-    )
+
+    changedPath = path.slice ( 0, -1 )
+    changedElem = getAtPath ( composition, changedPath )
+
+    const ref = path [ path.length - 1 ]
+    parts =
+    { inside: [ { ref, elem } ] 
+    , other:
+      Object.keys ( changedElem.i )
+      .filter ( key => key !== ref )
+      .map ( ref => ( { ref, elem: changedElem.i [ ref ] } ) )
+    }
   } else if ( touched.length === 1 && path.length === 1 ) {
     // Raw paragraph
     changedPath = path
@@ -187,40 +197,73 @@ function processSingleParent
     parts.inside = applyOp ( parts.inside, op )
   }
 
-  Object.keys(parts).forEach(key => {
-    parts[key].forEach(({elem, ref}) => {
-      children[ref] = elem
-    })
-  })
+  Object.keys ( parts )
+  .forEach
+  ( key => {
+      parts [ key ]
+      .forEach
+      ( ( { elem, ref } ) => {
+          children [ ref ] = elem
+        }
+      )
+    }
+  )
 
-  children = resetPosition(children)
+  // TODO: return selection from fused ranges...
+  children = simplifyChildren ( children )
+
+  const keys = Object.keys ( children )
+
   // TODO: we could optimize rendering: filter unchanged elements
   // by comparing them with original children.
-  const updated = Object.keys(children).map(ref => ({
-    path: changedPath.concat([ref]),
-    elem: children[ref]
-  }))
 
-  if (typeof changedElem.i === 'string') {
-    updated.unshift({
-      path: changedPath,
-      elem: Object.assign({}, changedElem, {i: {}})
-    })
-  }
+  if ( keys.length === 1 ) {
+    // Single element: change parent
+    const elem = children [ keys [ 0 ] ]
+    // FIXME: should return t of 'T' or 'P' what about 'B' ?
+    const updated =
+    [ { path: changedPath
+      , elem: Object.assign
+        ( {}, changedElem, { i: elem.i, t: elem.t } )
+      }
+    ]
 
-  const changes: any = { updated }
+    const changes: any = { updated }
 
-  const inside = parts.inside
-  if ( inside ) {
-    changes.selected = inside.map
-    ( ( { ref } ) => (
-        { path: changedPath.concat ( [ ref ] )
+    return changes
+  } else {
+    const updated = keys
+    .map
+    ( ref => 
+      ( { path: changedPath.concat ( [ ref ] )
         , elem: children [ ref ]
         }
       )
     )
+
+    if ( typeof changedElem.i === 'string' ) {
+      updated.unshift
+      ( { path: changedPath
+        , elem: Object.assign
+          ( {}, changedElem, { i: {} } )
+        }
+      )
+    }
+
+    const changes: any = { updated }
+
+    const inside = parts.inside
+    if ( inside ) {
+      changes.selected = inside.map
+      ( ( { ref } ) => (
+          { path: changedPath.concat ( [ ref ] )
+          , elem: children [ ref ]
+          }
+        )
+      )
+    }
+    return changes
   }
-  return changes
 }
 
 function hasSameParent

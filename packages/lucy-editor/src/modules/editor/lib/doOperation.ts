@@ -59,6 +59,7 @@ export function doOperation
   } else if ( SIMPLE_OP [ op ] ) {
     const { updated, selected } = extractSelection
     ( composition, selection, op )
+    console.log ( '====>', updated, selected )
     return makeOps ( updated, selected, selection )
   }
   return undefined
