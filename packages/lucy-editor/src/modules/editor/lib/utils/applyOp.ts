@@ -13,6 +13,57 @@ import { ChangesType
 
 const PARTS = ['before', 'inside', 'after']
 
+export function applyOp
+( composition: any
+, changes: ChangesType
+, op: string
+): ChangesType {
+  const newlist: any [] = []
+  // If a single element does not contain op, make all op
+  const forceOp = list.find
+  ( ( { elem } ) => elem.t.indexOf ( type ) < 0 ) && true || false
+
+  list.forEach
+  ( ( { elem, ref }, idx ) => {
+      let t
+      if ( forceOp ) {
+        t = type
+      } else if ( elem.t !== 'T' && elem.t !== type ) {
+        t = [ elem.t, type ].sort ().join ( '+' )
+      } else if ( elem.t === type ) {
+        t = 'T'
+      } else {
+        t = type
+      }
+      const nextobj = list [ idx + 1 ]
+      if ( isStringElement ( elem ) && nextobj && isStringElement ( nextobj.elem ) ) {
+        if ( elem.t === t && nextobj.elem.t === 'T' ) {
+          // Fuse nextobj with elem
+          list [ idx + 1 ] =
+          { ref
+            // Fuse elem + next
+          , elem: fuse ( elem, nextobj.elem )
+          }
+          return
+        } else if ( elem.t === 'T' && nextobj.elem.t === t ) {
+          list [ idx + 1 ] =
+          { ref: nextobj.ref
+            // Fuse elem + next as next
+          , elem: fuse ( elem, nextobj.elem, nextobj.elem )
+          }
+          return
+        }
+      }
+      newlist.push
+      ( { ref
+        , elem: Object.assign ( {}, elem, { t } )
+        }
+      )
+    }
+  )
+  return newlist
+}
+
 interface SplitResultType {
   before?: any
   inside?: any
@@ -59,6 +110,11 @@ function splitElement
   return result
 }
 
+interface ExtractedType {
+  updated: ElementRefType []
+  selected: StringElementRefType []
+}
+
 /** FIXME: This function is a complete mess. Needs better
  * handling of each case, maybe in different functions.
  */
@@ -66,7 +122,8 @@ function processSingleParent
 ( composition
 , { anchorOffset, focusOffset }
 , touched
-): ChangesType {
+, op?: string
+): ExtractedType {
   let changedPath
   let changedElem
   let parts
@@ -137,6 +194,10 @@ function processSingleParent
     }
   }
 
+  if ( op ) {
+    parts.inside = applyOp ( parts.inside, op )
+  }
+
   Object.keys ( parts )
   .forEach
   ( key => {
@@ -149,39 +210,61 @@ function processSingleParent
     }
   )
 
+  // TODO: return selection from fused ranges...
+  children = simplifyChildren ( children )
 
-  const updated =
-  Object.keys ( children )
-  .map
-  ( ref => 
-    ( { path: changedPath.concat ( [ ref ] )
-      , elem: children [ ref ]
-      }
-    )
-  )
+  const keys = Object.keys ( children )
 
-  if ( typeof changedElem.i === 'string' ) {
-    updated.unshift
-    ( { path: changedPath
+  // TODO: we could optimize rendering: filter unchanged elements
+  // by comparing them with original children.
+
+  if ( keys.length === 1 ) {
+    // Single element: change parent
+    const elem = children [ keys [ 0 ] ]
+    // FIXME: should return t of 'T' or 'P' what about 'B' ?
+    const updated =
+    [ { path: changedPath
       , elem: Object.assign
-        ( {}, changedElem, { i: {} } )
+        ( {}, changedElem, { i: elem.i, t: elem.t } )
       }
-    )
-  }
+    ]
 
-  const changes: any = { updated }
+    const changes: any = { updated }
 
-  const inside = parts.inside
-  if ( inside ) {
-    changes.selected = inside.map
-    ( ( { ref } ) => (
-        { path: changedPath.concat ( [ ref ] )
+    return changes
+  } else {
+    const updated = keys
+    .map
+    ( ref => 
+      ( { path: changedPath.concat ( [ ref ] )
         , elem: children [ ref ]
         }
       )
     )
+
+    if ( typeof changedElem.i === 'string' ) {
+      updated.unshift
+      ( { path: changedPath
+        , elem: Object.assign
+          ( {}, changedElem, { i: {} } )
+        }
+      )
+    }
+
+    const changes: any = { updated }
+
+    const inside = parts.inside
+    if ( inside ) {
+      changes.selected = inside.map
+      ( ( { ref } ) => (
+          { path: changedPath.concat ( [ ref ] )
+          , elem: children [ ref ]
+          }
+        )
+      )
+    }
+    return changes
   }
-  return changes
 }
 
 function hasSameParent
@@ -208,10 +291,11 @@ function hasSameParent
 export function extractSelection
 ( composition
 , selection
-): ChangesType {
+, op?: string
+): ExtractedType {
   const touched = inSelection ( composition, selection )
   if ( touched.length === 1 || hasSameParent ( touched ) ) {
-    return processSingleParent ( composition, selection, touched )
+    return processSingleParent ( composition, selection, touched, op )
   } else {
     // Start and end have different parent.
     throw new Error ( `Not implemented yet` )

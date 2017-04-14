@@ -1,10 +1,11 @@
-import { ElementType, ElementsType, GroupElementType } from './types'
+import { ChangesType, ElementType, ElementsType, GroupElementType } from './types'
 import { joinText } from './joinText'
 import { isTextBlock } from './isTextBlock'
 
-export function simplifyChildren
-( children: ElementsType
-): ElementsType {
+export function simplify
+( composition: any
+, changes: ChangesType
+): ChangesType {
   const result: ElementsType = {}
   let p = 0
   let last: ElementType | undefined
@@ -32,33 +33,4 @@ export function simplifyChildren
   )
 
   return result
-}
-
-
-interface Foo {
-  t: string
-  s: string
-}
-
-interface Bar {
-  t: string
-  i: { [ key: string ]: string } 
-}
-
-type Foobar = Foo | Bar
-
-function foo ( f: Foo ) {
-
-}
-
-function isFoo
-( f: Foo | Bar
-): f is Foo {
-  return (<Foo>f).hasOwnProperty ( 's' )
-}
-
-function foobar ( f: Foobar ) {
-  if ( isFoo ( f ) ) {
-    foo ( f )
-  }
 }

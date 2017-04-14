@@ -94,6 +94,11 @@ export interface RangeSelectionType {
 
 export type SelectionType = CaretSelectionType | RangeSelectionType
 
+export interface ChangesType {
+  changes: ElementRefType []
+  selected: ElementRefType []
+}
+
 // ============== Operations
 
 export interface SelectOperationType {

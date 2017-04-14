@@ -1,5 +1,5 @@
 /* global it expect describe */
-import { simplifyChildren } from './resetPosition'
+import { simplifyChildren } from './simplify'
 
 describe ( 'resetPosition', () => {
   it ( 'resets positions', () => {

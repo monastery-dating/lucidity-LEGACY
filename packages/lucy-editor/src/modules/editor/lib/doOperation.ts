@@ -1,7 +1,10 @@
+import { applyOp } from './utils/applyOp'
 import { extractSelection } from './utils/extractSelection'
 import { rangeSelection } from './utils/rangeSelection'
+import { simplify } from './utils/simplify'
 import { changeParagraph } from './utils/changeParagraph'
 import { CompositionType
+       , ChangesType
        , ElementRefType
        , OperationType
        , SelectionType
@@ -10,8 +13,7 @@ import { CompositionType
        } from './utils/types'
 
 function makeOps
-( updated: ElementRefType []
-, selected: StringElementRefType []
+( changes: ChangesType
 , selection: SelectionType
 ): OperationType [] {
   const ops: OperationType [] = []
@@ -57,10 +59,17 @@ export function doOperation
   if ( op === 'P' ) {
     return changeParagraph ( composition, selection, opts )
   } else if ( SIMPLE_OP [ op ] ) {
-    const { updated, selected } = extractSelection
-    ( composition, selection, op )
-    console.log ( '====>', updated, selected )
-    return makeOps ( updated, selected, selection )
+    return makeOps
+    ( simplify
+      ( composition
+      , applyOp
+        ( composition
+        , extractSelection ( composition, selection )
+        , op
+        )
+      )
+    , selection
+    )
   }
   return undefined
 }
