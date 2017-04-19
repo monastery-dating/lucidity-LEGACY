@@ -30,5 +30,12 @@
     "ts-jest": "^19.0.8",
     "ts-loader": "^2.0.3",
     "typescript": "^2.2.2"
+  },
+  "dependencies": {
+    "@types/js-yaml": "^3.5.30",
+    "@types/marked": "^0.0.28",
+    "@types/node": "^7.0.13",
+    "js-yaml": "^3.8.3",
+    "marked": "^0.3.6"
   }
 }

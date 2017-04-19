@@ -19,7 +19,7 @@ When defining a target, we can either use '@' (named based target) or '$' (id ba
 ```yaml
 lucidity: graph
 # Name of the location to connect this branch
-branch: @root
+branch: root
 entry: addid
 nodes:
   addid:
@@ -50,10 +50,16 @@ Here we change some elements to see how fragments are resolved.
 This will change **all** framents named 'main' in blocks named 'value'.
 
 ```ts
-return 2
+const v = 2
 ```
 
-# $root
+And then another paragraph with more details...
+
+```ts
+return v
+```
+
+# Appendix
 
 This part is automatically added by the editor to store sources of all blocks in all graphs in the project. When we serialise to the filesystem, these end up in their own files.
 
