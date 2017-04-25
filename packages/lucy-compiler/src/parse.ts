@@ -1,65 +1,14 @@
 /** Parse a string and return a Project
  * definition.
  */
-// import { Project } from './types'
+import 
+  { BasicBlockType
+  , FragmentType
+  , Project, SerializedBranch, SourceFragment } from './types'
 import * as marked from 'marked'
 import * as yaml from 'js-yaml'
 
 const HEAD_RE = /^((@|\$)([^\.]+)\.?(.*))$/
-
-export interface StringMap < T > {
-  [ id: string ]: T
-}
-
-/********** SERIALIZED TYPES **********************/
-
-export interface SerializedBlockType {
-  name: string
-  lang: string
-}
-
-export interface SerializedBranch extends BranchDefinition {
-  lucidity: 'branch' 
-  blocks: StringMap < SerializedBlockType >
-}
-
-/********** PROJECT TYPE **************************/
-
-export interface BasicBlockType extends SerializedBlockType {
-  id: string
-}
-
-type NodeDefinition = string []
-
-export interface BranchDefinition {
-  // Name of the location to connect this branch
-  branch: string
-  // Root of this branch
-  entry: string
-  nodes: StringMap < NodeDefinition >
-}
-
-export interface Project {
-  branches: BranchDefinition []
-  blockById: StringMap < BasicBlockType >
-  blocksByName: StringMap < BasicBlockType [] >
-  fragments: StringMap < SourceFragment >
-}
-
-type FragmentType = '@' | '$'
-
-/** A target like @foo.main translates into
- * type = @
- * target = foo
- * frag = main
- */
-export interface SourceFragment {
-  type: FragmentType
-  target: string
-  frag: string
-  lang: string
-  sources: string []
-}
 
 const defaultOp = ( text: string ) => text || ''
 const defaultOpNoArg = () => ''
@@ -101,7 +50,7 @@ export function parse
           }
           lang = block.lang || 'ts'
         }
-        fragment = { target: name, type, frag, lang, sources: [] }
+        fragment = { target: name, type, frag, lang, source: '' }
         fragments [ text ] = fragment
         tlevel = level
       }
@@ -158,7 +107,10 @@ export function parse
       }
 
       if ( fragment && lang === fragment.lang ) {
-        fragment.sources.push ( text )
+        const s = fragment.source
+        fragment.source = s === ''
+          ? text
+          : s + '\n' + text
         return ''
       }
 

@@ -37,7 +37,7 @@ export interface Project {
   fragments: StringMap < SourceFragment >
 }
 
-type FragmentType = '@' | '$'
+export type FragmentType = '@' | '$'
 
 /** A target like @foo.main translates into
  * type = @
@@ -49,7 +49,7 @@ export interface SourceFragment {
   target: string
   frag: string
   lang: string
-  sources: string []
+  source: string
 }
 
 /********** PROGRAM TYPE **************************/

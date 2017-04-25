@@ -6,7 +6,7 @@ describe ( 'parse', () => {
   it ( 'should parse markdown', () => {
     const x = parse ( projectMarkdown ( 'testA' ) )
     expect
-    ( x.fragments [ '@value.main' ].sources.join ( '\n' )
+    ( x.fragments [ '@value.main' ].source
     )
     .toEqual
     ( 'const v = 2\nreturn v' )
