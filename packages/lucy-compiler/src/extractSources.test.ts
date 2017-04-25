@@ -1,4 +1,6 @@
-import { fragmentInfo } from './extractSources'
+import { extractSources, fragmentInfo, ParsedSourceElement } from './extractSources'
+import { projectMarkdown } from './test/test-util'
+import { parse } from './parse'
 
 describe ( 'fragmentInfo', () => {
   it ( 'should parse single ts line', () => {
@@ -35,15 +37,51 @@ describe ( 'fragmentInfo', () => {
   })
 })
 
-/*
+function serialize
+( elem: ParsedSourceElement
+, name: string = '...'
+): string {
+  if ( typeof elem === 'string' ) {
+    return `${ name }: ${ elem }`
+  } else {
+    return `${ name } ==> ${ elem.name }\n${
+        elem.sources.map
+        ( ( e, idx ) => serialize ( e, `${ elem.name }${ idx }` )
+        ).join ( '\n' )
+      }`
+  }
+}
+
 describe ( 'extractSources', () => {
   it ( 'should return changed sources in Project', () => {
     const project = parse ( projectMarkdown ( 'testA' ) )
-    const sources = extractSources ( project.fragments [ '$value1id.source' ] )
+    const elem = extractSources ( project.fragments [ '$value1id.source' ] )
     expect
-    ( sources [ 'value1id' ]
+    ( elem.name
     )
-    .toEqual ( '' )
+    .toEqual ( 'source' )
+    expect
+    ( serialize ( elem ).split ( '\n' )
+    )
+    .toEqual
+    ( [ "... ==> source"
+      , "source0: export const update: Update ="
+      , "(): number => {"
+      , "  // <frag:main>"
+      , "source1 ==> main"
+      , "main0:   return 0"
+      , "source2:   // </frag:main>"
+      , "}"
+      , ""
+      , "export const meta: Meta ="
+      , '{ description: "Return a number."'
+      , ", tags: [ 'test', 'value' ]"
+      , ", author: 'Gaspard Bucher <gaspard@lucidity.io>'"
+      , ", origin: 'lucidity.io/value'"
+      , ", version: '1.0'"
+      , ", update: '(): number'"
+      , "}"
+      ]
+    )
   })
 })
-*/

@@ -1,17 +1,18 @@
 import { SourceFragment, StringMap } from './types'
 
-interface FragmentName {
+interface ParsedSource {
   name: string
   // Default source for this fragment
-  source: string
+  sources: ParsedSourceElement [] 
 }
+
+export type ParsedSourceElement = ParsedSource | string
 
 interface FragmentInfo {
   name: string
   type: 'open' | 'close' | 'empty'
 }
 
-type SourceElement = FragmentName | string
 
 const RE_BY_LANG: StringMap < RegExp > =
 { ts: /^\s*\/\/\s*<(\/?)\s*frag:(\w+)\s*(\/?)>\s*$/
@@ -39,9 +40,91 @@ export function fragmentInfo
   }
 }
 
+interface ParseResult {
+  elem: ParsedSource
+  idx: number
+}
+
+function parse
+( lines: string []
+, lang: string
+, lineIdx: number = 0
+, openFrag: string
+): ParseResult {
+  const sources: ParsedSourceElement [] = []
+  // string accumulator
+  let source: string | undefined = undefined
+  let idx = lineIdx
+  let line: string
+  while ( ( line = lines [ idx ] ) !== undefined ) {
+    const info = fragmentInfo ( line, lang )
+    if ( info ) {
+      if ( info.name === 'source' ) {
+        throw new Error ( `Cannot open or close fragment named 'source' at line ${ idx }.` )
+      }
+
+      if ( info.name === openFrag ) {
+        // Closing...
+        if ( info.type !== 'close' ) {
+          throw new Error ( `Invalid line ${ idx }, fragment '${ info.name }' already open.` )
+        }
+
+        if ( source ) {
+          sources.push ( source )
+        }
+        return { idx, elem: { name: openFrag, sources } } 
+
+      } else if ( info.type === 'close' ) {
+        throw new Error ( `Invalid line ${ idx }, invalid closing fragment '${ info.name }', should be '${ openFrag }'.` )
+
+      } else {
+        // Open or empty
+        // Add frag definition to source
+        if ( ! source ) {
+          source = line
+        } else {
+          source = source + '\n' + line
+        }
+        sources.push ( source )
+
+        if ( info.type === 'open' ) {
+          const res = parse ( lines, lang, idx + 1, info.name )
+          idx = res.idx
+          // Closed tag
+          sources.push ( res.elem )
+          // Add closing frag definition to next source block
+          source = lines [ idx ]
+        } else {
+          // Empty tag
+          sources.push
+          ( { name: info.name, sources: [] }
+          )
+        }
+      }
+    } else {
+      if ( ! source ) {
+        source = line
+      } else {
+        source = source + '\n' + line
+      }
+    }
+    idx += 1
+  }
+
+  if ( source ) {
+    sources.push ( source )
+  }
+  return { idx, elem: { name: openFrag, sources } }
+}
+
 export function extractSources
 ( code: SourceFragment
-): SourceElement [] {
-
-  return []
+): ParsedSource {
+  const { elem } = parse
+  ( code.source.split ( '\n' )
+  , code.lang
+  , 0
+  , 'source'
+  )
+  return elem
 }
