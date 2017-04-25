@@ -17,7 +17,7 @@ root
 When defining a target, we can either use '@' (named based target) or '$' (id based target). Visually, when a block is replaced by a branch (like @foo above), we display the name with brackets like this `[foo]`.
 
 ```yaml
-lucidity: graph
+lucidity: branch
 # Name of the location to connect this branch
 branch: root
 entry: addid

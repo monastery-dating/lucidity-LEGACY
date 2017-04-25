@@ -25,6 +25,9 @@
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "^19.2.2",
+    "@types/js-yaml": "^3.5.30",
+    "@types/marked": "^0.0.28",
+    "@types/node": "^7.0.13",
     "dotenv": "^4.0.0",
     "jest": "^19.0.2",
     "ts-jest": "^19.0.8",
@@ -32,9 +35,6 @@
     "typescript": "^2.2.2"
   },
   "dependencies": {
-    "@types/js-yaml": "^3.5.30",
-    "@types/marked": "^0.0.28",
-    "@types/node": "^7.0.13",
     "js-yaml": "^3.8.3",
     "marked": "^0.3.6"
   }

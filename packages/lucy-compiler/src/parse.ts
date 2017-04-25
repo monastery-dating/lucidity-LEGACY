@@ -1,54 +1,108 @@
 /** Parse a string and return a Project
  * definition.
  */
-import { Project } from './types'
+// import { Project } from './types'
 import * as marked from 'marked'
 import * as yaml from 'js-yaml'
 
 const HEAD_RE = /^((@|\$)([^\.]+)\.?(.*))$/
 
+export interface StringMap < T > {
+  [ id: string ]: T
+}
+
+/********** SERIALIZED TYPES **********************/
+
+export interface SerializedBlockType {
+  name: string
+  lang: string
+}
+
+export interface SerializedBranch extends BranchDefinition {
+  lucidity: 'branch' 
+  blocks: StringMap < SerializedBlockType >
+}
+
+/********** PROJECT TYPE **************************/
+
+export interface BasicBlockType extends SerializedBlockType {
+  id: string
+}
+
+type NodeDefinition = string []
+
+export interface BranchDefinition {
+  // Name of the location to connect this branch
+  branch: string
+  // Root of this branch
+  entry: string
+  nodes: StringMap < NodeDefinition >
+}
+
+export interface Project {
+  branches: BranchDefinition []
+  blockById: StringMap < BasicBlockType >
+  blocksByName: StringMap < BasicBlockType [] >
+  fragments: StringMap < SourceFragment >
+}
+
+type FragmentType = '@' | '$'
+
+/** A target like @foo.main translates into
+ * type = @
+ * target = foo
+ * frag = main
+ */
+export interface SourceFragment {
+  type: FragmentType
+  target: string
+  frag: string
+  lang: string
+  sources: string []
+}
+
+const defaultOp = ( text: string ) => text || ''
+const defaultOpNoArg = () => ''
+
 export function parse
 ( text: string
-): any {
-  const elements: any [] = []
-  const sources: any = {}
-  const branches: any = []
-  const blockById: any = {}
-  const blocksByName: any = {}
-  const targets: any = {}
-  const result = { branches, blockById, blocksByName, targets }
-  let target: any
+): Project {
+  const result: Project =
+  { branches: [], blockById: {}, blocksByName: {}, fragments: {} }
+
+  const { branches, blockById, blocksByName, fragments } = result
+
+  let fragment: SourceFragment
   let tname: string | undefined
   let tlevel: number = 0
 
   const renderer =
   { heading ( text: string, level: number ) {
-      elements.push ( { t: 'h', level, text } )
       if ( level <= tlevel ) {
         // done with current target block
         tlevel = 0
       }
       const re = HEAD_RE.exec ( text )
       if ( re ) {
-        const type = re [ 2 ]
+        const type = < FragmentType > re [ 2 ]
         const name = re [ 3 ]
         const frag = re [ 4 ]
         let lang: string
         if ( type === '@' ) {
           const list = blocksByName [ name ]
-          if ( !list ) {
+          if ( ! list ) {
             throw new Error ( `Block source defined before graph.` )
           }
           lang = list [ 0 ].lang || 'ts'
         } else {
           const block = blockById [ name ]
-          if ( !block ) {
+          if ( ! block ) {
             throw new Error ( `Block source '${name}' defined before graph.` )
           }
           lang = block.lang || 'ts'
         }
-        target = { target: name, type, frag, lang, sources: [''] }
-        targets [ text ] = target
+        fragment = { target: name, type, frag, lang, sources: [] }
+        fragments [ text ] = fragment
         tlevel = level
       }
       return ''
@@ -57,32 +111,40 @@ export function parse
       return text
     }
   , paragraph ( text: string ) {
-      elements.push ( { t: 'p', text } )
       return ''
     }
   , code ( text: string, lang: string ) {
       if ( lang === 'yaml' ) {
-        const content = yaml.load ( text )
-        const type = content.lucidity
-        if ( type === 'graph' ) {
-          branches.push ( content )
-          const blocks = content.blocks || {}
+        const content: SerializedBranch = yaml.load ( text )
+        const { lucidity, branch, entry, nodes, blocks } = content
+        const type = lucidity
+        if ( type === 'branch' ) {
+          branches.push
+          ( { branch
+            , entry
+            , nodes
+            } 
+          )
           Object.keys ( blocks )
           .forEach
           ( key => {
-              const block = { ...blocks [ key ], id: key }
-              if ( !block.lang ) {
-                block.lang = 'ts'
+              const sblock = blocks [ key ]
+              if ( ! sblock.lang ) {
+                sblock.lang = 'ts'
               }
               if ( blockById [ key ] ) {
                 throw new Error ( `Duplicate block id '${key}'.`)
               }
-              if ( ! block.name ) {
+              if ( ! sblock.name ) {
                 throw new Error ( `Missing 'name' in block id '${key}.`)
               }
+              const block: BasicBlockType = Object.assign
+              ( {}, sblock, { id: key } )
+
               blockById [ key ] = block
               let list = blocksByName [ block.name ]
-              if ( !list ) {
+
+              if ( ! list ) {
                 list = []
                 blocksByName [ block.name ] = list
               } else if ( list [ 0 ].lang !== block.lang ) {
@@ -95,24 +157,31 @@ export function parse
         }
       }
 
-      if ( target && lang === target.lang ) {
-        target.sources.push ( text )
+      if ( fragment && lang === fragment.lang ) {
+        fragment.sources.push ( text )
         return ''
       }
 
-      elements.push ( { t: 'code', lang, text } )
       return ''
     }
-    // **strong**
-  , strong ( text: string ) {
-      return text
-    }
-    // `foo` in text
-  , codespan ( text: string ) {
-      return text
-    }
+  , strong: defaultOp
+  , codespan: defaultOp
+  , blockquote: defaultOp
+  , html: defaultOp
+  , hr: defaultOpNoArg
+  , list: defaultOp
+  , listitem: defaultOp
+  , table: defaultOp
+  , tablerow: defaultOp
+  , tablecell: defaultOp
+  , em: defaultOp
+  , br: defaultOpNoArg
+  , del: defaultOp
+  , link: defaultOp
+  , image: defaultOp
   }
 
   marked ( text, { renderer } )
+  // console.log ( JSON.stringify ( result, null, 2 ) )
   return result
 }

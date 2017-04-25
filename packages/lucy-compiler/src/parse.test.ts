@@ -1,20 +1,27 @@
 import { parse } from './parse'
 
-import { readFileSync } from 'fs'
-import * as path from 'path'
-
-// Path has to be relative to compile ts file...
-declare var __dirname: any
-const TXT = readFileSync ( path.join ( __dirname, 'test/testA.md' ), 'utf8' )
+import { projectMarkdown } from './test/test-util'
 
 describe ( 'parse', () => {
   it ( 'should parse markdown', () => {
-    const x = parse ( TXT )
-    Object.keys ( x.targets )
-    .forEach
-    ( key => {
-      console.log ( key )
-      console.log ( x.targets [ key ].sources.join ( '\n' ) )
-    })
+    const x = parse ( projectMarkdown ( 'testA' ) )
+    expect
+    ( x.fragments [ '@value.main' ].sources.join ( '\n' )
+    )
+    .toEqual
+    ( 'const v = 2\nreturn v' )
+
+    expect
+    ( Object.keys ( x.fragments )
+      .sort ()
+    )
+    .toEqual
+    ( [ '$addid.source'
+      , '$fooid.source'
+      , '$value1id.source'
+      , '$value2id.source'
+      , '@value.main'
+      ]
+    )
   })
 })
