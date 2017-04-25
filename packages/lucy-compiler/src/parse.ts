@@ -5,6 +5,7 @@ import
   { BasicBlockType
   , FragmentType
   , Project, SerializedBranch, SourceFragment } from './types'
+import { extractSources } from './extractSources'
 import * as marked from 'marked'
 import * as yaml from 'js-yaml'
 
@@ -50,7 +51,13 @@ export function parse
           }
           lang = block.lang || 'ts'
         }
-        fragment = { target: name, type, frag, lang, source: '' }
+        fragment =
+        { target: name
+        , type, frag, lang
+        // dummy values for 'source' and 'sources'
+        , source: ''
+        , sources: { name: 'source', sources: [] } 
+        }
         fragments [ text ] = fragment
         tlevel = level
       }
@@ -135,5 +142,13 @@ export function parse
 
   marked ( text, { renderer } )
   // console.log ( JSON.stringify ( result, null, 2 ) )
+  Object.keys ( fragments )
+  .forEach
+  ( key => {
+      const frag = fragments [ key ]
+      frag.sources =
+      extractSources ( frag.source, frag.lang ).sources
+    }
+  )
   return result
 }

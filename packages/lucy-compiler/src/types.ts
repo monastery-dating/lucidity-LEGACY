@@ -50,7 +50,20 @@ export interface SourceFragment {
   frag: string
   lang: string
   source: string
+  sources: ParsedSourceElement []
 }
+
+/** Extracted source and fragments
+ * 
+ */
+export interface ParsedSource {
+  name: string
+  // Default source for this fragment
+  sources: ParsedSourceElement [] 
+}
+
+export type ParsedSourceElement = ParsedSource | string
+
 
 /********** PROGRAM TYPE **************************/
 

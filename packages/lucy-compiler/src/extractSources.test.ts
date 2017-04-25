@@ -54,8 +54,17 @@ function serialize
 
 describe ( 'extractSources', () => {
   it ( 'should return changed sources in Project', () => {
-    const project = parse ( projectMarkdown ( 'testA' ) )
-    const elem = extractSources ( project.fragments [ '$value1id.source' ] )
+    const code = `
+    export const update: Update =
+    (): number => {
+      // <frag:main>
+      return 0
+      // </frag:main>
+    }
+    // code end
+    `
+
+    const elem = extractSources ( code, 'ts' )
     expect
     ( elem.name
     )
@@ -65,22 +74,15 @@ describe ( 'extractSources', () => {
     )
     .toEqual
     ( [ "... ==> source"
-      , "source0: export const update: Update ="
-      , "(): number => {"
-      , "  // <frag:main>"
+      , "source0:     export const update: Update ="
+      , "    (): number => {"
+      , "      // <frag:main>"
       , "source1 ==> main"
-      , "main0:   return 0"
-      , "source2:   // </frag:main>"
-      , "}"
-      , ""
-      , "export const meta: Meta ="
-      , '{ description: "Return a number."'
-      , ", tags: [ 'test', 'value' ]"
-      , ", author: 'Gaspard Bucher <gaspard@lucidity.io>'"
-      , ", origin: 'lucidity.io/value'"
-      , ", version: '1.0'"
-      , ", update: '(): number'"
-      , "}"
+      , "main0:       return 0"
+      , "source2:       // </frag:main>"
+      , "    }"
+      , "    // code end"
+      , "    "
       ]
     )
   })

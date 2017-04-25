@@ -1,12 +1,4 @@
-import { SourceFragment, StringMap } from './types'
-
-interface ParsedSource {
-  name: string
-  // Default source for this fragment
-  sources: ParsedSourceElement [] 
-}
-
-export type ParsedSourceElement = ParsedSource | string
+import { ParsedSource, ParsedSourceElement, SourceFragment, StringMap } from './types'
 
 interface FragmentInfo {
   name: string
@@ -117,12 +109,18 @@ function parse
   return { idx, elem: { name: openFrag, sources } }
 }
 
+interface SourceToExtract {
+  source: string
+  lang: string
+}
+
 export function extractSources
-( code: SourceFragment
+( code: string
+, lang: string
 ): ParsedSource {
   const { elem } = parse
-  ( code.source.split ( '\n' )
-  , code.lang
+  ( code.split ( '\n' )
+  , lang
   , 0
   , 'source'
   )
