@@ -143,7 +143,9 @@ function processSingleParent
       parts [ key ]
       .forEach
       ( ( { elem, ref } ) => {
-          children [ ref ] = elem
+          // FIXME: maybe we do not need to make copies for
+          // all elements here
+          children [ ref ] = { ... elem }
         }
       )
     }
