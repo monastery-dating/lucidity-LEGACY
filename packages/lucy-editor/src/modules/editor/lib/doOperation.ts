@@ -15,13 +15,14 @@ import { CompositionType
 
 function makeOps
 ( changes: ChangesType
-, selection: SelectionType
+, initialSelection: SelectionType
 ): OperationType [] {
   const ops: OperationType [] = []
-  const { updated, selected } = changes
+  const { updated, selected, selection, elements } = changes
 
   updated.forEach
-  ( ( { path, elem } ) => {
+  ( ref => {
+      const { path, elem } = elements [ ref ]
       ops.push
       ( { op: 'update'
         , path
@@ -31,18 +32,26 @@ function makeOps
     }
   )
 
-  if ( selected ) {
-    const first = selected [ 0 ]
-    const last = selected [ selected.length - 1 ]
-    const elem = last.elem
+  if ( selection ) {
+    ops.push
+    ( { op: 'select'
+      , value: { ...selection, position: initialSelection.position }
+      }
+    )
+  } else if ( selected ) {
+    const firstRef = selected [ 0 ]
+    const firstRefElem = elements [ firstRef ]
+    const lastRef = selected [ selected.length - 1 ]
+    const lastRefElem = elements [ lastRef ]
+    const lastElem = lastRefElem.elem
 
-    if ( isStringElement ( elem ) ) {
+    if ( isStringElement ( lastElem ) ) {
       ops.push
       ( { op: 'select'
         , value: rangeSelection
-          ( first.path, 0, last.path
-          , elem.i.length
-          , selection.position
+          ( firstRefElem.path, 0, lastRefElem.path
+          , lastElem.i.length
+          , initialSelection.position
           )
         }
       )

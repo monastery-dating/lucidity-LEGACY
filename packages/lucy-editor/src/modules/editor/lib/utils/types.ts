@@ -45,11 +45,22 @@ export function isGroupElement
   return typeof elem.i === 'object'
 }
 
+export function isRangeSelection
+( selection: SelectionType
+): selection is RangeSelectionType {
+  return selection.type === 'Range'
+}
+
 
 export interface ElementRefType {
   path: PathType
   elem: ElementType
 }
+
+export interface ElementRefTypeById {
+  [ key: string ]: ElementRefType
+}
+
 
 export interface StringElementRefType {
   path: PathType
@@ -95,8 +106,10 @@ export interface RangeSelectionType {
 export type SelectionType = CaretSelectionType | RangeSelectionType
 
 export interface ChangesType {
-  updated: ElementRefType []
-  selected: ElementRefType []
+  updated: string []
+  selected: string []
+  elements: ElementRefTypeById
+  selection?: SelectionType
 }
 
 // ============== Operations

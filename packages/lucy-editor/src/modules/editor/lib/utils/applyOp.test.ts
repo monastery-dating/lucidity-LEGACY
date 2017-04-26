@@ -1,24 +1,12 @@
-/* global jest it expect describe */
-import { mockComposition, mockRef } from './testUtils'
+import { changesResults, mockComposition, mockRef } from './testUtils'
 import { rangeSelection } from './rangeSelection'
 import { extractSelection } from './extractSelection'
 
 const composition = mockComposition ()
 const position = { top: 0, left: 0 }
 
-function pathTypes
-( { selected, updated } ) {
-  return (
-    { selected: selected.map
-      ( s => s.path.join ( '.' ) + '-' + s.elem.t )
-    , updated: updated.map
-      ( s => s.path.join ( '.' ) + '-' + s.elem.t )
-    }
-  )
-}
-
 describe('extractSelection', () => {
-  it('extracts simple selection in plain paragraph', () => {
+  it ( 'extracts simple selection in plain paragraph', () => {
     mockRef ()
     const selection = rangeSelection
     ( ['zaahg'], 12
@@ -26,7 +14,7 @@ describe('extractSelection', () => {
     , position
     )
     expect
-    ( pathTypes
+    ( changesResults
       ( extractSelection ( composition, selection ) )
     )
     .toEqual
@@ -41,14 +29,14 @@ describe('extractSelection', () => {
     )
   })
 
-  it('extracts selection accross markup', () => {
+  it ( 'extracts selection accross markup', () => {
     mockRef ()
     const selection = rangeSelection
     ( [ 'zhaog', 'oiafg' ], 5
     , [ 'zhaog', 'haiou' ], 7
     , position
     )
-    expect(pathTypes(
+    expect(changesResults(
       extractSelection ( composition, selection )
     ))
     .toEqual({
@@ -63,7 +51,7 @@ describe('extractSelection', () => {
     })
   })
 
-  it('extracts single element fully selected', () => {
+  it ( 'extracts single element fully selected', () => {
     mockRef ()
     const selection = rangeSelection
     ( [ 'zhaog', 'oaiue' ], 0
@@ -71,7 +59,7 @@ describe('extractSelection', () => {
     , position
     )
     expect
-    ( pathTypes
+    ( changesResults
       ( extractSelection ( composition, selection ) )
     )
     .toEqual

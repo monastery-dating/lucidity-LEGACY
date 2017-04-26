@@ -1,21 +1,9 @@
-/* global jest it expect describe */
-import { mockComposition, mockRef } from './testUtils'
+import { changesResults, mockComposition, mockRef } from './testUtils'
 import { rangeSelection } from './rangeSelection'
 import { extractSelection } from './extractSelection'
 
 const composition = mockComposition ()
 const position = { top: 0, left: 0 }
-
-function pathTypes
-( { selected, updated } ) {
-  return (
-    { selected: selected.map
-      ( s => s.path.join ( '.' ) + '-' + s.elem.t )
-    , updated: updated.map
-      ( s => s.path.join ( '.' ) + '-' + s.elem.t )
-    }
-  )
-}
 
 describe('extractSelection', () => {
   it('extracts simple selection in plain paragraph', () => {
@@ -26,7 +14,7 @@ describe('extractSelection', () => {
     , position
     )
     expect
-    ( pathTypes
+    ( changesResults
       ( extractSelection ( composition, selection ) )
     )
     .toEqual
@@ -48,19 +36,27 @@ describe('extractSelection', () => {
     , [ 'zhaog', 'haiou' ], 7
     , position
     )
-    expect(pathTypes(
-      extractSelection ( composition, selection )
-    ))
-    .toEqual({
-      selected: ['zhaog.refe1-T', 'zhaog.oaiue-B', 'zhaog.refe2-T'],
-      updated: [
-        'zhaog.oiafg-T',
-        'zhaog.refe1-T',
-        'zhaog.oaiue-B',
-        'zhaog.refe2-T',
-        'zhaog.haiou-T'
-      ]
-    })
+    expect
+    ( changesResults
+      ( extractSelection
+        ( composition, selection )
+      )
+    )
+    .toEqual
+    ( { selected:
+        [ 'zhaog.refe1-T'
+        , 'zhaog.oaiue-B'
+        , 'zhaog.refe2-T'
+        ]
+      , updated:
+        [ 'zhaog.oiafg-T'
+        , 'zhaog.refe1-T'
+        , 'zhaog.oaiue-B'
+        , 'zhaog.refe2-T'
+        , 'zhaog.haiou-T'
+        ]
+      }
+    )
   })
 
   it('extracts single element fully selected', () => {
@@ -71,7 +67,7 @@ describe('extractSelection', () => {
     , position
     )
     expect
-    ( pathTypes
+    ( changesResults
       ( extractSelection ( composition, selection ) )
     )
     .toEqual

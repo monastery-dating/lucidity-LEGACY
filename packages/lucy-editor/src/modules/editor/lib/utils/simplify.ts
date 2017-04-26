@@ -3,30 +3,27 @@ import
   , ElementType, ElementsType
   , ElementNamedType
   , ElementRefType
+  , ElementRefTypeById
   , GroupElementType
   , isStringElement
+  , isRangeSelection
   , StringElementType
   } from './types'
 import { joinText } from './joinText'
 import { isTextBlock } from './isTextBlock'
 import { getAtPath } from './getAtPath'
-
-interface ElementRefTypeById {
-  [ key: string ]: ElementRefType
-}
+import { rangeSelection } from './rangeSelection'
 
 function simplifyParent
 ( composition: CompositionType
-, updatedById: ElementRefTypeById
-, updated: ElementRefType []
+, changes: ChangesType
 , parent: ElementRefType
 ): void {
+  const { elements, updated, selected } = changes
   const { path, elem } = parent
   if ( isStringElement ( elem ) ) {
     return
   }
-
-  // TODO: update selected if fusing...
 
   let last: ElementNamedType | undefined
   let allFused: boolean = true
@@ -35,7 +32,7 @@ function simplifyParent
   ( parent.elem.i )
   .map
   ( ref => {
-      const refElem = updatedById [ ref ]
+      const refElem = elements [ ref ]
       return refElem
         ? { ref, elem: refElem.elem }
         : { ref, elem: parent.elem.i [ ref ] }
@@ -56,7 +53,7 @@ function simplifyParent
                 && isTextBlock ( elem ) ) {
         let lastElem: StringElementType = last.elem
         // make sure last is in updated
-        if ( ! updatedById [ last.ref ] ) {
+        if ( ! elements [ last.ref ] ) {
           // make a copy
           lastElem = Object.assign ( {}, last.elem )
           last =
@@ -67,14 +64,27 @@ function simplifyParent
           { elem: lastElem
           , path: [ ...path, last.ref ]
           }
-          updatedById [ last.ref ] = pathElem
-          updated.push ( pathElem )
+          elements [ last.ref ] = pathElem
+          updated.push ( last.ref )
         }
         // fuse
+        if ( selected.indexOf ( ref ) >= 0 ) {
+          // When we fuse, there can only be one element in selected
+          // so this works.
+          const anchorOffset = lastElem.i.length
+          const focusOffset = anchorOffset + elem.i.length
+          const selectionPath = [ ...path, last.ref ]
+          changes.selection = rangeSelection
+          ( selectionPath, anchorOffset
+          , selectionPath, focusOffset
+          , { top: 0, left: 0 }
+          )
+        }
+
         lastElem.i = joinText ( lastElem.i, elem.i )
+
         // remove elem from updated list
-        let idx = updated.findIndex
-        ( pathElem => pathElem.elem === elem )
+        let idx = updated.indexOf ( ref )
         if ( idx >= 0 ) {
           updated.splice ( idx, 1 )
         }
@@ -88,15 +98,28 @@ function simplifyParent
   if ( last && allFused ) {
     const lastElem = last.elem
     // remove elem from updated list
-    let idx = updated.findIndex
-    ( pathElem => pathElem.elem === lastElem )
+    let idx = updated.indexOf ( last.ref )
     if ( idx >= 0 ) {
       updated.splice ( idx, 1 )
     }
     // change parent
+    const parentRef = path [ path.length - 1 ]
+    const t = lastElem.t === 'T'
+      ? parent.elem.t
+      : `${ parent.elem.t }+${ lastElem.t }`
     const elem = Object.assign
-    ( {}, parent.elem, { t: lastElem.t, i: lastElem.i } )
-    updated.push ( { elem, path } )
+    ( {}, parent.elem, { t, i: lastElem.i } )
+
+    elements [ parentRef ] = { elem, path }
+    updated.push ( parentRef )
+    const { selection } = changes
+    if ( selection ) {
+      // We should update path
+      if ( isRangeSelection ( selection ) ) {
+        selection.anchorPath = path
+        selection.focusPath = path
+      }
+    }
   }
 }
 
@@ -105,13 +128,11 @@ export function simplify
 , changes: ChangesType
 ): ChangesType {
   const result: ElementsType = {}
-  const { updated } = changes
+  const { updated, elements } = changes
   const parents: ElementRefTypeById = {}
-  const updatedById: ElementRefTypeById = {}
   updated.forEach
-  ( refElem => {
-      const { elem, path } = refElem
-      updatedById [ path [ path.length - 1 ] ] = refElem
+  ( ref => {
+      const { elem, path } = elements [ ref ]
       const parentPath = path.slice ( 0, -1 )
       const parentId = parentPath [ parentPath.length - 1 ]
       if ( parentId ) {
@@ -128,8 +149,7 @@ export function simplify
   ( parentId => {
       simplifyParent
       ( composition
-      , updatedById
-      , updated
+      , changes
       , parents [ parentId ]
       )
     }

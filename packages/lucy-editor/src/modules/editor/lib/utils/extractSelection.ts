@@ -4,12 +4,16 @@ import { getSiblings } from './getSiblings'
 import { inSelection } from './inSelection'
 import { makeRef } from './makeRef'
 import { splitText } from './splitText'
-import { ChangesType
-       , ElementRefType
-       , ElementNamedType
-       , isStringElement
-       , StringElementRefType
-       , DoOperationType } from './types'
+import
+  { ChangesType
+  , CompositionType
+  , ElementRefType
+  , ElementNamedType
+  , ElementRefTypeById
+  , isStringElement
+  , StringElementRefType
+  , DoOperationType
+  } from './types'
 
 const PARTS = ['before', 'inside', 'after']
 
@@ -59,20 +63,24 @@ function splitElement
   return result
 }
 
+const PART_NAMES =
+[ 'before', 'inside', 'after' ]
+
 /** FIXME: This function is a complete mess. Needs better
  * handling of each case, maybe in different functions.
  */
 function processSingleParent
-( composition
+( composition: CompositionType
 , { anchorOffset, focusOffset }
-, touched
+, touched: ElementRefType []
 ): ChangesType {
   let changedPath
   let changedElem
   let parts
   let children = {}
   const { path, elem } = touched [ 0 ]
-  if ( touched.length === 1
+  if ( isStringElement ( elem )
+       && touched.length === 1
        && anchorOffset === 0 
        && focusOffset === elem.i.length ) {
     // full selection of a single element
@@ -137,53 +145,44 @@ function processSingleParent
     }
   }
 
-  Object.keys ( parts )
+  const updated: string [] = []
+  const selected: string [] = []
+  const elements: ElementRefTypeById = {}
+
+  PART_NAMES
   .forEach
   ( key => {
-      parts [ key ]
+      const list = parts [ key ]
+      if ( ! list ) {
+        return
+      }
+      list
       .forEach
       ( ( { elem, ref } ) => {
-          // FIXME: maybe we do not need to make copies for
-          // all elements here
-          children [ ref ] = { ... elem }
+          elements [ ref ] =
+          { path: changedPath.concat ( [ ref ] )
+          , elem
+          }
+          updated.push ( ref )
+          if ( key === 'inside' ) {
+            selected.push ( ref )
+          }
         }
       )
     }
   )
 
-
-  const updated =
-  Object.keys ( children )
-  .map
-  ( ref => 
-    ( { path: changedPath.concat ( [ ref ] )
-      , elem: children [ ref ]
-      }
-    )
-  )
-
   if ( typeof changedElem.i === 'string' ) {
-    updated.unshift
-    ( { path: changedPath
-      , elem: Object.assign
-        ( {}, changedElem, { i: {} } )
-      }
-    )
+    const ref = changedPath [ changedPath.length - 1 ]
+    elements [ ref ] =
+    { path: changedPath
+    , elem: Object.assign
+      ( {}, changedElem, { i: {} } )
+    }
+    updated.unshift ( ref ) 
   }
 
-  const changes: any = { updated }
-
-  const inside = parts.inside
-  if ( inside ) {
-    changes.selected = inside.map
-    ( ( { ref } ) => (
-        { path: changedPath.concat ( [ ref ] )
-        , elem: children [ ref ]
-        }
-      )
-    )
-  }
-  return changes
+  return { elements, updated, selected }
 }
 
 function hasSameParent
