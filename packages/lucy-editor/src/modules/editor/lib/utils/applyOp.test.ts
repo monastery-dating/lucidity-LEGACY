@@ -1,11 +1,12 @@
 import { changesResults, mockComposition, mockRef } from './testUtils'
+import { applyOp } from './applyOp'
 import { rangeSelection } from './rangeSelection'
 import { extractSelection } from './extractSelection'
 
 const composition = mockComposition ()
 const position = { top: 0, left: 0 }
 
-describe('extractSelection', () => {
+describe ( 'applyOp', () => {
   it ( 'extracts simple selection in plain paragraph', () => {
     mockRef ()
     const selection = rangeSelection
@@ -13,58 +14,20 @@ describe('extractSelection', () => {
     , ['zaahg'], 17
     , position
     )
+    const changes = extractSelection ( composition, selection )
     expect
     ( changesResults
-      ( extractSelection ( composition, selection ) )
+      ( applyOp ( composition, changes, 'B' ) )
     )
     .toEqual
-    ( { selected: [ 'zaahg.refe2-T' ]
+    ( { selected: [ 'zaahg.refe2-B' ]
       , updated:
         [ 'zaahg-P'
         , 'zaahg.refe1-T'
-        , 'zaahg.refe2-T'
+        , 'zaahg.refe2-B'
         , 'zaahg.refe3-T'
         ]
-      }
-    )
-  })
-
-  it ( 'extracts selection accross markup', () => {
-    mockRef ()
-    const selection = rangeSelection
-    ( [ 'zhaog', 'oiafg' ], 5
-    , [ 'zhaog', 'haiou' ], 7
-    , position
-    )
-    expect(changesResults(
-      extractSelection ( composition, selection )
-    ))
-    .toEqual({
-      selected: ['zhaog.refe1-T', 'zhaog.oaiue-B', 'zhaog.refe2-T'],
-      updated: [
-        'zhaog.oiafg-T',
-        'zhaog.refe1-T',
-        'zhaog.oaiue-B',
-        'zhaog.refe2-T',
-        'zhaog.haiou-T'
-      ]
-    })
-  })
-
-  it ( 'extracts single element fully selected', () => {
-    mockRef ()
-    const selection = rangeSelection
-    ( [ 'zhaog', 'oaiue' ], 0
-    , [ 'zhaog', 'oaiue' ], 7
-    , position
-    )
-    expect
-    ( changesResults
-      ( extractSelection ( composition, selection ) )
-    )
-    .toEqual
-    ( { selected: [ 'zhaog.oaiue-B' ]
-      , updated: [ 'zhaog.oaiue-B' ]
+      , deleted: []
       }
     )
   })

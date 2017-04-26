@@ -5,8 +5,8 @@ import { extractSelection } from './extractSelection'
 const composition = mockComposition ()
 const position = { top: 0, left: 0 }
 
-describe('extractSelection', () => {
-  it('extracts simple selection in plain paragraph', () => {
+describe ( 'extractSelection', () => {
+  it ( 'extracts simple selection in plain paragraph', () => {
     mockRef ()
     const selection = rangeSelection
     ( ['zaahg'], 12
@@ -25,11 +25,12 @@ describe('extractSelection', () => {
         , 'zaahg.refe2-T'
         , 'zaahg.refe3-T'
         ]
+      , deleted: []
       }
     )
   })
 
-  it('extracts selection accross markup', () => {
+  it ( 'extracts selection accross markup', () => {
     mockRef ()
     const selection = rangeSelection
     ( [ 'zhaog', 'oiafg' ], 5
@@ -55,11 +56,12 @@ describe('extractSelection', () => {
         , 'zhaog.refe2-T'
         , 'zhaog.haiou-T'
         ]
+      , deleted: []
       }
     )
   })
 
-  it('extracts single element fully selected', () => {
+  it ( 'extracts single element fully selected', () => {
     mockRef ()
     const selection = rangeSelection
     ( [ 'zhaog', 'oaiue' ], 0
@@ -73,6 +75,7 @@ describe('extractSelection', () => {
     .toEqual
     ( { selected: [ 'zhaog.oaiue-B' ]
       , updated: [ 'zhaog.oaiue-B' ]
+      , deleted: []
       }
     )
   })

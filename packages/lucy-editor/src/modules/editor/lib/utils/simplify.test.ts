@@ -27,7 +27,7 @@ describe ( 'simplify', () => {
       ).updated
     )
     .toEqual
-    ( [ 'zhaog-T' ]
+    ( [ 'zhaog-P' ]
     )
 
     expect

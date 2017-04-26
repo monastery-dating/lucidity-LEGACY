@@ -105,7 +105,7 @@ export function mockRef
 interface ChangeResults {
   selected: string []
   updated: string []
-  removed: string []
+  deleted: string []
 }
 
 export function changesResults
@@ -125,7 +125,7 @@ export function changesResults
           return refElem.path.join ( '.' ) + '-' + refElem.elem.t
         }
       )
-    , removed: ( deleted || [] ).map
+    , deleted: ( deleted || [] ).map
       ( path => path.join ( '.' )
       )
     }
