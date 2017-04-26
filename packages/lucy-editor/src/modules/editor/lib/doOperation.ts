@@ -18,7 +18,19 @@ function makeOps
 , initialSelection: SelectionType
 ): OperationType [] {
   const ops: OperationType [] = []
-  const { updated, selected, selection, elements } = changes
+  const { updated, selected, selection, elements, deleted } = changes
+
+  if ( deleted ) {
+    deleted.forEach
+    ( path => {
+        ops.push
+        ( { op: 'delete'
+          , path
+          }
+        )
+      }
+    )
+  }
 
   updated.forEach
   ( ref => {

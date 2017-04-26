@@ -108,6 +108,8 @@ export type SelectionType = CaretSelectionType | RangeSelectionType
 export interface ChangesType {
   updated: string []
   selected: string []
+  // path of removed elements
+  deleted?: string [] []
   elements: ElementRefTypeById
   selection?: SelectionType
 }

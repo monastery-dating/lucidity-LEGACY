@@ -105,12 +105,13 @@ export function mockRef
 interface ChangeResults {
   selected: string []
   updated: string []
+  removed: string []
 }
 
 export function changesResults
 ( changes: ChangesType
 ): ChangeResults {
-  const { elements, selected, updated } = changes
+  const { elements, selected, deleted, updated } = changes
   return (
     { selected: selected.map
       ( ref => {
@@ -123,6 +124,9 @@ export function changesResults
           const refElem = elements [ ref ]
           return refElem.path.join ( '.' ) + '-' + refElem.elem.t
         }
+      )
+    , removed: ( deleted || [] ).map
+      ( path => path.join ( '.' )
       )
     }
   )

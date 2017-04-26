@@ -20,6 +20,7 @@ function simplifyParent
 , parent: ElementRefType
 ): void {
   const { elements, updated, selected } = changes
+  let deleted: string [] []
   const { path, elem } = parent
   if ( isStringElement ( elem ) ) {
     return
@@ -88,6 +89,10 @@ function simplifyParent
         if ( idx >= 0 ) {
           updated.splice ( idx, 1 )
         }
+        if ( ! deleted ) {
+          changes.deleted = deleted = []
+        }
+        deleted.push ( [ ... path, ref ] )
       } else {
         allFused = false
         last = refElem

@@ -53,7 +53,13 @@ describe ( 'doOperation.B', () => {
     expect
     ( doOperation ( composition, selection, 'B', { foo: 'bar' } ) )
     .toEqual
-    ( [ { op: 'update'
+    ( [ { op: 'delete'
+        , path: [ 'zhaog', 'oaiue' ]
+        }
+      , { op: 'delete'
+        , path: [ 'zhaog', 'haiou' ]
+        }
+      , { op: 'update'
         , path: [ 'zhaog' ]
         , value:
           { t: 'P', p: 1
