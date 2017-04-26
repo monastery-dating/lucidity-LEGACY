@@ -1,20 +1,32 @@
-/* global it expect describe */
-import { simplifyChildren } from './simplify'
+import { applyOp } from './applyOp'
+import { extractSelection } from './extractSelection'
+import { rangeSelection } from './rangeSelection'
+import { simplify } from './simplify'
+import { mockComposition, mockRef } from './testUtils'
 
-describe ( 'resetPosition', () => {
-  it ( 'resets positions', () => {
-    const children =
-    { foo: { p: 1, t: 'T', i: '' }
-    , bar: { p: 1.25, t: 'T', i: '' }
-    , baz: { p: 3, t: 'T', i: '' }
-    }
+const composition = mockComposition ()
+const position = { top: 0, left: 0 }
+
+describe ( 'simplify', () => {
+  it ( 'merges same elements', () => {
+    const selection = rangeSelection
+    ( [ 'zhaog', 'oaiue' ], 0
+    , [ 'zhaog', 'oaiue' ], 7
+    , position
+    )
+    const rawChanges = applyOp
+    ( composition
+    , extractSelection ( composition, selection )
+    , 'B'
+    )
+
+    const changes = simplify ( composition, rawChanges )
     expect
-    ( simplifyChildren ( children ) )
+    ( changes.updated.map
+      ( re => re.path.join ( '.' ) + '-' + re.elem.t )
+    )
     .toEqual
-    ( { foo: { p: 0 }
-      , bar: { p: 1 }
-      , baz: { p: 2 }
-      }
+    ( [ 'zhaog-T' ]
     )
   })
 })

@@ -1,4 +1,3 @@
-/* global jest it expect describe */
 import { mockComposition, mockRef } from './utils/testUtils'
 import { rangeSelection } from './utils/rangeSelection'
 import { doOperation } from './doOperation'

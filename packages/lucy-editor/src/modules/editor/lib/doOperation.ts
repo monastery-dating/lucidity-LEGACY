@@ -6,6 +6,7 @@ import { changeParagraph } from './utils/changeParagraph'
 import { CompositionType
        , ChangesType
        , ElementRefType
+       , isStringElement
        , OperationType
        , SelectionType
        , StringElementRefType
@@ -17,6 +18,7 @@ function makeOps
 , selection: SelectionType
 ): OperationType [] {
   const ops: OperationType [] = []
+  const { updated, selected } = changes
 
   updated.forEach
   ( ( { path, elem } ) => {
@@ -32,15 +34,22 @@ function makeOps
   if ( selected ) {
     const first = selected [ 0 ]
     const last = selected [ selected.length - 1 ]
-    ops.push
-    ( { op: 'select'
-      , value: rangeSelection
-        ( first.path, 0, last.path
-        , last.elem.i.length
-        , selection.position
-        )
-      }
-    )
+    const elem = last.elem
+
+    if ( isStringElement ( elem ) ) {
+      ops.push
+      ( { op: 'select'
+        , value: rangeSelection
+          ( first.path, 0, last.path
+          , elem.i.length
+          , selection.position
+          )
+        }
+      )
+    } else {
+      throw new Error ( `Error in makeOps, element is not a string element.` )
+    }
+
   }
   return ops
 }

@@ -13,6 +13,9 @@ import { ChangesType
 
 const PARTS = ['before', 'inside', 'after']
 
+/** Must modify selected elements in place so that they are also
+ * changed in 'updated'. This is how this thing works.
+ */
 export function applyOp
 ( composition: any
 , changes: ChangesType
@@ -20,48 +23,24 @@ export function applyOp
 ): ChangesType {
   const newlist: any [] = []
   // If a single element does not contain op, make all op
-  const forceOp = list.find
-  ( ( { elem } ) => elem.t.indexOf ( type ) < 0 ) && true || false
+  const { selected } = changes
+  const forceOp = selected.find
+  ( ( { elem } ) => elem.t.indexOf ( op ) < 0 ) && true || false
 
-  list.forEach
-  ( ( { elem, ref }, idx ) => {
-      let t
+  selected.forEach
+  ( ( { elem, path }, idx ) => {
       if ( forceOp ) {
-        t = type
-      } else if ( elem.t !== 'T' && elem.t !== type ) {
-        t = [ elem.t, type ].sort ().join ( '+' )
-      } else if ( elem.t === type ) {
-        t = 'T'
+        elem.t = op
+      } else if ( elem.t !== 'T' && elem.t !== op ) {
+        elem.t = [ elem.t, op ].sort ().join ( '+' )
+      } else if ( elem.t === op ) {
+        elem.t = 'T'
       } else {
-        t = type
+        elem.t = op
       }
-      const nextobj = list [ idx + 1 ]
-      if ( isStringElement ( elem ) && nextobj && isStringElement ( nextobj.elem ) ) {
-        if ( elem.t === t && nextobj.elem.t === 'T' ) {
-          // Fuse nextobj with elem
-          list [ idx + 1 ] =
-          { ref
-            // Fuse elem + next
-          , elem: fuse ( elem, nextobj.elem )
-          }
-          return
-        } else if ( elem.t === 'T' && nextobj.elem.t === t ) {
-          list [ idx + 1 ] =
-          { ref: nextobj.ref
-            // Fuse elem + next as next
-          , elem: fuse ( elem, nextobj.elem, nextobj.elem )
-          }
-          return
-        }
-      }
-      newlist.push
-      ( { ref
-        , elem: Object.assign ( {}, elem, { t } )
-        }
-      )
     }
   )
-  return newlist
+  return changes
 }
 
 interface SplitResultType {
