@@ -1,1 +1,42 @@
 Enable LateX math by parsing $...$ inline and using special Latex block.
+
+# Use sibling pointer ?
+
+Could we get rid of ordering and simply using a sibling pointer ? This would make the code a lot cleaner but then some operations become more
+complex:
+
+In a structure like this: [ a, b, (x), c, d ]
+
+### With a sibling pointer:
+
+delete a -> [ delete:a, update:parent.child ]
+delete b -> [ delete:b, update:a ]
+update b -> [ update:b ]
+insert x -> [ insert:x, update:b ]
+
+### With numbers and sorting
+
+delete a -> [ delete:a ]
+delete b -> [ delete:b ]
+update b -> [ update:b ]
+insert x -> [ insert:x ]
+
+## What about stability in case of collaborative edit ?
+
+Numbers and sorting is more stable. Let's say with these two edits and we
+do not know in which order they will arrive at the database:
+
+    user A: insert x
+    user B: update b
+    
+With sibling:
+
+    user A: [ insert:x, update:b ]
+    user B: [ update:b ]
+
+    => reconciliation breaks with sibling
+
+With numbers:
+
+    user A: [ insert:x ]
+    user B: [ update:b ]
