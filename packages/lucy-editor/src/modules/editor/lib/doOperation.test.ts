@@ -77,33 +77,41 @@ describe ( 'doOperation.B', () => {
     )
   })
 
-  it('renders larger bold selection', () => {
+  it ( 'renders larger bold selection', () => {
     mockRef ()
     const selection = rangeSelection
     ( [ 'zhaog', 'oiafg' ], 5
     , [ 'zhaog', 'haiou' ], 7
     , position
     )
+
     expect
     ( doOperation ( composition, selection, 'B' )
     )
     .toEqual
-    ( [ { op: 'update'
+    ( [ 
+        { op: 'delete'
+        , path: [ 'zhaog', 'oaiue' ]
+        }
+      , { op: 'delete'
+        , path: [ 'zhaog', 'refe2' ]
+        }
+      , { op: 'update'
         , path: [ 'zhaog', 'oiafg' ]
         , value: { t: 'T', p: 0, i: 'This ' }
         }
       , { op: 'update'
-        , path: [ 'zhaog', 'oaiue' ]
-        , value: { t: 'B', p: 1, i: 'is the first message. Hello' }
+        , path: [ 'zhaog', 'refe1' ]
+        , value: { t: 'B', p: 0.25, i: 'is the first message. Hello' }
         }
       , { op: 'update'
         , path: [ 'zhaog', 'haiou' ]
-        , value: { t: 'T', p: 2, i: ' blah bomgolo frabilou elma tec.' }
+        , value: { t: 'T', p: 3, i: ' blah bomgolo frabilou elma tec.' }
         }
       , { op: 'select'
         , value: rangeSelection
-          ( [ 'zhaog', 'oaiue' ], 0
-          , [ 'zhaog', 'oaiue' ], 27
+          ( [ 'zhaog', 'refe1' ], 0
+          , [ 'zhaog', 'refe1' ], 27
           , position
           )
         }
@@ -111,26 +119,19 @@ describe ( 'doOperation.B', () => {
     )
   })
 
-  it('renders bold selection after other markup', () => {
+  it ( 'renders bold selection after other markup', () => {
     mockRef ()
     const selection = rangeSelection
     ( [ 'zhaog', 'haiou' ], 13
     , [ 'zhaog', 'haiou' ], 20
     , position
     )
+
     expect
     ( doOperation ( composition, selection, 'B' )
     )
     .toEqual
     ( [ { op: 'update'
-        , path: [ 'zhaog', 'oiafg' ]
-        , value: { t: 'T', p: 0, i: 'This is the first ' }
-        }
-      , { op: 'update'
-        , path: [ 'zhaog', 'oaiue' ]
-        , value: { t: 'B', p: 1, i: 'message' }
-        }
-      , { op: 'update'
         , path: [ 'zhaog', 'haiou' ]
         , value: { t: 'T', p: 2, i: '. Hello blah ' }
         }

@@ -22,8 +22,9 @@ function simplifyParent
   const { elements, updated, selected } = changes
   let deleted: string [] []
   const { path, elem } = parent
+
   if ( isStringElement ( elem ) ) {
-    return
+    throw new Error ( `Not a valid parent at path '${ path.join ( '.' ) }.` )
   }
 
   let last: ElementNamedType | undefined
@@ -69,17 +70,28 @@ function simplifyParent
           updated.push ( last.ref )
         }
         // fuse
-        if ( selected.indexOf ( ref ) >= 0 ) {
-          // When we fuse, there can only be one element in selected
-          // so this works.
-          const anchorOffset = lastElem.i.length
-          const focusOffset = anchorOffset + elem.i.length
-          const selectionPath = [ ...path, last.ref ]
-          changes.selection = rangeSelection
-          ( selectionPath, anchorOffset
-          , selectionPath, focusOffset
-          , { top: 0, left: 0 }
-          )
+        const sidx = selected.indexOf ( ref )
+        if ( sidx >= 0 ) {
+          if ( ! changes.selection ) {
+            const anchorOffset = sidx === 0
+              // If the first selected item fuses: we are removing
+              // markup and need to keep selection "in mid air"
+              ? lastElem.i.length
+              // Fusing multiple selection: select from start of
+              // element
+              : 0
+            const focusOffset = sidx === 0
+              ? anchorOffset + elem.i.length
+              : lastElem.i.length + elem.i.length
+            const selectionPath = [ ...path, last.ref ]
+            changes.selection = rangeSelection
+            ( selectionPath, anchorOffset
+            , selectionPath, focusOffset
+            , { top: 0, left: 0 }
+            )
+          } else if ( isRangeSelection ( changes.selection ) ) {
+            changes.selection.focusOffset += elem.i.length
+          }
         }
 
         lastElem.i = joinText ( lastElem.i, elem.i )
@@ -141,10 +153,20 @@ export function simplify
       const parentPath = path.slice ( 0, -1 )
       const parentId = parentPath [ parentPath.length - 1 ]
       if ( parentId ) {
-        if ( ! parents [ parentId ] ) {
+        let refParent: ElementRefType = parents [ parentId ]
+        if ( ! refParent ) {
           const parent = getAtPath ( composition, parentPath )
-          parents [ parentId ] = { elem: parent, path: parentPath }
+          let parentElem: ElementType
+          if ( isStringElement ( parent ) ) {
+            parentElem = { ...parent, i: {} }
+          } else {
+            parentElem = { ...parent, i: { ...parent.i } }
+          }
+          parents [ parentId ] = refParent =
+          { elem: parentElem, path: parentPath }
         }
+        // We change the parent so that it hold the new/modified children.
+        refParent.elem.i [ ref ] = elements [ ref ].elem
       }
     }
   )
