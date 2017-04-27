@@ -94,6 +94,7 @@ function simplifyParent
           }
         }
 
+        // console.log('FUSE', last.ref, ref )
         lastElem.i = joinText ( lastElem.i, elem.i )
 
         // remove elem from updated list
@@ -106,6 +107,12 @@ function simplifyParent
         }
         deleted.push ( [ ... path, ref ] )
       } else {
+        // console.log
+        // ( 'NO FUSE'
+        // , last.ref + '-' + last.elem.t + '-' + isTextBlock ( last.elem )
+        // , ref + '-' + elem.t + '-' + isTextBlock ( elem )
+        // , JSON.stringify ( elem, null, 2 )
+        // )
         allFused = false
         last = refElem
       }

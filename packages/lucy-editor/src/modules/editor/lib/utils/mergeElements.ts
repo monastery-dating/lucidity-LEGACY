@@ -4,6 +4,13 @@ import { canFuse } from './canFuse'
 import { fuse } from './fuse'
 import { isGroupElement, isStringElement, CompositionType, ElementRefType, GroupElementType, OperationsType, StringElementType } from './types'
 
+/*********************************************************************
+ * FIXME: ALL THIS NEEDS TO WORK ON ChangesType, not operations !
+ * This would let us simplify this thing and use 'simplify' instead
+ * of rewriting the logic.
+ *********************************************************************
+ */
+
 function addDepth
 ( a: StringElementType
 ): GroupElementType {
@@ -74,7 +81,9 @@ function mergeFlatEnd
     ops.pop ()
   }
   // End is just a simple paragraph, simply fuse or move in start para.
-  if ( canFuse ( start ) && canFuse ( end ) ) {
+  if ( canFuse ( start ) && canFuse ( end ) 
+      && start.elem.t === 'T'
+     ) {
     // start and end are string element types
     const startElem = start.elem
     const endElem = end.elem
@@ -113,6 +122,7 @@ function mergeFlatEnd
   ops.push ( { op: 'delete', path: end.path } )
 }
 
+// TODO: Could we use 'simplify' here ?
 function mergeSamePara
 ( composition: CompositionType
 , start: ElementRefType

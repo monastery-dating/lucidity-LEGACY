@@ -112,8 +112,10 @@ describe ( 'deleteSelection', () => {
     , [ 'zaahg' ], 32
     , position
     )
+
+    const ops = deleteSelection ( composition, selection )
     expect
-    ( deleteSelection ( composition, selection )
+    ( ops // deleteSelection ( composition, selection )
     )
     .toEqual
     ( [ { op: 'update', path: [ 'zhaog', 'oaiue' ]

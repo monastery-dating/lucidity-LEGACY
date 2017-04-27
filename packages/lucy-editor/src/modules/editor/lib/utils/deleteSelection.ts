@@ -1,8 +1,12 @@
 import { inSelection } from './inSelection'
 import { mergeElements } from './mergeElements'
 import { caretSelection } from './caretSelection'
-import { CompositionType, ElementType, ElementRefType, OperationsType, PathType, SelectionType
-       , StringElementType, StringElementRefType } from './types'
+import 
+  { CompositionType, ElementType, ElementRefType
+  , isStringElement, OperationsType
+  , PathType, SelectionType
+  , StringElementType, StringElementRefType 
+  } from './types'
 
 function handleStart
 ( ops: OperationsType
@@ -126,23 +130,22 @@ export function deleteSelection
   touchedElements.forEach
   ( ( { path, elem }, idx ) => {
     // We know that first and last elements are StringElementType. No idea how to
-    // set this in inSelection... FIXME
+    // set this in inSelection...
     if ( idx === 0 ) {
-      if ( typeof elem.i !== 'string' ) {
+      if ( ! isStringElement ( elem ) ) {
         throw new Error ( 'Bug in inSelection, first element should be a string element.' )
       }
-      // Typescript should know that elem is a StringElementType by now.
       start = handleStart
-      ( ops, path, <StringElementType>elem, selection
+      ( ops, path, elem, selection
       , idx === touchedElements.length - 1
       , backkey
       )
     } else if ( idx === touchedElements.length - 1 ) {
-      if ( typeof elem.i !== 'string' ) {
-        throw new Error ( 'Bug in inSelection, last element should be a string element.' )
+      if ( ! isStringElement ( elem ) ) {
+        throw new Error ( 'Bug in inSelection, first element should be a string element.' )
       }
       end = handleEnd
-      ( ops, path, <StringElementType>elem, selection
+      ( ops, path, elem, selection
       , backkey
       )
     } else {
