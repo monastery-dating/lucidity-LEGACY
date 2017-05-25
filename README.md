@@ -1,4 +1,6 @@
-# [Lucidity](https://github.com/luciditeam/lucidity/wiki/Lucidity) [![Build Status](https://api.shippable.com/projects/58ee6e2a6fda40070081603f/badge?branch=master)](https://app.shippable.com/github/luciditeam/lucidity)
+# [Lucidity](https://github.com/luciditeam/lucidity/wiki/Lucidity)
+
+[![Build Status](https://api.shippable.com/projects/58ee6e2a6fda40070081603f/badge?branch=master)](https://app.shippable.com/github/luciditeam/lucidity)
 
 This is an application to ease the creation of digital and live art.
 
