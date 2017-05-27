@@ -1,6 +1,7 @@
 import { JSX, connect } from '../../Component'
 import { signal } from 'cerebral/tags'
 import getSelection from '../lib/getSelection'
+import { doOperation } from '../../../modules/editor/lib/doOperation'
 
 export default connect
 ( { applyOp: signal`editor.applyOpTriggered`
@@ -8,7 +9,9 @@ export default connect
 , function Select ( { applyOp } ) {
     const click = ( e, op ) => {
       const selection = getSelection ()
-      applyOp ( { op, selection } )
+      const composition = // FIXME
+      const ops = doOperation ( composition, selection, op )
+      applyOp ( { ops } )
       e.preventDefault ()
     }
     const onMouseDown = e => e.preventDefault ()

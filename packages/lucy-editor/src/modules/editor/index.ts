@@ -1,4 +1,4 @@
-import { handleOpSignal } from './signals/handleOp'
+import { processOps } from './actions/processOps'
 import { handleEnterSignal } from './signals/handleEnter'
 import { deleteSelectionSignal } from './signals/deleteSelection'
 import { handleBackspaceSignal } from './signals/handleBackspace'
@@ -12,7 +12,7 @@ export const editor =
   { composition: mockComposition ()
   }
 , signals:
-  { applyOpTriggered: handleOpSignal
+  { applyOpTriggered: [ processOps ]
   , backspacePressed: handleBackspaceSignal
   , enterPressed: handleEnterSignal
   , inputChanged: handleInputSignal
