@@ -56,7 +56,7 @@ export function parse
         , type, frag, lang
         // dummy values for 'source' and 'sources'
         , source: ''
-        , sources: { name: 'source', sources: [] } 
+        , sources: []
         }
         fragments [ text ] = fragment
         tlevel = level

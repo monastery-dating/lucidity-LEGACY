@@ -1,0 +1,15 @@
+{
+  "name": "@lucidity/ts-definitions",
+  "version": "0.0.1",
+  "description": "Compile d.ts files so they can be imported by compiler",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "node ./build.js"
+  },
+  "author": "Gaspard Bucher <gaspard@lucidogen.io> (http://lucidogen.io)",
+  "license": "MIT",
+  "devDependencies": {
+    "lucidity": "^0.0.1",
+    "typescript": "^2.2.2"
+  }
+}

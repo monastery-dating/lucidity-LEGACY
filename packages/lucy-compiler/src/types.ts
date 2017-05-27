@@ -1,3 +1,5 @@
+import { Block } from 'lucidity'
+
 export interface StringMap < T > {
   [ id: string ]: T
 }
@@ -67,6 +69,19 @@ export type ParsedSourceElement = ParsedSource | string
 
 /********** PROGRAM TYPE **************************/
 
-/** Compiled Project ready to be run */
+export interface CompiledNode extends Block {
+  js: string
+}
+
+export interface CompiledTree {
+  compiledNodes: StringMap < CompiledNode >
+}
+
+/** Compiled Project ready to be run
+ * This is the public API of a CompiledTree
+ */
 export interface Program {
 }
+
+// Ensure that the two types are compatible
+const test = < Program > < CompiledTree > {}

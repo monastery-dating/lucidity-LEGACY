@@ -1,8 +1,8 @@
-import { Project, Program } from './types'
-import { compile, updateSources } from './compile'
-import { parse } from './parse'
+import { Project, Program } from '../types'
+import { compile, updateSources } from '../compile'
+import { parse } from '../parse'
 
-import { projectMarkdown } from './test/test-util'
+import { projectMarkdown } from '../test/test-util'
 
 const project = parse ( projectMarkdown ( 'testA' ) )
 
@@ -38,11 +38,10 @@ describe ( 'compile', () => {
 
 describe ( 'updateSources', () => {
   it ( 'should return changed sources in Project', () => {
-    const cache = {}
-    const sources = updateSources ( cache, project )
+    const sources = updateSources ( project )
     expect
     ( sources [ 'value1id' ]
     )
-    .toEqual ( VALUE1_SOURCE )
+    .toEqual ( { source: VALUE1_SOURCE, lang: 'ts' } )
   })
 })

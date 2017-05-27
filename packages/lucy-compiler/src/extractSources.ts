@@ -1,4 +1,9 @@
-import { ParsedSource, ParsedSourceElement, SourceFragment, StringMap } from './types'
+import
+  { ParsedSource
+  , ParsedSourceElement
+  , SourceFragment
+  , StringMap
+  } from './types'
 
 interface FragmentInfo {
   name: string
