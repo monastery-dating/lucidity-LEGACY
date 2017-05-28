@@ -1,4 +1,3 @@
-
 sudo: false
 language: node_js
 node_js: '6'
@@ -7,6 +6,8 @@ cache:
   - node_modules
 notifications:
   email: false
+  slack:
+    secure: T0u8/8QHPqaSFK6Zveo+hGgQ4TEjI7t5yjbLwsIDfwUrHyL8gOBa5t38MV5aXwDTys4PS7fFf6RXCMdcCLM0S3WI5DPEIvYTZ04Qrc6H2Yo5SnWy/VJFp5p5aIf39+0clFN+0pQ4WD4kShTjII8OjPtRoeRXao2kU2Z7b10cI8TROFyWgzJEKSMY6wZx+Add0yDLt4kvBAyaTvv7AoNZhPwzQ6JIJuvPA9LUeUNWfbVbwZdO4uvaveSwiStpxstgES7pwUmFq3FlpCpLjoQaoh0vTgl5DtGPrPNqALs6UZI3i4fIr9QxHdPn8K8I5PyVgzyrEzh/1Ew0Z/bpwRXz5vTzUOv04VffJgGBpuXmTu2PSNFODbkS0ZcQZvNsQRJ/PsD6t3NUFc2d65GyFw3OrND9FpE47FoOhy4EI9jzr7+jroVVrLsGPsPTYgomoamfHETild+swMRbEYUsTM/lUc20EngASDftKPTZICcVToX2DSFiX7uQNzQdeqcwEXYJJciU9GbMT3gFdT1UjOXlgARaV+sps3a0lfBfM8o0209A839jalwWXkaLni84QcCSCIY2iN7DpNzZGN9kKzftMQDltZgsXmPyMKP0jqxGdUvLjMDWHj+i0FTF9nKDOurnS8kGCTSqIk0oQPRqejo7MXveSLJEQbfzfIE6m0/8U+o=
 after_success:
 - |
   if [[ $TRAVIS_BRANCH == 'master' || $TRAVIS_PULL_REQUEST == 'true' ]]; then
@@ -15,5 +16,5 @@ after_success:
   fi
 branches:
   except:
-    - "/^v\\d+\\.\\d+\\.\\d+$/"
-    - gh-pages
+  - "/^v\\d+\\.\\d+\\.\\d+$/"
+  - gh-pages
