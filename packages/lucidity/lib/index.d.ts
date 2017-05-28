@@ -1,4 +1,3 @@
-export { foo } from './utils';
 export declare type ContextExtension = any;
 export interface Time {
     now: number;
@@ -22,7 +21,7 @@ export interface MainContext {
     midi: Midi;
 }
 export declare type Cache = any;
-export declare type Context = MainContext & ContextExtension;
+export declare type Context = Readonly<MainContext & ContextExtension>;
 export interface AllChildren {
     (): void;
 }
@@ -50,13 +49,11 @@ export interface Control {
     Pad(namex: string, namey: string, clbk: PadCallback): any;
 }
 export interface Helpers {
-    context?: Context;
-    control?: Control;
-    require?: Require;
-    asset?: Asset;
-    children?: Children;
-    cache?: Cache;
-    detached?: boolean;
+    context: Context;
+    children: Children;
+    cache: Cache;
+    detached: boolean;
+    contextForChildren: Context;
 }
 export interface StringMap {
     [key: string]: string;

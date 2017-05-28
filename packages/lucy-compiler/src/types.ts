@@ -1,4 +1,4 @@
-import { Block } from 'lucidity'
+import { Block, Helpers } from 'lucidity'
 
 export interface StringMap < T > {
   [ id: string ]: T
@@ -73,15 +73,25 @@ export interface CompiledNode extends Block {
   js: string
 }
 
+export interface LinkedNode extends CompiledNode {
+  helpers: Helpers
+}
+
 export interface CompiledTree {
   compiledNodes: StringMap < CompiledNode >
 }
 
+export interface LinkedTree {
+  main (): void
+  linkedNodes: StringMap < LinkedNode >
+}
+
 /** Compiled Project ready to be run
- * This is the public API of a CompiledTree
+ * This is the public API of a LinkedTree
  */
 export interface Program {
+  main (): void
 }
 
 // Ensure that the two types are compatible
-const test = < Program > < CompiledTree > {}
+const test = < Program > < LinkedTree > {}

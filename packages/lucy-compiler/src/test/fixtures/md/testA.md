@@ -47,7 +47,7 @@ Here we change some elements to see how fragments are resolved.
 
 ### @value.main
 
-This will change **all** framents named 'main' in blocks named 'value'.
+This will change **all** fragments named 'main' in blocks named 'value'.
 
 ```ts
 const v = 2
@@ -67,6 +67,7 @@ This part is automatically added by the editor to store sources of all blocks in
 
 ```ts
 import { Init, Update, Meta } from 'lucidity'
+
 let result = { value: 0 }
 let child1: Update
 let child2: Update
@@ -97,7 +98,6 @@ export const meta: Meta =
 , author: 'Gaspard Bucher <gaspard@lucidity.io>'
 , origin: 'lucidity.io/value'
 , version: '1.0'
-, update: '(): void'
 , children:
   [ '(): number', '(): number', '(): number' ]
 }
@@ -106,6 +106,8 @@ export const meta: Meta =
 ### $fooid.source
 
 ```ts
+import { Meta, Update } from 'lucidity'
+
 export const update: Update =
 (): number => {
   return 0
@@ -124,6 +126,8 @@ export const meta: Meta =
 ### $value1id.source
 
 ```ts
+import { Meta, Update } from 'lucidity'
+
 export const update: Update =
 (): number => {
   // <frag:main>
@@ -144,6 +148,8 @@ export const meta: Meta =
 ### $value2id.source
 
 ```ts
+import { Meta, Update } from 'lucidity'
+
 export const update: Update =
 (): number => {
   // <frag:main>

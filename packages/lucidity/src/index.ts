@@ -35,7 +35,7 @@ export type Cache = any
 
 // TODO: Try to augment this contect during type checking of Block depending
 // on context requirements, meta.expect field.
-export type Context = MainContext & ContextExtension
+export type Context = Readonly < MainContext & ContextExtension >
 
 export interface AllChildren {
   (): void
@@ -43,6 +43,7 @@ export interface AllChildren {
 
 export interface Children {
   [ key: number ]: Update
+  // This only exists if the Meta.children is 'all'
   all?: AllChildren
 }
 
@@ -72,14 +73,15 @@ export interface Control {
 }
 
 export interface Helpers {
-  // optional to ease testing
-  context?: Context
-  control?: Control
-  require?: Require
-  asset?: Asset
-  children?: Children
-  cache?: Cache
-  detached?: boolean
+  context: Context
+  // control: Control
+  // require: Require
+  // asset: Asset
+  children: Children
+  cache: Cache
+  detached: boolean
+  // Not to be used inside a Block
+  contextForChildren: Context;
 }
 
 export interface StringMap {
@@ -97,6 +99,8 @@ export interface Meta {
   expect?: StringMap
   provide?: StringMap
   children?: string[] | 'all'
+  // If there is an update function but no type information, it
+  // is considered a floating child and can be conected to any slot.
   update?: string
 }
 

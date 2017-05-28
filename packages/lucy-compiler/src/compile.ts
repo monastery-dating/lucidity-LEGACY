@@ -2,6 +2,8 @@ import
   { BranchDefinition
   , CompiledTree
   , CompiledNode
+  , LinkedTree
+  , LinkedNode
   , ParsedSourceElement
   , Program
   , Project
@@ -9,7 +11,7 @@ import
   , StringMap
   } from './types'
 import { extractSources } from './extractSources'
-import { Block } from 'lucidity'
+import { Block, Context, Helpers, Update } from 'lucidity'
 import
   { compilers
   , CompileResult
@@ -85,7 +87,7 @@ export interface Project {
 }
 */
 
-function findRoot
+function buildTree
 ( project: Project
 ): BranchDefinition {
   const root = project.branches.find
@@ -113,12 +115,14 @@ function runModule
 ): Block {
   const exported: Block = {}
 
-  // try {
-  const codefunc = new Function ( 'exports', SCRUBBER_VAR, compiled.js )
-  codefunc ( exported, compiled.scrub.values )
-  //} catch ( err ) {
+  try {
+    const codefunc = new Function
+    ( 'exports', SCRUBBER_VAR, compiled.js )
+    codefunc ( exported, compiled.scrub.values )
+  } catch ( err ) {
     // TODO: Proper error handling.
-  // }
+    console.log ( err )
+  }
   return exported
 }
 
@@ -137,53 +141,302 @@ function compileNode
   return Object.assign ( compiled, exported )
 }
 
+/** The callback function must:
+ * 1. transform node and write it into accumulator
+ * 2. return unhandled children
+ */
 function mapTree <T>
-( project: Project
-, nodeId: string
-, fun: ( nodeId: string ) => T
-, result: StringMap < T > = {}
-): StringMap < T > {
+( branch: BranchDefinition
+, accumulator: StringMap < T >
+, fun: ( parent: T | undefined, nodeId: string ) => T
+, nodeId: string = branch.entry
+, parent: T | undefined = undefined
+): T {
   // map parent
-  result [ nodeId ] = fun ( nodeId )
+  const result = fun ( parent, nodeId )
+
+  accumulator [ nodeId ] = result
+
   // map children
+  const childrenIds = branch.nodes [ nodeId ]
+  if ( childrenIds ) {
+    childrenIds.forEach
+    ( childId => mapTree
+      ( branch
+      , accumulator
+      , fun
+      , childId
+      , result
+      )
+    )
+  }
 
   return result
 }
 
 function compileTree
-( project: Project
+( branch: BranchDefinition
 , sources: SourceMap
 ): CompiledTree {
-  const root = findRoot ( project )
-  const compiledNodes =
+  const compiledNodes: StringMap < CompiledNode > = {}
   mapTree
-  ( project
-  , root.entry
-  , nodeId => compileNode ( sources [ nodeId ] )
+  ( branch
+  , compiledNodes
+  , ( parent, nodeId ) => compileNode ( sources [ nodeId ] )
   )
-  // 1. Get full source
-  // 2. Compile source
-  // 3. Run script to get exports
-  // 4. Read meta
-  // 5. Process children
   return { compiledNodes }
 }
 
+function linkNode
+( baseHelpers: Helpers
+, accumulator: StringMap < LinkedNode >
+, typedChildren: LinkedNode []
+, floatingChildren: LinkedNode []
+, nodeId: string
+, node: CompiledNode
+): { typed?: LinkedNode, floatingChildren: LinkedNode [] } {
+  const { meta } = node
+  const helpers: Helpers =
+  Object.assign
+  ( {}
+  , baseHelpers
+  )
+
+  // Create LinkedNode
+  const self = accumulator [ nodeId ] = Object.assign
+  ( { helpers }
+  , node
+  )
+
+  if ( ! meta ) {
+    // ********* Not dealing with children.
+    if ( typedChildren.length ) {
+      throw new Error
+      ( `Invalid node '${nodeId}' (it has no children type information and contains typed children).` )
+    }
+
+    if ( node.update ) {
+      return { floatingChildren: [ ...floatingChildren, self ] }
+    } else {
+      return { floatingChildren }
+    }
+
+  } else if ( meta.children === undefined ) {
+    // ********* Not dealing with children but has meta.
+    if ( typedChildren.length ) {
+      throw new Error
+      ( `Invalid node '${nodeId}' (it has no children type information and contains typed children).` )
+    }
+
+    if ( meta.update ) {
+      if ( ! node.update ) {
+        throw new Error
+        ( `Invalid node '${nodeId} (it contains update type but no update function).` )
+      }
+      return { typed: self, floatingChildren }
+    } else if ( node.update ) {
+      return { floatingChildren: [ ...floatingChildren, self ] }
+    } else {
+      return { floatingChildren }
+    }
+
+  } else if ( meta.children === 'all' ) {
+    // ********* We run floating children
+    if ( typedChildren.length ) {
+      throw new Error
+      ( `Invalid node '${nodeId}' (it has children 'all' and contains typed children).` )
+    }
+
+    const list = < Update [] > floatingChildren.map ( child => child.update )
+    helpers.children =
+    { all () { 
+        for ( const f of list ) {
+          f ()
+        }
+      } 
+    }
+
+    if ( meta.update ) {
+      return { typed: self, floatingChildren: [] }
+    } else if ( node.update ) {
+      return { floatingChildren: [ self ] }
+    } else {
+      throw new Error
+      ( `Invalid node: has children 'all' setting but no update function.` )
+    }
+
+  } else if ( meta.children ) {
+    // ********* We run our own typed children
+    helpers.children = < Update [] > typedChildren.map ( child => child.update )
+
+    if ( meta.update ) {
+      return { typed: self, floatingChildren }
+    } else if ( node.update ) {
+      return { floatingChildren: [ ...floatingChildren, self ] }
+    } else {
+      throw new Error
+      ( `Invalid node: has typed children but no update function.` )
+    }
+  }
+  // Unreachable code
+  throw new Error ( `BUG: A case in linkNode not taken care of: ${
+    JSON.stringify ( node, null, 2 )
+  }`)
+}
+
+function linkOne
+( branch: BranchDefinition
+, accumulator: StringMap < LinkedNode >
+, fun:
+  ( accumulator: StringMap < LinkedNode >
+  , typedChildren: LinkedNode []
+  , floatingChildren: LinkedNode []
+  , nodeId: string
+  ) => { typed?: LinkedNode, floatingChildren: LinkedNode [] }
+, nodeId: string = branch.entry
+): { typed?: LinkedNode, floatingChildren: LinkedNode [] } {
+  // map children
+  const childrenIds = branch.nodes [ nodeId ]
+  const typedChildren: LinkedNode [] = []
+  let allFloatingChildren: LinkedNode [] = []
+  if ( childrenIds ) {
+    childrenIds.map
+    ( childId => linkOne
+      ( branch
+      , accumulator
+      , fun
+      , childId
+      )
+    ).forEach
+    ( ( { typed, floatingChildren } ) => {
+        if ( typed ) {
+          typedChildren.push ( typed )
+        }
+        if ( floatingChildren.length ) {
+          allFloatingChildren = allFloatingChildren.concat ( floatingChildren )
+        }
+      }
+    )
+  }
+  // map parent
+  return fun ( accumulator, typedChildren, allFloatingChildren, nodeId )
+}
+
+function linkTree
+( branch: BranchDefinition
+, tree: CompiledTree
+): LinkedTree {
+  const { compiledNodes } = tree
+  const linkedNodes: StringMap < LinkedNode > = {}
+
+  const baseHelpers: Helpers =
+  { context: {}
+  , contextForChildren: {}
+  , children: []
+  , cache: {}
+  , detached: false
+  }
+
+  const result = linkOne
+  ( branch
+  , linkedNodes
+  , ( acc, typedChildren, floatingChildren, nodeId ) =>
+      linkNode
+      ( baseHelpers
+      , acc
+      , typedChildren
+      , floatingChildren
+      , nodeId
+      , compiledNodes [ nodeId ]
+      )
+  )
+  if ( result.typed ) {
+    throw new Error
+    ( `Invalid project: root node '${ branch.entry }' is typed.` )
+  }
+  const list = < Update [] > result.floatingChildren.map
+  ( child => child.update )
+
+  const main = () => {
+    for ( const f of list ) {
+      f ()
+    }
+  }
+
+  return { linkedNodes, main }
+}
+
+function subContext <T, U>
+( base: T
+, updates: U
+): Readonly < T & U > {
+  return Object.freeze
+  ( Object.assign
+    ( {}, base, updates )
+  )
+}
+
+interface NodeWithContext {
+  helpers: { contextForChildren: Context }
+}
+
+function initNode
+( parent: NodeWithContext
+, nodeId: string
+, node: LinkedNode
+): LinkedNode {
+  const { init, helpers } = node
+  helpers.context = parent.helpers.contextForChildren
+
+  if ( init ) {
+    let result
+    try {
+      result = init ( helpers )
+    } catch ( err ) {
+      console.log ( node.js )
+      throw new Error
+      ( `Error running 'init' from '${ nodeId }': ${ err }` )
+    }
+    if ( result ) {
+      if ( typeof result !== 'object' ) {
+        throw new Error
+        ( `Error running '${nodeId}: init return value must be an object.` )
+      }
+      else {
+        helpers.contextForChildren =
+        subContext ( helpers.context, result )
+      }
+    }
+  }
+  return node
+}
+
 function initTree
-( project: Project
-, branch: CompiledTree
-) {
-  // Call init in all nodes (parent first).
+( branch: BranchDefinition
+, tree: LinkedTree
+): LinkedTree {
+  // We simply update the linked node for each child
+  const base = { helpers: { contextForChildren: subContext ( {}, {} ) } }
+  const { linkedNodes } = tree
+  const initNodes: StringMap < LinkedNode > = {}
+  mapTree
+  ( branch
+  , initNodes // Dummy, accumulator is discarded
+  , ( parent, nodeId ) => initNode
+      ( parent || base
+      , nodeId
+      , linkedNodes [ nodeId ]
+      )
+  )
+  return tree
 }
 
 export function compile
 ( project: Project
 ): Program {
-  // console.log(JSON.stringify(project, null, 2))
-  // FIXME: use
+  const branch = buildTree ( project )
   const sources = updateSources ( project )
-  const tree = compileTree ( project, sources )
-  initTree ( project, tree )
-
-  return {}
+  const compiledTree = compileTree ( branch, sources )
+  const linkedTree = linkTree ( branch, compiledTree )
+  return initTree ( branch, linkedTree )
 }

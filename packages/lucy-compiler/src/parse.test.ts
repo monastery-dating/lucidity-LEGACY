@@ -1,10 +1,10 @@
 import { parse } from './parse'
 
-import { projectMarkdown } from './test/test-util'
+import { source } from './test'
 
 describe ( 'parse', () => {
   it ( 'should parse markdown', () => {
-    const x = parse ( projectMarkdown ( 'testA' ) )
+    const x = parse ( source ( 'testA.md' ) )
     expect
     ( x.fragments [ '@value.main' ].source
     )

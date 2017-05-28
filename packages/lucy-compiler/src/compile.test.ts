@@ -1,4 +1,4 @@
-import { Project, Program } from './types'
+import { LinkedTree, Project, Program } from './types'
 import { compile, updateSources } from './compile'
 import { parse } from './parse'
 
@@ -7,7 +7,9 @@ import { source } from './test'
 const project = parse ( source ( 'testA.md' ) )
 
 const VALUE1_SOURCE =
-`export const update: Update =
+`import { Meta, Update } from 'lucidity'
+
+export const update: Update =
 (): number => {
   // <frag:main>
 const v = 2
@@ -26,13 +28,19 @@ export const meta: Meta =
 
 describe ( 'compile', () => {
   it ( 'should compile Project to Program', () => {
-    const program = compile ( project )
-    // program.init ()
-    // program.update ()
-    // expect
-    // ( program.cache [ '$addid' ].result.value
-    // )
-    // .toEqual ( 6 )
+    const program = <LinkedTree>compile ( project )
+
+    expect
+    ( program.linkedNodes [ 'addid' ].helpers.cache.result.value
+    )
+    .toEqual ( 0 )
+
+    program.main ()
+
+    expect
+    ( program.linkedNodes [ 'addid' ].helpers.cache.result.value
+    )
+    .toEqual ( 4 )
   })
 })
 
