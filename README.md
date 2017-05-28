@@ -1,6 +1,6 @@
 # [Lucidity](https://github.com/luciditeam/lucidity/wiki/Lucidity)
 
-[![Build Status](https://travis-ci.org/luciditeam/lucidity.svg?branch=master)](https://travis-ci.org/luciditeam/lucidity)
+[![Build Status](https://travis-ci.org/luciditeam/lucidity.svg?branch=master)](https://travis-ci.org/luciditeam/lucidity) [![Coverage Status](https://coveralls.io/repos/github/luciditeam/lucidity/badge.svg?branch=master)](https://coveralls.io/github/luciditeam/lucidity?branch=master)
 
 This is an application to ease the creation of digital and live art.
 
