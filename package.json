@@ -6,7 +6,7 @@
   "repository": "git@github.com:luciditeam/lucidity.git",
   "scripts": {
     "coverage": "CI=true lerna run coverage",
-    "coverage:upload": "cat packages/**/coverage/lcov.info | coveralls",
+    "coverage:upload": "./node_modules/.bin/lcov-result-merger \"packages/{,@lucidity}/*/coverage/lcov.info\" | coveralls",
     "deploy": "lerna --scope @lucidity/app run deploy",
     "predeploy": "lerna bootstrap",
     "postbootstrap": "npm run setup",
@@ -21,6 +21,7 @@
     "dotenv": "^4.0.0",
     "gh-pages": "^0.12.0",
     "jest": "^19.0.2",
+    "lcov-result-merger": "^1.2.0",
     "lerna": "2.0.0-beta.34",
     "ts-jest": "^19.0.8",
     "ts-loader": "^2.0.3",

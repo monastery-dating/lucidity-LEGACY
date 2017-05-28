@@ -4,6 +4,8 @@ node_js: '6'
 cache:
   directories:
   - node_modules
+ci:
+  - npm run coverage
 notifications:
   email: false
   slack:
@@ -14,7 +16,6 @@ notifications:
 after_success:
 - |
   if [[ $TRAVIS_BRANCH == 'master' || $TRAVIS_PULL_REQUEST == 'true' ]]; then
-    npm run coverage;
     npm run coverage:upload;
   fi
 branches:
