@@ -61,7 +61,7 @@ return v
 
 # Appendix
 
-This part is automatically added by the editor to store sources of all blocks in all graphs in the project. When we serialise to the filesystem, these end up in their own files.
+This part is automatically added by the editor to store sources of all blocks in all graphs in the project. These are the contents of the block 'templates' that we drag into the graph. When we serialise to the filesystem, these end up in their own files.
 
 ## $addid.source
 
