@@ -2,14 +2,35 @@
   "name": "@lucidity/ts-definitions",
   "version": "0.0.1",
   "description": "Compile d.ts files so they can be imported by compiler",
+  "license": "MIT",
+  "author": "Gaspard Bucher <gaspard@lucidogen.io> (http://lucidogen.io)",
   "main": "lib/index.js",
   "scripts": {
-    "build": "node ./build.js"
+    "build": "node ./build.js",
+    "coverage": "node scripts/test.js --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "test": "node scripts/test.js"
   },
-  "author": "Gaspard Bucher <gaspard@lucidogen.io> (http://lucidogen.io)",
-  "license": "MIT",
   "devDependencies": {
+    "@types/jest": "^19.2.2",
+    "coveralls": "^2.12.0",
+    "jest": "^17.0.3",
     "lucidity": "^0.0.1",
-    "typescript": "^2.2.2"
+    "typescript": "^2.2.2",
+    "ts-jest": "^17.0.3"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "testPathIgnorePatterns": [
+      "<rootDir>/(node_modules|build)/"
+    ],
+    "testEnvironment": "node",
+    "testRegex": "\\.test\\.(ts|tsx)$"
   }
 }

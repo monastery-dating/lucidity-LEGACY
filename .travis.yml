@@ -1,0 +1,23 @@
+
+sudo: false
+language: node_js
+node_js: '6'
+cache:
+  directories:
+  - node_modules
+notifications:
+  email: false
+script:
+  - npm bootstrap
+  - npm run setup
+  - mpn run test
+after_success:
+- |
+  if [[ $TRAVIS_BRANCH == 'master' || $TRAVIS_PULL_REQUEST == 'true' ]]; then
+    npm run coverage;
+    npm run coverage:upload;
+  fi
+branches:
+  except:
+    - "/^v\\d+\\.\\d+\\.\\d+$/"
+    - gh-pages
