@@ -9,6 +9,11 @@ env:
   global:
     - TEST_REPORT_PATH=shippable/testresults
 build:
+  ci:
+    - npm install
+    - npm bootstrap
+    - npm run setup
+    - mpn run test
   cache: true
   on_success:
     - git config --global user.email build@lucidity.io
