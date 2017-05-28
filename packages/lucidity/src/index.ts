@@ -1,4 +1,4 @@
-type ContextExtension = any
+export type ContextExtension = any
 
 /* ********** CONTEXTUAL TYPES ********** */
 export interface Time {
@@ -7,13 +7,13 @@ export interface Time {
 }
 
 // velocity values from 0-127
-type Note = number[]
+export type Note = number[]
 // velocity values from 0-127
-type Ctrl = number[]
+export type Ctrl = number[]
 
 export interface Midi {
-  note: Note[] // notes per channel 1-16
-  ctrl: Ctrl[] // ctrl per channel 1-16
+  note: Note [] // notes per channel 1-16
+  ctrl: Ctrl [] // ctrl per channel 1-16
 }
 
 export interface Screen {
@@ -27,34 +27,34 @@ export interface Screen {
 
 /* ********* */
 
-interface MainContext {
+export interface MainContext {
   midi: Midi
 }
 
-type Cache = any
+export type Cache = any
 
 // TODO: Try to augment this contect during type checking of Block depending
 // on context requirements, meta.expect field.
-type Context = MainContext & ContextExtension
+export type Context = MainContext & ContextExtension
 
-interface AllChildren {
+export interface AllChildren {
   (): void
 }
 
-interface Children {
+export interface Children {
   [ key: number ]: Update
   all?: AllChildren
 }
 
-interface Require {
+export interface Require {
   ( libname: string ): any
 }
 
-interface SourceCallback {
+export interface SourceCallback {
   ( content: string ): void
 }
 
-interface Asset {
+export interface Asset {
   source ( name: string, callback: SourceCallback ): void
 }
 
@@ -82,7 +82,7 @@ export interface Helpers {
   detached?: boolean
 }
 
-interface StringMap {
+export interface StringMap {
   [ key: string ]: string
 }
 

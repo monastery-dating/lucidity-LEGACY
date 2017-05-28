@@ -1,0 +1,15 @@
+{ "exclude":
+  [ "node_modules"
+  , "lib"
+  , ".git"
+  , "typings/browser"
+  , "typings/browser.d.ts"
+  ]
+, "compilerOptions":
+  { "outDir": "lib"
+  , "target": "es2015"
+  , "module": "commonjs"
+  , "declaration": true
+  }
+, "compileOnSave": true
+}

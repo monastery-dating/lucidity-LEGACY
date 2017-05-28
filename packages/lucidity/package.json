@@ -2,7 +2,7 @@
   "name": "lucidity",
   "version": "0.0.1",
   "description": "Types and runtime utilities.",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -21,7 +21,7 @@ const D_TS = Object.keys ( definitions ).reduce
 , < StringMap < ts.IScriptSnapshot > > {}
 )
 
-
+const MAIN_FILE = 'main.ts'
 const UNARY_AFTER = [ '=', '(', '?', ':', '[', '*', '/', '+' ]
 const SCRUB_PREFIX = `declare var ${SCRUBBER_VAR}: number[]\n`
 
@@ -41,7 +41,7 @@ const BASE_HOST =
   }
 
 , getCurrentDirectory (): string {
-    return 'LUCIDITY' // ?
+    return ''
   }
 
 , getDefaultLibFileName(options: ts.CompilerOptions): string {
@@ -64,9 +64,35 @@ const BASE_HOST =
     return true
   }
 
-, resolveModuleNames ( moduleNames: string[], containingFile: string): ts.ResolvedModule[] {
-    return moduleNames.map ( n => ( { resolvedFileName: n + '.ts' } ) )
-    // isExternalLibraryImport?: boolean
+, resolveModuleNames
+  ( moduleNames: string []
+  , containingFile: string
+  ): ts.ResolvedModule[] {
+    return moduleNames.map
+    ( modName => {
+        if ( containingFile === MAIN_FILE ) {
+          // No relative import
+          return { resolvedFileName: modName + '.ts' }
+        } else {
+          const base = containingFile.substr
+          ( 0, containingFile.length - 3 )
+          const path = modName.split( '/' ).reduce
+          ( ( acc, part, idx ) => {
+              if ( part === '.' ) {
+              } else if ( part === '..' ) {
+                acc.pop ()
+              } else {
+                acc.push ( part )
+              }
+              return acc
+            }
+          , base.split ( '/' )
+          ).join ( '/' )
+          console.log ( path )
+          return { resolvedFileName: path + '.ts' }
+        }
+      }
+    )
   }
 }
 
@@ -88,10 +114,10 @@ const LanguageHost =
 
   const lh =
   { getScriptFileNames (): string[] {
-      return [ 'main.ts' ]
+      return [ MAIN_FILE ]
     }
   , getScriptVersion ( filename: string ): string {
-      if ( filename === 'main.ts' ) {
+      if ( filename === MAIN_FILE ) {
         return mainFile.version.toString ()
       }
       else {
@@ -100,7 +126,7 @@ const LanguageHost =
     }
 
   , getScriptSnapshot ( filename: string ): ts.IScriptSnapshot {
-      if ( filename === 'main.ts' ) {
+      if ( filename === MAIN_FILE ) {
         return ts.ScriptSnapshot.fromString ( mainFile.source )
       }
       return libShot ( filename )
@@ -208,8 +234,8 @@ export function compileCode
     diagnostics =
     // This doesn't seem to give any useful information.
     // [ ...LS.getCompilerOptionsDiagnostics ()
-    [ ...LS.getSyntacticDiagnostics ( 'main.ts' )
-    , ...LS.getSemanticDiagnostics ( 'main.ts' )
+    [ ...LS.getSyntacticDiagnostics ( MAIN_FILE )
+    , ...LS.getSemanticDiagnostics ( MAIN_FILE )
     ]
   }
 
@@ -228,7 +254,7 @@ export function compileCode
     return { errors }
   }
 
-  const output = LS.getEmitOutput ( 'main.ts' )
+  const output = LS.getEmitOutput ( MAIN_FILE )
   if (!output.emitSkipped) {
     // valid
     const js = output.outputFiles [ 0 ].text
