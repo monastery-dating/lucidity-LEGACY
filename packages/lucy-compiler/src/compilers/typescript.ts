@@ -3,6 +3,7 @@
  */
 import * as ts from 'typescript'
 import { definitions } from '@lucidity/ts-definitions'
+import { StringMap } from 'lucidity'
 import
   { CompilerError
   , LiteralScrub
@@ -10,7 +11,6 @@ import
   , ScrubCode
   , CompileResult
   } from './types'
-import { StringMap } from '../types'
 
 const D_TS = Object.keys ( definitions ).reduce
 ( ( acc, name ) => {

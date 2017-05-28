@@ -2,9 +2,9 @@ import { Project, Program } from './types'
 import { compile, updateSources } from './compile'
 import { parse } from './parse'
 
-import { projectMarkdown } from './test/test-util'
+import { source } from './test'
 
-const project = parse ( projectMarkdown ( 'testA' ) )
+const project = parse ( source ( 'testA.md' ) )
 
 const VALUE1_SOURCE =
 `export const update: Update =
