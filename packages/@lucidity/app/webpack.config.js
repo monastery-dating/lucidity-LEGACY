@@ -50,4 +50,11 @@ module.exports =
       }
     ]
   }
+, plugins:
+  [ new webpack.DllReferencePlugin
+    ( { context: '.'
+      , manifest: require('./app/build/vendor-manifest.json')
+      }
+    )
+  ]
 }

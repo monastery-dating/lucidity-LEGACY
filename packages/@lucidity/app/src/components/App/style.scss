@@ -1,0 +1,26 @@
+@import "./variables.scss";
+
+$primary: #222222;
+
+@import "../../../node_modules/bulma/bulma.sass";
+
+.hero.is-primary .title {
+  color: #353535;
+}
+.Code, .Visuals {
+  min-height: 600px;
+}
+
+.Visuals {
+  color: #888;
+  background: #444;
+}
+
+.Main {
+  padding-right: 0;
+}
+
+.Visuals {
+  margin-top: -36px;
+  margin-bottom: -36px;
+}
