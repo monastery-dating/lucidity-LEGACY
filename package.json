@@ -9,7 +9,8 @@
     "start": "lerna --scope lucy-app run start",
     "deploy": "lerna --scope lucy-app run deploy",
     "predeploy": "lerna bootstrap",
-    "pretest": "lerna bootstrap"
+    "pretest": "lerna --scope lucidity run build",
+    "postinstall": "lerna bootstrap"
   },
   "dependencies": {
     "dotenv": "^4.0.0",

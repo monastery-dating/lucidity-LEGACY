@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc"
   },
   "author": "Gaspard Bucher <gaspard@lucidogen.io> (http://lucidogen.io)",
   "license": "ISC"
