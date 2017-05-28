@@ -1,8 +1,22 @@
 {
   "name": "@lucidity/editor",
   "version": "0.1.0",
-  "private": true,
   "homepage": "http://lucidity.io",
+  "author": "Gaspard Bucher <gaspard@lucidogen.io> (http://lucidogen.io)",
+  "license": "MIT",
+  "scripts": {
+    "build": "webpack --config app.webpack.config.js",
+    "coverage": "node scripts/test.js --env=jsdom --coverage",
+    "start": "webpack-dev-server --inline --content-base public",
+    "test": "node scripts/test.js --env=jsdom"
+  },
+  "dependencies": {
+    "cerebral": "2.0.0-b-alpha.d6efd5f3",
+    "font-awesome": "^4.7.0",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "uuid": "^2.0.3"
+  },
   "devDependencies": {
     "@types/enzyme": "^2.5.39",
     "@types/jest": "^16.0.1",
@@ -26,19 +40,6 @@
     "url-loader": "^0.5.7",
     "webpack": "1.12.13",
     "webpack-dev-server": "1.14.1"
-  },
-  "dependencies": {
-    "cerebral": "2.0.0-b-alpha.d6efd5f3",
-    "font-awesome": "^4.7.0",
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4",
-    "uuid": "^2.0.3"
-  },
-  "scripts": {
-    "build": "webpack --config app.webpack.config.js",
-    "coverage": "node scripts/test.js --env=jsdom --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "start": "webpack-dev-server --inline --content-base public",
-    "test": "node scripts/test.js --env=jsdom"
   },
   "jest": {
     "transform": {

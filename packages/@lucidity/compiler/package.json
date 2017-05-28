@@ -2,13 +2,18 @@
   "name": "@lucidity/compiler",
   "version": "0.0.1",
   "description": "Compile a Lucidity project into a program",
-  "main": "index.js",
-  "scripts": {
-    "coverage": "node scripts/test.js --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "test": "node scripts/test.js"
-  },
   "author": "Gaspard Bucher <gaspard@lucidogen.io> (http://lucidogen.io)",
   "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "coverage": "node scripts/test.js --coverage",
+    "test": "node scripts/test.js"
+  },
+  "dependencies": {
+    "js-yaml": "^3.8.3",
+    "marked": "^0.3.6",
+    "@lucidity/ts-definitions": "^0.0.1"
+  },
   "devDependencies": {
     "@types/jest": "^19.2.2",
     "@types/js-yaml": "^3.5.30",
@@ -23,11 +28,6 @@
     "ts-loader": "^2.0.3",
     "typescript": "^2.2.2",
     "webpack": "^2.6.1"
-  },
-  "dependencies": {
-    "js-yaml": "^3.8.3",
-    "marked": "^0.3.6",
-    "@lucidity/ts-definitions": "^0.0.1"
   },
   "jest": {
     "transform": {

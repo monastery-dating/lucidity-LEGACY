@@ -1,9 +1,26 @@
 {
   "name": "@lucidity/app",
   "version": "0.1.0",
-  "license": "MIT",
+  "description": "Interactive visuals for live arts.",
   "homepage": "http://test.lucidity.io",
+  "author": "Gaspard Bucher <gaspard@lucidogen.io> (http://lucidogen.io)",
+  "license": "MIT",
   "repository": "git@github.com:luciditeam/lucidity.git",
+  "scripts": {
+    "start": "webpack-dev-server --inline --content-base app",
+    "build": "webpack --config webpack.config.js",
+    "coverage": "node scripts/test.js --env=jsdom --coverage",
+    "test": "node scripts/test.js --env=jsdom",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d app -r git@github.com:luciditeam/lucidity.git"
+  },
+  "dependencies": {
+    "cerebral": "2.0.0-b-alpha.d6efd5f3",
+    "font-awesome": "^4.7.0",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "uuid": "^2.0.3"
+  },
   "devDependencies": {
     "@types/enzyme": "^2.7.8",
     "@types/jest": "^19.2.2",
@@ -28,21 +45,6 @@
     "url-loader": "^0.5.7",
     "webpack": "1.12.13",
     "webpack-dev-server": "1.14.1"
-  },
-  "dependencies": {
-    "cerebral": "2.0.0-b-alpha.d6efd5f3",
-    "font-awesome": "^4.7.0",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2",
-    "uuid": "^2.0.3"
-  },
-  "scripts": {
-    "start": "webpack-dev-server --inline --content-base app",
-    "build": "webpack --config webpack.config.js",
-    "coverage": "node scripts/test.js --env=jsdom --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "test": "node scripts/test.js --env=jsdom",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d app -r git@github.com:luciditeam/lucidity.git"
   },
   "jest": {
     "transform": {

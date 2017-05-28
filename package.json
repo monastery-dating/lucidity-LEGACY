@@ -6,7 +6,7 @@
   "repository": "git@github.com:luciditeam/lucidity.git",
   "scripts": {
     "coverage": "CI=true lerna run coverage",
-    "coverage:upload": "cat ./coverage/lcov.info | coveralls",
+    "coverage:upload": "cat packages/**/coverage/lcov.info | coveralls",
     "deploy": "lerna --scope @lucidity/app run deploy",
     "predeploy": "lerna bootstrap",
     "postbootstrap": "npm run setup",

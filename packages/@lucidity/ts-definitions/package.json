@@ -2,12 +2,12 @@
   "name": "@lucidity/ts-definitions",
   "version": "0.0.1",
   "description": "Compile d.ts files so they can be imported by compiler",
-  "license": "MIT",
   "author": "Gaspard Bucher <gaspard@lucidogen.io> (http://lucidogen.io)",
+  "license": "MIT",
   "main": "lib/index.js",
   "scripts": {
     "build": "node ./build.js",
-    "coverage": "node scripts/test.js --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "coverage": "node scripts/test.js --coverage",
     "test": "node scripts/test.js"
   },
   "devDependencies": {
