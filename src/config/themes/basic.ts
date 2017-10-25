@@ -1,7 +1,7 @@
 import { Theme } from 'styled'
 
 export const basic: Theme =
-{ background: '#ccc'
+{ background: '#333'
 , borderRadius: 3.0 // px
 , blockMargin: '1rem 1rem'
 , blockPaddingH: 0.8
@@ -15,7 +15,7 @@ export const basic: Theme =
 , pagePadding: 64
 , pageWidth: 1024
 , primaryColorFg: '#fff'
-, primaryColor: '#a04e95'
+, primaryColor: '#333'
 , regionPadding: '1rem'
 , secondaryColor: '#ccc'
 , secondaryColorFg: '#222'

@@ -1,10 +1,10 @@
 import { Config } from 'blocks/firebase'
 
 export const config: Config =
-{ apiKey: "AIzaSyAAhM1h-BDUQGohKQd2QM76dymBYcextSk"
-, authDomain: "test-5804c.firebaseapp.com"
-, databaseURL: "https://test-5804c.firebaseio.com"
-, projectId: "test-5804c"
-, storageBucket: "test-5804c.appspot.com"
-, messagingSenderId: "732741775435"
+{ apiKey: "AIzaSyAFUeypxCO2RWlmrcjlaX1PxqMM4MC_WKU"
+, authDomain: "lucidity-io.firebaseapp.com"
+, databaseURL: "https://lucidity-io.firebaseio.com"
+, projectId: "lucidity-io"
+, storageBucket: "lucidity-io.appspot.com"
+, messagingSenderId: "1033253979803"
 }
