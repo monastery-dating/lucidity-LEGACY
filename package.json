@@ -2,8 +2,8 @@
   "name": "sarigama",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://gaspard.github.io/sarigama",
-  "repository": "git@github.com:gaspard/sarigama.git",
+  "homepage": "http://lucidity.io",
+  "repository": "git@github.com:luciditeam/lucidity.git",
   "scripts": {
     "prebuild": "rm -rf output/dist",
     "build": "npm run build:vendor && npm run build:prod",
