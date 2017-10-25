@@ -1,0 +1,12 @@
+@media print {
+  #root {
+    visibility: hidden
+  }
+
+  .VFScore {
+    visibility: visible;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+  }
+}

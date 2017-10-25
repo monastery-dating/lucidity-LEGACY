@@ -1,0 +1,23 @@
+// See https://go.microsoft.com/fwlink/?LinkId=733558
+// for the documentation about the tasks.json format
+{ "version": "0.1.0"
+, "command": "yarn"
+, "isShellCommand": true
+, "suppressTaskName": true
+, "tasks":
+  [ { "taskName": "build"
+    , "command": "tsc"
+    , "showOutput": "silent"
+    , "args": [ "-p", "." ]
+    }
+  , { "taskName": "debugBuild"
+    , "showOutput": "silent"
+    , "args":
+      [ "run"
+      , "build:debug"
+      ]
+    , "isBuildCommand": true
+    , "problemMatcher": "$tsc"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "scope": {
+      "$sid": {
+        // Can read or write depending on the users ring:
+        // user [ $uid ].ring.scope [ $sid ].access 'rwa' (read, write, admin)
+        ".read": "auth != null && root.child('user').child(auth.uid).child('ring').child('scope').child($sid).child('access').val().contains('r')",
+        ".write": "auth != null && root.child('user').child(auth.uid).child('ring').child('scope').child($sid).child('access').val().contains('w')",
+        "data": {}
+      }
+    },
+    "user": {
+      ".read": "auth != null && root.child('admins').child(auth.uid).child('admin').val() == true",
+      ".write": "auth != null && root.child('admins').child(auth.uid).child('admin').val() == true",
+      "$uid": {
+        // FIXME:
+        // user [ $uid ].ring.scope [ $sid ] should be protected (= share scope)
+        // use validation / functions ?
+        ".read": "auth != null && auth.uid == $uid",
+        ".write": "auth != null && auth.uid == $uid"
+      }
+    }
+  }
+}

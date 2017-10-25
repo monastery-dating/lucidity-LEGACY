@@ -1,0 +1,1175 @@
+{
+    "extension": "linecount",
+    "version": "0.1.7",
+    "workspace": "/Users/gaspard/git/lucidity",
+    "linecount": [
+        {
+            "version": "0.1.7",
+            "counttime": "2017-10-25 16:39:34",
+            "filesum": 193,
+            "codesum": 7959,
+            "commentsum": 461,
+            "blanksum": 753,
+            "filelist": [
+                {
+                    "blank": 5,
+                    "code": 36,
+                    "comment": 0,
+                    "filename": "src/app/index.ts"
+                },
+                {
+                    "blank": 2,
+                    "code": 3,
+                    "comment": 2,
+                    "filename": "src/app/serviceWorker.ts"
+                },
+                {
+                    "blank": 2,
+                    "code": 5,
+                    "comment": 0,
+                    "filename": "src/blocks/boot/boot.type.ts"
+                },
+                {
+                    "blank": 11,
+                    "code": 71,
+                    "comment": 0,
+                    "filename": "src/blocks/boot/index.ts"
+                },
+                {
+                    "blank": 14,
+                    "code": 116,
+                    "comment": 0,
+                    "filename": "src/blocks/builder/boot.tsx"
+                },
+                {
+                    "blank": 11,
+                    "code": 29,
+                    "comment": 0,
+                    "filename": "src/blocks/builder/builder.type.ts"
+                },
+                {
+                    "blank": 1,
+                    "code": 9,
+                    "comment": 0,
+                    "filename": "src/blocks/builder/component.ts"
+                },
+                {
+                    "blank": 0,
+                    "code": 3,
+                    "comment": 0,
+                    "filename": "src/blocks/builder/index.ts"
+                },
+                {
+                    "blank": 2,
+                    "code": 14,
+                    "comment": 0,
+                    "filename": "src/blocks/builder/TestHelper.tsx"
+                },
+                {
+                    "blank": 1,
+                    "code": 33,
+                    "comment": 0,
+                    "filename": "src/blocks/document/actions/newDocument.ts"
+                },
+                {
+                    "blank": 4,
+                    "code": 41,
+                    "comment": 0,
+                    "filename": "src/blocks/document/components/Header.tsx"
+                },
+                {
+                    "blank": 3,
+                    "code": 42,
+                    "comment": 0,
+                    "filename": "src/blocks/document/components/index.tsx"
+                },
+                {
+                    "blank": 2,
+                    "code": 23,
+                    "comment": 0,
+                    "filename": "src/blocks/document/components/NewDocument.tsx"
+                },
+                {
+                    "blank": 5,
+                    "code": 71,
+                    "comment": 0,
+                    "filename": "src/blocks/document/index.ts"
+                },
+                {
+                    "blank": 1,
+                    "code": 7,
+                    "comment": 0,
+                    "filename": "src/blocks/document/types.ts"
+                },
+                {
+                    "blank": 6,
+                    "code": 73,
+                    "comment": 0,
+                    "filename": "src/blocks/editor/chains/save.ts"
+                },
+                {
+                    "blank": 11,
+                    "code": 45,
+                    "comment": 0,
+                    "filename": "src/blocks/editor/index.tsx"
+                },
+                {
+                    "blank": 3,
+                    "code": 61,
+                    "comment": 5,
+                    "filename": "src/blocks/editor/lib/cerebral/actions/changeText.ts"
+                },
+                {
+                    "blank": 2,
+                    "code": 14,
+                    "comment": 0,
+                    "filename": "src/blocks/editor/lib/cerebral/actions/deleteSelection.ts"
+                },
+                {
+                    "blank": 1,
+                    "code": 9,
+                    "comment": 0,
+                    "filename": "src/blocks/editor/lib/cerebral/actions/handleEnter.ts"
+                },
+                {
+                    "blank": 2,
+                    "code": 13,
+                    "comment": 0,
+                    "filename": "src/blocks/editor/lib/cerebral/actions/handleOp.ts"
+                },
+                {
+                    "blank": 1,
+                    "code": 9,
+                    "comment": 0,
+                    "filename": "src/blocks/editor/lib/cerebral/actions/handleSelect.ts"
+                },
+                {
+                    "blank": 6,
+                    "code": 62,
+                    "comment": 0,
+                    "filename": "src/blocks/editor/lib/cerebral/actions/processOps.ts"
+                },
+                {
+                    "blank": 1,
+                    "code": 476,
+                    "comment": 1,
+                    "filename": "src/blocks/editor/lib/cerebral/components/Composition/__snapshots__/Composition.test.tsx.snap"
+                },
+                {
+                    "blank": 5,
+                    "code": 27,
+                    "comment": 0,
+                    "filename": "src/blocks/editor/lib/cerebral/components/Composition/Composition.test.tsx"
+                },
+                {
+                    "blank": 12,
+                    "code": 121,
+                    "comment": 5,
+                    "filename": "src/blocks/editor/lib/cerebral/components/Composition/index.tsx"
+                },
+                {
+                    "blank": 11,
+                    "code": 44,
+                    "comment": 2,
+                    "filename": "src/blocks/editor/lib/cerebral/components/Composition/style.css"
+                },
+                {
+                    "blank": 4,
+                    "code": 27,
+                    "comment": 0,
+                    "filename": "src/blocks/editor/lib/cerebral/components/Composition/Title.tsx"
+                },
+                {
+                    "blank": 4,
+                    "code": 25,
+                    "comment": 1,
+                    "filename": "src/blocks/editor/lib/cerebral/components/Editor/index.tsx"
+                },
+                {
+                    "blank": 13,
+                    "code": 125,
+                    "comment": 3,
+                    "filename": "src/blocks/editor/lib/cerebral/components/ElementTag.tsx"
+                },
+                {
+                    "blank": 1,
+                    "code": 18,
+                    "comment": 0,
+                    "filename": "src/blocks/editor/lib/cerebral/components/helpers/expandInner.tsx"
+                },
+                {
+                    "blank": 2,
+                    "code": 22,
+                    "comment": 1,
+                    "filename": "src/blocks/editor/lib/cerebral/components/helpers/getCommand.ts"
+                },
+                {
+                    "blank": 1,
+                    "code": 17,
+                    "comment": 0,
+                    "filename": "src/blocks/editor/lib/cerebral/components/helpers/getElementClassName.ts"
+                },
+                {
+                    "blank": 1,
+                    "code": 15,
+                    "comment": 0,
+                    "filename": "src/blocks/editor/lib/cerebral/components/helpers/getElementTag.ts"
+                },
+                {
+                    "blank": 1,
+                    "code": 17,
+                    "comment": 0,
+                    "filename": "src/blocks/editor/lib/cerebral/components/helpers/getPath.ts"
+                },
+                {
+                    "blank": 6,
+                    "code": 78,
+                    "comment": 3,
+                    "filename": "src/blocks/editor/lib/cerebral/components/helpers/getSelection.ts"
+                },
+                {
+                    "blank": 2,
+                    "code": 24,
+                    "comment": 5,
+                    "filename": "src/blocks/editor/lib/cerebral/components/helpers/setSelection.ts"
+                },
+                {
+                    "blank": 10,
+                    "code": 64,
+                    "comment": 0,
+                    "filename": "src/blocks/editor/lib/cerebral/components/ToolBox/index.tsx"
+                },
+                {
+                    "blank": 7,
+                    "code": 48,
+                    "comment": 0,
+                    "filename": "src/blocks/editor/lib/cerebral/components/ToolBox/Paragraph.tsx"
+                },
+                {
+                    "blank": 8,
+                    "code": 70,
+                    "comment": 0,
+                    "filename": "src/blocks/editor/lib/cerebral/components/ToolBox/ParagraphEmpty.tsx"
+                },
+                {
+                    "blank": 8,
+                    "code": 61,
+                    "comment": 2,
+                    "filename": "src/blocks/editor/lib/cerebral/components/ToolBox/Select.tsx"
+                },
+                {
+                    "blank": 11,
+                    "code": 58,
+                    "comment": 11,
+                    "filename": "src/blocks/editor/lib/cerebral/components/ToolBox/style.css"
+                },
+                {
+                    "blank": 2,
+                    "code": 15,
+                    "comment": 0,
+                    "filename": "src/blocks/editor/lib/cerebral/computed/paragraphRefList.ts"
+                },
+                {
+                    "blank": 1,
+                    "code": 17,
+                    "comment": 1,
+                    "filename": "src/blocks/editor/lib/cerebral/customParagraph.test.ts"
+                },
+                {
+                    "blank": 5,
+                    "code": 78,
+                    "comment": 0,
+                    "filename": "src/blocks/editor/lib/cerebral/index.ts"
+                },
+                {
+                    "blank": 3,
+                    "code": 19,
+                    "comment": 0,
+                    "filename": "src/blocks/editor/lib/cerebral/markup/image.tsx"
+                },
+                {
+                    "blank": 1,
+                    "code": 6,
+                    "comment": 0,
+                    "filename": "src/blocks/editor/lib/cerebral/markup/index.ts"
+                },
+                {
+                    "blank": 3,
+                    "code": 20,
+                    "comment": 1,
+                    "filename": "src/blocks/editor/lib/cerebral/markup/youtube.tsx"
+                },
+                {
+                    "blank": 1,
+                    "code": 8,
+                    "comment": 0,
+                    "filename": "src/blocks/editor/lib/cerebral/signals/handleBackspace.ts"
+                },
+                {
+                    "blank": 1,
+                    "code": 8,
+                    "comment": 0,
+                    "filename": "src/blocks/editor/lib/cerebral/signals/handleEnter.ts"
+                },
+                {
+                    "blank": 1,
+                    "code": 16,
+                    "comment": 1,
+                    "filename": "src/blocks/editor/lib/cerebral/signals/handleInput.ts"
+                },
+                {
+                    "blank": 1,
+                    "code": 11,
+                    "comment": 0,
+                    "filename": "src/blocks/editor/lib/cerebral/signals/handleOp.ts"
+                },
+                {
+                    "blank": 1,
+                    "code": 12,
+                    "comment": 0,
+                    "filename": "src/blocks/editor/lib/cerebral/signals/handleSelect.ts"
+                },
+                {
+                    "blank": 5,
+                    "code": 82,
+                    "comment": 1,
+                    "filename": "src/blocks/editor/lib/doBackspace.test.ts"
+                },
+                {
+                    "blank": 1,
+                    "code": 68,
+                    "comment": 9,
+                    "filename": "src/blocks/editor/lib/doBackspace.ts"
+                },
+                {
+                    "blank": 4,
+                    "code": 72,
+                    "comment": 1,
+                    "filename": "src/blocks/editor/lib/doEnter.test.ts"
+                },
+                {
+                    "blank": 7,
+                    "code": 118,
+                    "comment": 14,
+                    "filename": "src/blocks/editor/lib/doEnter.ts"
+                },
+                {
+                    "blank": 9,
+                    "code": 171,
+                    "comment": 1,
+                    "filename": "src/blocks/editor/lib/doOperation.test.ts"
+                },
+                {
+                    "blank": 12,
+                    "code": 138,
+                    "comment": 0,
+                    "filename": "src/blocks/editor/lib/doOperation.ts"
+                },
+                {
+                    "blank": 3,
+                    "code": 43,
+                    "comment": 1,
+                    "filename": "src/blocks/editor/lib/doSelect.test.ts"
+                },
+                {
+                    "blank": 5,
+                    "code": 49,
+                    "comment": 3,
+                    "filename": "src/blocks/editor/lib/doSelect.ts"
+                },
+                {
+                    "blank": 1,
+                    "code": 11,
+                    "comment": 0,
+                    "filename": "src/blocks/editor/lib/getTitle.ts"
+                },
+                {
+                    "blank": 1,
+                    "code": 11,
+                    "comment": 0,
+                    "filename": "src/blocks/editor/lib/index.ts"
+                },
+                {
+                    "blank": 2,
+                    "code": 26,
+                    "comment": 0,
+                    "filename": "src/blocks/editor/lib/newComposition.ts"
+                },
+                {
+                    "blank": 3,
+                    "code": 34,
+                    "comment": 0,
+                    "filename": "src/blocks/editor/lib/stripZeroWidthChar.test.ts"
+                },
+                {
+                    "blank": 1,
+                    "code": 23,
+                    "comment": 1,
+                    "filename": "src/blocks/editor/lib/stripZeroWidthChar.ts"
+                },
+                {
+                    "blank": 2,
+                    "code": 30,
+                    "comment": 0,
+                    "filename": "src/blocks/editor/lib/utils/applyOp.test.ts"
+                },
+                {
+                    "blank": 4,
+                    "code": 39,
+                    "comment": 4,
+                    "filename": "src/blocks/editor/lib/utils/applyOp.ts"
+                },
+                {
+                    "blank": 1,
+                    "code": 7,
+                    "comment": 0,
+                    "filename": "src/blocks/editor/lib/utils/canFuse.ts"
+                },
+                {
+                    "blank": 2,
+                    "code": 15,
+                    "comment": 0,
+                    "filename": "src/blocks/editor/lib/utils/caretSelection.ts"
+                },
+                {
+                    "blank": 4,
+                    "code": 38,
+                    "comment": 1,
+                    "filename": "src/blocks/editor/lib/utils/changeParagraph.test.ts"
+                },
+                {
+                    "blank": 3,
+                    "code": 40,
+                    "comment": 0,
+                    "filename": "src/blocks/editor/lib/utils/changeParagraph.ts"
+                },
+                {
+                    "blank": 8,
+                    "code": 150,
+                    "comment": 3,
+                    "filename": "src/blocks/editor/lib/utils/deleteSelection.test.ts"
+                },
+                {
+                    "blank": 10,
+                    "code": 138,
+                    "comment": 15,
+                    "filename": "src/blocks/editor/lib/utils/deleteSelection.ts"
+                },
+                {
+                    "blank": 5,
+                    "code": 104,
+                    "comment": 0,
+                    "filename": "src/blocks/editor/lib/utils/extractSelection.test.ts"
+                },
+                {
+                    "blank": 7,
+                    "code": 191,
+                    "comment": 16,
+                    "filename": "src/blocks/editor/lib/utils/extractSelection.ts"
+                },
+                {
+                    "blank": 1,
+                    "code": 15,
+                    "comment": 1,
+                    "filename": "src/blocks/editor/lib/utils/fuse.ts"
+                },
+                {
+                    "blank": 4,
+                    "code": 23,
+                    "comment": 1,
+                    "filename": "src/blocks/editor/lib/utils/getAtPath.test.ts"
+                },
+                {
+                    "blank": 1,
+                    "code": 22,
+                    "comment": 2,
+                    "filename": "src/blocks/editor/lib/utils/getAtPath.ts"
+                },
+                {
+                    "blank": 5,
+                    "code": 49,
+                    "comment": 1,
+                    "filename": "src/blocks/editor/lib/utils/getNeighbours.test.ts"
+                },
+                {
+                    "blank": 10,
+                    "code": 102,
+                    "comment": 7,
+                    "filename": "src/blocks/editor/lib/utils/getNeighbours.ts"
+                },
+                {
+                    "blank": 3,
+                    "code": 15,
+                    "comment": 1,
+                    "filename": "src/blocks/editor/lib/utils/getPosition.test.ts"
+                },
+                {
+                    "blank": 1,
+                    "code": 21,
+                    "comment": 2,
+                    "filename": "src/blocks/editor/lib/utils/getPosition.ts"
+                },
+                {
+                    "blank": 2,
+                    "code": 16,
+                    "comment": 1,
+                    "filename": "src/blocks/editor/lib/utils/getSiblings.test.ts"
+                },
+                {
+                    "blank": 1,
+                    "code": 8,
+                    "comment": 0,
+                    "filename": "src/blocks/editor/lib/utils/getSiblings.ts"
+                },
+                {
+                    "blank": 5,
+                    "code": 75,
+                    "comment": 1,
+                    "filename": "src/blocks/editor/lib/utils/inSelection.test.ts"
+                },
+                {
+                    "blank": 6,
+                    "code": 66,
+                    "comment": 11,
+                    "filename": "src/blocks/editor/lib/utils/inSelection.ts"
+                },
+                {
+                    "blank": 5,
+                    "code": 29,
+                    "comment": 1,
+                    "filename": "src/blocks/editor/lib/utils/isParagraphStart.test.ts"
+                },
+                {
+                    "blank": 1,
+                    "code": 19,
+                    "comment": 0,
+                    "filename": "src/blocks/editor/lib/utils/isParagraphStart.ts"
+                },
+                {
+                    "blank": 3,
+                    "code": 37,
+                    "comment": 0,
+                    "filename": "src/blocks/editor/lib/utils/isTextBlock.test.ts"
+                },
+                {
+                    "blank": 3,
+                    "code": 18,
+                    "comment": 2,
+                    "filename": "src/blocks/editor/lib/utils/isTextBlock.ts"
+                },
+                {
+                    "blank": 0,
+                    "code": 6,
+                    "comment": 0,
+                    "filename": "src/blocks/editor/lib/utils/joinText.ts"
+                },
+                {
+                    "blank": 1,
+                    "code": 4,
+                    "comment": 0,
+                    "filename": "src/blocks/editor/lib/utils/makeRef.ts"
+                },
+                {
+                    "blank": 12,
+                    "code": 247,
+                    "comment": 28,
+                    "filename": "src/blocks/editor/lib/utils/mergeElements.ts"
+                },
+                {
+                    "blank": 2,
+                    "code": 24,
+                    "comment": 0,
+                    "filename": "src/blocks/editor/lib/utils/newParagraph.ts"
+                },
+                {
+                    "blank": 2,
+                    "code": 19,
+                    "comment": 0,
+                    "filename": "src/blocks/editor/lib/utils/rangeSelection.ts"
+                },
+                {
+                    "blank": 4,
+                    "code": 34,
+                    "comment": 1,
+                    "filename": "src/blocks/editor/lib/utils/simplify.test.ts"
+                },
+                {
+                    "blank": 2,
+                    "code": 33,
+                    "comment": 0,
+                    "filename": "src/blocks/editor/lib/utils/simplify.ts"
+                },
+                {
+                    "blank": 0,
+                    "code": 10,
+                    "comment": 0,
+                    "filename": "src/blocks/editor/lib/utils/splitText.ts"
+                },
+                {
+                    "blank": 6,
+                    "code": 118,
+                    "comment": 10,
+                    "filename": "src/blocks/editor/lib/utils/testUtils.ts"
+                },
+                {
+                    "blank": 1,
+                    "code": 10,
+                    "comment": 0,
+                    "filename": "src/blocks/editor/lib/utils/trim.ts"
+                },
+                {
+                    "blank": 49,
+                    "code": 204,
+                    "comment": 34,
+                    "filename": "src/blocks/editor/lib/utils/types.ts"
+                },
+                {
+                    "blank": 1,
+                    "code": 12,
+                    "comment": 1,
+                    "filename": "src/blocks/error/index.ts"
+                },
+                {
+                    "blank": 4,
+                    "code": 58,
+                    "comment": 1,
+                    "filename": "src/blocks/firebase/auth/chains/boot.ts"
+                },
+                {
+                    "blank": 4,
+                    "code": 22,
+                    "comment": 0,
+                    "filename": "src/blocks/firebase/auth/chains/clearPrefs.ts"
+                },
+                {
+                    "blank": 3,
+                    "code": 29,
+                    "comment": 0,
+                    "filename": "src/blocks/firebase/auth/chains/doSync.ts"
+                },
+                {
+                    "blank": 2,
+                    "code": 18,
+                    "comment": 0,
+                    "filename": "src/blocks/firebase/auth/chains/logout.ts"
+                },
+                {
+                    "blank": 3,
+                    "code": 12,
+                    "comment": 0,
+                    "filename": "src/blocks/firebase/auth/chains/prefsChanged.ts"
+                },
+                {
+                    "blank": 3,
+                    "code": 15,
+                    "comment": 33,
+                    "filename": "src/blocks/firebase/auth/chains/registerWithEmail.ts"
+                },
+                {
+                    "blank": 2,
+                    "code": 38,
+                    "comment": 0,
+                    "filename": "src/blocks/firebase/auth/chains/signIn.ts"
+                },
+                {
+                    "blank": 4,
+                    "code": 23,
+                    "comment": 0,
+                    "filename": "src/blocks/firebase/auth/chains/signInWithEmail.ts"
+                },
+                {
+                    "blank": 5,
+                    "code": 20,
+                    "comment": 0,
+                    "filename": "src/blocks/firebase/auth/chains/signInWithFacebook.ts"
+                },
+                {
+                    "blank": 4,
+                    "code": 20,
+                    "comment": 0,
+                    "filename": "src/blocks/firebase/auth/chains/signInWithGoogle.ts"
+                },
+                {
+                    "blank": 4,
+                    "code": 76,
+                    "comment": 0,
+                    "filename": "src/blocks/firebase/auth/chains/syncPrefs.ts"
+                },
+                {
+                    "blank": 4,
+                    "code": 54,
+                    "comment": 4,
+                    "filename": "src/blocks/firebase/data/index.ts"
+                },
+                {
+                    "blank": 3,
+                    "code": 9,
+                    "comment": 0,
+                    "filename": "src/blocks/firebase/data/paths.ts"
+                },
+                {
+                    "blank": 5,
+                    "code": 22,
+                    "comment": 20,
+                    "filename": "src/blocks/firebase/data/types.ts"
+                },
+                {
+                    "blank": 7,
+                    "code": 86,
+                    "comment": 1,
+                    "filename": "src/blocks/firebase/index.ts"
+                },
+                {
+                    "blank": 1,
+                    "code": 34,
+                    "comment": 7,
+                    "filename": "src/blocks/firebase/type.ts"
+                },
+                {
+                    "blank": 1,
+                    "code": 5,
+                    "comment": 0,
+                    "filename": "src/blocks/forms/chains/valueChanged.ts"
+                },
+                {
+                    "blank": 3,
+                    "code": 28,
+                    "comment": 0,
+                    "filename": "src/blocks/forms/index.ts"
+                },
+                {
+                    "blank": 4,
+                    "code": 31,
+                    "comment": 0,
+                    "filename": "src/blocks/lucidity/components/App/Footer.tsx"
+                },
+                {
+                    "blank": 3,
+                    "code": 70,
+                    "comment": 0,
+                    "filename": "src/blocks/lucidity/components/App/Header.tsx"
+                },
+                {
+                    "blank": 4,
+                    "code": 24,
+                    "comment": 0,
+                    "filename": "src/blocks/lucidity/components/App/index.tsx"
+                },
+                {
+                    "blank": 1,
+                    "code": 11,
+                    "comment": 0,
+                    "filename": "src/blocks/lucidity/components/App/print.css"
+                },
+                {
+                    "blank": 1,
+                    "code": 5,
+                    "comment": 0,
+                    "filename": "src/blocks/lucidity/components/App/style.scss"
+                },
+                {
+                    "blank": 1,
+                    "code": 7,
+                    "comment": 0,
+                    "filename": "src/blocks/lucidity/components/App/test.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 17,
+                    "comment": 0,
+                    "filename": "src/blocks/lucidity/components/Code/CodeDisplay.tsx"
+                },
+                {
+                    "blank": 1,
+                    "code": 5,
+                    "comment": 0,
+                    "filename": "src/blocks/lucidity/components/Code/CodeIcon.tsx"
+                },
+                {
+                    "blank": 3,
+                    "code": 26,
+                    "comment": 0,
+                    "filename": "src/blocks/lucidity/components/Code/index.tsx"
+                },
+                {
+                    "blank": 7,
+                    "code": 74,
+                    "comment": 1,
+                    "filename": "src/blocks/lucidity/components/Navigator/index.tsx"
+                },
+                {
+                    "blank": 5,
+                    "code": 38,
+                    "comment": 0,
+                    "filename": "src/blocks/lucidity/components/Navigator/Item.tsx"
+                },
+                {
+                    "blank": 8,
+                    "code": 50,
+                    "comment": 0,
+                    "filename": "src/blocks/lucidity/components/Navigator/NavContent.tsx"
+                },
+                {
+                    "blank": 4,
+                    "code": 36,
+                    "comment": 0,
+                    "filename": "src/blocks/lucidity/components/Navigator/Tab.tsx"
+                },
+                {
+                    "blank": 0,
+                    "code": 2,
+                    "comment": 0,
+                    "filename": "src/blocks/lucidity/components/variables.scss"
+                },
+                {
+                    "blank": 5,
+                    "code": 41,
+                    "comment": 0,
+                    "filename": "src/blocks/lucidity/index.ts"
+                },
+                {
+                    "blank": 2,
+                    "code": 63,
+                    "comment": 0,
+                    "filename": "src/blocks/lucidity/modules/data/index.ts"
+                },
+                {
+                    "blank": 3,
+                    "code": 46,
+                    "comment": 2,
+                    "filename": "src/blocks/lucidity/modules/navigation/index.ts"
+                },
+                {
+                    "blank": 5,
+                    "code": 48,
+                    "comment": 3,
+                    "filename": "src/blocks/lucidity/modules/prefs/index.ts"
+                },
+                {
+                    "blank": 4,
+                    "code": 26,
+                    "comment": 0,
+                    "filename": "src/blocks/lucidity/modules/router/index.ts"
+                },
+                {
+                    "blank": 1,
+                    "code": 8,
+                    "comment": 0,
+                    "filename": "src/blocks/typings/base64-arraybuffer.d.ts"
+                },
+                {
+                    "blank": 1,
+                    "code": 0,
+                    "comment": 115,
+                    "filename": "src/blocks/typings/cerebral.d.ts"
+                },
+                {
+                    "blank": 2,
+                    "code": 10,
+                    "comment": 0,
+                    "filename": "src/blocks/typings/clipboard-js.d.ts"
+                },
+                {
+                    "blank": 1,
+                    "code": 9,
+                    "comment": 4,
+                    "filename": "src/blocks/typings/react-styled-flexboxgrid.d.ts"
+                },
+                {
+                    "blank": 2,
+                    "code": 11,
+                    "comment": 4,
+                    "filename": "src/blocks/typings/seedrandom.d.ts"
+                },
+                {
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 7,
+                    "filename": "src/blocks/typings/svg.animate.d.ts"
+                },
+                {
+                    "blank": 1,
+                    "code": 4,
+                    "comment": 4,
+                    "filename": "src/blocks/typings/tone.d.ts"
+                },
+                {
+                    "blank": 1,
+                    "code": 7,
+                    "comment": 4,
+                    "filename": "src/blocks/typings/vexflow.d.ts"
+                },
+                {
+                    "blank": 17,
+                    "code": 94,
+                    "comment": 0,
+                    "filename": "src/blocks/watch/index.ts"
+                },
+                {
+                    "blank": 2,
+                    "code": 41,
+                    "comment": 0,
+                    "filename": "src/blocks/watch/matchPath.test.ts"
+                },
+                {
+                    "blank": 2,
+                    "code": 19,
+                    "comment": 0,
+                    "filename": "src/blocks/watch/matchPath.ts"
+                },
+                {
+                    "blank": 0,
+                    "code": 21,
+                    "comment": 5,
+                    "filename": "src/config/database.rules.json"
+                },
+                {
+                    "blank": 1,
+                    "code": 9,
+                    "comment": 0,
+                    "filename": "src/config/firebase.ts"
+                },
+                {
+                    "blank": 0,
+                    "code": 15,
+                    "comment": 0,
+                    "filename": "src/config/storage.rules"
+                },
+                {
+                    "blank": 1,
+                    "code": 21,
+                    "comment": 1,
+                    "filename": "src/config/themes/basic.ts"
+                },
+                {
+                    "blank": 3,
+                    "code": 17,
+                    "comment": 0,
+                    "filename": "src/config/themes/index.ts"
+                },
+                {
+                    "blank": 9,
+                    "code": 74,
+                    "comment": 0,
+                    "filename": "src/config/translate/common.ts"
+                },
+                {
+                    "blank": 1,
+                    "code": 45,
+                    "comment": 0,
+                    "filename": "src/config/translate/en.ts"
+                },
+                {
+                    "blank": 1,
+                    "code": 45,
+                    "comment": 0,
+                    "filename": "src/config/translate/fr.ts"
+                },
+                {
+                    "blank": 11,
+                    "code": 126,
+                    "comment": 1,
+                    "filename": "src/config/translate/index.ts"
+                },
+                {
+                    "blank": 1,
+                    "code": 11,
+                    "comment": 0,
+                    "filename": "src/index.html"
+                },
+                {
+                    "blank": 3,
+                    "code": 24,
+                    "comment": 0,
+                    "filename": "src/styled/Auth.tsx"
+                },
+                {
+                    "blank": 7,
+                    "code": 83,
+                    "comment": 0,
+                    "filename": "src/styled/Button.tsx"
+                },
+                {
+                    "blank": 1,
+                    "code": 11,
+                    "comment": 0,
+                    "filename": "src/styled/Card/Content.tsx"
+                },
+                {
+                    "blank": 8,
+                    "code": 42,
+                    "comment": 0,
+                    "filename": "src/styled/Card/Error.tsx"
+                },
+                {
+                    "blank": 1,
+                    "code": 9,
+                    "comment": 0,
+                    "filename": "src/styled/Card/Footer.tsx"
+                },
+                {
+                    "blank": 5,
+                    "code": 20,
+                    "comment": 0,
+                    "filename": "src/styled/Card/index.tsx"
+                },
+                {
+                    "blank": 8,
+                    "code": 52,
+                    "comment": 0,
+                    "filename": "src/styled/Card/Title.tsx"
+                },
+                {
+                    "blank": 2,
+                    "code": 13,
+                    "comment": 0,
+                    "filename": "src/styled/Content.tsx"
+                },
+                {
+                    "blank": 6,
+                    "code": 44,
+                    "comment": 0,
+                    "filename": "src/styled/DragHandle.tsx"
+                },
+                {
+                    "blank": 7,
+                    "code": 53,
+                    "comment": 1,
+                    "filename": "src/styled/Field.tsx"
+                },
+                {
+                    "blank": 2,
+                    "code": 15,
+                    "comment": 0,
+                    "filename": "src/styled/Footer.tsx"
+                },
+                {
+                    "blank": 2,
+                    "code": 17,
+                    "comment": 3,
+                    "filename": "src/styled/Header.tsx"
+                },
+                {
+                    "blank": 5,
+                    "code": 73,
+                    "comment": 2,
+                    "filename": "src/styled/Icon.tsx"
+                },
+                {
+                    "blank": 9,
+                    "code": 53,
+                    "comment": 0,
+                    "filename": "src/styled/index.tsx"
+                },
+                {
+                    "blank": 6,
+                    "code": 61,
+                    "comment": 0,
+                    "filename": "src/styled/Input.tsx"
+                },
+                {
+                    "blank": 7,
+                    "code": 58,
+                    "comment": 10,
+                    "filename": "src/styled/Layout/index.tsx"
+                },
+                {
+                    "blank": 1,
+                    "code": 6,
+                    "comment": 0,
+                    "filename": "src/styled/Layout/style.scss"
+                },
+                {
+                    "blank": 1,
+                    "code": 10,
+                    "comment": 0,
+                    "filename": "src/styled/Login/Authenticating.tsx"
+                },
+                {
+                    "blank": 1,
+                    "code": 21,
+                    "comment": 1,
+                    "filename": "src/styled/Login/Facebook.tsx"
+                },
+                {
+                    "blank": 1,
+                    "code": 19,
+                    "comment": 1,
+                    "filename": "src/styled/Login/Google.tsx"
+                },
+                {
+                    "blank": 5,
+                    "code": 35,
+                    "comment": 0,
+                    "filename": "src/styled/Login/index.tsx"
+                },
+                {
+                    "blank": 1,
+                    "code": 9,
+                    "comment": 0,
+                    "filename": "src/styled/Login/Loading.tsx"
+                },
+                {
+                    "blank": 3,
+                    "code": 44,
+                    "comment": 0,
+                    "filename": "src/styled/Login/Password.tsx"
+                },
+                {
+                    "blank": 4,
+                    "code": 53,
+                    "comment": 0,
+                    "filename": "src/styled/Login/SetPassword.tsx"
+                },
+                {
+                    "blank": 4,
+                    "code": 58,
+                    "comment": 0,
+                    "filename": "src/styled/Login/SignIn.tsx"
+                },
+                {
+                    "blank": 1,
+                    "code": 9,
+                    "comment": 0,
+                    "filename": "src/styled/Login/Sync.tsx"
+                },
+                {
+                    "blank": 5,
+                    "code": 32,
+                    "comment": 0,
+                    "filename": "src/styled/Modal.tsx"
+                },
+                {
+                    "blank": 2,
+                    "code": 18,
+                    "comment": 0,
+                    "filename": "src/styled/Page.tsx"
+                },
+                {
+                    "blank": 1,
+                    "code": 5,
+                    "comment": 0,
+                    "filename": "src/styled/Separator.tsx"
+                },
+                {
+                    "blank": 2,
+                    "code": 14,
+                    "comment": 0,
+                    "filename": "src/styled/Sidebar.tsx"
+                },
+                {
+                    "blank": 0,
+                    "code": 20,
+                    "comment": 7,
+                    "filename": "src/styled/theme.ts"
+                },
+                {
+                    "blank": 3,
+                    "code": 32,
+                    "comment": 0,
+                    "filename": "src/styled/Username.tsx"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,81 @@
+{ "exclude":
+  [ "node_modules"
+  , "output"
+  , ".git"
+  , "cerebral-devtools"
+  , "typings/browser"
+  , "typings/browser.d.ts"
+  , "OLD"
+  ]
+, "compilerOptions":
+  { "jsx": "react"
+  , "module": "commonjs"
+  , "noImplicitAny": true
+  , "outDir": "output/dist"
+  , "reactNamespace": "JSX"
+  , "sourceMap": true
+  , "strictNullChecks": true
+  , "target": "es6"
+  , "baseUrl": "."
+  , "paths":
+    { "// changes here must be in webpack/common.js too":
+      [ "or fail" ]
+    , "react":
+      [ "node_modules/@types/react" ]
+    , "app":
+      [ "src/app"
+      ] 
+    , "auth":
+      [ "src/blocks/firebase/auth" ]
+    , "blocks/*":
+      [ "src/blocks/*"
+      ] 
+    , "builder":
+      [ "src/blocks/builder"
+      ] 
+    , "builder/*": // TestHelper
+      [ "src/blocks/builder/*"
+      ] 
+    , "config/*":
+      [ "src/config/*"
+      ] 
+    , "crypt":
+      [ "src/blocks/crypt"
+      ] 
+    , "data":
+      [ "src/blocks/firebase/data"
+      ] 
+    , "data/*":
+      [ "src/blocks/firebase/data/*"
+      ] 
+    , "editor":
+      [ "src/blocks/editor"
+      ] 
+    , "error":
+      [ "src/blocks/error"
+      ] 
+    , "lib/*":
+      [ "src/lib/*"
+      ]
+    , "melogen/*":
+      [ "src/lib/melogen/*"
+      ] 
+    , "playback":
+      [ "src/lib/playback"
+      ] 
+    , "src/*":
+      [ "src/*"
+      ]
+    , "styled":
+      [ "src/styled"
+      ]
+    , "styled/*":
+      [ "src/styled/*"
+      ]
+    , "vexdraw":
+      [ "src/lib/vexdraw"
+      ] 
+    }
+  }
+, "compileOnSave": false
+}

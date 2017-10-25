@@ -1,0 +1,29 @@
+{ "globals":
+  { "ts-jest":
+    { "tsConfigFile": "./config/tsconfig.debug.json"
+    }
+  }
+, "rootDir": "../"
+, "transform":
+  { ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+  }
+, "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(js)$"
+, "moduleFileExtensions":
+  [ "js"
+  ]
+, "moduleNameMapper":
+  { "^.+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/config/jest/FileStub.js"
+  , "^.+\\.css$": "<rootDir>/config/jest/CSSStub.js"
+  , "^builder(.*)$": "<rootDir>/src/lib/builder$1"
+  , "^config(.*)$": "<rootDir>/src/config$1"
+  , "^editor(.*)$": "<rootDir>/src/lib/editor$1"
+  }
+, "setupFiles":
+  [ "<rootDir>/config/polyfills.js"
+  , "<rootDir>/src/tests/setup.js"
+  ]
+, "testPathIgnorePatterns":
+  [ "<rootDir>/(node_modules|app/build)/"
+  ]
+, "testEnvironment": "node"
+}

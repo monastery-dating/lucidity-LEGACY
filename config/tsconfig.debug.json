@@ -1,0 +1,70 @@
+{ "extends": "../tsconfig.json"
+, "compilerOptions":
+  { "outDir": "../output/debug"
+  , "baseUrl": ".."
+  , "paths":
+    { "// changes here must be in webpack/common.js too":
+      [ "or fail" ]
+    , "react":
+      [ "node_modules/@types/react" ]
+    , "app":
+      [ "src/app"
+      ] 
+    , "blocks/*":
+      [ "src/blocks/*"
+      ] 
+    , "builder":
+      [ "src/lib/builder"
+      ] 
+    , "builder/*":
+      [ "src/lib/builder/*"
+      ] 
+    , "config/*":
+      [ "src/config/*"
+      ] 
+    , "crypt":
+      [ "src/lib/crypt"
+      ] 
+    , "crypt/*":
+      [ "src/lib/crypt/*"
+      ] 
+    , "data":
+      [ "src/blocks/firebase/data"
+      ] 
+    , "editor":
+      [ "src/lib/editor"
+      ] 
+    , "editor/*":
+      [ "src/lib/editor/*"
+      ] 
+    , "error":
+      [ "src/lib/error"
+      ] 
+    , "lib/*":
+      [ "src/lib/*"
+      ]
+    , "melogen/*":
+      [ "src/lib/melogen/*"
+      ] 
+    , "playback":
+      [ "src/lib/playback"
+      ] 
+    , "src/*":
+      [ "src/*"
+      ]
+    , "styled":
+      [ "src/styled"
+      ]
+    , "styled/*":
+      [ "src/styled/*"
+      ]
+    , "vexdraw":
+      [ "src/lib/vexdraw"
+      ] 
+    }
+  }
+, "include":
+  [ "../src/**/*.ts"
+  , "../typings"
+  ]
+}
