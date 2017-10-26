@@ -29,20 +29,15 @@ const flextheme = ( theme: Theme ) => Object.assign
 , theme
 )
 
-const MyGrid = Grid.extend`
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-`
-
 interface EProps {
   className?: string
 }
 
 const Wrapper = styled.div`
-  font-family: ${ ( props: any ) => props.theme.fontFamily };
-  background: ${ props => props.theme.background };
-  color: ${ props => props.theme.color }
+background: ${ props => props.theme.background };
+color: ${ props => props.theme.color };
+font-family: ${ ( props: any ) => props.theme.fontFamily };
+min-height: 100vh;
 `
 
 interface Props {
@@ -55,10 +50,8 @@ export const Layout = connect < Props, EProps > (
 , function Layout ( { children, className, theme } ) {
     return (
       <ThemeProvider theme={ flextheme ( theme ) }>
-        <Wrapper>
-          <MyGrid className={ className }>
-            { children }
-          </MyGrid>
+        <Wrapper className={ className }>
+          { children }
         </Wrapper>
       </ThemeProvider>
     )

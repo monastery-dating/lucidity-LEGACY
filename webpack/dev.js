@@ -11,7 +11,7 @@ const webpack = require ( 'webpack' )
 const DIST = 'output/debug'
 const path = parts.path
 
-const DEBUG = false
+const DEBUG = true
 
 module.exports = merge
 ( [ app ( DIST )

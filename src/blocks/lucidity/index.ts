@@ -5,11 +5,14 @@ import { EditorBlock } from 'blocks/Editor'
 import { WatchBlock } from 'blocks/watch'
 import { signal } from 'cerebral/tags'
 
-import { Code, CodeIcon } from './components/Code'
+import { CodeEditor, CodeIcon } from './components/Code'
 import { data, DataState } from './modules/data'
 import { navigation, NavigationSignal, NavigationState } from './modules/navigation'
 import { prefs, PrefsSignal, PrefsState } from './modules/prefs'
 import { router, RouterSignal, RouterState } from './modules/router'
+
+export * from './types'
+export * from './lucidity.types'
 
 export interface AppState {
   data: DataState
@@ -32,7 +35,7 @@ export const app: Block < EditorBlock > =
     { init:
       { text: ''
       }
-    , tag: Code
+    , tag: CodeEditor
     , toolbox: CodeIcon
     }
   }

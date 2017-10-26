@@ -54,15 +54,12 @@
     , "error":
       [ "src/blocks/error"
       ] 
+    , "lucidity":
+      [ "src/blocks/lucidity"
+      ]
     , "lib/*":
       [ "src/lib/*"
       ]
-    , "melogen/*":
-      [ "src/lib/melogen/*"
-      ] 
-    , "playback":
-      [ "src/lib/playback"
-      ] 
     , "src/*":
       [ "src/*"
       ]

@@ -1,27 +1,34 @@
 import { JSX, connect } from 'builder'
 import { state } from 'cerebral/tags'
-import { Col, Row } from 'styled'
+import { styled, Col, Row } from 'styled'
 import { Login } from 'auth'
 
-const FullRow = Row.extend`
-  flex-grow: 1;
-  overflow: auto;
-  padding-top: 2rem;
-  &::-webkit-scrollbar { 
-    display: none; 
-  }
+const Wrapper = styled.div`
+display: flex;
+&::-webkit-scrollbar { 
+  display: none; 
+}
+flex-direction: ${ ( p: EProps ) => p.direction || 'column' };
 `
 
 interface Props {
   loggedIn: boolean
 }
 
-export const Auth = connect < Props > (
+interface EProps {
+  direction?: 'column' | 'row' | 'column-reverse' | 'row-reverse'
+}
+
+export const Auth = connect < Props, EProps > (
   { loggedIn: state`auth.loggedIn`
   }
-, function Auth ( { children, loggedIn } ) {
-    return loggedIn
-      ? <FullRow data-c='Auth'>{ children }</FullRow>
-      : <FullRow data-c='Auth'><Login /></FullRow>
+, function Auth ( { children, direction, loggedIn } ) {
+    return (
+      <Wrapper data-c='Auth'
+        direction={ direction }
+        >
+        { loggedIn ? children : <Login/> }
+      </Wrapper>
+    )
   }
 )

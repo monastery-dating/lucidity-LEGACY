@@ -27,6 +27,7 @@ module.exports = merge
         , data: parts.path ( 'src/blocks/firebase/data' )
         , editor: parts.path ( 'src/blocks/editor' )
         , error: parts.path ( 'src/blocks/error' )
+        , lucidity: parts.path ( 'src/blocks/lucidity' )
         , lib: parts.path ( 'src/lib' )
         , src: parts.path ( 'src' )
         , styled: parts.path ( 'src/styled' )
