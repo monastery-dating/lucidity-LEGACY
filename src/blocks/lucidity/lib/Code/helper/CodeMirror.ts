@@ -1,6 +1,7 @@
 import * as CM from 'codemirror'
 // JS mode
 import 'codemirror/mode/javascript/javascript'
+import 'codemirror/mode/stex/stex'
 // Addons, extentions
 import 'codemirror/keymap/vim'
 import 'codemirror/addon/scroll/simplescrollbars'

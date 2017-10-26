@@ -35,7 +35,9 @@ module.exports = merge
         // 1.16 MB
         , 'seedrandom' // 4.95 choosing alea and minified
         // 1.91 MB (instead of 3.56 MB before)
+        // FIXME: does this work or are we doubling stuff ?
         , './node_modules/font-awesome/css/font-awesome.min.css'
+        , './node_modules/katex/dist/katex.min.css'
         // 1.96 MB
         ]
       }

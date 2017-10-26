@@ -263,29 +263,28 @@ const scrubSetup =
   }
 }
 
-const EXT_TO_MODE: { [ key: string ]: string } =
+const LANG_TO_MODE: { [ key: string ]: string } =
 { js: 'javascript'
 , ts: 'javascript'
+, latex: 'stex'
 , glsl: 'x-shader/x-vertex'
 }
 const getMode =
-( filename: string ) => {
-  const fl = filename.split ( '.' )
-  const ext = fl [ fl.length - 1 ]
-  return EXT_TO_MODE [ ext ] || 'text'
+( lang: string ) => {
+  return LANG_TO_MODE [ lang ] || 'text'
 }
 
 export const sourceChanged =
 ( cm: CMEditor
-, filename: string
+, lang: string
 , source: string
 , block: BlockType
 ) => {
   const ledit = cm.options.lucidity
-  if ( ledit.lock && ledit.blockId === block.id && ledit.filename === filename ) {
+  if ( ledit.lock && ledit.blockId === block.id && ledit.filename === lang ) {
     return
   }
-  else if ( source === ledit.source && filename === ledit.filename ) {
+  else if ( source === ledit.source && lang === ledit.filename ) {
     // ignore
     return
   }
@@ -293,11 +292,12 @@ export const sourceChanged =
     // prevent save while we update the source
     ledit.nosave = true
       ledit.source = source
-      if ( filename !== ledit.filename ) {
-        ledit.filename = filename
-        const mode = getMode ( filename )
+      if ( lang !== ledit.filename ) {
+        ledit.filename = lang
+        const mode = getMode ( lang )
         if ( ledit.mode !== mode ) {
           ledit.mode = mode
+          console.log ( 'mode=', mode )
           cm.setOption ( 'mode', mode )
         }
       }
@@ -355,10 +355,11 @@ interface SaveCallback {
 export const makeEditor =
 ( elm: HTMLElement
 , source: string = ''
-, save: SaveCallback | undefined = undefined
-, typecheck: SaveCallback | undefined = undefined
+, lang: string
+, save?: SaveCallback
+, typecheck?: SaveCallback
 ): any => {
-  console.log ( 'makeEditor' )
+  console.log ( 'makeEditor', getMode ( lang ) )
 
   // We copy in here the currently loaded block's scrubber so that
   // we can access it from the editor.
@@ -372,7 +373,7 @@ export const makeEditor =
   , indentUnit: 2
   , lineWrapping: true
   , theme: 'bespin'
-  , mode: 'javascript'
+  , mode: getMode ( lang )
   , keyMap: 'vim' // FIXME: should come from user prefs
   , gutters: [ 'lucy-gutter' ]
   , extraKeys:
@@ -425,6 +426,9 @@ export const makeEditor =
       const source = cm.getValue ()
       // FIXME
       // typecheck ( ledit.filename, source )
+      // save ??
+    } else {
+      saveSource ( cm )
     }
 
   })

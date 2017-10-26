@@ -12,15 +12,15 @@ import 'codemirror/addon/scroll/simplescrollbars.css'
 import 'codemirror/addon/dialog/dialog.css'
 
 interface Props {
-  ablock: any
-  select: any
-  errors: any
   code: string
+  lang: string
 }
 
 interface EProps {
+  className?: string
   path: string
   tab?: string
+  save: ( code: string ) => void
 }
 
 const Wrapper = styled.div`
@@ -33,9 +33,9 @@ margin: 2rem;
 .cm-number {
   border: 1px dashed rgba(0,0,0,0);
   &.scrub {
-    cursor: move;
     border: 1px dashed yellow;
     border-radius: 4px;
+    cursor: move;
   }
 }
 
@@ -45,36 +45,38 @@ margin: 2rem;
 }
 
 .CodeMirror {
-  padding: 0;
+  padding: 10px;
+  height: auto;
+}
+
+.CodeMirror-code {
+  font-size: 1rem;
 }
 
 .CodeMirror-linewidget {
-  margin-top: 4px;
+  background: #353030;
+  border-top: 1px dashed #899266;
+  color: #959663;
   left: -1px;
+  margin-top: 4px;
+  padding: 4px;
   padding-left: 0px;
   width: 460px;
-  background: #353030;
-  color: #959663;
-  padding: 4px;
-  border-top: 1px dashed #899266;
 }
 `
 
 export const CodeEditor = connect < Props, EProps > (
-  { ablock: state`block`
-  , code: state`${ props`path` }.text`
-  , select: state`$block`
-  , errors: state`$editor.errors`
+  { code: state`${ props`path` }.code`
+  , lang: state`${ props`path` }.lang`
   }
 , class CodeDisplay extends React.Component < Props & EProps > {
     private cm: any
 
     create ( elm : any  ) {
-      const block = this.props.ablock || {}
       if ( this.cm === undefined ) {
-        console.log ( elm )
+        console.log(elm)
         const save = ( filename: string, source: string ) => {
-          // saveSource ( { filename, source } )
+          this.props.save ( source )
         }
 
         const typecheck = ( filename: string, source: string ) => {
@@ -87,6 +89,7 @@ export const CodeEditor = connect < Props, EProps > (
             this.cm = makeEditor
             ( elm
             , this.props.code || ''
+            , this.props.lang || 'ts'
             , save
             , typecheck
             )
@@ -99,7 +102,6 @@ export const CodeEditor = connect < Props, EProps > (
     render () {
       console.log ( 'RENDER XXX' )
       const { props } = this
-      const block = props.ablock || {}
 
       if ( this.cm ) {
         /*
@@ -126,12 +128,17 @@ export const CodeEditor = connect < Props, EProps > (
         */
 
       if ( this.cm /* && tab !== 'controls' */ ) {
-        sourceChanged ( this.cm, 'main.ts' /* tab */, source, block )
+        sourceChanged ( this.cm, this.props.lang, source, {} as any )
       }
 
-      return <Wrapper className='CodeEditor'>
+      return (
+        <Wrapper
+          className={ this.props.className }
+          onClick={ e => e.stopPropagation () } 
+          >
           <div className='codeholder' ref={ el => this.create ( el ) }></div>
         </Wrapper>
+      )
     }
   }
 )

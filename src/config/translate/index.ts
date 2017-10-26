@@ -66,12 +66,14 @@ export interface Common {
   passwordIcon: string
   repeatPasswordIcon: string
   AuthenticatingIcon: string
+  BranchIcon: string
   DictationIcon: string
   ClassIcon: string
   CodeIcon: string
   DocumentIcon: string
   HomeIcon: string
   FolderIcon: string
+  LatexIcon: string
   LogoutIcon: string
   LoadingIcon: string
   MelodySettingsIcon: string
