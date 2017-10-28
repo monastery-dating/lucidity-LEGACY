@@ -12,7 +12,6 @@ export interface SerializedBlockType {
 }
 
 export interface SerializedBranch extends BranchDefinition {
-  lucidity: 'branch' 
   blocks: StringMap < SerializedBlockType >
 }
 

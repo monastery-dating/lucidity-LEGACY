@@ -14,6 +14,15 @@ const HEAD_RE = /^((@|\$)([^\.]+)\.?(.*))$/
 const defaultOp = ( text: string ) => text || ''
 const defaultOpNoArg = () => ''
 
+const TYPE_RE = /^#\s*type\s*:\s*(.+)$/
+
+function getType ( text: string ): string | undefined {
+  const re = TYPE_RE.exec ( text )
+  if ( re ) {
+    return re [ 1 ]
+  }
+}
+
 export function parse
 ( text: string
 ): Project {
@@ -71,9 +80,9 @@ export function parse
     }
   , code ( text: string, lang: string ) {
       if ( lang === 'yaml' ) {
+        const type = getType ( text )
         const content: SerializedBranch = yaml.load ( text )
-        const { lucidity, branch, entry, nodes, blocks } = content
-        const type = lucidity
+        const { branch, entry, nodes, blocks } = content
         if ( type === 'branch' ) {
           branches.push
           ( { branch

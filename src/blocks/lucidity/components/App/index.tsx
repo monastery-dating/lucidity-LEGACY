@@ -1,5 +1,6 @@
 import { JSX } from 'builder'
 import { Document } from 'blocks/Document/components'
+import { Playback } from 'playback'
 import { styled, Col, Row } from 'styled'
 import { Auth } from 'styled/Auth'
 import { Layout } from 'styled/Layout'
@@ -14,23 +15,16 @@ opacity: 0.3;
 
 const MyDocument = styled(Document)`
 min-height: 100vh;
-width: 50vw;
 margin: 0;
 padding: 0;
-`
-
-const Result = styled.div`
-background: black;
-min-height: 100vh;
-width: 50vw;
 `
 
 export function App () {
   return (
     <Layout>
       <Auth direction='row'>
-        <MyDocument/>
-        <Result/>
+        <MyDocument />
+        <Playback />
       </Auth>
     </Layout>
   )

@@ -29,13 +29,9 @@ module.exports = merge
         , error: parts.path ( 'src/blocks/error' )
         , lucidity: parts.path ( 'src/blocks/lucidity' )
         , lib: parts.path ( 'src/lib' )
+        , playback: parts.path ( 'src/blocks/playback' )
         , src: parts.path ( 'src' )
         , styled: parts.path ( 'src/styled' )
-
-        // App specific
-        , melogen: parts.path ( 'src/lib/melogen' )
-        , playback: parts.path ( 'src/lib/playback' )
-        , vexdraw: parts.path ( 'src/lib/vexdraw' )
         }
       }
     , devtool: 'source-map'

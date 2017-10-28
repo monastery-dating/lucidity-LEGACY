@@ -20,6 +20,7 @@ const Wrapper = styled.div`
 background: #f5f5f5;
 border-left: 3px solid #ccc;
 margin: 2rem;
+min-height: 1.5rem;
 padding: 1rem;
 `
 

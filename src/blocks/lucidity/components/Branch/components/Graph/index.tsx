@@ -1,10 +1,11 @@
-import './style.scss'
-import { Component } from '../Component'
-import { ContextType } from '../../modules/context.type'
-import { uimap, GraphType, rootNodeId, UIGraphType } from '../../modules/Graph'
+import { Component } from 'builder'
+import { GraphType, rootNodeId, UIGraphType } from '../../../../lib/Graph'
+import { uimap } from '../../../../lib/Graph/helper/uimap'
+import { DragDropType, DragStartType } from '../../../../lib/DragDrop'
 import { Node } from '../Node'
 import { DropTarget } from '../DropTarget'
-import { DragDropType, DragStartType } from '../../modules/DragDrop'
+
+import './style.scss'
 
 const mapUINodes =
 ( graph: GraphType

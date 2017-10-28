@@ -5,12 +5,22 @@ import { styled } from 'styled'
 import { CodeEditor } from '../Code/CodeEditor'
 
 const MyEditor = styled(CodeEditor)`
-margin-top: -2rem;
+left: 2rem;
+margin: 0;
+position: absolute;
+right: 2rem;
+top: -2rem;
+box-shadow: ${ p => p.theme.boxShadow }
+`
+
+const Wrapper = styled.div`
+position: relative;
 `
 
 interface Props {
   latex: typeof State.latex.code 
-  onChange: typeof Signal.latex.changeLatex
+  onSave: typeof Signal.latex.changeLatex
+  onBlur: typeof Signal.latex.toggleEdit
 }
 
 interface EProps {
@@ -18,17 +28,22 @@ interface EProps {
 }
 
 export const LatexEdit = connect < Props, EProps > (
-  { onChange: signal`latex.changeLatex`
+  { onSave: signal`latex.changeLatex`
+  , onBlur: signal`latex.toggleEdit`
   }
-, function LatexEdit ( { onChange, path } ) {
-    const save = ( code: string ) => {
-      onChange ( { path, code } )
-    }
+, function LatexEdit ( { onBlur, onSave, path } ) {
     return (
-      <MyEditor
-        path={ path }
-        save={ save }
-        />
+      <Wrapper>
+        <MyEditor
+          focus
+          path={ path }
+          onSave={ code => onSave ( { path, code } ) }
+          onBlur={ () => {
+            console.log ( 'BLUR !!' )
+            onBlur ( { path } ) 
+          }}
+          />
+      </Wrapper>
     )    
   }
 )

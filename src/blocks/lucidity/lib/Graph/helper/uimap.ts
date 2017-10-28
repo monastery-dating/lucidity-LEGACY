@@ -1,5 +1,5 @@
 import { defaultUILayout } from './uilayout'
-import { BlockType, BlockByIdType } from '../../Block'
+import { BlockType, BlockByIdType } from '../../../lib/Block'
 import { GraphType
        , NodeType
        , NodeByIdType
@@ -10,7 +10,7 @@ import { GraphType
        , UIPosType
        , UISlotType
        , nextNodeId
-       , rootNodeId } from '../types'
+       , rootNodeId } from '../../../lib/Graph/types'
 
 import { minSize } from './minSize'
 import * as stringhash from 'string-hash'

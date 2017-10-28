@@ -228,7 +228,7 @@ function makeRunHooks
     const { changed, hooks } = store
     // In case the operations trigger new hooks
     store.changed = []
-    const seen = {}
+    const seen: { [ key: string ]: boolean } = {}
     changed.forEach
     ( path => {
         if ( ! seen [ path ] ) {

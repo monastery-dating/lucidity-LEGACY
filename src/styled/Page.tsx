@@ -11,7 +11,9 @@ margin: 1rem;
 min-height: 40vh;
 position: relative;
 padding: 3rem ${ p => p.theme.pagePadding }px;
-width: ${ p => p.theme.pageWidth }px;
+/* max-width: ${ p => p.theme.pageWidth }px;
+*/
+max-width: 100%;
 `
 
 export const Page = ( { children, className }: any ) =>

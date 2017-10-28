@@ -60,6 +60,9 @@
     , "lib/*":
       [ "src/lib/*"
       ]
+    , "playback":
+      [ "src/blocks/playback"
+      ] 
     , "src/*":
       [ "src/*"
       ]

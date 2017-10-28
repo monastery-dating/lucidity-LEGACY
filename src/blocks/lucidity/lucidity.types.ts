@@ -35,7 +35,7 @@ type Cache = any
 
 // TODO: Try to augment this contect during type checking of Block depending
 // on context requirements, meta.expect field.
-type Context = MainContext & ContextExtension
+export type Context = MainContext & ContextExtension
 
 interface AllChildren {
   (): void
@@ -72,14 +72,14 @@ export interface Control {
 }
 
 export interface Helpers {
-  // optional to ease testing
-  context?: Context
-  control?: Control
-  require?: Require
   asset?: Asset
-  children?: Children
-  cache?: Cache
+  cache: Cache
+  children: Children
+  context: Context
+  contextForChildren: Context
+  control?: Control
   detached?: boolean
+  require?: Require
 }
 
 export interface StringMap {

@@ -1,4 +1,5 @@
 import { boot, BootSignal, BootState } from 'blocks/boot'
+import { playback, PlaybackSignal, PlaybackState } from 'playback'
 import { document, DocumentSignal, DocumentState } from 'blocks/document'
 import { editor, EditorSignal, EditorState } from 'blocks/editor'
 import { firebase, FirebaseSignal, FirebaseState } from 'blocks/firebase'
@@ -15,6 +16,7 @@ export type AllState =
   & EditorState
   & FirebaseState
   & FormsState
+  & PlaybackState
   & WatchState
 
 export type AllSignal = 
@@ -24,6 +26,7 @@ export type AllSignal =
   & EditorSignal
   & FirebaseSignal
   & FormsSignal
+  & PlaybackSignal
   & WatchSignal
 
 export let State: AllState
@@ -37,5 +40,6 @@ build
 , editor
 , firebase
 , forms
+, playback
 , watch
 )

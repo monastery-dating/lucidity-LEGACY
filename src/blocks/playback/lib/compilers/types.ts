@@ -50,7 +50,7 @@ export function isCompileSuccess
 }
 
 export interface TranspileCallback {
-  ( arg: CompileResult )
+  ( arg: CompileResult ): void
 }
 
 export interface CompilerType {

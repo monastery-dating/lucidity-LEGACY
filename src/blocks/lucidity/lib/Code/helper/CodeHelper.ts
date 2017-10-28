@@ -91,8 +91,7 @@ interface EditorLucidityOptions {
   // cache source to avoid setting the same source more then once
   source?: string
   mode?: string
-  // save callback
-  save: SaveCallback | undefined
+  callbacks: Callbacks
 }
 
 export interface Scrubber extends ScrubCode {
@@ -333,7 +332,7 @@ const noScrubToggle =
 export const saveSource =
 ( cm: CMEditor ) => {
   const ledit = cm.options.lucidity
-  const save = ledit.save
+  const save = ledit.callbacks.onSave
 
   if ( save ) {
     // Do not trigger 'save' while we are updating the
@@ -348,28 +347,32 @@ export const saveSource =
 
 const isLiteral = /[0-9\.]/
 
-interface SaveCallback {
-  ( filename: string, source: string ): void
+interface Callbacks {
+  onSave?: ( filename: string, source: string ) => void
+  onBlur?: () => void
+  typecheck?: ( filename: string, source: string ) => void
 }
 
 export const makeEditor =
 ( elm: HTMLElement
 , source: string = ''
 , lang: string
-, save?: SaveCallback
-, typecheck?: SaveCallback
+, callbacks?: Callbacks
+, options?: { autofocus?: boolean }
 ): any => {
   console.log ( 'makeEditor', getMode ( lang ) )
+  const opt = options || {}
 
   // We copy in here the currently loaded block's scrubber so that
   // we can access it from the editor.
   const scrubber: Scrubber =
   { js: '', values: [], init () {}, literals: [] }
 
-  const ledit: EditorLucidityOptions = { scrubber, save }
+  const ledit: EditorLucidityOptions = { scrubber, callbacks: callbacks || {} }
 
   const opts: { [ key: string ]: any } =
-  { value: source
+  { autofocus: opt.autofocus
+  , value: source
   , indentUnit: 2
   , lineWrapping: true
   , theme: 'bespin'
@@ -398,7 +401,12 @@ export const makeEditor =
   })
 
   cm.on ( 'blur', () => {
+    const blur = ledit.callbacks.onBlur
+    console.log ( 'blur', blur )
     delete ledit.lock
+    if ( blur ) {
+      blur ()
+    }
     saveSource ( cm )
   })
 
@@ -425,7 +433,7 @@ export const makeEditor =
     if ( !ledit.nosave && ledit.mode === 'javascript' ) {
       const source = cm.getValue ()
       // FIXME
-      // typecheck ( ledit.filename, source )
+      // callbacks.typecheck ( ledit.filename, source )
       // save ??
     } else {
       saveSource ( cm )

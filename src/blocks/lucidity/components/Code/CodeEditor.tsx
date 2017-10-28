@@ -18,9 +18,11 @@ interface Props {
 
 interface EProps {
   className?: string
+  focus?: boolean
   path: string
   tab?: string
-  save: ( code: string ) => void
+  onSave: ( code: string ) => void
+  onBlur?: () => void
 }
 
 const Wrapper = styled.div`
@@ -46,6 +48,7 @@ margin: 2rem;
 
 .CodeMirror {
   padding: 10px;
+  min-height: 1rem;
   height: auto;
 }
 
@@ -73,10 +76,11 @@ export const CodeEditor = connect < Props, EProps > (
     private cm: any
 
     create ( elm : any  ) {
+      const { props } = this
       if ( this.cm === undefined ) {
         console.log(elm)
-        const save = ( filename: string, source: string ) => {
-          this.props.save ( source )
+        const onSave = ( filename: string, source: string ) => {
+          props.onSave ( source )
         }
 
         const typecheck = ( filename: string, source: string ) => {
@@ -88,11 +92,21 @@ export const CodeEditor = connect < Props, EProps > (
         ( () => {
             this.cm = makeEditor
             ( elm
-            , this.props.code || ''
-            , this.props.lang || 'ts'
-            , save
-            , typecheck
+            , props.code || ''
+            , props.lang || 'ts'
+            , { onSave
+              , onBlur: props.onBlur
+              , typecheck
+              }
+            , { autofocus: this.props.focus }
             )
+            sourceChanged
+            ( this.cm
+            , props.lang
+            , props.code
+            , {} as any
+            )
+            // FIXME: focus...
           }
         , 100
         )
