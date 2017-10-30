@@ -66,10 +66,10 @@ const graph: GraphType =
   }
 }
 
-export const init: BranchState = { graph }
+export const defaultBranch: BranchState = { graph }
 
 export const branchParagraph =
-{ init
+{ defaultBranch
 , tag: Branch
 , toolbox: BranchIcon
 }

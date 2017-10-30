@@ -1,11 +1,13 @@
 export { App } from './components/App'
 
 import { Block } from 'builder'
+import { DocumentBlock } from 'blocks/Document'
 import { EditorBlock } from 'blocks/Editor'
 import { WatchBlock } from 'blocks/watch'
 import { signal } from 'cerebral/tags'
 
-import { branch, branchParagraph, BranchSignal, BranchState } from './modules/branch'
+import { branch, branchParagraph, defaultBranch, BranchSignal, BranchState } from './modules/branch'
+
 import { code, codeParagraph, CodeSignal, CodeState } from './modules/code'
 import { data, DataState } from './modules/data'
 import { navigation, NavigationSignal, NavigationState } from './modules/navigation'
@@ -36,8 +38,20 @@ export interface AppSignal {
   router: RouterSignal
 }
 
-export const app: Block < EditorBlock > =
+export const app: Block < EditorBlock & DocumentBlock > =
 { name: 'sarigama'
+, document:
+  { elements:
+    { para4:
+      { t: 'P', p: 4
+      , c: 'branch'
+      }
+    }
+  , data:
+    { para4:
+      JSON.parse ( JSON.stringify ( defaultBranch ) )
+    }
+  }
 , editor:
   { branch: branchParagraph
   , code: codeParagraph
