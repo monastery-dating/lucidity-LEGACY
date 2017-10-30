@@ -2,7 +2,8 @@
  * 
  */
 import * as ts from 'typescript'
-import { definitions } from '@lucidity/ts-definitions'
+// import { definitions } from '@lucidity/ts-definitions'
+const definitions: { [key: string]: string } = {}
 import { StringMap } from 'lucidity'
 import
   { CompilerError
@@ -197,9 +198,9 @@ interface SourceFile {
 }
 
 interface Diagnostic {
-  file: SourceFile;
-  start: number;
-  length: number;
+  file?: SourceFile
+  start?: number
+  length?: number
   messageText: string | DiagnosticMessageChain;
   category: DiagnosticCategory;
   code: number;
@@ -243,7 +244,7 @@ export function compileCode
     let errors = diagnostics.map ( d => {
       const message =
       ts.flattenDiagnosticMessageText ( d.messageText, '\n' )
-      if ( d.file ) {
+      if ( d.file && d.start !== undefined ) {
         const { line, character } = d.file.getLineAndCharacterOfPosition ( d.start )
         return { line, ch: character, message }
       }

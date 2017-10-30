@@ -7,7 +7,7 @@ describe ( 'register', () => {
     const { register, runHooks, state } = reactor ()
     let { when } = register ( scope )
     when ( state`midi.note.64` )
-    .set ( value => state`foo.${ value > 0 ? 'start' : 'release' }`, state`time` )
+    .set ( ( value: any ) => state`foo.${ value > 0 ? 'start' : 'release' }`, state`time` )
 
     set ( state`time`, 10 )
     set ( state`midi.note.64`, 35 )
@@ -38,7 +38,7 @@ describe ( 'when', () => {
     const { register, runHooks, state } = reactor ()
     const { when } = register ( 'foo' )
     when ( state`midi.note.64` )
-    .set ( value => state`foo.${ value > 0 ? 'start' : 'release' }`, state`time` )
+    .set ( ( value: any ) => state`foo.${ value > 0 ? 'start' : 'release' }`, state`time` )
 
     set ( state`time`, 10 )
     set ( state`midi.note.64`, 35 )

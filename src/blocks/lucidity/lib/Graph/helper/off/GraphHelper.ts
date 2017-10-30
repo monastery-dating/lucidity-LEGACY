@@ -8,7 +8,7 @@ import { defaultMeta, mainContextProvide } from '../../Playback/helper/PlaybackH
 import { Immutable as IM } from './Immutable'
 
 export interface DoneGraphCallback {
-  ( errors: CompilerError[], graph?: GraphType ): void
+  ( errors: CompilerError[] | undefined, graph?: GraphType ): void
 }
 
 const checkFreeze =
@@ -34,12 +34,15 @@ const check =
 , context: any = mainContextProvide
 , nodeId: string = rootNodeId
 , allvoid: string[] = []
-, parentError: string = null
+, parentError: string | undefined = undefined
 , shouldBeVoid: boolean = false
 ): boolean => {
   let node: NodeType = graph.nodesById [ nodeId ]
   const block = graph.blocksById [ node.blockId ]
-  const meta: PlaybackMetaType = block.meta
+  const meta = block.meta
+  if ( meta === undefined ) {
+    throw new Error ( 'No block.meta (??)' )
+  }
   const expect = meta.expect || {}
   const cerr = parentError ? [ parentError ] : []
   let voidUpdateError = false
@@ -50,7 +53,7 @@ const check =
     voidUpdateError = true
   }
 
-  for ( const k in meta.expect ) {
+  for ( const k in expect ) {
     const e = expect [ k ]
     const c = context [ k ]
     if ( !c ) {
@@ -65,7 +68,7 @@ const check =
 
   const childrenTypes = meta.children
   const children = node.children
-  let childrenm: string[]
+  let childrenm: string[] | undefined = undefined
   const nodesById = graph.nodesById
   const blocksById = graph.blocksById
   const serr = []
@@ -79,24 +82,27 @@ const check =
       }
       if ( !b ) {
         serr [ i ] = `missing child ${i+1}: ${e}`
-      }
-      else {
-        let c = b.meta.update
+      } else {
+        const bmeta = b.meta
+        if ( !bmeta ) {
+          throw new Error ( 'No b.meta (??)' )
+        }
+        let c = bmeta.update
         if ( !c ) {
           // try to find child in grand-children
           if ( !childrenm ) {
             childrenm = Object.assign ( [], children )
           }
 
-          let nc = n
+          let nc: NodeType | undefined = n
           while ( !c && nc ) {
-            const childId = nc.children [ 0 ]
-            nc = null
+            const childId: string = nc.children [ 0 ]
+            nc = undefined
             if ( childId ) {
               nc = nodesById [ childId ]
               if ( nc ) {
                 const b = blocksById [ nc.blockId ]
-                const u = b.meta.update
+                const u = bmeta.update
                 if ( u ) {
                   // found child (will check if type is correct)
                   childrenm [ i ] = childId
@@ -117,6 +123,10 @@ const check =
   const valid = cerr.length === 0 && serr.length === 0
 
   if ( valid ) {
+    if ( !block.meta ) {
+      throw new Error ( 'No block.meta (??)' )
+    }
+
     if ( block.meta.isvoid ) {
       // add ourself to the capturing of void updates
       allvoid.push ( nodeId )
@@ -160,15 +170,15 @@ const check =
   const sub = context.set ( meta.provide || {} )
 
   const perror = node.invalid ?
-    `Parent '${block.name}' invalid.` : null
+    `Parent '${block.name}' invalid.` : undefined
 
-  const inlen = childrenTypes ? childrenTypes.length : null
+  const inlen = childrenTypes ? childrenTypes.length : undefined
   for ( let i = 0; i < children.length; ++i ) {
     const childId = children [ i ]
     if ( childId ) {
       if ( inlen ) {
         // Typed children
-        const err = i >= inlen ? `Not linked to parent: detached` : null
+        const err = i >= inlen ? `Not linked to parent: detached` : undefined
         check ( graph, sub, childId, all, err || perror )
         if ( !node.invalid ) {
           // valid node
@@ -191,6 +201,10 @@ const check =
 
   graph.nodesById [ nodeId ] = Object.freeze ( node )
 
+  if ( !block.meta ) {
+    throw new Error ( 'No block.meta (??)' )
+  }
+
   if ( !block.meta.all && !node.invalid ) {
     // node is valid and does not capture `isvoid` children.
     // Add new elements in all to allvoid.
@@ -206,14 +220,14 @@ const insertInGraph =
 ( newgraph: GraphType
 , oldgraph: GraphType
 , oldid: string
-, parentId: string
-, tail: { nid: string }
+, parentId: string | undefined
+, tail: { nid?: string }
 , dropId?: string
 ) => {
   const oldnode = oldgraph.nodesById [ oldid ]
-  let block = oldgraph.blocksById [ oldnode.blockId ]
+  let block: BlockType & { _copyblock?: boolean } = oldgraph.blocksById [ oldnode.blockId ]
 
-  if ( !block [ '_copyblock' ] ) {
+  if ( !block._copyblock ) {
     let bid = block.id
     if ( newgraph.blocksById [ bid ] ) {
       bid = nextBlockId ( newgraph.blocksById )
@@ -246,17 +260,17 @@ const insertInGraph =
 
   // map our children with new nodes and ids
   let nochild = true
-  const children = []
+  const children: ( string | undefined ) [] = []
   const ochildren = oldnode.children
   const len = ochildren.length
   for ( let i = 0; i < len; ++i ) {
     const oid = ochildren [ i ]
-    if ( oid === null || oid === dropId ) {
+    if ( oid === undefined || oid === dropId ) {
       if ( i === len - 1 ) {
         // ignore
       }
       else {
-        children.push ( null )
+        children.push ( undefined )
       }
     }
     else {
@@ -273,7 +287,7 @@ const insertInGraph =
       )
     }
   }
-  node.children = children
+  node.children = < string [] > children // (??)
 
   if ( nochild ) {
     node.children = []
@@ -287,7 +301,7 @@ const insertInGraph =
 const copyNodes =
 ( nodesById: NodeByIdType
 ) => {
-  const r = {}
+  const r: any = {}
   for ( const k in nodesById ) {
     r [ k ] = Object.assign ( {}, nodesById [ k ] )
   }
@@ -296,11 +310,11 @@ const copyNodes =
 
 
 export const createGraph =
-( name: string = null
-, source: string = null
+( name: string | undefined = undefined
+, source: string | undefined = undefined
 ): Promise<GraphType> => {
   let create = () => createBlock ( name, source )
-  if ( name === null && source === null ) {
+  if ( name === undefined && source === undefined ) {
     create = () => mainBlock ()
   }
   const p = new Promise<GraphType>
@@ -310,7 +324,7 @@ export const createGraph =
         const nid =  rootNodeId
         const g = Object.freeze
         ( { nodesById: Object.freeze
-            ( { [ nid ]: createNode ( block.id, nid, null ) } )
+            ( { [ nid ]: createNode ( block.id, nid, undefined ) } )
           , blocksById: Object.freeze
             ( { [ block.id ]: block } )
           , blockId: block.id
@@ -333,7 +347,7 @@ export const updateGraphSource =
   updateBlock ( oblock, { source } )
   .then ( ( block ) => {
     const g = IM.update ( graph, 'blocksById', blockId, block )
-    done ( null, checkFreeze ( g ) )
+    done ( undefined, checkFreeze ( g ) )
   })
   .catch ( ( errors ) => {
     done ( errors )
@@ -360,7 +374,7 @@ export const insertGraph =
   , blocksById: Object.assign ( {}, achild.blocksById )
   }
 
-  const tail = { nid: null }
+  const tail = {}
   // copy nodes and rename ids
   const nid = insertInGraph
   ( g
@@ -406,7 +420,7 @@ export const slipGraph =
   , blocksById: Object.assign ( {}, achild.blocksById )
   }
 
-  const tail = { nid: null }
+  const tail = { nid: undefined }
   // copy nodes and rename ids
   const nid = insertInGraph
   ( g
@@ -424,7 +438,12 @@ export const slipGraph =
   const prevnode = g.nodesById [ previd ]
 
   // This is where the previous child will go
-  const tailnode = g.nodesById [ tail.nid ]
+  const tnid = tail.nid // ??? tnid ??? nid ???
+  if ( !tnid ) {
+    throw new Error ( 'No tail.nid (??).' )
+  }
+
+  const tailnode = g.nodesById [ tnid ]
 
   // tail.children [ 0 ] = previd
   tailnode.children = IM.aset ( tailnode.children, 0, previd )
@@ -453,12 +472,12 @@ export const cutGraph =
   , blocksById: Object.assign ( {}, graph.blocksById )
   }
 
-  const tail = { nid: null }
+  const tail = { nid: undefined }
   insertInGraph
   ( g
   , oldgraph
   , nodeId
-  , null
+  , undefined
   , tail
   )
 
@@ -481,12 +500,12 @@ export const dropGraph =
   , blocksById: Object.assign ( {}, graph.blocksById )
   }
 
-  const tail = { nid: null }
+  const tail = { nid: undefined }
   insertInGraph
   ( g
   , oldgraph
   , rootNodeId
-  , null
+  , undefined
   , tail
   , nodeId
   )

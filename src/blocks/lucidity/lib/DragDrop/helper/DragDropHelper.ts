@@ -1,13 +1,7 @@
-import { SignalsType } from '../../context.type'
-import { NodeType, UINodeType } from '../../Graph'
+import { DragDropCallbacks, NodeType, Position, UINodeType } from '../../Graph/types'
 
 interface ClickCallback {
-  ( e: MouseEvent ): void
-}
-
-interface Position {
-  x: number
-  y: number
+  ( e: React.MouseEvent<SVGElement> ): void
 }
 
 interface DragCallback {
@@ -26,25 +20,27 @@ interface SlotInfo {
 }
 
 const startDrag =
-( signals: SignalsType
+( callbacks: DragDropCallbacks
 , initTarget: string
 ) => {
   const start = Date.now ()
   const doc = document.documentElement
   const slots: SlotInfo[] = []
   const list = document.getElementsByClassName ( 'sclick' )
-  let skipTarget = initTarget
+  let skipTarget: string | null = initTarget
 
   for ( let i = 0; i < list.length; ++i ) {
     const s = list [ i ]
     const r = s.getBoundingClientRect ()
     const target = s.getAttribute ( 'data-drop' )
-    slots.push
-    ( { x: r.left
-      , y: r.top
-      , target
-      }
-    )
+    if ( target ) {
+      slots.push
+      ( { x: r.left
+        , y: r.top
+        , target
+        }
+      )
+    }
   }
 
   // mouse move detected document wide
@@ -55,7 +51,7 @@ const startDrag =
     const clientPos = { x, y }
     // Find closest slot.
     let d: number = MIN_SLOT_DIST
-    let target: string
+    let target: string | null = null
     let m: SlotInfo
     for ( const s of slots ) {
       const dx = s.x - x
@@ -75,7 +71,7 @@ const startDrag =
       skipTarget = null
     }
 
-    signals.$dragdrop.move
+    callbacks.move
     ( { move: { target, clientPos, copy: e.altKey } } )
   }
 
@@ -86,7 +82,7 @@ const startDrag =
     doc.removeEventListener ( 'mousemove', mousemove )
     doc.removeEventListener ( 'mouseup', mouseup )
 
-    signals.$dragdrop.drop ()
+    callbacks.drop ()
   }
 
   doc.addEventListener ( 'mousemove', mousemove )
@@ -95,14 +91,15 @@ const startDrag =
 
 export module DragDropHelper {
   export const drag =
-  ( signals: SignalsType
+  ( callbacks: DragDropCallbacks
   , dragclbk: DragCallback
   , clickClbk: ClickCallback
   ) => {
     let evstate: 'down' | 'dragging' | 'up' = 'up'
-    let clickpos, nodePos
+    let clickpos: Position
+    let nodePos: Position
 
-    const mouseup = ( e ) => {
+    const mouseup = ( e: React.MouseEvent<SVGElement> ) => {
       e.preventDefault ()
       // Do not stopPropagation here or we miss drag release.
 
@@ -115,7 +112,7 @@ export module DragDropHelper {
       evstate = 'up'
     }
 
-    const mousedown = ( e: MouseEvent ) => {
+    const mousedown = ( e: React.MouseEvent< SVGElement > ) => {
       e.stopPropagation ()
       e.preventDefault ()
       const target = e.target as HTMLElement
@@ -129,7 +126,7 @@ export module DragDropHelper {
 
 
     // mouse move on element (just used to trigger drag)
-    const mousemove = ( e : MouseEvent ) => {
+    const mousemove = ( e : React.MouseEvent< SVGElement > ) => {
       e.preventDefault ()
 
       const clientPos = { x: e.clientX, y: e.clientY }
@@ -146,14 +143,14 @@ export module DragDropHelper {
         // FIXME: How can we wait for after DOM update ?
         setTimeout
         ( () => {
-            startDrag ( signals, initTarget )
+            startDrag ( callbacks, initTarget )
           }
         , 80
         )
       }
     }
 
-    const click = ( e: MouseEvent ) => {
+    const click = ( e: React.MouseEvent<SVGElement> ) => {
       e.preventDefault ()
       e.stopPropagation ()
     }

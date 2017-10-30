@@ -17,8 +17,8 @@ export const mainBlock =
 }
 
 export const createBlock =
-( name: string
-, source: string
+( name: string | undefined
+, source: string | undefined
 ): Promise<BlockType> => {
   const newobj =
   { id: rootBlockId

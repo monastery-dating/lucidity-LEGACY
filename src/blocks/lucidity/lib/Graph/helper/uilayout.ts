@@ -1,4 +1,4 @@
-import { UILayoutType, UIArrowType } from '../types'
+import { UIBaseLayoutType, UILayoutType, UIArrowType } from '../types'
 import { getTextSizeCanvas } from './getTextSizeCanvas'
 
 /** Some constants for graph layout.
@@ -24,11 +24,10 @@ const DEFAULT_LAYOUT =
 , SUBPADX: 0  // (computed  = 2 * GRIDH) pad in sub assets
 , SUBPADY: 4  // (computed  = 2 * GRIDH) pad in sub assets
 , VPAD:   0  // vertical padding between boxes
-, tsizer: null
 }
 
 const arrow =
-( l : UILayoutType
+( l : UIBaseLayoutType
 , open: boolean
 ): string => {
   const h = l.ARROW
@@ -42,13 +41,10 @@ const arrow =
   }
 }
 
-const computeSlotPaths =
-( layout: UILayoutType
-) => {
+function computeSlotPaths
+( layout: UIBaseLayoutType
+): UILayoutType {
   const sl = layout.SLOT
-  layout.sline = `M${-sl} ${0} h${2 * sl}`
-  layout.spath = `M${-sl} ${0} l${sl} ${-sl} l${sl} ${sl}`
-  layout.plus = `M${-sl} ${0} h${2*sl} M${0} ${-sl} v${2*sl}`
   const r = layout.RADIUS
   const cw = layout.SCLICKW
   const ch = layout.SCLICKH
@@ -63,24 +59,36 @@ const computeSlotPaths =
   clickp.push ( `a${r} ${r} 0 0 1 ${-r} ${-r}` )
   clickp.push ( `v${-ch+2*r} z` )
 
-  layout.click = clickp.join ('')
+  return Object.assign
+  ( {}
+  , layout
+  , { click: clickp.join ( '' )
+    , sline: `M${-sl} ${0} h${2 * sl}`
+    , spath: `M${-sl} ${0} l${sl} ${-sl} l${sl} ${sl}`
+    , plus: `M${-sl} ${0} h${2*sl} M${0} ${-sl} v${2*sl}`
+    }
+  )
 }
 
-export const UILayout =
-( o?: Object ) : UILayoutType => {
-  const res = Object.assign ( {}, DEFAULT_LAYOUT, o || {} )
+export function UILayout
+( o?: Object
+): UILayoutType {
+  const res: UIBaseLayoutType =
+  Object.assign
+  ( {}
+  , DEFAULT_LAYOUT
+  , { tsizer: getTextSizeCanvas ( '12pt Avenir Next' )
+    }
+  , o || {}
+  )
   res.SUBPADX = 2 * res.GRIDH
   res.SCLICKH = Math.min ( res.SCLICKW, res.HEIGHT )
   const click = `M0 0 h${6*res.ARROW} v${res.HEIGHT} h${-6*res.ARROW} v${-res.HEIGHT}`
-  res.ARROW_OPEN.path = arrow ( <UILayoutType>res, true )
+  res.ARROW_OPEN.path = arrow ( res, true )
   res.ARROW_OPEN.click = click
-  res.ARROW_CLOSED.path = arrow ( <UILayoutType>res, false )
+  res.ARROW_CLOSED.path = arrow ( res, false )
   res.ARROW_CLOSED.click = click
-  if ( ! res.tsizer ) {
-    res.tsizer = getTextSizeCanvas ( '10pt Avenir Next' )
-  }
-  computeSlotPaths ( res )
-  return res
+  return computeSlotPaths ( res )
 }
 
 export const defaultUILayout = UILayout ()

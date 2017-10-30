@@ -82,8 +82,8 @@ export interface Helpers {
   require?: Require
 }
 
-export interface StringMap {
-  [ key: string ]: string
+export interface StringMap <T=string> {
+  [ key: string ]: T
 }
 
 export interface Meta {

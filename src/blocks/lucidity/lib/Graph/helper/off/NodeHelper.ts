@@ -4,11 +4,11 @@ import { Immutable as IM } from './Immutable'
 export const createNode =
 ( blockId: string
 , id: string
-, parent: string
+, parent: string | undefined
 , children?: string[]
-) : NodeType => {
+): NodeType => {
 
-  return Object.freeze
+  return <NodeType> Object.freeze // (??)
   ( { id
     , blockId
     , parent

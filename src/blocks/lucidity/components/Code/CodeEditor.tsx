@@ -1,6 +1,6 @@
 import { Signal, State } from 'app'
 import * as React from 'react'
-import { connect, JSX } from 'builder'
+import { connect, Component, JSX } from 'builder'
 import { props, signal, state } from 'cerebral/tags'
 import { styled } from 'styled'
 
@@ -72,7 +72,7 @@ export const CodeEditor = connect < Props, EProps > (
   { code: state`${ props`path` }.code`
   , lang: state`${ props`path` }.lang`
   }
-, class CodeDisplay extends React.Component < Props & EProps > {
+, class CodeDisplay extends Component < Props & EProps > {
     private cm: any
 
     create ( elm : any  ) {

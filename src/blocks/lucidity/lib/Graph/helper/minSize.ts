@@ -8,17 +8,21 @@ export const minSize =
 , node: NodeType
 , layout: UILayoutType
 ) : UINodeSize => {
-  const needExtraSlot = !block.meta.children
+  const { meta } = block
+  if ( !meta ) {
+    throw new Error ( 'No block.meta (??)' )
+  }
+  const needExtraSlot = !meta.children
   let hasExtra = false
   let ds
   if ( node.closed ) {
     // done
     ds = 0
   }
-  else if ( block.meta.children ) {
+  else if ( meta.children ) {
    // exact children length (and cope for extra detached)
    ds = Math.max
-   ( block.meta.children.length, node.children.length )
+   ( meta.children.length, node.children.length )
   }
   else {
     // Always keep a free slot for untyped children

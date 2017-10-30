@@ -1,7 +1,7 @@
 import { GetTextSizeType } from './GetTextSizeType'
 import { UIArrowType } from './UINodeType'
 
-export interface UILayoutType {
+export interface UIBaseLayoutType {
   GRIDH:  number
   HEIGHT: number
   THEIGHT: number // text height (should be changed if font changes)
@@ -21,10 +21,12 @@ export interface UILayoutType {
   SUBPADY: number  // (3*GRIDH) pad with next item
   VPAD:   number  // vertical padding between boxes
   tsizer: GetTextSizeType
-
-  // computed slot paths
-  sline?: string
-  spath?: string
-  plus?: string
-  click?: string
 }
+
+export interface UILayoutType extends UIBaseLayoutType {
+  sline: string
+  spath: string
+  plus: string
+  click: string
+}
+

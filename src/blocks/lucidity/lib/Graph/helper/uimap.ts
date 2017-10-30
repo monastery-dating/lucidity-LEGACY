@@ -92,7 +92,7 @@ const className =
 const boxPosition =
 ( graph: GraphType
 , nodeId: string
-, flags: NodeByIdType
+, flags: NodeByIdType | undefined
 , layout: UILayoutType
 , uigraph: UIGraphType
 , ctx: UIPosType
@@ -143,7 +143,7 @@ const boxPosition =
 const uimapOne =
 ( graph: GraphType
 , nodeId: string
-, flags: NodeByIdType
+, flags: NodeByIdType | undefined
 , layout: UILayoutType
 , uigraph: UIGraphType
 , slotIdx: number
@@ -169,7 +169,12 @@ const uimapOne =
 
   size.wde = 0
 
-  const childrenTypes = block.meta.children
+  const { meta } = block
+  if ( !meta ) { 
+    throw new Error ( 'No block.meta (??)' )
+  }
+
+  const childrenTypes = meta.children
   const slots : UISlotType[] = []
   const sl = layout.SLOT
 

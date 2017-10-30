@@ -6,10 +6,11 @@ import { BlockAddOperationType } from '../Block'
 import { DragStartType, DragMoveType, DragDropType } from './types'
 
 export interface DragDropSignalsType {
-  drag ( input: { drag: DragStartType } )
-  move ( input: { move: DragMoveType } )
-  drop () // no argument (we read from state)
+  drag ( input: { drag: DragStartType } ): void
+  move ( input: { move: DragMoveType } ): void
+  drop (): void // no argument (we read from state)
 }
+/*
 
 import * as Model from 'cerebral-model-baobab'
 import { drag } from './signals/drag'
@@ -36,3 +37,5 @@ export const DragDrop =
     return {} // meta information
   }
 }
+
+*/

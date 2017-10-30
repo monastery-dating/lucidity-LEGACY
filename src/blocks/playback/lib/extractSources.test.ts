@@ -1,5 +1,4 @@
 import { extractSources, fragmentInfo } from './extractSources'
-import { projectMarkdown } from './test/test-util'
 import { parse } from './parse'
 import { ParsedSourceElement } from './types'
 

@@ -5,6 +5,7 @@ import { EditorBlock } from 'blocks/Editor'
 import { WatchBlock } from 'blocks/watch'
 import { signal } from 'cerebral/tags'
 
+import { branch, branchParagraph, BranchSignal, BranchState } from './modules/branch'
 import { code, codeParagraph, CodeSignal, CodeState } from './modules/code'
 import { data, DataState } from './modules/data'
 import { navigation, NavigationSignal, NavigationState } from './modules/navigation'
@@ -16,6 +17,7 @@ export * from './types'
 export * from './lucidity.types'
 
 export interface AppState {
+  branch: BranchState
   code: CodeState
   data: DataState
   latex: LatexState
@@ -25,6 +27,7 @@ export interface AppState {
 }
 
 export interface AppSignal {
+  branch: BranchSignal
   code: CodeSignal
   data: {}
   latex: LatexSignal
@@ -36,11 +39,13 @@ export interface AppSignal {
 export const app: Block < EditorBlock > =
 { name: 'sarigama'
 , editor:
-  { code: codeParagraph
+  { branch: branchParagraph
+  , code: codeParagraph
   , latex: latexParagraph
   }
 , modules:
   { app: { state: { name: 'Sarigama' } }
+  , branch
   , code
   , data
   , latex

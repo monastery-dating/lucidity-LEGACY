@@ -6,6 +6,7 @@
   , "typings/browser"
   , "typings/browser.d.ts"
   , "OLD"
+  , "**/off/*"
   ]
 , "compilerOptions":
   { "jsx": "react"

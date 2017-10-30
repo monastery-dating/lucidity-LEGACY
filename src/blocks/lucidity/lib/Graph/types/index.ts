@@ -1,4 +1,5 @@
 export * from './ComponentType'
+export * from './DragDropType'
 export * from './GetTextSizeType'
 export * from './GraphType'
 export * from './NodeType'
