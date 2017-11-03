@@ -1,6 +1,8 @@
 { "version": "0.2.0"
 , "configurations":
-  [ { "type": "node"
+  [
+
+     { "type": "node"
     , "request": "launch"
     , "name": "Debug Tests"
     , "program": "${workspaceRoot}/node_modules/jest/bin/jest.js"
@@ -20,7 +22,7 @@
     , "name": "Chrome"
     , "url": "http://localhost:8080"
     , "sourceMaps": true
-    , "webRoot": "${workspaceRoot}"
+    , "webRoot": "${workspaceRoot}/../.."
     }
   ]
 }

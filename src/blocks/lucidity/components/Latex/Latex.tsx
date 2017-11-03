@@ -1,6 +1,7 @@
 import { Signal, State } from 'app'
 import * as React from 'react'
 import { connect, JSX } from 'builder'
+import { CustomTagProps } from 'editor'
 import { props, signal, state } from 'cerebral/tags'
 import { styled } from 'styled'
 import * as katex from 'katex'
@@ -13,7 +14,7 @@ interface Props {
 }
 
 interface EProps {
-  path: string
+  dataPath: string
 }
 
 const Wrapper = styled.div`
@@ -25,7 +26,7 @@ padding: 1rem;
 `
 
 export const LatexDisplay = connect < Props, EProps > (
-  { code: state`${ props`path` }.code`
+  { code: state`${ props`dataPath` }.code`
   }
 , class LatexDisplay extends React.Component < Props & EProps > {
 
@@ -51,24 +52,20 @@ interface LProps {
   toggleEdit: typeof Signal.latex.toggleEdit
 }
 
-interface LEProps {
-  path: string
-}
-
-export const Latex = connect < LProps, LEProps > (
-  { edit: state`${ props`path` }.$edit`
+export const Latex = connect < LProps, CustomTagProps > (
+  { edit: state`${ props`dataPath` }.$edit`
   , toggleEdit: signal`latex.toggleEdit`
   }
-, function Latex ( { edit, path, toggleEdit } ) {
+, function Latex ( { dataPath, edit, path, toggleEdit } ) {
     const onClick = () => {
       console.log ( 'CLICK' )
-      toggleEdit ( { path } )
+      toggleEdit ( { path: dataPath } )
     }
     return (
       <div onClick={ onClick } >
-        <LatexDisplay path={ path } />
+        <LatexDisplay dataPath={ dataPath } />
         { edit
-          ? <LatexEdit path={ path } />
+          ? <LatexEdit path={ path } dataPath={ dataPath } />
           : null
         }
       </div>

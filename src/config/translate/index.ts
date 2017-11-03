@@ -65,6 +65,7 @@ export interface Common {
   emailIcon: string
   passwordIcon: string
   repeatPasswordIcon: string
+  searchIcon: string
   AuthenticatingIcon: string
   BranchIcon: string
   DictationIcon: string

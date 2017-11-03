@@ -24,6 +24,7 @@ interface Props {
 }
 
 interface EProps {
+  dataPath: string
   path: string
 }
 
@@ -31,17 +32,18 @@ export const LatexEdit = connect < Props, EProps > (
   { onSave: signal`latex.changeLatex`
   , onBlur: signal`latex.toggleEdit`
   }
-, function LatexEdit ( { onBlur, onSave, path } ) {
+, function LatexEdit ( { dataPath, onBlur, onSave, path } ) {
     return (
       <Wrapper>
         <MyEditor
           focus
-          path={ path }
-          onSave={ code => onSave ( { path, code } ) }
+          dataPath={ dataPath }
+          onSave={ code => onSave ( { path: dataPath, code } ) }
           onBlur={ () => {
             console.log ( 'BLUR !!' )
-            onBlur ( { path } ) 
+            onBlur ( { path: dataPath } ) 
           }}
+          path={ path }
           />
       </Wrapper>
     )    

@@ -2,6 +2,7 @@ import { Signal, State } from 'app'
 import * as React from 'react'
 import { connect, Component, JSX } from 'builder'
 import { props, signal, state } from 'cerebral/tags'
+import { CustomTagProps } from 'editor'
 import { styled } from 'styled'
 
 import { sourceChanged, makeEditor, saveSource } from '../../lib/Code/helper/CodeHelper'
@@ -16,10 +17,9 @@ interface Props {
   lang: string
 }
 
-interface EProps {
+interface EProps extends CustomTagProps {
   className?: string
   focus?: boolean
-  path: string
   tab?: string
   onSave: ( code: string ) => void
   onBlur?: () => void
@@ -69,8 +69,8 @@ margin: 2rem;
 `
 
 export const CodeEditor = connect < Props, EProps > (
-  { code: state`${ props`path` }.code`
-  , lang: state`${ props`path` }.lang`
+  { code: state`${ props`dataPath` }.code`
+  , lang: state`${ props`dataPath` }.lang`
   }
 , class CodeDisplay extends Component < Props & EProps > {
     private cm: any
@@ -98,7 +98,7 @@ export const CodeEditor = connect < Props, EProps > (
               , onBlur: props.onBlur
               , typecheck
               }
-            , { autofocus: this.props.focus }
+            , { autofocus: props.focus }
             )
             sourceChanged
             ( this.cm

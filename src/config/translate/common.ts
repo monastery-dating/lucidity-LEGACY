@@ -4,6 +4,7 @@ export const common: Common =
 { emailIcon: 'fa-envelope-o'
 , passwordIcon: 'fa-key'
 , repeatPasswordIcon: 'fa-key'
+, searchIcon: 'fa-search'
 , AuthenticatingIcon: 'fa-key'
 , BranchIcon: 'fa-cube'
 , ClassIcon: 'fa-users'

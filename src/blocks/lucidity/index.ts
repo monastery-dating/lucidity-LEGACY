@@ -42,14 +42,40 @@ export const app: Block < EditorBlock & DocumentBlock > =
 { name: 'sarigama'
 , document:
   { elements:
-    { para4:
+    { para3:
+      { t: 'P', p: 3
+      , i: 'And now a branch:'
+      }
+    , para4:
       { t: 'P', p: 4
       , c: 'branch'
+      }
+    , para5:
+      { t: 'P', p: 5
+      , i: 'And some math:'
+      }
+    , para6:
+      { t: 'P', p: 6
+      , c: 'latex'
+      }
+    , para7:
+      { t: 'P', p: 7
+      , i: 'And now some code:'
+      }
+    , para8:
+      { t: 'P', p: 8
+      , c: 'code'
       }
     }
   , data:
     { para4:
       JSON.parse ( JSON.stringify ( defaultBranch ) )
+    , para6:
+      { code: `\\sqrt{|xy|}\\leq\\left|\\frac{x+y}{2}\\right|`
+      }
+    , para8:
+      { code: `const foo = 'bar' // test`
+      }
     }
   }
 , editor:

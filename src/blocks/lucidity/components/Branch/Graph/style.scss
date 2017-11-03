@@ -4,6 +4,7 @@
 
 .Graph {
   padding: 0 2 * $ppad;
+  flex-grow: 1;
   height: 100%;
   overflow: auto;
   font-size: 12pt;
