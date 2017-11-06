@@ -37,7 +37,6 @@ const Wrapper = styled.div`
 margin: 2rem;
 background: #28211c;
 display: flex;
-flex-direction: row;
 `
 
 export const Branch = connect < Props, CustomTagProps > (
