@@ -18,13 +18,15 @@ position: relative;
 `
 
 interface Props {
-  latex: typeof State.latex.code 
   onSave: typeof Signal.latex.changeLatex
   onBlur: typeof Signal.latex.toggleEdit
+  // These are used by the code editor. The type
+  // must be present at given path.
+  source: typeof State.latex.source
+  lang: typeof State.latex.lang
 }
 
 interface EProps {
-  dataPath: string
   path: string
 }
 
@@ -32,18 +34,17 @@ export const LatexEdit = connect < Props, EProps > (
   { onSave: signal`latex.changeLatex`
   , onBlur: signal`latex.toggleEdit`
   }
-, function LatexEdit ( { dataPath, onBlur, onSave, path } ) {
+, function LatexEdit ( { onBlur, onSave, path } ) {
     return (
       <Wrapper>
         <MyEditor
           focus
-          dataPath={ dataPath }
-          onSave={ code => onSave ( { path: dataPath, code } ) }
+          path={ path }
+          onSave={ source => onSave ( { path, source } ) }
           onBlur={ () => {
             console.log ( 'BLUR !!' )
-            onBlur ( { path: dataPath } ) 
+            onBlur ( { path } ) 
           }}
-          path={ path }
           />
       </Wrapper>
     )    

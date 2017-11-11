@@ -1,5 +1,4 @@
 import { defaultUILayout } from './uilayout'
-import { BlockType, BlockByIdType } from '../../../lib/Block'
 import { GraphType
        , NodeType
        , NodeByIdType
@@ -10,10 +9,11 @@ import { GraphType
        , UIPosType
        , UISlotType
        , nextNodeId
-       , rootNodeId } from '../../../lib/Graph/types'
+       } from '../../../lib/Graph/types'
 
 import { minSize } from './minSize'
 import * as stringhash from 'string-hash'
+import { BlockDefinition, StringMap } from 'blocks/playback'
 
 /** Compute svg path of a box with up and down slots.
  * The sizes have to be computed first in the 'info' field.
@@ -43,8 +43,7 @@ const path =
   const rpadu = w - wu
   if ( rpadu > 0 ) {
     res.push ( `h${ rpadu + layout.SPAD }` )
-  }
-  else {
+  } else {
     res.push ( `h${ layout.SPAD }` )
   }
 
@@ -57,8 +56,7 @@ const path =
   const rpadd = w - wd - wde + ( sextra [ ds ] || 0 )
   if ( rpadd > 0 ) {
     res.push ( `h${ -rpadd - layout.SPAD }` )
-  }
-  else {
+  } else {
     // ??
     // console.log ( 'ERROR', w )
     res.push ( `h${ -layout.SPAD }` )
@@ -91,34 +89,33 @@ const className =
  */
 const boxPosition =
 ( graph: GraphType
-, nodeId: string
-, flags: NodeByIdType | undefined
+, blockId: string
+, flags: StringMap < BlockDefinition > | undefined
 , layout: UILayoutType
 , uigraph: UIGraphType
 , ctx: UIPosType
 ): number => {
-  const node = graph.nodesById [ nodeId ]
-  const block  = graph.blocksById [ node.blockId ]
+  const block  = graph.blocks [ blockId ]
 
   // store our position given by ctx
-  uigraph.uiNodeById [ nodeId ].pos = ctx
+  uigraph.uiNodeById [ blockId ].pos = ctx
   const dy = layout.HEIGHT + layout.VPAD
 
   let x  = ctx.x
 
-  const uinode = uigraph.uiNodeById [ nodeId ]
+  const uinode = uigraph.uiNodeById [ blockId ]
   const ds = uinode.size.ds
 
   const sextra = uinode.sextra
 
   // get children
   let cheight = 0
-  if ( node.closed ) {
+  if ( block.closed ) {
     // do nothing
-  }
-  else {
+  } else {
+    const children = block.children
     for ( let i = 0; i < ds; ++i ) {
-      const childId = node.children [ i ]
+      const childId = children [ i ]
       const wtonext = sextra [ i ] + layout.SPAD + 2 * layout.SLOT
 
       if ( childId ) {
@@ -128,8 +125,7 @@ const boxPosition =
         )
         cheight = Math.max ( cheight, h )
         x += layout.BPAD + uigraph.uiNodeById [ childId ].size.w
-      }
-      else if ( childId === null ) {
+      } else if ( childId === null ) {
         // empty slot, add slot padding
         x += layout.SPAD + 2 * layout.SLOT
       }
@@ -142,30 +138,29 @@ const boxPosition =
 
 const uimapOne =
 ( graph: GraphType
-, nodeId: string
-, flags: NodeByIdType | undefined
+, blockId: string
+, flags: StringMap < BlockDefinition > | undefined
 , layout: UILayoutType
 , uigraph: UIGraphType
 , slotIdx: number
+, parent: string
 ) => {
-  uigraph.uiNodeById [ nodeId ] = <UINodeType> { id: nodeId, slotIdx }
+  uigraph.uiNodeById [ blockId ] = <UINodeType>
+  { id: blockId, slotIdx, parent }
 
-  const uibox = uigraph.uiNodeById [ nodeId ]
+  const uibox = uigraph.uiNodeById [ blockId ]
 
-  const node = graph.nodesById [ nodeId ]
-  const block  = graph.blocksById [ node.blockId ]
+  const block = graph.blocks [ blockId ]
 
   uibox.name = block.name
 
   if ( block.name === 'main' ) {
     uibox.className = 'main'
-  }
-
-  else {
+  } else {
     uibox.className = className ( block.name, layout )
   }
 
-  const size = minSize ( block, node, layout )
+  const size = minSize ( block, layout )
 
   size.wde = 0
 
@@ -183,7 +178,7 @@ const uimapOne =
                        // second has spacing dependent on first child, etc
   const ds = size.ds
 
-  const flagnode = flags ? flags [ nodeId ] : node
+  const flagBlock = flags ? flags [ blockId ] : block
 
   if ( ds > 0 ) {
     let   x = layout.RADIUS + layout.SPAD
@@ -197,9 +192,9 @@ const uimapOne =
 
     const slotpad = layout.SPAD + 2 * layout.SLOT
 
-    const serr = flagnode.serr
+    const serr = flagBlock.serr
     for ( let i = 0; i < ds; i += 1 ) {
-      const childId = node.children [ i ]
+      const childId = block.children [ i ]
       const pos = { x: x + sl, y }
       const free = !childId
       const incompatible = serr && serr [ i ] ? true : false
@@ -216,8 +211,7 @@ const uimapOne =
           , flags: { detached: true }
           }
         )
-      }
-      else if ( incompatible ) {
+      } else if ( incompatible ) {
         slots.push
         ( { path: sline
           , idx: i
@@ -227,8 +221,7 @@ const uimapOne =
           , flags: { free, incompatible }
           }
         )
-      }
-      else {
+      } else {
         slots.push
         ( { path: spath
           , idx: i
@@ -241,16 +234,15 @@ const uimapOne =
       }
 
 
-      if ( node.closed ) {
+      if ( block.closed ) {
         // should not draw slot
-      }
-      else {
+      } else {
         if ( childId ) {
           const nodes = uigraph.nodes
 
           // We push in sextra the delta for slot i
           let w = uimapOne
-          ( graph, childId, flags, layout, uigraph, i )
+          ( graph, childId, flags, layout, uigraph, i, blockId )
           // w contains slotpad
 
           if ( size.hasExtra && i === ds - 2 ) {
@@ -258,18 +250,15 @@ const uimapOne =
             if ( x + w + slotpad < size.w ) {
               // Do not change w: we have enough space
               // OK
-            }
-            else if ( size.w > w && x + 2 * slotpad < size.w ) {
+            } else if ( size.w > w && x + 2 * slotpad < size.w ) {
               w = size.w - 2 * slotpad
-            }
-            else {
+            } else {
               // computing space for last element
               // 1. No need for padding before.
               // 2. Move back on element below.
               w += - 2 * slotpad
             }
-          }
-          else if ( i === ds - 1 ) {
+          } else if ( i === ds - 1 ) {
             // No extra space for after last element
             w += - slotpad
           }
@@ -277,8 +266,7 @@ const uimapOne =
           w = Math.max ( slotpad, w )
           sextra.push ( w - slotpad )
           x += w
-        }
-        else {
+        } else {
           // empty slot
           sextra.push ( 0 )
           x += slotpad
@@ -296,17 +284,17 @@ const uimapOne =
 
   }
 
-  uibox.invalid = flagnode.invalid
+  uibox.invalid = flagBlock.invalid
   uibox.sextra = sextra
 
   uibox.size = size
 
   uibox.path  = path ( uibox, layout )
-  uibox.arrow = node.closed ? layout.ARROW_CLOSED : layout.ARROW_OPEN
+  uibox.arrow = block.closed ? layout.ARROW_CLOSED : layout.ARROW_OPEN
   uibox.slots = slots
 
   // draw nodes from child to parent
-  uigraph.nodes.push ( nodeId )
+  uigraph.nodes.push ( blockId )
   return uibox.size.w
 }
 
@@ -315,7 +303,7 @@ const uimapOne =
 export const uimap =
 ( graph: GraphType
 // validity flags (drop preview)
-, flags?: NodeByIdType
+, flags?: StringMap < BlockDefinition >
 , alayout?: UILayoutType
 ) : UIGraphType => {
   const layout = alayout || defaultUILayout
@@ -336,13 +324,13 @@ export const uimap =
   }
 
   uimapOne
-  ( graph, rootNodeId, flags, layout, uigraph, 0 )
+  ( graph, graph.entry, flags, layout, uigraph, 0, 'root' )
 
   const height = boxPosition
-  ( graph, rootNodeId, flags, layout, uigraph, startpos ) +
+  ( graph, graph.entry, flags, layout, uigraph, startpos ) +
   layout.SCLICKH +
   layout.SLOT + 1
-  const width = uigraph.uiNodeById [ rootNodeId ].size.w + 1
+  const width = uigraph.uiNodeById [ graph.entry ].size.w + 1
   uigraph.size = { width, height: height + 20 } // 20 = droptarget FIXME
 
   return uigraph

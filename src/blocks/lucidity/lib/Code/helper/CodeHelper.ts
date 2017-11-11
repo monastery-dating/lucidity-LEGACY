@@ -87,7 +87,7 @@ interface EditorLucidityOptions {
   blockId?: string // to detect change of block selection
   cursorMarkCleared?: boolean
   nosave?: boolean
-  filename?: string
+  lang?: string
   // cache source to avoid setting the same source more then once
   source?: string
   mode?: string
@@ -280,23 +280,22 @@ export const sourceChanged =
 , block: BlockType
 ) => {
   const ledit = cm.options.lucidity
-  if ( ledit.lock && ledit.blockId === block.id && ledit.filename === lang ) {
-    return
-  }
-  else if ( source === ledit.source && lang === ledit.filename ) {
+  if ( ledit.lock && ledit.blockId === block.id && ledit.lang === lang ) {
     // ignore
     return
-  }
-  else {
+  } else if ( source === ledit.source && lang === ledit.lang ) {
+    // ignore
+    ledit.blockId = block.id
+    return
+  } else {
     // prevent save while we update the source
     ledit.nosave = true
       ledit.source = source
-      if ( lang !== ledit.filename ) {
-        ledit.filename = lang
+      if ( lang !== ledit.lang ) {
+        ledit.lang = lang
         const mode = getMode ( lang )
         if ( ledit.mode !== mode ) {
           ledit.mode = mode
-          console.log ( 'mode=', mode )
           cm.setOption ( 'mode', mode )
         }
       }
@@ -340,7 +339,8 @@ export const saveSource =
     // need this.
     if ( ! ledit.nosave ) {
       const source = cm.getValue ()
-      save ( <any>ledit.filename, source )
+      ledit.source = source
+      save ( <any>ledit.lang, source )
     }
   }
 }
@@ -360,7 +360,6 @@ export const makeEditor =
 , callbacks?: Callbacks
 , options?: { autofocus?: boolean }
 ): any => {
-  console.log ( 'makeEditor', getMode ( lang ) )
   const opt = options || {}
 
   // We copy in here the currently loaded block's scrubber so that
@@ -402,7 +401,6 @@ export const makeEditor =
 
   cm.on ( 'blur', () => {
     const blur = ledit.callbacks.onBlur
-    console.log ( 'blur', blur )
     delete ledit.lock
     if ( blur ) {
       blur ()
@@ -435,6 +433,7 @@ export const makeEditor =
       // FIXME
       // callbacks.typecheck ( ledit.filename, source )
       // save ??
+      saveSource ( cm )
     } else {
       saveSource ( cm )
     }

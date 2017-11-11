@@ -3,6 +3,7 @@ import { set } from 'cerebral/operators'
 import { props, state } from 'cerebral/tags'
 
 export { Playback } from './components/Playback'
+export * from './lib/types'
 
 export interface PlaybackState {
   playback: {

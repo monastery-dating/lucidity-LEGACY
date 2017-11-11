@@ -10,11 +10,11 @@ import './style.scss'
 import { LatexEdit } from './LatexEdit'
 
 interface Props {
-  code: typeof State.latex.code
+  source: typeof State.latex.source
 }
 
 interface EProps {
-  dataPath: string
+  path: string
 }
 
 const Wrapper = styled.div`
@@ -26,14 +26,14 @@ padding: 1rem;
 `
 
 export const LatexDisplay = connect < Props, EProps > (
-  { code: state`${ props`dataPath` }.code`
+  { source: state`${ props`path` }.source`
   }
 , class LatexDisplay extends React.Component < Props & EProps > {
 
     create ( el : any  ) {
       if ( !el ) { return }
-      const code = this.props.code
-      katex.render ( code, el )
+      const source = this.props.source
+      katex.render ( source, el )
     }
 
     render () {
@@ -53,19 +53,18 @@ interface LProps {
 }
 
 export const Latex = connect < LProps, CustomTagProps > (
-  { edit: state`${ props`dataPath` }.$edit`
+  { edit: state`${ props`path` }.$edit`
   , toggleEdit: signal`latex.toggleEdit`
   }
-, function Latex ( { dataPath, edit, path, toggleEdit } ) {
+, function Latex ( { path, edit, toggleEdit } ) {
     const onClick = () => {
-      console.log ( 'CLICK' )
-      toggleEdit ( { path: dataPath } )
+      toggleEdit ( { path } )
     }
     return (
       <div onClick={ onClick } >
-        <LatexDisplay dataPath={ dataPath } />
+        <LatexDisplay path={ path } />
         { edit
-          ? <LatexEdit path={ path } dataPath={ dataPath } />
+          ? <LatexEdit path={ path } />
           : null
         }
       </div>

@@ -78,6 +78,9 @@ export const Library = connect < Props, EProps > (
 , function Library ( { focused } ) {
     if ( focused ) {
       function setupScroll ( el: HTMLDivElement ) {
+        if ( !el ) {
+          return
+        }
         el.addEventListener ( 'mousewheel', scrollStop )
         el.addEventListener ( 'DOMMouseScroll', scrollStop )
       }

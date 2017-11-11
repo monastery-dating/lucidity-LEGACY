@@ -1,5 +1,6 @@
 import { set, toggle } from 'cerebral/operators'
 import { props, state } from 'cerebral/tags'
+import { ParagraphOption } from 'editor'
 
 import { CodeEditor, CodeIcon } from '../../components/Code'
 
@@ -7,10 +8,11 @@ export interface CodeSignal {
 }
 
 export interface CodeState {
-  code: string
+  source: string
+  lang: string
 }
 
-export const codeParagraph =
+export const codeParagraph: ParagraphOption =
 { init:
   { code: ''
   , lang: 'ts'

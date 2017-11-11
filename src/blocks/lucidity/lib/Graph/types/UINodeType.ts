@@ -53,6 +53,7 @@ export interface UINodeType {
   type?: string
   name: string
   id: string
+  parent: string
   size: UINodeSize
   pos: UIPosType
   sextra: number[]

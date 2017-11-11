@@ -2,9 +2,8 @@
  * definition.
  */
 import 
-  { BasicBlockType
-  , FragmentType
-  , Project, SerializedBranch, SourceFragment } from './types'
+  { FragmentType
+  , Project, BranchDefinition, SourceFragment } from './types'
 import { extractSources } from './extractSources'
 import * as marked from 'marked'
 import * as yaml from 'js-yaml'
@@ -81,30 +80,24 @@ export function parse
   , code ( text: string, lang: string ) {
       if ( lang === 'yaml' ) {
         const type = getType ( text )
-        const content: SerializedBranch = yaml.load ( text )
-        const { branch, entry, nodes, blocks } = content
+        const content: BranchDefinition = yaml.load ( text )
+        const { branch, entry, blocks } = content
         if ( type === 'branch' ) {
           branches.push
-          ( { branch
-            , entry
-            , nodes
-            } 
-          )
+          ( content)
           Object.keys ( blocks )
           .forEach
           ( key => {
-              const sblock = blocks [ key ]
-              if ( ! sblock.lang ) {
-                sblock.lang = 'ts'
+              const block = blocks [ key ]
+              if ( ! block.lang ) {
+                block.lang = 'ts'
               }
               if ( blockById [ key ] ) {
                 throw new Error ( `Duplicate block id '${key}'.`)
               }
-              if ( ! sblock.name ) {
+              if ( ! block.name ) {
                 throw new Error ( `Missing 'name' in block id '${key}.`)
               }
-              const block: BasicBlockType = Object.assign
-              ( {}, sblock, { id: key } )
 
               blockById [ key ] = block
               let list = blocksByName [ block.name ]

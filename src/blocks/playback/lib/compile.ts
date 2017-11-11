@@ -158,7 +158,7 @@ function mapTree <T>
   accumulator [ nodeId ] = result
 
   // map children
-  const childrenIds = branch.nodes [ nodeId ]
+  const childrenIds = branch.blocks [ nodeId ].children
   if ( childrenIds ) {
     childrenIds.forEach
     ( childId => mapTree
@@ -296,7 +296,7 @@ function linkOne
 , nodeId: string = branch.entry
 ): { typed?: LinkedNode, floatingChildren: LinkedNode [] } {
   // map children
-  const childrenIds = branch.nodes [ nodeId ]
+  const childrenIds = branch.blocks [ nodeId ].children
   const typedChildren: LinkedNode [] = []
   let allFloatingChildren: LinkedNode [] = []
   if ( childrenIds ) {

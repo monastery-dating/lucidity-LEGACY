@@ -1,9 +1,10 @@
 import { Signal, State } from 'app'
 import { connect, JSX } from 'builder'
-import { signal, state } from 'cerebral/tags'
+import { props, signal, state } from 'cerebral/tags'
 import { styled } from 'styled'
-import { NodeType, UINodeType, UISlotType } from '../../../lib/Graph/types'
+import { UINodeType, UISlotType } from '../../../lib/Graph/types'
 import { DragDropHelper } from '../../../lib/DragDrop'
+import { BlockDefinition } from 'blocks/playback'
 
 import './style.scss'
 
@@ -41,7 +42,8 @@ const makeSlot = ( slot: UISlotType, datainfo: any, sclick: any ) => {
 interface Props {
   add: typeof Signal.branch.add
   arrow: typeof Signal.branch.arrow
-  blockId: typeof State.branch.$blockId // user.blockId ?
+  block: typeof State.branch.branch.blocks.someId
+  $blockId: typeof State.branch.$blockId
   drag: typeof Signal.branch.drag
   drop: typeof Signal.branch.drop
   move: typeof Signal.branch.move
@@ -50,33 +52,33 @@ interface Props {
 }
 
 interface EProps {
-  node: NodeType
-  ownerType: string
+  path: string
   uinode: UINodeType  
 }
 
 export const Node = connect < Props, EProps > (
   { add: signal`branch.add`
   , arrow: signal`branch.arrow`
-  , blockId: state`branch.$blockId`
+  , block: state`${ props`path` }.branch.blocks.${ props`uinode.id` }`
+  , $blockId: state`${ props`path` }.$blockId`
   , drag: signal`branch.drag`
   , drop: signal`branch.drop`
   , move: signal`branch.move`
   , select: signal`branch.select`
   }
 , function Node
-  ( { add, arrow, blockId, drag, drop, move
-    , node, ownerType, select, uinode
+  ( { add, arrow, $blockId, drag, drop, move
+    , block, path, select, uinode
     }
   ) {
     // Position in parent
     const x = uinode.pos.x
     const y = uinode.pos.y
     const transform = `translate(${x},${y})`
-    const datainfo = `${ownerType}-${uinode.id}`
+    const datainfo = `${path}-${uinode.id}`
 
     const klass = 
-    { sel: node.blockId === blockId
+    { sel: block.id === $blockId
     , [uinode.className]: true
     , invalid: uinode.invalid
     , node: true
@@ -89,18 +91,18 @@ export const Node = connect < Props, EProps > (
         drag
         ( { drag:
             { copy
-            , nodeId: node.id
+            , nodeId: block.id
             , nodePos
-            , ownerType
+            , path
             }
           }
         )
           // initial target
-          return `${ownerType}-${node.parent}-${uinode.slotIdx}`
+          return `${path}-${uinode.parent}-${uinode.slotIdx}`
       }
     , ( e ) => {
         // normal click
-        select ( { select: { id: node.blockId, nodeId: node.id, ownerType } } )
+        select ( { blockId: block.id, path } )
       }
     )
 
@@ -108,7 +110,7 @@ export const Node = connect < Props, EProps > (
       e.stopPropagation ()
 
       arrow
-      ( { arrow: { nodeId: node.id, ownerType, closed: !node.closed } } )
+      ( { arrow: { nodeId: block.id, path, closed: !block.closed } } )
     }
 
     const slotclick = ( e: React.MouseEvent< SVGElement >, pos: number ) => {
@@ -117,7 +119,7 @@ export const Node = connect < Props, EProps > (
       add
       ( { pos
         , parentId: uinode.id
-        , ownerType
+        , path
         }
       )
     }

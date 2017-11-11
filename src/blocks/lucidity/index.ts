@@ -1,19 +1,18 @@
 export { App } from './components/App'
 
 import { Block } from 'builder'
+import { EditorBlock } from 'editor'
 import { DocumentBlock } from 'blocks/Document'
-import { EditorBlock } from 'blocks/Editor'
 import { WatchBlock } from 'blocks/watch'
 import { signal } from 'cerebral/tags'
 
 import { branch, branchParagraph, defaultBranch, BranchSignal, BranchState } from './modules/branch'
-
 import { code, codeParagraph, CodeSignal, CodeState } from './modules/code'
 import { data, DataState } from './modules/data'
+import { latex, latexParagraph, LatexSignal, LatexState } from './modules/latex'
 import { navigation, NavigationSignal, NavigationState } from './modules/navigation'
 import { prefs, PrefsSignal, PrefsState } from './modules/prefs'
 import { router, RouterSignal, RouterState } from './modules/router'
-import { latex, latexParagraph, LatexSignal, LatexState } from './modules/latex'
 
 export * from './types'
 export * from './lucidity.types'
@@ -71,10 +70,12 @@ export const app: Block < EditorBlock & DocumentBlock > =
     { para4:
       JSON.parse ( JSON.stringify ( defaultBranch ) )
     , para6:
-      { code: `\\sqrt{|xy|}\\leq\\left|\\frac{x+y}{2}\\right|`
+      { source: `\\sqrt{|xy|}\\leq\\left|\\frac{x+y}{2}\\right|`
+      , lang: 'latex'
       }
     , para8:
-      { code: `const foo = 'bar' // test`
+      { source: `const foo = 'bar' // test`
+      , lang: 'ts'
       }
     }
   }

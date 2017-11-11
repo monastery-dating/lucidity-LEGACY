@@ -1,7 +1,12 @@
+import { LinkedNode } from 'blocks/playback'
 export interface NodeByIdType {
   [ id: string ]: NodeType
 }
 
+export interface NodeType extends LinkedNode {
+
+}
+/*
 export interface NodeType {
   id: string         // node id
   blockId: string    // _id of the related block
@@ -26,6 +31,7 @@ export interface NodeType {
   // meta.all set to true
   all?: string[]
 }
+*/
 
 export const nextNodeId =
 ( nodesById: NodeByIdType

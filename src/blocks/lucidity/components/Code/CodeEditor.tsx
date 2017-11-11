@@ -13,7 +13,7 @@ import 'codemirror/addon/scroll/simplescrollbars.css'
 import 'codemirror/addon/dialog/dialog.css'
 
 interface Props {
-  code: string
+  source: string
   lang: string
 }
 
@@ -21,7 +21,7 @@ interface EProps extends CustomTagProps {
   className?: string
   focus?: boolean
   tab?: string
-  onSave: ( code: string ) => void
+  onSave: ( source: string ) => void
   onBlur?: () => void
 }
 
@@ -69,30 +69,30 @@ margin: 2rem;
 `
 
 export const CodeEditor = connect < Props, EProps > (
-  { code: state`${ props`dataPath` }.code`
-  , lang: state`${ props`dataPath` }.lang`
+  { source: state`${ props`path` }.source`
+  , lang: state`${ props`path` }.lang`
   }
 , class CodeDisplay extends Component < Props & EProps > {
     private cm: any
 
-    create ( elm : any  ) {
+    create ( el : any  ) {
       const { props } = this
       if ( this.cm === undefined ) {
-        console.log(elm)
         const onSave = ( filename: string, source: string ) => {
-          props.onSave ( source )
+          this.props.onSave ( source )
         }
 
         const typecheck = ( filename: string, source: string ) => {
-          // typecheck ( { filename, source } )
+          // this.props.typecheck ( { filename, source } )
         }
 
+        const id = props.path.split ( '.' ).slice ( -1 ) [ 0 ]
         this.cm = false
         setTimeout
         ( () => {
             this.cm = makeEditor
-            ( elm
-            , props.code || ''
+            ( el
+            , props.source || ''
             , props.lang || 'ts'
             , { onSave
               , onBlur: props.onBlur
@@ -103,8 +103,8 @@ export const CodeEditor = connect < Props, EProps > (
             sourceChanged
             ( this.cm
             , props.lang
-            , props.code
-            , {} as any
+            , props.source
+            , { id } as any
             )
             // FIXME: focus...
           }
@@ -114,7 +114,6 @@ export const CodeEditor = connect < Props, EProps > (
     }
 
     render () {
-      console.log ( 'RENDER XXX' )
       const { props } = this
 
       if ( this.cm ) {
@@ -133,16 +132,9 @@ export const CodeEditor = connect < Props, EProps > (
         */
       }
 
-      let source = props.code
-      /*
-      if ( tab !== 'main.ts' && tab !== 'controls' ) {
-        const sources = block.sources || {}
-        source = sources [ tab ]
-      }
-        */
-
-      if ( this.cm /* && tab !== 'controls' */ ) {
-        sourceChanged ( this.cm, this.props.lang, source, {} as any )
+      if ( this.cm ) {
+        const id = props.path.split ( '.' ).slice ( -1 ) [ 0 ]
+        sourceChanged ( this.cm, props.lang, props.source, { id } as any )
       }
 
       return (

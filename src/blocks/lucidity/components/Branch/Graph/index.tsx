@@ -12,55 +12,50 @@ import { DropTarget } from '../DropTarget'
 import './style.scss'
 
 const mapUINodes =
-( graph: GraphType
+( path: string
 , uigraph: UIGraphType
-, ownerType: string
 ) => {
-  const nodesById = graph.nodesById
   const nodes = uigraph.nodes
   const uiNodeById = uigraph.uiNodeById
 
   return nodes.map ( ( n ) => {
       const uinode = uiNodeById [ n ]
-      const node = nodesById [ n ]
       return <Node
         key={ n }
+        path={ path }
         uinode={ uinode }
-        node={ node }
-        ownerType={ ownerType }
         />
     }
   )
 }
 
 interface Props {
-  scale: typeof State.branch.$scale
-  graph: typeof State.branch.graph
+  // $scale: typeof State.prefs.branchScale ?
+  branch: typeof State.branch.branch
 }
 
 interface EProps {
   dropSlotIdx?: number
   dropUINode?: any // ??
-  ownerType: string // ??
   path: string
   position?: any // ??
-  uigraph: UIGraphType
 }
 
 export const Graph = connect < Props, EProps > (
-  { scale: state`branch.$scale`
-  , graph: state`${ props`path` }.graph`
+  { branch: state`${ props`path` }.branch`
   }
-, function Graph ( { dropSlotIdx, dropUINode, graph, ownerType, path, position, scale, uigraph } ) {
-    if ( !graph ) {
+, function Graph ( { dropSlotIdx, dropUINode, branch, path, position } ) {
+    if ( !branch ) {
       return null
     }
+
+    const uigraph = uimap ( branch )
 
     const style: any = {}
 
     // TODO: implement scale change with slider
     // in the status bar.
-    const transform = `scale(${scale})`
+    const transform = `scale(1.0)` // ${$scale})`
 
     if ( position ) {
       style.left = (position.x - uigraph.grabpos.x) + 'px'
@@ -83,7 +78,7 @@ export const Graph = connect < Props, EProps > (
           height={ uigraph.size.height }
           onClick={ noSelect }>
           <g transform={ transform }>
-          { mapUINodes ( graph, uigraph, ownerType ) }
+          { mapUINodes ( path, uigraph ) }
           { ( dropUINode && dropSlotIdx !== undefined ) ?
           <DropTarget key='DropTarget'
             uinode={ dropUINode } slotIdx={ dropSlotIdx }/>

@@ -86,19 +86,22 @@ export interface StringMap <T=string> {
   [ key: string ]: T
 }
 
-export interface Meta {
-  // only mandatory in the official library
+// Official library meta requires some
+// fields to be present.
+export interface LibMeta {
   description: string
   tags: string[]
   author: string
   origin: string
   version: string
-  // end mandatory
+
   expect?: StringMap
   provide?: StringMap
   children?: string[] | 'all'
   update?: string
 }
+
+export type Meta = Partial<LibMeta>
 
 export interface Init {
   ( h: Helpers ): ContextExtension | void

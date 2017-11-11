@@ -20,23 +20,26 @@ When defining a target, we can either use '@' (named based target) or '$' (id ba
 # type: branch
 # Name of the location to connect this branch
 branch: root
-entry: addid
-nodes:
-  addid:
-    - fooid
-    - value1id 
-    - value2id
+entry: add1
 blocks:
-  addid:
+  add1:
+    id: add1
+    children:
+      - foo1
+      - value1
+      - value2
     name: add
     lang: ts
-  fooid:
+  foo1:
+    id: foo1
     name: foo
     lang: ts
-  value1id:
+  value1:
+    id: value1
     name: value
     lang: ts
-  value2id:
+  value2:
+    id: value2
     name: value
     lang: ts
 ```
@@ -63,7 +66,7 @@ return v
 
 This part is automatically added by the editor to store sources of all blocks in all graphs in the project. These are the contents of the block 'templates' that we drag into the graph. When we serialise to the filesystem, these end up in their own files.
 
-## $addid.source
+## $add1.source
 
 ```ts
 import { Init, Update, Meta } from 'lucidity'
@@ -103,7 +106,7 @@ export const meta: Meta =
 }
 ```
 
-### $fooid.source
+### $foo1.source
 
 ```ts
 import { Meta, Update } from 'lucidity'
@@ -123,7 +126,7 @@ export const meta: Meta =
 }
 ```
 
-### $value1id.source
+### $value1.source
 
 ```ts
 import { Meta, Update } from 'lucidity'
@@ -145,7 +148,7 @@ export const meta: Meta =
 }
 ```
 
-### $value2id.source
+### $value2.source
 
 ```ts
 import { Meta, Update } from 'lucidity'

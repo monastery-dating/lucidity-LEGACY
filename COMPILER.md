@@ -6,6 +6,34 @@ Compilation is done in five steps which are described in detail below.
 
 This simply returns the root of the tree. Not sure why we need this step.
 
+A tree (same as Branch) is defined as:
+
+```ts
+interface BranchDefinition {
+  // @name of the location to connect this branch
+  branch: string
+  // Root of this branch (where to start)
+  entry: string
+  nodes: StringMap < string [] >
+}
+```
+
+Here is an example:
+
+```yaml
+# Name of the location to connect this branch
+branch: root
+entry: addid
+nodes:
+  addid:
+    - fooid
+    - value1id 
+    - value2id
+```
+
+And then the Project contains blockById to map ids to actual blocks and
+node fragments to replace parts of code in the block sources with other code.
+
 ## 2. Update sources
 
 This step walks through every block in the project and resolves the fragments to produce a map of blockId -> Source.
@@ -30,7 +58,7 @@ interface Block {
   meta?: Meta
 }
 
-interface CompiledNode extends Block {
+interface CompiledBlock extends Block {
   js: string
 }
 ```
@@ -61,3 +89,7 @@ interface Helpers {
 ```
 
 The linking process takes branch definition and ???
+
+# DISPLAY
+
+We can display unlinked nodes

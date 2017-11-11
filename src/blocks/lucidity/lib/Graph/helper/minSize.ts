@@ -1,11 +1,10 @@
 import { NodeType, UILayoutType, UINodeSize } from '../types'
-import { BlockType } from '../../Block'
+import { BlockDefinition } from 'blocks/playback'
 
 /** Compute the minimum size to display the element.
  */
 export const minSize =
-( block: BlockType
-, node: NodeType
+( block: BlockDefinition
 , layout: UILayoutType
 ) : UINodeSize => {
   const { meta } = block
@@ -15,18 +14,18 @@ export const minSize =
   const needExtraSlot = !meta.children
   let hasExtra = false
   let ds
-  if ( node.closed ) {
+  if ( block.closed ) {
     // done
     ds = 0
   }
   else if ( meta.children ) {
    // exact children length (and cope for extra detached)
    ds = Math.max
-   ( meta.children.length, node.children.length )
+   ( meta.children.length, block.children.length )
   }
   else {
     // Always keep a free slot for untyped children
-    ds = node.children.length + 1
+    ds = block.children.length + 1
     hasExtra = true
   }
   const us = 1 // alwasy show up slot.

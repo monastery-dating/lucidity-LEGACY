@@ -8,7 +8,7 @@ interface DragArg {
     copy: boolean 
     nodeId: string
     nodePos: Position
-    ownerType: string
+    path: string
   }
 }
 

@@ -4,14 +4,12 @@ import { props, signal, state } from 'cerebral/tags'
 import { CustomTagProps } from 'editor'
 import { styled } from 'styled'
 
-import { rootNodeId
-       , ComponentType, GraphType, NodeByIdType, UIGraphType 
+import { ComponentType, GraphType, NodeByIdType, UIGraphType 
        } from '../../lib/Graph'
-import { uimap } from '../../lib/Graph/helper/uimap'
+import { BlockEdit } from './BlockEdit'
+export { BranchIcon } from './BranchIcon'
 import { Graph } from './Graph'
 import { Library } from './Library'
-
-export { BranchIcon } from './BranchIcon'
 
 import './style.scss'
 
@@ -21,7 +19,7 @@ function classNames ( obj: any ) {
 
 interface Props {
   focused: typeof State.editor.composition.g.elem.s
-  graph: typeof State.branch.graph
+  $blockId: typeof State.branch.$blockId
   drag: typeof State.branch.$drag
   drop: typeof State.branch.$drop
 }
@@ -40,27 +38,27 @@ display: flex;
 `
 
 export const Branch = connect < Props, CustomTagProps > (
-  { graph: state`${ props`dataPath` }.graph`
-  , drag: state`branch.$drag`
+  { drag: state`branch.$drag`
   , drop: state`branch.$drop`
+  , $blockId: state`${ props`path` }.$blockId`
   , focused: state`${ props`path` }.s`
   }
-, function Branch ( { dataPath, drop, focused, graph, path } ) {
-    if ( ! graph ) {
-      return null
-    }
-
+, function Branch ( { path, drop, $blockId, focused } ) {
     return (
-      <Wrapper>
-        <Graph
-          dropSlotIdx= { undefined }
-          dropUINode={ undefined }
-          ownerType={ 'scene' }
-          path={ dataPath }
-          uigraph={ uimap ( graph ) }
-          />
-        <Library focused={ focused !== undefined } />
-      </Wrapper>
+      <div>
+        <Wrapper>
+          <Graph
+            dropSlotIdx= { undefined }
+            dropUINode={ undefined }
+            path={ path }
+            />
+          <Library focused={ focused !== undefined } />
+        </Wrapper>
+          { $blockId
+            ? <BlockEdit path={ path } />
+            : null
+          }
+      </div>
     )
   }
 )

@@ -1,40 +1,53 @@
-import { Block, Helpers } from 'lucidity'
+import { Block, Meta, Helpers, StringMap } from 'lucidity'
 
-export interface StringMap < T > {
-  [ id: string ]: T
-}
+export { StringMap } from 'lucidity'
 
 /********** SERIALIZED TYPES **********************/
+// This is saved data.
 
-export interface SerializedBlockType {
-  name: string
-  lang: string
+export interface ParsedMeta extends Meta {
+  // set to true if children: 'all'
+  all?: boolean
+  // set to true if it has an update but not type for update
+  isvoid?: boolean
+  children?: string[]
 }
 
-export interface SerializedBranch extends BranchDefinition {
-  blocks: StringMap < SerializedBlockType >
+export interface BlockDefinition {
+  id: string
+  children: string []
+  name: string
+  lang: string
+  source: string
+  // Extracted from source but saved for faster usage
+  meta: ParsedMeta
+
+  // ** UI stuff **
+  closed?: boolean
+
+  // ** Compilation feedback in UI ** 
+  // Context errors
+  cerr?: string []
+  // When a block is invalid, it is not initialized nor updated.
+  invalid?: boolean
+  // Slot connection errors (renders block invalid)
+  serr?: string []
 }
 
 /********** PROJECT TYPE **************************/
 
-export interface BasicBlockType extends SerializedBlockType {
-  id: string
-}
-
-type NodeDefinition = string []
-
 export interface BranchDefinition {
   // Name of the location to connect this branch
   branch: string
+  blocks: StringMap < BlockDefinition >
   // Root of this branch
   entry: string
-  nodes: StringMap < NodeDefinition >
 }
 
 export interface Project {
   branches: BranchDefinition []
-  blockById: StringMap < BasicBlockType >
-  blocksByName: StringMap < BasicBlockType [] >
+  blockById: StringMap < BlockDefinition >
+  blocksByName: StringMap < BlockDefinition [] >
   fragments: StringMap < SourceFragment >
 }
 
@@ -67,6 +80,8 @@ export type ParsedSourceElement = ParsedSource | string
 
 
 /********** PROGRAM TYPE **************************/
+
+// This is in memory in the Playback engine.
 
 export interface CompiledNode extends Block {
   js: string

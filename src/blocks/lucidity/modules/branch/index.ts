@@ -1,22 +1,21 @@
-import { set, toggle } from 'cerebral/operators'
+import { set, toggle, when, unset } from 'cerebral/operators'
 import { props, state } from 'cerebral/tags'
+import { ParagraphOption } from 'editor'
 
 import { Branch, BranchIcon } from '../../components/Branch'
-import { rootNodeId, DragDropCallbacks, GraphType, Position } from '../../lib/Graph/types'
+import { DragDropCallbacks, Position } from '../../lib/Graph/types'
+import { State } from 'app'
 import { DragDropType, DragStartType } from '../../lib/DragDrop'
+import { BlockDefinition, SourceFragment, StringMap, BranchDefinition } from 'blocks/playback'
 
-interface SelectArg {
-  select: {
-    id: string
-    nodeId: string
-    ownerType: string
-  }
+interface CheckTypes {
+  $blockId: typeof State.branch.$blockId
 }
 
 interface ArrowArg {
   arrow: {
     nodeId: string
-    ownerType: string
+    path: string
     closed: boolean
   }
 }
@@ -28,48 +27,59 @@ interface AddArg {
 export interface BranchSignal extends DragDropCallbacks {
   add ( arg: AddArg ): void
   arrow ( arg: ArrowArg ): void
-  select ( arg: SelectArg ): void
+  select ( arg: { blockId: string, path: string } ): void
 }
 
 export interface BranchState {
   $move?: any
   $drag?: DragStartType
   $drop?: DragDropType
-  $blockId?: string
-  $scale?: number
   // Pseudo type (this is not in state but in composition)
-  graph: GraphType
+  $blockId?: string
+  branch: BranchDefinition
 }
 
-const graph: GraphType =
-{ blocksById:
-  { b1:
-    { id: 'b1', name: 'add', source: ''
-    , meta: {}
-    }
-  , b2:
-    { id: 'b2', name: 'value1', source: ''
-    , meta: { children: [] }
-    }
-  , b3:
-    { id: 'b3', name: 'value2', source: ''
-    , meta: { children: [] }
-    }
-  }
-, nodesById:
-  { [ rootNodeId ]:
-    { id: 'n1', blockId: 'b1', children: [ 'n2', 'n3' ] }
-  , n2:
-    { id: 'n2', blockId: 'b2', children: [] }
-  , n3:
-    { id: 'n3', blockId: 'b3', children: [] }
+const b1: BlockDefinition =
+{ id: 'b1', name: 'add', lang: 'ts'
+, children: [ 'b2', 'b3' ]
+, meta: {}
+, source: `
+`
+}
+
+const b2: BlockDefinition =
+{ id: 'b2', name: 'value1', lang: 'ts'
+, children: []
+, meta: { children: [] }
+, source: `
+`
+}
+
+const b3: BlockDefinition = 
+{ id: 'b3', name: 'value2', lang: 'ts'
+, children: []
+, meta: { children: [] }
+, source: `
+`
+}
+
+const basicBranch
+: BranchDefinition =
+{ branch: 'root'
+, entry: 'b1'
+, blocks:
+  { b1
+  , b2
+  , b3
   }
 }
 
-export const defaultBranch: BranchState = { graph }
+export const defaultBranch: BranchState =
+{ branch: basicBranch
+}
 
-export const branchParagraph =
-{ defaultBranch
+export const branchParagraph: ParagraphOption =
+{ init: defaultBranch
 , tag: Branch
 , toolbox: BranchIcon
 }
@@ -87,8 +97,13 @@ export const branch =
       }
     ]
   , select:
-    [ () => {
-        throw new Error ( 'FIXME: refactor block.select into branch.select' )
+    [ when ( state`${ props`path` }.$blockId`, props`blockId`, ( a, b ) => a === b )
+    , { true:
+      [ unset ( state`${ props`path` }.$blockId` )
+      ]
+    , false:
+      [ set ( state`${ props`path` }.$blockId`, props`blockId` )
+      ]
       }
     ]
   }
