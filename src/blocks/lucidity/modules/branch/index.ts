@@ -7,6 +7,8 @@ import { DragDropCallbacks, Position } from '../../lib/Graph/types'
 import { State } from 'app'
 import { DragDropType, DragStartType } from '../../lib/DragDrop'
 import { BlockDefinition, SourceFragment, StringMap, BranchDefinition } from 'blocks/playback'
+import { blockSourceChanged } from './chains/blockSourceChanged'
+import { fragmentSourceChanged } from './chains/fragmentSourceChanged'
 
 interface CheckTypes {
   $blockId: typeof State.branch.$blockId
@@ -28,6 +30,8 @@ export interface BranchSignal extends DragDropCallbacks {
   add ( arg: AddArg ): void
   arrow ( arg: ArrowArg ): void
   select ( arg: { blockId: string, path: string } ): void
+  blockSourceChanged ( arg: { path: string, source: string } ): void
+  fragmentSourceChanged ( arg: { path: string, source: string } ): void
 }
 
 export interface BranchState {
@@ -106,6 +110,8 @@ export const branch =
       ]
       }
     ]
+  , blockSourceChanged
+  , fragmentSourceChanged
   }
 , state: {
     $scale: 1.0

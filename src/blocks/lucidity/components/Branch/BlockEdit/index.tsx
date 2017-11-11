@@ -20,8 +20,7 @@ position: relative;
 
 interface Props {
   $blockId: typeof State.branch.$blockId
-  // FIXME: replace with branch hooks for source change
-  save: typeof Signal.latex.changeLatex
+  save: typeof Signal.branch.blockSourceChanged
   // These are used by the code editor. The type
   // must be present at given path.
   source: typeof State.branch.branch.blocks.someId.source
@@ -34,7 +33,7 @@ interface EProps {
 
 export const BlockEdit = connect < Props, EProps > (
   { $blockId: state`${ props`path` }.$blockId`
-  , save: signal`latex.changeLatex`
+  , save: signal`branch.sourceChanged`
   }
 , function BlockEdit ( { $blockId, save, path } ) {
     const blockPath = `${ path }.branch.blocks.${ $blockId }`

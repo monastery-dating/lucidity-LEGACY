@@ -40,12 +40,12 @@ export interface BranchDefinition {
   // Name of the location to connect this branch
   branch: string
   blocks: StringMap < BlockDefinition >
-  // Root of this branch
+  // Root of this branch (also serves as branch id)
   entry: string
 }
 
 export interface Project {
-  branches: BranchDefinition []
+  branches: StringMap < BranchDefinition >
   blockById: StringMap < BlockDefinition >
   blocksByName: StringMap < BlockDefinition [] >
   fragments: StringMap < SourceFragment >
@@ -59,6 +59,7 @@ export type FragmentType = '@' | '$'
  * frag = main
  */
 export interface SourceFragment {
+  id: string
   type: FragmentType
   target: string
   frag: string

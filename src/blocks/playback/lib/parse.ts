@@ -5,8 +5,11 @@ import
   { FragmentType
   , Project, BranchDefinition, SourceFragment } from './types'
 import { extractSources } from './extractSources'
+import { v4 } from 'uuid'
 import * as marked from 'marked'
 import * as yaml from 'js-yaml'
+
+import { newProject, addBranch, addFragment, appendSource } from './project'
 
 const HEAD_RE = /^((@|\$)([^\.]+)\.?(.*))$/
 
@@ -25,12 +28,10 @@ function getType ( text: string ): string | undefined {
 export function parse
 ( text: string
 ): Project {
-  const result: Project =
-  { branches: [], blockById: {}, blocksByName: {}, fragments: {} }
+  const project: Project = newProject ()
 
-  const { branches, blockById, blocksByName, fragments } = result
-
-  let fragment: SourceFragment
+  let fragmentId: string
+  let fragmentLang: string
   let tname: string | undefined
   let tlevel: number = 0
 
@@ -47,26 +48,32 @@ export function parse
         const frag = re [ 4 ]
         let lang: string
         if ( type === '@' ) {
-          const list = blocksByName [ name ]
+          const list = project.blocksByName [ name ]
           if ( ! list ) {
             throw new Error ( `Block source defined before graph.` )
           }
           lang = list [ 0 ].lang || 'ts'
         } else {
-          const block = blockById [ name ]
+          const block = project.blockById [ name ]
           if ( ! block ) {
             throw new Error ( `Block source '${name}' defined before graph.` )
           }
           lang = block.lang || 'ts'
         }
-        fragment =
-        { target: name
-        , type, frag, lang
-        // dummy values for 'source' and 'sources'
-        , source: ''
-        , sources: []
-        }
-        fragments [ text ] = fragment
+
+        fragmentId = v4 ().slice ( 0, 10 )
+        fragmentLang = lang
+
+        addFragment
+        ( project
+        , { id: fragmentId
+          , target: name
+          , type, frag, lang
+          // dummy values for 'source' and 'sources'
+          , source: ''
+          , sources: []
+          }
+        )
         tlevel = level
       }
       return ''
@@ -80,46 +87,15 @@ export function parse
   , code ( text: string, lang: string ) {
       if ( lang === 'yaml' ) {
         const type = getType ( text )
-        const content: BranchDefinition = yaml.load ( text )
-        const { branch, entry, blocks } = content
         if ( type === 'branch' ) {
-          branches.push
-          ( content)
-          Object.keys ( blocks )
-          .forEach
-          ( key => {
-              const block = blocks [ key ]
-              if ( ! block.lang ) {
-                block.lang = 'ts'
-              }
-              if ( blockById [ key ] ) {
-                throw new Error ( `Duplicate block id '${key}'.`)
-              }
-              if ( ! block.name ) {
-                throw new Error ( `Missing 'name' in block id '${key}.`)
-              }
-
-              blockById [ key ] = block
-              let list = blocksByName [ block.name ]
-
-              if ( ! list ) {
-                list = []
-                blocksByName [ block.name ] = list
-              } else if ( list [ 0 ].lang !== block.lang ) {
-                throw new Error ( `Blocks of the same name should share the same lang.` )
-              }
-              list.push ( block )
-            }
-          )
+          const branch: BranchDefinition = yaml.load ( text )
+          addBranch ( project, branch )
           return ''
         }
       }
 
-      if ( fragment && lang === fragment.lang ) {
-        const s = fragment.source
-        fragment.source = s === ''
-          ? text
-          : s + '\n' + text
+      if ( fragmentId && lang === fragmentLang ) {
+        appendSource ( project, fragmentId, text )
         return ''
       }
 
@@ -143,14 +119,6 @@ export function parse
   }
 
   marked ( text, { renderer } )
-  // console.log ( JSON.stringify ( result, null, 2 ) )
-  Object.keys ( fragments )
-  .forEach
-  ( key => {
-      const frag = fragments [ key ]
-      frag.sources =
-      extractSources ( frag.source, frag.lang ).sources
-    }
-  )
-  return result
+
+  return project
 }
