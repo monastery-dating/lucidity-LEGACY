@@ -19,7 +19,8 @@ When defining a target, we can either use '@' (named based target) or '$' (id ba
 ```yaml
 # type: branch
 # Name of the location to connect this branch
-branch: root
+connect: root
+id: add1
 entry: add1
 blocks:
   add1:

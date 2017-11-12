@@ -2,6 +2,7 @@ import { LiveBlock } from './block'
 import { LiveBranch } from './Branch'
 import { extractSources } from './extractSources'
 import { makeId, SourceFragment, StringMap } from './types'
+import { compile } from 'blocks/playback/lib/compile';
 
 let project: LiveProject
 
@@ -36,8 +37,8 @@ export class LiveProject {
     this.provide = {}
   }
 
-  newBranch () {
-    return new LiveBranch ( this )
+  newBranch ( connect?: string ) {
+    return new LiveBranch ( this, connect )
   }
 
   newBlock ( branchId: string ) {
@@ -47,9 +48,7 @@ export class LiveProject {
 
   addBranch ( branch: LiveBranch ) {
     this.branches [ branch.id ] = branch
-    // Link...
-    // Compile...
-    // Init..
+    this.changed ()
   }
 
   addBlock ( block: LiveBlock ) {
@@ -75,11 +74,13 @@ export class LiveProject {
       throw new Error ( `Blocks of the same name should share the same lang.` )
     }
     list.push ( block )
+    this.changed ()
   }
 
   setContext ( key: string, type: string, ctx: any ) : void {
     this.context [ key ] = ctx
     this.provide [ key ] = type
+    this.changed ()
   }
 
   addFragment ( fragment: SourceFragment ) {
@@ -88,6 +89,7 @@ export class LiveProject {
     ( fragment.source
     , fragment.lang 
     ).sources
+    this.changed ()
   }
 
   appendSource ( fragmentId: string, source: string ) {
@@ -100,21 +102,20 @@ export class LiveProject {
     ( fragment.source
     , fragment.lang 
     ).sources
+    this.changed ()
   }
 
   setBlockSource ( blockId: string, source: string ) {
     const block = this.blockById [ blockId ]
     block.source = source
-    // FIXME
-    // ==> parse fragments
-    // ==> link block source
-    // ==> typecheck
+    this.changed ()
   }
 
   setFragmentSource ( fragmentId: string, source: string ) {
-    // FIXME
-    // ==> update fragment
-    // ==> link related block sources
-    // ==> typecheck
+    this.changed ()
+  }
+
+  changed () {
+    compile ( this ).main ()
   }
 }

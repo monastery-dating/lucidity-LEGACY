@@ -1,5 +1,5 @@
 import { LinkedTree, Project, Program } from './types'
-import { compile, updateSources } from './compile'
+import { compile, buildSources } from './compile'
 import { parse } from './parse'
 
 import { source } from './test'
@@ -46,7 +46,7 @@ describe ( 'compile', () => {
 
 describe ( 'updateSources', () => {
   it ( 'should return changed sources in Project', () => {
-    const sources = updateSources ( project )
+    const sources = buildSources ( project )
     expect
     ( sources [ 'value1id' ]
     )

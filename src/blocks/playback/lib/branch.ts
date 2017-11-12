@@ -7,6 +7,7 @@ import { LiveProject } from './project'
 
 export class LiveBranch {
   blocks: StringMap < LiveBlock >
+  entry: string
   id: string
 
   constructor
@@ -21,6 +22,9 @@ export class LiveBranch {
   addBlock
   ( block: LiveBlock
   ) {
+    if ( Object.keys ( this.blocks ).length === 0 ) {
+      this.entry = block.id
+    }
     this.blocks [ block.id ] = block
     this.project.addBlock ( block )
   }

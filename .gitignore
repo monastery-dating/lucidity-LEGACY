@@ -6,3 +6,4 @@ yarn.lock
 lerna-debug.log
 npm-debug.log
 output
+test-report.xml

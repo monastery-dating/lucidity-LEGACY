@@ -19,6 +19,8 @@ import
   , isCompileSuccess
   , SCRUBBER_VAR
   } from './compilers'
+import { LiveProject } from 'blocks/playback';
+import { LiveBranch } from 'blocks/playback/lib/branch';
 
 interface Source {
   lang: string
@@ -28,7 +30,7 @@ interface Source {
 type SourceMap = StringMap < Source >
 
 function serialize
-( project: Project
+( project: LiveProject
 , blockName: string 
 , elem: ParsedSourceElement
 ): string {
@@ -50,8 +52,8 @@ function serialize
   }
 }
 
-export function updateSources
-( project: Project
+export function buildSources
+( project: LiveProject
 ): SourceMap {
   const blocks: SourceMap = {}
 
@@ -87,16 +89,13 @@ export interface Project {
 }
 */
 
-function buildTree
-( project: Project
-): BranchDefinition {
-  const root = project.branches.find
-  ( b => b.branch === 'root' )
-  if ( ! root ) {
-    throw new Error
-    ( `Invalid project: missing node branching to root.` )
-  }
-  return root
+function findRoot
+( project: LiveProject
+): LiveBranch | undefined {
+  const { branches } = project
+  return Object.keys ( branches ).map
+  ( b => branches [ b ] ).find
+  ( b => b.connect === 'root' )
 }
 
 function compileSource
@@ -146,19 +145,22 @@ function compileNode
  * 2. return unhandled children
  */
 function mapTree <T>
-( branch: BranchDefinition
+( branch: LiveBranch
 , accumulator: StringMap < T >
 , fun: ( parent: T | undefined, nodeId: string ) => T
-, nodeId: string = branch.entry
+, blockId: string | undefined = branch.entry
 , parent: T | undefined = undefined
 ): T {
+  if ( blockId === undefined ) {
+    throw new Error ( `Cannot traverse branch: it is empty (no entry).` )
+  }
   // map parent
-  const result = fun ( parent, nodeId )
+  const result = fun ( parent, blockId )
 
-  accumulator [ nodeId ] = result
+  accumulator [ blockId ] = result
 
   // map children
-  const childrenIds = branch.blocks [ nodeId ].children
+  const childrenIds = branch.blocks [ blockId ].children
   if ( childrenIds ) {
     childrenIds.forEach
     ( childId => mapTree
@@ -293,10 +295,13 @@ function linkOne
   , floatingChildren: LinkedNode []
   , nodeId: string
   ) => { typed?: LinkedNode, floatingChildren: LinkedNode [] }
-, nodeId: string = branch.entry
+, blockId: string | undefined = branch.entry
 ): { typed?: LinkedNode, floatingChildren: LinkedNode [] } {
+  if ( blockId === undefined ) {
+    throw new Error ( `Cannot link blocks (branch is empty).` )
+  }
   // map children
-  const childrenIds = branch.blocks [ nodeId ].children
+  const childrenIds = branch.blocks [ blockId ].children
   const typedChildren: LinkedNode [] = []
   let allFloatingChildren: LinkedNode [] = []
   if ( childrenIds ) {
@@ -319,19 +324,20 @@ function linkOne
     )
   }
   // map parent
-  return fun ( accumulator, typedChildren, allFloatingChildren, nodeId )
+  return fun ( accumulator, typedChildren, allFloatingChildren, blockId )
 }
 
 function linkTree
-( branch: BranchDefinition
+( project: LiveProject
+, branch: BranchDefinition
 , tree: CompiledTree
 ): LinkedTree {
   const { compiledNodes } = tree
   const linkedNodes: StringMap < LinkedNode > = {}
 
   const baseHelpers: Helpers =
-  { context: {}
-  , contextForChildren: {}
+  { context: project.context
+  , contextForChildren: Object.assign ( project.context )
   , children: []
   , cache: {}
   , detached: false
@@ -432,11 +438,34 @@ function initTree
 }
 
 export function compile
-( project: Project
+( project: LiveProject
 ): Program {
-  const branch = buildTree ( project )
-  const sources = updateSources ( project )
-  const compiledTree = compileTree ( branch, sources )
-  const linkedTree = linkTree ( branch, compiledTree )
-  return initTree ( branch, linkedTree )
+  const root = findRoot ( project )
+  if ( !root ) {
+    // Nothing to run or compile if branches are not connected.
+    return { main () {} }
+  }
+
+  // Build sources from fragments
+  const sources = buildSources ( project )
+  // Compile sources and run the module to get exported content
+  // for all blocks in tree.
+  const compiledTree = compileTree ( root, sources )
+  // Link the result from exported contents to create an executable
+  const linkedTree = linkTree ( project, root, compiledTree )
+  // Run init code in every block
+  return initTree ( root, linkedTree )
 }
+
+/**
+ * To optimise compilation, we could:
+ * 
+ * 1. only build the sources for the blocks that have changed (the changed
+ * blocks are extracted from a dependency graph listing
+ * { [ fragmentId ]: blockId [] }.
+ * 
+ * 2. only compile changed sources (merge compiledTree with previous run).
+ * 
+ * 3. only init parts of tree that have been impacted (below changed blockIds)
+ * 
+ */

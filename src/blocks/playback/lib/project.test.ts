@@ -30,7 +30,7 @@ describe ( 'runtime', () => {
   })
 
   it ( 'should compile on addBranch', () => {
-    const branch = project.newBranch ()
+    const branch = project.newBranch ( 'root' )
     const block = project.newBlock ( branch.id )
     const src = source ( 'hello.ts' )
     project.setBlockSource ( block.id, src )
