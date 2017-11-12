@@ -1,5 +1,5 @@
 {
-  "name": "sarigama",
+  "name": "lucidity",
   "version": "0.1.0",
   "private": true,
   "homepage": "http://lucidity.io",
@@ -107,9 +107,14 @@
     "moduleNameMapper": {
       "^.+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/config/jest/FileStub.js",
       "^.+\\.css$": "<rootDir>/config/jest/CSSStub.js",
-      "^builder(.*)$": "<rootDir>/src/lib/builder$1",
+      "^builder(.*)$": "<rootDir>/src/blocks/builder$1",
+      "^blocks(.*)$": "<rootDir>/src/blocks$1",
       "^config(.*)$": "<rootDir>/src/config$1",
-      "^editor(.*)$": "<rootDir>/src/lib/editor$1",
+      "^data(.*)$": "<rootDir>/src/blocks/firebase/data$1",
+      "^editor(.*)$": "<rootDir>/src/blocks/editor$1",
+      "^error(.*)$": "<rootDir>/src/blocks/error$1",
+      "^lucidity(.*)$": "<rootDir>/src/blocks/lucidity$1",
+      "^playback(.*)$": "<rootDir>/src/blocks/playback$1",
       "^styled(.*)$": "<rootDir>/src/styled$1"
     },
     "setupFiles": [
@@ -117,7 +122,8 @@
       "<rootDir>/src/tests/setup.js"
     ],
     "testPathIgnorePatterns": [
-      "<rootDir>/(node_modules|app/build)/"
+      "<rootDir>/(node_modules|app/build)/",
+      "/off/"
     ],
     "testEnvironment": "node",
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx)$",

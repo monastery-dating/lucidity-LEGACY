@@ -1,6 +1,15 @@
-import { Block, Meta, Helpers, StringMap } from 'lucidity'
+import { Block, Meta, Helpers, StringMap } from 'blocks/lucidity/lucidity.types'
+import { v4 } from 'uuid'
 
-export { StringMap } from 'lucidity'
+export { StringMap } from 'blocks/lucidity/lucidity.types'
+
+export function makeId ( scope: { [ key: string ]: any } ) {
+  let id: string
+  do {
+    id = v4 ().slice ( 0, 6 )
+  } while ( scope [ id ] )
+  return id
+}
 
 /********** SERIALIZED TYPES **********************/
 // This is saved data.
@@ -24,7 +33,10 @@ export interface BlockDefinition {
 
   // ** UI stuff **
   closed?: boolean
+}
 
+export interface LiveBlock extends BlockDefinition {
+  branch: LiveBranch
   // ** Compilation feedback in UI ** 
   // Context errors
   cerr?: string []
@@ -37,11 +49,17 @@ export interface BlockDefinition {
 /********** PROJECT TYPE **************************/
 
 export interface BranchDefinition {
-  // Name of the location to connect this branch
-  branch: string
   blocks: StringMap < BlockDefinition >
+  // Name of the location to connect this branch. During drag/drop operations,
+  // connect can be undefined.
+  connect?: string
+  id: string
   // Root of this branch (also serves as branch id)
-  entry: string
+  entry?: string
+}
+
+export interface LiveBranch extends BranchDefinition {
+  project: Project
 }
 
 export interface Project {
@@ -49,6 +67,7 @@ export interface Project {
   blockById: StringMap < BlockDefinition >
   blocksByName: StringMap < BlockDefinition [] >
   fragments: StringMap < SourceFragment >
+  rootContext: { [ key: string ]: any }
 }
 
 export type FragmentType = '@' | '$'

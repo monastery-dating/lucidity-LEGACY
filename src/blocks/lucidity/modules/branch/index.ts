@@ -69,7 +69,8 @@ const b3: BlockDefinition =
 
 const basicBranch
 : BranchDefinition =
-{ branch: 'root'
+{ connect: 'root'
+, id: 'b1'
 , entry: 'b1'
 , blocks:
   { b1

@@ -1,104 +1,120 @@
-import { Project, BranchDefinition, SourceFragment } from 'playback'
-import { extractSources } from 'blocks/playback/lib/extractSources';
+import { LiveBlock } from './block'
+import { LiveBranch } from './Branch'
+import { extractSources } from './extractSources'
+import { makeId, SourceFragment, StringMap } from './types'
 
-export function newProject (): Project {
-  return (
-    { branches: {}
-    , blockById: {}
-    , blocksByName: {}
-    , fragments: {}
-    }
-  )
-}
+let project: LiveProject
 
-let project: Project
-
-export function getProject (): Project {
+export function getProject (): LiveProject {
   if ( !project ) {
-    project = newProject ()
+    project = new LiveProject
   }
   return project
 }
 
-export function addBranch
-( project: Project
-, branch: BranchDefinition
-) {
-  project.branches [ branch.entry ] = branch
-  const { blocks } = branch
-  Object.keys ( blocks )
-  .forEach
-  ( key => {
-      const block = blocks [ key ]
-      if ( ! block.lang ) {
-        block.lang = 'ts'
-      }
-      if ( project.blockById [ key ] ) {
-        throw new Error ( `Duplicate block id '${key}'.`)
-      }
-      if ( ! block.name ) {
-        throw new Error ( `Missing 'name' in block id '${key}.`)
-      }
+export function newProject
+(): LiveProject {
+  return new LiveProject
+}
 
-      project.blockById [ key ] = block
-      let list = project.blocksByName [ block.name ]
+export class LiveProject {
+  branches: StringMap < LiveBranch >
+  blockById: StringMap < LiveBlock >
+  blocksByName: StringMap < LiveBlock [] >
+  fragments: StringMap < SourceFragment >
+  // Root context
+  context: { [ key: string ]: any }
+  // Type of context
+  provide: { [ key: string ]: string }
 
-      if ( ! list ) {
-        list = []
-        project.blocksByName [ block.name ] = list
-      } else if ( list [ 0 ].lang !== block.lang ) {
-        throw new Error ( `Blocks of the same name should share the same lang.` )
-      }
-      list.push ( block )
+  constructor () {
+    this.branches = {}
+    this.blockById = {}
+    this.blocksByName = {}
+    this.fragments = {}
+    this.context = {}
+    this.provide = {}
+  }
+
+  newBranch () {
+    return new LiveBranch ( this )
+  }
+
+  newBlock ( branchId: string ) {
+    const branch = this.branches [ branchId ]
+    return new LiveBlock ( branch )
+  }
+
+  addBranch ( branch: LiveBranch ) {
+    this.branches [ branch.id ] = branch
+    // Link...
+    // Compile...
+    // Init..
+  }
+
+  addBlock ( block: LiveBlock ) {
+    if ( ! block.lang ) {
+      block.lang = 'ts'
     }
-  )
-}
+    const { id, name } = block
 
-export function addFragment
-( project: Project
-, fragment: SourceFragment
-) {
-  project.fragments [ fragment.id ] = fragment
-  fragment.sources = extractSources
-  ( fragment.source
-  , fragment.lang 
-  ).sources
-}
+    if ( this.blockById [ id ] ) {
+      throw new Error ( `Duplicate block id '${ id }'.`)
+    }
+    if ( ! name ) {
+      throw new Error ( `Missing 'name' in block id '${ id }.`)
+    }
 
-export function appendSource
-( project: Project
-, fragmentId: string
-, source: string
-) {
-  const fragment = project.fragments [ fragmentId ]
-  const s = fragment.source
-  fragment.source = s === ''
-    ? source
-    : s + '\n' + source
-  fragment.sources = extractSources
-  ( fragment.source
-  , fragment.lang 
-  ).sources
-}
+    this.blockById [ id ] = block
+    let list = this.blocksByName [ name ]
 
-export function changeBlockSource
-( project: Project
-, blockId: string
-, source: string
-) {
-  // FIXME
-  // ==> parse fragments
-  // ==> link block source
-  // ==> typecheck
-}
+    if ( ! list ) {
+      list = []
+      this.blocksByName [ name ] = list
+    } else if ( list [ 0 ].lang !== block.lang ) {
+      throw new Error ( `Blocks of the same name should share the same lang.` )
+    }
+    list.push ( block )
+  }
 
-export function changeFragmentSource
-( project: Project
-, fragmentId: string
-, source: string
-) {
-  // FIXME
-  // ==> update fragment
-  // ==> link related block sources
-  // ==> typecheck
+  setContext ( key: string, type: string, ctx: any ) : void {
+    this.context [ key ] = ctx
+    this.provide [ key ] = type
+  }
+
+  addFragment ( fragment: SourceFragment ) {
+    this.fragments [ fragment.id ] = fragment
+    fragment.sources = extractSources
+    ( fragment.source
+    , fragment.lang 
+    ).sources
+  }
+
+  appendSource ( fragmentId: string, source: string ) {
+    const fragment = this.fragments [ fragmentId ]
+    const s = fragment.source
+    fragment.source = s === ''
+      ? source
+      : s + '\n' + source
+    fragment.sources = extractSources
+    ( fragment.source
+    , fragment.lang 
+    ).sources
+  }
+
+  setBlockSource ( blockId: string, source: string ) {
+    const block = this.blockById [ blockId ]
+    block.source = source
+    // FIXME
+    // ==> parse fragments
+    // ==> link block source
+    // ==> typecheck
+  }
+
+  setFragmentSource ( fragmentId: string, source: string ) {
+    // FIXME
+    // ==> update fragment
+    // ==> link related block sources
+    // ==> typecheck
+  }
 }

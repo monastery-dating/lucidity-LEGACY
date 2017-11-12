@@ -1,4 +1,5 @@
 import { Init, Update, Meta } from 'lucidity'
+
 let result = { value: 0 }
 let child1: Update
 let child2: Update
@@ -24,12 +25,13 @@ export const update: Update =
 }
 
 export const meta: Meta =
-{ description: "Compute sum of three numbers."
-, tags: [ 'test', 'add' ]
-, author: 'Gaspard Bucher <gaspard@lucidity.io>'
-, origin: 'lucidity.io/value'
-, version: '1.0'
-, update: '(): void'
+{ author: 'Gaspard Bucher <gaspard@lucidity.io>'
 , children:
-  [ '(): number', '(): number', '(): number' ]
+[ '(): number', '(): number', '(): number' ]
+, description: "Compute sum of three numbers."
+, expect: { test: 'test.Result' }
+, origin: 'lucidity.io/value'
+, tags: [ 'test', 'add' ]
+, update: '(): void'
+, version: '1.0'
 }
