@@ -38,28 +38,26 @@ export class LiveProject {
   }
 
   newBranch ( connect?: string ) {
-    return new LiveBranch ( this, connect )
-  }
-
-  newBlock ( branchId: string ) {
-    const branch = this.branches [ branchId ]
-    return new LiveBlock ( branch )
-  }
-
-  addBranch ( branch: LiveBranch ) {
+    const branch = new LiveBranch ( this, connect )
     this.branches [ branch.id ] = branch
-    this.changed ()
+    this.addBlock ( branch.blocks [ branch.entry ] )
+    return branch
   }
 
-  addBlock ( block: LiveBlock ) {
-    if ( ! block.lang ) {
-      block.lang = 'ts'
-    }
+  newBlock ( branchId: string, parentId: string ) {
+    const branch = this.branches [ branchId ]
+    const block = branch.newBlock ( parentId )
+    this.addBlock ( block )
+    return block
+  }
+
+  private addBlock ( block: LiveBlock ) {
     const { id, name } = block
 
     if ( this.blockById [ id ] ) {
       throw new Error ( `Duplicate block id '${ id }'.`)
     }
+
     if ( ! name ) {
       throw new Error ( `Missing 'name' in block id '${ id }.`)
     }
@@ -75,6 +73,8 @@ export class LiveProject {
     }
     list.push ( block )
     this.setBlockSource ( block.id, block.source )
+
+    return block
   }
 
   setContext ( key: string, type: string, ctx: any ) : void {
@@ -110,14 +110,6 @@ export class LiveProject {
     // Not sure we need to set it in block.
     block.source = source
     const fragmentId = `$${ blockId }.source`
-    /* id: string
-       type: FragmentType
-       target: string
-       frag: string
-       lang: string
-       source: string
-       sources: ParsedSourceElement []
-    */
     const fragment: SourceFragment =
     { id: fragmentId
       // $     blockId . source
@@ -139,7 +131,7 @@ export class LiveProject {
   }
 
   changed () {
-    const main = compile ( this ).main
+    const { main, linkedNodes } = compile ( this )
     main ()
   }
 }

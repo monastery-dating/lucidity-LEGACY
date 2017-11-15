@@ -6,7 +6,7 @@ import { Branch, BranchIcon } from '../../components/Branch'
 import { DragDropCallbacks, Position } from '../../lib/Graph/types'
 import { State } from 'app'
 import { DragDropType, DragStartType } from '../../lib/DragDrop'
-import { LiveBlockDefinition, SourceFragment, StringMap, BranchDefinition } from 'blocks/playback'
+import { LiveBlockDefinition, SourceFragment, StringMap, BranchDefinition, getProject } from 'blocks/playback'
 import { blockSourceChanged } from './chains/blockSourceChanged'
 import { fragmentSourceChanged } from './chains/fragmentSourceChanged'
 
@@ -23,7 +23,10 @@ interface ArrowArg {
 }
 
 interface AddArg {
-  
+  branchId: string
+  parentId: string 
+  path: string
+  slotIdx: number
 }
 
 export interface BranchSignal extends DragDropCallbacks {
@@ -43,55 +46,27 @@ export interface BranchState {
   branch: BranchDefinition
 }
 
-const b1: LiveBlockDefinition =
-{ id: 'b1', name: 'add', lang: 'ts'
-, children: [ 'b2', 'b3' ]
-, meta: {}
-, source: `
-`
-}
-
-const b2: LiveBlockDefinition =
-{ id: 'b2', name: 'value1', lang: 'ts'
-, children: []
-, meta: { children: [] }
-, source: `
-`
-}
-
-const b3: LiveBlockDefinition = 
-{ id: 'b3', name: 'value2', lang: 'ts'
-, children: []
-, meta: { children: [] }
-, source: `
-`
-}
-
-const basicBranch
-: BranchDefinition =
-{ connect: 'root'
-, id: 'b1'
-, entry: 'b1'
-, blocks:
-  { b1
-  , b2
-  , b3
-  }
-}
-
 export const defaultBranch: BranchState =
-{ branch: basicBranch
+{ branch: getProject ().newBranch ().definition ()
 }
 
 export const branchParagraph: ParagraphOption =
-{ init: defaultBranch
+{ init () {
+    const branch = getProject ().newBranch ()
+    return { branch: branch.definition () }
+  }
 , tag: Branch
 , toolbox: BranchIcon
 }
 
 export const branch =
 { signals:
-  { drag:
+  { add:
+    [ ( c: any ) => {
+        console.log ( 'ADD BLOCK', c.props )
+      }
+    ]
+  , drag:
     [ () => {
         throw new Error ( 'FIXME: refactor dragdrop.drag into branch.drag' )
       }

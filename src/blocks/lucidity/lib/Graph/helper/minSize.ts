@@ -11,24 +11,24 @@ export const minSize =
   if ( !meta ) {
     throw new Error ( 'No block.meta (??)' )
   }
-  const needExtraSlot = !meta.children
+  const needExtraSlot = ! meta.children
   let hasExtra = false
   let ds
   if ( block.closed ) {
     // done
     ds = 0
-  }
-  else if ( meta.children ) {
-   // exact children length (and cope for extra detached)
-   ds = Math.max
-   ( meta.children.length, block.children.length )
-  }
-  else {
+  } else if ( meta.children ) {
+    // exact children length (and cope for extra detached)
+    ds = Math.max
+    ( meta.children.length, block.children.length )
+  } else {
     // Always keep a free slot for untyped children
     ds = block.children.length + 1
     hasExtra = true
   }
-  const us = 1 // alwasy show up slot.
+  console.log ( 'BLOCK', block, ds )
+  // Up slots
+  const us = block.id === 'root' ? 0 : 1
   // has update = block.meta.isvoid || block.meta.update ? 1 : 0
 
   const tb = layout.tsizer ( block.name )

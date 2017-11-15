@@ -94,13 +94,13 @@ export interface Project {
 }
 */
 
-function findRoot
+function findRoots
 ( project: LiveProject
-): LiveBranch | undefined {
+): LiveBranch [] {
   const { branches } = project
   return Object.keys ( branches ).map
-  ( b => branches [ b ] ).find
-  ( b => b.connect === 'root' )
+  ( b => branches [ b ] ).filter
+  ( b => b.blocks [ b.entry ].name === 'root' )
 }
 
 function compileSource
@@ -160,10 +160,9 @@ function mapTree <T>
     // Empty branch
     return
   }
-  // map parent
-  const result = fun ( parent, blockId )
 
-  accumulator [ blockId ] = result
+  const container = fun ( parent, blockId )
+  accumulator [ blockId ] = container
 
   // map children
   const childrenIds = branch.blocks [ blockId ].children
@@ -174,7 +173,7 @@ function mapTree <T>
       , accumulator
       , fun
       , childId
-      , result
+      , container
       )
     )
   }
@@ -188,7 +187,7 @@ function compileTree
   mapTree
   ( branch
   , compiledNodes
-  , ( parent, nodeId ) => compileNode ( sources [ nodeId ] )
+  , ( parent, blockId ) => compileNode ( sources [ blockId ] )
   )
   return { compiledNodes }
 }
@@ -299,7 +298,7 @@ function linkOne
   , floatingChildren: LinkedNode []
   , nodeId: string
   ) => { typed?: LinkedNode, floatingChildren: LinkedNode [] }
-, blockId: string | undefined = branch.entry
+, blockId: string = branch.entry
 ): { typed?: LinkedNode, floatingChildren: LinkedNode [] } {
   if ( blockId === undefined ) {
     // Empty branch
@@ -328,6 +327,7 @@ function linkOne
       }
     )
   }
+
   // map parent
   return fun ( accumulator, typedChildren, allFloatingChildren, blockId )
 }
@@ -363,18 +363,12 @@ function linkTree
   )
   if ( result.typed ) {
     throw new Error
-    ( `Invalid project: root node '${ branch.entry }' is typed.` )
+    ( `Invalid project: root node is typed.` )
   }
-  const list = < Update [] > result.floatingChildren.map
+  const updates = < Update [] > result.floatingChildren.map
   ( child => child.update )
 
-  const main = () => {
-    for ( const f of list ) {
-      f ()
-    }
-  }
-
-  return { linkedNodes, main }
+  return { linkedNodes, updates }
 }
 
 function subContext <T, U>
@@ -446,21 +440,39 @@ function initTree
 export function compile
 ( project: LiveProject
 ): Program {
-  const root = findRoot ( project )
-  if ( !root ) {
-    // Nothing to run or compile if branches are not connected.
-    return { main () {} }
+  const roots = findRoots ( project )
+  if ( roots.length === 0 ) {
+    return { linkedNodes: {}, main () {} }
   }
 
   // Build sources from fragments
   const sources = buildSources ( project )
   // Compile sources and run the module to get exported content
   // for all blocks in tree.
-  const compiledTree = compileTree ( root, sources )
-  // Link the result from exported contents to create an executable
-  const linkedTree = linkTree ( project, root, compiledTree )
-  // Run init code in every block
-  return initTree ( project, root, linkedTree )
+  const trees = roots.map
+  ( root => {
+      const compiledTree = compileTree ( root, sources )
+      // Link the result from exported contents to create an executable
+      const linkedTree = linkTree ( project, root, compiledTree )
+      // Run init code in every block
+      return initTree ( project, root, linkedTree )
+    }
+  )
+
+  const updates = ( < VoidFunction [] > [] )
+  .concat ( ... trees.map ( tree => tree.updates ) )
+
+  const linkedNodes: StringMap < LinkedNode > = Object.assign
+  ( {}
+  , ... trees.map ( tree => tree.linkedNodes )
+  )
+
+  const main = () => {
+    for ( const f of updates ) {
+      f ()
+    }
+  }
+  return { linkedNodes, main }
 }
 
 /**

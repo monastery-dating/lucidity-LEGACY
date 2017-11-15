@@ -53,6 +53,7 @@ interface Props {
 
 interface EProps {
   path: string
+  branchId: string
   uinode: UINodeType  
 }
 
@@ -67,7 +68,7 @@ export const Node = connect < Props, EProps > (
   , select: signal`branch.select`
   }
 , function Node
-  ( { add, arrow, $blockId, drag, drop, move
+  ( { add, arrow, branchId, $blockId, drag, drop, move
     , block, path, select, uinode
     }
   ) {
@@ -113,11 +114,12 @@ export const Node = connect < Props, EProps > (
       ( { arrow: { nodeId: block.id, path, closed: !block.closed } } )
     }
 
-    const slotclick = ( e: React.MouseEvent< SVGElement >, pos: number ) => {
+    const slotclick = ( e: React.MouseEvent< SVGElement >, slotIdx: number ) => {
       e.stopPropagation ()
 
       add
-      ( { pos
+      ( { slotIdx
+        , branchId
         , parentId: uinode.id
         , path
         }

@@ -28,7 +28,7 @@ export const meta: Meta =
 
 describe ( 'compile', () => {
   it ( 'should compile Project to Program', () => {
-    const program = <LinkedTree>compile ( project )
+    const program = compile ( project )
 
     expect
     ( program.linkedNodes [ 'addid' ].helpers.cache.result.value

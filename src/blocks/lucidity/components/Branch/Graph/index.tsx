@@ -13,6 +13,7 @@ import './style.scss'
 
 const mapUINodes =
 ( path: string
+, branchId: string
 , uigraph: UIGraphType
 ) => {
   const nodes = uigraph.nodes
@@ -20,11 +21,14 @@ const mapUINodes =
 
   return nodes.map ( ( n ) => {
       const uinode = uiNodeById [ n ]
-      return <Node
-        key={ n }
-        path={ path }
-        uinode={ uinode }
-        />
+      return (
+        <Node
+          branchId={ branchId }
+          key={ n }
+          path={ path }
+          uinode={ uinode }
+          />
+      )
     }
   )
 }
@@ -44,7 +48,14 @@ interface EProps {
 export const Graph = connect < Props, EProps > (
   { branch: state`${ props`path` }.branch`
   }
-, function Graph ( { dropSlotIdx, dropUINode, branch, path, position } ) {
+, function Graph
+  ( { branch
+    , dropSlotIdx
+    , dropUINode
+    , path
+    , position
+    }
+  ) {
     if ( !branch ) {
       return null
     }
@@ -78,7 +89,7 @@ export const Graph = connect < Props, EProps > (
           height={ uigraph.size.height }
           onClick={ noSelect }>
           <g transform={ transform }>
-          { mapUINodes ( path, uigraph ) }
+          { mapUINodes ( path, branch.id, uigraph ) }
           { ( dropUINode && dropSlotIdx !== undefined ) ?
           <DropTarget key='DropTarget'
             uinode={ dropUINode } slotIdx={ dropSlotIdx }/>

@@ -1,5 +1,6 @@
 import { newProject, LiveProject } from './project'
 import { source } from './test'
+import { uimap } from 'blocks/lucidity/lib/Graph/helper/uimap';
 
 it ( 'should create new project', () => {
   expect
@@ -30,8 +31,8 @@ describe ( 'runtime', () => {
   })
 
   it ( 'should compile on addBranch', () => {
-    const branch = project.newBranch ( 'root' )
-    const block = project.newBlock ( branch.id )
+    const branch = project.newBranch ()
+    const block = project.newBlock ( branch.id, branch.entry )
     const src = source ( 'hello.ts' )
     project.setBlockSource ( block.id, src )
     expect
@@ -40,5 +41,13 @@ describe ( 'runtime', () => {
     expect
     ( test.value ).toEqual
     ( 'Hello Lucidity' )
+  })
+  
+  it ( 'should uimap branch', () => {
+    const branch = project.newBranch ()
+    const block = project.newBlock ( branch.id, branch.entry )
+    const src = source ( 'hello.ts' )
+    project.setBlockSource ( block.id, src )
+    const uigraph = uimap ( branch )
   })
 })

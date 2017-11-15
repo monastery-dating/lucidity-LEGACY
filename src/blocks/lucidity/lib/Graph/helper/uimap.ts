@@ -145,7 +145,6 @@ const uimapOne =
 , slotIdx: number
 , parent: string
 ) => {
-
   uigraph.uiNodeById [ blockId ] = <UINodeType>
   { id: blockId, slotIdx, parent }
 
@@ -155,7 +154,7 @@ const uimapOne =
 
   uibox.name = block.name
 
-  if ( block.name === 'main' ) {
+  if ( block.id === graph.entry ) {
     uibox.className = 'main'
   } else {
     uibox.className = className ( block.name, layout )
@@ -323,19 +322,15 @@ export const uimap =
   , uiNodeById: {}
   , size: { width: 0, height: 0 }
   }
-  const entry = graph.entry
+  uimapOne
+  ( graph, graph.entry, flags, layout, uigraph, 0, graph.entry )
 
-  if ( entry !== undefined ) {
-    uimapOne
-    ( graph, entry, flags, layout, uigraph, 0, 'root' )
-
-    const height = boxPosition
-    ( graph, entry, flags, layout, uigraph, startpos ) +
-    layout.SCLICKH +
-    layout.SLOT + 1
-    const width = uigraph.uiNodeById [ entry ].size.w + 1
-    uigraph.size = { width, height: height + 20 } // 20 = droptarget FIXME
-  }
+  const height = boxPosition
+  ( graph, graph.entry, flags, layout, uigraph, startpos ) +
+  layout.SCLICKH +
+  layout.SLOT + 1
+  const width = uigraph.uiNodeById [ graph.entry ].size.w + 1
+  uigraph.size = { width, height: height + 20 } // 20 = droptarget FIXME
 
   return uigraph
 }

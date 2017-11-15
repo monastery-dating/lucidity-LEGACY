@@ -47,14 +47,17 @@ export interface LiveBlockDefinition extends BlockDefinition {
 
 /********** PROJECT TYPE **************************/
 
+/** Every branch contains a block with 'root' id that is
+ * only there to indicate where this branch will connect.
+ * This special 'root' information node is never compiled or
+ * used in the runtime.
+ */
 export interface BranchDefinition {
-  blocks: StringMap < LiveBlockDefinition >
-  // Name of the location to connect this branch. During drag/drop operations,
-  // connect can be undefined.
-  connect?: string
   id: string
-  // Root of this branch (also serves as branch id)
-  entry?: string
+  entry: string
+  blocks: {
+    [ key: string ]: LiveBlockDefinition
+  }
 }
 
 export interface LiveBranch extends BranchDefinition {
@@ -115,7 +118,7 @@ export interface CompiledTree {
 }
 
 export interface LinkedTree {
-  main (): void
+  updates: VoidFunction []
   linkedNodes: StringMap < LinkedNode >
 }
 
@@ -124,7 +127,5 @@ export interface LinkedTree {
  */
 export interface Program {
   main (): void
+  linkedNodes: StringMap < LinkedNode >
 }
-
-// Ensure that the two types are compatible
-const test = < Program > < LinkedTree > {}

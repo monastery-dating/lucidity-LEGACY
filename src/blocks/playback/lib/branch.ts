@@ -1,31 +1,54 @@
 import * as project from './project'
-import { makeId } from 'playback'
+import { makeId, BranchDefinition, BlockDefinition } from 'playback'
 import { StringMap } from 'blocks/lucidity';
 
 import { LiveBlock } from './block'
 import { LiveProject } from './project'
 
 export class LiveBranch {
-  blocks: StringMap < LiveBlock >
+  blocks: { [ key: string ]: LiveBlock }
   entry: string
   id: string
 
   constructor
   ( public project: LiveProject
-  , public connect?: string
+  , connect: string = 'root'
   ) {
-    this.blocks = {}
     this.id = makeId ( project.branches )
-    project.addBranch ( this )
+    const root = new LiveBlock ( this, connect )
+    this.entry = root.id
+    this.blocks = { [ root.id ]: root }
   }
 
-  addBlock
-  ( block: LiveBlock
+  definition (): BranchDefinition {
+    return (
+      { id: this.id
+      , entry: this.entry
+      , blocks: Object.assign
+        ( {}
+        , ... Object.keys ( this.blocks ).map
+          ( blockId => ( { [ blockId ]: this.blocks [ blockId ].definition () } )
+          )
+        )
+      }
+    )
+  }
+
+  newBlock
+  ( parentId: string
+  , slotIdx?: number
   ) {
-    if ( Object.keys ( this.blocks ).length === 0 ) {
-      this.entry = block.id
+    const parent = this.blocks [ parentId ]
+    if ( ! parent ) {
+      throw new Error ( `Cannot create block (invalid parent block id '${ parentId }')` )
+    }
+    const block = new LiveBlock ( this )
+    if ( slotIdx === undefined ) {
+      parent.children.push ( block.id )
+    } else {
+      parent.children [ slotIdx ] = block.id
     }
     this.blocks [ block.id ] = block
-    this.project.addBlock ( block )
+    return block
   }
 }
