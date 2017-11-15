@@ -12,7 +12,7 @@ interface FragmentInfo {
 
 
 const RE_BY_LANG: StringMap < RegExp > =
-{ ts: /^\s*\/\/\s*<(\/?)\s*frag:(\w+)\s*(\/?)>\s*$/
+{ ts: /^\s*\/\/\s*<(\/?)\s*(\w+)\s*(\/?)>\s*$/
 }
 
 export function fragmentInfo

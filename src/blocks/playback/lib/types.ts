@@ -35,8 +35,7 @@ export interface BlockDefinition {
   closed?: boolean
 }
 
-export interface LiveBlock extends BlockDefinition {
-  branch: LiveBranch
+export interface LiveBlockDefinition extends BlockDefinition {
   // ** Compilation feedback in UI ** 
   // Context errors
   cerr?: string []
@@ -49,7 +48,7 @@ export interface LiveBlock extends BlockDefinition {
 /********** PROJECT TYPE **************************/
 
 export interface BranchDefinition {
-  blocks: StringMap < BlockDefinition >
+  blocks: StringMap < LiveBlockDefinition >
   // Name of the location to connect this branch. During drag/drop operations,
   // connect can be undefined.
   connect?: string

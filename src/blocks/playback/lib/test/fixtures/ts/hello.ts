@@ -9,13 +9,11 @@ export const init: Init =
 
 export const update: Update =
 (): void => {
-  // <frag:main>
+  // <main>
   test.value = 'Hello Lucidity'
-  // </frag:main>
+  // </main>
 }
 
 export const meta: Meta =
-{ children: []
-, expect: { test: 'test.Result' }
-, update: '(): void'
+{ expect: { test: 'test.Result' }
 }

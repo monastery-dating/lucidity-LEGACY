@@ -9,7 +9,8 @@ import { v4 } from 'uuid'
 import * as marked from 'marked'
 import * as yaml from 'js-yaml'
 
-import { newProject, addBranch, addFragment, appendSource } from './project'
+import { newProject } from './project'
+import { LiveProject } from 'blocks/playback';
 
 const HEAD_RE = /^((@|\$)([^\.]+)\.?(.*))$/
 
@@ -27,8 +28,8 @@ function getType ( text: string ): string | undefined {
 
 export function parse
 ( text: string
-): Project {
-  const project: Project = newProject ()
+): LiveProject {
+  const project = newProject ()
 
   let fragmentId: string
   let fragmentLang: string
@@ -64,9 +65,10 @@ export function parse
         fragmentId = v4 ().slice ( 0, 10 )
         fragmentLang = lang
 
-        addFragment
-        ( project
-        , { id: fragmentId
+        /*
+         FIXME
+        project.loadFragment
+        ( { id: fragmentId
           , target: name
           , type, frag, lang
           // dummy values for 'source' and 'sources'
@@ -74,6 +76,7 @@ export function parse
           , sources: []
           }
         )
+        */
         tlevel = level
       }
       return ''
@@ -89,13 +92,15 @@ export function parse
         const type = getType ( text )
         if ( type === 'branch' ) {
           const branch: BranchDefinition = yaml.load ( text )
-          addBranch ( project, branch )
+          // FIXME
+          // project.loadBranch ( branch )
           return ''
         }
       }
 
       if ( fragmentId && lang === fragmentLang ) {
-        appendSource ( project, fragmentId, text )
+        // FIXME
+        // project.appendSource ( project, fragmentId, text )
         return ''
       }
 

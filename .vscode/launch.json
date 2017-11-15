@@ -10,8 +10,9 @@
       [ "--runInBand"
       , "--config"
       , "${workspaceRoot}/config/jest.debug.json"
-      , "--testNamePattern=doOpera"
+      , "--testPathPattern=project.test"
       ]
+    , "preLaunchTask": "debugBuild"
     , "sourceMaps": true
     , "outFiles":
       [ "${workspaceRoot}/output/debug/**/*"

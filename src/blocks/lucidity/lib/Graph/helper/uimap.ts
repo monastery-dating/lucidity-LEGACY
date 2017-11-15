@@ -13,7 +13,7 @@ import { GraphType
 
 import { minSize } from './minSize'
 import * as stringhash from 'string-hash'
-import { BlockDefinition, StringMap } from 'blocks/playback'
+import { LiveBlockDefinition, StringMap } from 'blocks/playback'
 
 /** Compute svg path of a box with up and down slots.
  * The sizes have to be computed first in the 'info' field.
@@ -90,7 +90,7 @@ const className =
 const boxPosition =
 ( graph: GraphType
 , blockId: string
-, flags: StringMap < BlockDefinition > | undefined
+, flags: StringMap < LiveBlockDefinition > | undefined
 , layout: UILayoutType
 , uigraph: UIGraphType
 , ctx: UIPosType
@@ -139,12 +139,13 @@ const boxPosition =
 const uimapOne =
 ( graph: GraphType
 , blockId: string
-, flags: StringMap < BlockDefinition > | undefined
+, flags: StringMap < LiveBlockDefinition > | undefined
 , layout: UILayoutType
 , uigraph: UIGraphType
 , slotIdx: number
 , parent: string
 ) => {
+
   uigraph.uiNodeById [ blockId ] = <UINodeType>
   { id: blockId, slotIdx, parent }
 
@@ -303,7 +304,7 @@ const uimapOne =
 export const uimap =
 ( graph: GraphType
 // validity flags (drop preview)
-, flags?: StringMap < BlockDefinition >
+, flags?: StringMap < LiveBlockDefinition >
 , alayout?: UILayoutType
 ) : UIGraphType => {
   const layout = alayout || defaultUILayout
@@ -322,16 +323,19 @@ export const uimap =
   , uiNodeById: {}
   , size: { width: 0, height: 0 }
   }
+  const entry = graph.entry
 
-  uimapOne
-  ( graph, graph.entry, flags, layout, uigraph, 0, 'root' )
+  if ( entry !== undefined ) {
+    uimapOne
+    ( graph, entry, flags, layout, uigraph, 0, 'root' )
 
-  const height = boxPosition
-  ( graph, graph.entry, flags, layout, uigraph, startpos ) +
-  layout.SCLICKH +
-  layout.SLOT + 1
-  const width = uigraph.uiNodeById [ graph.entry ].size.w + 1
-  uigraph.size = { width, height: height + 20 } // 20 = droptarget FIXME
+    const height = boxPosition
+    ( graph, entry, flags, layout, uigraph, startpos ) +
+    layout.SCLICKH +
+    layout.SLOT + 1
+    const width = uigraph.uiNodeById [ entry ].size.w + 1
+    uigraph.size = { width, height: height + 20 } // 20 = droptarget FIXME
+  }
 
   return uigraph
 }

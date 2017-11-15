@@ -2,14 +2,14 @@ import { ActionContext, CerebralChain } from 'builder'
 import { sequence } from 'cerebral'
 import { set } from 'cerebral/operators'
 import { props, state } from 'cerebral/tags'
-import { changeFragmentSource, getProject } from 'playback'
+import { getProject } from 'playback'
 
 function changeSource
 ( { props, state }: ActionContext
 ) {
   const fragmentId = props.path.split ( '.' ).slice ( -1 ) [ 0 ]
   const source = props.source
-  changeFragmentSource ( getProject (), fragmentId, source )
+  getProject ().setFragmentSource ( fragmentId, source )
 }
 
 export const fragmentSourceChanged: CerebralChain =

@@ -6,7 +6,7 @@ import { Branch, BranchIcon } from '../../components/Branch'
 import { DragDropCallbacks, Position } from '../../lib/Graph/types'
 import { State } from 'app'
 import { DragDropType, DragStartType } from '../../lib/DragDrop'
-import { BlockDefinition, SourceFragment, StringMap, BranchDefinition } from 'blocks/playback'
+import { LiveBlockDefinition, SourceFragment, StringMap, BranchDefinition } from 'blocks/playback'
 import { blockSourceChanged } from './chains/blockSourceChanged'
 import { fragmentSourceChanged } from './chains/fragmentSourceChanged'
 
@@ -43,7 +43,7 @@ export interface BranchState {
   branch: BranchDefinition
 }
 
-const b1: BlockDefinition =
+const b1: LiveBlockDefinition =
 { id: 'b1', name: 'add', lang: 'ts'
 , children: [ 'b2', 'b3' ]
 , meta: {}
@@ -51,7 +51,7 @@ const b1: BlockDefinition =
 `
 }
 
-const b2: BlockDefinition =
+const b2: LiveBlockDefinition =
 { id: 'b2', name: 'value1', lang: 'ts'
 , children: []
 , meta: { children: [] }
@@ -59,7 +59,7 @@ const b2: BlockDefinition =
 `
 }
 
-const b3: BlockDefinition = 
+const b3: LiveBlockDefinition = 
 { id: 'b3', name: 'value2', lang: 'ts'
 , children: []
 , meta: { children: [] }

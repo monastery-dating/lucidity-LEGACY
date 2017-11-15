@@ -1,3 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`editor sets ref 1`] = `
 <CerebralWrapping_Editor>
   <Editor
@@ -77,17 +79,20 @@ exports[`editor sets ref 1`] = `
     }
     enterPress={[Function]}
     inputChange={[Function]}
-    selectChange={[Function]}>
+    selectChange={[Function]}
+  >
     <div
       className="Composition"
       contentEditable={true}
       onInput={[Function]}
       onKeyDown={[Function]}
       onSelect={[Function]}
-      suppressContentEditableWarning={true}>
+      suppressContentEditableWarning={true}
+    >
       <CerebralWrapping_Element
         elemRef="mcneu"
-        path="editor.composition.i.mcneu">
+        path="editor.composition.i.mcneu"
+      >
         <Element
           elem={
             Object {
@@ -135,13 +140,16 @@ exports[`editor sets ref 1`] = `
             }
           }
           elemRef="mcneu"
-          path="editor.composition.i.mcneu">
+          path="editor.composition.i.mcneu"
+        >
           <p
             className={null}
-            data-ref="mcneu">
+            data-ref="mcneu"
+          >
             <CerebralWrapping_Element
               elemRef="uasuf"
-              path="editor.composition.i.mcneu.i.uasuf">
+              path="editor.composition.i.mcneu.i.uasuf"
+            >
               <Element
                 elem={
                   Object {
@@ -151,17 +159,20 @@ exports[`editor sets ref 1`] = `
                   }
                 }
                 elemRef="uasuf"
-                path="editor.composition.i.mcneu.i.uasuf">
+                path="editor.composition.i.mcneu.i.uasuf"
+              >
                 <span
                   className={null}
-                  data-ref="uasuf">
+                  data-ref="uasuf"
+                >
                   You can click 
                 </span>
               </Element>
             </CerebralWrapping_Element>
             <CerebralWrapping_Element
               elemRef="jnaid"
-              path="editor.composition.i.mcneu.i.jnaid">
+              path="editor.composition.i.mcneu.i.jnaid"
+            >
               <Element
                 elem={
                   Object {
@@ -183,13 +194,16 @@ exports[`editor sets ref 1`] = `
                   }
                 }
                 elemRef="jnaid"
-                path="editor.composition.i.mcneu.i.jnaid">
+                path="editor.composition.i.mcneu.i.jnaid"
+              >
                 <a
                   className={null}
-                  data-ref="jnaid">
+                  data-ref="jnaid"
+                >
                   <CerebralWrapping_Element
                     elemRef="mnzjq"
-                    path="editor.composition.i.mcneu.i.jnaid.i.mnzjq">
+                    path="editor.composition.i.mcneu.i.jnaid.i.mnzjq"
+                  >
                     <Element
                       elem={
                         Object {
@@ -199,17 +213,20 @@ exports[`editor sets ref 1`] = `
                         }
                       }
                       elemRef="mnzjq"
-                      path="editor.composition.i.mcneu.i.jnaid.i.mnzjq">
+                      path="editor.composition.i.mcneu.i.jnaid.i.mnzjq"
+                    >
                       <span
                         className={null}
-                        data-ref="mnzjq">
+                        data-ref="mnzjq"
+                      >
                         this 
                       </span>
                     </Element>
                   </CerebralWrapping_Element>
                   <CerebralWrapping_Element
                     elemRef="zzvgp"
-                    path="editor.composition.i.mcneu.i.jnaid.i.zzvgp">
+                    path="editor.composition.i.mcneu.i.jnaid.i.zzvgp"
+                  >
                     <Element
                       elem={
                         Object {
@@ -219,10 +236,12 @@ exports[`editor sets ref 1`] = `
                         }
                       }
                       elemRef="zzvgp"
-                      path="editor.composition.i.mcneu.i.jnaid.i.zzvgp">
+                      path="editor.composition.i.mcneu.i.jnaid.i.zzvgp"
+                    >
                       <span
                         className="strong em"
-                        data-ref="zzvgp">
+                        data-ref="zzvgp"
+                      >
                         link 
                       </span>
                     </Element>
@@ -232,7 +251,8 @@ exports[`editor sets ref 1`] = `
             </CerebralWrapping_Element>
             <CerebralWrapping_Element
               elemRef="mznao"
-              path="editor.composition.i.mcneu.i.mznao">
+              path="editor.composition.i.mcneu.i.mznao"
+            >
               <Element
                 elem={
                   Object {
@@ -242,17 +262,20 @@ exports[`editor sets ref 1`] = `
                   }
                 }
                 elemRef="mznao"
-                path="editor.composition.i.mcneu.i.mznao">
+                path="editor.composition.i.mcneu.i.mznao"
+              >
                 <span
                   className={null}
-                  data-ref="mznao">
+                  data-ref="mznao"
+                >
                   to view the next 
                 </span>
               </Element>
             </CerebralWrapping_Element>
             <CerebralWrapping_Element
               elemRef="mnahl"
-              path="editor.composition.i.mcneu.i.mnahl">
+              path="editor.composition.i.mcneu.i.mnahl"
+            >
               <Element
                 elem={
                   Object {
@@ -262,17 +285,20 @@ exports[`editor sets ref 1`] = `
                   }
                 }
                 elemRef="mnahl"
-                path="editor.composition.i.mcneu.i.mnahl">
+                path="editor.composition.i.mcneu.i.mnahl"
+              >
                 <span
                   className="em"
-                  data-ref="mnahl">
+                  data-ref="mnahl"
+                >
                   page
                 </span>
               </Element>
             </CerebralWrapping_Element>
             <CerebralWrapping_Element
               elemRef="ncgow"
-              path="editor.composition.i.mcneu.i.ncgow">
+              path="editor.composition.i.mcneu.i.ncgow"
+            >
               <Element
                 elem={
                   Object {
@@ -282,10 +308,12 @@ exports[`editor sets ref 1`] = `
                   }
                 }
                 elemRef="ncgow"
-                path="editor.composition.i.mcneu.i.ncgow">
+                path="editor.composition.i.mcneu.i.ncgow"
+              >
                 <span
                   className={null}
-                  data-ref="ncgow">
+                  data-ref="ncgow"
+                >
                   .
                 </span>
               </Element>
@@ -295,7 +323,8 @@ exports[`editor sets ref 1`] = `
       </CerebralWrapping_Element>
       <CerebralWrapping_Element
         elemRef="zhaog"
-        path="editor.composition.i.zhaog">
+        path="editor.composition.i.zhaog"
+      >
         <Element
           elem={
             Object {
@@ -321,13 +350,16 @@ exports[`editor sets ref 1`] = `
             }
           }
           elemRef="zhaog"
-          path="editor.composition.i.zhaog">
+          path="editor.composition.i.zhaog"
+        >
           <p
             className={null}
-            data-ref="zhaog">
+            data-ref="zhaog"
+          >
             <CerebralWrapping_Element
               elemRef="oiafg"
-              path="editor.composition.i.zhaog.i.oiafg">
+              path="editor.composition.i.zhaog.i.oiafg"
+            >
               <Element
                 elem={
                   Object {
@@ -337,17 +369,20 @@ exports[`editor sets ref 1`] = `
                   }
                 }
                 elemRef="oiafg"
-                path="editor.composition.i.zhaog.i.oiafg">
+                path="editor.composition.i.zhaog.i.oiafg"
+              >
                 <span
                   className={null}
-                  data-ref="oiafg">
+                  data-ref="oiafg"
+                >
                   This is the first 
                 </span>
               </Element>
             </CerebralWrapping_Element>
             <CerebralWrapping_Element
               elemRef="oaiue"
-              path="editor.composition.i.zhaog.i.oaiue">
+              path="editor.composition.i.zhaog.i.oaiue"
+            >
               <Element
                 elem={
                   Object {
@@ -357,17 +392,20 @@ exports[`editor sets ref 1`] = `
                   }
                 }
                 elemRef="oaiue"
-                path="editor.composition.i.zhaog.i.oaiue">
+                path="editor.composition.i.zhaog.i.oaiue"
+              >
                 <span
                   className="strong"
-                  data-ref="oaiue">
+                  data-ref="oaiue"
+                >
                   message
                 </span>
               </Element>
             </CerebralWrapping_Element>
             <CerebralWrapping_Element
               elemRef="haiou"
-              path="editor.composition.i.zhaog.i.haiou">
+              path="editor.composition.i.zhaog.i.haiou"
+            >
               <Element
                 elem={
                   Object {
@@ -377,10 +415,12 @@ exports[`editor sets ref 1`] = `
                   }
                 }
                 elemRef="haiou"
-                path="editor.composition.i.zhaog.i.haiou">
+                path="editor.composition.i.zhaog.i.haiou"
+              >
                 <span
                   className={null}
-                  data-ref="haiou">
+                  data-ref="haiou"
+                >
                   . Hello blah bomgolo frabilou elma tec.
                 </span>
               </Element>
@@ -390,7 +430,8 @@ exports[`editor sets ref 1`] = `
       </CerebralWrapping_Element>
       <CerebralWrapping_Element
         elemRef="zaahg"
-        path="editor.composition.i.zaahg">
+        path="editor.composition.i.zaahg"
+      >
         <Element
           elem={
             Object {
@@ -400,10 +441,12 @@ exports[`editor sets ref 1`] = `
             }
           }
           elemRef="zaahg"
-          path="editor.composition.i.zaahg">
+          path="editor.composition.i.zaahg"
+        >
           <p
             className={null}
-            data-ref="zaahg">
+            data-ref="zaahg"
+          >
             This is the third paragraph. My tailor types fast.
           </p>
         </Element>

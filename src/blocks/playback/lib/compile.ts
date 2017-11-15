@@ -65,14 +65,19 @@ export function buildSources
   .forEach
   ( blockId => {
       const block = project.blockById [ blockId ]
-      const base = project.fragments [ `$${ blockId }.source` ]
+      let base = project.fragments [ `$${ blockId }.source` ]
       if ( ! base ) {
-        throw new Error ( `Missing '$${ blockId }.source'.` )
-      }
-      blocks [ blockId ] = 
-      { lang: block.lang
-      , source: serialize
-        ( project, block.name, { name: 'source', sources: base.sources } )
+        // Block does not have a source.
+        blocks [ blockId ] =
+        { lang: 'ts'
+        , source: ''
+        }
+      } else {
+        blocks [ blockId ] = 
+        { lang: block.lang
+        , source: serialize
+          ( project, block.name, { name: 'source', sources: base.sources } )
+        }
       }
     }
   )
@@ -150,9 +155,10 @@ function mapTree <T>
 , fun: ( parent: T | undefined, nodeId: string ) => T
 , blockId: string | undefined = branch.entry
 , parent: T | undefined = undefined
-): T {
+) {
   if ( blockId === undefined ) {
-    throw new Error ( `Cannot traverse branch: it is empty (no entry).` )
+    // Empty branch
+    return
   }
   // map parent
   const result = fun ( parent, blockId )
@@ -172,12 +178,10 @@ function mapTree <T>
       )
     )
   }
-
-  return result
 }
 
 function compileTree
-( branch: BranchDefinition
+( branch: LiveBranch
 , sources: SourceMap
 ): CompiledTree {
   const compiledNodes: StringMap < CompiledNode > = {}
@@ -298,7 +302,8 @@ function linkOne
 , blockId: string | undefined = branch.entry
 ): { typed?: LinkedNode, floatingChildren: LinkedNode [] } {
   if ( blockId === undefined ) {
-    throw new Error ( `Cannot link blocks (branch is empty).` )
+    // Empty branch
+    return { floatingChildren: [] }
   }
   // map children
   const childrenIds = branch.blocks [ blockId ].children
@@ -418,11 +423,12 @@ function initNode
 }
 
 function initTree
-( branch: BranchDefinition
+( project: LiveProject
+, branch: LiveBranch
 , tree: LinkedTree
 ): LinkedTree {
   // We simply update the linked node for each child
-  const base = { helpers: { contextForChildren: subContext ( {}, {} ) } }
+  const base = { helpers: { contextForChildren: subContext ( project.context, {} ) } }
   const { linkedNodes } = tree
   const initNodes: StringMap < LinkedNode > = {}
   mapTree
@@ -454,7 +460,7 @@ export function compile
   // Link the result from exported contents to create an executable
   const linkedTree = linkTree ( project, root, compiledTree )
   // Run init code in every block
-  return initTree ( root, linkedTree )
+  return initTree ( project, root, linkedTree )
 }
 
 /**

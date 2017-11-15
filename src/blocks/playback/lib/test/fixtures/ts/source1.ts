@@ -19,9 +19,9 @@ export const init: Init =
 
 export const update: Update =
 (): void => {
-  // <frag:main>
+  // <main>
   result.value = child1 () + child2 () + child3 ()
-  // </frag:main>
+  // </main>
 }
 
 export const meta: Meta =

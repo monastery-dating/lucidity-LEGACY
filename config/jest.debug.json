@@ -3,20 +3,28 @@
     { "tsConfigFile": "./config/tsconfig.debug.json"
     }
   }
-, "rootDir": "../"
+, "rootDir": ".."
 , "transform":
   { ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
   }
 , "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(js)$"
 , "moduleFileExtensions":
   [ "js"
+  , "ts"
+  , "tsx"
   ]
 , "moduleNameMapper":
   { "^.+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/config/jest/FileStub.js"
   , "^.+\\.css$": "<rootDir>/config/jest/CSSStub.js"
-  , "^builder(.*)$": "<rootDir>/src/lib/builder$1"
+  , "^builder(.*)$": "<rootDir>/src/blocks/builder$1"
+  , "^blocks(.*)$": "<rootDir>/src/blocks$1"
   , "^config(.*)$": "<rootDir>/src/config$1"
-  , "^editor(.*)$": "<rootDir>/src/lib/editor$1"
+  , "^data(.*)$": "<rootDir>/src/blocks/firebase/data$1"
+  , "^editor(.*)$": "<rootDir>/src/blocks/editor$1"
+  , "^error(.*)$": "<rootDir>/src/blocks/error$1"
+  , "^lucidity(.*)$": "<rootDir>/src/blocks/lucidity$1"
+  , "^playback(.*)$": "<rootDir>/src/blocks/playback$1"
+  , "^styled(.*)$": "<rootDir>/src/styled$1"
   }
 , "setupFiles":
   [ "<rootDir>/config/polyfills.js"
@@ -24,6 +32,9 @@
   ]
 , "testPathIgnorePatterns":
   [ "<rootDir>/(node_modules|app/build)/"
+  , "<rootDir>/OLD/"
+  , "<rootDir>/src/"
+  , "<rootDir>/output/dist"
   ]
 , "testEnvironment": "node"
 }

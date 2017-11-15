@@ -123,7 +123,7 @@
     ],
     "testPathIgnorePatterns": [
       "<rootDir>/(node_modules|app/build)/",
-      "/off/"
+      "<rootDir>/OLD/"
     ],
     "testEnvironment": "node",
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx)$",

@@ -74,7 +74,7 @@ export class LiveProject {
       throw new Error ( `Blocks of the same name should share the same lang.` )
     }
     list.push ( block )
-    this.changed ()
+    this.setBlockSource ( block.id, block.source )
   }
 
   setContext ( key: string, type: string, ctx: any ) : void {
@@ -107,15 +107,39 @@ export class LiveProject {
 
   setBlockSource ( blockId: string, source: string ) {
     const block = this.blockById [ blockId ]
+    // Not sure we need to set it in block.
     block.source = source
+    const fragmentId = `$${ blockId }.source`
+    /* id: string
+       type: FragmentType
+       target: string
+       frag: string
+       lang: string
+       source: string
+       sources: ParsedSourceElement []
+    */
+    const fragment: SourceFragment =
+    { id: fragmentId
+      // $     blockId . source
+      // type  target    frag
+    , frag: 'source'
+    , type: '$'
+    , target: block.id
+    , lang: block.lang
+    , source
+    , sources: extractSources ( source, block.lang ).sources
+    }
+    this.fragments [ fragmentId ] = fragment
     this.changed ()
   }
 
   setFragmentSource ( fragmentId: string, source: string ) {
-    this.changed ()
+    throw new Error ( 'TODO' )
+    // this.changed ()
   }
 
   changed () {
-    compile ( this ).main ()
+    const main = compile ( this ).main
+    main ()
   }
 }

@@ -5,18 +5,18 @@ import { ParsedSourceElement } from './types'
 describe ( 'fragmentInfo', () => {
   it ( 'should parse single ts line', () => {
     expect
-    ( [ '   // <frag:foobar>  '
-      , '//     <frag:main>'
-      , '  //     </frag:main>'
-      , '// </ frag:one >'
-      , '// < frag:two >'
-      , '// < frag:boom />'
+    ( [ '   // <foobar>  '
+      , '//     <main>'
+      , '  //     </main>'
+      , '// </ one >'
+      , '// < two >'
+      , '// < boom />'
       // NOT A FRAGMENT
       , 'const x = "foo"'
-      , 'const y = "<frag:hello>"'
-      , 'const x = 0 // <frag:foobar> '
-      , '// some comment and stuff </frag:foobar >'
-      , '// <frag:foobar > blah blah'
+      , 'const y = "<hello>"'
+      , 'const x = 0 // <foobar> '
+      , '// some comment and stuff </foobar >'
+      , '// <foobar > blah blah'
       ]
       .map ( line => fragmentInfo ( line, 'ts' ) )
     )
@@ -57,9 +57,9 @@ describe ( 'extractSources', () => {
     const code = `
     export const update: Update =
     (): number => {
-      // <frag:main>
+      // <main>
       return 0
-      // </frag:main>
+      // </main>
     }
     // code end
     `
@@ -76,10 +76,10 @@ describe ( 'extractSources', () => {
     ( [ "... ==> source"
       , "source0:     export const update: Update ="
       , "    (): number => {"
-      , "      // <frag:main>"
+      , "      // <main>"
       , "source1 ==> main"
       , "main0:       return 0"
-      , "source2:       // </frag:main>"
+      , "source2:       // </main>"
       , "    }"
       , "    // code end"
       , "    "
