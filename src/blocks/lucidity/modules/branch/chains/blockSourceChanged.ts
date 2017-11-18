@@ -14,7 +14,6 @@ function changeSource
   getProject ()
   project.setBlockSource ( blockId, source )
   const blockDef = project.blockById [ blockId ].definition ()
-  console.log ( blockDef )
   state.set ( `${ path }.branch.blocks.${ blockId }`, blockDef )
 }
 

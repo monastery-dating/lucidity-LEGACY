@@ -16,6 +16,7 @@ box-shadow: ${ p => p.theme.boxShadow }
 
 const Wrapper = styled.div`
 position: relative;
+z-index: 999;
 `
 
 interface Props {

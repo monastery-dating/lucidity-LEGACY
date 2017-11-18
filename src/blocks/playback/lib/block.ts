@@ -5,7 +5,32 @@ import { makeId, ParsedMeta } from './types'
 import { BlockDefinition, CompiledNode } from 'blocks/playback';
 import { compileSource, runModule, Source } from 'blocks/playback/lib/compile'
 import { isCompileSuccess, CompilerError } from 'blocks/playback/lib/compilers/types';
-import { Update, Init } from 'blocks/lucidity';
+import { Update, Init, Meta } from 'blocks/lucidity';
+
+interface Foo extends Meta {
+  // set to true if children: 'all'
+  all?: boolean
+  // set to true if it has an update but not type for update
+  isvoid?: boolean
+  children?: string[]
+}
+
+function parseMeta ( meta: Meta ): ParsedMeta {
+  const { children } = meta
+  const parsedMeta: ParsedMeta = Object.assign
+  ( {}
+  , meta
+  , { children: children === 'all'
+      ? []
+      : children
+    }
+  )
+  if ( children === 'all' ) {
+    delete parsedMeta.children
+    parsedMeta.all = true
+  }
+  return parsedMeta
+}
 
 export class LiveBlock {
   children: string []
@@ -55,17 +80,9 @@ export class LiveBlock {
     } else {
       this.js = compiled.js
       const exported = runModule ( compiled )
-      console.log ( 'COMPILE', exported )
       const { meta } = exported
       if ( meta ) {
-        this.meta = Object.assign ( {}, this.meta || {}, meta )
-        if ( meta.children === 'all' ) {
-          delete this.meta.children
-          this.meta.all = true
-        } else {
-          this.meta.children = meta.children
-          this.meta.all = false
-        }
+        this.meta = parseMeta ( meta )
       } else {
         delete this.meta
       }

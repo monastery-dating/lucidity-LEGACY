@@ -389,10 +389,10 @@ interface NodeWithContext {
 
 function initNode
 ( parent: NodeWithContext
-, nodeId: string
-, node: LinkedNode
+, blockId: string
+, block: LinkedNode
 ): LinkedNode {
-  const { init, helpers } = node
+  const { init, helpers } = block
   helpers.context = parent.helpers.contextForChildren
 
   if ( init ) {
@@ -400,14 +400,14 @@ function initNode
     try {
       result = init ( helpers )
     } catch ( err ) {
-      console.log ( node.js )
+      console.log ( block.js )
       throw new Error
-      ( `Error running 'init' from '${ nodeId }': ${ err }` )
+      ( `Error running 'init' from '${ blockId }': ${ err }` )
     }
     if ( result ) {
       if ( typeof result !== 'object' ) {
         throw new Error
-        ( `Error running '${nodeId}: init return value must be an object.` )
+        ( `Error running '${blockId}: init return value must be an object.` )
       }
       else {
         helpers.contextForChildren =
@@ -415,7 +415,7 @@ function initNode
       }
     }
   }
-  return node
+  return block
 }
 
 function initTree
