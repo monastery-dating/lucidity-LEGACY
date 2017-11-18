@@ -151,24 +151,21 @@ const uimapOne =
   const uibox = uigraph.uiNodeById [ blockId ]
 
   const block = graph.blocks [ blockId ]
+  const isRoot = block.id === graph.entry
 
   uibox.name = block.name
 
-  if ( block.id === graph.entry ) {
+  if ( isRoot ) {
     uibox.className = 'main'
   } else {
     uibox.className = className ( block.name, layout )
   }
 
-  const size = minSize ( block, layout )
+  const size = minSize ( block, layout, isRoot )
 
   size.wde = 0
 
-  const { meta } = block
-  if ( !meta ) { 
-    throw new Error ( 'No block.meta (??)' )
-  }
-
+  const meta = block.meta || {}
   const childrenTypes = meta.children
   const slots : UISlotType[] = []
   const sl = layout.SLOT

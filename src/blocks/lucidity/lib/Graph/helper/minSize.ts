@@ -6,11 +6,9 @@ import { BlockDefinition } from 'blocks/playback'
 export const minSize =
 ( block: BlockDefinition
 , layout: UILayoutType
+, isRoot: boolean = false
 ) : UINodeSize => {
-  const { meta } = block
-  if ( !meta ) {
-    throw new Error ( 'No block.meta (??)' )
-  }
+  const meta = block.meta || {}
   const needExtraSlot = ! meta.children
   let hasExtra = false
   let ds
@@ -26,9 +24,8 @@ export const minSize =
     ds = block.children.length + 1
     hasExtra = true
   }
-  console.log ( 'BLOCK', block, ds )
   // Up slots
-  const us = block.id === 'root' ? 0 : 1
+  const us = isRoot ? 0 : 1
   // has update = block.meta.isvoid || block.meta.update ? 1 : 0
 
   const tb = layout.tsizer ( block.name )

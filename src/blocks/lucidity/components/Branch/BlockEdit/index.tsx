@@ -19,8 +19,8 @@ position: relative;
 `
 
 interface Props {
-  $blockId: typeof State.branch.$blockId
-  save: typeof Signal.branch.blockSourceChanged
+  blockId: typeof State.branch.$blockId
+  blockSourceChanged: typeof Signal.branch.blockSourceChanged
   // These are used by the code editor. The type
   // must be present at given path.
   source: typeof State.branch.branch.blocks.someId.source
@@ -32,13 +32,16 @@ interface EProps {
 }
 
 export const BlockEdit = connect < Props, EProps > (
-  { $blockId: state`${ props`path` }.$blockId`
-  , save: signal`branch.sourceChanged`
+  { blockId: state`${ props`path` }.$blockId`
+  , blockSourceChanged: signal`branch.blockSourceChanged`
   }
-, function BlockEdit ( { $blockId, save, path } ) {
-    const blockPath = `${ path }.branch.blocks.${ $blockId }`
+, function BlockEdit ( { blockId, blockSourceChanged, path } ) {
+    const blockPath = `${ path }.branch.blocks.${ blockId }`
     function onSave ( source: string ) {
-      save ( { path: blockPath, source } )
+      if ( blockId === undefined ) {
+        return
+      }
+      blockSourceChanged ( { path, source, blockId } )
     }
     return (
       <Wrapper>

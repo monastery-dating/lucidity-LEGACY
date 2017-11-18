@@ -22,7 +22,7 @@ import
 import { LiveProject } from 'blocks/playback';
 import { LiveBranch } from 'blocks/playback/lib/branch';
 
-interface Source {
+export interface Source {
   lang: string
   source: string
 }
@@ -103,7 +103,7 @@ function findRoots
   ( b => b.blocks [ b.entry ].name === 'root' )
 }
 
-function compileSource
+export function compileSource
 ( source: Source
 ): CompileResult {
   const compile = compilers [ source.lang ]
@@ -114,7 +114,7 @@ function compileSource
   return compile ( source.source )
 }
 
-function runModule
+export function runModule
 ( compiled: CompileSuccess
 ): Block {
   const exported: Block = {}
@@ -138,7 +138,8 @@ function compileNode
     const { errors } = compiled
     // Of course, this should bubble properly up to the inline editor. But for
     // now we just break.
-    throw new Error ( `Could not compile: ${ errors.map ( e => e.message ) }.`)
+    console.warn ( `Could not compile: ${ errors.map ( e => e.message ).join ( '\n' ) }.` )
+    return Object.assign ( compiled, { js: '' } )
   }
   const exported = runModule ( compiled )
 
@@ -184,10 +185,11 @@ function compileTree
 , sources: SourceMap
 ): CompiledTree {
   const compiledNodes: StringMap < CompiledNode > = {}
+  const { blocks } = branch
   mapTree
   ( branch
   , compiledNodes
-  , ( parent, blockId ) => compileNode ( sources [ blockId ] )
+  , ( parent, blockId ) => blocks [ blockId ].compile ( sources [ blockId ] )
   )
   return { compiledNodes }
 }

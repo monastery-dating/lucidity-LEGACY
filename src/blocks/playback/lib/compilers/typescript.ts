@@ -277,8 +277,8 @@ export function compile
 ): CompileResult {
   const compiled = compileCode ( source )
   if ( ! isCompileCodeSuccess ( compiled ) ) {
-    throw new Error ( compiled.errors.map ( e => e.message ).join ( ', ' ) )
-    // return compiled
+    // throw new Error ( compiled.errors.map ( e => e.message ).join ( ', ' ) )
+    return compiled
   }
 
   const scrub: ScrubCode = { js: '', values: [], literals: [] }

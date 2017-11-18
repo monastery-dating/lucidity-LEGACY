@@ -9,6 +9,7 @@ import { DragDropType, DragStartType } from '../../lib/DragDrop'
 import { LiveBlockDefinition, SourceFragment, StringMap, BranchDefinition, getProject } from 'blocks/playback'
 import { blockSourceChanged } from './chains/blockSourceChanged'
 import { fragmentSourceChanged } from './chains/fragmentSourceChanged'
+import { ActionChain, ActionContext } from '../../../../../../cerebral/packages/node_modules/cerebral';
 
 interface CheckTypes {
   $blockId: typeof State.branch.$blockId
@@ -29,11 +30,17 @@ interface AddArg {
   slotIdx: number
 }
 
+export interface SourceChanged {
+  path: string
+  source: string
+  blockId: string
+}
+
 export interface BranchSignal extends DragDropCallbacks {
   add ( arg: AddArg ): void
   arrow ( arg: ArrowArg ): void
   select ( arg: { blockId: string, path: string } ): void
-  blockSourceChanged ( arg: { path: string, source: string } ): void
+  blockSourceChanged ( arg: SourceChanged ): void
   fragmentSourceChanged ( arg: { path: string, source: string } ): void
 }
 
@@ -62,8 +69,13 @@ export const branchParagraph: ParagraphOption =
 export const branch =
 { signals:
   { add:
-    [ ( c: any ) => {
-        console.log ( 'ADD BLOCK', c.props )
+    [ ( { state, props }: ActionContext < { props: AddArg } > ) => {
+        const { branchId, parentId, path, slotIdx } = props
+        const project = getProject ()
+        const block = project.newBlock
+        ( branchId, parentId, slotIdx )
+        state.set ( `${ path }.branch.blocks.${ block.id }`, block.definition () )
+        state.set ( `${ path }.branch.blocks.${ parentId }`, project.blockById [ parentId ].definition () )
       }
     ]
   , drag:

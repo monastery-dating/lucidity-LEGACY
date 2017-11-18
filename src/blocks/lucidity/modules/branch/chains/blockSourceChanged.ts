@@ -3,20 +3,24 @@ import { sequence } from 'cerebral'
 import { set } from 'cerebral/operators'
 import { props, state } from 'cerebral/tags'
 import { getProject } from 'playback'
+import { SourceChanged } from '..'
 
 function changeSource
-( { props, state }: ActionContext
+( { props, state }: ActionContext < SourceChanged >
 ) {
-  const blockId = props.path.split ( '.' ).slice ( -1 ) [ 0 ]
-  const source = props.source
+  const { blockId, path, source } = props
   // FIXME
-  getProject ().setBlockSource ( blockId, source )
+  const project = getProject ()
+  getProject ()
+  project.setBlockSource ( blockId, source )
+  const blockDef = project.blockById [ blockId ].definition ()
+  console.log ( blockDef )
+  state.set ( `${ path }.branch.blocks.${ blockId }`, blockDef )
 }
 
 export const blockSourceChanged: CerebralChain =
 sequence
 ( 'branch.blockSourceChanged'
-, [ set ( state`${ props`path` }.source`, props`source` )
-  , changeSource
+, [ changeSource
   ]
 )

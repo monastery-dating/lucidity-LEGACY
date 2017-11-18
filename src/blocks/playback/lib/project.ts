@@ -44,9 +44,9 @@ export class LiveProject {
     return branch
   }
 
-  newBlock ( branchId: string, parentId: string ) {
+  newBlock ( branchId: string, parentId: string, slotIdx?: number ) {
     const branch = this.branches [ branchId ]
-    const block = branch.newBlock ( parentId )
+    const block = branch.newBlock ( parentId, slotIdx )
     this.addBlock ( block )
     return block
   }
@@ -107,6 +107,9 @@ export class LiveProject {
 
   setBlockSource ( blockId: string, source: string ) {
     const block = this.blockById [ blockId ]
+    if ( ! block ) {
+      throw new Error ( `Cannot set block source (unknown block '${ blockId }').`)
+    }
     // Not sure we need to set it in block.
     block.source = source
     const fragmentId = `$${ blockId }.source`
